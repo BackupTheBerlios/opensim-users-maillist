@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Prims and CPU usage?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Prims%20and%20CPU%20usage%3F&In-Reply-To=%3C63FAD4F222230A4EA79DE9E8BE6647352038CDBF%40winxbeus19.exchange.xchg%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002150.html">
+   <LINK REL="Next"  HREF="002152.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Prims and CPU usage?</H1>
+    <B>Frisby, Adam</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Prims%20and%20CPU%20usage%3F&In-Reply-To=%3C63FAD4F222230A4EA79DE9E8BE6647352038CDBF%40winxbeus19.exchange.xchg%3E"
+       TITLE="[Opensim-users] Prims and CPU usage?">adam at deepthink.com.au
+       </A><BR>
+    <I>Sat May 16 16:21:25 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002150.html">[Opensim-users] Prims and CPU usage?
+</A></li>
+        <LI>Next message: <A HREF="002152.html">[Opensim-users] Prims and CPU usage?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2151">[ date ]</a>
+              <a href="thread.html#2151">[ thread ]</a>
+              <a href="subject.html#2151">[ subject ]</a>
+              <a href="author.html#2151">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This is probably related to how the Update routine handles sending updates to clients.
+
+Adam
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:opensim-users-
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>] On Behalf Of John Sheridan
+</I>&gt;<i> Sent: Saturday, 16 May 2009 6:22 AM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: [Opensim-users] Prims and CPU usage?
+</I>&gt;<i> 
+</I>&gt;<i> Gang,
+</I>&gt;<i>     After trying a few of the higher prim oar files I've seen fly
+</I>&gt;<i> through here I've begun to notice a rather curious trend, although I'm
+</I>&gt;<i> unsure if its to do with my configuration or if others have seen this
+</I>&gt;<i> as
+</I>&gt;<i> well.  After trying Nebadon's Art City oar on a local standalone (Mono
+</I>&gt;<i> 2.0.1 / SQLite, Basic Physics on Linux Ubuntu) I found that after
+</I>&gt;<i> everything loaded and committed to the database (which on its own took
+</I>&gt;<i> a
+</I>&gt;<i> good hour and a half probably due to SQLite) upon restarting OpenSim
+</I>&gt;<i> cpu
+</I>&gt;<i> use for the OpenSim process was pinned at 30% when idle.
+</I>&gt;<i> 
+</I>&gt;<i>   Oddly enough, since I started building my Ravenport sims (Mono 2.0.1
+</I>&gt;<i> /
+</I>&gt;<i> MySql, ODE / ZeroMesh on Ubuntu) I've as well noticed a steady increase
+</I>&gt;<i> in cpu use as the build progressed, however until now I thought this
+</I>&gt;<i> was
+</I>&gt;<i> due to scripts or possibly a few rogue physical prims that may have
+</I>&gt;<i> sunk
+</I>&gt;<i> under ground or flown off the sim edge.  Currently when idle the
+</I>&gt;<i> Ravenport server is using 25% of the cpu at ~13,000 prims where a month
+</I>&gt;<i> ago it bordered around 10 to 15% at roughly 7,000 prims.  Out of
+</I>&gt;<i> curiosity I saved the sims out to an oar and began dissecting them on
+</I>&gt;<i> the same local configuration I tested the Art City  oar on.
+</I>&gt;<i> Surprisingly after removing all scripted objects there was no change in
+</I>&gt;<i> cpu use - it was still at 25%.  It wasn't until I began deleting the
+</I>&gt;<i> buildings that I began to notice a change where as the sims emptied out
+</I>&gt;<i> the cpu use decreased down to between 1 and 2% once all prims were
+</I>&gt;<i> deleted.
+</I>&gt;<i> 
+</I>&gt;<i>   To verify, I decided to try again this time with a clean OpenSim
+</I>&gt;<i> instance of the same config where I had set a scripted prim to create a
+</I>&gt;<i> grid of default .5x.5x.5 cubes.  The first round was with a grid of
+</I>&gt;<i> 13,000 prims which upon persisting and rebooting pinned the cpu at 30%,
+</I>&gt;<i> the second test I added another 13,000 which brought it up to 40%.
+</I>&gt;<i> After adding another 13,000 (39,000 total) the cpu was pinned at a
+</I>&gt;<i> solid
+</I>&gt;<i> 100% after a fresh restart.
+</I>&gt;<i> 
+</I>&gt;<i>   I have to admit, I do find this to be quite baffling.  In all I'd
+</I>&gt;<i> expect the sim to use more memory with a higher prim count but the cpu
+</I>&gt;<i> should remain about the same, especially given that my test environment
+</I>&gt;<i> was using basic physics where all prims were rendered as phantom.
+</I>&gt;<i> 
+</I>&gt;<i>   The oar for the 39,000 prim sim is located at
+</I>&gt;<i> <A HREF="http://www.pseudospace.net/primzilla.oar">http://www.pseudospace.net/primzilla.oar</A> if anyone else would like to
+</I>&gt;<i> test it on their own configuration.
+</I>&gt;<i> 
+</I>&gt;<i> Thanks, :)
+</I>&gt;<i> 
+</I>&gt;<i>  - John / Orion Pseudo
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002150.html">[Opensim-users] Prims and CPU usage?
+</A></li>
+	<LI>Next message: <A HREF="002152.html">[Opensim-users] Prims and CPU usage?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2151">[ date ]</a>
+              <a href="thread.html#2151">[ thread ]</a>
+              <a href="subject.html#2151">[ subject ]</a>
+              <a href="author.html#2151">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

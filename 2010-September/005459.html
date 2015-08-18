@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users]  Database issues after server crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%20Database%20issues%20after%20server%20crash&In-Reply-To=%3C4C83EDD4.6000107%40livingsounds.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005456.html">
+   <LINK REL="Next"  HREF="005460.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users]  Database issues after server crash</H1>
+    <B>Ben Faust</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%20Database%20issues%20after%20server%20crash&In-Reply-To=%3C4C83EDD4.6000107%40livingsounds.org%3E"
+       TITLE="[Opensim-users]  Database issues after server crash">ben at livingsounds.org
+       </A><BR>
+    <I>Sun Sep  5 21:21:56 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005456.html">[Opensim-users] Configure an OpenSim to use the ROBUST services
+</A></li>
+        <LI>Next message: <A HREF="005460.html">[Opensim-users] Database issues after server crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5459">[ date ]</a>
+              <a href="thread.html#5459">[ thread ]</a>
+              <a href="subject.html#5459">[ subject ]</a>
+              <a href="author.html#5459">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>  My server crashed (ran out of disk space), and it took awhile to 
+figure out how to get innoDB running again with MySQL... The database 
+appears to be in tact, except the `migrations` table is missing... Now, 
+when trying to start OpenSim, the following is part of the startup logs. 
+Anyone know how to fix this, or perhaps have the mysql for recreating 
+that table?
+
+Exception: System.Exception: Table 'migrations' already exists in SQL: 
+create table migrations(name varchar(100), version int)
+   at OpenSim.Data.Migration.ExecuteScript 
+(System.Data.Common.DbConnection conn, System.String[] script) [0x00000] 
+in &lt;filename unknown&gt;:0
+   at OpenSim.Data.Migration.ExecuteScript 
+(System.Data.Common.DbConnection conn, System.String sql) [0x00000] in 
+&lt;filename unknown&gt;:0
+   at OpenSim.Data.Migration.ExecuteScript (System.String sql) [0x00000] 
+in &lt;filename unknown&gt;:0
+   at OpenSim.Data.Migration.InitMigrationsTable () [0x00000] in 
+&lt;filename unknown&gt;:0
+   at OpenSim.Data.Migration.Update () [0x00000] in &lt;filename unknown&gt;:0
+   at OpenSim.Data.MySQL.MySQLEstateStore.Initialise (System.String 
+connectionString) [0x00000] in &lt;filename unknown&gt;:0
+   at OpenSim.Region.Framework.StorageManager..ctor (System.String 
+dllName, System.String connectionstring, System.String 
+estateconnectionstring) [0x00000] in &lt;filename unknown&gt;:0
+   at OpenSim.OpenSimBase.CreateStorageManager (System.String 
+connectionstring, System.String estateconnectionstring) [0x00000] in 
+&lt;filename unknown&gt;:0
+   at OpenSim.OpenSimBase.CreateStorageManager () [0x00000] in &lt;filename 
+unknown&gt;:0
+   at OpenSim.Region.ClientStack.RegionApplicationBase.StartupSpecific 
+() [0x00000] in &lt;filename unknown&gt;:0
+   at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in &lt;filename 
+unknown&gt;:0
+   at OpenSim.OpenSim.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0
+   at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] 
+in &lt;filename unknown&gt;:0
+   at OpenSim.Application.Main (System.String[] args) [0x00000] in 
+&lt;filename unknown&gt;:0
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005456.html">[Opensim-users] Configure an OpenSim to use the ROBUST services
+</A></li>
+	<LI>Next message: <A HREF="005460.html">[Opensim-users] Database issues after server crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5459">[ date ]</a>
+              <a href="thread.html#5459">[ thread ]</a>
+              <a href="subject.html#5459">[ subject ]</a>
+              <a href="author.html#5459">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

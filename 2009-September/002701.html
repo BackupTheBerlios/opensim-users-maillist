@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Retrieving inventory items
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Retrieving%20inventory%20items&In-Reply-To=%3C5979403a0909260956n34ee42c6x52c72ed1c5355d41%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002699.html">
+   <LINK REL="Next"  HREF="002703.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Retrieving inventory items</H1>
+    <B>Jeff1564</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Retrieving%20inventory%20items&In-Reply-To=%3C5979403a0909260956n34ee42c6x52c72ed1c5355d41%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Retrieving inventory items">jefersonc at gmail.com
+       </A><BR>
+    <I>Sat Sep 26 18:56:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002699.html">[Opensim-users] [opensim-users] UGRM,	FreeSwitch centralisation 	with R.O.B.U.S.T?
+</A></li>
+        <LI>Next message: <A HREF="002703.html">[Opensim-users] Retrieving inventory items
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2701">[ date ]</a>
+              <a href="thread.html#2701">[ thread ]</a>
+              <a href="subject.html#2701">[ subject ]</a>
+              <a href="author.html#2701">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello folks,
+
+I am playing with some bots here but when i try retrieve the inventory items
+from the bot I just get the folders and no items bellow is an example code:
+
+
+        private Inventory Inventory;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Inventory = Client.Inventory.Store;
+            InventoryFolder rootFolder = Inventory.RootFolder;
+            List&lt;InventoryBase&gt; contents =
+Client.Inventory.Store.GetContents(rootFolder);
+
+            foreach (InventoryBase i in contents)
+            {
+                if (i is InventoryFolder)
+                {
+                    InventoryFolder folderr = (InventoryFolder)i;
+                    List&lt;InventoryBase&gt; contentss =
+Client.Inventory.Store.GetContents(folderr);
+                    if (contentss.Count &gt; 0)
+                    {
+                        foreach (InventoryBase ii in contentss)
+                        {
+                            if (ii is InventoryFolder)
+                            {
+                                MessageBox.Show(&quot;This is a folder: &quot; +
+ii.ToString());
+
+                            }
+                            if (ii is InventoryItem)
+                            {
+                                MessageBox.Show(&quot;This is an Item: &quot; +
+ii.ToString());
+                            }
+
+                            //MessageBox.Show(&quot;is &gt; 0 &quot; +
+contentss.ToString());
+                        }
+                    }
+                    //MessageBox.Show(i.ToString());
+
+                }
+                if (i is InventoryItem)
+                {
+                    MessageBox.Show(&quot;I am an Item: &quot; + i.ToString());
+
+                }
+            }
+
+
+
+        }
+
+what am i doing wrong??? there is a trick to retrieve items??
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090926/0dd9b1b0/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090926/0dd9b1b0/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002699.html">[Opensim-users] [opensim-users] UGRM,	FreeSwitch centralisation 	with R.O.B.U.S.T?
+</A></li>
+	<LI>Next message: <A HREF="002703.html">[Opensim-users] Retrieving inventory items
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2701">[ date ]</a>
+              <a href="thread.html#2701">[ thread ]</a>
+              <a href="subject.html#2701">[ subject ]</a>
+              <a href="author.html#2701">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

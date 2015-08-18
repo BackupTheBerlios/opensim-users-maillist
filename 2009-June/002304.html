@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] About OpenSim Server Cluster
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20About%20OpenSim%20Server%20Cluster&In-Reply-To=%3C000301c9f099%246c094860%24441bd920%24%40ac.jp%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002299.html">
+   <LINK REL="Next"  HREF="002307.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] About OpenSim Server Cluster</H1>
+    <B>Arturo Nakasone</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20About%20OpenSim%20Server%20Cluster&In-Reply-To=%3C000301c9f099%246c094860%24441bd920%24%40ac.jp%3E"
+       TITLE="[Opensim-users] About OpenSim Server Cluster">arturonakasone at nii.ac.jp
+       </A><BR>
+    <I>Fri Jun 19 06:50:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002299.html">[Opensim-users] About OpenSim Server Cluster
+</A></li>
+        <LI>Next message: <A HREF="002307.html">[Opensim-users] Assistance with OpenSim Loads
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2304">[ date ]</a>
+              <a href="thread.html#2304">[ thread ]</a>
+              <a href="subject.html#2304">[ subject ]</a>
+              <a href="author.html#2304">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Ursula and Gavin
+
+Thanks a lot for your answers.
+I am not really sure how separating the region from the UGAIM servers will
+help since our applications are very data intensive (fast creation and
+deletion of prims and such).
+The virtualization solution seems interesting, but I agree that some
+performance problems might appear.
+In any case, I will try them to see which of these solutions gives us the
+best performance improvement.
+
+Thanks again
+Best regards
+Arturo
+
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Ursula MATOVA
+Sent: Friday, June 19, 2009 1:06 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] About OpenSim Server Cluster
+
+Hi Arturo,
+
+In grid mode you have the ability to separate server components ( UGAIM 
++R )
+I'm not sure at all that &quot;clustering&quot; will be possible with the  
+current development state. Anyway, one thing you could experiment is  
+the following :
+
+- First Server : Database + UGAIM
+- Second server : R ( Region Server )
+
+Another idea ( depends on the number of region you're hosting ) :
+
+Spliting the regions into 2 groups, then, run one region server on  
+each server. Of course you cannot run multiple copies of UGAIM.
+
+Another point is to carefully monitor your database ( MySQL in my  
+case ), running maintenance tasks, ...
+I have found that bad response times with MySQL have a very bad impact  
+on the whole OpenSim server performances.
+You could also use a database cluster.
+
+@Gavin : Not sure it's a good idea to run OpenSim into virtual  
+machines, not in a production environment. You really have too many  
+performance problem with the current virtualization tools ( I have  
+only tested xen ).
+
+Hope this help,
+
+regards,
+Ursula.
+
+
+Le 18 juin 09 &#224; 13:15, Gavin Spurgeon a &#233;crit :
+
+&gt;<i> On 18/06/09 11:02, Arturo Nakasone wrote:
+</I>&gt;&gt;<i> Hello,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This question might be somewhat unrelated to OpenSim, but we would
+</I>&gt;&gt;<i> appreciate if anyone could help us with this:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Currently, we have two Dell PowerEdge servers running two separate
+</I>&gt;&gt;<i> instances of OpenSim. While we were testing our applications, we had
+</I>&gt;&gt;<i> some small performance problems we would like to avoid by combining  
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i> power of both our servers. In short, what we are looking for is a  
+</I>&gt;&gt;<i> way to
+</I>&gt;&gt;<i> cluster our servers in such a way that OpenSim can look at this  
+</I>&gt;&gt;<i> cluster
+</I>&gt;&gt;<i> as one server. Since most of the burden for our applications is in  
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i> Region Server, I am not sure if running OpenSim in Grid mode will  
+</I>&gt;&gt;<i> really
+</I>&gt;&gt;<i> help in this case.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If anyone knows about any hardware or software based solution we can
+</I>&gt;&gt;<i> use, please let us know
+</I>&gt;<i>
+</I>&gt;<i> Simple answer,
+</I>&gt;<i>
+</I>&gt;<i>  Run your OpenSim in a Virtual Machine (Xen/KVM/QEMU) and have both
+</I>&gt;<i> physical servers running the Virtual Machines setup as a cluster with
+</I>&gt;<i> shared storage.
+</I>&gt;<i>
+</I>&gt;<i> This also gives you Load Balancing and Fault Tolerance as a bonus :-)
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i> &quot;The happiest of people don't necessarily have the best of everything,
+</I>&gt;<i> they just make the most of everything that comes along their way..&quot;
+</I>&gt;<i> Gavin Spurgeon.
+</I>&gt;<i> AKA Da Geek
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> This message was scanned by DaGeek Spam Filter and is believed to be  
+</I>&gt;<i> clean.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002299.html">[Opensim-users] About OpenSim Server Cluster
+</A></li>
+	<LI>Next message: <A HREF="002307.html">[Opensim-users] Assistance with OpenSim Loads
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2304">[ date ]</a>
+              <a href="thread.html#2304">[ thread ]</a>
+              <a href="subject.html#2304">[ subject ]</a>
+              <a href="author.html#2304">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

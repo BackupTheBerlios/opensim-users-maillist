@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Animating NPCs without osNpcPlayAnimation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animating%20NPCs%20without%20osNpcPlayAnimation&In-Reply-To=%3CCAHi41x%2BGD4krgYuzv6OD-798BFG0yfmRUaBDqaMJz4bp05oFCQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012346.html">
+   <LINK REL="Next"  HREF="012340.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Animating NPCs without osNpcPlayAnimation</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animating%20NPCs%20without%20osNpcPlayAnimation&In-Reply-To=%3CCAHi41x%2BGD4krgYuzv6OD-798BFG0yfmRUaBDqaMJz4bp05oFCQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Animating NPCs without osNpcPlayAnimation">r.ramloll at gmail.com
+       </A><BR>
+    <I>Mon Jun  3 23:19:57 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012346.html">[Opensim-users] Hypergrid Things, Jumps, SLurls, Hop URLs and Maps
+</A></li>
+        <LI>Next message: <A HREF="012340.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12339">[ date ]</a>
+              <a href="thread.html#12339">[ thread ]</a>
+              <a href="subject.html#12339">[ subject ]</a>
+              <a href="author.html#12339">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello
+I was a surprised to see that I could animate an NPC without using the
+osNpcPlayAnimation OSSL command.
+For e.g. if you create a prim and set it to animate an avatar who sits
+on it, then you could use something like
+
+    run_time_permissions(integer perm)
+    {
+        if (perm &amp; PERMISSION_TRIGGER_ANIMATION)
+        {
+                animation=llGetInventoryName(INVENTORY_ANIMATION,0);
+                llStartAnimation(animation);
+        }
+    }
+
+that gets triggered when sitting is detected.
+
+However, if you get an NPC to sit on the same prim, you would not
+expect it to animate as well because the osNpcPlayAnimation command is
+not there. It's not that I do not like it, it's just that I do not
+understand it. And I am wondering if this is a bug. if this is fixed,
+then I may have to debug my scripts for all my seats at a later stage.
+Since my application deals with hundreds of such situations, that
+would be hard work in the future ... because as we well know updating
+code for complex stuff in opensim is so inefficient because there are
+no way to propagate changes for scripts that are used often in
+different objects.
+
+on a side note, how does one efficiently update scripts for many
+objects that use them at once. It would be great if each script
+element in every prim is actually a pointer to some script in
+inventory, so that when we change the script in the inventory, then
+all scripts would know about the change. Is this something way too
+hard to implement?
+
+Ramesh
+
+
+
+--
+'Consider how the lilies grow. They do not labor or spin.'
+Rameshsharma Ramloll PhD, CEO CTO DeepSemaphore LLC, Affiliate
+Research Associate Professor, Idaho State University, Pocatello, ID
+83209 Tel: 208-240-0040
+Blog, LinkedIn, DeepSemaphore LLC, Google+ profile
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012346.html">[Opensim-users] Hypergrid Things, Jumps, SLurls, Hop URLs and Maps
+</A></li>
+	<LI>Next message: <A HREF="012340.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12339">[ date ]</a>
+              <a href="thread.html#12339">[ thread ]</a>
+              <a href="subject.html#12339">[ subject ]</a>
+              <a href="author.html#12339">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

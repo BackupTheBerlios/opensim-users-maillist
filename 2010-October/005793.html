@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Script State Already Exists?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20State%20Already%20Exists%3F&In-Reply-To=%3C4CB7F837.3000908%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005792.html">
+   <LINK REL="Next"  HREF="005795.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Script State Already Exists?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20State%20Already%20Exists%3F&In-Reply-To=%3C4CB7F837.3000908%40cox.net%3E"
+       TITLE="[Opensim-users] Script State Already Exists?">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Fri Oct 15 08:44:07 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005792.html">[Opensim-users] Script State Already Exists?
+</A></li>
+        <LI>Next message: <A HREF="005795.html">[Opensim-users] Script State Already Exists?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5793">[ date ]</a>
+              <a href="thread.html#5793">[ thread ]</a>
+              <a href="subject.html#5793">[ subject ]</a>
+              <a href="author.html#5793">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>  Hmm that is a thought... I did have an issue at one point where I had 
+a scripted sculpted object that I made physical. It actually passed 
+through the terrain and got stuck a couple thousand m below the terrain 
+and was also stuck waaaaaaaaaaaaaaaaaaay far beyond the border of the 
+region far out of my reach; but it was still acting like it was in that 
+region. Caused a lot of endless red spew once the 0.7.X series was 
+introduced which left me scratching my head for a while... Finally the 
+only thing I could think of was to create an OAR, Extract the OAR to a 
+folder, delete the offending object from the OAR's inventory, and then 
+recompress the OAR back to a .tar.gz file, reload it back to the region 
+and it got rid of the object. But is there an easier way to get rid of 
+such objects that are seemingly out of the avatar's normal grasp? The 
+Phoenix/Emerald viewers have the area search function that will list all 
+the objects in the region... but doesn't have a way of returning the 
+individual object; it's an all or nothing deal.
+
+On 10/14/2010 11:51 PM, Teravus Ovares wrote:
+&gt;<i> Hmm,
+</I>&gt;<i>
+</I>&gt;<i> I don't actually have an answer to this one..   It could also 
+</I>&gt;<i> potentially be a locking issue between script threads.   Maybe you've 
+</I>&gt;<i> got an object stuck at a border when the sim loads causing it to try 
+</I>&gt;<i> to save the state again?
+</I>&gt;<i>
+</I>&gt;<i> You might get some response on freenode, IRC, in #opensim-dev.   You 
+</I>&gt;<i> might also get a response in mantis if you post it there.   It sounds 
+</I>&gt;<i> like a bug but it may be one that can be safely ignored.
+</I>&gt;<i>
+</I>&gt;<i> Regards
+</I>&gt;<i>
+</I>&gt;<i> Teravus
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Oct 14, 2010 at 7:47 PM, Chris &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at cox.net</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at cox.net</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>      Hi, I was wondering if anyone had any thoughts on this. Was just
+</I>&gt;<i>     curious =) Thank you!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     On 10/10/2010 6:57 PM, Chris wrote:
+</I>&gt;<i>
+</I>&gt;<i>          Hi all!
+</I>&gt;<i>
+</I>&gt;<i>         Once in a while I get this error (and ones similar to them)
+</I>&gt;<i>         while OpenSim is loading up:
+</I>&gt;<i>
+</I>&gt;<i>         2010-10-03 04:38:59,234 ERROR -
+</I>&gt;<i>         OpenSim.Region.ScriptEngine.XEngine.XEngine [XEngine]: File
+</I>&gt;<i>         ScriptEngines\a6885bb3-049c-11de-ae71-0050c2490048\b61d3460-f98a-4542-bef1-7c2f4712c252.state
+</I>&gt;<i>         already exists! The process cannot access the file
+</I>&gt;<i>         'C:\Documents and Settings\Chris\Desktop\OpenSim\OS 069 Post
+</I>&gt;<i>         Fixes\bin\ScriptEngines\a6885bb3-049c-11de-ae71-0050c2490048\CommonCompiler_compiled_e04189c0-84ab-44c4-a327-54125bbe8867.dll.map'
+</I>&gt;<i>         because it is being used by another process.
+</I>&gt;<i>
+</I>&gt;<i>         I have a feeling that this is because some other entirely
+</I>&gt;<i>         different script is trying to share the same script state as
+</I>&gt;<i>         another script on one of my regions but I am not sure. I have
+</I>&gt;<i>         tried clearing out the contents of the ./bin/ScriptEngines
+</I>&gt;<i>         folder but the error still pops up from time to time. Does
+</I>&gt;<i>         anyone know what this error means and if it could possibly
+</I>&gt;<i>         cause any harm (say script corruption or something)?
+</I>&gt;<i>
+</I>&gt;<i>         Using OpenSim 0.6.9 PostFixes but have also noticed this on
+</I>&gt;<i>         0.7.X PostFixes as well.
+</I>&gt;<i>
+</I>&gt;<i>         Thank you! :)
+</I>&gt;<i>         _______________________________________________
+</I>&gt;<i>         Opensim-users mailing list
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>         &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101015/fb504ee9/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101015/fb504ee9/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005792.html">[Opensim-users] Script State Already Exists?
+</A></li>
+	<LI>Next message: <A HREF="005795.html">[Opensim-users] Script State Already Exists?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5793">[ date ]</a>
+              <a href="thread.html#5793">[ thread ]</a>
+              <a href="subject.html#5793">[ subject ]</a>
+              <a href="author.html#5793">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

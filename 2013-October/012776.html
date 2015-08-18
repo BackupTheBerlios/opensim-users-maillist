@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Issue Migrating Groups
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Issue%20Migrating%20Groups&In-Reply-To=%3C1382969113926-7580574.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012775.html">
+   <LINK REL="Next"  HREF="012777.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Issue Migrating Groups</H1>
+    <B>hack13</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Issue%20Migrating%20Groups&In-Reply-To=%3C1382969113926-7580574.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Issue Migrating Groups">timothy.f.rogers at gmail.com
+       </A><BR>
+    <I>Mon Oct 28 15:05:13 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012775.html">[Opensim-users] Issue Migrating Groups
+</A></li>
+        <LI>Next message: <A HREF="012777.html">[Opensim-users] Issue Migrating Groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12776">[ date ]</a>
+              <a href="thread.html#12776">[ thread ]</a>
+              <a href="subject.html#12776">[ subject ]</a>
+              <a href="author.html#12776">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ok, a bit more information. I did some debugging, and here is the result of a
+migrated group with one member:
+
+-----
+10:01:51 - [GROUPS]: GroupMembersRequest called for
+b9c0913e-a37a-47d6-92ef-b1f5ff57654e from client Timothy Hoxley
+10:01:51 - [GROUPS]: GroupProfileRequest called
+10:01:51 - [GROUPS]: GroupRoleDataRequest called
+10:01:51 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroupMembers,GroupID:b9c0913e-a37a-47d6-92ef-b1f5ff57654e
+10:01:51 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroup,GroupID:b9c0913e-a37a-47d6-92ef-b1f5ff57654e
+10:01:51 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroupRoles,GroupID:b9c0913e-a37a-47d6-92ef-b1f5ff57654e
+10:01:51 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroupRoles,GroupID:b9c0913e-a37a-47d6-92ef-b1f5ff57654e
+10:01:51 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getAgentGroupMembership,GroupID:b9c0913e-a37a-47d6-92ef-b1f5ff57654e,AgentID:70e2356b-c683-11e2-a1f3-e840f2ecbf6b
+10:01:51 - [GROUPS]: GroupRoleMembersRequest called
+10:01:51 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroupRoleMembers,GroupID:b9c0913e-a37a-47d6-92ef-b1f5ff57654e
+10:01:51 - [GROUPS]: Member(70e2356b-c683-11e2-a1f3-e840f2ecbf6b) -
+Role(6ca62d93-a1f5-4463-9cc5-8470e241e552)
+-------
+
+Now a migrated group with 1 member:
+
+---------
+10:04:31 - [GROUPS]: GroupMembersRequest called for
+d5e662a9-cc65-46a1-af26-23a87f532a7c from client Timothy Hoxley
+10:04:31 - [GROUPS]: GroupRoleDataRequest called
+10:04:31 - [GROUPS]: GroupProfileRequest called
+10:04:31 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroupMembers,GroupID:d5e662a9-cc65-46a1-af26-23a87f532a7c
+10:04:31 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroupRoles,GroupID:d5e662a9-cc65-46a1-af26-23a87f532a7c
+10:04:31 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroup,GroupID:d5e662a9-cc65-46a1-af26-23a87f532a7c
+10:04:31 - [GROUPS]: Member(70e2356b-c683-11e2-a1f3-e840f2ecbf6b) -
+IsOwner(True)
+10:04:31 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getAgentGroupMembership,GroupID:d5e662a9-cc65-46a1-af26-23a87f532a7c,AgentID:70e2356b-c683-11e2-a1f3-e840f2ecbf6b
+10:04:31 - [GROUPS]: GroupTitlesRequest called
+10:04:31 - [GROUPS]: GroupRoleMembersRequest called
+10:04:31 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getAgentRoles,GroupID:d5e662a9-cc65-46a1-af26-23a87f532a7c,AgentID:70e2356b-c683-11e2-a1f3-e840f2ecbf6b
+10:04:31 - [XMLRPC-GROUPS-CONNECTOR]: Cache miss for key
+70e2356b-c683-11e2-a1f3-e840f2ecbf6bgroups.getGroupRoleMembers,GroupID:d5e662a9-cc65-46a1-af26-23a87f532a7c
+10:04:31 - [GROUPS]: Member(70e2356b-c683-11e2-a1f3-e840f2ecbf6b) -
+Role(2e4d02bc-09fa-4edf-a7a6-d6b5471f6767)
+-------------
+
+So from what I can tell, it should be working...
+
+
+
+--
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Issue-Migrating-Groups-tp7580573p7580574.html">http://opensim-users.2152040.n2.nabble.com/Issue-Migrating-Groups-tp7580573p7580574.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012775.html">[Opensim-users] Issue Migrating Groups
+</A></li>
+	<LI>Next message: <A HREF="012777.html">[Opensim-users] Issue Migrating Groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12776">[ date ]</a>
+              <a href="thread.html#12776">[ thread ]</a>
+              <a href="subject.html#12776">[ subject ]</a>
+              <a href="author.html#12776">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

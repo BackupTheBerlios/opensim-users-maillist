@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Building%20and%20running%20newly%20tagged%200.6.5-release%0A%20%28downloaded%20as%20SVN%20r9667%29&In-Reply-To=%3C16744FB1-EA12-4292-85E1-A2EE13DCB85D%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002202.html">
+   <LINK REL="Next"  HREF="002205.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)</H1>
+    <B>Brent Seidel</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Building%20and%20running%20newly%20tagged%200.6.5-release%0A%20%28downloaded%20as%20SVN%20r9667%29&In-Reply-To=%3C16744FB1-EA12-4292-85E1-A2EE13DCB85D%40mac.com%3E"
+       TITLE="[Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)">brentseidel at mac.com
+       </A><BR>
+    <I>Mon May 25 22:29:17 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002202.html">[Opensim-users] Building and running newly tagged 0.6.5-release	(downloaded as SVN r9667)
+</A></li>
+        <LI>Next message: <A HREF="002205.html">[Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2203">[ date ]</a>
+              <a href="thread.html#2203">[ thread ]</a>
+              <a href="subject.html#2203">[ subject ]</a>
+              <a href="author.html#2203">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I ran into that one myself.  After I got pointed in the right  
+direction by this list, I put the solution on the Wiki (<A HREF="http://">http://</A> 
+opensimulator.org/wiki/CentOS_5.2_Build_Instructions) down at the  
+bottom.
+
+It turns out that it's a problem with an old version of one of the  
+mono libraries not getting overwritten when updating mono.  I was  
+able to fix it for myself by adding &quot;--prefix=/usr&quot; when I ran &quot;./ 
+configure&quot; for building mono.  Then I made and installed mono and was  
+able to compile OpenSim just fine.  I've been running r9561 myself.
+
+hope this helps,
+brent
+
+On 25-May-2009, at 1:18 PM, Bulli wrote:
+
+&gt;<i> Hmmm,
+</I>&gt;<i>
+</I>&gt;<i> Just tried checking out r9561 myself, not using any of the tags,  
+</I>&gt;<i> but based on revision, directly from trunk.
+</I>&gt;<i>
+</I>&gt;<i> Gives the following error after running prebuild.sh and nant  
+</I>&gt;<i> (Ubunut 8.04):
+</I>&gt;<i>
+</I>&gt;<i>                  [echo] Build Directory is /home/gridva/opensim/ 
+</I>&gt;<i> OpenSim/Framework/Servers/HttpServer/bin/Debug
+</I>&gt;<i>                 [mkdir] Creating directory '/home/gridva/opensim/ 
+</I>&gt;<i> OpenSim/Framework/Servers/HttpServer/bin/Debug'.
+</I>&gt;<i>                   [csc] Compiling 24 files to '/home/gridva/opensim/ 
+</I>&gt;<i> OpenSim/Framework/Servers/HttpServer/bin/Debug/ 
+</I>&gt;<i> OpenSim.Framework.Servers.HttpServer.dll'.
+</I>&gt;<i>                   [csc] /home/gridva/opensim/OpenSim/Framework/ 
+</I>&gt;<i> Servers/HttpServer/AsynchronousRestObjectRequester.cs(95,41): error  
+</I>&gt;<i> CS0246: The type or namespace name `TResponse' could not be found.  
+</I>&gt;<i> Are you missing a using directive or an assembly reference?
+</I>&gt;<i>                   [csc] /home/gridva/opensim/OpenSim/Framework/ 
+</I>&gt;<i> Servers/HttpServer/AsynchronousRestObjectRequester.cs(115,21):  
+</I>&gt;<i> error CS0029: Cannot implicitly convert type `TResponse' to  
+</I>&gt;<i> `TResponse'
+</I>&gt;<i>                   [csc] /home/gridva/opensim/OpenSim/Framework/ 
+</I>&gt;<i> Servers/HttpServer/AsynchronousRestObjectRequester.cs(115,21): The  
+</I>&gt;<i> generic parameter `TResponse' of  
+</I>&gt;<i> `OpenSim.Framework.Servers.HttpServer.AsynchronousRestObjectRequester. 
+</I>&gt;<i> &lt;&gt;c__CompilerGenerated0&lt;TRequest,TResponse&gt;' cannot be converted to  
+</I>&gt;<i> the generic parameter `TResponse' of  
+</I>&gt;<i> `OpenSim.Framework.Servers.HttpServer.AsynchronousRestObjectRequester. 
+</I>&gt;<i> MakeRequest&lt;TRequest,TResponse&gt;(string, string, TRequest,  
+</I>&gt;<i> System.Action&lt;TResponse&gt;)' (in the previous error)
+</I>&gt;<i>                   [csc] Compilation failed: 2 error(s), 0 warnings
+</I>&gt;<i>
+</I>&gt;<i>             BUILD FAILED - 0 non-fatal error(s), 3 warning(s)
+</I>&gt;<i>
+</I>&gt;<i>             /home/gridva/opensim/OpenSim/Framework/Servers/ 
+</I>&gt;<i> HttpServer/OpenSim.Framework.Servers.HttpServer.dll.build(14,6):
+</I>&gt;<i>             External Program Failed: /usr/lib/mono/2.0/gmcs.exe  
+</I>&gt;<i> (return code was 1)
+</I>&gt;<i>
+</I>&gt;<i>             Total time: 0.6 seconds.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Bulli Schumann
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002202.html">[Opensim-users] Building and running newly tagged 0.6.5-release	(downloaded as SVN r9667)
+</A></li>
+	<LI>Next message: <A HREF="002205.html">[Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2203">[ date ]</a>
+              <a href="thread.html#2203">[ thread ]</a>
+              <a href="subject.html#2203">[ subject ]</a>
+              <a href="author.html#2203">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

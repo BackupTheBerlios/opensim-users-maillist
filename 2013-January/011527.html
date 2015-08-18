@@ -1,0 +1,525 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] how can i assign one public ip to multiple
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20how%20can%20i%20assign%20one%20public%20ip%20to%20multiple&In-Reply-To=%3C000301cdeb72%2465ea5eb0%2431bf1c10%24%40secondgalaxy.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011526.html">
+   <LINK REL="Next"  HREF="011543.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] how can i assign one public ip to multiple</H1>
+    <B>Emperor Starfinder</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20how%20can%20i%20assign%20one%20public%20ip%20to%20multiple&In-Reply-To=%3C000301cdeb72%2465ea5eb0%2431bf1c10%24%40secondgalaxy.com%3E"
+       TITLE="[Opensim-users] how can i assign one public ip to multiple">emperor at secondgalaxy.com
+       </A><BR>
+    <I>Sat Jan  5 19:28:02 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011526.html">[Opensim-users] how can i assign one public ip to multiple	simulators
+</A></li>
+        <LI>Next message: <A HREF="011543.html">[Opensim-users] how can i assign one public ip to multiple
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11527">[ date ]</a>
+              <a href="thread.html#11527">[ thread ]</a>
+              <a href="subject.html#11527">[ subject ]</a>
+              <a href="author.html#11527">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hashim,
+
+I am assuming that you are running off of your own network LAN and not a
+hosting provider.  If I am correct then it might be that your regions.ini
+file may need to be fixed.
+
+On windows (for myself at least) I have found that the internal IP should
+not be 0.0.0.0 as this does cause viewers to hang at region handshake (Why
+this should matter I have no idea but it appears to in some cases.)
+
+In the regions.ini file I use for my grid I did as follows:
+
+[Example Region]
+RegionUUID = Your_Region_UUID
+Coordinates = 1000,1000
+InternalIP = 192.168.1.xx
+Port = 9000
+Alternate Ports = false
+External IP = Your_Domain_Name_Or_IP_Address
+
+Also the computer your region server is on should also have a static IP
+address assigned in our local network. Theres a simple tool you can find at
+portforwrd.com that will do that for you quite quickly.
+
+Also there has been some known issues with some FQDN names which have mixed
+results.  Some are from DynDNS.  
+
+I hope this helps a little.  As Ive indicated I am assuming your running on
+Windows operating system but in some cases what I say might actually work on
+Linux based operating systems as well.  Ive certainly found some of the
+linux based tutorials I've found also seem to give me a guide with windows
+also.
+
+Emperor
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+Sent: Friday, January 04, 2013 11:19 PM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Opensim-users Digest, Vol 65, Issue 7
+
+Send Opensim-users mailing list submissions to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+
+To subscribe or unsubscribe via the World Wide Web, visit
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+or, via email, send a message with subject or body 'help' to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+
+You can reach the person managing the list at
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>
+
+When replying, please edit your Subject line so it is more specific than
+&quot;Re: Contents of Opensim-users digest...&quot;
+
+
+Today's Topics:
+
+   1. Re: Opensim in amazon (Ken Grunke)
+   2. Groups : Invalid (or No) Read Key Specified (Laurent Bechir)
+   3. Re: Groups : Invalid (or No) Read Key Specified (Nebadon Izumi)
+   4. Re: Groups : Invalid (or No) Read Key Specified (InuYasha Meiji)
+   5. Re: Groups : Invalid (or No) Read Key Specified (InuYasha Meiji)
+   6. Re: Groups : Invalid (or No) Read Key Specified (Laurent Bechir)
+   7. OpenSimulator 0.7.5-rc1 now available (Justin Clark-Casey)
+   8. how can i assign one public ip to multiple	simulators (Hashim)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Fri, 04 Jan 2013 12:01:11 -0600
+From: Ken Grunke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kenearlg at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Opensim in amazon
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50E718E7.4020908 at gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;iso-8859-1&quot;; Format=&quot;flowed&quot;
+
+On 1/4/2013 2:02 AM, john felipe urrego mejia wrote:
+&gt;<i>
+</I>&gt;<i> Hi, please tell me or share me a tutorial or video explain me process 
+</I>&gt;<i> opensim un amazon with instances.
+</I>&gt;<i> Tnks a lot
+</I>&gt;<i>
+</I>
+Here is something I wrote for Ubuntu on OSGrid, but parts of it can apply to
+other distros (and grids or standalone) as well. Hope this helps!
+
+<A HREF="http://forums.osgrid.org/viewtopic.php?f=15&amp;t=4010&amp;p=18067">http://forums.osgrid.org/viewtopic.php?f=15&amp;t=4010&amp;p=18067</A>
+
+Ken Grunke aka Key Gruin @ OSGrid
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL:
+&lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130104/64c2d">https://lists.berlios.de/pipermail/opensim-users/attachments/20130104/64c2d</A>
+f6d/attachment-0001.html&gt;
+
+------------------------------
+
+Message: 2
+Date: Fri, 4 Jan 2013 19:19:06 +0100
+From: Laurent Bechir &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: [Opensim-users] Groups : Invalid (or No) Read Key Specified
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">538BA6E1-7287-40E9-A0E9-3801926C1741 at madonie.org</A>&gt;
+Content-Type: text/plain; charset=us-ascii
+
+
+Hello,
+
+What value should I put in OpensIm.ini and in config.php in front of
+XmlRpcServiceReadKey and XmlRpcServiceWriteKey for the groups to work ? I've
+tried thinks like '1a33b' or 'group_read_key', without success.
+
+Thank you
+
+------------------------------
+
+Message: 3
+Date: Fri, 4 Jan 2013 14:28:43 -0500
+From: Nebadon Izumi &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nebadon2025 at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Groups : Invalid (or No) Read Key
+	Specified
+Message-ID:
+	&lt;CAF5=<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rqXoN0TsABxOHCcQAUegos2cF3D9brvXnfVWxii7YO3a9g at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+
+I would leave these blank as the default shows, they really do not provide
+any kind of security.
+
+On Fri, Jan 4, 2013 at 1:19 PM, Laurent Bechir
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> What value should I put in OpensIm.ini and in config.php in front of 
+</I>&gt;<i> XmlRpcServiceReadKey and XmlRpcServiceWriteKey for the groups to work ?
+</I>&gt;<i> I've tried thinks like '1a33b' or 'group_read_key', without success.
+</I>&gt;<i>
+</I>&gt;<i> Thank you
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+--
+Michael Emory Cerquoni
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL:
+&lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130104/f42d3">https://lists.berlios.de/pipermail/opensim-users/attachments/20130104/f42d3</A>
+dcf/attachment-0001.html&gt;
+
+------------------------------
+
+Message: 4
+Date: Fri, 04 Jan 2013 16:59:37 -0500
+From: InuYasha Meiji &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Groups : Invalid (or No) Read Key
+	Specified
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50E750C9.4060508 at gmail.com</A>&gt;
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+
+It shouldn't matter as long as it is the same thing in your config.php file,
+under those lines.  it is a small attempt at some kind of security.
+InuYasha.
+
+
+
+On 1/4/2013 1:19 PM, Laurent Bechir wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> What value should I put in OpensIm.ini and in config.php in front of
+</I>XmlRpcServiceReadKey and XmlRpcServiceWriteKey for the groups to work ? I've
+tried thinks like '1a33b' or 'group_read_key', without success.
+&gt;<i>
+</I>&gt;<i> Thank you
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+________________________________________________________________________
+Opensim User: In Gridmode  on Version 0.7.4. Nine Instances with 56 Regions.
+on Windows 7, 64-bit. Phenom 9500 2.2 GHz Quad Core, Terabyte Hard Drive,
+8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+and MySQL 5.1.41-community edition.  Groups, Profiles, Vivox Voice and
+Offline Messages all working. (Not yet Public, 6 users allowed Now).
+________________________________________________________________________
+
+
+
+------------------------------
+
+Message: 5
+Date: Fri, 04 Jan 2013 17:01:19 -0500
+From: InuYasha Meiji &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Groups : Invalid (or No) Read Key
+	Specified
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50E7512F.3050109 at gmail.com</A>&gt;
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+
+Personally, I put in 4 randomely selected number in a row, and my groups 
+are working.  And a little security is better then none at all.
+
+InuYasha.
+
+
+
+
+On 1/4/2013 2:28 PM, Nebadon Izumi wrote:
+&gt;<i> I would leave these blank as the default shows, they really do not 
+</I>&gt;<i> provide any kind of security.
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Jan 4, 2013 at 1:19 PM, Laurent Bechir 
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Hello,
+</I>&gt;<i>
+</I>&gt;<i>     What value should I put in OpensIm.ini and in config.php in front
+</I>&gt;<i>     of XmlRpcServiceReadKey and XmlRpcServiceWriteKey for the groups
+</I>&gt;<i>     to work ? I've tried thinks like '1a33b' or 'group_read_key',
+</I>&gt;<i>     without success.
+</I>&gt;<i>
+</I>&gt;<i>     Thank you
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Michael Emory Cerquoni
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+________________________________________________________________________
+Opensim User: In Gridmode  on Version 0.7.4. Nine Instances with 56 Regions.
+on Windows 7, 64-bit. Phenom 9500 2.2 GHz Quad Core, Terabyte Hard Drive,
+8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+and MySQL 5.1.41-community edition.  Groups, Profiles, Vivox Voice and
+Offline Messages all working. (Not yet Public, 6 users allowed Now).
+________________________________________________________________________
+
+
+
+------------------------------
+
+Message: 6
+Date: Sat, 5 Jan 2013 00:49:08 +0100
+From: Laurent Bechir &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">InuYasha.Meiji at gmail.com</A>, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Groups : Invalid (or No) Read Key
+	Specified
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">C390D60B-78DF-4289-BF09-E37C6DF75204 at madonie.org</A>&gt;
+Content-Type: text/plain; charset=iso-8859-1
+
+
+Thank you all for your help :). I need to add these keys for a Joomla plugin
+I use to manage my Opensim. The mistake have made was to read to quickly the
+config files. In Opensim.ini, keys are written this way :
+
+    XmlRpcServiceReadKey    = xxx
+    XmlRpcServiceWriteKey   = xxx
+
+and in the config.php of the backend :
+
+    XmlRpcServiceWriteKey   = xxx
+    XmlRpcServiceReadKey    = xxx
+
+Thinking they were written the same way in both files, I was sure to make a
+mistake :)
+
+Le 4 janv. 2013 ? 23:01, InuYasha Meiji a ?crit :
+
+&gt;<i> Personally, I put in 4 randomely selected number in a row, and my groups
+</I>are working.  And a little security is better then none at all.
+&gt;<i> 
+</I>&gt;<i> InuYasha.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On 1/4/2013 2:28 PM, Nebadon Izumi wrote:
+</I>&gt;&gt;<i> I would leave these blank as the default shows, they really do not
+</I>provide any kind of security.
+&gt;&gt;<i> 
+</I>&gt;&gt;<i> On Fri, Jan 4, 2013 at 1:19 PM, Laurent Bechir
+</I>&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A>&gt;&gt; wrote:
+&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i>    Hello,
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i>    What value should I put in OpensIm.ini and in config.php in front
+</I>&gt;&gt;<i>    of XmlRpcServiceReadKey and XmlRpcServiceWriteKey for the groups
+</I>&gt;&gt;<i>    to work ? I've tried thinks like '1a33b' or 'group_read_key',
+</I>&gt;&gt;<i>    without success.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i>    Thank you
+</I>&gt;&gt;<i>    _______________________________________________
+</I>&gt;&gt;<i>    Opensim-users mailing list
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> Michael Emory Cerquoni
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> ________________________________________________________________________
+</I>&gt;<i> Opensim User: In Gridmode  on Version 0.7.4. Nine Instances with 56
+</I>Regions. on Windows 7, 64-bit. Phenom 9500 2.2 GHz Quad Core, Terabyte Hard
+Drive, 8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+&gt;<i> and MySQL 5.1.41-community edition.  Groups, Profiles, Vivox Voice and
+</I>&gt;<i> Offline Messages all working. (Not yet Public, 6 users allowed Now).
+</I>&gt;<i> ________________________________________________________________________
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+
+------------------------------
+
+Message: 7
+Date: Sat, 05 Jan 2013 00:52:47 +0000
+From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev at lists.berlios.de</A>
+Subject: [Opensim-users] OpenSimulator 0.7.5-rc1 now available
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50E7795F.9040606 at googlemail.com</A>&gt;
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+
+Hi folks.  The first release candidate for the next OpenSimulator version,
+0.7.5-rc1 [1], is now available [2].  As 
+ever, there are a large number of changes, the highlights of which are in
+the release notes.
+
+As with previous releases, only regressions compared to previous release are
+guaranteed to be addressed in some way 
+(where this can still be WONTFIX).  Please file this under the 0.7.5-rc1
+release option in Mantis.
+
+As ever, many many thanks to all those who contributed to this release in
+whatever capacity.
+
+[1] <A HREF="http://opensimulator.org/wiki/0.7.5_Release">http://opensimulator.org/wiki/0.7.5_Release</A>
+[2] <A HREF="http://opensimulator.org/wiki/Download">http://opensimulator.org/wiki/Download</A>
+
+Best,
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+
+------------------------------
+
+Message: 8
+Date: Sat, 5 Jan 2013 09:45:27 +0530
+From: &quot;Hashim&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">hashim at trust300.com</A>&gt;
+To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Subject: [Opensim-users] how can i assign one public ip to multiple
+	simulators
+Message-ID: &lt;000901cdeafb$4b7f7eb0$e27e7c10$@com&gt;
+Content-Type: text/plain; charset=&quot;us-ascii&quot;
+
+	
+
+while assigning public ip to sim servers in NAT policy of firewall. i
+assigned one public to 3 sim servers in 3 sim servers we assigned random
+port numbers for regions and we change default port number for each sim
+server then also i am unable to login is i need to change any common port or
+anything in configuration files. 
+
+Thank You....
+
+
+
+ 
+
+ 
+
+Kind regards
+
+ 
+
+Hashim
+
+ 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL:
+&lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130105/710bd">https://lists.berlios.de/pipermail/opensim-users/attachments/20130105/710bd</A>
+b28/attachment.html&gt;
+
+------------------------------
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+End of Opensim-users Digest, Vol 65, Issue 7
+********************************************
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011526.html">[Opensim-users] how can i assign one public ip to multiple	simulators
+</A></li>
+	<LI>Next message: <A HREF="011543.html">[Opensim-users] how can i assign one public ip to multiple
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11527">[ date ]</a>
+              <a href="thread.html#11527">[ thread ]</a>
+              <a href="subject.html#11527">[ subject ]</a>
+              <a href="author.html#11527">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

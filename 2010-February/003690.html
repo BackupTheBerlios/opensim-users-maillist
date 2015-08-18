@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] the concept of &quot;visitor&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20the%20concept%20of%20%22visitor%22&In-Reply-To=%3C4B69AC5D.1040709%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003689.html">
+   <LINK REL="Next"  HREF="003661.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] the concept of &quot;visitor&quot;</H1>
+    <B>diva at metaverseink.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20the%20concept%20of%20%22visitor%22&In-Reply-To=%3C4B69AC5D.1040709%40metaverseink.com%3E"
+       TITLE="[Opensim-users] the concept of &quot;visitor&quot;">diva at metaverseink.com
+       </A><BR>
+    <I>Wed Feb  3 18:03:25 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003689.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+        <LI>Next message: <A HREF="003661.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3690">[ date ]</a>
+              <a href="thread.html#3690">[ thread ]</a>
+              <a href="subject.html#3690">[ subject ]</a>
+              <a href="author.html#3690">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry if I missed details of this conversation, but the 
+presence-refactor branch of OpenSim, which will very soon be merged to 
+master, allows a lot of flexibility on this issue of authentication. It 
+will be more or less trivial to develop variations of the reference 
+login service that account for (a) anonymous users, (b) on-the-fly 
+registrations, (c) non-persistent visitors, etc etc
+
+It comes with an identity/login service that may be made independent of 
+any particular grid.
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">antont at kyperjokki.fi</A> wrote:
+&gt;<i> Lainaus John Mieske &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">johnmieske at gmail.com</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> I would like to know more on what you did.. :)
+</I>&gt;<i> 
+</I>&gt;<i> It is finished now and in use, in the Naali 0.1 release candidate 1. If you use 
+</I>&gt;<i> windows you can download the installer from <A HREF="http://code.google.com/p/realxtend-">http://code.google.com/p/realxtend-</A>
+</I>&gt;<i> naali/downloads/list (i don't link to the exact file so that if there is a bug 
+</I>&gt;<i> and we make rc2 etc the archives don't link to the old one :) . Looks like this, 
+</I>&gt;<i> the two quick login buttons: <A HREF="https://photos-">https://photos-</A>
+</I>&gt;<i> 1.dropbox.com/i/o/bvQdDNw8HFtF0yroMLrfI3gEClwXkLp1QeoaIWbPiuQ
+</I>&gt;<i> 
+</I>&gt;<i> On linux you can build it, there's a bash script in svn tools/ dir for ubuntu 
+</I>&gt;<i> that installs the deps and builds the thing itself, and people have used fedora 
+</I>&gt;<i> core and archlinux too. I guess we could provide a build somehow, there's a 
+</I>&gt;<i> builtbot that at least builds it after each commit anyway. Mac stuff needs some 
+</I>&gt;<i> work still.
+</I>&gt;<i> 
+</I>&gt;<i> Anyhow the current impl is very simple: it just fetches an unused username from 
+</I>&gt;<i> a web service, and uses that to login to a standalone opensim where 
+</I>&gt;<i> authentication is disabled from opensim.ini. The web service now just has a 
+</I>&gt;<i> counter, so gives Demo UserX where X is the number from the counter. That makes 
+</I>&gt;<i> the account unique, so you don't log in with an account someone was already 
+</I>&gt;<i> using, which would 'cause that user to logout. 
+</I>&gt;<i> 
+</I>&gt;<i> The url that gives accounts is <A HREF="http://www.playsign.fi/engine/rex/anonuser">http://www.playsign.fi/engine/rex/anonuser</A> if you 
+</I>&gt;<i> wanna see it in action. I was thinking of making it something nicer like give 
+</I>&gt;<i> random Finnish words but didn't have time for that (yet) :) .. The source for 
+</I>&gt;<i> the login button on the viewer side is <A HREF="http://code.google.com/p/realxtend-">http://code.google.com/p/realxtend-</A>
+</I>&gt;<i> naali/source/browse/trunk/bin/pymodules/usr/anonlogin.py
+</I>&gt;<i> 
+</I>&gt;<i> Like said in the earlier post, would be nice to have some better so that could 
+</I>&gt;<i> allow anon access to also worlds that are in actual use by also authenticated 
+</I>&gt;<i> users - will need to read the other posts in this read later 'cause seemed that 
+</I>&gt;<i> there was good ideas. This was just something that was quick to do in some 
+</I>&gt;<i> hours.
+</I>&gt;<i> 
+</I>&gt;<i> ~Toni
+</I>&gt;<i> 
+</I>&gt;&gt;<i> On Wed, Feb 3, 2010 at 3:10 AM, Toni Alatalo &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">antont at kyperjokki.fi</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> John Mieske kirjoitti:
+</I>&gt;&gt;&gt;&gt;<i> why not add a PHP file that does this all for you ?  Example : They
+</I>&gt;&gt;&gt;&gt;<i> click a button that says Visitor John. It gives them a temp user and
+</I>&gt;&gt;&gt;&gt;<i> PW with full instructions to their e-mail. They log in. Now the timer
+</I>&gt;&gt;&gt;&gt;<i> on the PHP can delete the temp user and PW after 24 hours. You
+</I>&gt;&gt;&gt;<i> BTW I happened to do independently a first very simple implementation of
+</I>&gt;&gt;&gt;<i> this on Monday, but integrated to the Naali viewer so that visitor /
+</I>&gt;&gt;&gt;<i> anon login to a preconfigured world is just click of a single button -
+</I>&gt;&gt;&gt;<i> no need to know anything about usernames or passwords or servers or
+</I>&gt;&gt;&gt;<i> anything. Was fun to see this discussion here after had implemented it :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> That works by the button handler in viewer fetching a temp / anon
+</I>&gt;&gt;&gt;<i> account with http, and logging in with that. It works in trunk now (also
+</I>&gt;&gt;&gt;<i> on linux) and is released hopefully later today in Naali 0.1 rc1 so you
+</I>&gt;&gt;&gt;<i> can test, the sources are in our google code repo -- i can give the
+</I>&gt;&gt;&gt;<i> direct pointers if someone is curious.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The target demo server is just a standalone with auth off with no other
+</I>&gt;&gt;&gt;<i> usage, so can be reseted if there becomes cruft etc. We are certainly
+</I>&gt;&gt;&gt;<i> interested in this more advanced solutions that have been outlined here,
+</I>&gt;&gt;&gt;<i> where could mix actual authenticated and such visitor accounts in the
+</I>&gt;&gt;&gt;<i> same worlds well enough.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ~Toni
+</I>&gt;&gt;&gt;&gt;<i> can even have a php that refreshes every hour that checks the database
+</I>&gt;&gt;&gt;&gt;<i> and removes the temp users that has no need to be there. Make sure you
+</I>&gt;&gt;&gt;&gt;<i> create a seperate database for the time limit so that it wont have to
+</I>&gt;&gt;&gt;&gt;<i> be added to the MAIN SQL database. If the &quot;extra&quot; SQL databse has the
+</I>&gt;&gt;&gt;&gt;<i> name and user's time stamp ready for deletion then it removes it from
+</I>&gt;&gt;&gt;&gt;<i> the MAIN database for the name and PW and then goes back to the temp
+</I>&gt;&gt;&gt;&gt;<i> and removes it there too. So two databases with name and PW to show
+</I>&gt;&gt;&gt;&gt;<i> which is fake.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> This can be done in many ways. Just a thought.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> John Mieske / Sonya Penucca
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Tue, Feb 2, 2010 at 10:49 AM, Paul Fishwick &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;&gt;&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt;&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     I would like to open up one of our worlds to the general public by
+</I>&gt;&gt;&gt;&gt;<i>     allowing people
+</I>&gt;&gt;&gt;&gt;<i>     to log in as visitors. This is related to the &quot;anonymous login&quot;
+</I>&gt;&gt;&gt;&gt;<i>     and has
+</I>&gt;&gt;&gt;&gt;<i>     been discussed
+</I>&gt;&gt;&gt;&gt;<i>     in various forms, but here is the concept - not sure if anything
+</I>&gt;&gt;&gt;&gt;<i>     exists
+</I>&gt;&gt;&gt;&gt;<i>     yet in trunk to
+</I>&gt;&gt;&gt;&gt;<i>     support this:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     1. A user logs in using whatever name they want. If authentication
+</I>&gt;&gt;<i> is
+</I>&gt;&gt;&gt;&gt;<i>     turned off, this is
+</I>&gt;&gt;&gt;&gt;<i>       no problem. However, what would be ideal is that when the user
+</I>&gt;&gt;<i> logs
+</I>&gt;&gt;&gt;&gt;<i>     off, any trace
+</I>&gt;&gt;&gt;&gt;<i>       of them is removed from the database-- they do not persist.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     2. When the user logs in, they have access to the Library part of
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;&gt;&gt;<i>     inventory, but are
+</I>&gt;&gt;&gt;&gt;<i>        unable to load any assets to the server, thus they would have
+</I>&gt;&gt;&gt;&gt;<i>     nothing under &quot;My Inventory&quot;
+</I>&gt;&gt;&gt;&gt;<i>        or be able to copy items from the Library or the world into My
+</I>&gt;&gt;&gt;&gt;<i>     Inventory. The Library
+</I>&gt;&gt;&gt;&gt;<i>        would contain all necessities (clothing, basic objects and
+</I>&gt;&gt;<i> scripts
+</I>&gt;&gt;&gt;&gt;<i>     that they require
+</I>&gt;&gt;&gt;&gt;<i>        in the space).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     3. The user cannot build on the island but can run scripts and
+</I>&gt;&gt;&gt;&gt;<i>     navigate
+</I>&gt;&gt;&gt;&gt;<i>     performing full
+</I>&gt;&gt;&gt;&gt;<i>        interaction.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     #1 is not a huge issue since I would imagine that the incremental
+</I>&gt;&gt;&gt;&gt;<i>     space
+</I>&gt;&gt;&gt;&gt;<i>     allocation for
+</I>&gt;&gt;&gt;&gt;<i>     users just means additional rows in the user/agent tables --
+</I>&gt;&gt;&gt;<i> shouldn't
+</I>&gt;&gt;&gt;&gt;<i>     take up too much
+</I>&gt;&gt;&gt;&gt;<i>     room. #2 is a bigger problem - visitors should not be taxing the
+</I>&gt;&gt;&gt;<i> asset
+</I>&gt;&gt;&gt;&gt;<i>     server. #3
+</I>&gt;&gt;&gt;&gt;<i>     can be handled by unchecking both boxes next to Create Objects in
+</I>&gt;&gt;&gt;&gt;<i>     About
+</I>&gt;&gt;&gt;&gt;<i>     Land-&gt;Options.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     Are either #1 or #2 possible? They would seem to be a prerequisite
+</I>&gt;&gt;&gt;<i> for
+</I>&gt;&gt;&gt;&gt;<i>     something approaching
+</I>&gt;&gt;&gt;&gt;<i>     basic web page services: people come in, visit, and exit while
+</I>&gt;&gt;&gt;&gt;<i>     leaving a
+</I>&gt;&gt;&gt;&gt;<i>     minimal trace.
+</I>&gt;&gt;&gt;&gt;<i>     Builders on the other hand, have special login names that give
+</I>&gt;&gt;&gt;&gt;<i>     them the
+</I>&gt;&gt;&gt;&gt;<i>     capability to build
+</I>&gt;&gt;&gt;&gt;<i>     and load assets (possible with groups?).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     -p
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     --
+</I>&gt;&gt;&gt;&gt;<i>     Paul Fishwick, PhD
+</I>&gt;&gt;&gt;&gt;<i>     Professor
+</I>&gt;&gt;&gt;&gt;<i>     University of Florida
+</I>&gt;&gt;&gt;&gt;<i>     CISE Department, CSE 301
+</I>&gt;&gt;&gt;&gt;<i>     Gainesville, FL 32611
+</I>&gt;&gt;&gt;&gt;<i>     Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>     Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;&gt;&gt;&gt;<i>     &lt;<A HREF="http://www.cise.ufl.edu/%7Efishwick">http://www.cise.ufl.edu/%7Efishwick</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i>     Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> John Mieske / Sonya Pencuca
+</I>&gt;&gt;<i> <A HREF="http://johnmieske.org">http://johnmieske.org</A>
+</I>&gt;&gt;<i> Space Grid Station
+</I>&gt;&gt;<i> &quot;Religion - The art of killing people to prove who's imaginary friend is
+</I>&gt;&gt;<i> better.&quot;
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003689.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+	<LI>Next message: <A HREF="003661.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3690">[ date ]</a>
+              <a href="thread.html#3690">[ thread ]</a>
+              <a href="subject.html#3690">[ subject ]</a>
+              <a href="author.html#3690">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

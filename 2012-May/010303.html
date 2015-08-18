@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Multiple concurrent logins on same user account	possible?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multiple%20concurrent%20logins%20on%20same%20user%20account%0A%09possible%3F&In-Reply-To=%3CCACNHMc_GyA_txy7PMCwNjkW%2BO4G-4XsHVQ%3DF4Cvws8E0Vq53%2BQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010299.html">
+   <LINK REL="Next"  HREF="010312.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Multiple concurrent logins on same user account	possible?</H1>
+    <B>Stephen Howell</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multiple%20concurrent%20logins%20on%20same%20user%20account%0A%09possible%3F&In-Reply-To=%3CCACNHMc_GyA_txy7PMCwNjkW%2BO4G-4XsHVQ%3DF4Cvws8E0Vq53%2BQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Multiple concurrent logins on same user account	possible?">stephen.r.howell at gmail.com
+       </A><BR>
+    <I>Thu May 10 13:24:26 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010299.html">[Opensim-users] Multiple concurrent logins on same user account possible?
+</A></li>
+        <LI>Next message: <A HREF="010312.html">[Opensim-users] Multiple concurrent logins on same user account possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10303">[ date ]</a>
+              <a href="thread.html#10303">[ thread ]</a>
+              <a href="subject.html#10303">[ subject ]</a>
+              <a href="author.html#10303">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, May 10, 2012 at 2:00 AM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> Very cool to hear about this.
+</I>&gt;<i>
+</I>
+Thanks Justin, I am only developing the Kinect plugin, the project is for
+the very cool folks in <A HREF="http://missionv.ie/">http://missionv.ie/</A> who have an OpenSim project with
+primary schools in Ireland.
+
+
+&gt;<i> To my constant surprise, it is possible to log in the same avatar multiple
+</I>&gt;<i> times on the same grid [1].  However, it's certainly not currently possible
+</I>&gt;<i> to log two agents for the same user into the same region or neighbouring
+</I>&gt;<i> regions (since child/root agents would interfere with each other).
+</I>&gt;<i>
+</I>
+Thanks for that link. The fact that I connected twice and saw myself logged
+out of the first connection could be down to the server configuration or
+the way I connected perhaps?
+
+
+&gt;<i> I would say your best bet would be to do this with a region module [2]
+</I>&gt;<i> that detected the logged in root ScenePresences (the OpenSimulator class
+</I>&gt;<i> that handles your avatar in sim) and added http handlers that could receive
+</I>&gt;<i> external HTTP requests to manipulate a certain avatar (by caling through to
+</I>&gt;<i> animations code).
+</I>&gt;<i>
+</I>
+I have developed a working Kinect controller region module. My
+understanding from your comment is that I could place the dll on the server
+and it act as a mini-server (inside the OpenSim server) taking HTTP
+requests and running them directly against a specified avatar. The OpenSim
+server wouldn't kick the first logged in avatar because no actual 'logging
+in' would take place a second time. I would presumably have to build
+in authentication as otherwise it would be a potential security hole.
+
+
+&gt;<i> Unfortunately, the internals of OpenSimulator are very hairy since they've
+</I>&gt;<i> evolved from a place where only external clients needed to be able to
+</I>&gt;<i> perform these operations.  However, if you want any help exploring the
+</I>&gt;<i> codebase we're very happy to provide it via this list or the in-world IRC
+</I>&gt;<i> channels, though that does depend on whether the right people are around at
+</I>&gt;<i> the time.
+</I>&gt;<i>
+</I>
+Thanks, I found the region module wiki documentation could have had more
+examples, but it was great to have what was there.
+
+
+&gt;<i> I think you could also do this by placing an LSL script in the simulator
+</I>&gt;<i> that registered lslhttp handlers to receive the commands and then invoking
+</I>&gt;<i> OSSL functions [3] such as osAvatarPlayAnimation and osAvatarStopAnimation
+</I>&gt;<i> to manipulate the appropriate avatar.  However, this would rely on having
+</I>&gt;<i> that script in every region I think (though conversely the region module
+</I>&gt;<i> approach requires that you have that region module in every simulator).
+</I>&gt;<i>
+</I>
+Interesting, I'll investigate that too.
+
+
+&gt;<i> [1] <A HREF="http://opensimulator.org/**mantis/view.php?id=5969&lt;http://opensimulator.org/mantis/view.php?id=5969">http://opensimulator.org/**mantis/view.php?id=5969&lt;http://opensimulator.org/mantis/view.php?id=5969</A>&gt;
+</I>&gt;<i> [2] <A HREF="http://opensimulator.org/wiki/**IRegionModule&lt;http://opensimulator.org/wiki/IRegionModule">http://opensimulator.org/wiki/**IRegionModule&lt;http://opensimulator.org/wiki/IRegionModule</A>&gt;
+</I>&gt;<i> [3] <A HREF="http://opensimulator.org/wiki/**Category:OSSL_Functions&lt;http://opensimulator.org/wiki/Category:OSSL_Functions">http://opensimulator.org/wiki/**Category:OSSL_Functions&lt;http://opensimulator.org/wiki/Category:OSSL_Functions</A>&gt;
+</I>
+
+Thanks for the reply and the links.
+
+Regards,
+
+Stephen
+
+&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120510/2e370071/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120510/2e370071/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010299.html">[Opensim-users] Multiple concurrent logins on same user account possible?
+</A></li>
+	<LI>Next message: <A HREF="010312.html">[Opensim-users] Multiple concurrent logins on same user account possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10303">[ date ]</a>
+              <a href="thread.html#10303">[ thread ]</a>
+              <a href="subject.html#10303">[ subject ]</a>
+              <a href="author.html#10303">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

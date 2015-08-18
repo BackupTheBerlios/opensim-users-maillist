@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim(r6074) in Grid mode on Grid server machine	crashes on startup..
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%28r6074%29%20in%20Grid%20mode%20on%20Grid%20server%20machine%0A%09crashes%20on%20startup..&In-Reply-To=%3C8779be340809020002o359c0497s3a198a76fe255ad4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000411.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim(r6074) in Grid mode on Grid server machine	crashes on startup..</H1>
+    <B>Rhian</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%28r6074%29%20in%20Grid%20mode%20on%20Grid%20server%20machine%0A%09crashes%20on%20startup..&In-Reply-To=%3C8779be340809020002o359c0497s3a198a76fe255ad4%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] OpenSim(r6074) in Grid mode on Grid server machine	crashes on startup..">dutchy.rhian at gmail.com
+       </A><BR>
+    <I>Tue Sep  2 09:02:38 CEST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000411.html">[Opensim-users] Help! Region server crash on startup due to request	time out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#410">[ date ]</a>
+              <a href="thread.html#410">[ thread ]</a>
+              <a href="subject.html#410">[ subject ]</a>
+              <a href="author.html#410">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hiya,
+
+I am trying to get a little local grid running, the servers are
+started up correctly (in the right order) and don't seem to
+complain...
+When I try to start the local (still empty region) on the Grid server
+(where the instances for User/Grid/Assets/Inventory/Messaging are
+running), the region crashes on startup at:
+---[ Console output from: mono --debug OpenSim.exe ]---
+08:36:05 - [HTTPD]: Spawned main thread OK
+08:36:05 - [LIBRARY INVENTORY]: Loading library inventory
+08:36:05 - [LIBRARY INVENTORY]: Loading libraries control file
+./inventory/Libraries.xml
+[APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.UriFormatException: Invalid URI: The hostname could
+not be parsed
+  at System.Uri.Parse (UriKind kind, System.String uriString)
+[0x00809] in /home/ingo/mono-1.9.1+dfsg/mcs/class/System/System/Uri.cs:1483
+  at System.Uri.ParseUri (UriKind kind) [0x00000] in
+/home/ingo/mono-1.9.1+dfsg/mcs/class/System/System/Uri.cs:1133
+  at System.Uri..ctor (System.String uriString, Boolean dontEscape)
+[0x00064] in /home/ingo/mono-1.9.1+dfsg/mcs/class/System/System/Uri.cs:161
+  at System.Uri..ctor (System.String uriString) [0x00000] in
+/home/ingo/mono-1.9.1+dfsg/mcs/class/System/System/Uri.cs:114
+  at OpenSim.Region.Communications.OGS1.OGS1SecureInventoryService..ctor
+(System.String inventoryServerUrl) [0x00018] in
+/home/opensim/builds/6074/OpenSim/Region/Communications/OGS1/OGS1SecureInventoryService.cs:55
+  at OpenSim.Region.Communications.OGS1.CommunicationsOGS1..ctor
+(OpenSim.Framework.NetworkServersInfo serversInfo,
+OpenSim.Framework.Servers.BaseHttpServer httpServer,
+OpenSim.Framework.Communications.Cache.AssetCache assetCache)
+[0x0002b] in /home/opensim/builds/6074/OpenSim/Region/Communications/OGS1/CommunicationsOGS1.cs:46
+  at OpenSim.OpenSimBase.Startup () [0x00197] in
+/home/opensim/builds/6074/OpenSim/Region/Application/OpenSimBase.cs:398
+  at OpenSim.OpenSim.Startup () [0x00072] in
+/home/opensim/builds/6074/OpenSim/Region/Application/OpenSim.cs:96
+  at OpenSim.Application.Main (System.String[] args) [0x0014f] in
+/home/opensim/builds/6074/OpenSim/Region/Application/Application.cs:88
+
+Application is terminating: True
+---[ End ]---
+
+Now before I post this as a bug on Mantis, I would like to know if I
+did something wrong?
+In the services xmls everything points to 127.0.0.1:port, should that be LAN-IP?
+The mySQL database runs on localhost, in my.cnf I haven't defined any
+address, so it binds to all...
+Note: this all is running on Debian lenny/sid 32-bit.
+
+Thanks for any help,
+Rhian (aka Dutchie)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000411.html">[Opensim-users] Help! Region server crash on startup due to request	time out
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#410">[ date ]</a>
+              <a href="thread.html#410">[ thread ]</a>
+              <a href="subject.html#410">[ subject ]</a>
+              <a href="author.html#410">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

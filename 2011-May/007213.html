@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripting: Having fun with C# and UDP
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%20Having%20fun%20with%20C%23%20and%20UDP&In-Reply-To=%3Cp06240800c9e4f1a9d2da%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007210.html">
+   <LINK REL="Next"  HREF="007218.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripting: Having fun with C# and UDP</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%20Having%20fun%20with%20C%23%20and%20UDP&In-Reply-To=%3Cp06240800c9e4f1a9d2da%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] Scripting: Having fun with C# and UDP">opensim at pescadoo.net
+       </A><BR>
+    <I>Tue May  3 01:49:01 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007210.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+        <LI>Next message: <A HREF="007218.html">[Opensim-users] Scripting: Having fun with C# and UDP
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7213">[ date ]</a>
+              <a href="thread.html#7213">[ thread ]</a>
+              <a href="subject.html#7213">[ subject ]</a>
+              <a href="author.html#7213">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That's a thing I was dreaming for years : Linking a physical, real-world
+object to an opensim object. You move the object in opensim, the real
+object moves. You move the real object, the object in opensim moves. All in
+real-time.
+
+Here is a short demo video, in mov and mp4 (H.264) format. If your web
+browser can't handle either, download the .mp4 version and open it with
+VLC. I don't Youtube, sorry.
+
+<A HREF="http://www.pescadoo.net/tmp/fun_with_udp.mov">http://www.pescadoo.net/tmp/fun_with_udp.mov</A>	(1Mb)
+<A HREF="http://www.pescadoo.net/tmp/fun_with_udp.mp4">http://www.pescadoo.net/tmp/fun_with_udp.mp4</A>	(1.9Mb)
+
+Right is the familiar Imprudence window. The object with eight yellow bars
+is a multi-slider, similar to a mixing desk. Each bar can be clicked and
+dragged to the desired value.
+
+Left is a less-familiar window with another application running. The app is
+Cycling74' Max/MSP, although that could any app that can animate objects
+(graphical or physical) and read/write network sockets.
+
+In this video, i first move the slider in opensim and you see the sliders
+in the external app moving. Then I move the sliders in the external app,
+and the sliders in opensim move. No delay. Real-time.
+
+But there is more fun. The external app is linked to a physical &quot;control
+surface&quot;, with motorized sliders. Unfortunately I can't show it in the
+video, missing a camcorder. I use a Behringer BCF2000. See it here:
+
+<A HREF="http://www.behringer.com/EN/images/lightboxphotos/BCF2000_P0246_Left_XL.jpg">http://www.behringer.com/EN/images/lightboxphotos/BCF2000_P0246_Left_XL.jpg</A>
+
+It is attached to my desktop machine (not the simulator host) via USB/MIDI.
+You could as well control lights with DMX, motors with Arduino, a robotic
+device, or conversely move an opensim object with a dataglove, or anything
+you may imagine.
+
+How does it work?
+
+The opensim object contains two C# script, one for sending and one for
+receiving UDP messages using System.Net.Sockets (two scripts are needed
+because the receiver runs a forever loop and events can't interrupt). The
+simulator host and my desktop machine (both on same LAN) communicate
+through UDP messages.
+
+I omit the prim handling script for brevity. It is pure LSL and there is
+nothing new here. It reads and writes couples of (track_number, value) via
+link messages to the C# sender and receiver. Since i am a beginner in C#,
+there is much room for improvement. I was not able to declare a 'use'
+clause, so I had to fully qualify each instance and method, making the code
+quite ugly.
+
+
+
+UDP Sender script
+-----------------
+
+//c#
+
+public static void SendUDPPacket (string hostNameOrAddress,
+                                  int destinationPort, string data) {
+
+    // Resolve the host name to an IP Address
+    System.Net.IPAddress[] ipAddresses
+        = System.Net.Dns.GetHostAddresses(hostNameOrAddress);
+
+    // Use the first IP Address in the list
+    System.Net.IPAddress destination = ipAddresses[0];
+    System.Net.IPEndPoint endPoint
+        = new System.Net.IPEndPoint(destination, destinationPort);
+
+    byte[] buffer = System.Text.Encoding.ASCII.GetBytes(data);
+
+    // Send the packet
+    System.Net.Sockets.Socket socket = new System.Net.Sockets.Socket
+        (System.Net.Sockets.AddressFamily.InterNetwork,
+         System.Net.Sockets.SocketType.Dgram,
+         System.Net.Sockets.ProtocolType.Udp);
+
+    socket.SendTo(buffer, endPoint);
+    socket.Close();
+}
+
+int SLIDER_IN  = 101;       // Link Messages input
+int SLIDER_OUT = 102;       // Link Messages output
+
+string  remoteAddr = &quot;192.168.0.21&quot;;
+int     remotePort = 51000;
+
+// Receiving a link message from the sliders
+
+public void default_event_link_message (
+    LSL_Types.LSLInteger sender_num,
+    LSL_Types.LSLInteger num,
+    LSL_Types.LSLString str,    // Channel number
+    LSL_Types.LSLString id) {   // Channel value
+
+    // Send the message over UDP
+
+    if (num == SLIDER_OUT)
+        SendUDPPacket (remoteAddr, remotePort, str+&quot; &quot;+id);
+}
+
+
+
+UDP Receiver script
+-------------------
+
+//c#
+
+public static System.Net.Sockets.Socket BindUDPSocket (int listenPort) {
+
+    // Local endpoint
+    System.Net.IPEndPoint endPoint
+        = new System.Net.IPEndPoint(System.Net.IPAddress.Any, listenPort);
+
+    // Create socket
+    System.Net.Sockets.Socket socket = new System.Net.Sockets.Socket
+        (System.Net.Sockets.AddressFamily.InterNetwork,
+         System.Net.Sockets.SocketType.Dgram,
+         System.Net.Sockets.ProtocolType.Udp);
+
+    // Bind socket
+    socket.Bind(endPoint);
+    return socket;
+}
+
+
+int listenPort = 50000;
+
+int SLIDER_IN  = 101;       // Link Messages input
+int SLIDER_OUT = 102;       // Link Messages output
+
+public void default_event_state_entry() {
+    System.Net.Sockets.Socket socket = BindUDPSocket (listenPort);
+    byte[] buffer = new byte[1024];
+
+    // Receiving a message from UDP (loop forever)
+
+    while (true) {
+        socket.Receive(buffer);
+        string msg = System.Text.ASCIIEncoding.ASCII.GetString(buffer);
+
+        // 1st word is Channel number
+        // 2nd word is Channel value
+
+        string[] parse = msg.Split(' ');
+
+        // Send the message using LinkMessage
+
+        llMessageLinked (LINK_THIS, SLIDER_IN, parse[0], parse[1]);
+
+        System.Array.Clear (buffer, 0, 1024);
+    }
+}
+
+
+Thanks to Nick Olsen for C# code
+<A HREF="http://nickstips.wordpress.com/2010/09/03/c-creating-and-sending-udp-packets/">http://nickstips.wordpress.com/2010/09/03/c-creating-and-sending-udp-packets/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007210.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+	<LI>Next message: <A HREF="007218.html">[Opensim-users] Scripting: Having fun with C# and UDP
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7213">[ date ]</a>
+              <a href="thread.html#7213">[ thread ]</a>
+              <a href="subject.html#7213">[ subject ]</a>
+              <a href="author.html#7213">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

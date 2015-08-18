@@ -1,0 +1,268 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Awaiting region handshake
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Awaiting%20region%20handshake&In-Reply-To=%3C898B716725A343CEA56F76F9C3C21E7C%40GABPC%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007938.html">
+   <LINK REL="Next"  HREF="007932.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Awaiting region handshake</H1>
+    <B>Gary Beck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Awaiting%20region%20handshake&In-Reply-To=%3C898B716725A343CEA56F76F9C3C21E7C%40GABPC%3E"
+       TITLE="[Opensim-users] Awaiting region handshake">gab4gab at gmail.com
+       </A><BR>
+    <I>Mon Aug 15 15:28:33 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007938.html">[Opensim-users] Awaiting region handshake
+</A></li>
+        <LI>Next message: <A HREF="007932.html">[Opensim-users] Awaiting region handshake
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7939">[ date ]</a>
+              <a href="thread.html#7939">[ thread ]</a>
+              <a href="subject.html#7939">[ subject ]</a>
+              <a href="author.html#7939">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Pete,
+   
+   Here's a list of routers:  <A HREF="http://opensimulator.org/wiki/NAT_Loopback_Routers">http://opensimulator.org/wiki/NAT_Loopback_Routers</A>
+
+   There was also a write-up on using... address translation or routing tables on a Linux system to substitute the local IP address in place of the external on the local lan here: <A HREF="http://opensimulator.org/wiki/Network_Settings">http://opensimulator.org/wiki/Network_Settings</A>
+
+   It's difficult to find marketing material that mentions loop back.   What I did is get the router user guides and search those for the loop back function.  In the Cisco/Linksys manuals they talk about &quot;Filter Internet NAT Redirection&quot;
+Filter Internet NAT Redirection-This filter prevents a local computer from using a URL or Internet IP address to access the local server. Select this option to enable the filter. This option is disabled by default.
+
+I've used both a WRT54G and the E3200.  They support loop-back.  Filter Internet NAT Redirection disabled is how you turn loop back on.
+
+Finally - there's a very ugly process where you can revise the hosts table entry as needed.  Local address while logging on locally.  External address while logging on remote.   Once you're logged in things are mostly OK while you stay inside a single region.   I've done that while testing.  
+
+- Gary Beck
+
+  ----- Original Message ----- 
+  From: Guardian 
+  To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> 
+  Sent: Monday, August 15, 2011 2:05 AM
+  Subject: Re: [Opensim-users] Awaiting region handshake
+
+
+  Hmmmm, OK.. that sounds logical. How do I get around this? Without buying a new router as there would be no way of knowing if it supports loop back until its in and running.
+
+
+  On Aug 15, 2011 4:27 PM, &quot;Gary Beck&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gab4gab at gmail.com</A>&gt; wrote:
+  &gt; If you use a host file on the server to resolve myusername.dyndns.org to 192.168.1.251 that can cause the handshake to fail. The server will hand the viewer [192.168.1.251 + the port of the region] as the address to use for the UDP handshake. That will fail from outside your lan.
+  &gt; 
+  &gt; ----- Original Message ----- 
+  &gt; From: Guardian 
+  &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> 
+  &gt; Sent: Monday, August 15, 2011 12:15 AM
+  &gt; Subject: Re: [Opensim-users] Awaiting region handshake
+  &gt; 
+  &gt; 
+  &gt; My router does not like loopback, so if I try to access anything by the external name, it won't work. So I use the hosts file to point back to the server for internal use..
+  &gt; 
+  &gt; On Aug 15, 2011 3:51 PM, &quot;Gary Beck&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gab4gab at gmail.com</A>&gt; wrote:
+  &gt; &gt; Pete,
+  &gt; &gt; From what you say I assume you have myusername.dyndns.org set up to be your external IP address. Browsing from outside your lan using myusername.dyndns.org:9000 to get the hippo page is some key info. Now I'm still wondering what you're doing in the hosts file. If your dyndns is set up to point to your external IP you shouldn't need to modify it using hosts.
+  &gt; &gt; By the way for internal address 0.0.0.0 is normally the address is use.
+  &gt; &gt; - Gary Beck
+  &gt; &gt; ----- Original Message ----- 
+  &gt; &gt; From: Guardian 
+  &gt; &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> 
+  &gt; &gt; Sent: Sunday, August 14, 2011 11:30 PM
+  &gt; &gt; Subject: Re: [Opensim-users] Awaiting region handshake
+  &gt; &gt; 
+  &gt; &gt; 
+  &gt; &gt; Just before I answer these questions, note I just tried building a DNS server and using that instead of the hosts file, but it did not'help.
+  &gt; &gt; 
+  &gt; &gt; For external hostname I am using myusername.dyndns.org and I have Aldo tried my external IP address 202.155.etc
+  &gt; &gt; 
+  &gt; &gt; The internalhostname I've tried 0.0.0.0 as well as 192.168.1.251
+  &gt; &gt; 
+  &gt; &gt; I can also browse to myusername.dyndns.org:9000 and get the hippo page...
+  &gt; &gt; 
+  &gt; &gt; On Aug 15, 2011 2:31 PM, &quot;Gary Beck&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gab4gab at gmail.com</A>&gt; wrote:
+  &gt; &gt; &gt; Pete,
+  &gt; &gt; &gt; These problems are tough to work through. I'm curious about what your have specified in your region parameters for ExternalHostName and what you're putting in the Host entry to point back to the server. Whatever you could reveal while protecting your network would help.
+  &gt; &gt; &gt; At handshake time the server hands the viewer an address to use for UDP. The problem could be that address isn't correct or the port is blocked (or both.) Since you seem sure the ports are open I'm wondering about the address.
+  &gt; &gt; &gt; - Gary
+  &gt; &gt; &gt; ----- Original Message ----- 
+  &gt; &gt; &gt; From: Guardian 
+  &gt; &gt; &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> 
+  &gt; &gt; &gt; Sent: Sunday, August 14, 2011 10:04 PM
+  &gt; &gt; &gt; Subject: Re: [Opensim-users] Awaiting region handshake
+  &gt; &gt; &gt; 
+  &gt; &gt; &gt; 
+  &gt; &gt; &gt; I just tried changing the port to 9001 and forwarding that but still no go. 
+  &gt; &gt; &gt; 
+  &gt; &gt; &gt; On Aug 15, 2011 7:37 AM, &quot;Guardian&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">linux.deamon at gmail.com</A>&gt; wrote:
+  &gt; &gt; &gt; &gt; Hi Guys,
+  &gt; &gt; &gt; &gt; 
+  &gt; &gt; &gt; &gt; Thanks for the suggestions, I've checked the ports and they seem fine, both
+  &gt; &gt; &gt; &gt; 8002TCP and 9000TCP/UDP are open.
+  &gt; &gt; &gt; &gt; 
+  &gt; &gt; &gt; &gt; 
+  &gt; &gt; &gt; &gt; 
+  &gt; &gt; &gt; &gt; 
+  &gt; &gt; &gt; &gt; On Mon, Aug 15, 2011 at 1:02 AM, Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karenpalensl at gmail.com</A>&gt; wrote:
+  &gt; &gt; &gt; &gt; 
+  &gt; &gt; &gt; &gt;&gt; I have always found that the free &quot;Shields Up&quot; at WWW.grc.com is a
+  &gt; &gt; &gt; &gt;&gt; &quot;quick and dirty way&quot; to verify that the ports are actually open and
+  &gt; &gt; &gt; &gt;&gt; working.
+  &gt; &gt; &gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; I also found that my TOR relay setup uses 9000 series ports and can
+  &gt; &gt; &gt; &gt;&gt; interfere with extenal connections.
+  &gt; &gt; &gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; There are a lot of links in that chain that can block the traffic!
+  &gt; &gt; &gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; Karen
+  &gt; &gt; &gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; On 08/14/2011 02:39 AM, Fleep Tuque wrote:
+  &gt; &gt; &gt; &gt;&gt; &gt; Hi Pete,
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt; When I had similar symptoms, it turned out my virus protection software
+  &gt; &gt; &gt; &gt;&gt; was
+  &gt; &gt; &gt; &gt;&gt; &gt; blocking UDP traffic. Usually it seems if you get as far as &quot;waiting for
+  &gt; &gt; &gt; &gt;&gt; &gt; region handshake&quot;, then your TCP traffic is ok but there's an issue with
+  &gt; &gt; &gt; &gt;&gt; the
+  &gt; &gt; &gt; &gt;&gt; &gt; UDP traffic somewhere.
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt; If you have security software running, maybe try disabling it and seeing
+  &gt; &gt; &gt; &gt;&gt; if
+  &gt; &gt; &gt; &gt;&gt; &gt; that changes anything, can also install a packet sniffer like Wireshark
+  &gt; &gt; &gt; &gt;&gt; to
+  &gt; &gt; &gt; &gt;&gt; &gt; see what packets are coming and going in case that helps diagnose the
+  &gt; &gt; &gt; &gt;&gt; issue.
+  &gt; &gt; &gt; &gt;&gt; &gt; Can also double check to make sure the proper ports are open with a 3rd
+  &gt; &gt; &gt; &gt;&gt; &gt; party..
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt; Let us know if any of that helps and good luck!
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt; - Chris/Fleep
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt; On Sun, Aug 14, 2011 at 5:27 AM, Guardian &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">linux.deamon at gmail.com</A>&gt;
+  &gt; &gt; &gt; &gt;&gt; wrote:
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; Hi all,
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; I'm running opensim in Robust grid mode, and I've been trying to connect
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; outside my LAN but just arnt having any luck.
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; I get to awaiting region handshake, then the &quot;we're having trouble
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; connecting&quot; message. I know this is a fairly common issue, and here is
+  &gt; &gt; &gt; &gt;&gt; what
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; I've tried:
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; Checking ports 8002 8001 and 9000 are forwarded to the correct server.
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; Checked, rechecked and triplechecked regions.ini
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; I dont think my router supports loop back so I set an entry in the hosts
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; file on the server so the external domain name points back to the
+  &gt; &gt; &gt; &gt;&gt; server.
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; I've been at this for months, I even gave up and tried a bunch of other
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; Sims, but none of them have the features I want.
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; Can anyone help step through this issue?
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; Thanks in advance,
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; -Pete
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; _______________________________________________
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; Opensim-users mailing list
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;&gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt;
+  &gt; &gt; &gt; &gt;&gt; &gt; _______________________________________________
+  &gt; &gt; &gt; &gt;&gt; &gt; Opensim-users mailing list
+  &gt; &gt; &gt; &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt; &gt; &gt; &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  &gt; &gt; &gt; &gt;&gt; _______________________________________________
+  &gt; &gt; &gt; &gt;&gt; Opensim-users mailing list
+  &gt; &gt; &gt; &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt; &gt; &gt; &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  &gt; &gt; &gt; &gt;&gt;
+  &gt; &gt; &gt; 
+  &gt; &gt; &gt; 
+  &gt; &gt; &gt; 
+  &gt; &gt; &gt; ------------------------------------------------------------------------------
+  &gt; &gt; &gt; 
+  &gt; &gt; &gt; 
+  &gt; &gt; &gt; _______________________________________________
+  &gt; &gt; &gt; Opensim-users mailing list
+  &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  &gt; &gt; 
+  &gt; &gt; 
+  &gt; &gt; 
+  &gt; &gt; ------------------------------------------------------------------------------
+  &gt; &gt; 
+  &gt; &gt; 
+  &gt; &gt; _______________________________________________
+  &gt; &gt; Opensim-users mailing list
+  &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  &gt; 
+  &gt; 
+  &gt; 
+  &gt; ------------------------------------------------------------------------------
+  &gt; 
+  &gt; 
+  &gt; _______________________________________________
+  &gt; Opensim-users mailing list
+  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+------------------------------------------------------------------------------
+
+
+  _______________________________________________
+  Opensim-users mailing list
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110815/8e02fc25/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110815/8e02fc25/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007938.html">[Opensim-users] Awaiting region handshake
+</A></li>
+	<LI>Next message: <A HREF="007932.html">[Opensim-users] Awaiting region handshake
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7939">[ date ]</a>
+              <a href="thread.html#7939">[ thread ]</a>
+              <a href="subject.html#7939">[ subject ]</a>
+              <a href="author.html#7939">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

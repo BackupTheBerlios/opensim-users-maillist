@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripting: 10x speed boost with C#
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3C4DBF03C8.9060306%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007211.html">
+   <LINK REL="Next"  HREF="007223.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripting: 10x speed boost with C#</H1>
+    <B>Karen Palen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3C4DBF03C8.9060306%40gmail.com%3E"
+       TITLE="[Opensim-users] Scripting: 10x speed boost with C#">karenpalensl at gmail.com
+       </A><BR>
+    <I>Mon May  2 21:19:36 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007211.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+        <LI>Next message: <A HREF="007223.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7212">[ date ]</a>
+              <a href="thread.html#7212">[ thread ]</a>
+              <a href="subject.html#7212">[ subject ]</a>
+              <a href="author.html#7212">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Is this really saying that compiled code executes math functions faster
+than interpreted code?
+
+I don't really see this as a language specific thing based on what you
+are saying (although I am sure we all agree that LSL is a total mess
+from a language design viewpoint).
+
+The deeper question is where to go from here for OpenSimulator. Simply
+dumping all the installed scripts would be far too painful - ask any
+Cobol programmer - but hopefully we do not have to repeat past mistakes!
+
+Karen
+
+On 05/02/2011 05:11 AM, Jeff Kelley wrote:
+&gt;<i> At 4:36 AM +0100 4/25/11, Justin Clark-Casey wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Very interesting, Jeff.  The scripting engine in OpenSim transforms LSL to C#
+</I>&gt;&gt;<i> before compiling it so there wouldn't be a time difference due to
+</I>&gt;&gt;<i> interpretation.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Of course, I'm presuming that you had configured all LSL scripting delays down
+</I>&gt;&gt;<i> to zero
+</I>&gt;<i> 
+</I>&gt;<i> No, because I was not aware of that option.
+</I>&gt;<i> 
+</I>&gt;<i> With ScriptDelayFactor = 0.0, the LSL version changes from an average of
+</I>&gt;<i> 2.15s to 2.10s. No big deal. The C# version is still around 0.2s.
+</I>&gt;<i> 
+</I>&gt;<i> I switched to C# because i noticed my script spent most of its time into
+</I>&gt;<i> list handling (llList2Rot, which was a first speed gain over
+</I>&gt;<i> 4*llList2Float). Since LSL has no array structure, we use lists to emulate
+</I>&gt;<i> them and waste a lot of time here.
+</I>&gt;<i> 
+</I>&gt;<i> Then, replacing llPow with System.Math.Pow gave me another speed boost.
+</I>&gt;<i> Finally, replacing osSetPenColour, osDrawLine with direct drawlist
+</I>&gt;<i> manipuations (drawList += ) accounted for the overall 10x speed increase.
+</I>&gt;<i> 
+</I>&gt;<i> Of course, that depends a lot on your application. If you are manipulating
+</I>&gt;<i> prims, the gain may be near zero. If you do a lot of math and matrixes, it
+</I>&gt;<i> may be higher.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007211.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+	<LI>Next message: <A HREF="007223.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7212">[ date ]</a>
+              <a href="thread.html#7212">[ thread ]</a>
+              <a href="subject.html#7212">[ subject ]</a>
+              <a href="author.html#7212">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

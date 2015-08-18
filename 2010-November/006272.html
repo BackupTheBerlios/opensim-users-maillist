@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Any way to recompile LSL scripts from the command line, or create an OAR from scripts in SVN?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Any%20way%20to%20recompile%20LSL%20scripts%20from%20the%0A%20command%20line%2C%20or%20create%20an%20OAR%20from%20scripts%20in%20SVN%3F&In-Reply-To=%3C4CF0597B.6060808%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006247.html">
+   <LINK REL="Next"  HREF="006274.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Any way to recompile LSL scripts from the command line, or create an OAR from scripts in SVN?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Any%20way%20to%20recompile%20LSL%20scripts%20from%20the%0A%20command%20line%2C%20or%20create%20an%20OAR%20from%20scripts%20in%20SVN%3F&In-Reply-To=%3C4CF0597B.6060808%40googlemail.com%3E"
+       TITLE="[Opensim-users] Any way to recompile LSL scripts from the command line, or create an OAR from scripts in SVN?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Nov 27 02:06:03 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006247.html">[Opensim-users] Any way to recompile LSL scripts from the command line, or create an OAR from scripts in SVN?
+</A></li>
+        <LI>Next message: <A HREF="006274.html">[Opensim-users] Any way to recompile LSL scripts from the command line, or create an OAR from scripts in SVN?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6272">[ date ]</a>
+              <a href="thread.html#6272">[ thread ]</a>
+              <a href="subject.html#6272">[ subject ]</a>
+              <a href="author.html#6272">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 25/11/10 07:37, Edmund Edgar wrote:
+&gt;<i> I've got a fairly big set of objects for my project (Sloodle),
+</I>&gt;<i> containing lots of LSL scripts. Some of these scripts are shared
+</I>&gt;<i> between lots of different objects. The LSL scripts are all checked
+</I>&gt;<i> into a Subversion repo, but we distribute an .oar file to our end
+</I>&gt;<i> users containing objects with the scripts in them. I'd like a way to
+</I>&gt;<i> automatically publish the scripts from Subversion into the .oar file,
+</I>&gt;<i> to save time and make sure that when I distribute an .oar or .iar, all
+</I>&gt;<i> the objects contain the version of the script that I've got in the
+</I>&gt;<i> repo.
+</I>&gt;<i>
+</I>&gt;<i> The process I have so far is:
+</I>&gt;<i> 1) Each LSL script has a comment in it saying where it lives in the repo.
+</I>&gt;<i> 2) I have an .oar file containing all the objects, which in turn
+</I>&gt;<i> contain LSL scripts.
+</I>&gt;<i> 3) I have a shell script that will untar the .oar file, copy over the
+</I>&gt;<i> latest versions of all the LSL scripts into it then tar it back up
+</I>&gt;<i> again.
+</I>&gt;<i> 4) Having run my shell script on the .oar file, I can make a release
+</I>&gt;<i> with all the right scripts as follows:
+</I>&gt;<i>    a) Load the .oar file into OpenSim
+</I>&gt;<i>    b) Rez each of the objects in the .oar file
+</I>&gt;<i>    c) Manually compile each of the scripts using the viewer so that
+</I>&gt;<i> their compiled code matches the uncompiled LSL code.
+</I>&gt;<i>    d) Save them back into the inventory of the object that originally
+</I>&gt;<i> contained them (we distributed lots of objects from inside one master
+</I>&gt;<i> object).
+</I>&gt;<i>    e) Save back out to a new .oar file, which I can distribute to our users.
+</I>&gt;<i>
+</I>&gt;<i> That's good as far as it goes, but 4b and 4c are still quite laborious
+</I>&gt;<i> manual tasks, and I'd like to automate them.
+</I>&gt;<i>
+</I>&gt;<i> Does anyone know of a way to automate steps 4b/4c? For example, if I
+</I>&gt;<i> could force OpenSim to recompile each of the scripts from the LSL
+</I>&gt;<i> source when it loads them, that would be a great help. (I'd hoped it
+</I>&gt;<i> would do this by default when I loaded an .oar, but it seems to be
+</I>&gt;<i> getting the compiled code from the .oar file somewhere.)
+</I>
+There isn't any compiled code in the OAR.  The compiled code will actually be in bin/ScriptEngines. under UUID 
+directories that represent the different regions.  If you delete these directories then it should force recompilation of 
+the scripts on OAR load.  Or you could be even more aggressive and target the dlls with the right asset uuids (I'm 
+guessing this is the correspondence of that directory name with the script asset).
+
+&gt;<i>
+</I>&gt;<i> If I could compile each script in the .oar file from the command line
+</I>&gt;<i> and saved the compiled code back to the .oar file, that would be even
+</I>&gt;<i> better.
+</I>&gt;<i>
+</I>&gt;<i> Alternatively, can anyone suggest an easier way of getting the LSL
+</I>&gt;<i> scripts from Subversion into an .oar or .iar file?
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006247.html">[Opensim-users] Any way to recompile LSL scripts from the command line, or create an OAR from scripts in SVN?
+</A></li>
+	<LI>Next message: <A HREF="006274.html">[Opensim-users] Any way to recompile LSL scripts from the command line, or create an OAR from scripts in SVN?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6272">[ date ]</a>
+              <a href="thread.html#6272">[ thread ]</a>
+              <a href="subject.html#6272">[ subject ]</a>
+              <a href="author.html#6272">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

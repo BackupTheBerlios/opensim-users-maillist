@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [Opensim-dev] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; message
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20Proposal%20for%20removing%20%22ERROR%3A%0A%20There%20was%20an%20error%20while%20scanning%20assembly%3A%22%20message&In-Reply-To=%3C480B7480.9030106%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000226.html">
+   <LINK REL="Next"  HREF="000228.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [Opensim-dev] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; message</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20Proposal%20for%20removing%20%22ERROR%3A%0A%20There%20was%20an%20error%20while%20scanning%20assembly%3A%22%20message&In-Reply-To=%3C480B7480.9030106%40googlemail.com%3E"
+       TITLE="[Opensim-users] [Opensim-dev] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; message">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sun Apr 20 18:51:12 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000226.html">[Opensim-users] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; messages
+</A></li>
+        <LI>Next message: <A HREF="000228.html">[Opensim-users] Proposal for removing &quot;ERROR: There was an error while	scanning assembly:&quot; message
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#227">[ date ]</a>
+              <a href="thread.html#227">[ thread ]</a>
+              <a href="subject.html#227">[ subject ]</a>
+              <a href="author.html#227">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Stefan Andersson wrote:
+&gt;<i> Justin,
+</I>&gt;<i>  
+</I>&gt;<i> what was the problem with moving plug-in dll's to a separate directory?
+</I>&gt;<i>  
+</I>&gt;<i> Or, doesn't mono plugins support loading named plugins from an xml file, 
+</I>&gt;<i> for example?
+</I>&gt;<i>  
+</I>&gt;<i> Wouldn't either of these solve the problem?
+</I>
+Stefan,
+
+The mono addins package doesn't appear to support picking up modules 
+from a root directory different from the one in which the assembly 
+loading the plugins is situated.  The directory you give the addins 
+manager on initialization only appears to place the addin caching 
+information in a different directory instead.  Possibly this is as yet 
+incomplete functionality.
+
+The xml in the addins directory looks tantalisingly like it should allow 
+the naming of different plugin directories, but from reading the code 
+this doesn't appear to be the case.
+
+I haven't done much more experimentation, mainly because I'm beginning 
+to think it would be better if we re-used the same module loading code 
+we use to load region modules to load application 'plugins'.  This would 
+mean removing the mono addins manager.  The cons of this are
+
+* We end up writing (and maintaining) our own plugin code, though much 
+of this is written already for region modules.
+* We lose the ability to have a multiple application plugin cache, 
+though I'm not sure how useful this is for us.
+* We lose the ability to version plugins - we would have to write this 
+in our own code.
+
+The pro is
+
+* We get what will probably be a simpler to understand system without 
+the complexity of maintaining an addins cache and the bugs which result. 
+  Mono.Addins pretty much has as much documentation as our own code, but 
+at least we wrote our own code...
+
+On the whole, I think the pro outweighs the cons - particularly as it 
+seems odd for us to maintain two distinct plugin systems.  Any changes 
+we make will also be with a view to enhancing the current modularization 
+a little further down the road (e.g. to allow the explicit selection of 
+plugins).
+
+Thoughts?
+
+
+&gt;<i>  
+</I>&gt;<i> Best,
+</I>&gt;<i> Stefan
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i>  &gt; Date: Fri, 18 Apr 2008 20:00:38 +0100
+</I>&gt;<i>  &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>
+</I>&gt;<i>  &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev at lists.berlios.de</A>; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>  &gt; Subject: [Opensim-dev] Proposal for removing &quot;ERROR: There was an 
+</I>&gt;<i> error while scanning assembly:&quot; messages
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; Hello,
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; This is a technical post but I'm copying it to users for information.
+</I>&gt;<i>  &gt; You may (or may not) want to stop reading quickly :-)
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; So, some of you may have noticed that the latest OpenSim revisions now
+</I>&gt;<i>  &gt; have many more of the subject error messages on the console. The cause
+</I>&gt;<i>  &gt; is the Mono Addins manager we're using, which writes these errors to the
+</I>&gt;<i>  &gt; console if the dll doesn't contain the configuration data it's expecting.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; So today I looked at removing these errors. I had to follow several
+</I>&gt;<i>  &gt; lines of investigation.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; 1. My initial thought was to move all the external libraries which are
+</I>&gt;<i>  &gt; causing the problem to a separate $OPENSIM_ROOT/lib/ext directory.
+</I>&gt;<i>  &gt; However, this means changes to make sure that the dlls can be found in
+</I>&gt;<i>  &gt; the new directory. For a cross platform application, it's hard. On
+</I>&gt;<i>  &gt; Microsoft's CLR we can simply use &lt;Probing&gt; in config files. However,
+</I>&gt;<i>  &gt; Mono does appear to support this, at least according to
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; <A HREF="http://www.mono-project.com/Assemblies_and_the_GAC">http://www.mono-project.com/Assemblies_and_the_GAC</A>
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; I tried it anyway, without success. Instead, the only option on Mono is
+</I>&gt;<i>  &gt; to either set the MONO_PATH or put the assemblies in the Global Assembly
+</I>&gt;<i>  &gt; Cache.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; 2. This makes things awkward, so instead I looked at moving the plugin
+</I>&gt;<i>  &gt; dlls. Same problem.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; 3. So instead I looked at simply suppressing the messages.
+</I>&gt;<i>  &gt; Unfortunately, the Mono addins code writes these messages out to the
+</I>&gt;<i>  &gt; console. Although in theory you could give it an IProgressMonitor and
+</I>&gt;<i>  &gt; stop this, all the classes for this (and the interface) are internal and
+</I>&gt;<i>  &gt; hence not accessible. Later versions of mono-addins than the one we are
+</I>&gt;<i>  &gt; using would appear to have the same problem.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; So although we could hack the code in 3. to remove the message (or even
+</I>&gt;<i>  &gt; replace or code our own plugin solution), the fact is that we really
+</I>&gt;<i>  &gt; need to have dlls in different directories eventually anyway - bin/ is
+</I>&gt;<i>  &gt; already overloaded. This means I'm forced to come back to suggestion
+</I>&gt;<i>  &gt; 1. Putting things in the GAC is unrealistic at this stage I think, so
+</I>&gt;<i>  &gt; I'm proposing that we move all the external libraries to
+</I>&gt;<i>  &gt; $OPENSIM_ROOT/lib/ext and set the MONO_PATH environmental variable to
+</I>&gt;<i>  &gt; point to this directory. Under Windows, we would instead put &lt;Probing&gt;
+</I>&gt;<i>  &gt; entries in the executable's config files.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; I tried setting MONO_PATH programatically in OpenSimMain.cs, but the set
+</I>&gt;<i>  &gt; doesn't look like it is exported so the load fails. The same path works
+</I>&gt;<i>  &gt; fine when exported from the command line.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; If we go the MONO_PATH route, then I think we could provide shell
+</I>&gt;<i>  &gt; scripts for all the executables to set the path and then launch the
+</I>&gt;<i>  &gt; program, even though this is a little messy. The executable itself
+</I>&gt;<i>  &gt; would complain loudly if it is not on Windows and MONO_PATH is unset
+</I>&gt;<i>  &gt; (which would be inconvenient for Windows mono users, though there may
+</I>&gt;<i>  &gt; not be that many of them).
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; I'm open to constructive suggestions on this, particularly from core
+</I>&gt;<i>  &gt; developers.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; --
+</I>&gt;<i>  &gt; justincc
+</I>&gt;<i>  &gt; Justin Clark-Casey
+</I>&gt;<i>  &gt; <A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; _______________________________________________
+</I>&gt;<i>  &gt; Opensim-dev mailing list
+</I>&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>
+</I>&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-dev mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000226.html">[Opensim-users] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; messages
+</A></li>
+	<LI>Next message: <A HREF="000228.html">[Opensim-users] Proposal for removing &quot;ERROR: There was an error while	scanning assembly:&quot; message
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#227">[ date ]</a>
+              <a href="thread.html#227">[ thread ]</a>
+              <a href="subject.html#227">[ subject ]</a>
+              <a href="author.html#227">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

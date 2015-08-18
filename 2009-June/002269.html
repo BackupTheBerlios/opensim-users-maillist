@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Making Viewer Portable
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Making%20Viewer%20Portable&In-Reply-To=%3C81dc9e650906042356y3f344374q8cf70bf9c19a18a6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002268.html">
+   <LINK REL="Next"  HREF="002270.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Making Viewer Portable</H1>
+    <B>Len Brown</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Making%20Viewer%20Portable&In-Reply-To=%3C81dc9e650906042356y3f344374q8cf70bf9c19a18a6%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Making Viewer Portable">lenwbrown at gmail.com
+       </A><BR>
+    <I>Fri Jun  5 08:56:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002268.html">[Opensim-users] Making Viewer Portable
+</A></li>
+        <LI>Next message: <A HREF="002270.html">[Opensim-users] Making Viewer Portable
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2269">[ date ]</a>
+              <a href="thread.html#2269">[ thread ]</a>
+              <a href="subject.html#2269">[ subject ]</a>
+              <a href="author.html#2269">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, thing is - that is just one of many different settings that need to be
+controlled.
+
+If you go into the file menu &quot;Edit&quot; and then &quot;Preferences&quot; and adjust such
+things as &quot;Hide My Name On My Screen&quot; and Graphics settings, and audio and
+video settings - ANYTHING that is adjusted in Preferences - those settings
+are all controlled outside of the viewer.
+
+Try this - whatever viewer you use, Second Life, Hippo and ReXtend, copy the
+folder that is in Program Files to a thumb drive and run it from the thumb
+drive.  Change a number of the settings in Preferences.  Then exit the
+viewer and remove the thumb drive and plug it into a different pc.  ALL
+settings are at default when you start up the viewer.  The first obvious one
+is that you will find the First Name and Last Name and Password fields are
+all blank when they should be pre-filled.  When you do log in you'll find
+that everything in Preferences has defaulted right back to the initial
+settings as if you installed the viewer for the first time.
+
+I used VMWare's &quot;Thinstall&quot; application to attempt to make the viewer
+portable that way, but it would be MUCH simpler to just have the viewer save
+all Preference settings to an ini file instead of via system registry.
+
+If you open a command window (click Start, Run, then type in regedit and hit
+enter.  Then click Edit then Find and type in &quot;Second Life&quot; and repeatedly
+click F3 for &quot;find next&quot; you'll find lots and lots of references in the
+registry to Second Life (of whatever viewer you're using).
+
+On Fri, Jun 5, 2009 at 3:40 AM, Jeroen van Veen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">j.veenvan at gmail.com</A>&gt; wrote:
+
+&gt;<i> did you checked out the cache-entry in app_settings/settings.xml ? =&gt;
+</I>&gt;<i>
+</I>&gt;<i>    &lt;key&gt;CacheLocation&lt;/key&gt;
+</I>&gt;<i>    &lt;map&gt;
+</I>&gt;<i>      &lt;key&gt;Comment&lt;/key&gt;
+</I>&gt;<i>      &lt;string&gt;Controls the location of the local disk cache&lt;/string&gt;
+</I>&gt;<i>      &lt;key&gt;Persist&lt;/key&gt;
+</I>&gt;<i>      &lt;integer&gt;1&lt;/integer&gt;
+</I>&gt;<i>      &lt;key&gt;Type&lt;/key&gt;
+</I>&gt;<i>      &lt;string&gt;String&lt;/string&gt;
+</I>&gt;<i>      &lt;key&gt;Value&lt;/key&gt;
+</I>&gt;<i>      &lt;string /&gt;
+</I>&gt;<i>    &lt;/map&gt;
+</I>&gt;<i>
+</I>&gt;<i> jeroen
+</I>&gt;<i>
+</I>&gt;<i> On Friday 05 June 2009 04:55:05 Len Brown wrote:
+</I>&gt;<i> &gt; Right on.  That is where the cache is stored by default.  That can be
+</I>&gt;<i> &gt; changed in the application BUT those settings are all stored as registry
+</I>&gt;<i> &gt; settings.  Those settings are what I'd like to have as an ini file rather
+</I>&gt;<i> &gt; than registry settings.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; For example, if you go into Second Life and change the cache to be stored
+</I>&gt;<i> &gt; on a thumb drive along with the main application, if you plug the thumb
+</I>&gt;<i> &gt; into a different computer and run Second Life, all the settings revert to
+</I>&gt;<i> &gt; default, including the default cache storage location you pointed out.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Thu, Jun 4, 2009 at 11:29 PM, Teravus Ovares &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; &gt; I thought it was stored in:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; C:\Documents and Settings\&lt;Windows UserName&gt;\Application
+</I>&gt;<i> Data\SecondLife
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Regards
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Teravus
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; On 6/4/09, Len Brown &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">lenwbrown at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; &gt; Hey there everyone!
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;      Recently I've been working on making the Open Simulator Virtual
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; World
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; Platform 100% portable.  I've set up the OpenSim server and a
+</I>&gt;<i> separate
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; MySQL
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; server both on an external thumb drive.  I have copied the
+</I>&gt;<i> installation
+</I>&gt;<i> &gt; &gt; &gt; directory of the Hippo viewer to the thumb as well but discovered
+</I>&gt;<i> that
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; when
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; I made changes to the viewer those changes were ignored when loading
+</I>&gt;<i> on
+</I>&gt;<i> &gt; &gt; &gt; a different computer.
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;      I realized the viewer settings are all saved to the system
+</I>&gt;<i> &gt; &gt; &gt; registry (I'm using Windows XP).  Would it be possible to instead
+</I>&gt;<i> &gt; &gt; &gt; compile a viewer
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; so
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; that all internal changes are instead saved to an ini file - like
+</I>&gt;<i> &gt; &gt; &gt; OpenSim is?  This way a person could have a truly 100% portable copy
+</I>&gt;<i> of
+</I>&gt;<i> &gt; &gt; &gt; OpenSim, MySQL server and viewer all on a thumb drive and keeping all
+</I>&gt;<i> &gt; &gt; &gt; settings
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; intact
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; when going from system to system.
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; Thanks for any input on this!
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; - Len W. Brown
+</I>&gt;<i> &gt; &gt; &gt;      <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">lenwbrown at gmail.com</A>
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090605/2429dfb4/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090605/2429dfb4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002268.html">[Opensim-users] Making Viewer Portable
+</A></li>
+	<LI>Next message: <A HREF="002270.html">[Opensim-users] Making Viewer Portable
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2269">[ date ]</a>
+              <a href="thread.html#2269">[ thread ]</a>
+              <a href="subject.html#2269">[ subject ]</a>
+              <a href="author.html#2269">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

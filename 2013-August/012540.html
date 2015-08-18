@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Wifi 0.7.5 with Robust works but can't send email
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Wifi%200.7.5%20with%20Robust%20works%20but%20can%27t%20send%20email&In-Reply-To=%3C1376925776308-7580318.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012567.html">
+   <LINK REL="Next"  HREF="012541.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Wifi 0.7.5 with Robust works but can't send email</H1>
+    <B>erikb</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Wifi%200.7.5%20with%20Robust%20works%20but%20can%27t%20send%20email&In-Reply-To=%3C1376925776308-7580318.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Wifi 0.7.5 with Robust works but can't send email">tamrider at frodo.tv
+       </A><BR>
+    <I>Mon Aug 19 17:22:56 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012567.html">[Opensim-users] Bryan Carter's new project (cross posted)
+</A></li>
+        <LI>Next message: <A HREF="012541.html">[Opensim-users] Wifi 0.7.5 with Robust works but can't send	email
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12540">[ date ]</a>
+              <a href="thread.html#12540">[ thread ]</a>
+              <a href="subject.html#12540">[ subject ]</a>
+              <a href="author.html#12540">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I&#8217;m having a frustrating problem: Wifi 0.7.5 can&#8217;t send email.  People can
+create accounts, I can search for users, and I can activate them, but Wifi
+can&#8217;t send mail.  I am using OpenSim 0.7.5 in Grid format with hypergrid
+enabled.
+
+I&#8217;ve just converted my grid from from diva-r20232.   Before Diva, I was
+using OpenSim 7.1.1.1 with Robust.  Both times Wifi was working fine, so
+it&#8217;s frustrating that there is something here that I&#8217;m overlooking.
+
+There is one major difference between my current configuration and my
+previous configurations: I&#8217;ve now divided my grid into four OpenSim
+instances. Each one is an estate with its own OpenSim.ini (just a few lines)
+and its own Regions.ini.   I don&#8217;t think this is causing the problem, but
+I&#8217;m mentioning it just in case I&#8217;m wrong.
+
+ I&#8217;ve tried using two different email SMTP accounts and settings in
+Robust.HG.ini:  smtp.gmail.com and my own ISP&#8217;s mail.sonic.net but nothing
+changes.  I am currently using smtp.gmail.com because that's what's worked
+for me in the past.
+
+What am I overlooking?  I have the feeling that it's one of those small,
+obvious things that I'll feel like an idiot for overlooking.
+
+The Wifi URL, in case it helps, is <A HREF="http://marin.us.com:8002/wifi">http://marin.us.com:8002/wifi</A> .
+
+Here is the error message I get in my Robust window when Wifi tries to send
+email after a user requests a password reset:
+
+07:55:33 - [Wifi]: ForgotPasswordGetRequest
+07:55:40 - [Wifi]: [(user email address)] System.Net.Mail.SmtpException:
+Message could not be sent. ---&gt; System.IO.IOException: The authentication or
+decryption has failed. ---&gt; System.InvalidOperationException: SSL
+authentication error: RemoteCertificateNotAvailable,
+RemoteCertificateChainErrors
+  at System.Net.Mail.SmtpClient.&lt;callback&gt;m__4 (System.Object sender,
+System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+System.Security.Cryptography.X509Certificates.X509Chain chain,
+SslPolicyErrors sslPolicyErrors) [0x00000] in &lt;filename unknown&gt;:0 
+  at
+System.Net.Security.SslStream+&lt;BeginAuthenticateAsClient&gt;c__AnonStorey7.&lt;&gt;m__A
+(System.Security.Cryptography.X509Certificates.X509Certificate cert,
+System.Int32[] certErrors) [0x00000] in &lt;filename unknown&gt;:0 
+  at
+Mono.Security.Protocol.Tls.SslClientStream.OnRemoteCertificateValidation
+(System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+System.Int32[] errors) [0x00000] in &lt;filename unknown&gt;:0 
+  at
+Mono.Security.Protocol.Tls.SslStreamBase.RaiseRemoteCertificateValidation
+(System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+System.Int32[] errors) [0x00000] in &lt;filename unknown&gt;:0 
+  at
+Mono.Security.Protocol.Tls.SslClientStream.RaiseServerCertificateValidation
+(System.Security.Cryptography.X509Certificates.X509Certificate certificate,
+System.Int32[] certificateErrors) [0x00000] in &lt;filename unknown&gt;:0 
+  at
+Mono.Security.Protocol.Tls.Handshake.Client.TlsServerCertificate.validateCertificates
+(Mono.Security.X509.X509CertificateCollection certificates) [0x00000] in
+&lt;filename unknown&gt;:0 
+  at
+Mono.Security.Protocol.Tls.Handshake.Client.TlsServerCertificate.ProcessAsTls1
+() [0x00000] in &lt;filename unknown&gt;:0 
+  at Mono.Security.Protocol.Tls.Handshake.HandshakeMessage.Process ()
+[0x00000] in &lt;filename unknown&gt;:0 
+  at (wrapper remoting-invoke-with-check)
+Mono.Security.Protocol.Tls.Handshake.HandshakeMessage:Process ()
+  at Mono.Security.Protocol.Tls.ClientRecordProtocol.ProcessHandshakeMessage
+(Mono.Security.Protocol.Tls.TlsStream handMsg) [0x00000] in &lt;filename
+unknown&gt;:0 
+  at Mono.Security.Protocol.Tls.RecordProtocol.InternalReceiveRecordCallback
+(IAsyncResult asyncResult) [0x00000] in &lt;filename unknown&gt;:0 
+  --- End of inner exception stack trace ---
+  at Mono.Security.Protocol.Tls.SslStreamBase.AsyncHandshakeCallback
+(IAsyncResult asyncResult) [0x00000] in &lt;filename unknown&gt;:0 
+  --- End of inner exception stack trace ---
+  at System.Net.Mail.SmtpClient.Send (System.Net.Mail.MailMessage message)
+[0x00000] in &lt;filename unknown&gt;:0 
+  at System.Net.Mail.SmtpClient+&lt;SendAsync&gt;c__AnonStorey5.&lt;&gt;m__5
+(System.Object o, System.ComponentModel.DoWorkEventArgs ea) [0x00000] in
+&lt;filename unknown&gt;:0
+R.O.B.U.S.T.# 
+
+
+Thanks!   I&#8217;ll appreciate any help.
+
+
+
+
+-----
+ Apollo Manga (
+   Erik Gordon Bainbridge) 
+ Writer, instructor, former software engineer 
+ Northern California 
+ ErikBainbridge.com 
+ VirtualMarin.com 
+--
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Wifi-0-7-5-with-Robust-works-but-can-t-send-email-tp7580318.html">http://opensim-users.2152040.n2.nabble.com/Wifi-0-7-5-with-Robust-works-but-can-t-send-email-tp7580318.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012567.html">[Opensim-users] Bryan Carter's new project (cross posted)
+</A></li>
+	<LI>Next message: <A HREF="012541.html">[Opensim-users] Wifi 0.7.5 with Robust works but can't send	email
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12540">[ date ]</a>
+              <a href="thread.html#12540">[ thread ]</a>
+              <a href="subject.html#12540">[ subject ]</a>
+              <a href="author.html#12540">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

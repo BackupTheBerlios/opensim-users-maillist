@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.6.4 errors out trying to create	Inventory.db with SQLite3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.6.4%20errors%20out%20trying%20to%20create%0A%09Inventory.db%20with%20SQLite3&In-Reply-To=%3C49EBFC32.307%40bresnan.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002000.html">
+   <LINK REL="Next"  HREF="002002.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.6.4 errors out trying to create	Inventory.db with SQLite3</H1>
+    <B>John Batt</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.6.4%20errors%20out%20trying%20to%20create%0A%09Inventory.db%20with%20SQLite3&In-Reply-To=%3C49EBFC32.307%40bresnan.net%3E"
+       TITLE="[Opensim-users] OpenSim 0.6.4 errors out trying to create	Inventory.db with SQLite3">jbatt at bresnan.net
+       </A><BR>
+    <I>Mon Apr 20 06:38:10 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002000.html">[Opensim-users] Visibuild/modrex public alpha
+</A></li>
+        <LI>Next message: <A HREF="002002.html">[Opensim-users] XML2 and OAR
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2001">[ date ]</a>
+              <a href="thread.html#2001">[ thread ]</a>
+              <a href="subject.html#2001">[ subject ]</a>
+              <a href="author.html#2001">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>When I start OpenSim 0.6.4 on an Ubuntu 8.04 server running SQLIte3 it 
+runs fine until it gets to:
+
+22:29:56 - [LIBRARY INVENTORY]: Loading library control file 
+./inventory/Libraries.xml
+22:29:56 - [PLUGINS]: Loading extension point /OpenSim/InventoryData
+22:29:56 - [PLUGINS]: Trying plugin 
+/OpenSim/InventoryData/MSSQLInventoryData
+22:29:56 - [PLUGINS]: Trying plugin 
+/OpenSim/InventoryData/MySQLInventoryData
+22:29:56 - [PLUGINS]: Trying plugin 
+/OpenSim/InventoryData/NHibernateInventoryData
+22:29:56 - [PLUGINS]: Trying plugin 
+/OpenSim/InventoryData/SQLiteInventoryData
+22:29:56 - [PLUGINS]: Plugin Loaded: OpenSim.Data.SQLite
+22:29:56 - [INVENTORY DB]: Sqlite - connecting: 
+SQLiteDialect;SqliteClientDriver;URI=file:Inventory.db,version=3
+22:29:56 - [APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.InvalidOperationException: Invalid connection string: 
+no URI
+  at Mono.Data.SqliteClient.SqliteConnection.SetConnectionString 
+(System.String connstring) [0x00000]
+  at Mono.Data.SqliteClient.SqliteConnection.set_ConnectionString 
+(System.String value) [0x00000]
+  at Mono.Data.SqliteClient.SqliteConnection..ctor (System.String 
+connstring) [0x00000]
+  at (wrapper remoting-invoke-with-check) 
+Mono.Data.SqliteClient.SqliteConnection:.ctor (string)
+  at OpenSim.Data.SQLite.SQLiteInventoryStore.Initialise (System.String 
+dbconnect) [0x00000]
+  at OpenSim.Data.InventoryDataInitialiser.Initialise (IPlugin plugin) 
+[0x00000]
+  at 
+OpenSim.Framework.PluginLoader`1[OpenSim.Data.IInventoryDataPlugin].Load 
+() [0x00000]
+  at 
+OpenSim.Data.DataPluginFactory.LoadDataPlugins[IInventoryDataPlugin] 
+(System.String provider, System.String connect) [0x00000]
+  at OpenSim.Framework.Communications.InventoryServiceBase.AddPlugin 
+(System.String provider, System.String connect) [0x00000]
+  at 
+OpenSim.ApplicationPlugins.CreateCommsManager.CreateCommsManagerPlugin.InitialiseStandaloneServices 
+(OpenSim.Framework.Communications.Cache.LibraryRootFolder 
+libraryRootFolder) [0x00000]
+  at 
+OpenSim.ApplicationPlugins.CreateCommsManager.CreateCommsManagerPlugin.InitialiseStandardServices 
+(OpenSim.Framework.Communications.Cache.LibraryRootFolder 
+libraryRootFolder) [0x00000]
+  at 
+OpenSim.ApplicationPlugins.CreateCommsManager.CreateCommsManagerPlugin.InitialiseCommsManager 
+(OpenSim.OpenSimBase openSim) [0x00000]
+  at 
+OpenSim.ApplicationPlugins.CreateCommsManager.CreateCommsManagerPlugin.Initialise 
+(OpenSim.OpenSimBase openSim) [0x00000]
+  at OpenSim.ApplicationPluginInitialiser.Initialise (IPlugin plugin) 
+[0x00000]
+  at OpenSim.Framework.PluginLoader`1[OpenSim.IApplicationPlugin].Load 
+() [0x00000]
+  at OpenSim.Framework.PluginLoader`1[OpenSim.IApplicationPlugin].Load 
+(System.String extpoint) [0x00000]
+  at OpenSim.OpenSimBase.LoadPlugins () [0x00000]
+  at OpenSim.OpenSimBase.StartupSpecific () [0x00000]
+  at OpenSim.OpenSim.StartupSpecific () [0x00000]
+  at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000]
+  at OpenSim.Application.Main (System.String[] args) [0x00000]
+
+Application is terminating: True
+
+Running sqlite3 shows I have Asset.db and OpenSim.db. 
+I'm tired of banging my head against a wall, what is the problem?
+
+John Batt
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jbatt at bresnan.net</A>
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002000.html">[Opensim-users] Visibuild/modrex public alpha
+</A></li>
+	<LI>Next message: <A HREF="002002.html">[Opensim-users] XML2 and OAR
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2001">[ date ]</a>
+              <a href="thread.html#2001">[ thread ]</a>
+              <a href="subject.html#2001">[ subject ]</a>
+              <a href="author.html#2001">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

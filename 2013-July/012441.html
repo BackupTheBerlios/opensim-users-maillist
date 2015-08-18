@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] core's OpenSim service bundles for 0.7.5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20core%27s%20OpenSim%20service%20bundles%20for%200.7.5&In-Reply-To=%3CCAME74xFSe5O01cRTBFd350TxK-zEQijxJx7s%3DSD%2BniDPx%3D0O%3Dw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012440.html">
+   <LINK REL="Next"  HREF="012442.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] core's OpenSim service bundles for 0.7.5</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20core%27s%20OpenSim%20service%20bundles%20for%200.7.5&In-Reply-To=%3CCAME74xFSe5O01cRTBFd350TxK-zEQijxJx7s%3DSD%2BniDPx%3D0O%3Dw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] core's OpenSim service bundles for 0.7.5">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Thu Jul 11 13:08:32 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012440.html">[Opensim-users] core's OpenSim service bundles for 0.7.5
+</A></li>
+        <LI>Next message: <A HREF="012442.html">[Opensim-users] IAR default directory in Windows 7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12441">[ date ]</a>
+              <a href="thread.html#12441">[ thread ]</a>
+              <a href="subject.html#12441">[ subject ]</a>
+              <a href="author.html#12441">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 11 July 2013 02:12, James Hughes &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jamesh at bluewallgroup.com</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i> You may still use the OpenProfiles module. Just configure the module as
+</I>&gt;<i> normal and it will work fine. If you want the new module, yes it is using
+</I>&gt;<i> JsonRpc, but will use the same database. Backup before switching.
+</I>&gt;<i>
+</I>
+Ah, thank you, James! This was not immediately obvious &#8212; it was clear that
+0.7.6 includes new modules (or old ones... I can't remember when the core
+developers decided to push profiles out of the core, forcing us to live
+with external services, and now, well, we got all these back again), but it
+was unclear how to configure them.
+
+Seems that the &quot;right&quot; way to do so is simply to disregard all old external
+functionality. Since it's not so easy to figure out where the changes are,
+for completion's sake, I'm including them here:
+
+On OpenSim.ini that means getting rid of
+
+[Profile]
+Module = &quot;OpenProfileModule&quot;
+ProfileURL = <A HREF="http://&lt;your">http://&lt;your</A> external webserver&gt;/os_services/profile.php
+
+and just make sure the following is active:
+
+[UserProfiles]
+  ;# {ProfileURL} {} {Set url to UserProfilesService} {}
+  ;; Set the value of the url to your UserProfilesService
+  ;; If un-set / &quot;&quot; the module is disabled
+  ;; ProfileServiceURL = <A HREF="http://127.0.0.1:8002">http://127.0.0.1:8002</A>
+  ProfileServiceURL = <A HREF="http://&lt;your">http://&lt;your</A> OpenSim address&gt;:8002
+
+Then, if you're using Robust, it means also:
+
+On GridCommon.ini, make sure you have commented out the old [Profile]
+section.
+Wherever you have HomeURI set to your external webserver for profiles to
+work, just revert it to <A HREF="http://&lt;your">http://&lt;your</A> OpenSim address&gt;:8002
+
+Then, on Robust.HG.ini for a hypergrid'ed gri), just comment out all
+HomeURI set to the external webserver. Thankfully, now we don't need to
+configure that over and over again; once HomeURI is set at [Hypergrid], it
+will remain the default for everything (yay).
+
+Under [LoginService] make sure SRV_ProfileServerURI is also set to <A HREF="http://&lt;your">http://&lt;your</A>
+OpenSim address&gt;:8002
+
+[UserProfilesService] needs to have Enabled = true and the ConnectionString
+set to the database where the profiles are stored. Now this was a neat
+trick! Indeed, I can confirm that the old tables work flawlessly with the
+new configuration. In my case, I had them on a separate database, but
+OpenSim has no trouble connecting to it. Table names for profiles, picks
+(and allegedly classifieds...) are the same, and so are all the columns.
+Whew! It was much, much simpler than I expected.
+
+And as a bonus, I finally got profiles working with Hypergrid teleports :)
+something which I never managed to get working properly. Hooray!
+
+Once more, thank you for the precious tips!
+
+Now back to figuring out how to get collisions on attachments... heh.
+
+   - Gwyn
+
+-- 
+&quot;I'm not building a game. I'm building a new country.&quot;
+  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130711/d3814a97/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130711/d3814a97/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012440.html">[Opensim-users] core's OpenSim service bundles for 0.7.5
+</A></li>
+	<LI>Next message: <A HREF="012442.html">[Opensim-users] IAR default directory in Windows 7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12441">[ date ]</a>
+              <a href="thread.html#12441">[ thread ]</a>
+              <a href="subject.html#12441">[ subject ]</a>
+              <a href="author.html#12441">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

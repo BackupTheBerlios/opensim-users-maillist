@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Question about Groups
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20about%20Groups&In-Reply-To=%3Ccb14b4b11001282249s6853f6c9rdb1a1d9cb659d22e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003645.html">
+   <LINK REL="Next"  HREF="003613.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Question about Groups</H1>
+    <B>Jane Foxclaw</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20about%20Groups&In-Reply-To=%3Ccb14b4b11001282249s6853f6c9rdb1a1d9cb659d22e%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Question about Groups">janefoxclaw at gmail.com
+       </A><BR>
+    <I>Fri Jan 29 07:49:25 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003645.html">[Opensim-users] Making A 30region clone to a 30 sector	Mega-region
+</A></li>
+        <LI>Next message: <A HREF="003613.html">[Opensim-users] GPU Rendering with LuxRender is coming!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3609">[ date ]</a>
+              <a href="thread.html#3609">[ thread ]</a>
+              <a href="subject.html#3609">[ subject ]</a>
+              <a href="author.html#3609">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok, I setup the xmlrpc.php and it just doesn't work. I have tried many
+things.. but i just get nothing.  I know i'm doing something not right but I
+cannot for the life of me figure out why.
+
+config.php
+--------------------------------------------
+&lt;?php
+    $dbName = &quot;userdatabasename&quot;;
+    $dbHost = &quot;localhost&quot;;
+    $dbPort = &quot;3306&quot;;
+    $dbUser = &quot;root&quot;;
+    $dbPassword =&quot;mysqlpw&quot;;
+    // Set to 0 for no debugging, 1 for essential debugging, 2 for more
+information.
+    $debugXMLRPC = 2;
+    $debugXMLRPCFile = &quot;xmlrpc.log&quot;;
+ //////////////////////////////
+//// Group security
+/////////////////////
+ // A xmlrpc client must have this key to commit changes to the Groups DB
+// Leave blank to allow all clients to make changes.
+$groupWriteKey = '';
+$groupReadKey  = '';
+ // Enabling this, will require that the service attempt to verify the agent
+// is authentic by contacting the User Service specified in the request
+// to authenticate the AgentID and SessionID provided.
+$groupRequireAgentAuthForWrite = TRUE;
+ // This enforces the role Permissions bitmask.
+$groupEnforceGroupPerms = TRUE;
+ // Specify the following to hard-code / lockdown the User Service used to
+authenticate
+// user sessions.  Example: <A HREF="http://osgrid.org:8002">http://osgrid.org:8002</A>
+// Note:  This causes the User Service specified with requests to be
+ignored, and
+// prevents the service from being used cross-grid or by hypergridded users.
+//$overrideAgentUserService = '<A HREF="http://mytestserverdomainname:8002">http://mytestserverdomainname:8002</A>';
+ // This setting configures the behavior of the &quot;Members are Visible&quot;
+checkbox
+// provided for on the Role configuration panel -- and determines who is
+allowed
+// to get a list of members for a role when that checkbox is *NOT* checked.
+ $membersVisibleTo = 'Group'; // Anyone in the group can see members
+// $membersVisibleTo = 'Owners'; // Only members of the owners role can see
+members
+// $membersVisibleTo = 'All'; // Anyone can see members
+?&gt;
+-----------------------------------------------
+in the opensim.ini file I have this for the groups section
+-----------------------------------------------
+[Groups]
+    Enabled = true
+
+    ; This is the current groups stub in Region.CoreModules.Avatar.Groups
+    ;Module  = Default
+
+    ; The PHP code for the server is available from the Flotsam project for
+you to deploy
+    ; to your own server.  The Flotsam project is located at
+<A HREF="http://code.google.com/p/flotsam/">http://code.google.com/p/flotsam/</A>
+    ;
+    Module  = XmlRpcGroups
+
+    ; Enable Group Notices
+    NoticesEnabled   = true
+
+    ; This makes the Groups modules very chatty on the console.
+    DebugEnabled     = false
+
+    ; Specify which messaging module to use for groups messaging and if it's
+enabled
+    MessagingModule = GroupsMessagingModule
+    MessagingEnabled = true
+
+    ; Service connector to Groups Service [Select One]
+    ; XmlRpc Service Connector to the Flotsam XmlRpc Groups Service
+Implementation
+     ServicesConnectorModule = XmlRpcGroupsServicesConnector
+     XmlRpcServiceURL        =
+<A HREF="http://mytestserverdomainname/groups/xmlrpc.php">http://mytestserverdomainname/groups/xmlrpc.php</A>
+     XmlRpcServiceReadKey    = 1234
+     XmlRpcServiceWriteKey   = 1234
+     XmlRpcMessagingEnabled = true
+     XmlRpcNoticesEnabled   = true
+
+    ; Disables HTTP Keep-Alive for XmlRpcGroupsServicesConnector HTTP
+Requests,
+    ; this is a work around fora problem discovered on some Windows based
+region servers.
+    ; Only disable keep alive if you see a large number (dozens) of the
+following Exceptions:
+    ; System.Net.WebException: The request was aborted: The request was
+canceled.
+    ;
+    ; XmlRpcDisableKeepAlive = false
+------------------------------------------------------------
+
+not sure what i'm doing wrong here. any ideas ?
+
+Sonya
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100129/9c980436/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100129/9c980436/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003645.html">[Opensim-users] Making A 30region clone to a 30 sector	Mega-region
+</A></li>
+	<LI>Next message: <A HREF="003613.html">[Opensim-users] GPU Rendering with LuxRender is coming!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3609">[ date ]</a>
+              <a href="thread.html#3609">[ thread ]</a>
+              <a href="subject.html#3609">[ subject ]</a>
+              <a href="author.html#3609">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

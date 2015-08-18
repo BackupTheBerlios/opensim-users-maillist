@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Avatar texture corruption
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Avatar%20texture%20corruption&In-Reply-To=%3C51205188.1040608%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011764.html">
+   <LINK REL="Next"  HREF="011771.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Avatar texture corruption</H1>
+    <B>InuYasha Meiji</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Avatar%20texture%20corruption&In-Reply-To=%3C51205188.1040608%40gmail.com%3E"
+       TITLE="[Opensim-users] Avatar texture corruption">inuyasha.meiji at gmail.com
+       </A><BR>
+    <I>Sun Feb 17 04:42:00 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011764.html">[Opensim-users] Avatar texture corruption
+</A></li>
+        <LI>Next message: <A HREF="011771.html">[Opensim-users] Avatar texture corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11770">[ date ]</a>
+              <a href="thread.html#11770">[ thread ]</a>
+              <a href="subject.html#11770">[ subject ]</a>
+              <a href="author.html#11770">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I ran the suggested test using half of my regions, 24 of them.  I can't 
+run two instances of Firestorm and my entire grid at once at least for 
+now.  I was foreced to hit CTRL-ALT-R at the very start. Not only have I 
+found your problem seems to exist, but the first avatar to log into an 
+instance sees itself as fine, and will see the next avatar to appear in 
+the same instance and region, but the new avatar takes a while to rez 
+and can't see the avatar that logged in just in before them.  I hit the 
+CTRL-ALT-R so I could start the steps before crossing the border with 
+two avatars that could at least see each other to begin with.  That 
+itself is a growing problem,  when I start to have larger groups of 
+visitors it will be ver bothersome.
+
+Once I logged both avatars, my wife's as well as mine, I used the 
+&quot;appearance show command&quot;, on my avatar as follows.
+
+Region (root) # appearance show InuYasha Meiji
+For InuYasha Meiji in Hantagawa
+Bake Type  UUID
+Head       00bc3078-6310-4aaf-afac-036fce0a31d2 (uploaded)
+UpperBody  3e80b8fc-dc97-4758-a91f-97a9a59a7e7d (uploaded)
+LowerBody  ff9ae32b-c198-4991-965b-2876e042c89f (uploaded)
+Eyes       b8d3f618-19fb-451b-8eb7-92433e673c4f (uploaded)
+Skirt      41403566-74fb-4410-8e25-36f4ba4f4962 (uploaded)
+Hair       05c9335f-73fa-4370-b5e8-c4670b773cfa (uploaded)
+InuYasha Meiji baked appearance texture is OK
+
+I left my wife's avatar standing on the first instance on the region and 
+then walked across to the next region, nearby to the next instance and 
+got this result.  This time neither of us lost the other's textures.  It 
+could be because I rebaked before when we shared the same instance and 
+region.  Also I am using the same machine to log on to each of our 
+accounts.  Checking the &quot;appearance show command&quot; now, on the region and 
+instance I just moved onto... Different from the one my wife's avatar is 
+standing.  Even though in the newest Firestome v4.3.1. 31155 (opensim 
+version) I use, bpth see each other.  The results do show an issue. here...
+
+Region (root) # appearance show InuYasha Meiji
+For InuYasha Meiji in Shuri Village
+Bake Type  UUID
+Head       not set
+UpperBody  not set
+LowerBody  not set
+Eyes       not set
+Skirt      not set
+Hair       not set
+InuYasha Meiji baked appearance texture is corrupt
+Region (root) #
+
+I hope this test helps.
+
+Your Friend,
+InuYasha
+
+  
+________________________________________________________________________
+Opensim User: In Gridmode  on Version 0.7.4. Nine Instances with 56 Regions. on Windows 7, 64-bit. Phenom 9500 2.2 GHz Quad Core, Terabyte Hard Drive, 8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+and MySQL 5.1.41-community edition.  Groups, Profiles, Vivox Voice and
+Offline Messages all working. (Not yet Public, 10 user accounts so far).
+________________________________________________________________________
+
+
+On 2/16/2013 5:08 AM, caro t hart wrote:
+&gt;<i> Emperor, all readers,
+</I>&gt;<i> Thank you for the time you put in helping me figuring out what is 
+</I>&gt;<i> going on.
+</I>&gt;<i> I have tried several avatar textures as you suggested previously 
+</I>&gt;<i> (including a Linda Kellie type and the default &quot;Ruth&quot;).
+</I>&gt;<i> I have tried this with avatars which have been in use for a longer 
+</I>&gt;<i> period and new created avatars.
+</I>&gt;<i>
+</I>&gt;<i> The problem is consistently the same and best illustated as follows:
+</I>&gt;<i> Step 1: Log in as avatar A in opensim instance X
+</I>&gt;<i> Control 1: Console command in instance X: appearance show avatarname
+</I>&gt;<i> Step 2: Walk into an adjacent region  in an other opensim instance &quot;Y&quot; 
+</I>&gt;<i> (do not bake, teleport or edit appearance!)
+</I>&gt;<i> Control 2: Console command in instance Y: appearance show avatarname
+</I>&gt;<i> Step 3: Log in as avatar B in either X or Y
+</I>&gt;<i>
+</I>&gt;<i> My Result: A can see B normally, but B sees A as a cloud.
+</I>&gt;<i>
+</I>&gt;<i> And yes, a baking action by A resolves the problem. But A does not 
+</I>&gt;<i> know he is a cloud unless he is told.
+</I>&gt;<i> Unfortunately in my setup avatars do walk around and are supposed to 
+</I>&gt;<i> cross regions walking.
+</I>&gt;<i>
+</I>&gt;<i> I can see:
+</I>&gt;<i> in the consoles that all avatars (old new, fancy or standard) lose (or 
+</I>&gt;<i> do not get) textures when walking into another opensim instance The 
+</I>&gt;<i> console reports appearance corrupt.
+</I>&gt;<i> Zen and Firestorm show a normal avatar once the other avatar has OK 
+</I>&gt;<i> appearance in console, even if they walk across a boundary and the 
+</I>&gt;<i> console reports corrupt. This stays true unless they walk out of 
+</I>&gt;<i> visual range and return. Than they show as cloud.
+</I>&gt;<i> If a second avatar logs in and the present avatar has previously 
+</I>&gt;<i> walked across a region/sim boundary, than second avatar will see the 
+</I>&gt;<i> already present avatar as a cloud. Only ctr-alt-r, appearance edit or 
+</I>&gt;<i> teleport of the already present avatar resolves this.
+</I>&gt;<i>
+</I>&gt;<i> I prefer being wrong, however at this point I do not think it is a 
+</I>&gt;<i> texture problem, but a bug.
+</I>&gt;<i> I hate filing bug reports without proper confirmation of the problem 
+</I>&gt;<i> so I would very much appreciate it if the readers who are:
+</I>&gt;<i> running in Grid mode
+</I>&gt;<i> and have two regions adjacent to each other  running in separate 
+</I>&gt;<i> opensim servers
+</I>&gt;<i> to test step 1,2,3 and let me know what they see.
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advance,
+</I>&gt;<i> Caro
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Message: 1
+</I>&gt;<i>     Date: Fri, 15 Feb 2013 06:18:04 -0500
+</I>&gt;<i>     From: Emperor Starfinder &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">emperor at secondgalaxy.com</A>&gt;
+</I>&gt;<i>     To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     Subject: Re: [Opensim-users] Avatar texture corruption
+</I>&gt;<i>     Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">20130215061804.11382lhefyzpz1yc at 74.50.85.33</A>&gt;
+</I>&gt;<i>     Content-Type: text/plain; charset=ISO-8859-1; DelSp=&quot;Yes&quot;;
+</I>&gt;<i>     format=&quot;flowed&quot;
+</I>&gt;<i>
+</I>&gt;<i>     I haven't seen issues when walking across region borders with avatar
+</I>&gt;<i>     textures yet in our tests. If you have successfully rezzed the avi
+</I>&gt;<i>     once I might suggest baking the avatar textures then trying as this
+</I>&gt;<i>     could mean that the problem is with retrieving baked textures. If
+</I>&gt;<i>     that
+</I>&gt;<i>     solves it then it isnt with the j2kDecoder it would be an issue with
+</I>&gt;<i>     the persistence aka retrieving of baked avatar textures would be my
+</I>&gt;<i>     guess.
+</I>&gt;<i>
+</I>&gt;<i>     I hope this helps a little.
+</I>&gt;<i>
+</I>&gt;<i>     Emperor
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011764.html">[Opensim-users] Avatar texture corruption
+</A></li>
+	<LI>Next message: <A HREF="011771.html">[Opensim-users] Avatar texture corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11770">[ date ]</a>
+              <a href="thread.html#11770">[ thread ]</a>
+              <a href="subject.html#11770">[ subject ]</a>
+              <a href="author.html#11770">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

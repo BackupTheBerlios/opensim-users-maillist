@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sim size limits
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3C4F63FFDF.6090103%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009847.html">
+   <LINK REL="Next"  HREF="009849.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sim size limits</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3C4F63FFDF.6090103%40googlemail.com%3E"
+       TITLE="[Opensim-users] Sim size limits">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Mar 17 04:07:11 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009847.html">[Opensim-users] Sim size limits
+</A></li>
+        <LI>Next message: <A HREF="009849.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9858">[ date ]</a>
+              <a href="thread.html#9858">[ thread ]</a>
+              <a href="subject.html#9858">[ subject ]</a>
+              <a href="author.html#9858">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Megaregions [1] provide some of this functionality but as James said, they are some way from perfect.  I suspect there 
+are a number of bugs and some architectural issues that could be resolved (e.g. issues with terrain and messy 
+workarounds for oar loading/saving) but ultimately they are limited by having to work with a viewer that is only dimly 
+aware that regions can be larger than 256m x 256m (e.g. teleporting into a megaregion can involved an automatically 
+server-side invoked double teleport).
+
+Having said that, some people use megaregions quite happily so it may depend on the use.
+
+The advantage of megaregions is that they should work with all viewers.  To do it 'properly', I believe one has to have 
+specific viewer support (e.g. as Toni was talking about with the old Naali viewer).  I imagine that multiples of 256m x 
+256m are easier than completely variable regions.  Some OpenSimulator assumptions/bugs may also need to be resolved 
+though that might not be too bad since they've already been resolved for megaregions.
+
+Some viewers already support variable regions (for Aurorasim for instance) so it may not be too hard.
+
+In other words, I believe we are likely to see the change in OpenSim but it requires a bit of work/co-ordination so it 
+probably won't happen tomorrow.
+
+[1] <A HREF="http://opensimulator.org/wiki/Setting_Up_Mega-Regions">http://opensimulator.org/wiki/Setting_Up_Mega-Regions</A>
+
+On 16/03/12 12:35, James Stallings II wrote:
+&gt;<i> Enter Megaregions. Not perfect, but they work. I run one that is 1.25km square on OSgrid (Shambala).
+</I>&gt;<i>
+</I>&gt;<i> Cheers
+</I>&gt;<i> James/Hiro
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Mar 16, 2012 at 6:36 AM, David Burden &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">david.burden at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">david.burden at daden.co.uk</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     At the risk of opening a real can of worms, what is the potential in the future of changing the 256m x 256m limit on
+</I>&gt;<i>     sim size, and even moving to a single, near limitless sim.
+</I>&gt;<i>
+</I>&gt;<i>     It is the one feature of OpenSim that stops us using it/proposing it for some of the really big projects we're
+</I>&gt;<i>     involved with, where even modelling just a 2km x 2km area becomes unthinkable in OpenSim (64 sims?), but is trivial
+</I>&gt;<i>     in environments like Unity. I know that grids have total sizes well over this, but generally each sim is operating
+</I>&gt;<i>     on its own, with few buildings overlapping sim boundaries and people being very conscious of boundary crossings, and
+</I>&gt;<i>     trying to automate an object from one sim to another if non-trivial. In terms of our aspirations just getting to
+</I>&gt;<i>     1/2/3km sims would make a huge difference, even if we had to stick with existing prim limits.
+</I>&gt;<i>
+</I>&gt;<i>     I think that RealXTend Tundra has removed the limitation, and Vastpark (which also has some OpenSim heritage) has.
+</I>&gt;<i>     Are we ever likely to see a change in OpenSim (and if it's &quot;just&quot; a case of money, then how much effort?)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     David
+</I>&gt;<i>
+</I>&gt;<i>     David Burden
+</I>&gt;<i>     Daden Limited
+</I>&gt;<i>
+</I>&gt;<i>     t: +44 (0)121 250 5677 &lt;tel:%2B44%20%280%29121%20250%205677&gt;
+</I>&gt;<i>     m: 07811 266 199
+</I>&gt;<i>     e: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">david.burden at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">david.burden at daden.co.uk</A>&gt;
+</I>&gt;<i>     w: www.daden.co.uk &lt;<A HREF="http://www.daden.co.uk">http://www.daden.co.uk</A>&gt;
+</I>&gt;<i>     skype: daden5
+</I>&gt;<i>     twitter: www.twitter.com/davidburden &lt;<A HREF="http://www.twitter.com/davidburden">http://www.twitter.com/davidburden</A>&gt;
+</I>&gt;<i>     sl IM: Corro Moseley
+</I>&gt;<i>
+</I>&gt;<i>     Daden specialise in creating immersive learning &amp; visualisation systems, and interactive virtual agents.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> ===================================
+</I>&gt;<i> <A HREF="http://simhost.com">http://simhost.com</A>
+</I>&gt;<i> <A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+</I>&gt;<i> <A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009847.html">[Opensim-users] Sim size limits
+</A></li>
+	<LI>Next message: <A HREF="009849.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9858">[ date ]</a>
+              <a href="thread.html#9858">[ thread ]</a>
+              <a href="subject.html#9858">[ subject ]</a>
+              <a href="author.html#9858">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

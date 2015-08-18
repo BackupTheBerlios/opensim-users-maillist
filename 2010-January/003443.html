@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] llParticleSystem script issues in OpenSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llParticleSystem%20script%20issues%20in%20OpenSim&In-Reply-To=%3C539cebb31001121050n29601d06l81557f3682576e99%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003439.html">
+   <LINK REL="Next"  HREF="003453.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] llParticleSystem script issues in OpenSim</H1>
+    <B>dz</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llParticleSystem%20script%20issues%20in%20OpenSim&In-Reply-To=%3C539cebb31001121050n29601d06l81557f3682576e99%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] llParticleSystem script issues in OpenSim">dz at bitzend.net
+       </A><BR>
+    <I>Tue Jan 12 19:50:22 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003439.html">[Opensim-users] OpenSim Lunch in Zurich
+</A></li>
+        <LI>Next message: <A HREF="003453.html">[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3443">[ date ]</a>
+              <a href="thread.html#3443">[ thread ]</a>
+              <a href="subject.html#3443">[ subject ]</a>
+              <a href="author.html#3443">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE> Clive,
+
+I had a chance to review your script..  Although it may work in SL, such a
+minimal definition of a particle system relies heavily on the default
+parameters,  Obviously, the default particle system parameters differ from
+SL to OpenSim.   Although I wouldn't recommend using this script as an
+example, It is possible to make it emit particles with the addition of a
+single line...
+
+    PSYS_SRC_BURST_PART_COUNT,  2,                  //Number of particles
+per emission
+
+So the resulting code section would be ....
+
+++++  begin code+++
+
+  llParticleSystem(
+    [
+    PSYS_SRC_BURST_PART_COUNT,  2,                  //Number of particles
+per emission
+
+    PSYS_PART_FLAGS,         PSYS_PART_WIND_MASK | PSYS_PART_EMISSIVE_MASK,
+    PSYS_SRC_PATTERN,  PSYS_SRC_PATTERN_EXPLODE,
+    PSYS_PART_START_COLOR,   &lt;1,1,0&gt;,
+
+    ] );
+
++++  end code +++
+
+I would also recommend that if you intend to show students this script as an
+example of how to create particles, you should include the attribution
+required  for including code found on the lsl wiki.    At a minimum, add
+this to the header..
+
+// This work uses content from the Second Life Wiki articles:
+//                         <A HREF="http://wiki.secondlife.com/wiki/LlParticleSystem">http://wiki.secondlife.com/wiki/LlParticleSystem</A>
+// Copyright &#169; 2007-2010 Linden Research, Inc.
+//        Licensed under the Creative Commons Attribution-Share Alike 3.0
+License.
+//                         <A HREF="http://creativecommons.org/licenses/by-sa/3.0/">http://creativecommons.org/licenses/by-sa/3.0/</A>
+
+
+There is a VERY NICE Particle script resource @
+<A HREF="http://particles-lsl-generator.bashora.com/index.php.">http://particles-lsl-generator.bashora.com/index.php.</A>   It provides a user
+with a chance to use a web page to review the effect of, and set values for,
+all the relevant parameters.   It will also auto-generates a script that you
+can use.
+
+D
+
+++++++++++++++++++++
+From: Clive Gould &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cliveg at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Date: Sun, 10 Jan 2010 13:10:32 +0000
+Subject: [Opensim-users] llParticleSystem
+Hi
+
+I'm in the process of copying my LSL exhibition from SL into a hypergrided
+OpenSim standalone. Eventually I hope to make this available as an OAR file
+to the community.
+
+I'm gradually copying the posters and their accompanying scripts over and
+all is well up to poster 21. I'm struggling with the poster 21 script that
+works fine in SL, but doesn't appear to work in OpenSim.
+
+I suspect the problem lies with the llParticleSystem function. I append the
+script to this posting.
+
+....
+
+// Code for Poster 21:
+
+integer second;
+
+default
+{
+   state_entry()
+   {
+       second = 0;
+       llParticleSystem( [] );  //reset system
+       state new;
+   }
+}
+
+state new
+{
+   touch_start(integer total_number)
+   {
+   // output particles
+   llParticleSystem(
+  [
+   PSYS_PART_FLAGS,         PSYS_PART_WIND_MASK | PSYS_PART_EMISSIVE_MASK,
+   PSYS_SRC_PATTERN,  PSYS_SRC_PATTERN_EXPLODE,
+   PSYS_PART_START_COLOR,   &lt;1,1,0&gt;
+  ] );
+  llSetTimerEvent( 1 );
+   }
+
+   timer ()
+   //delay 10 seconds before reset
+   {  second ++;
+       if(second &gt; 10)
+       {
+          llResetScript();  //reset
+   }
+}
+}
+
+// End of code;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100112/4ec39bbf/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100112/4ec39bbf/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003439.html">[Opensim-users] OpenSim Lunch in Zurich
+</A></li>
+	<LI>Next message: <A HREF="003453.html">[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3443">[ date ]</a>
+              <a href="thread.html#3443">[ thread ]</a>
+              <a href="subject.html#3443">[ subject ]</a>
+              <a href="author.html#3443">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

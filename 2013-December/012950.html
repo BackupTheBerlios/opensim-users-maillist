@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 0.7.6 and MONO 3 (OS X)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200.7.6%20and%20MONO%203%20%28OS%20X%29&In-Reply-To=%3C52AB75B4.6050107%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012940.html">
+   <LINK REL="Next"  HREF="012951.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 0.7.6 and MONO 3 (OS X)</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200.7.6%20and%20MONO%203%20%28OS%20X%29&In-Reply-To=%3C52AB75B4.6050107%40googlemail.com%3E"
+       TITLE="[Opensim-users] 0.7.6 and MONO 3 (OS X)">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Dec 13 22:01:40 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012940.html">[Opensim-users] 0.7.6 and MONO 3 (OS X)
+</A></li>
+        <LI>Next message: <A HREF="012951.html">[Opensim-users] 0.7.6 and MONO 3 (OS X)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12950">[ date ]</a>
+              <a href="thread.html#12950">[ thread ]</a>
+              <a href="subject.html#12950">[ subject ]</a>
+              <a href="author.html#12950">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OpenSimulator 0.7.6 should have run just fine with Mono 2.4.3.  However, I'm beginning to think that I made a mistake 
+when building it.  It should run under Mono 2.4.3 if you took the source code and recompiled it with Mono 2.4.3 
+yourself, though I would recommend using later Mono instead if at all possible.
+
+I hadn't heard of that finalizer thread issue with Mono 2.10, at least on Linux.  I can imagine Mac is significantly 
+different in this area though, so possibly this is a Mac only issue.
+
+I have heard of people (plus yourself now) running OpenSimulator with Mono 3 (at least later than 3.0.6) with good 
+results, so this should be a viable route.
+
+I believe Mono 2.8 should also run .NET 4 code.  However, I wouldn't recommend 2.8 since there were many issues with it 
+in the past.  I put Mono 2.10.8.1 as the minimum firstly because it's the one shipping on all the latest major distros, 
+and secondly because somewhere in the 2.10.* releases (2.10.5 perhaps), a bug was resolved which would cause the 
+OpenSimulator sun to jump around unexpectedly.
+
+On 13/12/13 13:39, Jeff Kelley wrote:
+&gt;<i> MONO 3 compatibility report (and MONO 2.10.11 issue) .
+</I>&gt;<i>
+</I>&gt;<i> Previously running 0.7.5 with MONO 2.4.3, Mac OS X (Darwin) 10.6.8
+</I>&gt;<i>
+</I>&gt;<i> - Upgrading to 0.7.6 required a MONO update
+</I>&gt;<i> - Official minimum version is said to be 2.10.8.1 (*)
+</I>&gt;<i> - go-mono.com offers &quot;Stable Version&quot; 2.10.11 for my platform
+</I>&gt;<i>
+</I>&gt;<i> (*) This is for the dev branch. 0.7.6 won't run under 2.4.3 : &quot;The runtime version supported by this application is
+</I>&gt;<i> unavailable&quot;. Since 0.8 is in the tube, it is wise to anticipate and meet or exceed 2.10.8.1 right now.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Trying MONO 2.10.11 : opensim 0.7.6 suffers from a &quot;Shutting down finalizer thread timed out&quot;. See these discussions:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/quot-Shutting-down-finalizer-thread-timed-out-quot-td7579150.html">http://opensim-users.2152040.n2.nabble.com/quot-Shutting-down-finalizer-thread-timed-out-quot-td7579150.html</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://forums.osgrid.org/viewtopic.php?f=9&amp;t=3838">http://forums.osgrid.org/viewtopic.php?f=9&amp;t=3838</A>
+</I>&gt;<i>
+</I>&gt;<i> This is a severe one since the process is unkillable and leaves UDP ports allocated, forcing a server reboot.
+</I>&gt;<i>
+</I>&gt;<i> =&gt; Mac OS + MONO 2.10.11 : NO
+</I>&gt;<i> It may work under Linux, i don't know.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I decided to make a big jump forward and install MONO 3.2.4
+</I>&gt;<i> Finger crossed... Not a single problem since November, 15.
+</I>&gt;<i>
+</I>&gt;<i> =&gt; Mac OS + MONO 3.2.4 : YES
+</I>&gt;<i> (Snow Leopard. Don't ask for Lion)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Cherry on the cake : a nasty bug under MONO 2.4.3 seems gone. From time to time,  opensim was unable to read the content
+</I>&gt;<i> of config-include files. This one baffled me. I could cat the files. opensim could not read them. Id did not spring
+</I>&gt;<i> since the upgrade.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> If you are runing Darwin, skip 2.10.11 &quot;stable&quot; and go MONO 3.2.4 &quot;latest&quot;.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- Jeff
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> .
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012940.html">[Opensim-users] 0.7.6 and MONO 3 (OS X)
+</A></li>
+	<LI>Next message: <A HREF="012951.html">[Opensim-users] 0.7.6 and MONO 3 (OS X)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12950">[ date ]</a>
+              <a href="thread.html#12950">[ thread ]</a>
+              <a href="subject.html#12950">[ subject ]</a>
+              <a href="author.html#12950">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow handling of POST -
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3C50678619.9010206%40rigutech.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010936.html">
+   <LINK REL="Next"  HREF="010987.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow handling of POST -</H1>
+    <B>R.Gunther</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3C50678619.9010206%40rigutech.nl%3E"
+       TITLE="[Opensim-users] Slow handling of POST -">rigun at rigutech.nl
+       </A><BR>
+    <I>Sun Sep 30 01:36:57 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010936.html">[Opensim-users] Slow handling of POST -
+</A></li>
+        <LI>Next message: <A HREF="010987.html">[Opensim-users] Slow handling of POST -
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10986">[ date ]</a>
+              <a href="thread.html#10986">[ thread ]</a>
+              <a href="subject.html#10986">[ subject ]</a>
+              <a href="author.html#10986">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>=====================================
+I switched back to linux with my osgrid region.
+I have some strange sideeffect on my train megasim, as soo the train is 
+rideing and am on the sim it seems to crash pretty fast
+with a nice stacktrace and above that some slow requests on serveral parts.
+
+22:16:02 - [BASE HTTP SERVER]: Slow handling of 498 POST /CAPS/ ......  
+took 5708ms
+22:16:05 - [BASE HTTP SERVER]: Slow handling of 505 POST /CAPS/ ...... 
+took 4644ms
+22:17:35 - [FORMS]: Slow request 45 POST ........ took 100125ms,
+23:19:17 - [FORMS]: Slow request 138 POST.......  took 100024ms,
+23:19:58 - [USER AGENT CONNECTOR]: Unable to contact remote server 
+...... for GetServerURLs
+Region (root) # Stacktrace:
+
+Native stacktrace:
+
+         mono() [0x498a19]
+         mono() [0x4e999f]
+         mono() [0x41f617]
+         /lib64/libpthread.so.0(+0xf140) [0x7effa5a6c140]
+         mono() [0x5e04d9]
+         mono() [0x5dd4a0]
+         mono() [0x5e0cfc]
+         mono() [0x5e15d2]
+         mono() [0x5e1c07]
+         mono() [0x5e263d]
+         mono() [0x5dc292]
+         mono() [0x5dc575]
+         mono() [0x5dc7ee]
+         mono(mono_array_new_specific+0xe2) [0x590602]
+         [0x4186fd7d]
+
+Debug info from gdb:
+
+So have done a bit searching, thereare  maby a few hints.
+I try to explain it best i can, hope 1 of them is direction to the solution.
+Its maby more a collection of ideas , more the needle in the hay.
+Not C# expert, but what i see the request code is pretty basic.
+The one opensim uses looks a bit like whats used on
+**********
+
+<A HREF="http://www.codeproject.com/Articles/13486/A-Simple-Crawler-Using-C-Sockets#WebRequest">http://www.codeproject.com/Articles/13486/A-Simple-Crawler-Using-C-Sockets#WebRequest</A>
+and look at the section, &quot;2. *WebRequest and WebResponse problems:&quot; *am 
+quoting a piece of text from that website
+
+&quot;&quot;This code works well but it has a very serious problem as the 
+|<i>WebRequest| class function |GetResponse| locks the access to all other 
+</I>processes, the |WebRequest| tells the retrieved response as closed, as 
+in the last line in the previous code. So I noticed that always only one 
+thread is downloading while others are waiting to |GetResponse|. To 
+solve this serious problem, I implemented my two classes, 
+*|MyWebRequest|* and *|MyWebResponse|*.&quot;&quot;
+
+**********
+HttpWebRequest.GetResponse Method seems to block.
+
+the Microsoft page say the following: 
+<A HREF="http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest.getresponse%28v=vs.71%29.aspx">http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest.getresponse%28v=vs.71%29.aspx</A>
+&quot;&quot;This method blocks waiting for content to post; if there is no 
+time-out set and you do not provide content, your application will block 
+indefinitely.&quot;&quot;
+
+**********
+
+Maby the ServicePointManager.Expect100Continue Property is intressting 
+to use ? 
+<A HREF="http://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.expect100continue%28v=vs.71%29.aspx">http://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.expect100continue%28v=vs.71%29.aspx</A>
+
+**********
+last thing that i want to point to is this site 
+<A HREF="http://stackoverflow.com/questions/2519655/httpwebrequest-is-extremely-slow">http://stackoverflow.com/questions/2519655/httpwebrequest-is-extremely-slow</A>
+The talk about that the http proxy is enabled default, and that disable 
+it can speed up the process.
+Most of the above things come from this page.
+
+=====================================
+
+On 2012-09-22 02:22, Justin Clark-Casey wrote:
+&gt;<i> There are no timeouts on these particular requests, which probably 
+</I>&gt;<i> isn't a good thing - OpenSimulator is inconsistent when it comes to 
+</I>&gt;<i> timeouts.  However, I suspect that's oging to be peripheral to the 
+</I>&gt;<i> issue here.
+</I>&gt;<i>
+</I>&gt;<i> On 20/09/12 11:44, M.E. Verhagen wrote:
+</I>&gt;&gt;<i> I wonder if there is a timeout on the fetch request ?
+</I>&gt;&gt;<i> Or are they stacking up and just waiting till they are in the front 
+</I>&gt;&gt;<i> of the line to be processed ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012/9/20 Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A> 
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Fetch times of 1068560ms (which is more than 15 minutes!) are 
+</I>&gt;&gt;<i> pathological - something is wrong.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     In the first case I would suspect an issue with the connection to 
+</I>&gt;&gt;<i> the OSGrid inventory service.  Either it is being
+</I>&gt;&gt;<i>     overloaded (OSGrid actually runs multiple copies of the ROBUST 
+</I>&gt;&gt;<i> inventory service and load-balances between them
+</I>&gt;&gt;<i>     using Nginx, but perhaps the limits are being hit), things are 
+</I>&gt;&gt;<i> being massive lagged because of lots of requests
+</I>&gt;&gt;<i>     hitting the .net default connection limit, as Melanie discussed, 
+</I>&gt;&gt;<i> or you have a network issue.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     However, I'm a little surprised that the OSGrid Inventory Service 
+</I>&gt;&gt;<i> request within FetchInventoryDescendents2 isn't
+</I>&gt;&gt;<i>     making it's own complaint about a long request.  The log message 
+</I>&gt;&gt;<i> you're seeing does cover the whole of the CAPs call
+</I>&gt;&gt;<i>     so I suppose there is some chance there's some other cause, 
+</I>&gt;&gt;<i> though it is a pretty simple capability.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     If you want to see if viewers are doing a lot of inventory 
+</I>&gt;&gt;<i> fetches, then you can try the command &quot;debug http 3&quot; on
+</I>&gt;&gt;<i>     the simulator console.  This will show every incoming http 
+</I>&gt;&gt;<i> request from viewers (and other simulators) and the HTTP
+</I>&gt;&gt;<i>     URI they are hitting.  Very recent code also has levels 4 and 5 
+</I>&gt;&gt;<i> which will log a snippet of the incoming request and
+</I>&gt;&gt;<i>     the entire request, though you probably don't want to use them 
+</I>&gt;&gt;<i> for any length of time.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     On 14/09/12 11:33, Ai Austin wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>             From: Melanie &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">melanie at t-data.com</A> 
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">melanie at t-data.com</A>&gt;&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>             You're using a viewer that fetches the user inventory in the
+</I>&gt;&gt;<i>             background on login. ...
+</I>&gt;&gt;<i>             You will need to disable inventory fetch on startup and/or
+</I>&gt;&gt;<i>             viewerside AO.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Thanks for the explanation Melanie... that sounds like it is 
+</I>&gt;&gt;<i> the type of problem I am seeing on our add on OSGrid
+</I>&gt;&gt;<i>         regions... but not on our own Openvue grid whcih essentially 
+</I>&gt;&gt;<i> runs on identical hardware and with identical
+</I>&gt;&gt;<i>         network setups.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         I am observing the problem with both LL 3.3.4 and 
+</I>&gt;&gt;<i> Firestorm/Pheonix 4.2.2...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         I don't have the viewer provided sAO turned on in Firestorm,  
+</I>&gt;&gt;<i> but I just looked at all the settings I can find in LL
+</I>&gt;&gt;<i>         3.3.4 and Firestorm 4.2.2 and cannot see one that refers to 
+</I>&gt;&gt;<i> http fetching via http.  Although I am sure I have
+</I>&gt;&gt;<i>         seen this
+</I>&gt;&gt;<i>         in the past on earlier viewers.  Which Preferences tab is it on?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>             From: James Stallings II &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">james.stallings at gmail.com</A> 
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">james.stallings at gmail.com</A>&gt;&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>             I would recommend (assuming firestorm here) setting both 
+</I>&gt;&gt;<i> inventory fetch
+</I>&gt;&gt;<i>             and texture fetch to http in the settings, and making the 
+</I>&gt;&gt;<i> following changes
+</I>&gt;&gt;<i>             to opensim.ini:
+</I>&gt;&gt;<i>             [ClientStack.LindenCaps]
+</I>&gt;&gt;<i>                  ...
+</I>&gt;&gt;<i>                  Cap_GetTexture = &quot;localhost&quot;
+</I>&gt;&gt;<i>                  Cap_GetMesh = &quot;localhost&quot;
+</I>&gt;&gt;<i>                  ; This is disabled by default. Change if you see 
+</I>&gt;&gt;<i> fit. Note that
+</I>&gt;&gt;<i>                  ; serving this cap from the simulators may lead to 
+</I>&gt;&gt;<i> poor performace.
+</I>&gt;&gt;<i>                   Cap_FetchInventoryDescendents2 = &quot;localhost&quot;
+</I>&gt;&gt;<i>                   Cap_FetchInventory2 = &quot;localhost&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Yep, that what I am set to already James.. I just checked. 
+</I>&gt;&gt;<i> Thanks.
+</I>&gt;&gt;<i>         _________________________________________________
+</I>&gt;&gt;<i>         Opensim-users mailing list
+</I>&gt;&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> 
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> 
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     --
+</I>&gt;&gt;<i>     Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i>     OSVW Consulting
+</I>&gt;&gt;<i>     <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;&gt;<i>     <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     _________________________________________________
+</I>&gt;&gt;<i>     Opensim-users mailing list
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> 
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> 
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> Groningen en Hannover Opensims: 
+</I>&gt;&gt;<i> <A HREF="secondlife://meverhagen.nl:8002:Hannover">secondlife://meverhagen.nl:8002:Hannover</A> ZW/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120930/679b629c/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120930/679b629c/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010936.html">[Opensim-users] Slow handling of POST -
+</A></li>
+	<LI>Next message: <A HREF="010987.html">[Opensim-users] Slow handling of POST -
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10986">[ date ]</a>
+              <a href="thread.html#10986">[ thread ]</a>
+              <a href="subject.html#10986">[ subject ]</a>
+              <a href="author.html#10986">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

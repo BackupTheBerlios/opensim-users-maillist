@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database cleanup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20cleanup&In-Reply-To=%3C376400.30446.qm%40web63104.mail.re1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003370.html">
+   <LINK REL="Next"  HREF="003378.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database cleanup</H1>
+    <B>Karen Palen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20cleanup&In-Reply-To=%3C376400.30446.qm%40web63104.mail.re1.yahoo.com%3E"
+       TITLE="[Opensim-users] Database cleanup">karen_palen at yahoo.com
+       </A><BR>
+    <I>Fri Dec 25 09:21:06 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003370.html">[Opensim-users] Database cleanup
+</A></li>
+        <LI>Next message: <A HREF="003378.html">[Opensim-users] Disposed PhysActors / *waves finger*, Don't be evil
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3377">[ date ]</a>
+              <a href="thread.html#3377">[ thread ]</a>
+              <a href="subject.html#3377">[ subject ]</a>
+              <a href="author.html#3377">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That did the trick, - thank you!
+
+However, a closer look reveals that the inactive regions are only a small part of the problem :-( Only about 2Mb of the 600Mb total!
+
+500Mb is devoted to assets - 9500 of them! Over half textures and a great many duplicates (to judge from the descriptions anyway).
+
+I don't see any easy fix by inspection, since the assets depend on other tables to identify if they are used.
+
+Karen
+
+--- On Wed, 12/23/09, Michael &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mikeeab at gmail.com</A>&gt; wrote:
+
+&gt;<i> From: Michael &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mikeeab at gmail.com</A>&gt;
+</I>&gt;<i> Subject: Re: [Opensim-users] Database cleanup
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Date: Wednesday, December 23, 2009, 12:21 AM
+</I>&gt;<i> Inactive regions are pretty easy to fix.
+</I>&gt;<i> But, as always, a backup is recommended before poking that
+</I>&gt;<i> thar bear with a stick. :)
+</I>&gt;<i> Ya just need to take your favorite database
+</I>&gt;<i> tool, and connect to your OpenSim db.&#160;First you'll need
+</I>&gt;<i> the UUIDs of any inactive regions.&#160;If you no longer have a
+</I>&gt;<i> record of this somewhere (say, in an old XML or INI region
+</I>&gt;<i> file) you can compare the UUIDs from your active regions to
+</I>&gt;<i> the results of the following query, and take note of the
+</I>&gt;<i> ones that are dead:
+</I>&gt;<i> 
+</I>&gt;<i> SELECT RegionID FROM estate_map;
+</I>&gt;<i> Looks to me like there's only really two
+</I>&gt;<i> tables to worry about here named &quot;prims&quot; and
+</I>&gt;<i> &quot;primshapes&quot;. We'll start with safe queries
+</I>&gt;<i> that don't actually change anything, so you can get a
+</I>&gt;<i> feel for whether this is worthwhile for you. We'll also
+</I>&gt;<i> only do one stale region for the sake of simplicity.
+</I>&gt;<i> Let's start by seeing just how many rows you might be
+</I>&gt;<i> able to remove. Run this simple query:
+</I>&gt;<i> 
+</I>&gt;<i> SELECT COUNT(*) FROM prims WHERE RegionUUID =
+</I>&gt;<i> '&lt;OldRegionUUID&gt;';
+</I>&gt;<i> Replace &lt;OldRegionUUID&gt; with the inactive
+</I>&gt;<i> region's UUID. That query will return a number
+</I>&gt;<i> &#160;equaling the number of stale prims sitting in that
+</I>&gt;<i> table.
+</I>&gt;<i> 
+</I>&gt;<i> That's the prims table, which is easiest
+</I>&gt;<i> since each prim has a RegionUUID column. The primshapes
+</I>&gt;<i> table doesn't, so we'll have to use the prims table
+</I>&gt;<i> to figure out which shapes are stale. The following query
+</I>&gt;<i> will do this for you:
+</I>&gt;<i> 
+</I>&gt;<i> SELECT COUNT(*)&#160;&#160; &#160;FROM
+</I>&gt;<i> primshapes&#160;&#160; &#160;WHERE EXISTS&#160;&#160;
+</I>&gt;<i> &#160;(SELECT * FROM prims WHERE&#160;&#160;
+</I>&gt;<i> &#160;prims.RegionUUID =
+</I>&gt;<i> '&lt;OldRegionUUID&gt;'&#160;&#160; &#160;AND
+</I>&gt;<i> prims.UUID = primshapes.UUID);
+</I>&gt;<i> 
+</I>&gt;<i> This *should* return the exact same number for
+</I>&gt;<i> primshapes that that you got from the query to the prims
+</I>&gt;<i> table. If you do not, stop right here, and don't make
+</I>&gt;<i> any changes to your database.&#160;If both counts are the same
+</I>&gt;<i> though, you now know how many rows you can remove by
+</I>&gt;<i> combining the two counts. So now we'll remove those
+</I>&gt;<i> rows. Make sure you have that backup before the next
+</I>&gt;<i> steps.
+</I>&gt;<i> 
+</I>&gt;<i> Now we'll remove the stale prims from the
+</I>&gt;<i> primshapes table. It's important to do this with
+</I>&gt;<i> primshapes before modifying the prims table. The following
+</I>&gt;<i> query will do so:
+</I>&gt;<i> 
+</I>&gt;<i> DELETE&#160;FROM primshapes&#160;&#160; &#160;WHERE
+</I>&gt;<i> EXISTS&#160;&#160; &#160;(SELECT * FROM prims
+</I>&gt;<i> WHERE&#160;&#160; &#160;prims.RegionUUID =
+</I>&gt;<i> '&lt;OldRegionUUID&gt;'&#160;&#160; &#160;AND
+</I>&gt;<i> prims.UUID = primshapes.UUID);
+</I>&gt;<i> 
+</I>&gt;<i> Finally, the query to remove them from the prims
+</I>&gt;<i> table:
+</I>&gt;<i> DELETE FROM prims WHERE RegionUUID =
+</I>&gt;<i> '&lt;OldRegionUUID&gt;';
+</I>&gt;<i> And there you have it. These queries removed
+</I>&gt;<i> over 9000 rows from my little OpenSim database. You can also
+</I>&gt;<i> remove those stale region UUIDs from the estate_* tables,
+</I>&gt;<i> but that should be pretty easy to do via a GUI of your
+</I>&gt;<i> choice since these tables tend to be very small in
+</I>&gt;<i> comparison to the prim tables. I just left them out of sheer
+</I>&gt;<i> laziness... they're a single row, so the space they take
+</I>&gt;<i> up is insignificant.
+</I>&gt;<i> 
+</I>&gt;<i> Marcus Llewellyn
+</I>&gt;<i> 
+</I>&gt;<i> On Tue, Dec 22, 2009 at 6:27 PM,
+</I>&gt;<i> Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karen_palen at yahoo.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> 
+</I>&gt;<i> I
+</I>&gt;<i> definitely have the remove/replace region problem. I suspect
+</I>&gt;<i> that I have more than that too though :-)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Karen
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -----Inline Attachment Follows-----
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003370.html">[Opensim-users] Database cleanup
+</A></li>
+	<LI>Next message: <A HREF="003378.html">[Opensim-users] Disposed PhysActors / *waves finger*, Don't be evil
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3377">[ date ]</a>
+              <a href="thread.html#3377">[ thread ]</a>
+              <a href="subject.html#3377">[ subject ]</a>
+              <a href="author.html#3377">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

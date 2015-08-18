@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Rationale for limiting number of listeners
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Rationale%20for%20limiting%20number%20of%20listeners&In-Reply-To=%3C5164A4CD.4030009%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012014.html">
+   <LINK REL="Next"  HREF="012018.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Rationale for limiting number of listeners</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Rationale%20for%20limiting%20number%20of%20listeners&In-Reply-To=%3C5164A4CD.4030009%40googlemail.com%3E"
+       TITLE="[Opensim-users] Rationale for limiting number of listeners">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Apr 10 01:31:25 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012014.html">[Opensim-users] Rationale for limiting number of listeners
+</A></li>
+        <LI>Next message: <A HREF="012018.html">[Opensim-users] On Mesh Avatars and skin creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12017">[ date ]</a>
+              <a href="thread.html#12017">[ thread ]</a>
+              <a href="subject.html#12017">[ subject ]</a>
+              <a href="author.html#12017">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I think the chief impact of increasing those numbers will be to increase the number of events being generated.  The more 
+listeners you have, the more events.  This means more CPU use and more memory churn (which means more garbage collection 
+events and potential main scene loop thread delays, which manifests as rubberbanding).
+
+That said, the performance impact may not be too bad, particularly if fewer listeners means more events squeezed through 
+those listeners anyway.  I suggest just trying it to see.  You can get some sense of the number of events being 
+generated via the &quot;xengine status&quot; console command - you're probably already seeing high numbers already if you're 
+hitting maximum allowed listeners.
+
+On 07/04/13 16:31, Dr Ramesh Ramloll wrote:
+&gt;<i> Hello,
+</I>&gt;<i> I was wondering if anyone can explain or throw in a few ideas on the motivation for limiting the number of listeners on
+</I>&gt;<i> a sim.
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Configuring_Scripting">http://opensimulator.org/wiki/Configuring_Scripting</A>
+</I>&gt;<i>
+</I>&gt;<i>   * max_listens_per_region - Change the max number of llListens per region. Default is 1000.
+</I>&gt;<i>   * max_listens_per_script - Change the max number of llListens per script. Default is 64.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have one application which I modified to take into account the max_listens per script which is 64.
+</I>&gt;<i> After changing it, the application grew happily again until it is now hitting the max_listens_per_region.
+</I>&gt;<i> I have some thought on how I may further reduce the number of listeners I use, but am wondering whether it might be a
+</I>&gt;<i> waste of time.
+</I>&gt;<i> For e.g. I could further reduce the number of listeners by making sure every object/3d entity I use does not have more
+</I>&gt;<i> than one listener. However, I will then need to queue up messages that go between the various objects and squeeze
+</I>&gt;<i> everything through only one listener channel ... rather than have data flow between parallel listener channels. Right
+</I>&gt;<i> now, every object use two parallel listener channels. I do not yet know the impact on performance between the two
+</I>&gt;<i> approaches. What do you think?
+</I>&gt;<i> Now question comes up, say, I double max_listens_per_region, what do I stand to lose by doing so?
+</I>&gt;<i> Sorry for the questions .... which might be nooby, but I cannot examine underlying opensim infrastructure to find out.
+</I>&gt;<i> Am far more focused on application layers.
+</I>&gt;<i> --
+</I>&gt;<i> 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i> *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate /Research Associate Professor/, Idaho State University,
+</I>&gt;<i> Pocatello, ID 83209 Tel: 208-240-0040
+</I>&gt;<i> Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn &lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;, DeepSemaphore LLC
+</I>&gt;<i> &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile &lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012014.html">[Opensim-users] Rationale for limiting number of listeners
+</A></li>
+	<LI>Next message: <A HREF="012018.html">[Opensim-users] On Mesh Avatars and skin creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12017">[ date ]</a>
+              <a href="thread.html#12017">[ thread ]</a>
+              <a href="subject.html#12017">[ subject ]</a>
+              <a href="author.html#12017">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

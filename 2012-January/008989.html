@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Crash on collision
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3C025201ccccde%2461f2f460%2425d8dd20%24%40reactiongrid.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008986.html">
+   <LINK REL="Next"  HREF="008950.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Crash on collision</H1>
+    <B>Chris Hart</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3C025201ccccde%2461f2f460%2425d8dd20%24%40reactiongrid.com%3E"
+       TITLE="[Opensim-users] Crash on collision">chris at reactiongrid.com
+       </A><BR>
+    <I>Sat Jan  7 02:47:57 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008986.html">[Opensim-users] Crash on collision
+</A></li>
+        <LI>Next message: <A HREF="008950.html">[Opensim-users] Crash on collision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8989">[ date ]</a>
+              <a href="thread.html#8989">[ thread ]</a>
+              <a href="subject.html#8989">[ subject ]</a>
+              <a href="author.html#8989">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If I have physical prims causing trouble on a region then here's what I
+normally do: 
+
+Log in to the region and turn on beacons in your client (View - Beacons) and
+check the box to view Physical Objects. Even with physical_prim set to false
+you will still see green lines highlighting objects with the physical flag
+set to true (though thankfully they should not be moving or causing trouble
+while you have physical prims disabled). 
+
+If you see any of those highlighted objects embedded in the ground, or
+something set to be physical that shouldn't be, then you may have found the
+cause of your crashes - you could then right-click and edit the object, then
+in the uncheck the physical checkbox and change it to be a regular prim,
+reboot the region with physics re-enabled and see if your crashes return or
+not. If it crashes, repeat the process 'til you find the nasty that causes
+the trouble :)
+
+Hope this helps,
+
+Chris 
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Justin
+Clark-Casey
+Sent: 06 January 2012 4:35 PM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Crash on collision
+
+Ok, so at least it's not completely insane.  If physical objects aren't
+important to you then I suggest running with this setting for now until/if
+git master physics libraries are updated or some other change is made.
+
+Or you may want to see how many &quot;Active objects&quot; are in the script stats
+(active objects are physical objects) and try removing them if they
+shouldn't be there.  Unfortunately, you might need to hunt for them.
+
+On 06/01/12 21:18, Klaus-E. Klingner wrote:
+&gt;<i> Hallo Justin,
+</I>&gt;<i>
+</I>&gt;<i> this seems to be working. Without problems.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Klaus
+</I>&gt;<i>
+</I>&gt;<i> On 05.01.2012 00:07, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> What happens if you set physical_prim = false in [Startup] with no 
+</I>&gt;&gt;<i> avatars? As this prevents prims temporarily being physical then there 
+</I>&gt;&gt;<i> will be no colliding active at all and nothing should crash. If it still
+</I>does then something more bizarre is going on.
+&gt;&gt;<i>
+</I>&gt;&gt;<i> On 04/01/12 23:04, Klaus-E. Klingner wrote:
+</I>&gt;&gt;&gt;<i> Done. Without success :( Same result. This time even without an 
+</I>&gt;&gt;&gt;<i> avatar online. It crashed shortly after the world started.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Regards
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Klaus
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Von meinem iPad gesendet
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Am 04.01.2012 um 23:20 schrieb &quot;M.E. Verhagen&quot;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">marceled9 at gmail.com</A>&gt;:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I also changed the ulimit settings in the limits.conf file in 
+</I>&gt;&gt;&gt;&gt;<i> /etc/security/limits.conf
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Changing the ulimit with the ulimit -s 212144 does not seem to be
+</I>persistent, it gets setted back.
+&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The values I entered are:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> * hard stack 524288
+</I>&gt;&gt;&gt;&gt;<i> * soft stack 524288
+</I>&gt;&gt;&gt;&gt;<i> * soft nofile 2048
+</I>&gt;&gt;&gt;&gt;<i> * hard nofile 2048
+</I>&gt;&gt;&gt;&gt;<i> * soft memlock 256
+</I>&gt;&gt;&gt;&gt;<i> * hard memlock 256
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The settings get effective after a reboot.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> As a bonus OpenSim uses a thirth less memory !
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> You can try experimenting with these values, you should be carefull 
+</I>&gt;&gt;&gt;&gt;<i> though these settings (just like the sysctl -a) can reduce crashes, 
+</I>&gt;&gt;&gt;&gt;<i> increase system speed and reduce memory usage, but false settings can
+</I>also also cause system unresponsiveness and system crashes.
+&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+--
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008986.html">[Opensim-users] Crash on collision
+</A></li>
+	<LI>Next message: <A HREF="008950.html">[Opensim-users] Crash on collision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8989">[ date ]</a>
+              <a href="thread.html#8989">[ thread ]</a>
+              <a href="subject.html#8989">[ subject ]</a>
+              <a href="author.html#8989">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

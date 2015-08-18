@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Trouble with Architecting a Scalable ROBUST Solution
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Trouble%20with%20Architecting%20a%20Scalable%20ROBUST%20Solution&In-Reply-To=%3CCOL111-DS11151B18BE83220A407ACACD8F0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011075.html">
+   <LINK REL="Next"  HREF="011050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Trouble with Architecting a Scalable ROBUST Solution</H1>
+    <B>Chuck Lesko</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Trouble%20with%20Architecting%20a%20Scalable%20ROBUST%20Solution&In-Reply-To=%3CCOL111-DS11151B18BE83220A407ACACD8F0%40phx.gbl%3E"
+       TITLE="[Opensim-users] Trouble with Architecting a Scalable ROBUST Solution">chucklesko at msn.com
+       </A><BR>
+    <I>Tue Oct  9 14:06:41 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011075.html">[Opensim-users] Map config wiki page
+</A></li>
+        <LI>Next message: <A HREF="011050.html">[Opensim-users] Trouble with Architecting a Scalable ROBUST	Solution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11049">[ date ]</a>
+              <a href="thread.html#11049">[ thread ]</a>
+              <a href="subject.html#11049">[ subject ]</a>
+              <a href="author.html#11049">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi All: I am having trouble with architecting a scalable ROBUST
+OpenSimulator solution.  I am using 0.7.4 and I am using multiple Ubuntu
+12.04 servers.  I am trying to setup the Robust solution so that my Robust
+Server is the only server with a public address.  The other Servers are
+using a private IP 10.10.10.x/24. I have both a public and private IP bound
+to the Robust Server.  For now, all firewalls are turned off so no port
+issues here and I can successfully run Simulators directly on the Robust
+Server but when I try to put the Simulators on a different server I can't
+get it to work.  So here is the set up.
+
+Robust Server: 
+
+                Public IP: 20.30.40.50
+
+                VLAN IP: 10.10.10.10
+
+MySQL Server (MySQL):
+
+                VLAN IP: 10.10.10.20
+
+Database: dbRobust
+
+Database User: Robust-User    pwd:Robust1234
+
+Simulator Server1:
+
+                VLAN IP: 10.10.10.30
+
+Simulator Server2:
+
+                VLAN IP: 10.10.10.40
+
+First I start up the Robust Server (mono Robust.exe); the only Robust.ini
+changes I make are:
+
+[DatabaseService]
+
+    StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+
+    ConnectionString = &quot;Data Source=10.10.10.20;Database=dbRobust;User
+ID=Robust-User;Password=Robust1234;Old Guids=true;&quot;
+
+[LoginService]
+
+    MapTileURL = &quot;<A HREF="http://20.30.40.50:8002">http://20.30.40.50:8002</A>&quot;;
+
+[GridInfoService]
+
+    login = &quot;<A HREF="http://20.30.40.50:8002">http://20.30.40.50:8002</A>&quot;;
+
+    gridname = 'My Grid&quot;
+
+    gridnick = &quot;MyGrid&quot;
+
+ 
+
+All appears successful here, no errors, I create an estate user account and
+move to setting up my first Simulator. On Simulator Server1 in /bin I make
+no changes to OpenSimDefault.ini and then make the following change to
+Opensim.ini by commenting out the standalone.ini and uncomment the Grid.ini
+
+[Architecture]
+
+    Include-Architecture = &quot;config-include/Grid.ini&quot;
+
+Next on Simulator Server1 I make a copy of GridCommon.ini.example named
+GridCommon.ini and make the following changes to the default settings:
+
+[DatabaseService]
+
+    StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+
+    ConnectionString = &quot;Data Source=10.10.10.20;Database=dbRobust;User
+ID=Robust-User;Password=Robust1234;Old Guids=true;&quot;
+
+Next, in GridCommon.ini, I change all the values
+&quot;<A HREF="http://mygridserver.com:8003">http://mygridserver.com:8003</A>&quot; to &quot;<A HREF="http://10.10.10.10:8003">http://10.10.10.10:8003</A>&quot; and all the
+values &quot;<A HREF="http://mygridserver.com:8002">http://mygridserver.com:8002</A>&quot; to &quot;<A HREF="http://10.10.10.10:8002">http://10.10.10.10:8002</A>&quot; 
+
+When I run mono OpenSim.exe on the Simulator Server1 (10.10.10.30) these are
+the entries I make that set up the region.ini:
+
+[Sim00]
+
+   RegionUUID = 54321740-4321-1234-ba4c-29207b010072
+
+   Location = 1000,1000
+
+   InternalAddress = 10.10.10.30
+
+   InternalPort = 9000
+
+   AllowAlternatePorts = False
+
+   ExternalHostName = 20.30.40.50
+
+ 
+
+I copy the same procedure above and when I run mono OpenSim.exe on the
+Simulator Server2 (10.10.10.40) these are the entries I make to set up the
+region.ini:
+
+[Sim01]
+
+   RegionUUID = 54321740-4321-1234-ba4c-29207b010094
+
+   Location = 1000,1001
+
+   InternalAddress = 10.10.10.40
+
+   InternalPort = 9000
+
+   AllowAlternatePorts = False
+
+   ExternalHostName = 20.30.40.50
+
+ 
+
+When I try to log in using my client viewer it begins the handshake but
+fails to log in.  Where am I going wrong here?
+
+ 
+
+ 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121009/f4b0c58b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20121009/f4b0c58b/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011075.html">[Opensim-users] Map config wiki page
+</A></li>
+	<LI>Next message: <A HREF="011050.html">[Opensim-users] Trouble with Architecting a Scalable ROBUST	Solution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11049">[ date ]</a>
+              <a href="thread.html#11049">[ thread ]</a>
+              <a href="subject.html#11049">[ subject ]</a>
+              <a href="author.html#11049">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

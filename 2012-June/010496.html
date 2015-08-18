@@ -1,0 +1,500 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Diva WiFi Query and Groups Modules (Chris	Stevens)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Diva%20WiFi%20Query%20and%20Groups%20Modules%20%28Chris%0A%09Stevens%29&In-Reply-To=%3C4FD2988D.40002%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010489.html">
+   <LINK REL="Next"  HREF="010490.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Diva WiFi Query and Groups Modules (Chris	Stevens)</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Diva%20WiFi%20Query%20and%20Groups%20Modules%20%28Chris%0A%09Stevens%29&In-Reply-To=%3C4FD2988D.40002%40googlemail.com%3E"
+       TITLE="[Opensim-users] Diva WiFi Query and Groups Modules (Chris	Stevens)">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Jun  9 02:27:57 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010489.html">[Opensim-users] Diva WiFi Query and Groups Modules (Chris	Stevens)
+</A></li>
+        <LI>Next message: <A HREF="010490.html">[Opensim-users] limitations on number of open listeners in opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10496">[ date ]</a>
+              <a href="thread.html#10496">[ thread ]</a>
+              <a href="subject.html#10496">[ subject ]</a>
+              <a href="author.html#10496">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Regarding 2, in grid mode one can enable a handler for creating users remotely [1].  This calls the same routines as 
+&quot;create user&quot; on the robust console command line and so creates user entries and a user inventory.  In 0.7.3.1, one can 
+also set CreateDefaultAvatarEntries = true in the [UserAccountService] section of Robust.ini to create the minimum set 
+of body parts and clothing necessary and the right appearance entries to get an avatar to display in viewer 2/3 (in 
+viewer 1 one would see a Ruth even if there were no body parts or clothing).
+
+This facilities is currently only available in grid mode and the avatar/body parts used are not configurable except by 
+direct patching.
+
+Unfortunately, this facility is not available in standalone mode.  In standalone, one can call the create user command 
+via RemoteAdmin [2] instead.  This should still create a user entry and inventory but it is a different code path that 
+also has facilities to create clothing entries by reading from an XML file.  However, I don't know for sure how well 
+this works right now with the various viewer combinations (I've never tried it, maybe someone can enlighten me).
+
+In the future, the paths need to be brought together and provide the same configurability.
+
+I suspect all other modules either set data via calling services (e.g. useraccounts, inventory) or even hit the database 
+directly.
+
+[1] <A HREF="http://opensimulator.org/wiki/UserManipulation">http://opensimulator.org/wiki/UserManipulation</A>
+[2] <A HREF="http://opensimulator.org/wiki/RemoteAdmin">http://opensimulator.org/wiki/RemoteAdmin</A>
+
+On 08/06/12 16:07, Chris Stevens wrote:
+&gt;<i> Thanks for the advice Chris.
+</I>&gt;<i>
+</I>&gt;<i> Discovered the answer to 1) Was that I hadn't changed the SQL .dll to the diva one (this resolved that problem neatly).
+</I>&gt;<i>
+</I>&gt;<i> 2) Yeah this is proving a bit of a bugbear... the nearest we've found is building a batch file form a spreadsheet (not
+</I>&gt;<i> ideal); though definitely something that should be a feature.
+</I>&gt;<i>
+</I>&gt;<i> 3) Will take a look!
+</I>&gt;<i>
+</I>&gt;<i> Thanks again.
+</I>&gt;<i>
+</I>&gt;<i> On 8 June 2012 14:41, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     Send Opensim-users mailing list submissions to
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>     or, via email, send a message with subject or body 'help' to
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     You can reach the person managing the list at
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     When replying, please edit your Subject line so it is more specific
+</I>&gt;<i>     than &quot;Re: Contents of Opensim-users digest...&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Today's Topics:
+</I>&gt;<i>
+</I>&gt;<i>        1. Diva WiFi Query and Groups Modules (Chris Stevens)
+</I>&gt;<i>        2. Re: Windows 8 (Robert Martin)
+</I>&gt;<i>        3. Re: Diva WiFi Query and Groups Modules (Fleep Tuque)
+</I>&gt;<i>        4. Re: Diva WiFi Query and Groups Modules (Fleep Tuque)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i>     Message: 1
+</I>&gt;<i>     Date: Fri, 8 Jun 2012 12:25:18 +0100
+</I>&gt;<i>     From: Chris Stevens &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;&gt;
+</I>&gt;<i>     To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     Subject: [Opensim-users] Diva WiFi Query and Groups Modules
+</I>&gt;<i>     Message-ID:
+</I>&gt;<i>     &lt;CAJE-OuMcD04pwroPttAc7Euw_Xnd=<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">9+ucv4_UXwvXryBCi41Yw at mail.gmail.com</A> &lt;mailto:9%<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">2Bucv4_UXwvXryBCi41Yw at mail.gmail.com</A>&gt;&gt;
+</I>&gt;<i>     Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i>     Three queries really.
+</I>&gt;<i>
+</I>&gt;<i>     1) I have a Robust Opensim install (which works fine), with Diva WIFI. I am
+</I>&gt;<i>     able to add users using WiFi (they show up in the database and can be
+</I>&gt;<i>     logged in)... but the auto-update of how many users/regions in WiFi doesn't
+</I>&gt;<i>     work, and neither does user search. It's like WiFi can't find my database.
+</I>&gt;<i>     Can provide copies of my robust.ini and grid_common.ini if need be, but
+</I>&gt;<i>     would rather ask if there is something obvious I am missing in my wifi
+</I>&gt;<i>     config.
+</I>&gt;<i>
+</I>&gt;<i>     2) Is there any way to do bulk upload of users into the database without
+</I>&gt;<i>     creating a custom app? I was looking at extending WiFi but that appears to
+</I>&gt;<i>     be a non-starter given the way it's implemented. Does anyone know if I
+</I>&gt;<i>     would need to modify more than the user's table to get stuff set up
+</I>&gt;<i>     properly?
+</I>&gt;<i>
+</I>&gt;<i>     3) Anyone familiar with implementing group modules and what functionality
+</I>&gt;<i>     they give? Have been looking into Simian and the xmlrpc versions... but not
+</I>&gt;<i>     having much luck.
+</I>&gt;<i>
+</I>&gt;<i>     Regards,
+</I>&gt;<i>     Chris.
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     Chris Stevens
+</I>&gt;<i>     Lead Programmer
+</I>&gt;<i>     Daden Limited
+</I>&gt;<i>
+</I>&gt;<i>     t: +44 (0)121 250 5678 &lt;tel:%2B44%20%280%29121%20250%205678&gt;
+</I>&gt;<i>     e: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;
+</I>&gt;<i>     w: www.daden.co.uk &lt;<A HREF="http://www.daden.co.uk">http://www.daden.co.uk</A>&gt;
+</I>&gt;<i>     skype: christopher.michael.stevens
+</I>&gt;<i>     sl: <A HREF="http://www.slurl.com/secondlife/daden%20prime/160/184/26">http://www.slurl.com/secondlife/daden%20prime/160/184/26</A>
+</I>&gt;<i>     sl IM: Chris Taselian
+</I>&gt;<i>
+</I>&gt;<i>     Daden specialise in immersive learning &amp; training systems, built
+</I>&gt;<i>     environment visualisations, and creating interactive virtual personalities
+</I>&gt;<i>     (chatbots).
+</I>&gt;<i>
+</I>&gt;<i>     Daden are a Linden Lab Gold Solution Provider for Second Life.
+</I>&gt;<i>     -------------- next part --------------
+</I>&gt;<i>     An HTML attachment was scrubbed...
+</I>&gt;<i>     URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120608/27f4ec3e/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120608/27f4ec3e/attachment-0001.html</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     ------------------------------
+</I>&gt;<i>
+</I>&gt;<i>     Message: 2
+</I>&gt;<i>     Date: Fri, 8 Jun 2012 09:02:40 -0400
+</I>&gt;<i>     From: Robert Martin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">robertltux at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">robertltux at gmail.com</A>&gt;&gt;
+</I>&gt;<i>     To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">InuYasha.Meiji at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">InuYasha.Meiji at gmail.com</A>&gt;, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     Subject: Re: [Opensim-users] Windows 8
+</I>&gt;<i>     Message-ID:
+</I>&gt;<i>     &lt;CANyFgZ5Fx2STu3hdwf=<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nFg5RZBjBGmYU97E8iebCfPhVJuEKKw at mail.gmail.com</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nFg5RZBjBGmYU97E8iebCfPhVJuEKKw at mail.gmail.com</A>&gt;&gt;
+</I>&gt;<i>     Content-Type: text/plain; charset=ISO-8859-1
+</I>&gt;<i>
+</I>&gt;<i>     On Fri, Jun 8, 2012 at 3:52 AM, InuYasha Meiji &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>      &gt; Her computer came with a OEM disc ?of Vista, and when her mobo went bad and
+</I>&gt;<i>      &gt; was replaced the OEN thinks we are trying to use it on a new machine. ?We
+</I>&gt;<i>      &gt; found the free trial Windows 8. ?I think the RP release. ?It runs but we do
+</I>&gt;<i>      &gt; hate that stupif interface.
+</I>&gt;<i>
+</I>&gt;<i>     well as far as the OEM is concerned you did replace it with a new machine
+</I>&gt;<i>     you will need to get your hands on a &quot;normal&quot; disc and a matching key.
+</I>&gt;<i>     Do you have any small computer shops in your area?? (you can hand wave
+</I>&gt;<i>     into getting an OEM copy of 7 since you did buy that Mobo)
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     Robert L Martin
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     ------------------------------
+</I>&gt;<i>
+</I>&gt;<i>     Message: 3
+</I>&gt;<i>     Date: Fri, 8 Jun 2012 09:39:44 -0400
+</I>&gt;<i>     From: Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt;&gt;
+</I>&gt;<i>     To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     Subject: Re: [Opensim-users] Diva WiFi Query and Groups Modules
+</I>&gt;<i>     Message-ID:
+</I>&gt;<i>     &lt;CAG6z+U5NHcS0fr1vZTcdjQ0XZb8vsKf9ETBD1e2A=<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">yB1p-_Hyw at mail.gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">yB1p-_Hyw at mail.gmail.com</A>&gt;&gt;
+</I>&gt;<i>     Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i>     Hi Chris,
+</I>&gt;<i>
+</I>&gt;<i>     1)  When you say the auto-update of users/regions doesn't work, do you mean
+</I>&gt;<i>     on the splash screen when users log in or somewhere else?
+</I>&gt;<i>
+</I>&gt;<i>     If the former, make sure that you added the section from the
+</I>&gt;<i>     wifi.ini.example to your [DatabaseService] section in the Robust.HG.ini
+</I>&gt;<i>     file - it looks like this:
+</I>&gt;<i>
+</I>&gt;<i>     [DatabaseService]
+</I>&gt;<i>         ; If you want Wifi to use some advanced options, like displaying
+</I>&gt;<i>     ; the number of users online on the splash page, change this to
+</I>&gt;<i>     ; Diva.Data.MySQL.dll. It is 100% compatible with OpenSim's
+</I>&gt;<i>         StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i>         ConnectionString = &quot;Data Source=localhost;Database=opensim;User
+</I>&gt;<i>     ID=opensim;Password=opensim123;&quot;
+</I>&gt;<i>
+</I>&gt;<i>     2)  I suspect that someone has developed ways to do this, but I haven't
+</I>&gt;<i>     figure out how yet and would also be interested in learning more about bulk
+</I>&gt;<i>     account creations.
+</I>&gt;<i>
+</I>&gt;<i>     3)  I highly recommend Mimetic Core's Opensim Services bundle, which
+</I>&gt;<i>     includes Groups, Offline IMs, Profiles, and Search functionality.  (And
+</I>&gt;<i>     darn it again I will say those things should all be bundled with stock
+</I>&gt;<i>     Opensim!)
+</I>&gt;<i>
+</I>&gt;<i>     <A HREF="http://opensim.odosys.net/files/">http://opensim.odosys.net/files/</A>
+</I>&gt;<i>
+</I>&gt;<i>     There are versions of 0.7.2 and 0.7.3 available, and if you want examples
+</I>&gt;<i>     of how I installed it, take a look at <A HREF="http://fleep.wikispaces.com">http://fleep.wikispaces.com</A> under the
+</I>&gt;<i>     11/19/11 entry (search the page).
+</I>&gt;<i>
+</I>&gt;<i>     Good luck!
+</I>&gt;<i>
+</I>&gt;<i>     - Chris/Fleep
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;<i>     Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;<i>     UCIT Instructional &amp; Research Computing
+</I>&gt;<i>     University of Cincinnati
+</I>&gt;<i>     406A Zimmer Hall
+</I>&gt;<i>     315 College Drive
+</I>&gt;<i>     PO BOX 210088
+</I>&gt;<i>     Cincinnati, OH 45221-0088
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;<i>     (513) 556-3018 &lt;tel:%28513%29%20556-3018&gt;
+</I>&gt;<i>
+</I>&gt;<i>     <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;<i>
+</I>&gt;<i>     On Fri, Jun 8, 2012 at 7:25 AM, Chris Stevens &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;&gt;wrote:
+</I>&gt;<i>
+</I>&gt;<i>      &gt; Three queries really.
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; 1) I have a Robust Opensim install (which works fine), with Diva WIFI. I
+</I>&gt;<i>      &gt; am able to add users using WiFi (they show up in the database and can be
+</I>&gt;<i>      &gt; logged in)... but the auto-update of how many users/regions in WiFi doesn't
+</I>&gt;<i>      &gt; work, and neither does user search. It's like WiFi can't find my database.
+</I>&gt;<i>      &gt; Can provide copies of my robust.ini and grid_common.ini if need be, but
+</I>&gt;<i>      &gt; would rather ask if there is something obvious I am missing in my wifi
+</I>&gt;<i>      &gt; config.
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; 2) Is there any way to do bulk upload of users into the database without
+</I>&gt;<i>      &gt; creating a custom app? I was looking at extending WiFi but that appears to
+</I>&gt;<i>      &gt; be a non-starter given the way it's implemented. Does anyone know if I
+</I>&gt;<i>      &gt; would need to modify more than the user's table to get stuff set up
+</I>&gt;<i>      &gt; properly?
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; 3) Anyone familiar with implementing group modules and what functionality
+</I>&gt;<i>      &gt; they give? Have been looking into Simian and the xmlrpc versions... but not
+</I>&gt;<i>      &gt; having much luck.
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; Regards,
+</I>&gt;<i>      &gt; Chris.
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; --
+</I>&gt;<i>      &gt; Chris Stevens
+</I>&gt;<i>      &gt; Lead Programmer
+</I>&gt;<i>      &gt; Daden Limited
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; t: +44 (0)121 250 5678 &lt;tel:%2B44%20%280%29121%20250%205678&gt;
+</I>&gt;<i>      &gt; e: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;
+</I>&gt;<i>      &gt; w: www.daden.co.uk &lt;<A HREF="http://www.daden.co.uk">http://www.daden.co.uk</A>&gt;
+</I>&gt;<i>      &gt; skype: christopher.michael.stevens
+</I>&gt;<i>      &gt; sl: <A HREF="http://www.slurl.com/secondlife/daden%20prime/160/184/26">http://www.slurl.com/secondlife/daden%20prime/160/184/26</A>
+</I>&gt;<i>      &gt; sl IM: Chris Taselian
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; Daden specialise in immersive learning &amp; training systems, built
+</I>&gt;<i>      &gt; environment visualisations, and creating interactive virtual personalities
+</I>&gt;<i>      &gt; (chatbots).
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; Daden are a Linden Lab Gold Solution Provider for Second Life.
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; _______________________________________________
+</I>&gt;<i>      &gt; Opensim-users mailing list
+</I>&gt;<i>      &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>      &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>      &gt;
+</I>&gt;<i>     -------------- next part --------------
+</I>&gt;<i>     An HTML attachment was scrubbed...
+</I>&gt;<i>     URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120608/be7ec640/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120608/be7ec640/attachment-0001.html</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     ------------------------------
+</I>&gt;<i>
+</I>&gt;<i>     Message: 4
+</I>&gt;<i>     Date: Fri, 8 Jun 2012 09:41:54 -0400
+</I>&gt;<i>     From: Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt;&gt;
+</I>&gt;<i>     To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     Subject: Re: [Opensim-users] Diva WiFi Query and Groups Modules
+</I>&gt;<i>     Message-ID:
+</I>&gt;<i>     &lt;CAG6z+U6h+==kGt2j=<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">EVZ_TbM8RCxwY0wbXZQw2O6_Mx1WKP5VA at mail.gmail.com</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">EVZ_TbM8RCxwY0wbXZQw2O6_Mx1WKP5VA at mail.gmail.com</A>&gt;&gt;
+</I>&gt;<i>     Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i>     Oops sorry, that link to my changelog should be
+</I>&gt;<i>     <A HREF="http://fleep.wikispaces.com/FleepGrid">http://fleep.wikispaces.com/FleepGrid</A> for examples.  I also have copies of
+</I>&gt;<i>     my opensim.ini and robust.HG.ini files there as well, in case that might be
+</I>&gt;<i>     helpful.
+</I>&gt;<i>
+</I>&gt;<i>     - Fleep
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;<i>     Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;<i>     UCIT Instructional &amp; Research Computing
+</I>&gt;<i>     University of Cincinnati
+</I>&gt;<i>     406A Zimmer Hall
+</I>&gt;<i>     315 College Drive
+</I>&gt;<i>     PO BOX 210088
+</I>&gt;<i>     Cincinnati, OH 45221-0088
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;<i>     (513) 556-3018 &lt;tel:%28513%29%20556-3018&gt;
+</I>&gt;<i>
+</I>&gt;<i>     <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;<i>
+</I>&gt;<i>     On Fri, Jun 8, 2012 at 9:39 AM, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>      &gt; Hi Chris,
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; 1)  When you say the auto-update of users/regions doesn't work, do you
+</I>&gt;<i>      &gt; mean on the splash screen when users log in or somewhere else?
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; If the former, make sure that you added the section from the
+</I>&gt;<i>      &gt; wifi.ini.example to your [DatabaseService] section in the Robust.HG.ini
+</I>&gt;<i>      &gt; file - it looks like this:
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; [DatabaseService]
+</I>&gt;<i>      &gt;     ; If you want Wifi to use some advanced options, like displaying
+</I>&gt;<i>      &gt; ; the number of users online on the splash page, change this to
+</I>&gt;<i>      &gt;  ; Diva.Data.MySQL.dll. It is 100% compatible with OpenSim's
+</I>&gt;<i>      &gt;     StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i>      &gt;     ConnectionString = &quot;Data Source=localhost;Database=opensim;User
+</I>&gt;<i>      &gt; ID=opensim;Password=opensim123;&quot;
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; 2)  I suspect that someone has developed ways to do this, but I haven't
+</I>&gt;<i>      &gt; figure out how yet and would also be interested in learning more about bulk
+</I>&gt;<i>      &gt; account creations.
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; 3)  I highly recommend Mimetic Core's Opensim Services bundle, which
+</I>&gt;<i>      &gt; includes Groups, Offline IMs, Profiles, and Search functionality.  (And
+</I>&gt;<i>      &gt; darn it again I will say those things should all be bundled with stock
+</I>&gt;<i>      &gt; Opensim!)
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; <A HREF="http://opensim.odosys.net/files/">http://opensim.odosys.net/files/</A>
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; There are versions of 0.7.2 and 0.7.3 available, and if you want examples
+</I>&gt;<i>      &gt; of how I installed it, take a look at <A HREF="http://fleep.wikispaces.com">http://fleep.wikispaces.com</A> under
+</I>&gt;<i>      &gt; the 11/19/11 entry (search the page).
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; Good luck!
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; - Chris/Fleep
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;<i>      &gt; Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;<i>      &gt; UCIT Instructional &amp; Research Computing
+</I>&gt;<i>      &gt; University of Cincinnati
+</I>&gt;<i>      &gt; 406A Zimmer Hall
+</I>&gt;<i>      &gt; 315 College Drive
+</I>&gt;<i>      &gt; PO BOX 210088
+</I>&gt;<i>      &gt; Cincinnati, OH 45221-0088
+</I>&gt;<i>      &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;<i>      &gt; (513) 556-3018 &lt;tel:%28513%29%20556-3018&gt;
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt; On Fri, Jun 8, 2012 at 7:25 AM, Chris Stevens &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;&gt;wrote:
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt;&gt; Three queries really.
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; 1) I have a Robust Opensim install (which works fine), with Diva WIFI. I
+</I>&gt;<i>      &gt;&gt; am able to add users using WiFi (they show up in the database and can be
+</I>&gt;<i>      &gt;&gt; logged in)... but the auto-update of how many users/regions in WiFi doesn't
+</I>&gt;<i>      &gt;&gt; work, and neither does user search. It's like WiFi can't find my database.
+</I>&gt;<i>      &gt;&gt; Can provide copies of my robust.ini and grid_common.ini if need be, but
+</I>&gt;<i>      &gt;&gt; would rather ask if there is something obvious I am missing in my wifi
+</I>&gt;<i>      &gt;&gt; config.
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; 2) Is there any way to do bulk upload of users into the database without
+</I>&gt;<i>      &gt;&gt; creating a custom app? I was looking at extending WiFi but that appears to
+</I>&gt;<i>      &gt;&gt; be a non-starter given the way it's implemented. Does anyone know if I
+</I>&gt;<i>      &gt;&gt; would need to modify more than the user's table to get stuff set up
+</I>&gt;<i>      &gt;&gt; properly?
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; 3) Anyone familiar with implementing group modules and what functionality
+</I>&gt;<i>      &gt;&gt; they give? Have been looking into Simian and the xmlrpc versions... but not
+</I>&gt;<i>      &gt;&gt; having much luck.
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; Regards,
+</I>&gt;<i>      &gt;&gt; Chris.
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; --
+</I>&gt;<i>      &gt;&gt; Chris Stevens
+</I>&gt;<i>      &gt;&gt; Lead Programmer
+</I>&gt;<i>      &gt;&gt; Daden Limited
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; t: +44 (0)121 250 5678 &lt;tel:%2B44%20%280%29121%20250%205678&gt;
+</I>&gt;<i>      &gt;&gt; e: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;
+</I>&gt;<i>      &gt;&gt; w: www.daden.co.uk &lt;<A HREF="http://www.daden.co.uk">http://www.daden.co.uk</A>&gt;
+</I>&gt;<i>      &gt;&gt; skype: christopher.michael.stevens
+</I>&gt;<i>      &gt;&gt; sl: <A HREF="http://www.slurl.com/secondlife/daden%20prime/160/184/26">http://www.slurl.com/secondlife/daden%20prime/160/184/26</A>
+</I>&gt;<i>      &gt;&gt; sl IM: Chris Taselian
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; Daden specialise in immersive learning &amp; training systems, built
+</I>&gt;<i>      &gt;&gt; environment visualisations, and creating interactive virtual personalities
+</I>&gt;<i>      &gt;&gt; (chatbots).
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; Daden are a Linden Lab Gold Solution Provider for Second Life.
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;&gt; _______________________________________________
+</I>&gt;<i>      &gt;&gt; Opensim-users mailing list
+</I>&gt;<i>      &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>      &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>      &gt;&gt;
+</I>&gt;<i>      &gt;
+</I>&gt;<i>      &gt;
+</I>&gt;<i>     -------------- next part --------------
+</I>&gt;<i>     An HTML attachment was scrubbed...
+</I>&gt;<i>     URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120608/230d35b0/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120608/230d35b0/attachment.html</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     ------------------------------
+</I>&gt;<i>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>     End of Opensim-users Digest, Vol 58, Issue 15
+</I>&gt;<i>     *********************************************
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Chris Stevens
+</I>&gt;<i> Lead Programmer
+</I>&gt;<i> Daden Limited
+</I>&gt;<i>
+</I>&gt;<i> t: +44 (0)121 250 5678
+</I>&gt;<i> e: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;
+</I>&gt;<i> w: www.daden.co.uk &lt;<A HREF="http://www.daden.co.uk">http://www.daden.co.uk</A>&gt;
+</I>&gt;<i> skype: christopher.michael.stevens
+</I>&gt;<i> sl: <A HREF="http://www.slurl.com/secondlife/daden%20prime/160/184/26">http://www.slurl.com/secondlife/daden%20prime/160/184/26</A>
+</I>&gt;<i> sl IM: Chris Taselian
+</I>&gt;<i>
+</I>&gt;<i> Daden specialise in immersive learning &amp; training systems, built environment visualisations, and creating interactive
+</I>&gt;<i> virtual personalities (chatbots).
+</I>&gt;<i>
+</I>&gt;<i> Daden are a Linden Lab Gold Solution Provider for Second Life.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010489.html">[Opensim-users] Diva WiFi Query and Groups Modules (Chris	Stevens)
+</A></li>
+	<LI>Next message: <A HREF="010490.html">[Opensim-users] limitations on number of open listeners in opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10496">[ date ]</a>
+              <a href="thread.html#10496">[ thread ]</a>
+              <a href="subject.html#10496">[ subject ]</a>
+              <a href="author.html#10496">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

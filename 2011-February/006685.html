@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] User exists in MySQL but ROBUST says user not found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20User%20exists%20in%20MySQL%20but%20ROBUST%20says%20user%20not%20found&In-Reply-To=%3CAANLkTimVwVQiGW%3DqEJc-cRd2BZ84%3DRBhPNsA5LojWWp0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006688.html">
+   <LINK REL="Next"  HREF="006686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] User exists in MySQL but ROBUST says user not found</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20User%20exists%20in%20MySQL%20but%20ROBUST%20says%20user%20not%20found&In-Reply-To=%3CAANLkTimVwVQiGW%3DqEJc-cRd2BZ84%3DRBhPNsA5LojWWp0%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] User exists in MySQL but ROBUST says user not found">fleep513 at gmail.com
+       </A><BR>
+    <I>Wed Feb 23 17:52:32 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006688.html">[Opensim-users] Help with getting opensim working on ubuntu
+</A></li>
+        <LI>Next message: <A HREF="006686.html">[Opensim-users] User exists in MySQL but ROBUST says user not	found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6685">[ date ]</a>
+              <a href="thread.html#6685">[ thread ]</a>
+              <a href="subject.html#6685">[ subject ]</a>
+              <a href="author.html#6685">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I'm attempting to get 0.7.0.2 running in grid mode on our campus Win2008
+servers and I can't figure out for the life of me what's wrong.
+
+I've got FleepGrid running 0.7.0.2 on WinXP in grid mode at home, the only
+other difference is that FleepGrid is all on a single physical machine, and
+the campus grid is running on two separate virtual machines.  This is the
+first time I've tried setting up a grid where the grid services are on a
+different (virtual) machine than the simulators.  At the moment, I am just
+trying to get everything working properly on the university's internal
+network.
+
+This morning when I first installed everything, it seemed to go fine.  I
+successfully created a user &quot;Fleep Tuque&quot; through ROBUST console.  I added
+the first region &quot;University of Cincinnati&quot; to the region.ini file.  I
+logged in.  All seemed well.  I rezzed a prim, stored in inventory, attached
+to head to test attachment points.  Still good, I see everything coming
+through on the console.  I upload an OAR file with our campus build in
+progress, still all good - everything seems to load properly, it looks right
+in-world.  I'm thinking yay, all good at least on the internal network.
+
+I go away for a few hours.  Come back, create some new accounts on the
+ROBUST console to get my staff all set up, and then try to login myself and
+get this on the ROBUST console:
+
+10:59:51 - [GRID HANDLER]: Exception System.NullReferenceException: Object
+refer
+ence not set to an instance of an object.
+11:01:33 - [LLOGIN SERVICE]: Login request for Fleep Tuque from
+10.24.146.106 wi
+th user agent Imprudence 1.3.0  / Second Life 1.23.5.136262 starting in last
+11:01:33 - [LLOGIN SERVICE]: Login failed, reason: user not found
+
+Things I've tried so far:
+
+1.  Shutting down opensim and ROBUST and restarting.  No love.
+
+2.  Double checking the database connection string in PRIM STORAGE section
+opensim.ini
+
+storage_plugin=&quot;OpenSim.Data.MySQL.dll&quot;
+    storage_connection_string=&quot;Data
+Source=10.23.23.148;Database=opensim;User ID=opensim;Password=MYPASSWORD;&quot;
+
+3.  Changing the URLs in gridcommon.ini to IP addresses instead of FQDN (one
+example, they all say the same thing):
+
+WAS
+
+[UserAccountService]
+    ;
+    ; change this to your grid-wide user accounts server
+    ;
+    UserAccountServerURI = &quot;<A HREF="http://ucsim.uc.edu:8003">http://ucsim.uc.edu:8003</A>&quot;
+
+NOW
+
+[UserAccountService]
+    ;
+    ; change this to your grid-wide user accounts server
+    ;
+    UserAccountServerURI = &quot;<A HREF="http://10.23.23.148:8003">http://10.23.23.148:8003</A>&quot;  &lt;--- Machine where
+ROBUST and MySQL are running
+
+
+Still no luck.  So my questions are:
+
+1.  What does this error mean:  11:24:24 - [GRID HANDLER]: Exception
+System.NullReferenceException: Object refer
+ence not set to an instance of an object.
+
+2.  Why is ROBUST not seeing that the user exists in the database?
+
+3.  Why was I successfully able to login initially but not now?  What
+changed?  (That is, I'm pretty sure I didn't change anything between my last
+successful login and my first unsuccessful login.)
+
+
+Any help much appreciated!
+
+Sincerely,
+
+- Chris/Fleep
+
+
+
+Chris M. Collins (SL: Fleep Tuque)
+Project Manager, UC Second Life
+Second Life Ambassador, Ohio Learning Network
+UCit Instructional &amp; Research Computing
+University of Cincinnati
+406E Zimmer Hall
+PO Box 210088
+Cincinnati, OH 45221-0088
+(513)556-3018
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+
+UC Second Life:   <A HREF="http://homepages.uc.edu/secondlife">http://homepages.uc.edu/secondlife</A>
+OLN Second Life: <A HREF="http://www.oln.org/emerging_technologies/emtech.php">http://www.oln.org/emerging_technologies/emtech.php</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110223/2df292ac/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110223/2df292ac/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006688.html">[Opensim-users] Help with getting opensim working on ubuntu
+</A></li>
+	<LI>Next message: <A HREF="006686.html">[Opensim-users] User exists in MySQL but ROBUST says user not	found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6685">[ date ]</a>
+              <a href="thread.html#6685">[ thread ]</a>
+              <a href="subject.html#6685">[ subject ]</a>
+              <a href="author.html#6685">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

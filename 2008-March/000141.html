@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.5.1 Release won't start
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.5.1%20Release%20won%27t%20start&In-Reply-To=%3C47D4D390.5010300%40earthlink.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000140.html">
+   <LINK REL="Next"  HREF="000142.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.5.1 Release won't start</H1>
+    <B>Fish Kungfu</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.5.1%20Release%20won%27t%20start&In-Reply-To=%3C47D4D390.5010300%40earthlink.net%3E"
+       TITLE="[Opensim-users] OpenSim 0.5.1 Release won't start">fish.kungfu at earthlink.net
+       </A><BR>
+    <I>Mon Mar 10 07:22:08 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000140.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+        <LI>Next message: <A HREF="000142.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#141">[ date ]</a>
+              <a href="thread.html#141">[ thread ]</a>
+              <a href="subject.html#141">[ subject ]</a>
+              <a href="author.html#141">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Below is my OpenSim.ini file for using MySQL running in standalone mode
+for 0.5.0, with MySQL on the same box as opensim.  You will need to put
+your password for MySQL root user, or whatever user you're using.  I had
+to create the empty database, &quot;opensim&quot; before everything would work. 
+Then, remember to GRANT ALL privileges to your userName for the opensim
+database, and then FLUSH PRIVILEGES.
+
+I had to add these lines to the example file that came with the
+installer to make it work.  This tripped me up, and caused the SQLite
+activity in the log at startup.  They are included in my OpenSim.ini below
+   asset_database = &quot;mysql&quot;
+   asset_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+
+I hope this helps.....Fish
+
+
+
+;****BEGIN*****
+[Startup]
+gridmode = false
+
+;##########
+; MESHER
+;##########
+; Select a mesher here. ZeroMesher is save and fast.
+; ZeroMesher also means that the physics engine models the physics of prims
+; sticking to the basic shapes the engine does support. Usually this is
+only a box.
+; Meshmerizer gives a better handling of complex prims by using triangle
+meshes.
+; Note, that only ODE physics currently deals with meshed prims in a
+satisfactoring way
+;
+;meshing = ZeroMesher
+meshing = Meshmerizer
+
+
+;##########
+; PHYSICS
+;##########
+; Choose one of the physics engines below
+;physics = basicphysics
+;physics = POS
+;physics = modified_BulletX
+physics = OpenDynamicsEngine
+
+; if you would like to allow prim to be physical and move by physics
+with the physical checkbox in the client set this to true.
+physical_prim = true
+
+
+;##########
+; STORAGE
+;##########
+; *** Prim Storage - only leave one storage_plugin uncommented ***
+; ****************************************************************
+; --- The NullStorage stores nothing - effectively disabling persistence:
+; storage_plugin = &quot;OpenSim.DataStore.NullStorage.dll&quot;
+
+; --- To use sqlite as region storage:
+;storage_plugin = &quot;OpenSim.Framework.Data.SQLite.dll&quot;
+;storage_connection_string=&quot;URI=file:OpenSim.db,version=3&quot;;
+
+; --- To use MySQL storage, supply your own connectionstring (this is
+only an example):
+;     note that the supplied account needs create privilegies if you
+want it to auto-create needed tables.
+storage_plugin=&quot;OpenSim.Framework.Data.MySQL.dll&quot;
+storage_connection_string=&quot;Data Source=127.0.0.1;Database=opensim;User
+ID=root;Password=yourMySQLPasswordHere;&quot;;
+
+startup_console_commands_file = &quot;startup_commands.txt&quot;
+shutdown_console_commands_file = &quot;shutdown_commands.txt&quot;
+serverside_object_permissions = true
+
+; Select the type of database to use for asset storage
+;asset_database = &quot;db4o&quot;
+;asset_database = &quot;sqlite&quot;
+;asset_database = &quot;grid&quot;
+;asset_database = &quot;mssql&quot;
+asset_database = &quot;mysql&quot;
+
+verbose = true
+
+
+;##########
+; SCRIPTING
+;##########
+; ScriptEngine
+script_engine = OpenSim.Region.ScriptEngine.DotNetEngine.dll
+;Experimental remote ScriptServer plugin:
+;script_engine = OpenSim.Region.ScriptEngine.RemoteServer.dll
+
+; To run a script every few minutes, set the script filename here
+; timer_Script = &quot;filename&quot;
+
+[StandAlone]
+accounts_authenticate = true
+welcome_message = &quot;Hello, Avatar!  Welcome to OpenSim!&quot;
+
+;inventory_plugin = &quot;OpenSim.Framework.Data.SQLite.dll&quot;
+inventory_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+
+;userDatabase_plugin = &quot;OpenSim.Framework.Data.SQLite.dll&quot;
+userDatabase_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+
+; ***Added this section on 2008-03-02.......Fish
+;asset_plugin = &quot;OpenSim.Framework.Data.SQLite.dll&quot;
+asset_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+
+default_location_x = 1000
+default_location_y = 1000
+dump_assets_to_file = false
+
+
+[Network]
+http_listener_port = 9000
+remoting_listener_port = 8895
+
+; Uncomment below to enable llRemoteData/remote channels
+; remoteDataPort = 20800
+
+grid_server_url = &quot;<A HREF="http://127.0.0.1:8001">http://127.0.0.1:8001</A>&quot;
+grid_send_key = &quot;null&quot;
+grid_recv_key = &quot;null&quot;
+
+user_server_url = &quot;<A HREF="http://127.0.0.1:8002">http://127.0.0.1:8002</A>&quot;
+user_send_key = &quot;null&quot;
+user_recv_key = &quot;null&quot;
+
+asset_server_url = &quot;<A HREF="http://127.0.0.1:8003">http://127.0.0.1:8003</A>&quot;
+
+inventory_server_url = &quot;<A HREF="http://127.0.0.1:8004">http://127.0.0.1:8004</A>&quot;
+
+[Chat]
+whisper_distance = 10
+say_distance = 30
+shout_distance = 100
+
+; Uncomment the following for IRC bridge
+; experimental, so if it breaks... keep both parts... yada yada
+; also, not good error detection when it fails
+;[IRC]
+;server  = irc.freenode.net
+;nick    = OSbot
+;channel = #innovatieproject
+
+; Uncomment the following to control the progression of daytime
+; in the Sim.  The defaults are what is shown below
+[Sun]
+; number of wall clock hours for an opensim day.  24.0 would mean realtime
+day_length = 0.5
+
+; send a Sun update ever frame_rate # of frames.  A lower number will
+; make for smoother sun transition at the cost of network
+;frame_rate = 100
+
+;****END*****
+
+
+Joe Greene wrote:
+&gt;<i>
+</I>&gt;<i> Problem Desc: Opensim [ASSET SERVER] appear to be attempting to open
+</I>&gt;<i> and SQLitew database althoguh no such reference appears (even in
+</I>&gt;<i> comments) in my OpenSim.ini file. As I'm using MySQL (both the
+</I>&gt;<i> OpenSim.ini and the mysql_connection.ini) I have no SQLite installed.
+</I>&gt;<i> Any suggestions on what I'm doing wrong, or shall I submit my OpenSim.ini
+</I>&gt;<i>
+</I>&gt;<i> Version Info:
+</I>&gt;<i> SuSe Enterprise 9.3 ( with updates )
+</I>&gt;<i> Mono: Mono JIT compiler version 1.2.6 (Installed via YAST from Mono Site)
+</I>&gt;<i> MySQL: 4.1.10a
+</I>&gt;<i>
+</I>&gt;<i> libode 0.9-25
+</I>&gt;<i>
+</I>&gt;<i> Console Log:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at opensim1</A>:~/bin&gt; mono OpenSim.exe
+</I>&gt;<i> OpenSim 0.5, SVN build
+</I>&gt;<i>
+</I>&gt;<i> Performing compatibility checks...  Environment is compatible.
+</I>&gt;<i>
+</I>&gt;<i> Starting...
+</I>&gt;<i>
+</I>&gt;<i> ERROR: There was an error while scanning assembly:
+</I>&gt;<i> /opt/opensim-0.5.1-release/bi
+</I>&gt;<i> n/PhysX-wrapper.dll (Could not load file or assembly
+</I>&gt;<i> '/opt/opensim-0.5.1-release
+</I>&gt;<i> /bin/PhysX-wrapper.dll' or one of its dependencies. An attempt was
+</I>&gt;<i> made to load
+</I>&gt;<i> a program with an incorrect format.)
+</I>&gt;<i> ERROR: There was an error while scanning assembly:
+</I>&gt;<i> /opt/opensim-0.5.1-release/bi
+</I>&gt;<i> n/ode.dll (Could not load file or assembly
+</I>&gt;<i> '/opt/opensim-0.5.1-release/bin/ode.d
+</I>&gt;<i> ll' or one of its dependencies. An attempt was made to load a program
+</I>&gt;<i> with an in
+</I>&gt;<i> correct format.)
+</I>&gt;<i> ERROR: There was an error while scanning assembly:
+</I>&gt;<i> /opt/opensim-0.5.1-release/bi
+</I>&gt;<i> n/openjpeg-libsl.dll (Could not load file or assembly
+</I>&gt;<i> '/opt/opensim-0.5.1-releas
+</I>&gt;<i> e/bin/openjpeg-libsl.dll' or one of its dependencies. An attempt was
+</I>&gt;<i> made to loa
+</I>&gt;<i> d a program with an incorrect format.)
+</I>&gt;<i> ERROR: There was an error while scanning assembly:
+</I>&gt;<i> /opt/opensim-0.5.1-release/bi
+</I>&gt;<i> n/sqlite3.dll (Could not load file or assembly
+</I>&gt;<i> '/opt/opensim-0.5.1-release/bin/s
+</I>&gt;<i> qlite3.dll' or one of its dependencies. An attempt was made to load a
+</I>&gt;<i> program wi
+</I>&gt;<i> th an incorrect format.)
+</I>&gt;<i> 00:14:21 -
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 00:14:21 - ========================= STARTING OPENSIM
+</I>&gt;<i> =========================
+</I>&gt;<i> 00:14:21 -
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> Creating new local console
+</I>&gt;<i> 00:14:21 - [Region]: Started at 3/10/2008 12:14:21 AM
+</I>&gt;<i> 00:14:22 - [DATASTORE]: Attempting to load
+</I>&gt;<i> OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 00:14:22 - [DATASTORE]: MySql - connecting: Data
+</I>&gt;<i> Source=localhost;Database=opens
+</I>&gt;<i> im;User ID=opensim;Password=******;
+</I>&gt;<i> 00:14:23 - [DATASTORE]: Added IRegionDataStore Interface
+</I>&gt;<i> 00:14:23 - [ASSET SERVER]: Starting asset storage system
+</I>&gt;<i> 00:14:23 - [SQLAssetServer]: AssetStorage: Attempting to load
+</I>&gt;<i> OpenSim.Framework.
+</I>&gt;<i> Data.SQLite.dll
+</I>&gt;<i> [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.DllNotFoundException: libsqlite3.so.0
+</I>&gt;<i>   at (wrapper managed-to-native)
+</I>&gt;<i> Mono.Data.SqliteClient.Sqlite:sqlite3_open16 (s
+</I>&gt;<i> tring,intptr&amp;)
+</I>&gt;<i>   at Mono.Data.SqliteClient.SqliteConnection.Open () [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.Data.SQLite.SQLiteAssetData.Initialise
+</I>&gt;<i> (System.String dbf
+</I>&gt;<i> ile, System.String dbname) [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.Data.SQLite.SQLiteAssetData.Initialise ()
+</I>&gt;<i> [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.Communications.Cache.SQLAssetServer.AddPlugin
+</I>&gt;<i> (System.Str
+</I>&gt;<i> ing FileName) [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.Communications.Cache.SQLAssetServer..ctor
+</I>&gt;<i> (System.String
+</I>&gt;<i> pluginName) [0x00000]
+</I>&gt;<i>   at OpenSim.OpenSimMain.Initialize () [0x00000]
+</I>&gt;<i>   at OpenSim.Region.ClientStack.RegionApplicationBase.StartUp ()
+</I>&gt;<i> [0x00000]
+</I>&gt;<i>   at OpenSim.OpenSimMain.StartUp () [0x00000]
+</I>&gt;<i>   at OpenSim.Application.Main (System.String[] args) [0x00000]
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Joe Greene
+</I>&gt;<i> UNIX Systems, Network and IT Specialist
+</I>&gt;<i> If you aren't having fun, you're doing the wrong thing!
+</I>&gt;<i> All opinions expressed are mine alone. You Can't Have them!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20080310/e83e262f/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20080310/e83e262f/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000140.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+	<LI>Next message: <A HREF="000142.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#141">[ date ]</a>
+              <a href="thread.html#141">[ thread ]</a>
+              <a href="subject.html#141">[ subject ]</a>
+              <a href="author.html#141">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

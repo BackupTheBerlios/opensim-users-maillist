@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database issues after server crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20issues%20after%20server%20crash&In-Reply-To=%3C4C85ABC2.2070807%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005463.html">
+   <LINK REL="Next"  HREF="005464.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database issues after server crash</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20issues%20after%20server%20crash&In-Reply-To=%3C4C85ABC2.2070807%40googlemail.com%3E"
+       TITLE="[Opensim-users] Database issues after server crash">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Sep  7 05:04:34 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005463.html">[Opensim-users] Database issues after server crash
+</A></li>
+        <LI>Next message: <A HREF="005464.html">[Opensim-users] Configure an OpenSim to use the ROBUST services
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5470">[ date ]</a>
+              <a href="thread.html#5470">[ thread ]</a>
+              <a href="subject.html#5470">[ subject ]</a>
+              <a href="author.html#5470">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 06/09/10 06:36, Chris wrote:
+&gt;<i> Oh I see... I am not sure other than using a pose script with animation
+</I>&gt;<i> or just simply scripting in a sit target in the prim that was meant to
+</I>&gt;<i> be sat on. Sorry :) But if there is such a setting in the configuration
+</I>&gt;<i> I would like to know as well.
+</I>
+There do seem to be some bugs currently associated with sitting (e.g. the recently submitted 5015 by Chris). 
+Unfortunately I don't know if there are any settings that can currently be tweaked, though that might be something to 
+think about exposing if there are any parameters that could reasonably be fiddled with.
+
+&gt;<i>
+</I>&gt;<i> On 9/6/2010 12:18 AM, Ben Faust wrote:
+</I>&gt;&gt;<i> Importing objects such as chairs and other things meant for sitting.
+</I>&gt;&gt;<i> Even the scripts often don't work correctly. If they don't have
+</I>&gt;&gt;<i> scripts (and no scripts are desired), then all the individual prims
+</I>&gt;&gt;<i> would need to be rotated, resized, re-textured, IF that would even
+</I>&gt;&gt;<i> work; however, on a default-sized box, the avatar sits sideways and in
+</I>&gt;&gt;<i> the ground, not on any side of the box. I was hoping there was a
+</I>&gt;&gt;<i> setting in the server itself so sitting works in a reasonable way for
+</I>&gt;&gt;<i> everyone.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 9/6/2010 1:11 AM, Chris wrote:
+</I>&gt;&gt;&gt;<i> You could try putting a script in said prim and fiddle with the
+</I>&gt;&gt;&gt;<i> llSitTarget function ( llSitTarget(&lt;0.0, 0.0, 0.5&gt;, ZERO_ROTATION);
+</I>&gt;&gt;&gt;<i> for instance) I don't know if this will accomplish what you are
+</I>&gt;&gt;&gt;<i> trying to do though. Just curious, what does it have to do with
+</I>&gt;&gt;&gt;<i> importing objects?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 9/5/2010 11:20 PM, Ben Faust wrote:
+</I>&gt;&gt;&gt;&gt;<i> Please disregard this. I discovered the database files had simply
+</I>&gt;&gt;&gt;&gt;<i> become corrupted, and I had to delete them physically (from the
+</I>&gt;&gt;&gt;&gt;<i> server files) and start over. Another question though: does anyone
+</I>&gt;&gt;&gt;&gt;<i> know how to change the sit settings so they line up with Second Life
+</I>&gt;&gt;&gt;&gt;<i> or even OSgrid? I can't just create a box and sit on it, but sit low
+</I>&gt;&gt;&gt;&gt;<i> and sideways, and not even on the box at any rotation. This makes
+</I>&gt;&gt;&gt;&gt;<i> importing objects from elsewhere nearly impossible in some cases.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 9/5/2010 3:21 PM, Ben Faust wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> My server crashed (ran out of disk space), and it took awhile to
+</I>&gt;&gt;&gt;&gt;&gt;<i> figure out how to get innoDB running again with MySQL... The
+</I>&gt;&gt;&gt;&gt;&gt;<i> database appears to be in tact, except the `migrations` table is
+</I>&gt;&gt;&gt;&gt;&gt;<i> missing... Now, when trying to start OpenSim, the following is part
+</I>&gt;&gt;&gt;&gt;&gt;<i> of the startup logs. Anyone know how to fix this, or perhaps have
+</I>&gt;&gt;&gt;&gt;&gt;<i> the mysql for recreating that table?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Exception: System.Exception: Table 'migrations' already exists in
+</I>&gt;&gt;&gt;&gt;&gt;<i> SQL: create table migrations(name varchar(100), version int)
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Data.Migration.ExecuteScript
+</I>&gt;&gt;&gt;&gt;&gt;<i> (System.Data.Common.DbConnection conn, System.String[] script)
+</I>&gt;&gt;&gt;&gt;&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Data.Migration.ExecuteScript
+</I>&gt;&gt;&gt;&gt;&gt;<i> (System.Data.Common.DbConnection conn, System.String sql) [0x00000]
+</I>&gt;&gt;&gt;&gt;&gt;<i> in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Data.Migration.ExecuteScript (System.String sql)
+</I>&gt;&gt;&gt;&gt;&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Data.Migration.InitMigrationsTable () [0x00000] in
+</I>&gt;&gt;&gt;&gt;&gt;<i> &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Data.Migration.Update () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Data.MySQL.MySQLEstateStore.Initialise (System.String
+</I>&gt;&gt;&gt;&gt;&gt;<i> connectionString) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Region.Framework.StorageManager..ctor (System.String
+</I>&gt;&gt;&gt;&gt;&gt;<i> dllName, System.String connectionstring, System.String
+</I>&gt;&gt;&gt;&gt;&gt;<i> estateconnectionstring) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.OpenSimBase.CreateStorageManager (System.String
+</I>&gt;&gt;&gt;&gt;&gt;<i> connectionstring, System.String estateconnectionstring) [0x00000]
+</I>&gt;&gt;&gt;&gt;&gt;<i> in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.OpenSimBase.CreateStorageManager () [0x00000] in
+</I>&gt;&gt;&gt;&gt;&gt;<i> &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Region.ClientStack.RegionApplicationBase.StartupSpecific
+</I>&gt;&gt;&gt;&gt;&gt;<i> () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in &lt;filename
+</I>&gt;&gt;&gt;&gt;&gt;<i> unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.OpenSim.StartupSpecific () [0x00000] in &lt;filename
+</I>&gt;&gt;&gt;&gt;&gt;<i> unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000]
+</I>&gt;&gt;&gt;&gt;&gt;<i> in &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Application.Main (System.String[] args) [0x00000] in
+</I>&gt;&gt;&gt;&gt;&gt;<i> &lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005463.html">[Opensim-users] Database issues after server crash
+</A></li>
+	<LI>Next message: <A HREF="005464.html">[Opensim-users] Configure an OpenSim to use the ROBUST services
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5470">[ date ]</a>
+              <a href="thread.html#5470">[ thread ]</a>
+              <a href="subject.html#5470">[ subject ]</a>
+              <a href="author.html#5470">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

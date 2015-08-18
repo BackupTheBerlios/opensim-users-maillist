@@ -1,0 +1,436 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim crashing why?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20crashing%20why%3F&In-Reply-To=%3C004901caeaf6%24691ea1b0%243b5be510%24%40net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004399.html">
+   <LINK REL="Next"  HREF="004401.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim crashing why?</H1>
+    <B>Tedd Hansen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20crashing%20why%3F&In-Reply-To=%3C004901caeaf6%24691ea1b0%243b5be510%24%40net%3E"
+       TITLE="[Opensim-users] OpenSim crashing why?">tedd at konge.net
+       </A><BR>
+    <I>Mon May  3 21:25:34 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004399.html">[Opensim-users] OpenSim crashing why?
+</A></li>
+        <LI>Next message: <A HREF="004401.html">[Opensim-users] OpenSim release candidate 0.6.9.rc2 available
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4400">[ date ]</a>
+              <a href="thread.html#4400">[ thread ]</a>
+              <a href="subject.html#4400">[ subject ]</a>
+              <a href="author.html#4400">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+netstat command will do that for you.
+Linux: netstat -nlap | less
+Windows: netstat -anb | more
+
+debian5:~# netstat -nlap | grep tcp | grep :8002
+tcp        0      0 0.0.0.0:8002            0.0.0.0:*               LISTEN
+13841/mono
+
+Br,
+ Tedd
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Clive Gould
+Sent: 3. mai 2010 21:22
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] OpenSim crashing why?
+
+Hi
+
+Justin wrote: &quot;By the look of it, something in OpenSim is failing to
+close connections.  After 24 hours, the HttpServer embedded in OpenSim
+eventually finds that it runs out of sockets to play with.&quot;
+
+OpenSim is still crashing periodically.
+
+Any idea how I can find out how many connections the HTTP Server
+embedded in OpenSim thinks it has open at any one time?
+
+Is there a command from the Linux command line that will show this?
+(I've tried ps and netstat without success)
+
+Thanks very much
+
+Clive
+
+
+&gt;<i> Message: 2
+</I>&gt;<i> Date: Thu, 29 Apr 2010 23:38:49 +0100
+</I>&gt;<i> From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] OpenSim crashing why?
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">4BDA0A79.5020105 at googlemail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+</I>&gt;<i>
+</I>&gt;<i> Clive Gould wrote:
+</I>&gt;&gt;<i> Hi
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We're successfully using OpenSim for student project work at Bromley
+</I>College.
+&gt;&gt;<i>
+</I>&gt;&gt;<i> OpenSim 0.6.8 standalone has just started crashing on us every 24 hours
+</I>or so.
+&gt;&gt;<i>
+</I>&gt;&gt;<i> Logins are disabled and the OpenSim.log file fills up the CentOS home
+</I>&gt;&gt;<i> partition very quickly with error messages.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Killing all processes owned by the opensim user, deleting the
+</I>&gt;&gt;<i> OpenSim.log file, restarting the vnc session and the opensim
+</I>&gt;&gt;<i> application cures the problem, until the next time.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I append relevent excerpts from the error log to this message.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Does anyone have any idea what may be causing this??
+</I>&gt;<i>
+</I>&gt;<i> By the look of it, something in OpenSim is failing to close connections.
+</I>After 24 hours, the HttpServer embedded in OpenSim eventually finds that it
+runs out of sockets to play with.
+&gt;<i>
+</I>&gt;<i> I'm surprised to see this in standalone mode.  Are you doing something
+</I>with OpenSim in standalone mode that requires outbound connections (e.g.
+remote database, groups, etc.), or perhaps a script that regularly
+establishes an outbound connection?
+&gt;<i>
+</I>&gt;<i> If this has just started crashing after being fine before then it suggests
+</I>that something has changed locally to reveal a bug in OpenSim.
+&gt;<i>
+</I>&gt;<i> -- Justin
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Clive
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010-04-29 16:55:47,776 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+</I>&gt;&gt;<i> [Scene] Adding new agent India Airie to scene Rookery_NW
+</I>&gt;&gt;<i> 2010-04-29 16:55:47,777 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+</I>&gt;&gt;<i> [APPEARANCE]: Appearance not found in Rookery_NW, returning default
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010-04-29 16:55:55,132 DEBUG -
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing
+</I>&gt;&gt;<i> Primitive, 204f5d0d-a994-4d61-8fb1-4b8d3af433fd in Rookery_
+</I>&gt;&gt;<i> SW
+</I>&gt;&gt;<i> 2010-04-29 16:56:14,262 DEBUG -
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing
+</I>&gt;&gt;<i> Primitive, 9b4c39ad-eebe-4417-9fd9-12a3994f17bc in Rookery_
+</I>&gt;&gt;<i> SW
+</I>&gt;&gt;<i> 2010-04-29 16:57:30,449 DEBUG -
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing
+</I>&gt;&gt;<i> Primitive, 88551bb8-3fa2-4bd9-a2fb-78c74bf45f55 in Rookery_
+</I>&gt;&gt;<i> SW
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010-04-29 17:16:15,070 DEBUG -
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing
+</I>&gt;&gt;<i> Primitive, 9b4c39ad-eebe-4417-9fd9-12a3994f17bc in Rookery SW
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010-04-29 17:17:11,209 ERROR -
+</I>&gt;&gt;<i> OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP
+</I>&gt;&gt;<i> SERVER]: HttpServer.HttpListener had an exception
+</I>&gt;&gt;<i> System.Net.Sockets.SocketException: Too many open files
+</I>&gt;&gt;<i>   at System.Net.Sockets.Socket.Accept () [0x00000]
+</I>&gt;&gt;<i>   at System.Net.Sockets.Socket+Worker.Accept () [0x00000]
+</I>&gt;&gt;<i> 2010-04-29 17:17:11,255 ERROR -
+</I>&gt;&gt;<i> OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP
+</I>&gt;&gt;<i> SERVER]: HttpServer.HttpListener had an exception
+</I>&gt;&gt;<i> System.Net.Sockets.SocketException: Too many open files
+</I>&gt;&gt;<i>   at System.Net.Sockets.Socket.Accept () [0x00000]
+</I>&gt;&gt;<i>   at System.Net.Sockets.Socket+Worker.Accept () [0x00000]
+</I>&gt;&gt;<i> 2010-04-29 17:17:11,273 ERROR -
+</I>&gt;&gt;<i> OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP
+</I>&gt;&gt;<i> SERVER]: HttpServer.HttpListener had an exception
+</I>&gt;&gt;<i> System.Net.Sockets.SocketException: Too many open files
+</I>&gt;&gt;<i>   at System.Net.Sockets.Socket.Accept () [0x00000]
+</I>&gt;&gt;<i>   at System.Net.Sockets.Socket+Worker.Accept () [0x00000]
+</I>&gt;&gt;<i> ockets.SocketException: Too many open files
+</I>&gt;&gt;<i>   at System.Net.Sockets.Socket.Accept () [0x00000]
+</I>&gt;&gt;<i>   at System.Net.Sockets.Socket+Worker.Accept () [0x00000]
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 3
+</I>&gt;<i> Date: Fri, 30 Apr 2010 08:08:45 +0200
+</I>&gt;<i> From: &quot;Dirk Krause&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dirk.krause at pixelpark.com</A>&gt;
+</I>&gt;<i> To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Subject: Re: [Opensim-users] Looking for help reproducing a user study
+</I>&gt;<i>        inOpenSim
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">6C2AFDB53CBC0D4A8637CF3C7B63B2B8099F98 at postbox.bitlab.de</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i> On a side note:  this is a perfect use case for an opensim-in-a-box (i.e.
+</I>a cloud based temporary OpenSimulator with prdefined environment).
+&gt;<i>
+</I>&gt;<i> just wanted to mention it.
+</I>&gt;<i>
+</I>&gt;<i> best,
+</I>&gt;<i>  dirk
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----Urspr?ngliche Nachricht-----
+</I>&gt;<i> Von: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> im Auftrag von Elizabeth Lowry
+</I>&gt;<i> Gesendet: Do 29.04.2010 21:25
+</I>&gt;<i> An: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Cc: Staff WorldSimTerra
+</I>&gt;<i> Betreff: Re: [Opensim-users] Looking for help reproducing a user study
+</I>inOpenSim
+&gt;<i>
+</I>&gt;<i> I can't personally run a reproduction of the study with participants I
+</I>can't
+&gt;<i> meet in person - I'm required to get consent forms from anyone who
+</I>&gt;<i> participates in *my* study.  That's why I'm looking for *other* people to
+</I>&gt;<i> run *reproductions* of my study, not for other places for myself to run my
+</I>&gt;<i> study.
+</I>&gt;<i>
+</I>&gt;<i> I don't need my own region, I already have my own grid!
+</I>&gt;<i>
+</I>&gt;<i> - Elizabeth
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Apr 29, 2010 at 2:45 PM, Ideia Boa &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ideiaboa at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>  On 29-04-2010 8:31, Ideia Boa wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi Elizabeth
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We can build a region free of charge to all volunteers reproduce your
+</I>&gt;&gt;<i> tests, and can also play one or two tests.
+</I>&gt;&gt;<i> For other volunteers, you will have to be you to send invitations.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The WorldSimTerra is always ready to host all kinds of initiatives for
+</I>&gt;&gt;<i> schools and universities, only that, our time is very short so we can
+</I>help
+&gt;&gt;<i> more.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The region will have your name &quot;ELIZABETH&quot;, so the volunteers will be
+</I>easy
+&gt;&gt;<i> to find and may be available on Saturday and Sunday.
+</I>&gt;&gt;<i> The owner of the region will be one of our mentors &quot;Pato Donald&quot;, he will
+</I>&gt;&gt;<i> have the ability to handle the server if necessary.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regards
+</I>&gt;&gt;<i> Ideia Boa
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> www.worldsimterra.com
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 29-04-2010 8:06, Elizabeth Lowry wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ideia,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Ah, then you can reproduce the study?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  If so, that's wonderful!  Is there anything in the instructions I put up
+</I>&gt;&gt;<i> at
+</I>&gt;&gt;<i> <A HREF="http://hokiegrid.cs.vt.edu/index.php?&amp;page=smodul&amp;id=34&amp;btn=33&amp;subbtn=34">http://hokiegrid.cs.vt.edu/index.php?&amp;page=smodul&amp;id=34&amp;btn=33&amp;subbtn=34</A>
+</I>that
+&gt;&gt;<i> I should clarify to help you start?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Thanks,
+</I>&gt;&gt;<i> Elizabeth
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Apr 29, 2010 at 1:44 PM, Ideia Boa &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ideiaboa at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hi Elizabeth
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> We can build a region within our WorldSimTerra Grid for volunteers who
+</I>can
+&gt;&gt;&gt;<i> use it for your scientific work.
+</I>&gt;&gt;&gt;<i> Therefore all volunteers who are interested in reproducing your tests
+</I>can
+&gt;&gt;&gt;<i> do so in this region
+</I>&gt;&gt;&gt;<i> If there is interest in this region, please send a reply to the list and
+</I>&gt;&gt;&gt;<i> the call for volunteers.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Regards
+</I>&gt;&gt;&gt;<i> Ideia Boa
+</I>&gt;&gt;&gt;<i> www.worldsimterra.com
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 29-04-2010 9:15, Elizabeth Lowry wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  Hi all,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  I tried telling the individuals who answered my first email back in
+</I>&gt;&gt;&gt;<i> March about this, but I haven't gotten any responses yet.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  I'd really like to compare the results I'm getting from my study with
+</I>&gt;&gt;&gt;<i> someone else's - I've posted instructions at
+</I>&gt;&gt;&gt;<i> <A HREF="http://hokiegrid.cs.vt.edu/index.php?&amp;page=smodul&amp;id=34&amp;btn=33&amp;subbtn=34">http://hokiegrid.cs.vt.edu/index.php?&amp;page=smodul&amp;id=34&amp;btn=33&amp;subbtn=34</A>
+</I>and
+&gt;&gt;&gt;<i> I'd really like to talk to some of you about reproducing my experiment.
+</I>&gt;&gt;&gt;<i>  Please?  It's for science!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  Thank you,
+</I>&gt;&gt;&gt;<i> Elizabeth Lowry
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Mon, Mar 22, 2010 at 10:29 AM, Elizabeth Lowry &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">emlowry at vt.edu</A>&gt;
+</I>wrote:
+&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Hi all,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  My name is Elizabeth Lowry and I'm a Master's Student in the Computer
+</I>&gt;&gt;&gt;&gt;<i> Science program at Virginia Tech.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  As part of my thesis, I'm going to be running a user study using
+</I>&gt;&gt;&gt;&gt;<i> OpenSim.  I'll be packaging my setup, including the data collection
+</I>tools,
+&gt;&gt;&gt;&gt;<i> in an OAR, and I'm hoping some of you will be willing to reproduce my
+</I>&gt;&gt;&gt;&gt;<i> experiment using that OAR and let me compare your results to mine.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  The idea of the experiment is to measure the effect of levels of
+</I>&gt;&gt;&gt;&gt;<i> spatial presentation in a virtual environment on that environment's
+</I>&gt;&gt;&gt;&gt;<i> effectiveness.  I'll be presenting two lessons -- one on the
+</I>photoelectric
+&gt;&gt;&gt;&gt;<i> effect, a topic with a level of inherent spatial content, and one on a
+</I>&gt;&gt;&gt;&gt;<i> yet-to-be determined topic that isn't inherently spatial, like music or
+</I>&gt;&gt;&gt;&gt;<i> logic -- at three levels of spatial presentation -- as a slide show
+</I>given in
+&gt;&gt;&gt;&gt;<i> the virtual world, as a set of posters arranged in space (with the
+</I>slides
+&gt;&gt;&gt;&gt;<i> from the previously-mentioned slideshow as the posters), and as a set
+</I>of
+&gt;&gt;&gt;&gt;<i> full-on 3D exhibits (presenting the same information as the slides)
+</I>taking
+&gt;&gt;&gt;&gt;<i> advantage of a virtual environment's ability to present 3D objects.
+</I>&gt;&gt;&gt;&gt;<i>  Subjects will visit exactly one of the
+</I>topic/level-of-spatial-presentation
+&gt;&gt;&gt;&gt;<i> combinations for a set period of time and their learning will be
+</I>measured by
+&gt;&gt;&gt;&gt;<i> comparing their scores on quizzes before and after visiting.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  The question I'm hoping to answer is: How much effort is really worth
+</I>&gt;&gt;&gt;&gt;<i> it in the construction of a virtual learning environment?  And does
+</I>this
+&gt;&gt;&gt;&gt;<i> level of effort vary between topics that are inherently spatial and
+</I>ones
+&gt;&gt;&gt;&gt;<i> that aren't?  If the full-3D versions of the learning environments in
+</I>the
+&gt;&gt;&gt;&gt;<i> study lead to the greatest improvements in quiz scores, it'll indicate
+</I>that
+&gt;&gt;&gt;&gt;<i> the greater amount of effort required to build such environments pays
+</I>off in
+&gt;&gt;&gt;&gt;<i> better learning.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  Obviously, more work would need to be done in the future, whatever the
+</I>&gt;&gt;&gt;&gt;<i> results of this study -- but to get solid results on this study, I'd
+</I>like
+&gt;&gt;&gt;&gt;<i> your help.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  Is anyone on this list in a position to run a user study in OpenSim
+</I>&gt;&gt;&gt;&gt;<i> with 30 or more participants by mid to late April?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  Thank you,
+</I>&gt;&gt;&gt;&gt;<i> Elizabeth Lowry
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i>
+</I><A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/open
+sim-users
+&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> No virus found in this incoming message.
+</I>&gt;&gt;<i> Checked by AVG - www.avg.com
+</I>&gt;&gt;<i> Version: 9.0.814 / Virus Database: 271.1.1/2841 - Release Date: 04/28/10
+</I>20:27:00
+&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> A non-text attachment was scrubbed...
+</I>&gt;<i> Name: not available
+</I>&gt;<i> Type: application/ms-tnef
+</I>&gt;<i> Size: 6068 bytes
+</I>&gt;<i> Desc: not available
+</I>&gt;<i> URL:
+</I>&lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100430/85702">https://lists.berlios.de/pipermail/opensim-users/attachments/20100430/85702</A>
+0cb/attachment.bin&gt;
+&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> End of Opensim-users Digest, Vol 32, Issue 35
+</I>&gt;<i> *********************************************
+</I>&gt;<i>
+</I>_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004399.html">[Opensim-users] OpenSim crashing why?
+</A></li>
+	<LI>Next message: <A HREF="004401.html">[Opensim-users] OpenSim release candidate 0.6.9.rc2 available
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4400">[ date ]</a>
+              <a href="thread.html#4400">[ thread ]</a>
+              <a href="subject.html#4400">[ subject ]</a>
+              <a href="author.html#4400">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

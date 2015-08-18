@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] sound files length
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20sound%20files%20length&In-Reply-To=%3C519D1887.7000207%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012243.html">
+   <LINK REL="Next"  HREF="012278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] sound files length</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20sound%20files%20length&In-Reply-To=%3C519D1887.7000207%40googlemail.com%3E"
+       TITLE="[Opensim-users] sound files length">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed May 22 21:12:07 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012243.html">[Opensim-users] sound files length
+</A></li>
+        <LI>Next message: <A HREF="012278.html">[Opensim-users] sound files length
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12276">[ date ]</a>
+              <a href="thread.html#12276">[ thread ]</a>
+              <a href="subject.html#12276">[ subject ]</a>
+              <a href="author.html#12276">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>As light relief from other things, I had a chance to take a look at this today and llSetSoundQueueing() should now be 
+implemented as of git master 7d38f49.
+
+The implementation was surprisingly simple as it's the viewer that does all the work.  This means that like SL, only two 
+sounds can be queued at any one time.  But this should be enough to get LSL scripts to work though I didn't test the one 
+you quoted.
+
+On 15/05/13 10:28, Tom Willans wrote:
+&gt;<i> In SL there is the script <A HREF="http://www.free-lsl-scripts.com/cgi/freescripts.plx?ID=1681">http://www.free-lsl-scripts.com/cgi/freescripts.plx?ID=1681</A> that can play multiple 10 second
+</I>&gt;<i> wave files to make upto in this case 42 minutes.
+</I>&gt;<i> Unfortunately this does not work within Openim because llSetSoundQueueing
+</I>&gt;<i> &lt;<A HREF="http://wiki.secondlife.com/wiki/llSetSoundQueueing">http://wiki.secondlife.com/wiki/llSetSoundQueueing</A>&gt; is not fully implemented. This buffers the sound so that there is
+</I>&gt;<i> no break I believe. I have been told that the 10 second .wav files are quite a resource hit - however I have not tested
+</I>&gt;<i> this myself.
+</I>&gt;<i>
+</I>&gt;<i> It would be helpful if this could be fully implemented.
+</I>&gt;<i>
+</I>&gt;<i> I have got around this by using a script to play the parcel media as an avatar approaches using the agent sensor script.
+</I>&gt;<i> Using the media all I needed was a link to the .mp3 files. I never got the audio setting to work; I think that this
+</I>&gt;<i> needs audio streaming which I never set up fully (the media option was easier). You may be able to set the media parcel
+</I>&gt;<i> using
+</I>&gt;<i> <A HREF="http://wiki.secondlife.com/wiki/LlParcelMediaCommandList">http://wiki.secondlife.com/wiki/LlParcelMediaCommandList</A> for each set of dialogue.
+</I>&gt;<i>
+</I>&gt;<i> Hope this helps.
+</I>&gt;<i>
+</I>&gt;<i> Tom Willans  BSc(Hons)  MBCS  CITP
+</I>&gt;<i> PhD Student
+</I>&gt;<i> Serious Games Institute, Coventry University
+</I>&gt;<i> United Kingdom
+</I>&gt;<i>
+</I>&gt;<i> Managing Director Bessacarr Publications Ltd
+</I>&gt;<i> Senior Research Representative:Engineering and Computing
+</I>&gt;<i> +44 (0)121 288 0281
+</I>&gt;<i> email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tom.willans at bessacarr.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tom.willans at bessacarr.com</A>&gt;
+</I>&gt;<i> skype: tom.willans
+</I>&gt;<i> Second Life and OSGrid: Tom Tiros
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Sent from my iPad
+</I>&gt;<i>
+</I>&gt;<i> On 15 May 2013, at 09:04, &quot;Nick Zwart - 3DLES&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nick at 3dles.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nick at 3dles.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> So the viewer builders should work on that, to make it long enough to have the NPC speak whole sentences. This is what
+</I>&gt;&gt;<i> more of us would like to see. There is a lot of language education going on in OpenSim so sentences of, let's say, 1
+</I>&gt;&gt;<i> minute would be great.
+</I>&gt;&gt;<i> Now that some of the viewers are forked to OpenSim, the OS version could have that option!
+</I>&gt;&gt;<i> Nick Zwart - 3DLES
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ----- Original Message -----
+</I>&gt;&gt;<i>     *From:* Nebadon Izumi &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nebadon2025 at gmail.com</A>&gt;
+</I>&gt;&gt;<i>     *To:* OpenSim Users Mailing List &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>     *Sent:* Tuesday, May 14, 2013 11:41 PM
+</I>&gt;&gt;<i>     *Subject:* Re: [Opensim-users] sound files length
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     This is a limit imposed on the viewer mostly to combat copyright issues in the Linden grid, you could
+</I>&gt;&gt;<i>     theoretically expand that limit if you had a good enough understanding of the viewer code, there is nothing that
+</I>&gt;&gt;<i>     can be done on the simulator side, as there is no hard limit there, it will accept whatever the viewer feeds it at
+</I>&gt;&gt;<i>     this time.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     On Tue, May 14, 2013 at 11:32 AM, Michel DENIS &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michel.m.denis at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michel.m.denis at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         __
+</I>&gt;&gt;<i>         Hello,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         I need to set up a long and complex voice dialog between 2 bots (NPCs)  but discover the difficulty of doing
+</I>&gt;&gt;<i>         that as it looks that sound files cannot be more than 10 seconds each !?
+</I>&gt;&gt;<i>         Not only the initial set up requires several cuts of each voice sequence, but  there's a complex
+</I>&gt;&gt;<i>         parameterization of scripts, and finally the maintenance/evolution of the system when dialogs need to be
+</I>&gt;&gt;<i>         changed will be tough.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Why this limitation ? Any way of patching to get &quot;free length&quot; sound files like on other VW platforms ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Thanks in advance for your feedback,
+</I>&gt;&gt;<i>         -michel
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         _______________________________________________
+</I>&gt;&gt;<i>         Opensim-users mailing list
+</I>&gt;&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     --
+</I>&gt;&gt;<i>     Michael Emory Cerquoni
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ------------------------------------------------------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     _______________________________________________
+</I>&gt;&gt;<i>     Opensim-users mailing list
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012243.html">[Opensim-users] sound files length
+</A></li>
+	<LI>Next message: <A HREF="012278.html">[Opensim-users] sound files length
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12276">[ date ]</a>
+              <a href="thread.html#12276">[ thread ]</a>
+              <a href="subject.html#12276">[ subject ]</a>
+              <a href="author.html#12276">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

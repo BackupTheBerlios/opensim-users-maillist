@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Getting the trees to work...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Getting%20the%20trees%20to%20work...&In-Reply-To=%3C8779be340902090440u541b8542l90824d2127c9846a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001341.html">
+   <LINK REL="Next"  HREF="001352.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Getting the trees to work...</H1>
+    <B>Rhian</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Getting%20the%20trees%20to%20work...&In-Reply-To=%3C8779be340902090440u541b8542l90824d2127c9846a%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Getting the trees to work...">dutchy.rhian at gmail.com
+       </A><BR>
+    <I>Mon Feb  9 13:40:07 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001341.html">[Opensim-users] Getting the trees to work...
+</A></li>
+        <LI>Next message: <A HREF="001352.html">[Opensim-users] Getting the trees to work...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1342">[ date ]</a>
+              <a href="thread.html#1342">[ thread ]</a>
+              <a href="subject.html#1342">[ subject ]</a>
+              <a href="author.html#1342">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Ursula,
+Perhaps it works only on the r8202? On that one I do see something
+happening.
+On r8290 (linux/mono) I get:
+Region (root) # tree
+04:29:34 - Invalid command
+Region (root) # show version
+Version: OpenSimulator Server  0.6.2.8290  (interface version 2)
+----
+On r8202 (same linux/mono)I get:
+Region (root) # :
+tree
+04:37:18 - [TREES]: New tree planting
+04:37:18 - [TREES]: New tree planting
+04:37:18 - [TREES]: New tree planting
+04:37:18 - [TREES]: New tree planting
+Region (root) # :
+show version
+Version: OpenSimulator Server  0.6.2.8202  (interface version 2)
+
+Strange, perhaps a bug?
+
+Regards,
+Rhian
+
+On Mon, Feb 9, 2009 at 1:12 PM, Ursula MATOVA &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ursula.matova at klintcentral.net</A>&gt; wrote:
+
+&gt;<i> Hi, Rhian,
+</I>&gt;<i>
+</I>&gt;<i> If I can remember, you have to type the following command on the
+</I>&gt;<i> RegionServer console :
+</I>&gt;<i>
+</I>&gt;<i>  &gt; tree
+</I>&gt;<i>
+</I>&gt;<i> Additionaly, you can stop the trees simulation by this command :
+</I>&gt;<i>
+</I>&gt;<i>  &gt; tree active true
+</I>&gt;<i>
+</I>&gt;<i> And stop it :
+</I>&gt;<i>
+</I>&gt;<i> &gt;  tree active false
+</I>&gt;<i>
+</I>&gt;<i> Be carefull, this module will heavily use your Server CPU :)
+</I>&gt;<i> But, working nice. It's a very interresting simulation.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Ursula.
+</I>&gt;<i>
+</I>&gt;<i> Rhian a &#233;crit :
+</I>&gt;<i> &gt; Hi All,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; In r8202 there was an introduction of the TreePopulator. I did try it
+</I>&gt;<i> &gt; at that time and ever since I have been trying to get it to work
+</I>&gt;<i> &gt; without success.
+</I>&gt;<i> &gt; In the logging I see that the module is activated, but nothing is
+</I>&gt;<i> &gt; happening in the region(s). In more recent releases the console
+</I>&gt;<i> &gt; command has ceased to be recognized. (Invalid command)
+</I>&gt;<i> &gt; I tried both on Windows and Debian/mono but no luck so far.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Rhian
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; === OpenSim.ini ===
+</I>&gt;<i> &gt; [Trees]
+</I>&gt;<i> &gt;     ; Enable this to allow the tree module to manage your sim trees,
+</I>&gt;<i> &gt; including growing, reproducing and dying
+</I>&gt;<i> &gt;     active_trees = true
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;     ; Density of tree population
+</I>&gt;<i> &gt;     tree_density = 1000.0
+</I>&gt;<i> &gt; ================
+</I>&gt;<i> &gt; r8202 commit info:
+</I>&gt;<i> &gt; Author: teravus
+</I>&gt;<i> &gt; Date: 2009-02-01 22:04:03 -0800 (Sun, 01 Feb 2009)
+</I>&gt;<i> &gt; New Revision: 8202
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Modified:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> trunk/OpenSim/Region/Environment/Modules/World/TreePopulator/TreePopulatorModule.cs
+</I>&gt;<i> &gt;   trunk/bin/OpenSim.ini.example
+</I>&gt;<i> &gt; Log:
+</I>&gt;<i> &gt; * Adding the Tree module configuration options to OpenSim.ini.example
+</I>&gt;<i> &gt; * Adding an option to use the tree module to manage the trees in the
+</I>&gt;<i> &gt; simulator (grow/reproduce/die)
+</I>&gt;<i> &gt; * Setting it to off by default in an effort to reduce the number of
+</I>&gt;<i> &gt; threads in use by default
+</I>&gt;<i> &gt; * You can also turn it on in a 'one off' way with 'tree active true'
+</I>&gt;<i> &gt; on the console. To 'one off' turn it off, it's 'tree active false'.
+</I>&gt;<i> &gt;  The permanent way to do that, however is in the opensim.ini.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Modified:
+</I>&gt;<i> &gt;
+</I>&gt;<i> trunk/OpenSim/Region/Environment/Modules/World/TreePopulator/TreePopulatorModule.cs
+</I>&gt;<i> &gt; ------------------------------------------------------------------------
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090209/a2c9992b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090209/a2c9992b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001341.html">[Opensim-users] Getting the trees to work...
+</A></li>
+	<LI>Next message: <A HREF="001352.html">[Opensim-users] Getting the trees to work...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1342">[ date ]</a>
+              <a href="thread.html#1342">[ thread ]</a>
+              <a href="subject.html#1342">[ subject ]</a>
+              <a href="author.html#1342">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

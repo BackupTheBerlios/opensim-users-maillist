@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] ode + mesh = phantom
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20ode%20%2B%20mesh%20%3D%20phantom&In-Reply-To=%3C510DDDE5.2060400%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011698.html">
+   <LINK REL="Next"  HREF="011703.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] ode + mesh = phantom</H1>
+    <B>Marcus Llewellyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20ode%20%2B%20mesh%20%3D%20phantom&In-Reply-To=%3C510DDDE5.2060400%40gmail.com%3E"
+       TITLE="[Opensim-users] ode + mesh = phantom">marcus.llewellyn at gmail.com
+       </A><BR>
+    <I>Sun Feb  3 04:47:49 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011698.html">[Opensim-users] ode + mesh = phantom
+</A></li>
+        <LI>Next message: <A HREF="011703.html">[Opensim-users] ode + mesh = phantom
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11702">[ date ]</a>
+              <a href="thread.html#11702">[ thread ]</a>
+              <a href="subject.html#11702">[ subject ]</a>
+              <a href="author.html#11702">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hiya. :)
+
+As you probably already know, the settings you use in your mesh upload 
+dialog matter if you want a mesh to have a useful physics shape in 
+OpenSim. In the Physics tab of the upload floater, you only want to 
+select an LOD (Step 1). Ignore all the others... they don't do anything, 
+and will probably even prevent mesh physics from working.
+
+Using any one of the LOD options definitely works for me. I *believe* 
+I've also been able to use the &quot;From File&quot; option successfully in the 
+past so that a palm tree's trunk collided with avatars, but not the 
+leaves. But this isn't something I've tried or tested for some time, and 
+may be hallucinating it at this point. ;)
+
+I've successfully uploaded physical meshes with official LL viewers, 
+Firestorm, Zen, Kokua, Angstrom, and Niran's. So it's unlikely to be an 
+issue with one of those viewers. This includes meshes composed of single 
+objects, and a group of objects.
+
+One thing you can also check is to be certain that the mesh's Physics 
+Shape Type is set to Convex Hull in the Features tab of the built 
+floater. I've occasionally run into quirky behaviour where a mesh will 
+behave as phantom, or wind up with a cubic collision shape. Toggling 
+this setting (possibly a few times) in the build floater has corrected 
+such events.
+
+For informational purposes, there is an INI setting for mesh physics. 
+It's in the [Mesh] section, and the option is as follows:
+
+UseMeshiesPhysicsMesh = true
+
+This option has defaulted to true in OpenSimDefaults.ini for quite some 
+time now, so it really shouldn't be necessary to fiddle with it.
+
+I haven't had good luck yet with mesh physics in BulletSim. It seems to 
+generate a general physics shape, but not one that's very precise or 
+always useful. A mesh stairway with rails will cause your avatar to walk 
+at the level of the rails, for example. I've been unable to enter mesh 
+buildings or caves with Bullet as well. I'm sure this will improve as 
+BulletSim is further developed.
+
+Marcus
+
+
+On 2/1/2013 9:03 PM, ssm2017 wrote:
+&gt;<i> hello
+</I>&gt;<i> using :
+</I>&gt;<i> mono version 2.10.8.1 (Debian 2.10.8.1-5)
+</I>&gt;<i> OpenSimulator version 0.7.5-rc2
+</I>&gt;<i> default settings from OpenSimDefaults.ini
+</I>&gt;<i>
+</I>&gt;<i> when uploading a mesh, the mesh is phantom.
+</I>&gt;<i> same result using kokua and firestorm.
+</I>&gt;<i>
+</I>&gt;<i> im using the &quot;medium&quot; LOD parameter for the &quot;physiscs&quot; tab in the 
+</I>&gt;<i> importer panel.
+</I>&gt;<i>
+</I>&gt;<i> do you know working parameters to use ?
+</I>&gt;<i> maybe a special viewer ?
+</I>&gt;<i> maybe a special parameter to set in OpenSim.ini ?
+</I>&gt;<i> maybe a special parameter to set in Blender ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130202/41fb9b60/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130202/41fb9b60/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011698.html">[Opensim-users] ode + mesh = phantom
+</A></li>
+	<LI>Next message: <A HREF="011703.html">[Opensim-users] ode + mesh = phantom
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11702">[ date ]</a>
+              <a href="thread.html#11702">[ thread ]</a>
+              <a href="subject.html#11702">[ subject ]</a>
+              <a href="author.html#11702">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

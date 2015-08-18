@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Strange error on master when using	llHTTPRequest on master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Strange%20error%20on%20master%20when%20using%0A%09llHTTPRequest%20on%20master&In-Reply-To=%3C51D8B97D.8020206%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012414.html">
+   <LINK REL="Next"  HREF="012435.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Strange error on master when using	llHTTPRequest on master</H1>
+    <B>Chris M</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Strange%20error%20on%20master%20when%20using%0A%09llHTTPRequest%20on%20master&In-Reply-To=%3C51D8B97D.8020206%40gmail.com%3E"
+       TITLE="[Opensim-users] Strange error on master when using	llHTTPRequest on master">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Sun Jul  7 02:42:37 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012414.html">[Opensim-users] Strange error on master when using llHTTPRequest on	master
+</A></li>
+        <LI>Next message: <A HREF="012435.html">[Opensim-users] Strange error on master when using llHTTPRequest on master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12432">[ date ]</a>
+              <a href="thread.html#12432">[ thread ]</a>
+              <a href="subject.html#12432">[ subject ]</a>
+              <a href="author.html#12432">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I believe I may have stumbled across the issue; it seems that in the 
+http_response(key id, integer status, list meta, string body) event, 
+status always contains 499 and body always contains &quot;The remote server 
+returned an error: (status code) Some string&quot; instead of the actual 
+status number and the string sent back in body by the server I'm 
+connecting to as expected on LL grid and on OS 0.7.5
+
+For example, If I put llSay(0, (string)status + llUnescapeURL(body)); in 
+my script I see this: &quot;499 The remote server returned an error: (404) 
+Not Found.&quot; instead of &quot;404 NOTFOUND: Missing item name here&quot; &quot;NOTFOUND: 
+Missing item name here&quot; is the string  in body from the database server.
+
+I can parse the string to extract the the correct status code with this:
+list temp = llParseString2List(llUnescapeURL(body), [&quot;The remote server 
+returned an error: &quot;, &quot;(&quot;, &quot;)&quot;], []);
+integer new_status = llList2Integer(temp, 0);
+
+and proceed from there.
+
+The &quot;NOTFOUND: Missing item name here&quot; string sent back in body by the 
+database server is lost though (whether I extract the status code from 
+the string or not), and the script depends on that information to 
+determine what wasn't found, and act accordingly to it.
+
+Was this change in how the status codes are handled intentional?
+
+I apologize if the entire explanation seems confusing and/or long 
+winded; but this was a very confusing thing for me to try to write out :)
+
+On 7/2/2013 8:53 PM, Chris M wrote:
+&gt;<i> Hello all, I have a roleplay HUD that I scripted that uses 
+</I>&gt;<i> llHTTPRequest to query an external database server for usernames and 
+</I>&gt;<i> profiles and then use that data to configure the HUD accordingly.
+</I>&gt;<i>
+</I>&gt;<i> On the latest master I'm encountering a strange message in chat that 
+</I>&gt;<i> I'm not sure what to make of:
+</I>&gt;<i> 499 The remote server returned an error: (300) Ambiguous Redirect.
+</I>&gt;<i>
+</I>&gt;<i> The database server console seems to be getting the request and 
+</I>&gt;<i> sending the data back... but no data seems to be received by the HUD 
+</I>&gt;<i> and it fails to configure the HUD.
+</I>&gt;<i>
+</I>&gt;<i> On commit 3611d33 (r/22387) it all works fine and as expected with no 
+</I>&gt;<i> errors.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately that is all the info I can think of to give; but is 
+</I>&gt;<i> anyone seeing this as well?
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012414.html">[Opensim-users] Strange error on master when using llHTTPRequest on	master
+</A></li>
+	<LI>Next message: <A HREF="012435.html">[Opensim-users] Strange error on master when using llHTTPRequest on master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12432">[ date ]</a>
+              <a href="thread.html#12432">[ thread ]</a>
+              <a href="subject.html#12432">[ subject ]</a>
+              <a href="author.html#12432">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

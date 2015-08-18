@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Question about IAR files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20about%20IAR%20files&In-Reply-To=%3C4B8497F6.7000400%40atomicit.com.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003959.html">
+   <LINK REL="Next"  HREF="004026.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Question about IAR files</H1>
+    <B>Roger BUCK</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20about%20IAR%20files&In-Reply-To=%3C4B8497F6.7000400%40atomicit.com.au%3E"
+       TITLE="[Opensim-users] Question about IAR files">rbuck at atomicit.com.au
+       </A><BR>
+    <I>Wed Feb 24 04:07:34 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003959.html">[Opensim-users] Question about IAR files
+</A></li>
+        <LI>Next message: <A HREF="004026.html">[Opensim-users] Question about IAR files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3956">[ date ]</a>
+              <a href="thread.html#3956">[ thread ]</a>
+              <a href="subject.html#3956">[ subject ]</a>
+              <a href="author.html#3956">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Apologies for 'terse' - No time for detailed answer now, but here's one 
+way to get started:
+
+GMail-johnpat10 wrote:
+  &gt; 1. When I was running Save and Load IAR I'm working directly on the
+&gt;<i> server and the command line on the server. It also saved the IAR files 
+</I>&gt;<i> directly to the bin folder (Diva install) and requires that they be in 
+</I>&gt;<i> the bin folder when I load them back into a different sim.
+</I>
+The path to load/save .iar can be specified - this allows for lots of 
+options beyond the obvious - it is possible to both store local content 
+and mount remote shares into designated local filesystem, for example:
+
+   opt/opensim/bin/Library/folders
+
+See: <A HREF="http://opensimulator.org/wiki/Inventory_Archives">http://opensimulator.org/wiki/Inventory_Archives</A>
+
+This 'sort of' works for simple instances - I had trouble with path 
+recursion but not had time to investigate in detail (see previous 
+threads in this list)
+
+&gt;<i>  This is not 
+</I>&gt;<i> a problem when the server and the client are on the same hardware (my 
+</I>&gt;<i> desktop), but when OpenSim is deployed on it's own hardware, am i going 
+</I>&gt;<i> to have to log in remotely to the server to run iar? Is it possible to 
+</I>&gt;<i> ssh to OpenSim server and run the management console to save and load 
+</I>&gt;<i> IAR files? How would you do that if the server is already running,
+</I>
+Yes to all of the above - using the 'screen' utility provides one 
+solution - start your instance of opensim in a 'screen' session, login 
+via ssh and access/attach logout/detach from that session as often as 
+you like.
+
+Some info about 'screen':
+
+  <A HREF="http://magazine.redhat.com/2007/09/27/a-guide-to-gnu-screen/">http://magazine.redhat.com/2007/09/27/a-guide-to-gnu-screen/</A>
+
+This example RH style sysv init script might give you some ideas:
+
+#!/bin/bash
+#
+# Provides an OTT sys.v init script
+#     with multiple 'screen' sessions opensim
+#
+# opensim
+#
+# chkconfig: - 51 50
+# description: OpenSim diva distro
+# processname: opensim
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Get config.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+if [ ${NETWORKING} = &quot;no&quot; ]
+then
+     exit 0
+fi
+
+# See how we were called.
+case &quot;$2&quot; in
+     realxtend)
+         echo &quot;Distro ${2}...&quot;
+         BIN_DIR=&quot;/opt/opensim/realxtend/bin&quot;
+     ;;
+     *)
+	# diva...
+         ROOT_DIR=&quot;/opt/opensim&quot;
+         BIN_DIR=&quot;/opt/opensim/diva/bin&quot;
+esac
+
+#echo &quot;Debug ${2}: Set path to default disto located in: ${BIN_DIR}&quot;
+
+# Check app exists, or exit...
+[ -f ${BIN_DIR}/OpenSim.exe ] || exit 0
+
+function startdiva {
+     cd ${BIN_DIR}
+     echo &quot; Starting OpenSim...&quot;
+     ulimit -s 262144
+     screen -S opensim -d -m mono OpenSim.exe 
+-physics=OpenDynamicsEngine -gridmode=false
+}
+
+function getstatus {
+    session=( $(screen -ls | sed -r -ne 's/ *//g' -ne 
+'s/\((At|De)tached\)// p') )
+    echo &quot;Debug session: ${session}&quot;
+    screen -list
+     echo &quot;To view a screen: 'screen -r screenname'&quot;
+}
+
+function killscreens {
+     killall -15 screen &gt; /dev/null 2&gt;&amp;1
+     screen -wipe &gt; /dev/null 2&gt;&amp;1
+     echo &quot;Opensim screen instances killed...&quot;
+}
+
+if [ &quot;$#&quot; -eq &quot;0&quot; ]; then
+     session=( $(screen -ls | sed -r -ne 's/ *//g' -ne 
+'s/\((At|De)tached\)// p') )
+     echo &quot;valid parameters are: ${0} [ start | stop | status | fixip ]&quot;
+else
+     case &quot;$1&quot; in
+         &quot;start&quot;)
+             startdiva
+             ;;
+         &quot;stop&quot;)
+             killscreens
+             ;;
+         &quot;status&quot;)
+             getstatus
+             ;;
+         &quot;restart&quot;)
+             killall -HUP mono
+             $0 stop
+             sleep 2s
+             $0 start
+             ;;
+         *)
+             echo &quot;Usage: $0 {start|stop|status|restart}&quot;
+             exit 1
+    esac
+fi
+
+# To display active background sessions...
+screen -list
+
+echo &quot;To view a screen: 'screen -r screenname &quot;
+
+# === done ===
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003959.html">[Opensim-users] Question about IAR files
+</A></li>
+	<LI>Next message: <A HREF="004026.html">[Opensim-users] Question about IAR files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3956">[ date ]</a>
+              <a href="thread.html#3956">[ thread ]</a>
+              <a href="subject.html#3956">[ subject ]</a>
+              <a href="author.html#3956">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

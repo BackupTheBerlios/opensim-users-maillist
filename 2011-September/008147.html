@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] npc and attachments
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20npc%20and%20attachments&In-Reply-To=%3C4E6FD742.50805%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008134.html">
+   <LINK REL="Next"  HREF="008136.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] npc and attachments</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20npc%20and%20attachments&In-Reply-To=%3C4E6FD742.50805%40googlemail.com%3E"
+       TITLE="[Opensim-users] npc and attachments">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Sep 14 00:20:50 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008134.html">[Opensim-users] npc and attachments
+</A></li>
+        <LI>Next message: <A HREF="008136.html">[Opensim-users] ToS and HG
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8147">[ date ]</a>
+              <a href="thread.html#8147">[ thread ]</a>
+              <a href="subject.html#8147">[ subject ]</a>
+              <a href="author.html#8147">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm surprised that going back to the original appearance saved in the notecard doesn't remove the attachment - it should.
+
+On 12/09/11 22:11, paul emery wrote:
+&gt;<i> Am wondering if anybody has some hints for simulating a bot picking up an
+</I>&gt;<i> object carrying it some where and then putting it down. I have a kludge to
+</I>&gt;<i> get the bot to bend over and &quot;pick up&quot; an object and carry it somewhere. I
+</I>&gt;<i> cannot get him to drop the attachment. Here is my kludge.
+</I>&gt;<i>               ...
+</I>&gt;<i>                  // appearance is a note card of bot without an attachment
+</I>&gt;<i>                  npc = osNpcCreate(&quot;Casias&quot;, &quot;Twin&quot;,&lt;104, 57, 27&gt;,
+</I>&gt;<i> &quot;appearance&quot;);
+</I>&gt;<i>                  vector first = osNpcGetPos(npc);
+</I>&gt;<i>                  vector second = first +&lt;6,0,0&gt;  ;
+</I>&gt;<i>                  llOwnerSay(&quot;I am going to get it. &quot;);
+</I>&gt;<i>                  //osNpcMoveToTarget(npc, llGetPos() +&lt;2,0,0&gt;,
+</I>&gt;<i> OS_NPC_NO_FLY);
+</I>&gt;<i>                  osNpcMoveToTarget(npc, second, OS_NPC_NO_FLY);
+</I>&gt;<i>                  llSleep(5);
+</I>&gt;<i>                  llOwnerSay(&quot;I am picking it up.&quot;);
+</I>&gt;<i>                  osAvatarPlayAnimation(npc, &quot;Casbow&quot;);
+</I>&gt;<i>                  osNpcLoadAppearance(npc,&quot;carry&quot;);
+</I>&gt;<i> // replaced the bot appearance from a second notecare that includes the item
+</I>&gt;<i> attached to chest
+</I>&gt;<i>                  llSleep(5);
+</I>&gt;<i>                  vector xyz_angles =&lt;0,0,180&gt;; // This is to define a 45
+</I>&gt;<i> degree change
+</I>&gt;<i>                  vector angles_in_radians = xyz_angles * DEG_TO_RAD; //
+</I>&gt;<i> Change to Radians
+</I>&gt;<i>                  rotation rot_xyzq = llEuler2Rot(angles_in_radians); //
+</I>&gt;<i> Change to a Rotation
+</I>&gt;<i>                  rotation rot = osNpcGetRot(npc);
+</I>&gt;<i>                  osNpcSetRot(npc, rot * rot_xyzq);
+</I>&gt;<i>                  //osNpcMoveToTarget(npc, llGetPos() -&lt;2,0,0&gt;,
+</I>&gt;<i> OS_NPC_NO_FLY);
+</I>&gt;<i>                  llOwnerSay(&quot;returning&quot;);
+</I>&gt;<i>                  osNpcMoveToTarget(npc,first, OS_NPC_NO_FLY);
+</I>&gt;<i>                  llSleep(5);
+</I>&gt;<i>                  llOwnerSay(&quot;I am putting it down.&quot;);
+</I>&gt;<i>                  osAvatarPlayAnimation(npc, &quot;Casbow&quot;);
+</I>&gt;<i>                  llSleep(5);
+</I>&gt;<i>                  // i thought going back to original notecard appearance
+</I>&gt;<i> would get rid of the attachment
+</I>&gt;<i>                  // but it doesn't. So really bad kludge
+</I>&gt;<i>                  osNpcRemove (npc);
+</I>&gt;<i>                  llOwnerSay(&quot;should have disappeared&quot;);
+</I>&gt;<i>                  npc = osNpcCreate(&quot;Casias&quot;, &quot;Twin&quot;,&lt;104, 57, 27&gt;,
+</I>&gt;<i> &quot;appearance&quot;);
+</I>&gt;<i>
+</I>&gt;<i> Ok now don't laugh just give me some suggestions
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/npc-and-attachments-tp6785269p6785269.html">http://opensim-users.2152040.n2.nabble.com/npc-and-attachments-tp6785269p6785269.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008134.html">[Opensim-users] npc and attachments
+</A></li>
+	<LI>Next message: <A HREF="008136.html">[Opensim-users] ToS and HG
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8147">[ date ]</a>
+              <a href="thread.html#8147">[ thread ]</a>
+              <a href="subject.html#8147">[ subject ]</a>
+              <a href="author.html#8147">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

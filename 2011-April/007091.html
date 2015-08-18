@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Using a teleport script in the OS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Using%20a%20teleport%20script%20in%20the%20OS&In-Reply-To=%3C6E63199595D34B999D7AC502C39CFE11%40GABPC%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007090.html">
+   <LINK REL="Next"  HREF="007092.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Using a teleport script in the OS</H1>
+    <B>Gary Beck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Using%20a%20teleport%20script%20in%20the%20OS&In-Reply-To=%3C6E63199595D34B999D7AC502C39CFE11%40GABPC%3E"
+       TITLE="[Opensim-users] Using a teleport script in the OS">gab4gab at gmail.com
+       </A><BR>
+    <I>Mon Apr 18 21:51:54 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007090.html">[Opensim-users] Using a teleport script in the OS
+</A></li>
+        <LI>Next message: <A HREF="007092.html">[Opensim-users] Using a teleport script in the OS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7091">[ date ]</a>
+              <a href="thread.html#7091">[ thread ]</a>
+              <a href="subject.html#7091">[ subject ]</a>
+              <a href="author.html#7091">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kay,
+
+Your script worked for me in opensim.   I got the message about selected engine not available until I added a blank comment line at the top.   Worked with and without that comment though.   What problem are you having?
+- Gary
+  ----- Original Message ----- 
+  From: Kay McLennan 
+  To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> 
+  Sent: Monday, April 18, 2011 15:14
+  Subject: [Opensim-users] Using a teleport script in the OS
+
+
+  I would like to use the simple teleport script (below) as kind of an elevator script (to transport avatars from one floor of a building to another floor).  In turn, while the script works in SL I cannot get it to work in the OS.  Any suggestions?  
+
+  Thank you in advance.
+
+  Best,
+  Kay
+
+  // From the book:
+  //
+  // Scripting Recipes for Second Life
+  // by Jeff Heaton (Encog Dod in SL)
+  // ISBN: 160439000X
+  // Copyright 2007 by Heaton Research, Inc.
+  //
+  // This script may be freely copied and modified so long as this header
+  // remains unmodified.
+  //
+  // For more information about this book visit the following web site:
+  //
+  // <A HREF="http://www.heatonresearch.com/articles/series/22/">http://www.heatonresearch.com/articles/series/22/</A>
+  vector target=&lt;65,191,32&gt;;
+  vector offset;
+  default
+  {    
+      moving_end()
+      {
+          offset = (target- llGetPos()) * (ZERO_ROTATION / llGetRot());
+          llSitTarget(offset, ZERO_ROTATION); 
+      }
+      state_entry()
+      {
+          llSetText(&quot;Right click &amp; touch teleport to go to the 2nd floor&quot;,&lt;1,1,1&gt;,1.0);
+          offset = (target- llGetPos()) * (ZERO_ROTATION / llGetRot());
+          llSetSitText(&quot;Teleport&quot;);
+          llSitTarget(offset, ZERO_ROTATION);      
+      }
+      changed(integer change) 
+      { 
+          if (change &amp; CHANGED_LINK) 
+          { 
+              llSleep(0.5); 
+              if (llAvatarOnSitTarget() != NULL_KEY) 
+              { 
+                  llUnSit(llAvatarOnSitTarget()); 
+              }
+          }
+      }
+      
+      touch_start(integer i)
+      {
+          llSay(0, &quot;Please right-click and select Teleport&quot;);
+      }
+  }
+
+
+
+
+------------------------------------------------------------------------------
+
+
+  _______________________________________________
+  Opensim-users mailing list
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110418/a0f88c0e/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110418/a0f88c0e/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007090.html">[Opensim-users] Using a teleport script in the OS
+</A></li>
+	<LI>Next message: <A HREF="007092.html">[Opensim-users] Using a teleport script in the OS
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7091">[ date ]</a>
+              <a href="thread.html#7091">[ thread ]</a>
+              <a href="subject.html#7091">[ subject ]</a>
+              <a href="author.html#7091">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

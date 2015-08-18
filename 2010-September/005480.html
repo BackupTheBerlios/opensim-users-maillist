@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] upgrading to latest release (migration issue)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20upgrading%20to%20latest%20release%20%28migration%20issue%29&In-Reply-To=%3C4C8900DD.90102%40cise.ufl.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005502.html">
+   <LINK REL="Next"  HREF="005481.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] upgrading to latest release (migration issue)</H1>
+    <B>Paul Fishwick</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20upgrading%20to%20latest%20release%20%28migration%20issue%29&In-Reply-To=%3C4C8900DD.90102%40cise.ufl.edu%3E"
+       TITLE="[Opensim-users] upgrading to latest release (migration issue)">fishwick at cise.ufl.edu
+       </A><BR>
+    <I>Thu Sep  9 17:44:29 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005502.html">[Opensim-users] setup Whisper voice (Mumble - Murmur Voice)
+</A></li>
+        <LI>Next message: <A HREF="005481.html">[Opensim-users] upgrading to latest release (migration issue)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5480">[ date ]</a>
+              <a href="thread.html#5480">[ thread ]</a>
+              <a href="subject.html#5480">[ subject ]</a>
+              <a href="author.html#5480">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+System: Ubuntu 10.04 (64 bit). Mono version 2.4.4
+
+Has any one encountered this problem when taking a 0.6.9 MySQL database
+and trying to run 0.7.1 ? I seem to recall some discussion about increasing
+the timeout for MySQL, but not sure whether that is the problem. Running
+mono OpenSim.exe causes a problem (below) and then hangs at:
+
+[SMTP]: module disabled in configuration
+....shell hangs....
+
+
+..................trace of where errors begin................
+
+11:01:55 - [MIGRATIONS]: Upgrading AssetStore to latest revision 8.
+11:01:55 - [MIGRATIONS]: NOTE - this may take a while, don't interrupt 
+this process!
+11:01:55 - [MIGRATIONS]: Cmd was Duplicate column name 'asset_flags' in 
+SQL: ALTER TABLE assets ADD COLUMN asset_flags INTEGER NOT NULL DEFAULT 0;
+11:01:55 - [MIGRATIONS]: An error has occurred in the migration. This 
+may mean you could see errors trying to run OpenSim. If you see database 
+related errors, you will need to fix the issue manually. Continuing.
+11:01:55 - [MIGRATIONS]: Updating AssetStore to version 7
+11:02:37 - [MIGRATIONS]: Cmd was Timeout expired.  The timeout period 
+elapsed prior to completion of the operation or the server is not 
+responding. in SQL: ALTER TABLE assets ADD COLUMN CreatorID varchar(128) 
+NOT NULL DEFAULT '';
+11:02:37 - [MIGRATIONS]: An error has occurred in the migration. This 
+may mean you could see errors trying to run OpenSim. If you see database 
+related errors, you will need to fix the issue manually. Continuing.
+11:02:37 - Error loading plugin from OpenSim.Services.AssetService.dll, 
+exception System.Exception: Connection must be valid and open. in SQL: 
+ROLLBACK;
+   at OpenSim.Data.Migration.ExecuteScript 
+(System.Data.Common.DbConnection conn, System.String[] script) [0x00000]
+   at OpenSim.Data.Migration.ExecuteScript 
+(System.Data.Common.DbConnection conn, System.String sql) [0x00000]
+   at OpenSim.Data.Migration.ExecuteScript (System.String sql) [0x00000]
+   at OpenSim.Data.Migration.Update () [0x00000]
+   at OpenSim.Data.MySQL.MySQLAssetData.Initialise (System.String 
+connect) [0x00000]
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005502.html">[Opensim-users] setup Whisper voice (Mumble - Murmur Voice)
+</A></li>
+	<LI>Next message: <A HREF="005481.html">[Opensim-users] upgrading to latest release (migration issue)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5480">[ date ]</a>
+              <a href="thread.html#5480">[ thread ]</a>
+              <a href="subject.html#5480">[ subject ]</a>
+              <a href="author.html#5480">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] TechCrunch Article
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20TechCrunch%20Article&In-Reply-To=%3C4F3E244A.1050000%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009429.html">
+   <LINK REL="Next"  HREF="009432.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] TechCrunch Article</H1>
+    <B>Wade Schuette</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20TechCrunch%20Article&In-Reply-To=%3C4F3E244A.1050000%40gmail.com%3E"
+       TITLE="[Opensim-users] TechCrunch Article">wade.schuette at gmail.com
+       </A><BR>
+    <I>Fri Feb 17 10:56:26 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009429.html">[Opensim-users] TechCrunch Article
+</A></li>
+        <LI>Next message: <A HREF="009432.html">[Opensim-users] TechCrunch Article
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9430">[ date ]</a>
+              <a href="thread.html#9430">[ thread ]</a>
+              <a href="subject.html#9430">[ subject ]</a>
+              <a href="author.html#9430">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I imagine that, aside from coding language,  the rest of the 
+architecture and database design are equally adhoc, were great at the 
+time as one of those &quot;temporary solutions&quot; that LL outgrew rapidly.   
+Are they running MySQL under the covers?
+
+The asset server has clearly bogged down and probably the tables are 
+incredibly fragmented but I don't think they have the ability to defrag 
+them, or recognize the problem for what it is.   Whatever it is 
+certainly didn't scale well or age well, and clearly has no transaction 
+control so things get lost routinely.
+
+A monolithic non-distributed design,  implemented on a cloud of 
+servers,  is an astoundingly poor use of resources.  The whole busy/idle 
+problem is as well, where 100 avatars can work fine one per sim, but if 
+they all come together that one cpu stops while 99 cpu's are idle.       
+Easily 95% of the computing power of the server farm is wasted.
+
+The &quot;silos with messaging&quot; approach to growth also results in the total 
+chaos when anyone or anything simply attempts to move from one sim 
+across a boundary to the next sim.
+
+Still,  all of the above problems could be fixed and redesigned away 
+without having to break anything at the user's level.
+
+I think their largest constraint on growth IS somewhat more deeply 
+embedded in code, which is their data structures for &quot;objects&quot; that have 
+only a single level of linking.     Once you link those &quot;wheels&quot; to the 
+&quot;car&quot; there are no &quot;wheel&quot; objects any more, and God help you if you 
+want to change the tires.
+
+Also the way the code is implemented discourages building with 
+distributed intelligence among the parts, and encourages monolithic 
+scripts that run everything from the root prim.   More than once I've 
+tried to do a clean distributed intelligence object and given up and 
+gone back to central scripts.
+
+Overall, I suspect that, as always, &quot;the work of the hands reflects the 
+state of the heart.&quot;   Their management style involves silos of teams 
+that may message each other but don't cross boundaries well,  with 
+massive central control that limits creativity and makes changes have to 
+be prohibitively huge and staged instead of incremental and continuous.
+
+As near as I can tell the whole architecture is on &quot;milking status&quot; with 
+effective freeze on putting money into fixing things such as the 
+Marketplace, which is clearly in a different silo than the developers.
+
+It's like a piston-driven internal combustion engine -- which is way 
+better than the horse drawn carts before it, but now that the market has 
+been developed, is seen to have no change of being &quot;tweaked&quot; to match 
+the new turbine-engined designs of next year with true distributed 
+intelligence and scalable growth without performance disaster.
+
+In fact, if a single thing defines their limits, it's an architecture 
+where, the more servers are added to the mix, the HARDER it becomes to 
+operate at any kind of reasonable speed or accuracy.  Their help desk is 
+massively overwhelmed already and must pray for the number of users to 
+stop growing.    One can imagine an architecture with the opposite 
+property,  where every new user and server chips in a little more 
+capacity and actually increases performance and ability to do 
+self-healing quality control.
+
+Wade
+
+
+On 2/17/12 1:18 AM, Toni Alatalo wrote:
+&gt;<i> On Feb 17, 2012, at 9:00 AM, Drew Hart wrote:
+</I>&gt;&gt;<i> money. The whole world is built on *old, inefficient code*, and if 
+</I>&gt;&gt;<i> Linden tries to update it those virtual objects can break, triggering 
+</I>&gt;&gt;<i> massive backlash from buyers and sellers.&quot; (Emphasis mine)
+</I>&gt;&gt;<i> I am just curious - is this statement true?  Is it true of Open Sim? 
+</I>&gt;&gt;<i>  I feel like it's not true, but I am curious for comment.  And are we 
+</I>&gt;&gt;<i> sacrificing quality to ensure backwards compatibility?  I guess this 
+</I>&gt;&gt;<i> is a philosophy
+</I>&gt;<i>
+</I>&gt;<i> I'd dare to say: yes. With some reservations.
+</I>&gt;<i>
+</I>&gt;<i> Rationale: for example LSL itself, at least the current 
+</I>&gt;<i> implementations of it, are AFAIK relatively inefficient. Not to 
+</I>&gt;<i> mention not the greatest nor best known language around, with third 
+</I>&gt;<i> party libraries etc. The LLUDP protocol is another problem point, but 
+</I>&gt;<i> I'll focus on the scripting here as that's what your post seemed to 
+</I>&gt;<i> refer to.
+</I>&gt;<i>
+</I>&gt;<i> If you compare LSL with a completely from the scratch approach, where 
+</I>&gt;<i> you would drop all concerns for backwards compatibility, you could use 
+</I>&gt;<i> either Javascript and the powerful optimized V8 engine for it (used in 
+</I>&gt;<i> Chrome and in many places that embed js now) or for example Lua which 
+</I>&gt;<i> has gotten really popular in games, and is fast and light.
+</I>&gt;<i>
+</I>&gt;<i> The reservations: I'm sure both SL and Opensim backends have done good 
+</I>&gt;<i> things to optimize things e.g. in the script engines. Linden has been 
+</I>&gt;<i> working on their viewer too etc. Usually it is possible to optimize, 
+</I>&gt;<i> clean up implementations etc. while still keeping backwards 
+</I>&gt;<i> compatibility. I don't mean to belittle that work nor say that it 
+</I>&gt;<i> would be impossible. There might be some weird things with LSL that 
+</I>&gt;<i> prevent some cleanup / optimization for backwards compatibility 
+</I>&gt;<i> reasons but I'd guess those points are rare.
+</I>&gt;<i>
+</I>&gt;<i> Anyhow my bet is that LSL will never beat V8, with the huge Google 
+</I>&gt;<i> effort, nor Lua with the nice clean design that also allows great 
+</I>&gt;<i> speed (with LuaJIT2) , in quality -- considering both the niceness of 
+</I>&gt;<i> the langs and the efficiency of execution.
+</I>&gt;<i>
+</I>&gt;<i> C# scripting for SL seemed promising in Babbage's demo and that would 
+</I>&gt;<i> be plenty nice and fast, though. And with Opensim you get that 
+</I>&gt;<i> efficiency by writing region modules.
+</I>&gt;<i>
+</I>&gt;<i> In realXtend with the Tundra SDK we've been now pursuing the approach 
+</I>&gt;<i> where dropped most our the legacy (slviewer and opensim) alltogether, 
+</I>&gt;<i> compatibility as well. So there at least you have something to compare 
+</I>&gt;<i> with: a nice clean efficient system, but with no SL compatibility. If 
+</I>&gt;<i> someone is interested we can do benchmarks, just tell what to test &amp; 
+</I>&gt;<i> we'll report :) We currently use JS for apps (not V8 now though but 
+</I>&gt;<i> there's a branch of qtscript with which we can get that) and may test 
+</I>&gt;<i> Lua too. My wish is that we are still a humble part of the opensim 
+</I>&gt;<i> community, even though use different technologies -- alternative tools 
+</I>&gt;<i> that suite different purposes are good to have around.
+</I>&gt;<i>
+</I>&gt;<i> And the fact that all you out there in the big world use Opensim 
+</I>&gt;<i> happily and can't e.g. switch to Tundra is a perfect example why 
+</I>&gt;<i> backwards compatibility is a big deal :) We here just have often cases 
+</I>&gt;<i> where legacy doesn't matter, some new game or customer project where 
+</I>&gt;<i> need to make a custom app, perhaps with no SL like functionality at 
+</I>&gt;<i> all, so in those cases it's not a prob and we can pursue this route.
+</I>&gt;<i>
+</I>&gt;&gt;<i> Drew
+</I>&gt;<i>
+</I>&gt;<i> 2cently yours,
+</I>&gt;<i> ~Toni
+</I>&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://techcrunch.com/2012/02/16/littletextpeople/">http://techcrunch.com/2012/02/16/littletextpeople/</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120217/09ad0b11/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120217/09ad0b11/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009429.html">[Opensim-users] TechCrunch Article
+</A></li>
+	<LI>Next message: <A HREF="009432.html">[Opensim-users] TechCrunch Article
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9430">[ date ]</a>
+              <a href="thread.html#9430">[ thread ]</a>
+              <a href="subject.html#9430">[ subject ]</a>
+              <a href="author.html#9430">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

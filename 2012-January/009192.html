@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Heads-Up%20for%20users%20of%20OpenSim%20development%0A%20versions%20from%20Jan%2020%2C%202012%20until%20today&In-Reply-To=%3C4F1EFABD.1090308%40bluewallgroup.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009181.html">
+   <LINK REL="Next"  HREF="009179.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today</H1>
+    <B>BlueWall</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Heads-Up%20for%20users%20of%20OpenSim%20development%0A%20versions%20from%20Jan%2020%2C%202012%20until%20today&In-Reply-To=%3C4F1EFABD.1090308%40bluewallgroup.com%3E"
+       TITLE="[Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today">jamesh at bluewallgroup.com
+       </A><BR>
+    <I>Tue Jan 24 19:38:53 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009181.html">[Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today
+</A></li>
+        <LI>Next message: <A HREF="009179.html">[Opensim-users] sql ? -- being lazy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9192">[ date ]</a>
+              <a href="thread.html#9192">[ thread ]</a>
+              <a href="subject.html#9192">[ subject ]</a>
+              <a href="author.html#9192">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 01/23/2012 10:10 PM, BlueWall wrote:
+&gt;<i> As some are aware, development to add working telehubs to OpenSim has
+</I>&gt;<i> been progressing the past couple of days. In the beginning, working out
+</I>&gt;<i> the packet dialog with the viewer, several bits of data were needed to
+</I>&gt;<i> send for the telehub info. These were saved in the database and there
+</I>&gt;<i> was a migration to add the fields and an additional table to the
+</I>&gt;<i> database to save these. As work progressed, and more eyes were added to
+</I>&gt;<i> the effort, it was apparent that we needed to refresh the values each
+</I>&gt;<i> time they were used and that saving them was pointless. So, we are
+</I>&gt;<i> modifying the database to only save what is needed. Here is the rub - I
+</I>&gt;<i> was not aware that by policy we do not do backwards migrations for a
+</I>&gt;<i> couple of reasons. So, these previous migrations will need to be handled
+</I>&gt;<i> by hand. It is just a matter of logging into the console of your
+</I>&gt;<i> database and pasting the script that follows.
+</I>&gt;<i>
+</I>&gt;<i> This affects MySQL only! Works has not been extended to other database
+</I>&gt;<i> engines at this time.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> revisions affected:
+</I>&gt;<i> start: 32d58d6e3e9a0ea1bfa808567d0f64c0652f8a85
+</I>&gt;<i> end: c36c916342460751d25350b66ffbd7eb0a401c2b
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Script ...
+</I>&gt;<i>
+</I>&gt;<i> BEGIN;
+</I>&gt;<i> alter table regionsettings drop column TelehubName;
+</I>&gt;<i> alter table regionsettings drop column TelehubEnabled;
+</I>&gt;<i> alter table regionsettings drop column TelehubPosX;
+</I>&gt;<i> alter table regionsettings drop column TelehubPosY;
+</I>&gt;<i> alter table regionsettings drop column TelehubPosZ;
+</I>&gt;<i> alter table regionsettings drop column TelehubRotX;
+</I>&gt;<i> alter table regionsettings drop column TelehubRotY;
+</I>&gt;<i> alter table regionsettings drop column TelehubRotZ;
+</I>&gt;<i> alter table regionsettings drop column TelehubRotW;
+</I>&gt;<i>
+</I>&gt;<i> alter table spawn_points change column PointX Yaw float NOT NULL;
+</I>&gt;<i> alter table spawn_points change column PointY Pitch float NOT NULL;
+</I>&gt;<i> alter table spawn_points change column PointZ Distance float NOT NULL;
+</I>&gt;<i> COMMIT;
+</I>&gt;<i>
+</I>&gt;<i> your migrations table (of your region store) should look like ...
+</I>&gt;<i>
+</I>&gt;<i> +----------------+---------+
+</I>&gt;<i> | name           | version |
+</I>&gt;<i> +----------------+---------+
+</I>&gt;<i> | migrations     |       1 |
+</I>&gt;<i> | UserStore      |       7 |
+</I>&gt;<i> | GridStore      |       2 |
+</I>&gt;<i> | LogStore       |       1 |
+</I>&gt;<i> | InventoryStore |       4 |
+</I>&gt;<i> | AssetStore     |       6 |
+</I>&gt;<i> | RegionStore    |      39 |
+</I>&gt;<i> +----------------+---------+
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> That should be all that is needed to get things on track for future
+</I>&gt;<i> releases. And, as always you can get additional assistance here or in
+</I>&gt;<i> IRC @ #opensim or for development questions #opensim-dev.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks for using OpenSimulator!
+</I>&gt;<i> BlueWall
+</I>
+
+PS: Also for a very brief time this was in the estate_settings and the 
+spawn_points was created at that time too. If you are running your 
+estate and region data together, there is a slight chance that your 
+spawn_points table could need fixing.
+
+see if your spawn_points table looks like this ...
+
+  `spawn_points` (
+   `RegionID` varchar(36) COLLATE utf8_unicode_ci NOT NULL,
+   `Yaw` float NOT NULL,
+   `Pitch` float NOT NULL,
+   `Distance` float NOT NULL,
+   KEY `RegionID` (`RegionID`)
+) ENGINE=InnoDB
+
+There is a slight chance you have EstateID instead of RegionID,
+
+if that is the case ...
+
+alter table spawn_points change column `EstateID` `RegionID` VarChar(36) 
+NOT NULL;
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009181.html">[Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today
+</A></li>
+	<LI>Next message: <A HREF="009179.html">[Opensim-users] sql ? -- being lazy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9192">[ date ]</a>
+              <a href="thread.html#9192">[ thread ]</a>
+              <a href="subject.html#9192">[ subject ]</a>
+              <a href="author.html#9192">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

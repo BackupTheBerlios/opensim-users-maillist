@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] some questions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20some%20questions&In-Reply-To=%3C200905100659.21085.laemi%40optusnet.com.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002104.html">
+   <LINK REL="Next"  HREF="002115.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] some questions</H1>
+    <B>LaeMi Wang</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20some%20questions&In-Reply-To=%3C200905100659.21085.laemi%40optusnet.com.au%3E"
+       TITLE="[Opensim-users] some questions">laemi at optusnet.com.au
+       </A><BR>
+    <I>Sat May  9 22:59:20 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002104.html">[Opensim-users] some questions
+</A></li>
+        <LI>Next message: <A HREF="002115.html">[Opensim-users] some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2108">[ date ]</a>
+              <a href="thread.html#2108">[ thread ]</a>
+              <a href="subject.html#2108">[ subject ]</a>
+              <a href="author.html#2108">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi L&#250;thien,
+
+I'm a tinkerer rather than a dev., so anything a dev. says different to me, 
+believe the dev. ;-) But I think I can answer a few of those.
+
+&gt;<i> - The first is - I would like to have some other trees than the ones
+</I>&gt;<i> that are available now. Is it possible to create one in, say, Blender,
+</I>&gt;<i> and import that (b/c I know how to make trees in Blender)? So far, I
+</I>&gt;<i> have found no repository of objects to use in Opensim (apart from the
+</I>&gt;<i> discussions about importing SL stuff - but I have never been in SL).
+</I>
+Trees in SL are a special object made from a simple algorithm and a special 
+texture. I am not sure if these can be changed without altering the viewer. 
+Might be possible to change the texture.
+
+However, trees can also be made out of clumps of sculpties or from flat prims 
+with pictures of trees on them (3 such flat prims together, rotated at 120deg 
+to eachother will give the tree some 3D body and doesn't look bad from mid-to-
+long distances. Custom trees like these won't bend in the wind though.
+
+&gt;<i> - Another, similar one .. did any of you ever create rocks or
+</I>&gt;<i> boulders? Would a &quot;sculpted prim&quot; be the way to go here?
+</I>&gt;<i> I find building more or less geometric forms very easy with the Build
+</I>&gt;<i> tool - including more complex things. But it is indeed hard to create
+</I>&gt;<i> anything naturally - looking, irregular.
+</I>
+Natural shapes are exactly what sculpties are for :-) While you CAN make 
+complex regular shapes too, it often doesn't look so good to my eye.
+
+See: <A HREF="http://wiki.secondlife.com/wiki/Sculpted_Prims:_3d_Software_Guide">http://wiki.secondlife.com/wiki/Sculpted_Prims:_3d_Software_Guide</A>
+
+&gt;<i> - is there a way to use larger region texture files than 512 x 512? I
+</I>&gt;<i> find these smaller ones to make mountains look not that natural. Most
+</I>&gt;<i> textures give a rather unnatural repetitive effect.
+</I>
+I think this is currently fixed in the viewer. Can't use greyscale textures 
+either (which 3 of my 4 textures are and would save memory and bandwidth).
+
+&gt;<i> - is it possible to create another global light source, other than the
+</I>&gt;<i> Sun or Moon? Like a large beacon with a bright light, illuminating one
+</I>&gt;<i> or more regions?
+</I>&gt;<i> The light-emitting prims don't reach very far.
+</I>
+Another viewer limitation - IIRC, SL has a limit of 8 active light sources (1 
+for sun/moon, 7 for prims), presumably because of limitations of graphics 
+cards at the low end.
+
+&gt;<i> - there are sometimes cracks or tears in the ground; even outside of
+</I>&gt;<i> the region seams (which are indeed sometimes hard to match up).
+</I>
+Sounds like a bug in stitching the regions together, likely when the two 
+regions are being rendered at different LODs (Levels Of Detail). I suspect 
+this because of the way the gaps disappear - if the regions suddenly start 
+displaying the same LOD, this is what would be expected.
+
+Not sure about the associated crashing, if it is LOD stitching issue, I would 
+suspect the client, however some weird interaction between the client and 
+server when things leave the realms of expected behaviour is also on the cards 
+(ie, the client starts sending position information to the server that the 
+server thinks impossible and the error isn't caught). That is all guessing, 
+remember I am not a dev.
+
+&gt;<i> - and the last one - is it possible *in principle* to see further than
+</I>&gt;<i> the current &quot;max viewing distance&quot; setting of 512 meters in Hippo?
+</I>
+LindenLabs (who's viewer Hippo is extended from) have been talking about 
+terrain-to-the-horizon for over a year. I am pretty sure it is possible to do 
+but would require some reworking of the viewer and possibly the server. 
+Normally the viewer is only plugged into its current sim and the 8 adjacent 
+sims. To render further would require plugging into more sims at once, which 
+becomes an exponentially increasing load on both the viewer and the sims. 
+Rendering only terrain (and not objects) to the horizon is the compromise LL 
+is thinking of as it loads up the viewer more (but only if the user turns it 
+on) and only minimally increases load on the sims (fetching height-maps, but 
+not the rest of the sim contents).
+
+
+Hope this helps
+(hope this info is correct)
+
+LaeMing
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002104.html">[Opensim-users] some questions
+</A></li>
+	<LI>Next message: <A HREF="002115.html">[Opensim-users] some questions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2108">[ date ]</a>
+              <a href="thread.html#2108">[ thread ]</a>
+              <a href="subject.html#2108">[ subject ]</a>
+              <a href="author.html#2108">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

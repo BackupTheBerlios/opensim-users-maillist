@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OAR File saving errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OAR%20File%20saving%20errors&In-Reply-To=%3C4F5AB7B3.8020603%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009768.html">
+   <LINK REL="Next"  HREF="009771.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OAR File saving errors</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OAR%20File%20saving%20errors&In-Reply-To=%3C4F5AB7B3.8020603%40googlemail.com%3E"
+       TITLE="[Opensim-users] OAR File saving errors">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Mar 10 03:08:51 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009768.html">[Opensim-users] OAR File saving errors
+</A></li>
+        <LI>Next message: <A HREF="009771.html">[Opensim-users] Permission Denied Cannot Rotate
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9772">[ date ]</a>
+              <a href="thread.html#9772">[ thread ]</a>
+              <a href="subject.html#9772">[ subject ]</a>
+              <a href="author.html#9772">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes, there's a good chance this is related to mantis 5898.  I've just posted a commit to git master that might improve 
+reliability.  I would appreciate it if you could test and comment on mantis 5898.  Thanks.
+
+On 09/03/12 15:21, Fleep Tuque wrote:
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> I'm seeing some errors on the console when trying to save out OAR file backups on FleepGrid (running in grid mode but
+</I>&gt;<i> everything on one box, WinXP, OpenSim 0.7.2,MySQL Server 5.1), and I'm not sure what would be causing the problem. This
+</I>&gt;<i> only seems to be happening for regions with lots of content, most of the OARs are saving out just fine.
+</I>&gt;<i>
+</I>&gt;<i> Searching the Mantis, I found <A HREF="http://opensimulator.org/mantis/view.php?id=5898">http://opensimulator.org/mantis/view.php?id=5898</A> which seems related perhaps?
+</I>&gt;<i>
+</I>&gt;<i> On the affected OAR save attempts, I see tons of these types of errors in red on the simulator console:
+</I>&gt;<i>
+</I>&gt;<i> 10:02:18 - [ASYNC REQUEST]: Request GET <A HREF="http://74.83.148.18:8003/assets/80f6de3a">http://74.83.148.18:8003/assets/80f6de3a</A>
+</I>&gt;<i> -a081-405e-bec5-4fb593899fda failed with status ConnectFailure and message Unabl
+</I>&gt;<i> e to connect to the remote server
+</I>&gt;<i>
+</I>&gt;<i> And these messages on the ROBUST console:
+</I>&gt;<i>
+</I>&gt;<i> 10:03:08 - [BASE HTTP SERVER]: slow GET request for /assets/31520575-ed55-45da-8
+</I>&gt;<i> 01e-5027df205b49 from 74.83.148.18:1325 &lt;<A HREF="http://74.83.148.18:1325">http://74.83.148.18:1325</A>&gt; took 14922 ms
+</I>&gt;<i>
+</I>&gt;<i> Then at the end on the simulator console:
+</I>&gt;<i>
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: Asset service failed to return information about 14 reque
+</I>&gt;<i> sted assets
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: No information about asset 7f381ec0-2bc9-b017-7d8a-11b602
+</I>&gt;<i> 109a87 received
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: No information about asset 8c5cee82-6400-4786-b028-0a4d56
+</I>&gt;<i> f66f9d received
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: No information about asset 3e6b8b99-5756-4db0-981e-8b9ab9
+</I>&gt;<i> 01349a received
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: (... 11 more not shown)
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: Archive save aborted.  PLEASE DO NOT USE THIS ARCHIVE, IT
+</I>&gt;<i>   WILL BE INCOMPLETE.
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: Asset service failed to return information about 15 reque
+</I>&gt;<i> sted assets
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: No information about asset 3e6b8b99-5756-4db0-981e-8b9ab9
+</I>&gt;<i> 01349a received
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: No information about asset 4e62db81-4c6a-446d-a83c-405fea
+</I>&gt;<i> a5bb1c received
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: No information about asset 8096df7a-c118-4ae8-996e-6b68ae
+</I>&gt;<i> bd3c4a received
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: (... 12 more not shown)
+</I>&gt;<i> 10:04:08 - [ARCHIVER]: Archive save aborted.  PLEASE DO NOT USE THIS ARCHIVE, IT
+</I>&gt;<i>   WILL BE INCOMPLETE.
+</I>&gt;<i>
+</I>&gt;<i> Not sure what's causing this but thought I'd mention in case anyone else has seen or solved it..
+</I>&gt;<i>
+</I>&gt;<i> - Chris/Fleep
+</I>&gt;<i>
+</I>&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;<i> University of Cincinnati
+</I>&gt;<i> 406A Zimmer Hall
+</I>&gt;<i> 315 College Drive
+</I>&gt;<i> PO BOX 210088
+</I>&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;<i> (513) 556-3018
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009768.html">[Opensim-users] OAR File saving errors
+</A></li>
+	<LI>Next message: <A HREF="009771.html">[Opensim-users] Permission Denied Cannot Rotate
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9772">[ date ]</a>
+              <a href="thread.html#9772">[ thread ]</a>
+              <a href="subject.html#9772">[ subject ]</a>
+              <a href="author.html#9772">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Issues in setting up FreeSWITCH
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Issues%20in%20setting%20up%20FreeSWITCH&In-Reply-To=%3C1296103534412-5965205.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006572.html">
+   <LINK REL="Next"  HREF="006559.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Issues in setting up FreeSWITCH</H1>
+    <B>Steam421</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Issues%20in%20setting%20up%20FreeSWITCH&In-Reply-To=%3C1296103534412-5965205.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Issues in setting up FreeSWITCH">a.nantes at qut.edu.au
+       </A><BR>
+    <I>Thu Jan 27 05:45:34 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006572.html">[Opensim-users] Terrain over Multiple Regions
+</A></li>
+        <LI>Next message: <A HREF="006559.html">[Opensim-users] Issues in setting up FreeSWITCH
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6558">[ date ]</a>
+              <a href="thread.html#6558">[ thread ]</a>
+              <a href="subject.html#6558">[ subject ]</a>
+              <a href="author.html#6558">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi
+
+I've been trying to set up freeswitch (1.0.head (git-e0ed000 2011-01-21)) in
+a robust server. I'm running Windows XP and opensim 0.7.0.2 and I'm using
+Hippo v0.6.3.
+Opensim and freeswitch are running on the same machine. The firewall allows
+the VOIP traffic.
+I've tried to run the client, as well as freeswitch, on a different machine
+with no success.
+
+I looked at several forums but I could not find the answer to this problem;
+The 'talk' button in Hippo just doesn't get enabled.
+
+Voice chat is enabled in the 'About Land' menu, within the 'Preferences' tab
+and in 'Region/Estate'. Still I cannot use it.
+
+Here are the snippets of my opensim conf files:
+
+Opensim.ini
+------------------------------------
+[FreeSwitchVoice]
+    ; In order for this to work you need a functioning FreeSWITCH PBX set
+up.
+    ; Configuration details at
+<A HREF="http://opensimulator.org/wiki/Freeswitch_Module">http://opensimulator.org/wiki/Freeswitch_Module</A>
+    enabled = true
+    ; FreeSWITCH server is going to contact us and ask us all sorts of
+things
+    freeswitch_server_user = freeswitch
+    freeswitch_server_pass = password
+    freeswitch_api_prefix = /fsapi
+    ; external IP address of your OpenSim voice enabled region
+    ; note: all regions running on same OpenSim.exe will be enabled
+    freeswitch_service_server = 127.0.0.1
+    ; this should be the same port the region listens on
+    freeswitch_service_port = 8002
+    freeswitch_realm = 127.0.0.1
+    freeswitch_sip_proxy = 127.0.0.1:5060
+    ; STUN = Simple Traversal of UDP through NATs
+    ; See <A HREF="http://wiki.freeswitch.org/wiki/NAT_Traversal">http://wiki.freeswitch.org/wiki/NAT_Traversal</A>
+    ; stun.freeswitch.org is not guaranteed to be running so use it in
+production at your own risk
+    freeswitch_attempt_stun = false
+    freeswitch_stun_server = 127.0.0.1
+    freeswitch_echo_server = 127.0.0.1
+    freeswitch_echo_port = 50505
+    freeswitch_well_known_ip = 127.0.0.1
+    ;
+    ; Type the address of your http server here, hostname is allowed.  This
+is provided so you can specify a hostname
+    ; This is used by client for account verification.  By default, it's the
+same as the freeswitch service server.
+    ;
+    ; opensim_well_known_http_address =
+Address_Of_Your_SIM_HTTP_Server_Hostname_Allowed
+    ;
+    freeswitch_default_timeout = 5000
+    freeswitch_subscribe_retry = 120
+    ; freeswitch_password_reset_url =
+------------------------------------
+
+Robust.ini
+------------------------------------
+[FreeswitchService]
+    LocalServiceModule =
+&quot;OpenSim.Services.FreeswitchService.dll:FreeswitchService&quot;
+    ServerAddress = 127.0.0.1
+    Realm = &quot;127.0.0.1&quot;
+------------------------------------
+
+
+The opensim server prompts the following info:
+
+14:15:05 - [FreeSwitchVoice]:[PROVISIONVOICE]: request: &lt;llsd&gt;&lt;undef
+/&gt;&lt;/llsd&gt;
+14:15:05 - [FreeSwitchVoice]:[PROVISIONVOICE]: avatar &quot;MyAvatar&quot;:
+&lt;llsd&gt;&lt;map&gt;&lt;key&gt;username&lt;/key&gt;&lt;string&gt;x0FaRQWc-RGWT6xgLlsC-Kg==&lt;/string&gt;&lt;key&gt;password&lt;/key&gt;&lt;string&gt;1234&lt;/string&gt;&lt;key&gt;voice_sip_uri_hostname&lt;/key&gt;&lt;string&gt;127.0.0.1&lt;/string&gt;&lt;key&gt;voice_account_server_name&lt;/key&gt;&lt;string&gt;<A HREF="http://127.0.0.1:8002/fsapi/&lt;/string">http://127.0.0.1:8002/fsapi/&lt;/string</A>&gt;&lt;/map&gt;&lt;/llsd&gt;
+
+
+By typing 'sofia status' in freeswitch I get the following output:
+
+                     Name          Type                                      
+Data      State
+=================================================================================================
+                 internal       profile            
+sip:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mod_sofia at 192.168.0.6</A>:5060      RUNNING (0)
+              192.168.0.6         alias                                  
+internal      ALIASED
+                 external       profile            
+sip:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mod_sofia at 192.168.0.6</A>:5080      RUNNING (0)
+    external::example.com       gateway                   
+sip:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">joeuser at example.com</A>      NOREG
+=================================================================================================
+2 profiles 1 alias
+
+
+while the command 'status' produces:
+
+UP 0 years, 0 days, 0 hours, 53 minutes, 11 seconds, 937 milliseconds, 500
+microseconds
+0 session(s) since startup
+0 session(s) 0/30
+1000 session(s) max
+min idle cpu 0.00/65.62
+
+In the freeswitch log I see the usual error message:
+[ERR] mod_xml_curl.c:304 Received HTTP error 0 trying to fetch
+<A HREF="http://127.0.0.1:8002/fsapi/freeswitch-configdata:">http://127.0.0.1:8002/fsapi/freeswitch-configdata:</A>
+[hostname=MobiDick&amp;section=directory&amp;tag_name=&amp;key_name=&amp;key_value=&amp;Event-Name=REQUEST_PARAMS&amp;Core-UUID=06c263c2-8bac-4297-b15f-70661e6c3260&amp;FreeSWITCH-Hostname=MobiDick&amp;FreeSWITCH-IPv4=192.168.0.6&amp;FreeSWITCH-IPv6=%3A%3A1&amp;Event-Date-Local=2011-01-27%2013%3A36%3A45&amp;Event-Date-GMT=Thu,%2027%20Jan%202011%2003%3A36%3A45%20GMT&amp;Event-Date-Timestamp=1296099405734375&amp;Event-Calling-File=sofia.c&amp;Event-Calling-Function=config_sofia&amp;Event-Calling-Line-Number=3872&amp;purpose=gateways&amp;profile=external]
+
+as well as the following one:
+...
+[ERR] sofia.c:1501 Error Creating SIP UA for profile: internal-ipv6
+...
+[CRIT] switch_loadable_module.c:928 Error Loading module
+C:\Programmi\FreeSWITCH\mod\mod_cluechoo.dll
+...
+
+Can anyone tell me where did I go wrong? 
+Thank you for your time.
+
+-- 
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Issues-in-setting-up-FreeSWITCH-tp5965205p5965205.html">http://opensim-users.2152040.n2.nabble.com/Issues-in-setting-up-FreeSWITCH-tp5965205p5965205.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006572.html">[Opensim-users] Terrain over Multiple Regions
+</A></li>
+	<LI>Next message: <A HREF="006559.html">[Opensim-users] Issues in setting up FreeSWITCH
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6558">[ date ]</a>
+              <a href="thread.html#6558">[ thread ]</a>
+              <a href="subject.html#6558">[ subject ]</a>
+              <a href="author.html#6558">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

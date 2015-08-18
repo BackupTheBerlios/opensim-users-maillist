@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Multi-core, multi-threading OpenSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multi-core%2C%20multi-threading%20OpenSim&In-Reply-To=%3CAANLkTikvG1hTHwAec3%3DWJemLnRHPiMjm84i%3DtPzPNTrC%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005309.html">
+   <LINK REL="Next"  HREF="005308.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Multi-core, multi-threading OpenSim</H1>
+    <B>Mister Blue</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multi-core%2C%20multi-threading%20OpenSim&In-Reply-To=%3CAANLkTikvG1hTHwAec3%3DWJemLnRHPiMjm84i%3DtPzPNTrC%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Multi-core, multi-threading OpenSim">misterblue at misterblue.com
+       </A><BR>
+    <I>Sat Aug 21 00:10:39 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005309.html">[Opensim-users] Multi-core, multi-threading OpenSim
+</A></li>
+        <LI>Next message: <A HREF="005308.html">[Opensim-users] problem with textures in the Libray
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5311">[ date ]</a>
+              <a href="thread.html#5311">[ thread ]</a>
+              <a href="subject.html#5311">[ subject ]</a>
+              <a href="author.html#5311">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have developed some OpenSimulator stress tests which exercise the maximum
+avatars, scripted objects and physical objects. Some results of running
+these against version 0.6.9-post-fixes and 0.7.0.1 are
+<A HREF="athttp://www.sciencesim.com/wiki/doku.php/vwperf/stress_profile_20100820.">athttp://www.sciencesim.com/wiki/doku.php/vwperf/stress_profile_20100820.</A>
+
+The multi-threaded XEngine script engine is able to utilize all available
+processor threads. The single-threaded ODE physics engine performance drops
+when a single processor thread is used up. In general, maximum number of
+scripts is limited by the server multi-thread performance, maximum number of
+physical objects is limited by the server's single-thread performance, and
+the maximum number of avatars is limited by the single-thread performance
+(physics and agent update calculations in the heartbeat loop).
+
+Have other people created stress and operational tests for OpenSimulator? If
+so, I would like to collect them to create a exercise resource for software
+and server evaluation.
+
+-- mb
+
+On Fri, Aug 20, 2010 at 2:16 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> On 20/08/10 19:22, Gwyneth Llewelyn wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> A simple and stupid question. I was trying to look for some information
+</I>&gt;&gt;<i> if OpenSim is multi-threaded and able to automatically run on multiple
+</I>&gt;&gt;<i> cores, or if due to some limitations of Mono (unknown to me), this is
+</I>&gt;&gt;<i> impossible. Google seems quiet on this (or I might just have been unable
+</I>&gt;&gt;<i> to trigger the right combination of keywords that provide me with the
+</I>&gt;&gt;<i> answer I need).
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hi Gwyn.  In many places, OpenSim is very multithreaded - each client on
+</I>&gt;<i> the sim gets its own thread, for instance, and many client operations are
+</I>&gt;<i> executed with threads from the threadpool.
+</I>&gt;<i>
+</I>&gt;<i> However, there are some single-thread bottlenecks.  The scene updating
+</I>&gt;<i> thread is one, which might be why you don't see activity consistently on all
+</I>&gt;<i> cores.  Changing the number of virtual cores or other configuration
+</I>&gt;<i> parameters won't affect this - it's a software issue.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> If so, it would make more sense to launch multiple separate Mono
+</I>&gt;&gt;<i> instances, each running a set of regions, instead of having just one
+</I>&gt;&gt;<i> instance with all the regions in that server?
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I should think that it's always going to be more efficient to run
+</I>&gt;<i> everything within one Mono instance in order to avoid the overhead of
+</I>&gt;<i> multiple runtimes.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> What would you recommend as a more reasonable configuration? I usually
+</I>&gt;&gt;<i> have Linux installations with 4 virtual cores, and from visual
+</I>&gt;&gt;<i> observation, only two (sometimes even just one!) is being used all the
+</I>&gt;&gt;<i> time by OpenSim and Robust. Does Mono somehow pre-bind to a single core
+</I>&gt;&gt;<i> and never changes? (In that case, launching multiple OpenSim instances
+</I>&gt;&gt;<i> would all get pre-bound on a single core, thus not really making any
+</I>&gt;&gt;<i> difference?) For a server that is exclusively used for OpenSim, it seems
+</I>&gt;&gt;<i> a waste to let all those cores run idle...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for any input on this :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cheers,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Gwyn
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> &quot;I'm not building a game. I'm building a new country.&quot;
+</I>&gt;&gt;<i> -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100820/5dffc709/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100820/5dffc709/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005309.html">[Opensim-users] Multi-core, multi-threading OpenSim
+</A></li>
+	<LI>Next message: <A HREF="005308.html">[Opensim-users] problem with textures in the Libray
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5311">[ date ]</a>
+              <a href="thread.html#5311">[ thread ]</a>
+              <a href="subject.html#5311">[ subject ]</a>
+              <a href="author.html#5311">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] short avatars make world bounce
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20short%20avatars%20make%20world%20bounce&In-Reply-To=%3CCADyQTWqJqVNf8HZ1qmohC%2BQKg4vO%2BTOAvW1sdyUgv-uurqDG2w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010425.html">
+   <LINK REL="Next"  HREF="010422.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] short avatars make world bounce</H1>
+    <B>dz</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20short%20avatars%20make%20world%20bounce&In-Reply-To=%3CCADyQTWqJqVNf8HZ1qmohC%2BQKg4vO%2BTOAvW1sdyUgv-uurqDG2w%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] short avatars make world bounce">dz at bitzend.net
+       </A><BR>
+    <I>Tue May 29 18:28:09 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010425.html">[Opensim-users] opensimulator-splash-screen
+</A></li>
+        <LI>Next message: <A HREF="010422.html">[Opensim-users] short avatars make world bounce
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10420">[ date ]</a>
+              <a href="thread.html#10420">[ thread ]</a>
+              <a href="subject.html#10420">[ subject ]</a>
+              <a href="author.html#10420">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> From: InuYasha Meiji &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] short avatars make world bounce
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Well the last time I felt brave about those numbers was a few versions
+</I>&gt;<i> back.  But found it a little rough.  I ened up unable to walk up the
+</I>&gt;<i> steps or climb ladders very well.  Maybe ime to try again?
+</I>&gt;<i>
+</I>&gt;<i> InuYasha.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 5/21/2012 4:48 PM, Justin Clark-Casey wrote:
+</I>&gt;<i> &gt; If you're extremely brave, you could try adjusting some of the numbers
+</I>&gt;<i> &gt; in [ODEPhysicsSettings] (copying from OpenSimDefaults.ini).  Lowering
+</I>&gt;<i> &gt; m_avatarobjectcontact_bounce might be interesting, for example.
+</I>&gt;<i> &gt; However, I haven't played much with these numbers so I'm not sure what
+</I>&gt;<i> &gt; kind of effect that would have.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On 20/05/12 06:30, InuYasha Meiji wrote:
+</I>&gt;<i> &gt;&gt; I was wondering if anyone else noticed this in 7.3.1, but my shorter
+</I>&gt;<i> &gt;&gt; then usual for secondlife avatar seems to make the
+</I>&gt;<i> &gt;&gt; world bounce all around it when I walk down my street. I have used
+</I>&gt;<i> &gt;&gt; this same AV for a long time and just noticed this
+</I>&gt;<i> &gt;&gt; going on. It is as if the world is one big trampoline now. Can
+</I>&gt;<i> &gt;&gt; anything be done, besides making taller avatars?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; InuYasha
+</I>&gt;<i>
+</I>
+
+I believe the bouncing is the result of the avatar &quot;physics capsule&quot;
+interacting with the ground....
+a small enough avatar design would result in the capsule ALWAYS coming in
+contact with the ground....
+
+As Justin indicated...there are a couple parameters in OPENSIM.INI related
+to the physics of avatars...
+I believe the parameter he MEANT to describe was...
+    m_terraincontact_bounce = 0.05   ( instead of
+&quot;m_OBJECTcontact_bounce&quot;... )
+
+In addition to the one he mentions...   I would experiment with these
+parameters in the [ODEPhysicsSettings] section ...
+
+    ;girth of the avatar.  Adds radius to the height also
+    av_capsule_radius = 0.37
+
+    (try reducing this parameter to generate a smaller radius avatar
+capsule)
+
+I didn't see any reference to how long ago you used your short avatars, but
+a while back the default for this parameter changed..
+Maybe the old default works better for shorter avatars????
+
+    ; specifies if the capsule should be tilted (=true; old compatibility
+mode)
+    ; or straight up-and-down (=false; better and more consistent physics
+behavior)
+    av_capsule_tilted = false
+
+    (Use True instead of False)
+
+You might also look to see what happens if you toggle this parameter  to
+true....
+
+    ; Filtering collisions helps keep things stable physics wise, but
+sometimes
+    ; it can be overzealous.  If you notice bouncing, chances are it's that.
+    filter_collisions = false
+
+Please note that these parameters are documented in OLDER versions of the
+OPENSIM.INI file..
+Apparently they have been removed from more current releases,  to &quot;prevent
+confusion&quot;...
+
+While I do agree that it is hard to balance &quot;Ease of Startup&quot; against full
+disclosure of ALL the possible parameter changes,
+This is one instance where removing them makes it  virtually  impossible
+for a developer to do anything other than ask for help
+and pray someone &quot;remembers&quot;  one of the now-hidden parameter options...
+Personally,  I think that while you classify the
+code as BETA, the benefits of exposing new users to ALL of the available
+options GREATLY outweighs the difficulties of
+documenting what they all impact...
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120529/0c820e90/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120529/0c820e90/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010425.html">[Opensim-users] opensimulator-splash-screen
+</A></li>
+	<LI>Next message: <A HREF="010422.html">[Opensim-users] short avatars make world bounce
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10420">[ date ]</a>
+              <a href="thread.html#10420">[ thread ]</a>
+              <a href="subject.html#10420">[ subject ]</a>
+              <a href="author.html#10420">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

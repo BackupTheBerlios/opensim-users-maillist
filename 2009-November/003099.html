@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Hypergrid: incompatible coordinates
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hypergrid%3A%20incompatible%20coordinates&In-Reply-To=%3C4AFB40F1.8010001%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003098.html">
+   <LINK REL="Next"  HREF="003100.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Hypergrid: incompatible coordinates</H1>
+    <B>diva at metaverseink.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hypergrid%3A%20incompatible%20coordinates&In-Reply-To=%3C4AFB40F1.8010001%40metaverseink.com%3E"
+       TITLE="[Opensim-users] Hypergrid: incompatible coordinates">diva at metaverseink.com
+       </A><BR>
+    <I>Wed Nov 11 23:55:45 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003098.html">[Opensim-users] Hypergrid: incompatible coordinates
+</A></li>
+        <LI>Next message: <A HREF="003100.html">[Opensim-users] Hypergrid: incompatible coordinates
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3099">[ date ]</a>
+              <a href="thread.html#3099">[ thread ]</a>
+              <a href="subject.html#3099">[ subject ]</a>
+              <a href="author.html#3099">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Your problem is (4): miscellaneous configuration bugs.
+Specifically I have a feeling you have the exact same UUID for both 
+regions. If you're not careful with UUIDs being unique, all sorts of 
+strange things can happen.
+
+Paul Fishwick wrote:
+&gt;<i> the diva distro works well. However, I also see the details of the
+</I>&gt;<i> problem with the HG-enabled opensim that I made:
+</I>&gt;<i> 
+</I>&gt;<i>  1) enabled HG standalone on HOME machine
+</I>&gt;<i>  2) launch viewer on this standalone and verify that &quot;home&quot; is currently 
+</I>&gt;<i> set
+</I>&gt;<i>  3) WORLD-&gt;Teleport Home. Works fine, and I am teleported correctly.
+</I>&gt;<i>  4) do a &quot;link-region...&quot; to WORK-IP
+</I>&gt;<i>  5) step #4 works fine and the linked region shows in map
+</I>&gt;<i>  6) try #3 again and it fails with [Hgrid] saying that it thinks that 
+</I>&gt;<i> home is on WORK-IP
+</I>&gt;<i> 
+</I>&gt;<i> the error from HG is:
+</I>&gt;<i> 
+</I>&gt;<i> [Hgrid]: Local user is going to foreign region or foreign user is going 
+</I>&gt;<i> elsewhere
+</I>&gt;<i> --------------- Home -----------------
+</I>&gt;<i> &lt;WORK-IP is listed here&gt; along with the UUID and port
+</I>&gt;<i> 
+</I>&gt;<i> Does HG look for home other than how it is set via the viewer? I've 
+</I>&gt;<i> tried with 2 or 3
+</I>&gt;<i> viewers, cleaning cache, but to no avail. As soon as I do 
+</I>&gt;<i> &quot;link-region...&quot;, &quot;home&quot;
+</I>&gt;<i> is reset and so Teleport-Home fails.
+</I>&gt;<i> 
+</I>&gt;<i> -p
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A> wrote:
+</I>&gt;&gt;<i> If it doesn't work it's either because (1) the home region isn't set; 
+</I>&gt;&gt;<i> or (2) the departing sim's http port is behind a firewall, therefore 
+</I>&gt;&gt;<i> the receiving sim is not able to verify the session; or (3) the user 
+</I>&gt;&gt;<i> information in the DB is wrong; or (4) miscellaneous configuration bugs.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hence the reason for me to make the diva distro: 3 and 4 are eliminated.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Paul Fishwick wrote:
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;&gt;<i> On the work unix machine, there are no blocked ports. On the home pc 
+</I>&gt;&gt;&gt;<i> machine, the usual
+</I>&gt;&gt;&gt;<i> incoming ports are open (9000 through 9010, 8000 through 8010) and 
+</I>&gt;&gt;&gt;<i> both work and home
+</I>&gt;&gt;&gt;<i> opensims can be accessed via the SL viewer using the FQDN fine when 
+</I>&gt;&gt;&gt;<i> not using the
+</I>&gt;&gt;&gt;<i> HG architecture (i.e., when using regular standalone). Is there a 
+</I>&gt;&gt;&gt;<i> particular port or port range
+</I>&gt;&gt;&gt;<i> that HG uses, not used in standalone? Perhaps I have not opened up 
+</I>&gt;&gt;&gt;<i> everything I need to
+</I>&gt;&gt;&gt;<i> for HG.
+</I>&gt;&gt;&gt;<i> -p
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A> wrote:
+</I>&gt;&gt;&gt;<i>    
+</I>&gt;&gt;&gt;&gt;<i> Ports blocked on firewall.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Paul Fishwick wrote:
+</I>&gt;&gt;&gt;&gt;<i>      
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A> wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i>        
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Paul Fishwick wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>          
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> It has public access (&quot;Allow Public Access&quot; is set in 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Region/Estate). However, it also has the
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> defaultpermissionsmodule, so does one need to disable permissions 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> (username, password) to
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> get hypergrid TPs to work?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>                 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> No. I though you were saying you have an access list in that sim.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Permissions work exactly the same way in HG and non-HG.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I don't know in which way you are failing to TP. It may be that 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> you don't have your home region set. You cannot HG TP around 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> without a home region. For setting a home region, you need to set 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> it, logout, and then login again, or the viewer's cache will get 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> in the way.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;&gt;<i> I went back temporarily to the regular standalone architecture for
+</I>&gt;&gt;&gt;&gt;&gt;<i> the two opensim installations - we'll call them  HOME and WORK. I 
+</I>&gt;&gt;&gt;&gt;&gt;<i> verified in each that
+</I>&gt;&gt;&gt;&gt;&gt;<i> a home was set, since I could do &quot;Teleport Home&quot; in each, an it 
+</I>&gt;&gt;&gt;&gt;&gt;<i> worked fine. I also,
+</I>&gt;&gt;&gt;&gt;&gt;<i> in each, set &quot;accounts_authenticate = false&quot; since this would 
+</I>&gt;&gt;&gt;&gt;&gt;<i> appear to be necessary for
+</I>&gt;&gt;&gt;&gt;&gt;<i> HG? In any case, I can login as anyone and yet the permissions 
+</I>&gt;&gt;&gt;&gt;&gt;<i> module is enabled so only
+</I>&gt;&gt;&gt;&gt;&gt;<i> the master user can edit/create on the land. So far, so good.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Now, that I know that accounts_authenticate is turned off and that 
+</I>&gt;&gt;&gt;&gt;&gt;<i> each opensim
+</I>&gt;&gt;&gt;&gt;&gt;<i> has a home region set, I turned back on the hypergrid setting under 
+</I>&gt;&gt;&gt;&gt;&gt;<i> [Architecture] for both
+</I>&gt;&gt;&gt;&gt;&gt;<i> HOME and WORK.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> At HOME, I did link-region 1000 1000 &lt;WORK IP&gt; 9000 local
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> this fails to get the map image, but correctly links in the WORK 
+</I>&gt;&gt;&gt;&gt;&gt;<i> opensim at 1000, 1000.
+</I>&gt;&gt;&gt;&gt;&gt;<i> I can see the grey square at the 1000,1000 location in the map.
+</I>&gt;&gt;&gt;&gt;&gt;<i> With the hypergrid, back on, I am unable to &quot;Teleport Home&quot; let 
+</I>&gt;&gt;&gt;&gt;&gt;<i> alone teleport to 'local'
+</I>&gt;&gt;&gt;&gt;&gt;<i> by clicking on the grey square and trying to teleport there. When I 
+</I>&gt;&gt;&gt;&gt;&gt;<i> try &quot;Teleport Home&quot;, it
+</I>&gt;&gt;&gt;&gt;&gt;<i> is attempting to teleport to WORK's home since I can see this in 
+</I>&gt;&gt;&gt;&gt;&gt;<i> WORK's opensim log, when
+</I>&gt;&gt;&gt;&gt;&gt;<i> it should be trying to teleport to HOME's home.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> In any event, I get [Hgrid]: Access denied to foreign user on the 
+</I>&gt;&gt;&gt;&gt;&gt;<i> WORK log screen.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I realize I must be missing another essential step or setting. 
+</I>&gt;&gt;&gt;&gt;&gt;<i> Thoughts?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> -p
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>        
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003098.html">[Opensim-users] Hypergrid: incompatible coordinates
+</A></li>
+	<LI>Next message: <A HREF="003100.html">[Opensim-users] Hypergrid: incompatible coordinates
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3099">[ date ]</a>
+              <a href="thread.html#3099">[ thread ]</a>
+              <a href="subject.html#3099">[ subject ]</a>
+              <a href="author.html#3099">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

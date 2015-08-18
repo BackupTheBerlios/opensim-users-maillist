@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] trying to set up freeswitch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C201011131452.oADEqI23011735%40lmtp1.ucs.ed.ac.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006221.html">
+   <LINK REL="Next"  HREF="006113.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] trying to set up freeswitch</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C201011131452.oADEqI23011735%40lmtp1.ucs.ed.ac.uk%3E"
+       TITLE="[Opensim-users] trying to set up freeswitch">ai.ai.austin at gmail.com
+       </A><BR>
+    <I>Sat Nov 13 15:52:17 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006221.html">[Opensim-users] Implementing Groups
+</A></li>
+        <LI>Next message: <A HREF="006113.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6112">[ date ]</a>
+              <a href="thread.html#6112">[ thread ]</a>
+              <a href="subject.html#6112">[ subject ]</a>
+              <a href="author.html#6112">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+&gt;<i>From: Diva Canto &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt;
+</I>&gt;<i>If that's any consolation, I too am fighting with FreeSwitch
+</I>
+
+In case its helpful, we have FreeSwitch workings fine across 3 
+different Opensim.exe instances on separate hosts in a grid of 20 
+regions.  The Opensim Wiki page and Opensim.ini.example file was 
+altered as a result of our experience so look at that carefully for setup.
+
+Additional notes that might help:
+
+1. We established a simple OpenSim.exe on the SAME host as the 
+FreeSwitch.exe service and put a single simple island on that (we 
+called it &quot;Talk&quot;) as some folks observed that FreeSwitch had problems 
+with connecting for its CONFIGURED server lin to another server, and 
+use THAT OpenSim.exe instance for the config setup with FreeSwitch.. 
+not the main regions we run on other servers.
+
+2. FreeSwitch provides service to all OpenSim.ex instances on any 
+servers you wish even though its only configured fro one.
+
+3. There is one FreeSwitch channel per region, change regions and you 
+change channel.  So all users to talk must be on the same 
+region.  Plots on one region share the region channel we think.
+
+4. You appear as one user in the SL Viewers, AL other users appear as 
+a single &quot;user&quot; with a coded name for the channel.
+
+5. You must have voice enabled at the region, AND the plot 
+level.  This is a pain, as the default setting in OpenSim is that 
+PLOTS have voice turned off.  The standard viewers 1.23 and 2.x do 
+not allow you to turn this back on, so you must use a third party 
+viewer to turn on PLOT voice.  I have asked before that we change the 
+default setting when a plot is created to have this on by default (or 
+on if the region voice is on- which it is by default).
+
+6. You definitely MUST start FreeSwitch.exe before the regions that 
+you want voice to work on. It works fine over restarts without 
+FreeSwitch being started again.
+
+7. Rremember to configure for EXTERNALLY accessible IP 
+addressed.  Use IP numbers fro FreeSwitch... and if there are 
+192.168.x.x style local net addresses in there you will not get 
+FreeSwitch to work with external users.
+
+8. There are some red errors on startup of FreeSwitch as noted by 
+gregor.. at least in our setup which appears to be related to a 
+missing config file that FreeSwitch tries to retrieve from OpenSim 
+(opensim-region-server-url:port/api/freeswitch-config) that is not in 
+the OpenSim setup... We have (safely?) ignored those without problems...
+
+2010-11-13 14:42:55.252361 [ERR] mod_xml_curl.c:252 Received HTTP 
+error 0 trying
+  to fetch <A HREF="http://129.215.219.143:9000/api/freeswitch-config">http://129.215.219.143:9000/api/freeswitch-config</A>
+data: 
+[hostname=shuna&amp;section=directory&amp;tag_name=domain&amp;key_name=name&amp;key_value=
+129.215.219.143&amp;Event-Name=GENERAL&amp;Core-UUID=cb64ea40-aa92-494b-be13-65d9c468efe
+c&amp;FreeSWITCH-Hostname=shuna&amp;FreeSWITCH-IPv4=129.215.219.143&amp;FreeSWITCH-IPv6=2002
+%3A81d7%3Adb8f%3A%3A81d7%3Adb8f&amp;Event-Date-Local=2010-11-13%2014%3A42%3A54&amp;Event
+-Date-GMT=Sat,%2013%20Nov%202010%2014%3A42%3A54%20GMT&amp;Event-Date-Timestamp=12896
+59374247361&amp;Event-Calling-File=switch_core.c&amp;Event-Calling-Function=switch_load_
+network_lists&amp;Event-Calling-Line-Number=984&amp;domain=129.215.219.143&amp;purpose=network-list]
+
+You can test voice on regions on the Openvue grid if you wish... The 
+Talk region is on same host as the FreeSwitch.exe service if other 
+regions give problems.  The server is only a dual core Pentium 
+Windows 32 bit OS machine so not that beefy remember, but has worked 
+for 4 way calls for us.
+
+
+
+
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006221.html">[Opensim-users] Implementing Groups
+</A></li>
+	<LI>Next message: <A HREF="006113.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6112">[ date ]</a>
+              <a href="thread.html#6112">[ thread ]</a>
+              <a href="subject.html#6112">[ subject ]</a>
+              <a href="author.html#6112">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

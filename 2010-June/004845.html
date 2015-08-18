@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim + MySQL error on startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20%2B%20MySQL%20error%20on%20startup&In-Reply-To=%3C20100630165601.GA1398%40squirrel.privatenet%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004814.html">
+   <LINK REL="Next"  HREF="004793.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim + MySQL error on startup</H1>
+    <B>gdweber at iue.edu</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20%2B%20MySQL%20error%20on%20startup&In-Reply-To=%3C20100630165601.GA1398%40squirrel.privatenet%3E"
+       TITLE="[Opensim-users] OpenSim + MySQL error on startup">gdweber at iue.edu
+       </A><BR>
+    <I>Wed Jun 30 18:56:01 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004814.html">[Opensim-users] OpenSim + MySQL error on startup
+</A></li>
+        <LI>Next message: <A HREF="004793.html">[Opensim-users] Opensimulator 0.7.1 latest git (master) compile tip
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4845">[ date ]</a>
+              <a href="thread.html#4845">[ thread ]</a>
+              <a href="subject.html#4845">[ subject ]</a>
+              <a href="author.html#4845">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks, again.  The can-not-connect-to-server page was especially helpful.
+
+It turned out that I had to add a line to /etc/hosts.allow to permit
+TCP connections to mysqld even from localhost.
+
+What confused me was 
+
+$ mysql --host=localhost --port=...
+
+was working and *seemed* to be making its connection through TCP, 
+on the specified port, but was actually using a Unix socket instead.  
+If you specify --host=localhost (or omit host altogether), it does that.
+On the other hand, in the opensim config files, &quot;server=localhost&quot;
+in the connection string *does* force it to use TCP.  In fact it
+seems impossible to configure opensim to use a Unix socket.
+
+Greg
+
+
+On 2010-Jun-28, Marck wrote:
+&gt;<i> I don't really have an idea how to help you with this, I am afraid.
+</I>&gt;<i> 
+</I>&gt;<i> My impression is that this is not a problem with OpenSim but there is an issue with the network connection to the MySQL server. Maybe MySQL is configured differently for the mysql client and other generic clients (check the [mysql] and [client] sections in your system's my.cnf for differences)?
+</I>&gt;<i> 
+</I>&gt;<i> Perhaps the info at <A HREF="http://dev.mysql.com/doc/refman/5.1/en/can-not-connect-to-server.html">http://dev.mysql.com/doc/refman/5.1/en/can-not-connect-to-server.html</A> (including the comments at the bottom of that page) can help you. In particular, the parameters skip-networking and bind-address may be important in this context.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Marck
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gdweber at iue.edu</A> wrote:
+</I>&gt;<i> &gt;Thanks, that was partly helpful; I had completely forgotten about
+</I>&gt;<i> &gt;OpenSim.ini -- I thought all the config files were in config-include!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;But now that I have remedied that deficiency, I'm still having
+</I>&gt;<i> &gt;connect problems; in fact it looks like the same problems.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;I now have:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;A.  in OpenSim.ini:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;[Startup]
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;    storage_plugin=&quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i> &gt;    storage_connection_string = &quot;Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;[StandAlone]
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;    inventory_plugin = &quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i> &gt;    inventory_source = &quot;Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;    userDatabase_plugin = &quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i> &gt;    user_source = &quot;Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;B.  in config-include/StandaloneCommon.ini:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;[DatabaseService]
+</I>&gt;<i> &gt;    ;
+</I>&gt;<i> &gt;    ;### Choose the DB
+</I>&gt;<i> &gt;    ;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;    ; MySql
+</I>&gt;<i> &gt;    StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i> &gt;    ConnectionString = &quot;Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;Now, I have recently figured out where the OpenSim log file is,
+</I>&gt;<i> &gt;and here is the bottom of OpenSim.log (there is a little more detail here
+</I>&gt;<i> &gt;than usual, because I have inserted some additional logging statements
+</I>&gt;<i> &gt;in the code):
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;2010-06-27 20:39:25,982 INFO  - OpenSim.Application [OPENSIM MAIN]: configured log4net using default OpenSim.exe.config
+</I>&gt;<i> &gt;2010-06-27 20:39:26,029 INFO  - OpenSim.Application [OPENSIM MAIN]: Runtime gave us 30 worker threads and 16 IOCP threads
+</I>&gt;<i> &gt;2010-06-27 20:39:26,037 INFO  - OpenSim.Application [OPENSIM MAIN]: Bumping up to 500 worker threads and 1000 IOCP threads
+</I>&gt;<i> &gt;2010-06-27 20:39:26,038 INFO  - OpenSim.Application Performing compatibility checks...
+</I>&gt;<i> &gt;2010-06-27 20:39:26,074 INFO  - OpenSim.Application Environment is compatible.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;2010-06-27 20:39:26,248 INFO  - OpenSim.ConfigurationLoader [CONFIG] Reading configuration settings
+</I>&gt;<i> &gt;2010-06-27 20:39:26,250 INFO  - OpenSim.ConfigurationLoader [CONFIG] Reading configuration file /home/gdweber/build/opensim-0.6.9-source/bin/OpenSim.ini
+</I>&gt;<i> &gt;2010-06-27 20:39:26,295 INFO  - OpenSim.ConfigurationLoader [CONFIG] Reading configuration file /home/gdweber/build/opensim-0.6.9-source/bin/config-include/Standalone.ini
+</I>&gt;<i> &gt;2010-06-27 20:39:26,302 INFO  - OpenSim.ConfigurationLoader [CONFIG] Reading configuration file /home/gdweber/build/opensim-0.6.9-source/bin/config-include/StandaloneCommon.ini
+</I>&gt;<i> &gt;2010-06-27 20:39:26,316 INFO  - OpenSim.ConfigurationLoader [CONFIG] StorageDll = OpenSim.Data.MySQL.dll
+</I>&gt;<i> &gt;2010-06-27 20:39:26,316 INFO  - OpenSim.ConfigurationLoader [CONFIG] StorageConnectionString = Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;
+</I>&gt;<i> &gt;2010-06-27 20:39:26,316 INFO  - OpenSim.ConfigurationLoader [CONFIG] EstateConnectionString = Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;
+</I>&gt;<i> &gt;2010-06-27 20:39:26,316 INFO  - OpenSim.ConfigurationLoader [CONFIG] StandaloneInventorySource = Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;
+</I>&gt;<i> &gt;2010-06-27 20:39:26,316 INFO  - OpenSim.ConfigurationLoader [CONFIG] StandaloneUserSource = Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;
+</I>&gt;<i> &gt;2010-06-27 20:39:26,316 INFO  - OpenSim.ConfigurationLoader [CONFIG] ConfigurationLoader.cs updated 2010 June 27 19:55
+</I>&gt;<i> &gt;2010-06-27 20:39:26,319 INFO  - OpenSim.OpenSim [LOGGING]: Logging started to file /home/gdweber/build/opensim-0.6.9-source/bin/OpenSim.log
+</I>&gt;<i> &gt;2010-06-27 20:39:26,339 INFO  - OpenSim.OpenSim [OPENSIM MAIN]: Using async_call_method SmartThreadPool
+</I>&gt;<i> &gt;2010-06-27 20:39:26,339 INFO  - OpenSim.Framework.Servers.BaseOpenSimServer [STARTUP]: Beginning startup processing
+</I>&gt;<i> &gt;2010-06-27 20:39:26,340 INFO  - OpenSim.Framework.Servers.BaseOpenSimServer [STARTUP]: Version: OpenSim 0.6.9 (Release)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;2010-06-27 20:39:26,349 INFO  - OpenSim.OpenSim ====================================================================
+</I>&gt;<i> &gt;2010-06-27 20:39:26,349 INFO  - OpenSim.OpenSim ========================= STARTING OPENSIM =========================
+</I>&gt;<i> &gt;2010-06-27 20:39:26,349 INFO  - OpenSim.OpenSim ====================================================================
+</I>&gt;<i> &gt;2010-06-27 20:39:26,349 INFO  - OpenSim.OpenSim [OPENSIM MAIN]: Running in sandbox mode
+</I>&gt;<i> &gt;2010-06-27 20:39:26,366 INFO  - OpenSim.Region.Framework.StorageManager [DATASTORE]: Attempting to load OpenSim.Data.MySQL.dll
+</I>&gt;<i> &gt;2010-06-27 20:39:26,377 INFO  - OpenSim.Data.MySQL.MySQLEstateStore [REGION DB]: MySql - connecting: Data Source=localhost;Database=opensim;User ID=opensimulator;Password=secretish;
+</I>&gt;<i> &gt;2010-06-27 20:39:26,568 ERROR - OpenSim.Application [APPLICATION]:
+</I>&gt;<i> &gt;APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;Exception: MySql.Data.MySqlClient.MySqlException: Connection unexpectedly terminated.
+</I>&gt;<i> &gt;  at MySql.Data.MySqlClient.MySqlStream.LoadPacket () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &gt;  at MySql.Data.MySqlClient.MySqlStream.OpenPacket () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &gt;  at MySql.Data.MySqlClient.NativeDriver.Open () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &gt;  at MySql.Data.MySqlClient.Driver.Create (MySql.Data.MySqlClient.MySqlConnectionStringBuilder settings) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &gt;  at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &gt;  at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &gt;  at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;Application is terminating: True
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;Also, I've found out how to enable the general log file in MySQL.
+</I>&gt;<i> &gt;While the error message &quot;Connection unexpectedly terminated&quot;
+</I>&gt;<i> &gt;suggests that a connection was made and then broken,
+</I>&gt;<i> &gt;perhaps because of a bad password, MySQL's log file
+</I>&gt;<i> &gt;shows that OpenSim is not connecting at all
+</I>&gt;<i> &gt;-- all the connections to MySQL are from the
+</I>&gt;<i> &gt;command-line client 'mysql' program.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;So I'm still stumped!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;Greg
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;On 2010-Jun-27, Marck wrote:
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gdweber at iue.edu</A> wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;I have some trouble getting OpenSim to start using MySQL.
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;OpenSim version: 0.6.9
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;Operating system: Arch Linux, Linux 2.6.33
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;MySQL version: 5.1.47-1
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;Mono version: 2.6.4-2
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;Here's the problem: Every time I start opensim, it cannot get
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;(and keep) a connection to MySQL.  This is the first line of
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;the error messages:
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;22:13:11 - Error loading plugin from OpenSim.Services.AssetService.dll, exception MySql.Data.MySqlClient.MySqlException: Connection unexpectedly terminated.
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;I have the default configuration files, except in
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;StandaloneCommon.ini, I have commented out
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;;    StorageProvider = &quot;OpenSim.Data.SQLite.dll&quot;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;and have uncommented and modified these two lines:
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;     StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;     ConnectionString = &quot;Data Source=localhost;Database=opensim;User ID=opensimulator;Password=********;&quot;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Have you also changed the configuration in OpenSim.ini to use MySQL? It is not sufficient to only do changes in StandaloneCommon.ini. You also need to adjust the settings for &quot;storage_plugin&quot; and &quot;storage_connection_string&quot; in the [Startup] section, and &quot;inventory_plugin&quot;, &quot;inventory_source&quot;, &quot;userDatabase_plugin&quot;, and &quot;user_source&quot; in the [StandAlone] section of OpenSim.ini.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;Now, I *do* have mysqld running!
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;And I can connect to it with the shell mysql client using the same
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;database, user name, and password:
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;$ mysql -h localhost -D opensim -u opensimulator --password=********
+</I>&gt;<i> &gt;&gt;&gt;&gt; &gt;Welcome to the MySQL monitor.  Commands end with ; or \g.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-- 
+   ___   ___  __     _      
+  / _ \ / _ \| |    | |     Gregory D. Weber, Associate Professor
+ / /_\// / | | | /\ | |     Indiana University East
+/ /_\\/ /__| | |/  \| |     <A HREF="http://mypage.iu.edu/~gdweber/">http://mypage.iu.edu/~gdweber/</A>
+\____/\_____/\___/\__/      Tel. (765) 973-8420; FAX (765) 973-8550
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004814.html">[Opensim-users] OpenSim + MySQL error on startup
+</A></li>
+	<LI>Next message: <A HREF="004793.html">[Opensim-users] Opensimulator 0.7.1 latest git (master) compile tip
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4845">[ date ]</a>
+              <a href="thread.html#4845">[ thread ]</a>
+              <a href="subject.html#4845">[ subject ]</a>
+              <a href="author.html#4845">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

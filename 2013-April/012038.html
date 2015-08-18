@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Approach%20to%20get%20fresh%20content%20for%20an%20OpenSim%0A%20Grid%20on%20New%20Servers&In-Reply-To=%3C5168B619.5000906%40t-data.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012037.html">
+   <LINK REL="Next"  HREF="012041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers</H1>
+    <B>Melanie</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Approach%20to%20get%20fresh%20content%20for%20an%20OpenSim%0A%20Grid%20on%20New%20Servers&In-Reply-To=%3C5168B619.5000906%40t-data.com%3E"
+       TITLE="[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers">melanie at t-data.com
+       </A><BR>
+    <I>Sat Apr 13 03:34:17 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012037.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+        <LI>Next message: <A HREF="012041.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12038">[ date ]</a>
+              <a href="thread.html#12038">[ thread ]</a>
+              <a href="subject.html#12038">[ subject ]</a>
+              <a href="author.html#12038">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+this requires a sweep and mark approach.
+
+Create a table that parallels your asset table. It should contain
+the asset ID and a date field which would default to the asset's
+creation date.
+
+Next you need to iterate over all rezzed objects in all sims and
+collect the UUID of any used textures and the UUIDs of all inventory
+items. Keep those that refer to objects separately, as well as those
+that refer to scripts and wearables. Also make a list of all
+notecards. Don't forget to include ground textures and parcel
+textures. Mark all textures and wearables with the current date.
+
+Then, similarly iterate all user inventories. Mark all UUIDs of
+simple objects like wearables and textures, then add the UUIDs of
+the objects, wearables, notecards and scripts to the UUID lists
+created in the first step. Mark all &quot;simple&quot; (non-object) assets
+with the current date.
+
+Next, iterate all notecards. Extract all attached (embedded) objects
+and add the wearables and objects and other notecards to the lists
+above. Mark all simple assets found. Repeat until no more notecards
+are left.
+
+Finally, iterate all object assets, retrieving and parsing them to
+glean the same info as you obtained from the sim. Mark textures and
+wearables and also add wearables, objects and scripts to the above
+lists. Mark all object assets with the current date.
+
+Repeat until no more objects are left in the object list.
+
+If notecards were collected, go back to iterating the notecards.
+
+Last, iterate wearables (extract texture ids and mark them) and
+scripts (regex-match UUID-like things and if they are a known asset,
+mark them).
+
+Depending on the grid size, this should leave you anywhere from a
+few days to a few months on. Assuming the sweep &amp; mark took less
+than 6 months, all UUID in the secondary table that have a date
+stamp OLDER than 6 months are unreferenced and the assets they name
+can be deleted.
+
+Since old assets are static, limiting future scans to only look at
+things changed after the last scan was done will allow you to keep
+this dated list and use it for further purging, dramatically
+shortening the next sweeping run.
+
+A lot of this code is present in the flotsam cache and the
+archivers. It's a matter of putting it together properly and filling
+in a few tricky spots.
+
+Melanie
+
+On 13/04/2013 02:40, Jeff Kelley wrote:
+&gt;<i> At 4:20 PM -0500 4/12/13, Chris wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>  As far as I can tell it does also pick up assets recursively although how
+</I>&gt;&gt;<i>  deeply nested I am unsure of; I have not tested more than a few objects deep.
+</I>&gt;<i> 
+</I>&gt;<i> Well, there is no recursivity, strictly speaking. &quot;Nested&quot; is more 
+</I>&gt;<i> accurate. An object in itself is stramlined in the XML (not a 
+</I>&gt;<i> reference pointing to self). Recursivity is achieved in-world  with 
+</I>&gt;<i> the &quot;rez and give a copy of self&quot; trick.
+</I>&gt;<i> 
+</I>&gt;<i> I'm searching a way to clean the database more deeply than with SQL queries.
+</I>&gt;<i> That implies parsing SceneObjectGroups, as well as the binary UUIDs 
+</I>&gt;<i> in primShapes:Texture. Not a simple task.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- Jeff
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I></PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012037.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+	<LI>Next message: <A HREF="012041.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12038">[ date ]</a>
+              <a href="thread.html#12038">[ thread ]</a>
+              <a href="subject.html#12038">[ subject ]</a>
+              <a href="author.html#12038">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

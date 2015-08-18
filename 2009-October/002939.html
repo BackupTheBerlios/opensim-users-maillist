@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Standalone, MySQL &amp; creating new regions crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Standalone%2C%20MySQL%20%26%20creating%20new%20regions%20crash&In-Reply-To=%3C005f01ca523b%240236e2e0%2406a4a8a0%24%40freeserve.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002937.html">
+   <LINK REL="Next"  HREF="002940.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Standalone, MySQL &amp; creating new regions crash</H1>
+    <B>Kevin Buckley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Standalone%2C%20MySQL%20%26%20creating%20new%20regions%20crash&In-Reply-To=%3C005f01ca523b%240236e2e0%2406a4a8a0%24%40freeserve.co.uk%3E"
+       TITLE="[Opensim-users] Standalone, MySQL &amp; creating new regions crash">kevin at buckley70.freeserve.co.uk
+       </A><BR>
+    <I>Wed Oct 21 12:41:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002937.html">[Opensim-users] Standalone, MySQL &amp; creating new regions crash
+</A></li>
+        <LI>Next message: <A HREF="002940.html">[Opensim-users] Standalone, MySQL &amp; creating new regions crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2939">[ date ]</a>
+              <a href="thread.html#2939">[ thread ]</a>
+              <a href="subject.html#2939">[ subject ]</a>
+              <a href="author.html#2939">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm trying to get a stable standalone working with the ultimate objective of
+operating in hypergrid standalone.
+
+ 
+
+I'm using a binary set downloaded from OSGrid as this seems to be better
+(less 'flailing' with physics enabled for example) than the version 0.6.7
+release.  I've changed the various .ini files for standalone (not hypergrid
+at this time) and I'm using MySQL (because I want to separate the data from
+the executables) and generally it works OK.
+
+ 
+
+However, I have suddenly found I can't add any more regions.  It crashes
+with this error:
+
+ 
+
+2009-10-21 11:28:27,025 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+[SCENE]: Registering with InterregionCommsIn
+
+2009-10-21 11:28:27,085 WARN  - OpenSim.Services.GridService.GridService
+[GRID SERVICE]: Region 4f5d4aa6-a66e-4ae0-9933-8a7c6b16096c tried to
+register in coordinates 102400, 102400 which are already in use in scope
+00000000-0000-0000-0000-000000000000.
+
+2009-10-21 11:28:27,105 ERROR - OpenSim.OpenSimBase [STARTUP]: Registration
+of region with grid failed, aborting startup -    at
+OpenSim.Region.Framework.Scenes.Scene.RegisterRegionWithGrid() in
+d:\OSGRID\OSGRID
+RELEASES\10-14-2009.osgrid.release.6d3d985511a8e70624c3a06a042890002f223978\
+OpenSim\Region\Framework\Scenes\Scene.cs:line 1352
+
+   at OpenSim.OpenSimBase.CreateRegion(RegionInfo regionInfo, Boolean
+portadd_flag, Boolean do_post_init, IScene&amp; mscene) in d:\OSGRID\OSGRID
+RELEASES\10-14-2009.osgrid.release.6d3d985511a8e70624c3a06a042890002f223978\
+OpenSim\Region\Application\OpenSimBase.cs:line 398
+
+ 
+
+I don't understand why it is trying to register with the grid as I have set
+gridmode = false in Opensim.ini.
+
+ 
+
+Can anyone else who is running in standalone, with multiple regions, shed
+any light on this?
+
+ 
+
+Would it be better to go back to v0.6.7?  If so, how to fix the 'flailing'
+when I enable ODE physics (because I want prims to not be phantom)?
+
+ 
+
+Thanks - Kevin
+
+ 
+
+From: Kevin Buckley [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>] 
+Sent: 20 October 2009 18:13
+To: '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>'
+Subject: Standalone, MySQL &amp; creating new regions crash
+
+ 
+
+Today I ran into a problem with creating new regions in standalone mode.
+And I noticed that someone else has filed a mantise about it
+(<A HREF="http://opensimulator.org/mantis/view.php?id=4279">http://opensimulator.org/mantis/view.php?id=4279</A>
+&lt;<A HREF="http://opensimulator.org/mantis/view.php?id=4279&amp;nbn=2">http://opensimulator.org/mantis/view.php?id=4279&amp;nbn=2</A>&gt; &amp;nbn=2).
+
+ 
+
+Can anyone enlighten me what the advice &quot;So stay with Memory storage for
+regions in standalone, for now.&quot; means, or more specifically what the
+implications are? - Kevin
+
+
+
+Want to find out when you can get an iPhone with Orange? Register at <A HREF="http://www.orange.co.uk/iphone">http://www.orange.co.uk/iphone</A> and we'll let you know.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091021/c2085aa5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091021/c2085aa5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002937.html">[Opensim-users] Standalone, MySQL &amp; creating new regions crash
+</A></li>
+	<LI>Next message: <A HREF="002940.html">[Opensim-users] Standalone, MySQL &amp; creating new regions crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2939">[ date ]</a>
+              <a href="thread.html#2939">[ thread ]</a>
+              <a href="subject.html#2939">[ subject ]</a>
+              <a href="author.html#2939">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Having trouble with people logging in to OS from outside my network.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Having%20trouble%20with%20people%20logging%20in%20to%20OS%0A%20from%20outside%20my%20network.&In-Reply-To=%3C4C01FB79.4070907%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004587.html">
+   <LINK REL="Next"  HREF="004589.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Having trouble with people logging in to OS from outside my network.</H1>
+    <B>Chris Kennedy</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Having%20trouble%20with%20people%20logging%20in%20to%20OS%0A%20from%20outside%20my%20network.&In-Reply-To=%3C4C01FB79.4070907%40cox.net%3E"
+       TITLE="[Opensim-users] Having trouble with people logging in to OS from outside my network.">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Sun May 30 07:45:29 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004587.html">[Opensim-users] Having trouble with people logging in to OS from outside my network.
+</A></li>
+        <LI>Next message: <A HREF="004589.html">[Opensim-users] Having trouble with people logging in to
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4588">[ date ]</a>
+              <a href="thread.html#4588">[ thread ]</a>
+              <a href="subject.html#4588">[ subject ]</a>
+              <a href="author.html#4588">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay. I tried a few things earlier with a friend of mine who's outside 
+of my LAN.
+
+I set ExternalHostName to 192.168.1.100 (Windows Computer IP) with no luck
+         Tried 192.168.1.1 (I can't even log in from LAN when it is set 
+to this)
+         Tried my WAN IP (70.xxx.xxx.200 number)
+
+Tried changing my computer's LAN IP to some other address and updating 
+my router's port range forwarding and Regions.ini accordingly
+Deleted all the port forward and port range forward settings leaving 
+just the one for OpenSim available and active
+Tried DMZ again, didn't work, turned it back off.
+Rebooted router and modem
+
+I also thought maybe the fact that I had more than one NIC (VirtualBox 
+adapters due to having VBox virtual machine installed) might have had 
+something to do with it, so I uninstalled it, rebooted my computer and 
+made sure that the only NIC left in the list was my computer's hardware 
+NIC; but this didn't seem to help either.
+
+Also uninstalled some other programs that affect my computer network 
+wise to no avail.
+
+Checked again with <A HREF="http://canyouseeme.org">http://canyouseeme.org</A> while OpenSim is running (on 
+port 9000) and it indeed sees the service still.
+
+While it will connect, it just doesn't want to get past region handshake 
+for some reason (for users outside my LAN). It hangs at region handshake 
+then eventually gives a can't connect error.
+
+Here is what I see when someone tries to login outside my LAN:
+
+2010-05-30 00:21:16,203 INFO  - 
+OpenSim.Framework.Communications.Services.LoginService [LOGIN BEGIN]: 
+XMLRPC Received login request message from user 'XXX' 'Radikal'
+2010-05-30 00:21:16,203 DEBUG - 
+OpenSim.Framework.Communications.Services.LoginService [LOGIN]: XMLRPC 
+Client is Second Life Release 1.23.5.136262, start location is last
+2010-05-30 00:21:16,218 INFO  - 
+OpenSim.Client.Linden.LLStandaloneLoginService [LOGIN]: Authenticating 
+XXX Radikal
+2010-05-30 00:21:16,265 INFO  - OpenSim.Region.Framework.Scenes.Scene 
+[USERLOGOFF]: Got a logoff request for 
+1329fa67-0a2a-4fa4-80df-b5e6e999e3cc but the user isn't here.  The user 
+might already have been logged out
+2010-05-30 00:21:16,265 INFO  - 
+OpenSim.Framework.Communications.Services.LoginService [LOGIN]: XMLRPC 
+User XXX Radikal is already logged in, not notifying user, kicking old 
+presence and starting new login.
+2010-05-30 00:21:16,312 DEBUG - 
+OpenSim.Services.InventoryService.InventoryService [INVENTORY SERVICE]: 
+Getting inventory skeleton for 1329fa67-0a2a-4fa4-80df-b5e6e999e3cc
+2010-05-30 00:21:16,328 INFO  - 
+OpenSim.Client.Linden.LLStandaloneLoginService [LOGIN]: Telling Monte 
+Cristo @ 1000,1000 (<A HREF="http://70.191.178.200:9000">http://70.191.178.200:9000</A>) to prepare for client 
+connection
+2010-05-30 00:21:16,328 INFO  - OpenSim.Region.Framework.Scenes.Scene 
+[CONNECTION BEGIN]: Region Monte Cristo told of incoming root agent XXX 
+Radikal 1329fa67-0a2a-4fa4-80df-b5e6e999e3cc (circuit code 84931925, 
+teleportflags 128)
+2010-05-30 00:21:16,328 DEBUG - 
+OpenSim.Framework.Communications.UserManagerBase [USER AUTH]: Verifying 
+session 4a498a08-0b29-215c-fb46-d96d01596371 for 
+1329fa67-0a2a-4fa4-80df-b5e6e999e3cc; current  session 
+4a498a08-0b29-215c-fb46-d96d01596371
+2010-05-30 00:21:16,328 DEBUG - OpenSim.Region.Framework.Scenes.Scene 
+[CONNECTION BEGIN]: User authentication returned True
+2010-05-30 00:21:16,343 INFO  - OpenSim.Region.Framework.Scenes.Scene 
+[CONNECTION BEGIN]: Region Monte Cristo authenticated and authorized 
+incoming root agent XXX Radikal 1329fa67-0a2a-4fa4-80df-b5e6e999e3cc 
+(circuit code 84931925)
+
+It hangs there (presumably while on region handshake) then eventually 
+gives the user an error that it can not connect.
+
+----Original Message----
+
+Hi, I am having a little bit of trouble with people trying to log into 
+my OS server from outside my network. I can log into it fine from any 
+computer on my LAN but when someone tries to access it from WAN they get 
+as far as the region handshake and it dies on them.
+
+Here is the Regions.ini setup
+
+[Monte Cristo]
+RegionUUID = bf4a1f26-f6f2-4871-bbf5-3620e8a39872
+Location = 1000,1000
+InternalAddress = 0.0.0.0
+InternalPort = 9000
+AllowAlternatePorts = False
+ExternalHostName = 70.XXX.XXX.200 (actual full address is in the ini 
+file, just middle two octets hidden here for privacy)
+MasterAvatarFirstName = Chris
+MasterAvatarLastName = Kennedy
+MasterAvatarSandboxPassword = lolpassword
+
+
+This works perfectly fine when I run OpenSim from my Linux box (I can 
+log in and others can login outside my LAN just fine), but using this 
+same setup on my Windows computer it hangs at region handshake for 
+people outside my LAN (I can log in fine and all works fine as long as 
+it is a computer within my LAN). There is no apparent difference in 
+OpenSim setup except for the fact that it is on Windows instead of 
+Linux, and a different LAN IP address.
+
+I have made sure to forward the OpenSim ports to the appropriate LAN IPs 
+on my router for both my Linux and Windows system. My database 
+connectors in OpenSim.ini are correct, MySQL has the database and 
+database user with privileges set to the opensim database. My firewall 
+is set to allow OpenSim on all ports (even tried disabling my firewall 
+completely). I've checked my hosts file and it is redirecting localhost 
+to 127.0.0.1 if that is useful info...
+
+I am really at a loss on this... Any insight on this would be much 
+appreciated!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004587.html">[Opensim-users] Having trouble with people logging in to OS from outside my network.
+</A></li>
+	<LI>Next message: <A HREF="004589.html">[Opensim-users] Having trouble with people logging in to
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4588">[ date ]</a>
+              <a href="thread.html#4588">[ thread ]</a>
+              <a href="subject.html#4588">[ subject ]</a>
+              <a href="author.html#4588">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

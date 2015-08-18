@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Couple%20questions%20about%20master%20%28Unhandled%20Packet%0A%20AgentUpdate%2C%20and%20HTTP%20Inventory%29&In-Reply-To=%3C50C91535.2020205%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011444.html">
+   <LINK REL="Next"  HREF="011446.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Couple%20questions%20about%20master%20%28Unhandled%20Packet%0A%20AgentUpdate%2C%20and%20HTTP%20Inventory%29&In-Reply-To=%3C50C91535.2020205%40googlemail.com%3E"
+       TITLE="[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Dec 13 00:37:25 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011444.html">[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+</A></li>
+        <LI>Next message: <A HREF="011446.html">[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11445">[ date ]</a>
+              <a href="thread.html#11445">[ thread ]</a>
+              <a href="subject.html#11445">[ subject ]</a>
+              <a href="author.html#11445">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 11/12/12 22:28, Chris wrote:
+&gt;<i> Hello every one, got a couple of questions about git master 905d7c4 (r/21385).
+</I>&gt;<i>
+</I>&gt;<i> I recently downloaded and compiled master and am noticing a bunch of yellow text popping up (warnings?) saying [CLIENT]:
+</I>&gt;<i> unhandled packet AgentUpdate primarily when walking around but they do pop up on occasion when standing still. Is anyone
+</I>&gt;<i> else seeing this?
+</I>
+AgentUpdates are extremely common messages.  If you do &quot;debug packet 255&quot; on the console you will see a constant stream 
+of them come in since they tell the server about agent movements, head rotation, etc, even when you're standing 
+completely still.
+
+So this must only be happening on rare occasions.  In the current code this should only happen if an agent update 
+message has somehow been sent to the client port from another source but with wrong session and agent IDs.
+
+This seems very unlikely, so I think a stronger candidate is some packet pooling issue.
+
+So in connection with this
+
+1) How recently did this start happening?
+
+2) Does it happen when you are alone on a region with nobody in the same or in any neighbouring regions?
+
+3) What happens if you set
+
+[PacketPool]
+RecyclePackets = false
+
+?
+
+&gt;<i>
+</I>&gt;<i> Also a quick question about HTTP inventory and more recent viewers (i.e. Firestorm, SL v3.3.x, and possibly v1.23 based
+</I>&gt;<i> viewers that support it (have not tested these though)); It seems that when I have HTTP Inventory disabled my inventory
+</I>&gt;<i> refuses to load up until HTTP Inventory is enabled. I prefer to keep it off because UDP inventory loads a lot quicker
+</I>&gt;<i> for me and having it disabled also seems to result in more stable teleports on LL grid. Is there anyway to fix this in
+</I>&gt;<i> the config files?
+</I>
+On the server side, UDP inventory is always available.  You could disable HTTP inventory on the server side with the 
+instructions at [1] just to be sure.  But I think a viewer bug is more likely where fallback is not happening properly 
+when HTTP inventory is disabled.  I don't know if there are any viewer config values which would help in this situation.
+
+[1] <A HREF="http://opensimulator.org/mantis/view.php?id=6412">http://opensimulator.org/mantis/view.php?id=6412</A>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011444.html">[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+</A></li>
+	<LI>Next message: <A HREF="011446.html">[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11445">[ date ]</a>
+              <a href="thread.html#11445">[ thread ]</a>
+              <a href="subject.html#11445">[ subject ]</a>
+              <a href="author.html#11445">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

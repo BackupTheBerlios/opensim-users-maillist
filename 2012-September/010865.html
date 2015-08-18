@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Is it possible lsl list dont return memory to system ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Is%20it%20possible%20lsl%20list%20dont%20return%20memory%20to%0A%20system%20%3F&In-Reply-To=%3C504607C5.4000806%40rigutech.nl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010864.html">
+   <LINK REL="Next"  HREF="010866.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Is it possible lsl list dont return memory to system ?</H1>
+    <B>R.Gunther</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Is%20it%20possible%20lsl%20list%20dont%20return%20memory%20to%0A%20system%20%3F&In-Reply-To=%3C504607C5.4000806%40rigutech.nl%3E"
+       TITLE="[Opensim-users] Is it possible lsl list dont return memory to system ?">rigun at rigutech.nl
+       </A><BR>
+    <I>Tue Sep  4 15:53:09 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010864.html">[Opensim-users] Is it possible lsl list dont return memory to system ?
+</A></li>
+        <LI>Next message: <A HREF="010866.html">[Opensim-users] Is it possible lsl list dont return memory to system ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10865">[ date ]</a>
+              <a href="thread.html#10865">[ thread ]</a>
+              <a href="subject.html#10865">[ subject ]</a>
+              <a href="author.html#10865">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I cleaned my sandbox more, after it did go up 574MB in 14 hours.
+It looks like with only the latest build scripts with fixes. Memory 
+seems to keep pretty stable.
+
+Its just some idea maby a direction, hard to trace back.
+I think that there is some memory leak when list are created inside 
+(repeating events, like this.
+
+simplified example :
+
+default  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=default">http://wiki.secondlife.com/index.php?title=default</A>&gt;
+{
+      timer  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=touch_start">http://wiki.secondlife.com/index.php?title=touch_start</A>&gt;(  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=integer">http://wiki.secondlife.com/index.php?title=integer</A>&gt;)
+     {    
+         list  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=list">http://wiki.secondlife.com/index.php?title=list</A>&gt;  a=  [&quot;abc&quot;,1,2,3.14,&lt;0,0,0&gt;];
+         llOwnerSay  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=llOwnerSay">http://wiki.secondlife.com/index.php?title=llOwnerSay</A>&gt;((string  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)a);// outcome:  abc123.140000&lt;0.000000, 0.000000, 0.000000&gt;
+     }
+}
+
+I did that by mistake to, i moved the &quot;list  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=list">http://wiki.secondlife.com/index.php?title=list</A>&gt;  a;&quot; out opf the timer event. Like this.
+
+list  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=list">http://wiki.secondlife.com/index.php?title=list</A>&gt;  a;
+
+default  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=default">http://wiki.secondlife.com/index.php?title=default</A>&gt;
+{
+      timer  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=touch_start">http://wiki.secondlife.com/index.php?title=touch_start</A>&gt;(  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=integer">http://wiki.secondlife.com/index.php?title=integer</A>&gt;)
+     {    
+	a = [];
+           &lt;<A HREF="http://wiki.secondlife.com/index.php?title=list">http://wiki.secondlife.com/index.php?title=list</A>&gt;a=  [&quot;abc&quot;,1,2,3.14,&lt;0,0,0&gt;];
+         llOwnerSay  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=llOwnerSay">http://wiki.secondlife.com/index.php?title=llOwnerSay</A>&gt;((string  &lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)a);// outcome:  abc123.140000&lt;0.000000, 0.000000, 0.000000&gt;
+     }
+}
+
+Then it seems to work much better with memory usage. Still testing.
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120904/5668a819/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120904/5668a819/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010864.html">[Opensim-users] Is it possible lsl list dont return memory to system ?
+</A></li>
+	<LI>Next message: <A HREF="010866.html">[Opensim-users] Is it possible lsl list dont return memory to system ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10865">[ date ]</a>
+              <a href="thread.html#10865">[ thread ]</a>
+              <a href="subject.html#10865">[ subject ]</a>
+              <a href="author.html#10865">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

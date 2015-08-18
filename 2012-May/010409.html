@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sit Target difficulties
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sit%20Target%20difficulties&In-Reply-To=%3C4FBF9A48.80809%40bluewallgroup.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010408.html">
+   <LINK REL="Next"  HREF="010410.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sit Target difficulties</H1>
+    <B>James Hughes</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sit%20Target%20difficulties&In-Reply-To=%3C4FBF9A48.80809%40bluewallgroup.com%3E"
+       TITLE="[Opensim-users] Sit Target difficulties">jamesh at bluewallgroup.com
+       </A><BR>
+    <I>Fri May 25 16:42:16 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010408.html">[Opensim-users] Sit Target difficulties
+</A></li>
+        <LI>Next message: <A HREF="010410.html">[Opensim-users] Sit Target difficulties
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10409">[ date ]</a>
+              <a href="thread.html#10409">[ thread ]</a>
+              <a href="subject.html#10409">[ subject ]</a>
+              <a href="author.html#10409">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Here are a couple of scripts to help you with the sit position...
+
+
+Place this script in the object you want to set the sit position for...
+
+// Sit target system by Lex Neva. Please distribute willy-nilly.
+
+default
+{
+     touch_start(integer total_number)
+     {
+         llSensor(&quot;Sit Target Helper&quot;,
+                 NULL_KEY, ACTIVE|PASSIVE, 96, PI);
+         llSay(0, &quot;Searching for Sit Target Helper...&quot;);
+     }
+
+     no_sensor()
+     {
+         llSay(0, &quot;Sit Target Helper not found. No sit target set.&quot;);
+         llSitTarget(ZERO_VECTOR, ZERO_ROTATION);
+     }
+
+     sensor(integer num)
+     {
+         if (num &gt; 1)
+         {
+             llSay(0, &quot;Multiple Sit Target Helpers found. Using closest 
+helper.&quot;);
+         } else {
+             llSay(0, &quot;Sit Target Helper found. Setting sit target.&quot;);
+         }
+
+         vector helper_pos = llDetectedPos(0);
+         rotation helper_rot = llDetectedRot(0);
+
+         vector my_pos = llGetPos();
+         rotation my_rot = llGetRot();
+
+         // calculate where the avatar actually is
+         vector avatar_pos = helper_pos + &lt;0,0,1&gt; * helper_rot;
+         // due to helper's sit target
+         avatar_pos = avatar_pos - &lt;0,0,0.186&gt; + &lt;0,0,0.4&gt; * helper_rot; 
+         // correct for a bug in llSitTarget(), for helper sit target
+
+         vector target_pos = (avatar_pos - my_pos) / my_rot;
+         target_pos = target_pos + &lt;0,0,0.186&gt;/my_rot - &lt;0,0,0.4&gt;; // 
+       correct for the bug again, this time in my sit target
+         rotation target_rot = helper_rot / my_rot;
+
+         llSitTarget(target_pos, target_rot);
+         llSay(0, &quot;llSitTarget(&quot; + (string)target_pos +
+                     &quot;, &quot; + (string)target_rot + &quot;);&quot;);
+     }
+
+     changed(integer change)
+     {
+         if (llAvatarOnSitTarget() != NULL_KEY)
+             llRequestPermissions(llAvatarOnSitTarget(),
+                 PERMISSION_TRIGGER_ANIMATION);
+     }
+
+     run_time_permissions(integer perm) {
+         string anim = llGetInventoryName(INVENTORY_ANIMATION, 0);
+         if (anim != &quot;&quot;)
+         {
+             llStopAnimation(&quot;sit&quot;);
+             llStopAnimation(&quot;sit_generic&quot;);
+             llStopAnimation(&quot;sit_female&quot;);
+             llStartAnimation(anim);
+         }
+     }
+}
+
+
+Make a &quot;Sit Target Helper&quot;...
+
+Create a sphere and shrink it to about 0.25 and set the name of the 
+object to &quot;Sit Target Helper&quot;. Place this script inside it. And if you 
+will be using an animation in your object, then place it inside this 
+&quot;Sit Target Helper&quot; too. It will play the animation while you make the 
+adjustment.
+
+
+Make the sit position adjustment...
+
+You will sit the avatar on this object and move it around until you are 
+at the position you want. When you are satisfied with the adjustment, 
+touch the object that you placed the above script in. It will print the 
+llSitTarget command in chat with the right parameters for your 
+adjustment. Use that llSitTarget in your object and remove the helper 
+script.
+
+
+
+default
+{
+     state_entry()
+     {
+         llSitTarget(&lt;0,0,1&gt;, ZERO_ROTATION);
+     }
+
+     changed(integer change)
+     {
+         if (llAvatarOnSitTarget() != NULL_KEY)
+             llRequestPermissions(llAvatarOnSitTarget(),
+                                 PERMISSION_TRIGGER_ANIMATION);
+     }
+
+     run_time_permissions(integer perm)
+     {
+         string anim = llGetInventoryName(INVENTORY_ANIMATION, 0);
+         if (anim != &quot;&quot;)
+         {
+             llStopAnimation(&quot;sit&quot;);
+             llStopAnimation(&quot;sit_generic&quot;);
+             llStopAnimation(&quot;sit_female&quot;);
+             llStartAnimation(anim);
+         }
+     }
+}
+
+
+
+Hope that helps,
+
+BlueWall
+
+
+On 05/25/2012 06:51 AM, Dr Ramesh Ramloll wrote:
+ &gt; Hello,
+ &gt; I did not feel confident about stable solutions regarding how to get an
+ &gt; avie to sit properly on a mesh object after reading
+ &gt; 
+<A HREF="http://opensim-dev.2196679.n2.nabble.com/Sit-position-changes-in-OpenSimulator-b6df9e9-Sat-5th-Nov-2011-td7056247.html">http://opensim-dev.2196679.n2.nabble.com/Sit-position-changes-in-OpenSimulator-b6df9e9-Sat-5th-Nov-2011-td7056247.html</A>
+ &gt;
+ &gt; dated nov 5 2011. I would like to hear from users who are sitting
+ &gt; perfectly fine in their opensim worlds ... how did you do it?
+ &gt; It's a little funny, I have transferred fairly complicated stuff into
+ &gt; opensim that work with some relief, and now I hit the sit target problem,
+ &gt; and I feel a little frustrated.
+ &gt; Any help deeply appreciated.
+ &gt; Regards
+ &gt; Ramesh
+ &gt;
+ &gt; --
+ &gt; 'Consider how the lilies grow. They do not labor or spin.'
+ &gt; *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate
+ &gt; /Research Associate Professor/, Idaho State University, Pocatello, ID
+ &gt; 83209 Tel: 208-240-0040
+ &gt; Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn
+ &gt; &lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;, DeepSemaphore LLC
+ &gt; &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile
+ &gt; &lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+ &gt;
+ &gt;
+ &gt;
+ &gt; _______________________________________________
+ &gt; Opensim-users mailing list
+ &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+ &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010408.html">[Opensim-users] Sit Target difficulties
+</A></li>
+	<LI>Next message: <A HREF="010410.html">[Opensim-users] Sit Target difficulties
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10409">[ date ]</a>
+              <a href="thread.html#10409">[ thread ]</a>
+              <a href="subject.html#10409">[ subject ]</a>
+              <a href="author.html#10409">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

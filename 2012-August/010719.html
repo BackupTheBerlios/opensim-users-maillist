@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Updated Services Bundle!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Updated%20Services%20Bundle%21&In-Reply-To=%3C78B08F72-B283-474D-B6A2-23280B3AB16E%40gwynethllewelyn.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010812.html">
+   <LINK REL="Next"  HREF="010716.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Updated Services Bundle!</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Updated%20Services%20Bundle%21&In-Reply-To=%3C78B08F72-B283-474D-B6A2-23280B3AB16E%40gwynethllewelyn.net%3E"
+       TITLE="[Opensim-users] Updated Services Bundle!">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Fri Aug 10 18:20:59 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010812.html">[Opensim-users] Updated Services Bundle!
+</A></li>
+        <LI>Next message: <A HREF="010716.html">[Opensim-users] List of banned viewers for config files?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10719">[ date ]</a>
+              <a href="thread.html#10719">[ thread ]</a>
+              <a href="subject.html#10719">[ subject ]</a>
+              <a href="author.html#10719">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks to all who replied, and my apologies. &quot;Nothing works&quot; was a bit premature :-)
+
+So, first and foremost: I had actually been using the bundle for 0.7.2 on 0.7.3.1 &#8212; when updating the bundle, I didn't ever think of checking up if all the files were on the right place! They weren't! The structure changed!
+
+I always recompile all modules from scratch. BUT I'm using the last version I got from&#8230; uh, SourceForge, I think.
+
+Once I painfully tracked down all URLs scattered across a gazillion places on the OpenSim ever-more-complex configuration, groups and offline IMs immediately started to work.
+Woo-hoo! One problem less. For me, groups was the most important &#8212; nay, crucial! &#8212; missing feature. I truly needed it, or the setup on the whole grid would be worthless. With that problem fixed, at least I could launch 0.7.4RC1 and work on the remaining issues.
+
+Search didn't work. There is a tiny bug on parser.php and register.php: at the top, they do mysql_connect($DB_HOST, $DB_USER, $DB_PASSWORD). This should be changed to mysql_connect($dbHost, $dbUser, $dbPassword). Nevertheless, even though this means no more MySQL errors on the logs, it's not enough to make them work.
+
+Profiles don't work, either. While I can live without Search, Profiles is a cute, nice thing to have. So I started debugging the whole thing. It's a bit more complex than what you report, Fleep &#8212; the XML-RPC server is indeed called with the right parameters, the database gets correctly updated, BUT the response sent back is not accepted by the viewer (I'm currently using the CoolViewer). This is slightly different from &quot;nothing works&quot;, because the viewer/simulator combination actually figure out when &quot;nothing works&quot; by disabling (&quot;graying out&quot;) the Save button on the profile. So client and simulator know that the XML-RPC server is up, it accepts requests, the requests are acknowledged, data is correctly passed to it, and even the database gets updated. Unfortunately, the response is ignored (OpenSim doesn't give an error, though; it is as if it never received anything). Because of that, the viewer never gets to see the updated profile, and if you close it and open it again, it overwrites the profile with blank data. This is actually part of the code &#8212; when a profile cannot be retrieved, the default action is to overwrite it with a blank. &quot;Retrieved&quot; means in this case: accepting the XML-RPC call (which works), looking the data up on the database (which also works), creating a well-formed response (yep. It works!), and accepting that response (NOTHING HAPPENS). Since that last step is missing from each and every request, well, every change gets &quot;discarded&quot; upon the next profile view &#8212; so it &quot;looks&quot; like the database never got updated. But it did!
+
+So. My homework for today. First, I saw only today that a helpful developer posted a message, obscurely hidden on the SourceForge forums for OpenSim, that they have abandoned SourceForge and moved to GitHub instead. Sigh. I have nothing against GitHub, but it was sort of nice having everything OpenSim-related under the same roof. Now I managed to track down the new modules, which apparently have a &quot;fix&quot; from 23 days ago. I'm curious if that fix will actually fix anything, so I'm giving it a try.
+
+They also have a more recent OMEconomy module on GitHub, which I'm going to try, since the one I have, even though it IS compiled for OpenSim 0.7.4, does not work with a reference to a missing library which God only knows where it comes from. A working economy is by no means important for my grid, but it would be nice to have it working again &#8212; since 0.7.0.1 that I never managed to get it working again.
+
+I'll keep in touch. I'm stubborn :) I like interconnecting different systems, and I see no reason for not forcing the XML-RPC server for groups into submission :) There are even a lot of awkward programming nastinesses &#8212; the code worked flawlessly, even though it's not exactly compliant with the way it *should* have been written, and the responses are not 100% XML-RPC standard, but since OpenSim seemed to be fine with them, there was no point in changing. &quot;If it's no broken, don't fix it&quot;. Well, now SOMETHING is broken, so I'm going to see what it is and FIX it :-) Heh!
+
+Cheers all, and thanks again for piping in.
+
+	- Gwyn
+
+P.S. to R. Gunther: I hardly ever use pre-compiled DLLs, unless I have no other choice. In my short experience with Mono, those DLLs are always &quot;slightly off&quot; for the kind of environment I have. Either they have been compiled with a different version of Mono, or they're 32 bit and not 64 bit, or they were compiled for Windows 7 and not Linux, or they come from a different distro of Linux which happened to have a library installed &quot;which every sane person should have in their system&quot; but clearly I don't (and obviously that library is never mentioned anywhere, and the not-always-so-helpful developers tend to say &quot;uh?&quot; when I ask them where the library XPT0 is supposed to come from&#8230;). Been there, done that, got the sleeveless top and it needs being washed :P So I always recompile everything from scratch. If something refuses to compile, I know there will be a module somewhere which will give me pain in the future, and it's better to avoid it!
+
+Sometimes, of course, only DLLs are available, so I have to live with the few little morsels of generosity I can get :)
+
+On 09/08/2012, at 20:25, Fleep Tuque wrote:
+
+&gt;<i> Hi Gwyn,
+</I>&gt;<i> 
+</I>&gt;<i> I just upgraded some of the staff regions on our university grid to 0.7.4 RC1, and it appears that from the OS Services Bundle (just copying over from previous version) the offline IM and group services are working, but profiles and search is not.  Well, actually I don;'t think I ever got search to work, but profiles definitely did work before but don't seem to now post upgrade.  Seeing no problems with sending offline IMs and creating groups, adding members to groups, using the new group land settings etc.
+</I>&gt;<i> 
+</I>&gt;<i> Not sure if that helps, and the only thing I can think of that I consistently goof up when upgrading is forgetting to move the .dll files from /bin to /bin when I upgrade.  I finally remembered to add that to my documentation today, what little notes I made are at: 
+</I>&gt;<i> <A HREF="http://ucopensim.wikispaces.com/Opensim+0.7.4+RC1">http://ucopensim.wikispaces.com/Opensim+0.7.4+RC1</A> 
+</I>&gt;<i> 
+</I>&gt;<i> Would love to hear if anyone else gets profiles or search working with 0.7.4 RC1, I'm never sure what's user error and what isn't with those two services.
+</I>&gt;<i> 
+</I>&gt;<i> Sincerely,
+</I>&gt;<i> 
+</I>&gt;<i> - Fleep
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120810/75c69262/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120810/75c69262/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010812.html">[Opensim-users] Updated Services Bundle!
+</A></li>
+	<LI>Next message: <A HREF="010716.html">[Opensim-users] List of banned viewers for config files?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10719">[ date ]</a>
+              <a href="thread.html#10719">[ thread ]</a>
+              <a href="subject.html#10719">[ subject ]</a>
+              <a href="author.html#10719">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

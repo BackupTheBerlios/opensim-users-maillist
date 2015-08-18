@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.5.1 Release won't start
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.5.1%20Release%20won%27t%20start&In-Reply-To=%3C20080311235737.i0ziz1gao4gswgws%40www.greenemyst.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000146.html">
+   <LINK REL="Next"  HREF="000153.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.5.1 Release won't start</H1>
+    <B>Joe Greene</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.5.1%20Release%20won%27t%20start&In-Reply-To=%3C20080311235737.i0ziz1gao4gswgws%40www.greenemyst.com%3E"
+       TITLE="[Opensim-users] OpenSim 0.5.1 Release won't start">jgreene at greenemyst.com
+       </A><BR>
+    <I>Wed Mar 12 04:57:37 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000146.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+        <LI>Next message: <A HREF="000153.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#151">[ date ]</a>
+              <a href="thread.html#151">[ thread ]</a>
+              <a href="subject.html#151">[ subject ]</a>
+              <a href="author.html#151">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+   New Errors.
+
+   seems my ODE is possibly mauled, but I suspect it has more to do  
+with the errors about failing to create terrain. I'm going to try and  
+DL a Terrain file.. but in the meantime:
+
+   23:54:54 - [DATASTORE]: Loaded terrain revision r1205271257
+Failed generating terrain map: System.TypeInitializationException: An  
+exception was thrown by the type initializer for  
+System.Drawing.GDIPlus ---&gt; System.DllNotFoundException: gdiplus.dll
+&#160; at (wrapper managed-to-native) System.Drawing.GDIPlus:GdiplusStartup  
+(ulong&amp;,System.Drawing.GdiplusStartupInput&amp;,System.Drawing.GdiplusStartupOutput&amp;)
+&#160; at System.Drawing.GDIPlus..cctor () [0x00000] --- End of inner  
+exception stack trace ---
+
+&#160; at System.Drawing.Bitmap..ctor (System.String filename, Boolean  
+useIcm) [0x00000]
+&#160; at System.Drawing.Bitmap..ctor (System.String filename) [0x00000]
+&#160; at (wrapper remoting-invoke-with-check) System.Drawing.Bitmap:.ctor (string)
+&#160; at OpenSim.Region.Terrain.TerrainEngine.TerrainToBitmap  
+(System.String gradientmap) [0x00000]
+&#160; at OpenSim.Region.Terrain.TerrainEngine.WriteJpegImage  
+(System.String gradientmap) [0x00000]
+23:54:54 - [PHYSICS]: Added meshing engine: ZeroMesher
+23:54:55 - [PHYSICS]: Added physics engine: basicphysics
+23:54:55 - [PHYSICS]: Added physics engine: modified_BulletX
+23:54:55 - [PHYSICS]: Added meshing engine: Meshmerizer
+23:54:55 - [PHYSICS]: Added physics engine: OpenDynamicsEngine
+23:54:55 - [PHYSICS]: Added physics engine: POS
+23:54:55 - [PHYSICS]: Added physics engine: RealPhysX
+23:54:55 - [PHYSICS]: creating meshing engine Meshmerizer
+23:54:55 - [PHYSICS]: creating OpenDynamicsEngine
+[APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.DllNotFoundException: ode
+&#160; at (wrapper managed-to-native) Ode.NET.d:WorldCreate ()
+&#160; at OpenSim.Region.Physics.OdePlugin.OdeScene..ctor  
+(OpenSim.Region.Physics.Manager.CollisionLocker dode) [0x00000]
+&#160; at OpenSim.Region.Physics.OdePlugin.OdePlugin.GetScene () [0x00000]
+&#160; at  
+OpenSim.Region.Physics.Manager.PhysicsPluginManager.GetPhysicsScene  
+(System.String physEngineName, System.String meshEngineName) [0x00000]
+&#160; at OpenSim.Region.ClientStack.RegionApplicationBase.GetPhysicsScene  
+(System.String engine, System.String meshEngine) [0x00000]
+&#160; at OpenSim.OpenSimMain.GetPhysicsScene () [0x00000]
+&#160; at OpenSim.Region.ClientStack.RegionApplicationBase.SetupScene  
+(OpenSim.Framework.RegionInfo regionInfo,  
+OpenSim.Region.ClientStack.UDPServer&amp; udpServer, Boolean  
+m_permissions) [0x00000]
+&#160; at OpenSim.OpenSimMain.CreateRegion (OpenSim.Framework.RegionInfo  
+regionInfo) [0x00000]
+&#160; at  
+OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.Initialise  
+(OpenSim.OpenSimMain openSim) [0x00000]
+&#160; at OpenSim.OpenSimMain.StartUp () [0x00000]
+&#160; at OpenSim.Application.Main (System.String[] args) [0x00000]
+
+Application is terminating: True
+
+-- 
+Joe Greene
+UNIX Systems, Network and IT Specialist
+If you aren't having fun, you're doing the wrong thing!
+All opinions expressed are mine alone. You Can't Have them!
+
+Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> Joe Greene wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks That got rid of the sqlite complaints.. of course, now I've
+</I>&gt;&gt;<i> a new error.. which makes me think my MySQL DB may be damaged.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Exception: MySql.Data.MySqlClient.MySqlException: Table
+</I>&gt;&gt;<i> 'INFORMATION_SCHEMA.TABLES' doesn't exist
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Has anyone seen that error?
+</I>&gt;&gt;<i>
+</I>&gt;<i> OpenSim requires version 5 of MySql, which is the first one which has
+</I>&gt;<i> the INFORMATION_SCHEMA table
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> justincc
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> Joe Greene
+</I>&gt;&gt;<i> UNIX Systems, Network and IT Specialist
+</I>&gt;&gt;<i> If you aren't having fun, you're doing the wrong thing!
+</I>&gt;&gt;<i> All opinions expressed are mine alone. You Can't Have them!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Fish Kungfu &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fish.kungfu at earthlink.net</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Below is my OpenSim.ini file for using MySQL running in standalone mode
+</I>&gt;&gt;&gt;<i> for 0.5.0, with MySQL on the same box as opensim.&#160; You will need to put
+</I>&gt;&gt;&gt;<i> your password for MySQL root user, or whatever user you're using.&#160; I had
+</I>&gt;&gt;&gt;<i> to create the empty database, &quot;opensim&quot; before everything would work.
+</I>&gt;&gt;&gt;<i> Then, remember to GRANT ALL privileges to your userName for the opensim
+</I>&gt;&gt;&gt;<i> database, and then FLUSH PRIVILEGES.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I had to add these lines to the example file that came with the
+</I>&gt;&gt;&gt;<i> installer to make it work.&#160; This tripped me up, and caused the SQLite
+</I>&gt;&gt;&gt;<i> activity in the log at startup.&#160; They are included in my OpenSim.ini below
+</I>&gt;&gt;&gt;<i> &#160; &#160; asset_database = &quot;mysql&quot;
+</I>&gt;&gt;&gt;<i> &#160; &#160; asset_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I hope this helps.....Fish
+</I>&gt;&gt;<i> [snip]
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Joe Greene wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Problem Desc: Opensim [ASSET SERVER] appear to be attempting to open
+</I>&gt;&gt;&gt;&gt;<i> and SQLitew database althoguh no such reference appears (even in
+</I>&gt;&gt;&gt;&gt;<i> comments) in my OpenSim.ini file. As I'm using MySQL (both the
+</I>&gt;&gt;&gt;&gt;<i> OpenSim.ini and the mysql_connection.ini) I have no SQLite installed.
+</I>&gt;&gt;&gt;&gt;<i> Any suggestions on what I'm doing wrong, or shall I submit my OpenSim.ini
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Version Info:
+</I>&gt;&gt;&gt;&gt;<i> SuSe Enterprise 9.3 ( with updates )
+</I>&gt;&gt;&gt;&gt;<i> Mono: Mono JIT compiler version 1.2.6 (Installed via YAST from Mono Site)
+</I>&gt;&gt;&gt;&gt;<i> MySQL: 4.1.10a
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> libode 0.9-25
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Console Log:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at opensim1</A>:~/bin&gt; mono OpenSim.exe
+</I>&gt;&gt;&gt;&gt;<i> OpenSim 0.5, SVN build
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20080311/d9b13a2d/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20080311/d9b13a2d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000146.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+	<LI>Next message: <A HREF="000153.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#151">[ date ]</a>
+              <a href="thread.html#151">[ thread ]</a>
+              <a href="subject.html#151">[ subject ]</a>
+              <a href="author.html#151">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

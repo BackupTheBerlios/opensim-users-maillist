@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripting: 10x speed boost with C#
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3CBANLkTi%3Dv-Us_rmNKMPy7-3MGP9ORMj1j5w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007212.html">
+   <LINK REL="Next"  HREF="007210.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripting: 10x speed boost with C#</H1>
+    <B>Jorge Lima</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3CBANLkTi%3Dv-Us_rmNKMPy7-3MGP9ORMj1j5w%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Scripting: 10x speed boost with C#">jorge.manuel at gmail.com
+       </A><BR>
+    <I>Tue May  3 19:46:15 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007212.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+        <LI>Next message: <A HREF="007210.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7223">[ date ]</a>
+              <a href="thread.html#7223">[ thread ]</a>
+              <a href="subject.html#7223">[ subject ]</a>
+              <a href="author.html#7223">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If I understood correctly, they &quot;transform&quot; LSL into C#, which means
+they compile an automatic translation of LSL into C#, and then it runs
+as a standard C# program.
+This could mean that some translator optimization is in order, which
+would immediately benefit everyone with an LSL installed base.
+
+On Mon, May 2, 2011 at 8:19 PM, Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karenpalensl at gmail.com</A>&gt; wrote:
+&gt;<i> Is this really saying that compiled code executes math functions faster
+</I>&gt;<i> than interpreted code?
+</I>&gt;<i>
+</I>&gt;<i> I don't really see this as a language specific thing based on what you
+</I>&gt;<i> are saying (although I am sure we all agree that LSL is a total mess
+</I>&gt;<i> from a language design viewpoint).
+</I>&gt;<i>
+</I>&gt;<i> The deeper question is where to go from here for OpenSimulator. Simply
+</I>&gt;<i> dumping all the installed scripts would be far too painful - ask any
+</I>&gt;<i> Cobol programmer - but hopefully we do not have to repeat past mistakes!
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i> On 05/02/2011 05:11 AM, Jeff Kelley wrote:
+</I>&gt;&gt;<i> At 4:36 AM +0100 4/25/11, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Very interesting, Jeff. &#160;The scripting engine in OpenSim transforms LSL to C#
+</I>&gt;&gt;&gt;<i> before compiling it so there wouldn't be a time difference due to
+</I>&gt;&gt;&gt;<i> interpretation.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Of course, I'm presuming that you had configured all LSL scripting delays down
+</I>&gt;&gt;&gt;<i> to zero
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> No, because I was not aware of that option.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> With ScriptDelayFactor = 0.0, the LSL version changes from an average of
+</I>&gt;&gt;<i> 2.15s to 2.10s. No big deal. The C# version is still around 0.2s.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I switched to C# because i noticed my script spent most of its time into
+</I>&gt;&gt;<i> list handling (llList2Rot, which was a first speed gain over
+</I>&gt;&gt;<i> 4*llList2Float). Since LSL has no array structure, we use lists to emulate
+</I>&gt;&gt;<i> them and waste a lot of time here.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Then, replacing llPow with System.Math.Pow gave me another speed boost.
+</I>&gt;&gt;<i> Finally, replacing osSetPenColour, osDrawLine with direct drawlist
+</I>&gt;&gt;<i> manipuations (drawList += ) accounted for the overall 10x speed increase.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Of course, that depends a lot on your application. If you are manipulating
+</I>&gt;&gt;<i> prims, the gain may be near zero. If you do a lot of math and matrixes, it
+</I>&gt;&gt;<i> may be higher.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007212.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+	<LI>Next message: <A HREF="007210.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7223">[ date ]</a>
+              <a href="thread.html#7223">[ thread ]</a>
+              <a href="subject.html#7223">[ subject ]</a>
+              <a href="author.html#7223">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

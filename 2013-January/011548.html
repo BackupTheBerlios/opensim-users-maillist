@@ -1,0 +1,426 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] how can i assign one public ip to
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20how%20can%20i%20assign%20one%20public%20ip%20to&In-Reply-To=%3C50ECAACF.10900%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011547.html">
+   <LINK REL="Next"  HREF="011549.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] how can i assign one public ip to</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20how%20can%20i%20assign%20one%20public%20ip%20to&In-Reply-To=%3C50ECAACF.10900%40googlemail.com%3E"
+       TITLE="[Opensim-users] how can i assign one public ip to">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Jan  9 00:25:03 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011547.html">[Opensim-users] how can i assign one public ip to
+</A></li>
+        <LI>Next message: <A HREF="011549.html">[Opensim-users] A bit off topic,	but still interesting post by Dell...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11548">[ date ]</a>
+              <a href="thread.html#11548">[ thread ]</a>
+              <a href="subject.html#11548">[ subject ]</a>
+              <a href="author.html#11548">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In this case, the relevant use is the C# SDK method [1], as used in OpenSimUDPBase.StartInbound() for receiving UDP 
+packets.  As you can see from the doc, specifying IPAddress.Any binds it to the 'most appropriate network address' (I've 
+never been able to find out what 'most appropriate' actually means.).  And IPAddress.Any == 0.0.0.0.
+
+So if you have more than one network adaptor, you need to choose the one which viewers should use.
+
+[1] <A HREF="http://msdn.microsoft.com/en-us/library/system.net.sockets.socket.bind.aspx">http://msdn.microsoft.com/en-us/library/system.net.sockets.socket.bind.aspx</A>
+
+On 08/01/13 17:16, Emperor Starfinder wrote:
+&gt;<i> Okay so seeing there seems to have been some questions I've noticed
+</I>&gt;<i> regarding 0.0.0.0 I thought I would have a little fun during my lunch break
+</I>&gt;<i> and research it as some have had mixed results with it in their region
+</I>&gt;<i> config files.  This is what I have found regarding 0.0.0.0:
+</I>&gt;<i>
+</I>&gt;<i> The IP address 0.0.0.0 can have very different meanings, depending on where
+</I>&gt;<i> it's used.
+</I>&gt;<i>
+</I>&gt;<i>     *  It's not a valid address to be given to an actual network interface,
+</I>&gt;<i> along with any other address in the 0.0.0.0/8 subnet (i.e. any address
+</I>&gt;<i> starting with 0.).
+</I>&gt;<i>     * It can't be used as the source address on any IP packet, unless this
+</I>&gt;<i> happens when a computer still doesn't know its own IP address and it's
+</I>&gt;<i> trying to acquire one (classic example: DHCP).
+</I>&gt;<i>     *  If used in a routing table, it identifies the default gateway; a route
+</I>&gt;<i> to 0.0.0.0 is the default one, i.e. the one used when there is not any more
+</I>&gt;<i> specific route available to a destination address.
+</I>&gt;<i>     * Lastly, when seen in the output of the netstat command (which is what
+</I>&gt;<i> you asked for), it means that a given socket is listening on all the
+</I>&gt;<i> available IP address the computer has; when a computer has more than one IP
+</I>&gt;<i> address, a socket can be bound only to a specific address and port pair, or
+</I>&gt;<i> to a port and all addresses; if you see an IP address there, it means that
+</I>&gt;<i> socket is listening only on that port and that specific address; if you see
+</I>&gt;<i> 0.0.0.0, it means it's listening on that port on all addresses of the
+</I>&gt;<i> machine, including the loopback one (127.0.0.1).
+</I>&gt;<i>
+</I>&gt;<i> My guess is this also holds true on linux based systems.  In most cases
+</I>&gt;<i> today on Windows at least, most computers will operate on 127.0.0.1 which is
+</I>&gt;<i> the localhost numeric IP address which also happens to be the loopback ip of
+</I>&gt;<i> your machine.  Thus if your computer is on a LAN local area network your
+</I>&gt;<i> better off having your computer's IP on your network as your InternalIP and
+</I>&gt;<i> the external IP should be the IP provided by the ISP (This is how I solved
+</I>&gt;<i> the region handshake problem on Linksys 54G.)
+</I>&gt;<i>
+</I>&gt;<i> Hope that helps a little.
+</I>&gt;<i>
+</I>&gt;<i> Emperor
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+</I>&gt;<i> Sent: Tuesday, January 08, 2013 6:00 AM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Opensim-users Digest, Vol 65, Issue 12
+</I>&gt;<i>
+</I>&gt;<i> Send Opensim-users mailing list submissions to
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> You can reach the person managing the list at
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> When replying, please edit your Subject line so it is more specific than
+</I>&gt;<i> &quot;Re: Contents of Opensim-users digest...&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Today's Topics:
+</I>&gt;<i>
+</I>&gt;<i>     1. Re: how can i assign one public ip to multiple
+</I>&gt;<i>        (Justin Clark-Casey)
+</I>&gt;<i>     2. Re: OpenSimulator 0.7.5-rc1 now available (Justin Clark-Casey)
+</I>&gt;<i>     3. Re: lost NPC attachments and editing appearance note cards
+</I>&gt;<i>        (Justin Clark-Casey)
+</I>&gt;<i>     4. Re: OpenSimulator 0.7.5-rc1 now available (Randy Pierce)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Mon, 07 Jan 2013 22:19:10 +0000
+</I>&gt;<i> From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] how can i assign one public ip to
+</I>&gt;<i> 	multiple
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50EB49DE.2020209 at googlemail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+</I>&gt;<i>
+</I>&gt;<i> I believe the InternalIP is used to choose between network adaptors when the
+</I>&gt;<i> machine has more than one.  If it's left as 0.0.0.0, then the .net SDK will
+</I>&gt;<i> choose the 'main' one - but I've no idea how it works this out (the .NET SDK
+</I>&gt;<i> docs are not clear on this matter, AFAIR).
+</I>&gt;<i>
+</I>&gt;<i> On 05/01/13 18:28, Emperor Starfinder wrote:
+</I>&gt;&gt;<i> Hashim,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am assuming that you are running off of your own network LAN and not
+</I>&gt;&gt;<i> a hosting provider.  If I am correct then it might be that your
+</I>&gt;&gt;<i> regions.ini file may need to be fixed.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On windows (for myself at least) I have found that the internal IP
+</I>&gt;&gt;<i> should not be 0.0.0.0 as this does cause viewers to hang at region
+</I>&gt;&gt;<i> handshake (Why this should matter I have no idea but it appears to in
+</I>&gt;&gt;<i> some cases.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In the regions.ini file I use for my grid I did as follows:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [Example Region]
+</I>&gt;&gt;<i> RegionUUID = Your_Region_UUID
+</I>&gt;&gt;<i> Coordinates = 1000,1000
+</I>&gt;&gt;<i> InternalIP = 192.168.1.xx
+</I>&gt;&gt;<i> Port = 9000
+</I>&gt;&gt;<i> Alternate Ports = false
+</I>&gt;&gt;<i> External IP = Your_Domain_Name_Or_IP_Address
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Also the computer your region server is on should also have a static
+</I>&gt;&gt;<i> IP address assigned in our local network. Theres a simple tool you can
+</I>&gt;&gt;<i> find at portforwrd.com that will do that for you quite quickly.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Also there has been some known issues with some FQDN names which have
+</I>&gt;&gt;<i> mixed results.  Some are from DynDNS.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I hope this helps a little.  As Ive indicated I am assuming your
+</I>&gt;&gt;<i> running on Windows operating system but in some cases what I say might
+</I>&gt;&gt;<i> actually work on Linux based operating systems as well.  Ive certainly
+</I>&gt;&gt;<i> found some of the linux based tutorials I've found also seem to give
+</I>&gt;&gt;<i> me a guide with windows also.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Emperor
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+</I>&gt;&gt;<i> Sent: Friday, January 04, 2013 11:19 PM
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Opensim-users Digest, Vol 65, Issue 7
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Send Opensim-users mailing list submissions to
+</I>&gt;&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You can reach the person managing the list at
+</I>&gt;&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When replying, please edit your Subject line so it is more specific
+</I>&gt;&gt;<i> than
+</I>&gt;&gt;<i> &quot;Re: Contents of Opensim-users digest...&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Today's Topics:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>      1. Re: Opensim in amazon (Ken Grunke)
+</I>&gt;&gt;<i>      2. Groups : Invalid (or No) Read Key Specified (Laurent Bechir)
+</I>&gt;&gt;<i>      3. Re: Groups : Invalid (or No) Read Key Specified (Nebadon Izumi)
+</I>&gt;&gt;<i>      4. Re: Groups : Invalid (or No) Read Key Specified (InuYasha Meiji)
+</I>&gt;&gt;<i>      5. Re: Groups : Invalid (or No) Read Key Specified (InuYasha Meiji)
+</I>&gt;&gt;<i>      6. Re: Groups : Invalid (or No) Read Key Specified (Laurent Bechir)
+</I>&gt;&gt;<i>      7. OpenSimulator 0.7.5-rc1 now available (Justin Clark-Casey)
+</I>&gt;&gt;<i>      8. how can i assign one public ip to multiple	simulators (Hashim)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ----------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Message: 1
+</I>&gt;&gt;<i> Date: Fri, 04 Jan 2013 12:01:11 -0600
+</I>&gt;&gt;<i> From: Ken Grunke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kenearlg at gmail.com</A>&gt;
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] Opensim in amazon
+</I>&gt;&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50E718E7.4020908 at gmail.com</A>&gt;
+</I>&gt;&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;; Format=&quot;flowed&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 1/4/2013 2:02 AM, john felipe urrego mejia wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hi, please tell me or share me a tutorial or video explain me process
+</I>&gt;&gt;&gt;<i> opensim un amazon with instances.
+</I>&gt;&gt;&gt;<i> Tnks a lot
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is something I wrote for Ubuntu on OSGrid, but parts of it can
+</I>&gt;&gt;<i> apply to other distros (and grids or standalone) as well. Hope this helps!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://forums.osgrid.org/viewtopic.php?f=15&amp;t=4010&amp;p=18067">http://forums.osgrid.org/viewtopic.php?f=15&amp;t=4010&amp;p=18067</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ken Grunke aka Key Gruin @ OSGrid
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -------------- next part -------------- An HTML attachment was
+</I>&gt;&gt;<i> scrubbed...
+</I>&gt;&gt;<i> URL:
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130104">https://lists.berlios.de/pipermail/opensim-users/attachments/20130104</A>
+</I>&gt;&gt;<i> /64c2d
+</I>&gt;&gt;<i> f6d/attachment-0001.html&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Message: 2
+</I>&gt;&gt;<i> Date: Fri, 4 Jan 2013 19:19:06 +0100
+</I>&gt;&gt;<i> From: Laurent Bechir &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A>&gt;
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: [Opensim-users] Groups : Invalid (or No) Read Key Specified
+</I>&gt;&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">538BA6E1-7287-40E9-A0E9-3801926C1741 at madonie.org</A>&gt;
+</I>&gt;&gt;<i> Content-Type: text/plain; charset=us-ascii
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hello,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What value should I put in OpensIm.ini and in config.php in front of
+</I>&gt;&gt;<i> XmlRpcServiceReadKey and XmlRpcServiceWriteKey for the groups to work
+</I>&gt;&gt;<i> ? I've tried thinks like '1a33b' or 'group_read_key', without success.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Message: 3
+</I>&gt;&gt;<i> Date: Fri, 4 Jan 2013 14:28:43 -0500
+</I>&gt;&gt;<i> From: Nebadon Izumi &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nebadon2025 at gmail.com</A>&gt;
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] Groups : Invalid (or No) Read Key
+</I>&gt;&gt;<i> 	Specified
+</I>&gt;&gt;<i> Message-ID:
+</I>&gt;&gt;<i> 	&lt;CAF5=<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rqXoN0TsABxOHCcQAUegos2cF3D9brvXnfVWxii7YO3a9g at mail.gmail.com</A>&gt;
+</I>&gt;&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I would leave these blank as the default shows, they really do not
+</I>&gt;&gt;<i> provide any kind of security.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Fri, Jan 4, 2013 at 1:19 PM, Laurent Bechir
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A>&gt;wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hello,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> What value should I put in OpensIm.ini and in config.php in front of
+</I>&gt;&gt;&gt;<i> XmlRpcServiceReadKey and XmlRpcServiceWriteKey for the groups to work ?
+</I>&gt;&gt;&gt;<i> I've tried thinks like '1a33b' or 'group_read_key', without success.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thank you
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Michael Emory Cerquoni
+</I>&gt;&gt;<i> -------------- next part -------------- An HTML attachment was
+</I>&gt;&gt;<i> scrubbed...
+</I>&gt;&gt;<i> URL:
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130104">https://lists.berlios.de/pipermail/opensim-users/attachments/20130104</A>
+</I>&gt;&gt;<i> /f42d3
+</I>&gt;&gt;<i> dcf/attachment-0001.html&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Message: 4
+</I>&gt;&gt;<i> Date: Fri, 04 Jan 2013 16:59:37 -0500
+</I>&gt;&gt;<i> From: InuYasha Meiji &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt;
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] Groups : Invalid (or No) Read Key
+</I>&gt;&gt;<i> 	Specified
+</I>&gt;&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50E750C9.4060508 at gmail.com</A>&gt;
+</I>&gt;&gt;<i> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It shouldn't matter as long as it is the same thing in your config.php
+</I>&gt;&gt;<i> file, under those lines.  it is a small attempt at some kind of security.
+</I>&gt;&gt;<i> InuYasha.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 1/4/2013 1:19 PM, Laurent Bechir wrote:
+</I>&gt;&gt;&gt;<i> Hello,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> What value should I put in OpensIm.ini and in config.php in front of
+</I>&gt;&gt;<i> XmlRpcServiceReadKey and XmlRpcServiceWriteKey for the groups to work
+</I>&gt;&gt;<i> ? I've tried thinks like '1a33b' or 'group_read_key', without success.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thank you
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> OSVW Consulting
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 2
+</I>&gt;<i> Date: Mon, 07 Jan 2013 22:26:17 +0000
+</I>&gt;<i> From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] OpenSimulator 0.7.5-rc1 now available
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50EB4B89.7050609 at googlemail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+</I>&gt;<i>
+</I>&gt;<i> Randy, presuming that OpenSimulator at least starts up, you can run the
+</I>&gt;<i> command
+</I>&gt;<i>
+</I>&gt;<i> &quot;config show DatabaseService&quot;
+</I>&gt;<i>
+</I>&gt;<i> from the console.  This will show you what settings OpenSimulator is
+</I>&gt;<i> actually using.
+</I>&gt;<i>
+</I>&gt;<i> If SQLite still appears there then it is hiding in your config files
+</I>&gt;<i> somewhere.  The top of the log will show all the
+</I>&gt;<i> various config files that OpenSimulator ends up including on startup.
+</I>&gt;<i>
+</I>&gt;<i> On 05/01/13 23:38, Randy Pierce wrote:
+</I>&gt;&gt;<i> Thanks for the assist, but this was the very first thing I checked.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> At the present time, I am totally removing the 0.7.4 version directory and
+</I>&gt;&gt;<i> replacing it with 0.7.5 to ensure there are no leftovers. As I said, 0.7.4
+</I>&gt;&gt;<i> ran totally fine with no errors. Just got to heavy in the memory category
+</I>&gt;<i> to
+</I>&gt;&gt;<i> warrant staying on 7.4 when this version became available.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> View this message in context:
+</I>&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/OpenSimulator-0-7-5-rc1-now-avail">http://opensim-users.2152040.n2.nabble.com/OpenSimulator-0-7-5-rc1-now-avail</A>
+</I>&gt;<i> able-tp7579258p7579266.html
+</I>&gt;&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011547.html">[Opensim-users] how can i assign one public ip to
+</A></li>
+	<LI>Next message: <A HREF="011549.html">[Opensim-users] A bit off topic,	but still interesting post by Dell...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11548">[ date ]</a>
+              <a href="thread.html#11548">[ thread ]</a>
+              <a href="subject.html#11548">[ subject ]</a>
+              <a href="author.html#11548">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

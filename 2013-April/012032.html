@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Approach%20to%20get%20fresh%20content%20for%20an%20OpenSim%0A%20Grid%20on%20New%20Servers&In-Reply-To=%3C5167F426.3080207%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012024.html">
+   <LINK REL="Next"  HREF="012033.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Approach%20to%20get%20fresh%20content%20for%20an%20OpenSim%0A%20Grid%20on%20New%20Servers&In-Reply-To=%3C5167F426.3080207%40gmail.com%3E"
+       TITLE="[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Fri Apr 12 13:46:46 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012024.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+        <LI>Next message: <A HREF="012033.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12032">[ date ]</a>
+              <a href="thread.html#12032">[ thread ]</a>
+              <a href="subject.html#12032">[ subject ]</a>
+              <a href="author.html#12032">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Ai, It has been my experience that when I take the approach of saving 
+and reloading OAR/IAR files to a new fresh database it usually does 
+result in a smaller assets table (as compared to the previous database) 
+but I suppose the space gain all depends on how many unreferenced assets 
+there were on the previous database.
+
+As far as I can tell, IAR and OAR saves work by only collecting assets 
+that are referenced on the regions that have had OARs made from, and any 
+assets that are referenced in the path specified for IARs that are 
+created from user inventories. Any thing left over will be gone once a 
+new empty database is created.
+
+I am not 100% certain since I am only going by what I have observed in 
+the process of saving/loading archives and transferring to a new 
+database so anyone please by all means correct me if I'm not entirely 
+accurate here :)
+
+
+On 4/11/2013 9:39 AM, Ai Austin wrote:
+&gt;<i> Our OpenSim grid has been running continuously since version 0.4 from 
+</I>&gt;<i> September 2007... and has probably by now accumulated a LOT of stuff 
+</I>&gt;<i> that has not been garbage collected.
+</I>&gt;<i>
+</I>&gt;<i> We are changing to some new more powerful core servers in the next few 
+</I>&gt;<i> weeks, and I had an idea of how to do the upgrade that MIGHT get rid 
+</I>&gt;<i> of the clutter while still keeping in place the region UUIDs (for web 
+</I>&gt;<i> map servers, etc), the avatar UUIDs for permissions and .ini files 
+</I>&gt;<i> that refer to these, and even perhaps the UUIDs of key assets in case 
+</I>&gt;<i> they are in scripts.
+</I>&gt;<i>
+</I>&gt;<i> but i am assuming that the IARs and OARs work by trying to reuse the 
+</I>&gt;<i> UUIDs if they are not already use din the data base.
+</I>&gt;<i>
+</I>&gt;<i> Will this process work..
+</I>&gt;<i>
+</I>&gt;<i> 1. Save each region as an OAR and the avatar inventories we wish to 
+</I>&gt;<i> carry over as an IAR
+</I>&gt;<i>
+</I>&gt;<i> 2. Create a completely fresh data base - empty.
+</I>&gt;<i>
+</I>&gt;<i> 3. Create the avatars we want to preserve using the ption to set a 
+</I>&gt;<i> specific UUID for them
+</I>&gt;<i>
+</I>&gt;<i> 4. Start up with the original region.ini files which have the old UUID 
+</I>&gt;<i> in them
+</I>&gt;<i>
+</I>&gt;<i> 5. restore the OARS to the relevant regions, and the IARs to the 
+</I>&gt;<i> relevant avatars.
+</I>&gt;<i>
+</I>&gt;<i> 6. Then fingers crossed we have a smaller neater, no clutter version 
+</I>&gt;<i> of what we have now?
+</I>&gt;<i>
+</I>&gt;<i> Or is that just plain silly and we have to take over more, or dump to 
+</I>&gt;<i> SQL and restore the data base as is?
+</I>&gt;<i>
+</I>&gt;<i> Any comments from devs or those with experience of a migration would 
+</I>&gt;<i> be appreciated before we try this if its going to be a waste of time.  Ai
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012024.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+	<LI>Next message: <A HREF="012033.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12032">[ date ]</a>
+              <a href="thread.html#12032">[ thread ]</a>
+              <a href="subject.html#12032">[ subject ]</a>
+              <a href="author.html#12032">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] opensim migration strategy
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20opensim%20migration%20strategy&In-Reply-To=%3C7098A0FC-FB9E-431B-AE60-964D312ECC68%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000775.html">
+   <LINK REL="Next"  HREF="000778.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] opensim migration strategy</H1>
+    <B>Generic Email</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20opensim%20migration%20strategy&In-Reply-To=%3C7098A0FC-FB9E-431B-AE60-964D312ECC68%40gmail.com%3E"
+       TITLE="[Opensim-users] opensim migration strategy">generic.email.30022 at gmail.com
+       </A><BR>
+    <I>Fri Dec  5 19:57:50 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000775.html">[Opensim-users] opensim migration strategy
+</A></li>
+        <LI>Next message: <A HREF="000778.html">[Opensim-users] opensim migration strategy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#777">[ date ]</a>
+              <a href="thread.html#777">[ thread ]</a>
+              <a href="subject.html#777">[ subject ]</a>
+              <a href="author.html#777">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am so glad you brought these up.
+I believe these are also misconceptions...
+
+In many circumstances, primarily where transactions are involved,  
+SQLite beats the pants off mySQL <A HREF="http://www.sqlite.org/speed.html">http://www.sqlite.org/speed.html</A>
+
+Granted they are old tests, and I am sure we have all gotten better  
+since then, but remember, it almost isn't a fair comparison. SQLite  
+has hundreds of fewer features and an order of magnitude less  
+complexity when compared with MySQL. All it does is quickly store and  
+retrieve data.
+
+Did you know that SQLite db writes are journaled, and and failure will  
+result in the transactions being rolled back to a known good state? It  
+is being used on literally millions of cellphones every day, with zero  
+maintenance. If it was easy to corrupt, then I believe the major  
+hardware manufacturers would be steering clear of it, but instead they  
+are moving forward and paying for its maintenance.
+
+I really enjoyed listening to <A HREF="http://twit.tv/floss26">http://twit.tv/floss26</A>
+
+Thanks again.
+
+On Dec 5, 2008, at 1:36 PM, Frisby, Adam wrote:
+
+&gt;<i> The problem with SQLite is that it&#8217;s very very slow by comparison.
+</I>&gt;<i>
+</I>&gt;<i> There&#8217;s a real noticeable difference between the speed it takes to  
+</I>&gt;<i> perform operations, and that of say MySQL.
+</I>&gt;<i>
+</I>&gt;<i> It&#8217;s also a little bit easier to corrupt &#8211; for instance you can&#8217;t  
+</I>&gt;<i> have two processes accessing the one sqlite DB at once.
+</I>&gt;<i>
+</I>&gt;<i> Adam
+</I>&gt;<i>
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> 
+</I>&gt;<i> ] On Behalf Of Generic Email
+</I>&gt;<i> Sent: Friday, 5 December 2008 8:10 AM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] opensim migration strategy
+</I>&gt;<i>
+</I>&gt;<i> This is a bit of a soap box, so if your are easily offended or  
+</I>&gt;<i> annoyed, just pass by, there is nothing to see here.
+</I>&gt;<i>
+</I>&gt;<i> I see in the OpenSim world the assertion that SQLite is not  
+</I>&gt;<i> production worthy often. Most recently here:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Upgrading">http://opensimulator.org/wiki/Upgrading</A>
+</I>&gt;<i> SQLite (default - a lightweight database that comes bundled with  
+</I>&gt;<i> OpenSim and can be used without requiring any extra configuration.  
+</I>&gt;<i> It is mostly intended to get you up and running quickly, not for  
+</I>&gt;<i> production use.)
+</I>&gt;<i>
+</I>&gt;<i> I prefer to describe SQLite as:
+</I>&gt;<i> SQLite is a software library that implements a self-contained,  
+</I>&gt;<i> serverless, zero-configuration, transactional SQL database engine.  
+</I>&gt;<i> SQLite is the most widely deployed SQL database engine in the world.  
+</I>&gt;<i> The source code for SQLite is in the public domain.
+</I>&gt;<i>
+</I>&gt;<i> These companies believe SQLite is production worthy/ready: <A HREF="http://www.sqlite.org/famous.html">http://www.sqlite.org/famous.html</A>
+</I>&gt;<i>
+</I>&gt;<i> I am a huge fan of SQLite, and for what it does, I believe it does  
+</I>&gt;<i> it very well.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for letting me get that out, and I hope I can influence more  
+</I>&gt;<i> of you to take a better look at SQLite.
+</I>&gt;<i>
+</I>&gt;<i> On Dec 5, 2008, at 10:58 AM, Justin Clark-Casey wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;<i>
+</I>&gt;<i> From one version of opensim to the next, what is the accepted  
+</I>&gt;<i> migration
+</I>&gt;<i> strategy?  In particular, what happens if someone changes an SQLite
+</I>&gt;<i> or MySQL schema from one revision to the next? I tried METHOD 2
+</I>&gt;<i> last night when going from r7320 to r7605, and it failed. Not sure why
+</I>&gt;<i> yet...I ended up just creating new regions from scratch.
+</I>&gt;<i>
+</I>&gt;<i> If someone can suggest a more efficient approach, that would
+</I>&gt;<i> be great. Once it is down, we can put it in the wiki. It could go
+</I>&gt;<i> under:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Configuration">http://opensimulator.org/wiki/Configuration</A>
+</I>&gt;<i>
+</I>&gt;<i> Actually, just a couple of days ago I started a rough wiki page for  
+</I>&gt;<i> this.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Upgrading">http://opensimulator.org/wiki/Upgrading</A>
+</I>&gt;<i>
+</I>&gt;<i> It has the standalone info but not really the grid stuff.  Also,  
+</I>&gt;<i> your bullet point format is much clearer.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> METHOD 1: If Using SQLite in StandAlone Mode
+</I>&gt;<i>
+</I>&gt;<i> 1. Build the latest version from source (or download the binaries)
+</I>&gt;<i> 2. Put this new installation in a new folder
+</I>&gt;<i> 3. Copy the following files from the old \bin to the new \bin
+</I>&gt;<i>    3a. All *.db files
+</I>&gt;<i>    3b. The opensim.ini file
+</I>&gt;<i>    3c. The \bin\regions XML files
+</I>&gt;<i> 4. Launch the new opensim.exe
+</I>&gt;<i>
+</I>&gt;<i> METHOD 2: If Using MySQL in StandAlone Mode
+</I>&gt;<i>
+</I>&gt;<i> 1. Build the latest version from source (or download the binaries)
+</I>&gt;<i> 2. Put this new installation in a new folder
+</I>&gt;<i> 3. Copy the following files from the old \bin to the new \bin
+</I>&gt;<i>    3a. The opensim.ini file
+</I>&gt;<i>    3b. The \bin\regions XML files
+</I>&gt;<i> 4. Launch the new opensim.exe
+</I>&gt;<i>
+</I>&gt;<i> METHOD 3: If Using MySQL in Grid Mode
+</I>&gt;<i>
+</I>&gt;<i> 1. Build the latest version from source (or download the binaries)
+</I>&gt;<i> 2. Put this new installation in a new folder
+</I>&gt;<i> 3. Copy the following files from the old \bin to the new \bin
+</I>&gt;<i>    3a. The opensim.ini file
+</I>&gt;<i>    3b. The \bin\regions XML files
+</I>&gt;<i>    3c. The 5 XML config files
+</I>&gt;<i> 4. Launch services in the following order: UGAIM + R where
+</I>&gt;<i>    &quot;R&quot; designates the region server (OpenSim)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> justincc
+</I>&gt;<i> Justin Clark-Casey
+</I>&gt;<i> <A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20081205/8f54cf09/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20081205/8f54cf09/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000775.html">[Opensim-users] opensim migration strategy
+</A></li>
+	<LI>Next message: <A HREF="000778.html">[Opensim-users] opensim migration strategy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#777">[ date ]</a>
+              <a href="thread.html#777">[ thread ]</a>
+              <a href="subject.html#777">[ subject ]</a>
+              <a href="author.html#777">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

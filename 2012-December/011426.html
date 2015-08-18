@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] &quot;Shutting down finalizer thread timed out.&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%22Shutting%20down%20finalizer%20thread%20timed%20out.%22&In-Reply-To=%3C50C14084.8060802%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011425.html">
+   <LINK REL="Next"  HREF="011429.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] &quot;Shutting down finalizer thread timed out.&quot;</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%22Shutting%20down%20finalizer%20thread%20timed%20out.%22&In-Reply-To=%3C50C14084.8060802%40googlemail.com%3E"
+       TITLE="[Opensim-users] &quot;Shutting down finalizer thread timed out.&quot;">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Dec  7 02:04:04 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011425.html">[Opensim-users] &quot;Shutting down finalizer thread timed out.&quot;
+</A></li>
+        <LI>Next message: <A HREF="011429.html">[Opensim-users] &quot;Shutting down finalizer thread timed out.&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11426">[ date ]</a>
+              <a href="thread.html#11426">[ thread ]</a>
+              <a href="subject.html#11426">[ subject ]</a>
+              <a href="author.html#11426">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Odd.  Are you getting that message when shutting down a complete empty region or is it associated with some kind of content?
+
+On 06/12/12 11:12, Tom wrote:
+&gt;<i> Does anyone know how to a) prevent the error message &quot;Shutting down finalizer thread timed out.&quot; when shutting down the
+</I>&gt;<i> opensim (grid, standalone, diva). and b) how to locate and kill the, presumably, process that continues to use the port
+</I>&gt;<i> e.g. 9000 for local standalone.
+</I>&gt;<i>
+</I>&gt;<i> a) &quot;Shutting down finalizer thread timed out.&quot;
+</I>&gt;<i> I am on a Mid 2012 Mac Book Pro, OS X 10.7.5, Mono 2.10.9.
+</I>&gt;<i> I have tried OS 0.7.3 and OS 0.7.4 (Robust and Standalone) and diva-r20232-b (standalone).
+</I>&gt;<i>
+</I>&gt;<i> When a try to start the OpenSim again I get  I get the error message &quot;Exception: System.Net.Sockets.SocketException:
+</I>&gt;<i> Address already in use&quot; ( see full output below). leading me to suspect that there is a process still using port 9000. I
+</I>&gt;<i> have trued mono  OpenSim.32BitLaunch.exe and mono OpenSim.exe ( I understand that OpenSim.32BitLaunch.exe is no longer
+</I>&gt;<i> needed ).
+</I>&gt;<i>
+</I>&gt;<i> b) If I use lsof -i:9000 ) which should identify the process using port 9000 it detects nothing except when the OpenSim
+</I>&gt;<i> is working correctly. I had hoped to be able to kill the process and then restart OpenSim. Only restarting the computer
+</I>&gt;<i> seem to work.
+</I>&gt;<i>
+</I>&gt;<i> If you can help I would be really grateful.
+</I>&gt;<i> Tom
+</I>&gt;<i>
+</I>&gt;<i> The full error message is:
+</I>&gt;<i> 11:00:12 - [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.Net.Sockets.SocketException: Address already in use
+</I>&gt;<i>    at System.Net.Sockets.Socket.Bind (System.Net.EndPoint local_end) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenMetaverse.OpenSimUDPBase.Start (Int32 recvBufferSize, Boolean asyncPacketHandling) [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.Start () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Region.ClientStack.LindenUDP.LLUDPServerShim.Start () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean
+</I>&gt;<i> do_post_init, IScene&amp; mscene) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp; scene)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSim.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i> [ERROR] FATAL UNHANDLED EXCEPTION: System.Net.Sockets.SocketException: Address already in use
+</I>&gt;<i>    at System.Net.Sockets.Socket.Bind (System.Net.EndPoint local_end) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenMetaverse.OpenSimUDPBase.Start (Int32 recvBufferSize, Boolean asyncPacketHandling) [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.Start () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Region.ClientStack.LindenUDP.LLUDPServerShim.Start () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean
+</I>&gt;<i> do_post_init, IScene&amp; mscene) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp; scene)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSim.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> Tom Willans  BSc(Hons)  MBCS  CITP
+</I>&gt;<i> PhD Student
+</I>&gt;<i> Serious Games Institute, Coventry University
+</I>&gt;<i> United Kingdom
+</I>&gt;<i>
+</I>&gt;<i> Senior Research Representative: Faculty of Engineering and Computing
+</I>&gt;<i> Managing Director Bessacarr Publications Ltd
+</I>&gt;<i> +44 (0)121 288 0281
+</I>&gt;<i> email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tom.willans at bessacarr.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tom.willans at bessacarr.com</A>&gt;
+</I>&gt;<i> skype: tom.willans
+</I>&gt;<i> Second Life and OSGrid: Tom Tiros
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011425.html">[Opensim-users] &quot;Shutting down finalizer thread timed out.&quot;
+</A></li>
+	<LI>Next message: <A HREF="011429.html">[Opensim-users] &quot;Shutting down finalizer thread timed out.&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11426">[ date ]</a>
+              <a href="thread.html#11426">[ thread ]</a>
+              <a href="subject.html#11426">[ subject ]</a>
+              <a href="author.html#11426">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Any way to display the values of &quot;IP&quot; and &quot;MyIP&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Any%20way%20to%20display%20the%20values%20of%20%22IP%22%20and%20%22MyIP%22&In-Reply-To=%3CCADCqwr37LG-Cf-3P5_fJW2dWA7JaSocE8F7fUz5PbTsAEEueWA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010091.html">
+   <LINK REL="Next"  HREF="010095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Any way to display the values of &quot;IP&quot; and &quot;MyIP&quot;</H1>
+    <B>Rick Anderson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Any%20way%20to%20display%20the%20values%20of%20%22IP%22%20and%20%22MyIP%22&In-Reply-To=%3CCADCqwr37LG-Cf-3P5_fJW2dWA7JaSocE8F7fUz5PbTsAEEueWA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Any way to display the values of &quot;IP&quot; and &quot;MyIP&quot;">rianders at docs.rutgers.edu
+       </A><BR>
+    <I>Wed Apr 11 20:37:59 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010091.html">[Opensim-users] Any way to display the values of &quot;IP&quot; and &quot;MyIP&quot;
+</A></li>
+        <LI>Next message: <A HREF="010095.html">[Opensim-users] Any way to display the values of &quot;IP&quot; and &quot;MyIP&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10094">[ date ]</a>
+              <a href="thread.html#10094">[ thread ]</a>
+              <a href="subject.html#10094">[ subject ]</a>
+              <a href="author.html#10094">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Diva,
+
+I'll go back to using the rugrid.rutgers.edu in the robust
+configuration and see what happens.
+Robust.ini result,
+----
+18:17:50 - [HOME AGENT HANDLER]: Unauthorized machine 184.162.51.100
+tried to set client ip to 165.230.192.41
+18:17:50 - [USER AGENT SERVICE]: Request to login user Rk.Jinn
+@rugrid.rutgers.edu (@stored IP) to grid <A HREF="http://174.129.197.43:8002/">http://174.129.197.43:8002/</A>
+18:17:50 - [USER AGENT SERVICE]: this grid:
+<A HREF="http://rugrid.rutgers.edu:8002/,">http://rugrid.rutgers.edu:8002/,</A> desired grid:
+<A HREF="http://174.129.197.43:8002/">http://174.129.197.43:8002/</A>
+18:17:50 - [GATEKEEPER SERVICE]: Login request for Rk.Jinn
+@rugrid.rutgers.edu @ <A HREF="http://rugrid.rutgers.edu:8002/">http://rugrid.rutgers.edu:8002/</A>
+(80861b47-0d09-49e0-a711-8e59851006f9) at JumpNexus0 using viewer
+Imprudence 1.4.0.1, channel Imprudence, IP 165.230.192.41, Mac
+3bb974300b81b292f953727e3cf33574, Id0 6468c4a3c3a6f5fa9e55986a1017e0f0
+Teleport Flags 0
+18:17:50 - [GATEKEEPER SERVICE]: Verifying <A HREF="http://174.129.197.43:8002">http://174.129.197.43:8002</A>
+against <A HREF="http://rugrid.rutgers.edu:8002">http://rugrid.rutgers.edu:8002</A>
+18:17:50 - [GATEKEEPER SERVICE]: Unable to verify identity of agent
+Rk.Jinn @rugrid.rutgers.edu. Refusing service.
+18:17:50 - [USER AGENT SERVICE]: Unable to login user Rk.Jinn
+@rugrid.rutgers.edu to grid <A HREF="http://174.129.197.43:8002/,">http://174.129.197.43:8002/,</A> reason:
+Unable to verify identity
+----
+In this case rugrid.rutgers.edu = 174.129.197.43.
+
+I'll try this next:
+&gt;<i> Second, use the hosts files to adjust the mappings between domain names and
+</I>&gt;<i> IP addresses inside the network if needed.
+</I>
+Also, this is running in the Amazon AWS cloud. So each machine has
+public/private addresses.
+
+
+-_Rick
+
+On Wed, Apr 11, 2012 at 1:13 PM, Diva Canto &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+&gt;<i> The higher-order bit of what I'm about to say is that OpenSim networking is
+</I>&gt;<i> a complicated matter. Hypergrid networking adds even more complexity to it.
+</I>&gt;<i> Having said that, let me explain a bit.
+</I>&gt;<i>
+</I>&gt;<i> The main source of problems arise when you have the following situation:
+</I>&gt;<i> (1) the servers are on a given network
+</I>&gt;<i> (2) some clients are also on that network
+</I>&gt;<i> (3) some clients are on external networks
+</I>&gt;<i> This is usually the case with universities, for example, depending on how
+</I>&gt;<i> the university network is set up. Hence you need to be extra careful.
+</I>&gt;<i>
+</I>&gt;<i> The Hypergrid performs several checks for ensuring identity security. These
+</I>&gt;<i> checks are based on the domain names that the grids use, on the IP addresses
+</I>&gt;<i> of the robust servers and on the IP addresses of the clients.
+</I>&gt;<i>
+</I>&gt;<i> The IP address from where the client logged in is the vital piece of info
+</I>&gt;<i> that needs to be asserted throughout HG teleports. The user's home grid
+</I>&gt;<i> knows that address; the simulators that the user visit also know that
+</I>&gt;<i> address. In order for those simulators to make sure that the agent that
+</I>&gt;<i> they're getting is the real thing, and not a fake pretending to be a certain
+</I>&gt;<i> user, they call back to the user's home grid for IP verification. That's
+</I>&gt;<i> when that debug message gets printed out.
+</I>&gt;<i>
+</I>&gt;<i> Two things can happen: either the IP address of the client that the
+</I>&gt;<i> destination simulator gets is exactly the same as the IP address that the
+</I>&gt;<i> home grid saw at client login (normal case, when servers and clients are on
+</I>&gt;<i> separate networks) or the IP address of the client that the destination
+</I>&gt;<i> simulator gets is different than the one seen at login in the home grid, but
+</I>&gt;<i> is the same as the robust server -- which means that the client logged in in
+</I>&gt;<i> the same machine where the robust server runs. This happens in standalones
+</I>&gt;<i> ran at people's homes, for example, where there's just on box running both
+</I>&gt;<i> OpenSim and the viewer.
+</I>&gt;<i>
+</I>&gt;<i> So, what does this mean for people with &#160;a mix of clients inside the
+</I>&gt;<i> server-side network and clients outside?
+</I>&gt;<i>
+</I>&gt;<i> First of all, stick to using domain names, not IP addresses. That is just
+</I>&gt;<i> bound to cause problems, because many times the IP addresses seen from the
+</I>&gt;<i> outside are different from the IP addresses seen from the inside of a
+</I>&gt;<i> network. If you fix it for one case, you screw it up for the other. So, rule
+</I>&gt;<i> #1: USE DOMAIN NAMES in the Robust configuration.
+</I>&gt;<i>
+</I>&gt;<i> Second, use the hosts files to adjust the mappings between domain names and
+</I>&gt;<i> IP addresses inside the network if needed.
+</I>&gt;<i>
+</I>&gt;<i> I am sure that this process of IP verification can be improved to account
+</I>&gt;<i> for these hybrid setups, but for the time being only the simplest of cases
+</I>&gt;<i> is accounted for (client logged in in the same machine as the home grid).
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 4/11/2012 8:35 AM, Rick Anderson wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It turns out that MyIP displays the IP address when it can be found.
+</I>&gt;&gt;<i> I changed my Robust configuration from rugrid.rutgers.edu to the IP
+</I>&gt;&gt;<i> address and it now returns the correct client info:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 15:32:39 - [USER AGENT SERVICE]: Verifying Client session
+</I>&gt;&gt;<i> 7a0ffc9a-c6ea-4a8c-899d-88f9fe0da2bf with reported IP 165.230.192.41.
+</I>&gt;&gt;<i> 15:32:39 - [USER AGENT SERVICE]: Comparing 165.230.192.41 with login
+</I>&gt;&gt;<i> IP 165.230.192.41 and MyIP 165.230.192.41; result is True
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When I return my region is light blue. So I've made one step forward.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -_Rick
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Apr 11, 2012 at 11:24 AM, Rick Anderson
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rianders at docs.rutgers.edu</A>&gt; &#160;wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'm trying to trace down an error with the unauthorized machine
+</I>&gt;&gt;&gt;<i> message from &quot;HOME AGENT HANDLER&quot; &#160;There is a value comparing login IP
+</I>&gt;&gt;&gt;<i> with MyIP with a result of false:
+</I>&gt;&gt;&gt;<i> 15:19:28 - [USER AGENT SERVICE]: Verifying Client session
+</I>&gt;&gt;&gt;<i> b5495ff5-827a-4bd2-98ee-2eb3e5dfe036 with reported IP 165.230.192.41.
+</I>&gt;&gt;&gt;<i> 15:19:28 - [USER AGENT SERVICE]: Comparing 165.230.192.41 with login
+</I>&gt;&gt;&gt;<i> IP &#160;and MyIP ; result is False
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Can the values of &quot;IP&quot; and MyIP&quot; be shown in the console?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -_Rick
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Rick Anderson
+</I>&gt;&gt;&gt;<i> Director of Virtual Worlds
+</I>&gt;&gt;&gt;<i> Division of Continuing Studies (DoCS)
+</I>&gt;&gt;&gt;<i> Rutgers University
+</I>&gt;&gt;&gt;<i> (732) 586-3265
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+
+-- 
+Rick Anderson
+Director of Virtual Worlds
+Division of Continuing Studies (DoCS)
+Rutgers University
+(732) 586-3265
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010091.html">[Opensim-users] Any way to display the values of &quot;IP&quot; and &quot;MyIP&quot;
+</A></li>
+	<LI>Next message: <A HREF="010095.html">[Opensim-users] Any way to display the values of &quot;IP&quot; and &quot;MyIP&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10094">[ date ]</a>
+              <a href="thread.html#10094">[ thread ]</a>
+              <a href="subject.html#10094">[ subject ]</a>
+              <a href="author.html#10094">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Mono Threads?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mono%20Threads%3F&In-Reply-To=%3C4BFD90B5.9030604%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004568.html">
+   <LINK REL="Next"  HREF="004571.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Mono Threads?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mono%20Threads%3F&In-Reply-To=%3C4BFD90B5.9030604%40googlemail.com%3E"
+       TITLE="[Opensim-users] Mono Threads?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed May 26 23:20:53 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004568.html">[Opensim-users] Mono Threads?
+</A></li>
+        <LI>Next message: <A HREF="004571.html">[Opensim-users] Mono Threads?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4570">[ date ]</a>
+              <a href="thread.html#4570">[ thread ]</a>
+              <a href="subject.html#4570">[ subject ]</a>
+              <a href="author.html#4570">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Mespelt, Don wrote:
+&gt;<i> Thanks Justin.  Still learning....  ;)
+</I>&gt;<i> 
+</I>&gt;<i> Here is the log just BEFORE I restart the OpenSim.exe program...
+</I>&gt;<i> 
+</I>&gt;<i> I hope it can shed some light on this.
+</I>
+The part of the log just before failure is
+
+2010-05-24 08:50:15,460 DEBUG - OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing Primitive, 494ac5fc-d58a-4636-acc8-98cfc050e1c6 in Cannon Beach
+2010-05-24 08:50:17,559 DEBUG - OpenSim.Region.Framework.Scenes.AsyncSceneObjectGroupDeleter [SCENE]: Starting send to inventory loop
+2010-05-24 08:50:17,560 DEBUG - OpenSim.Region.Framework.Scenes.AsyncSceneObjectGroupDeleter [SCENE]: Sending object to user's inventory, 1 item(s) remaining.
+2010-05-24 08:50:17,825 DEBUG - OpenSim.Region.Framework.Scenes.AsyncSceneObjectGroupDeleter [SCENE]: No objects left in inventory send queue.
+2010-05-24 08:50:52,103 DEBUG - OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing Primitive, ebb0e782-5ff0-4c4a-b60c-ec620473113f in Cannon Beach
+2010-05-24 08:51:11,329 DEBUG - OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing Primitive, 90aeddc0-6574-477f-af0e-64c7a5995884 in Cannon Beach
+2010-05-24 08:53:04,516 INFO  - OpenSim.Application [OPENSIM MAIN]: configured log4net using default OpenSim.exe.config
+2010-05-24 08:53:04,539 INFO  - OpenSim.Application [OPENSIM MAIN]: Runtime gave us 40 worker threads and 0 IOCP threads
+2010-05-24 08:53:04,543 INFO  - OpenSim.Application [OPENSIM MAIN]: Bumping up to 500 worker threads and 1000 IOCP threads
+2010-05-24 08:53:04,543 INFO  - OpenSim.Application Performing compatibility checks... 
+2010-05-24 08:53:04,562 INFO  - OpenSim.Application Environment is compatible.
+
+This doesn't show anything unusual at all.  In these cases, the error has probably only been printed to the console - try and capture this (if you are running on Windows you'll need to start the server at a command prompt rather than by double clicking).
+
+If you're running with Mono, then console errors are very often Mono crashes.  There's little OpenSim can do about this.  If Mono is crashing then I suggest that you try upgrading it - the realistic minimum nowadays is 2.4 - people also report good results with Mono 2.6).
+
+&gt;<i> 
+</I>&gt;<i> - D
+</I>&gt;<i> 
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Justin Clark-Casey
+</I>&gt;<i> Sent: Tuesday, May 25, 2010 4:00 PM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] Mono Threads?
+</I>&gt;<i> 
+</I>&gt;<i> Mespelt, Don wrote:
+</I>&gt;&gt;<i> People are using the sim great.  Then it dies for some random reason.  The logs show this before death:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010-05-25 08:08:00,079 INFO  - OpenSim.Application [OPENSIM MAIN]: configured log4net using default OpenSim.exe.config
+</I>&gt;&gt;<i> 2010-05-25 08:08:00,101 INFO  - OpenSim.Application [OPENSIM MAIN]: Runtime gave us 40 worker threads and 0 IOCP threads
+</I>&gt;&gt;<i> 2010-05-25 08:08:00,105 INFO  - OpenSim.Application [OPENSIM MAIN]: Bumping up to 500 worker threads and 1000 IOCP threads
+</I>&gt;&gt;<i> 2010-05-25 08:08:00,105 INFO  - OpenSim.Application Performing compatibility checks... 
+</I>&gt;&gt;<i> 2010-05-25 08:08:00,124 INFO  - OpenSim.Application Environment is compatible.
+</I>&gt;<i> 
+</I>&gt;<i> This is what one would see just after OpenSim is started.  Is this definitely the right end of the log?  OpenSim doesn't restart itself in this manner without other external scripts.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004568.html">[Opensim-users] Mono Threads?
+</A></li>
+	<LI>Next message: <A HREF="004571.html">[Opensim-users] Mono Threads?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4570">[ date ]</a>
+              <a href="thread.html#4570">[ thread ]</a>
+              <a href="subject.html#4570">[ subject ]</a>
+              <a href="author.html#4570">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

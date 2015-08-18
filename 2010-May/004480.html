@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Groups module
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Groups%20module&In-Reply-To=%3C4BE9E5D9.3050608%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004478.html">
+   <LINK REL="Next"  HREF="004479.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Groups module</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Groups%20module&In-Reply-To=%3C4BE9E5D9.3050608%40googlemail.com%3E"
+       TITLE="[Opensim-users] Groups module">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed May 12 01:18:49 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004478.html">[Opensim-users] Groups module
+</A></li>
+        <LI>Next message: <A HREF="004479.html">[Opensim-users] Running FreeSwitch with OpenSim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4480">[ date ]</a>
+              <a href="thread.html#4480">[ thread ]</a>
+              <a href="subject.html#4480">[ subject ]</a>
+              <a href="author.html#4480">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jor3l Boa wrote:
+&gt;<i> Hello there, I'm trying to use the Groups module, got everything, 
+</I>&gt;<i> configured each side (php and server) installed DBs and started OS, but 
+</I>&gt;<i> I'm getting this error: 
+</I>&gt;<i> 
+</I>&gt;<i> 11:20:09 - [GROUPS-MESSAGING]: Could not get IGroupsServicesConnector, 
+</I>&gt;<i> GroupsMessagingModule is now disabled.
+</I>&gt;<i> 11:20:09 - [GROUPS]: Could not get IGroupsServicesConnector
+</I>&gt;<i> 
+</I>&gt;<i> Is something with the OpenSim.ini configuration? I did a test with the 
+</I>&gt;<i> 'test.php' and got this error: 
+</I>&gt;<i> 
+</I>&gt;<i> ---GOT---
+</I>&gt;<i> HTTP/1.1 404 Not Found
+</I>&gt;<i> Date: Tue, 11 May 2010 16:31:12 GMT
+</I>&gt;<i> Server: Apache/2.2.14 (Ubuntu)
+</I>&gt;<i> Vary: Accept-Encoding
+</I>&gt;<i> Content-Encoding: gzip
+</I>&gt;<i> Content-Length: 241
+</I>&gt;<i> Connection: close
+</I>&gt;<i> Content-Type: text/html; charset=iso-8859-1
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Any help is welcome.
+</I>
+&gt;<i>From the message it simply looks like you don't have this active in your configuration.  I believe that You should have something like this if you're using 0.6.9.rc2.  Unfortunately, this has changed in 0.6.9-post-fixes (and I'm not sure this is a good idea for what should be a pretty stable branch).
+</I>
+[Groups]
+    Enabled = true
+
+    ; This is the current groups stub in Region.CoreModules.Avatar.Groups
+    ;Module  = Default
+
+    ; The PHP code for the server is available from the Flotsam project for you to deploy
+    ; to your own server.  The Flotsam project is located at <A HREF="http://code.google.com/p/flotsam/">http://code.google.com/p/flotsam/</A>
+    ;   
+    Module  = GroupsModule
+
+    ; Enable Group Notices
+    NoticesEnabled   = true
+
+    ; This makes the Groups modules very chatty on the console.
+    DebugEnabled     = false
+
+    ; Specify which messaging module to use for groups messaging and if it's enabled
+    MessagingModule = GroupsMessagingModule
+    MessagingEnabled = true
+
+    ; Service connector to Groups Service [Select One]
+    ; XmlRpc Service Connector to the Flotsam XmlRpc Groups Service Implementation
+    ServicesConnectorModule = XmlRpcGroupsServicesConnector
+    ;XmlRpcServiceURL        = <A HREF="http://localhost/XmlRpcGroupsServer/xmlrpc.php">http://localhost/XmlRpcGroupsServer/xmlrpc.php</A>
+    GroupsServerURI         = <A HREF="http://localhost/XmlRpcGroupsServer/xmlrpc.php">http://localhost/XmlRpcGroupsServer/xmlrpc.php</A>
+
+    XmlRpcServiceReadKey    = 1234
+    XmlRpcServiceWriteKey   = 1234
+
+    ; Disables HTTP Keep-Alive for XmlRpcGroupsServicesConnector HTTP Requests,
+    ; this is a work around fora problem discovered on some Windows based region servers.
+    ; Only disable keep alive if you see a large number (dozens) of the following Exceptions:
+    ; System.Net.WebException: The request was aborted: The request was canceled.
+    ;   
+    ; XmlRpcDisableKeepAlive = false
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004478.html">[Opensim-users] Groups module
+</A></li>
+	<LI>Next message: <A HREF="004479.html">[Opensim-users] Running FreeSwitch with OpenSim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4480">[ date ]</a>
+              <a href="thread.html#4480">[ thread ]</a>
+              <a href="subject.html#4480">[ subject ]</a>
+              <a href="author.html#4480">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

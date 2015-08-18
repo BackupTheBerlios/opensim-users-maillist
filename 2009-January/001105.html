@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Backup and Restore of MySQL Opensim DB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Backup%20and%20Restore%20of%20MySQL%20Opensim%20DB&In-Reply-To=%3C503132f1b5326ee6a46c6847fa2f705f%403rdrockgrid.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001104.html">
+   <LINK REL="Next"  HREF="001110.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Backup and Restore of MySQL Opensim DB</H1>
+    <B>trucker.anthony at 3rdrockgrid.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Backup%20and%20Restore%20of%20MySQL%20Opensim%20DB&In-Reply-To=%3C503132f1b5326ee6a46c6847fa2f705f%403rdrockgrid.com%3E"
+       TITLE="[Opensim-users] Backup and Restore of MySQL Opensim DB">trucker.anthony at 3rdrockgrid.com
+       </A><BR>
+    <I>Tue Jan 20 00:00:26 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001104.html">[Opensim-users] Backup and Restore of MySQL Opensim DB
+</A></li>
+        <LI>Next message: <A HREF="001110.html">[Opensim-users] Correcting Metaverse Time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1105">[ date ]</a>
+              <a href="thread.html#1105">[ thread ]</a>
+              <a href="subject.html#1105">[ subject ]</a>
+              <a href="author.html#1105">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>the only silly question is the one that goes unanswered because it was not
+asked I have a 12GB database on a public grid and here are the stept that i
+take to back up and restore the database
+Here's the steps needed to make a backup of your database.
+Open command prompt. type... cd\ then press enter 
+type... cd .\path to your mysql\bin\ (example: cd .\Program
+Files\MySQL\MySQL Server 5.0\bin\ ) then press enter 
+type... mysqldump -u root -p --opt yourdb &gt; filename.sql (I always do the
+date.. such as... 111008.sql)
+This will create a file in the mysql\bin folder with this file name... this
+is your database backup file. 
+Once this is completed.... right click on the file and choose cut... then
+paste it to the database backup folder of your choosing. Open your ftp
+program and send a copy of this file to another server... just in case..
+then you'll have a backup in 2 places instead of just one. 
+Here's the steps needed to delete your old database... create a new
+database... and upload a backup file to it. 
+Open command prompt. type... cd\ then press enter 
+type... cd .\path to your mysql\bin\ (example: cd .\Program
+Files\MySQL\MySQL Server 5.0\bin\ ) 
+then press enter type... mysql -u root -p then press enter 
+enter your password then press enter 
+type... drop database yourdb; then press enter (this deletes your old
+database) 
+type... create database yourdb; then press enter (this creates a database
+named yourdb) 
+type... use yourdb; then press enter (this selects the database) 
+type... source c:\path\to\your\backup\database\file\and\name.sql then press
+enter (example: c:\Program Files\MySQL\MySQL Server 5.0\bin\111008.sql) 
+This uploads the info from your backup database file to your database. 
+now i am using MySQL 5.0 but should be almost the same if not exact hope
+this helps you out
+TA
+
+On Mon, 19 Jan 2009 22:52:41 +0000, Ai Austin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at googlemail.com</A>&gt;
+wrote:
+&gt;<i> A really silly question... but I ask as I am seeing inconsistent
+</I>&gt;<i> advice on backup and restore of MySQL data bases, and an attempt to
+</I>&gt;<i> do this via direct copy across two identical Windows machines was not
+</I>&gt;<i> successful... and a myslqdump of the opensim db and a subsequent
+</I>&gt;<i> reload attempt with mysql indicated the file was too large.. but it
+</I>&gt;<i> was only 50MB or so.
+</I>&gt;<i> 
+</I>&gt;<i> I just have Opensim on MySQL 5.1.30 though I could in future have one
+</I>&gt;<i> other systems databases..   I can see th data directory.  I assume
+</I>&gt;<i> ALL files that need to be copied are in there.
+</I>&gt;<i> 
+</I>&gt;<i> the opensim directory was where I THOUGHT al the files were, but
+</I>&gt;<i> those just look like unchanging table description files, and their
+</I>&gt;<i> date last modified stays at the date the DB ws first created. he main
+</I>&gt;<i> files that seem to grow are OUTSIDE that directory at the top level
+</I>&gt;<i> of the data directory...
+</I>&gt;<i> 
+</I>&gt;<i> C:\wamp\bin\mysql\mysql5.1.30\data
+</I>&gt;<i> 
+</I>&gt;<i> mysql  (directory)
+</I>&gt;<i> opensim (directory)
+</I>&gt;<i> &lt;machinename&gt;.pid
+</I>&gt;<i> ib_logfile0
+</I>&gt;<i> ib_logfile1
+</I>&gt;<i> ibdata1
+</I>&gt;<i> mysql-bin-000001
+</I>&gt;<i> ...
+</I>&gt;<i> mysql-bin.000008
+</I>&gt;<i> mysql-bin.index
+</I>&gt;<i> 
+</I>&gt;<i> As far as I can tell the REAL data base file is ibdata1 (from its
+</I>&gt;<i> size as it grows and the date last modified)
+</I>&gt;<i> Assuming I shut down the MySQL server before copying files, what do I
+</I>&gt;<i> need to copy to be able to later restore a complete copy of the Opensim
+</I>&gt;<i> DB?
+</I>&gt;<i> 
+</I>&gt;<i> Can anyone set me straight on the right way to take a backup opensim
+</I>&gt;<i> data base copy and later restore it by the direct copy method?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001104.html">[Opensim-users] Backup and Restore of MySQL Opensim DB
+</A></li>
+	<LI>Next message: <A HREF="001110.html">[Opensim-users] Correcting Metaverse Time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1105">[ date ]</a>
+              <a href="thread.html#1105">[ thread ]</a>
+              <a href="subject.html#1105">[ subject ]</a>
+              <a href="author.html#1105">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] SQL error or connection string configuration error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SQL%20error%20or%20connection%20string%20configuration%20error&In-Reply-To=%3CBC843D5E-EE19-4927-8A86-80E015CAA00C%40asquare.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006808.html">
+   <LINK REL="Next"  HREF="006820.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] SQL error or connection string configuration error</H1>
+    <B>Garrett Lynch</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SQL%20error%20or%20connection%20string%20configuration%20error&In-Reply-To=%3CBC843D5E-EE19-4927-8A86-80E015CAA00C%40asquare.org%3E"
+       TITLE="[Opensim-users] SQL error or connection string configuration error">lists at asquare.org
+       </A><BR>
+    <I>Wed Mar 16 13:56:20 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006808.html">[Opensim-users] Opensim-users Digest, Vol 43, Issue 20
+</A></li>
+        <LI>Next message: <A HREF="006820.html">[Opensim-users] SQL error or connection string configuration	error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6809">[ date ]</a>
+              <a href="thread.html#6809">[ thread ]</a>
+              <a href="subject.html#6809">[ subject ]</a>
+              <a href="author.html#6809">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+Restarted my sim this morning and I now have a new error (see below).   
+ConnectionString isn't defined, config-include (not config_include)  
+does exist and OpenSim.ini architecture does exist.  Tried restarting  
+a few times and its the same error each time.
+
+There is mention that I should be using mysql instead here:
+<A HREF="http://opensim-users.2152040.n2.nabble.com/Opensim-Mono-2-6-Snow-Leopard-td5555426.html">http://opensim-users.2152040.n2.nabble.com/Opensim-Mono-2-6-Snow-Leopard-td5555426.html</A>
+
+and here:
+<A HREF="http://forums.osgrid.org/viewtopic.php?f=14&amp;t=2254">http://forums.osgrid.org/viewtopic.php?f=14&amp;t=2254</A>
+
+If that's the case how do I do that?
+
+
+Thanks in advance.
+
+Garrett
+
+
+11:35:39 - [APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.Exception: There was a SQL error or connection  
+string configuration error when saving the region settings.  This  
+could be a bug, it could also happen if ConnectionString is defined in  
+the [DatabaseService] section of StandaloneCommon.ini in the  
+config_include folder.  This could also happen if the config_include  
+folder doesn't exist or if the OpenSim.ini [Architecture] section  
+isn't set.  If this is your first time running OpenSimulator, please  
+restart the simulator and bug a developer to fix this! ---&gt;  
+Mono.Data.Sqlite.SqliteException: Abort due to constraint violation
+column regionUUID is not unique
+   at Mono.Data.Sqlite.SQLite3.Reset (Mono.Data.Sqlite.SqliteStatement  
+stmt) [0x00000]
+   at Mono.Data.Sqlite.SQLite3.Step (Mono.Data.Sqlite.SqliteStatement  
+stmt) [0x00000]
+   at Mono.Data.Sqlite.SqliteDataReader.NextResult () [0x00000]
+   at (wrapper remoting-invoke-with-check)  
+Mono.Data.Sqlite.SqliteDataReader:NextResult ()
+   at Mono.Data.Sqlite.SqliteDataReader..ctor  
+(Mono.Data.Sqlite.SqliteCommand cmd, CommandBehavior behave) [0x00000]
+   at (wrapper remoting-invoke-with-check)  
+Mono.Data.Sqlite.SqliteDataReader:.ctor  
+(Mono.Data.Sqlite.SqliteCommand,System.Data.CommandBehavior)
+   at Mono.Data.Sqlite.SqliteCommand.ExecuteReader (CommandBehavior  
+behavior) [0x00000]
+   at Mono.Data.Sqlite.SqliteCommand.ExecuteDbDataReader  
+(CommandBehavior behavior) [0x00000]
+   at System.Data.Common.DbCommand.ExecuteReader (CommandBehavior  
+behavior) [0x00000]
+   at  
+System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader  
+(CommandBehavior behavior) [0x00000]
+   at System.Data.Common.DbDataAdapter.Update (System.Data.DataRow[]  
+dataRows, System.Data.Common.DataTableMapping tableMapping) [0x00000]
+   --- End of inner exception stack trace ---
+   at OpenSim.Data.SQLite.SQLiteSimulationData.Commit () [0x00000]
+   at OpenSim.Data.SQLite.SQLiteSimulationData.StoreRegionSettings  
+(OpenSim.Framework.RegionSettings rs) [0x00000]
+   at OpenSim.Data.SQLite.SQLiteSimulationData.LoadRegionSettings  
+(UUID regionUUID) [0x00000]
+   at  
+OpenSim.Services.Connectors.SimulationDataService.LoadRegionSettings  
+(UUID regionUUID) [0x00000]
+   at OpenSim.Region.Framework.Scenes.Scene..ctor  
+(OpenSim.Framework.RegionInfo regInfo,  
+OpenSim.Framework.AgentCircuitManager authen,  
+OpenSim.Region.Framework.Scenes.SceneCommunicationService  
+sceneGridService, ISimulationDataService simDataService,  
+IEstateDataService estateDataService,  
+OpenSim.Region.Framework.ModuleLoader moduleLoader, Boolean  
+dumpAssetsToFile, Boolean physicalPrim, Boolean  
+SeeIntoRegionFromNeighbor, IConfigSource config, System.String  
+simulatorVersion) [0x00000]
+   at OpenSim.OpenSimBase.CreateScene (OpenSim.Framework.RegionInfo  
+regionInfo, ISimulationDataService simDataService, IEstateDataService  
+estateDataService, OpenSim.Framework.AgentCircuitManager  
+circuitManager) [0x00000]
+   at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo  
+regionInfo, Int32 proxyOffset, IConfigSource configSource,  
+IClientNetworkServer&amp; clientServer) [0x00000]
+   at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo  
+regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp;  
+mscene) [0x00000]
+   at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo  
+regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000]
+   at  
+OpenSim 
+.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise ()  
+[0x00000]
+   at OpenSim.OpenSimBase.StartupSpecific () [0x00000]
+   at OpenSim.OpenSim.StartupSpecific () [0x00000]
+   at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000]
+   at OpenSim.Application.Main (System.String[] args) [0x00000]
+InnerException: Mono.Data.Sqlite.SqliteException: Abort due to  
+constraint violation
+column regionUUID is not unique
+   at Mono.Data.Sqlite.SQLite3.Reset (Mono.Data.Sqlite.SqliteStatement  
+stmt) [0x00000]
+   at Mono.Data.Sqlite.SQLite3.Step (Mono.Data.Sqlite.SqliteStatement  
+stmt) [0x00000]
+   at Mono.Data.Sqlite.SqliteDataReader.NextResult () [0x00000]
+   at (wrapper remoting-invoke-with-check)  
+Mono.Data.Sqlite.SqliteDataReader:NextResult ()
+   at Mono.Data.Sqlite.SqliteDataReader..ctor  
+(Mono.Data.Sqlite.SqliteCommand cmd, CommandBehavior behave) [0x00000]
+   at (wrapper remoting-invoke-with-check)  
+Mono.Data.Sqlite.SqliteDataReader:.ctor  
+(Mono.Data.Sqlite.SqliteCommand,System.Data.CommandBehavior)
+   at Mono.Data.Sqlite.SqliteCommand.ExecuteReader (CommandBehavior  
+behavior) [0x00000]
+   at Mono.Data.Sqlite.SqliteCommand.ExecuteDbDataReader  
+(CommandBehavior behavior) [0x00000]
+   at System.Data.Common.DbCommand.ExecuteReader (CommandBehavior  
+behavior) [0x00000]
+   at  
+System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader  
+(CommandBehavior behavior) [0x00000]
+   at System.Data.Common.DbDataAdapter.Update (System.Data.DataRow[]  
+dataRows, System.Data.Common.DataTableMapping tableMapping) [0x00000]
+
+Application is terminating: True
+
+
+
+On 16 Mar 2011, at 11:00, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A> wrote:
+
+&gt;<i> I would make sure you can get things working in local standalone  
+</I>&gt;<i> first - it's a lot simpler.
+</I>&gt;<i>
+</I>&gt;<i> If you can get that working but continue to have problems getting  
+</I>&gt;<i> your regions online with osgrid then I would suggest
+</I>&gt;<i> trying the osgrid support channels.
+</I>
+_________________
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Garrett at asquare.org</A>
+<A HREF="http://www.asquare.org/">http://www.asquare.org/</A>
+<A HREF="http://www.asquare.org/networkresearch/">http://www.asquare.org/networkresearch/</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006808.html">[Opensim-users] Opensim-users Digest, Vol 43, Issue 20
+</A></li>
+	<LI>Next message: <A HREF="006820.html">[Opensim-users] SQL error or connection string configuration	error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6809">[ date ]</a>
+              <a href="thread.html#6809">[ thread ]</a>
+              <a href="subject.html#6809">[ subject ]</a>
+              <a href="author.html#6809">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

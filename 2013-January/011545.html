@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] lost NPC attachments and editing appearance note cards
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20lost%20NPC%20attachments%20and%20editing%20appearance%0A%20note%20cards&In-Reply-To=%3C50EB4FD0.9090301%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011534.html">
+   <LINK REL="Next"  HREF="011550.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] lost NPC attachments and editing appearance note cards</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20lost%20NPC%20attachments%20and%20editing%20appearance%0A%20note%20cards&In-Reply-To=%3C50EB4FD0.9090301%40googlemail.com%3E"
+       TITLE="[Opensim-users] lost NPC attachments and editing appearance note cards">jjustincc at googlemail.com
+       </A><BR>
+    <I>Mon Jan  7 23:44:32 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011534.html">[Opensim-users] lost NPC attachments and editing appearance note	cards
+</A></li>
+        <LI>Next message: <A HREF="011550.html">[Opensim-users] lost NPC attachments and editing appearance	note cards
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11545">[ date ]</a>
+              <a href="thread.html#11545">[ thread ]</a>
+              <a href="subject.html#11545">[ subject ]</a>
+              <a href="author.html#11545">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 06/01/13 00:18, paul emery wrote:
+&gt;<i> I am having problems with NPC's losing attachments.
+</I>&gt;<i>
+</I>&gt;<i> 1. I create an appearance note card by having an avatar touch a &quot;Clone
+</I>&gt;<i> yourself&quot; prim having a script with the line
+</I>&gt;<i> osAgentSaveAppearance(llDetectedKey(0), &quot;appearance&quot;);
+</I>&gt;<i>
+</I>&gt;<i> I open the prim and rename the resultant appearance note card and then save
+</I>&gt;<i> it to my inventory. I can then drop this note card into another prim and
+</I>&gt;<i> recreate the NPC controlled by that object using
+</I>&gt;<i> npc = osNpcCreate(firstn, lastn, npcPos, renamednotecard);
+</I>&gt;<i>
+</I>&gt;<i> Seems to work great if the model avatar is logged directly into the grid
+</I>&gt;<i> when the note card is created. However if the avatar that i am modeling is
+</I>&gt;<i> there via HyperGrid the attachments only seem to show up temporarily.
+</I>&gt;<i> Clothing, shape and skin are still there when i recreate the npc but not
+</I>&gt;<i> attachments.
+</I>
+Interesting.  From looking at the code, what I think is happening here is that when the AvatarFactoryModule attempts to 
+permanently store the normally temporary baked textures, the HGAssetBroker AssetService implementation identifies those 
+as HG assets and thinks they need to be exported to the visitor's OpenSimulator installation, rather than persisted on 
+this installation.
+
+It might be possible to work around this by setting the asset ID to a non-HG ID, but this would rely on the notecard 
+also saving the non-HG version.  Perhaps you could attach the notecard so we could take a look?
+
+&gt;<i>
+</I>&gt;<i> So
+</I>&gt;<i> 2. I see by looking at the xml of a note card that it appears that
+</I>&gt;<i> attachments are listed by their attachment point and then identified by an
+</I>&gt;<i> item key and an asset key.
+</I>&gt;<i> Can I edit the appearance card xml and add/modify attachments by reference
+</I>&gt;<i> to something that i have in my inventory? (I can find an asset key by
+</I>&gt;<i> looking at the item in my inventory but where would i find the 'item key'?
+</I>
+The item IDs are actually irrelevant and could be set to UUID.Zero [1].  They are there because the same data format is 
+reused for other purposes.
+
+[1] <A HREF="http://opensimulator.org/wiki/Appearance_Formats">http://opensimulator.org/wiki/Appearance_Formats</A>
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/lost-NPC-attachments-and-editing-appearance-note-cards-tp7579268.html">http://opensim-users.2152040.n2.nabble.com/lost-NPC-attachments-and-editing-appearance-note-cards-tp7579268.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011534.html">[Opensim-users] lost NPC attachments and editing appearance note	cards
+</A></li>
+	<LI>Next message: <A HREF="011550.html">[Opensim-users] lost NPC attachments and editing appearance	note cards
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11545">[ date ]</a>
+              <a href="thread.html#11545">[ thread ]</a>
+              <a href="subject.html#11545">[ subject ]</a>
+              <a href="author.html#11545">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

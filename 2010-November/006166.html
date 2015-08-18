@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim-users Digest, Vol 39, Issue 21
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Digest%2C%20Vol%2039%2C%20Issue%2021&In-Reply-To=%3C4CE343A4.5050109%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006148.html">
+   <LINK REL="Next"  HREF="006142.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim-users Digest, Vol 39, Issue 21</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Digest%2C%20Vol%2039%2C%20Issue%2021&In-Reply-To=%3C4CE343A4.5050109%40googlemail.com%3E"
+       TITLE="[Opensim-users] Opensim-users Digest, Vol 39, Issue 21">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Nov 17 03:53:24 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006148.html">[Opensim-users] Opensim-users Digest, Vol 39, Issue 21
+</A></li>
+        <LI>Next message: <A HREF="006142.html">[Opensim-users] Opensim-users Digest, Vol 39, Issue 21
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6166">[ date ]</a>
+              <a href="thread.html#6166">[ thread ]</a>
+              <a href="subject.html#6166">[ subject ]</a>
+              <a href="author.html#6166">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 16/11/10 01:38, Jor3l Boa wrote:
+&gt;<i> Justin, using osgrid xmlrpc I get groups working, seems like their code serve the response as JSON and not XML, for e.g:
+</I>&gt;<i>
+</I>&gt;<i> 2010-11-15 20:25:56,418 INFO  - OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.GroupsModule [GROUPS]: SendGroupMembershipInfoViaCaps called
+</I>&gt;<i> 2010-11-15 20:25:56,420 INFO  - OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.GroupsModule [GROUPS]: {&quot;AgentData&quot;:[{&quot;AgentID&quot;:&quot;2496b438-f3de-47ea-a0bb-a7688032448a&quot;}],&quot;GroupData&quot;:[{&quot;GroupID&quot;:&quot;3bd2ee88-2c71-4a30-a84f-beedcd0add2c&quot;,&quot;GroupPowers&quot;:[0,1,61,255,255,255,255,254],&quot;AcceptNotices&quot;:true,&quot;GroupName&quot;:&quot;Testing group&quot;}],&quot;NewGroupData&quot;:[{&quot;ListInProfile&quot;:true}]}
+</I>&gt;<i>
+</I>&gt;<i> Or is the module parsing the XML to JSON ?
+</I>
+That's where the general groups module is sending data to the client.  That's separate from the communication with the 
+xmlrpc backend.
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2010/11/15 Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt;
+</I>&gt;<i>
+</I>&gt;<i>     Having said that, the SimianGrid groups module uses a different code path so would not be affected by any of these
+</I>&gt;<i>     bugs.  You might want to try that instead.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     On 16/11/10 00:56, Justin Clark-Casey wrote:
+</I>&gt;<i>
+</I>&gt;<i>         Unfortunately, in OpenSim 0.7.0.1 and 0.7.0.2, the Flotsam groups code in OpenSim was broken.
+</I>&gt;<i>
+</I>&gt;<i>         I discovered this after 0.7.0.2 and fixed it (in commit b1ab3ea on Friday 17th September in OpenSim Master). I
+</I>&gt;<i>         also made
+</I>&gt;<i>         some fixes on the PHP side - unfortunately mcortez hasn't had time to maintain it and I don't either but it
+</I>&gt;<i>         should be
+</I>&gt;<i>         working at the moment.
+</I>&gt;<i>
+</I>&gt;<i>         I was rather surprised that nobody had discovered this problem before I did - possibly most people were sticking
+</I>&gt;<i>         with
+</I>&gt;<i>         0.6.9 at that time.
+</I>&gt;<i>
+</I>&gt;<i>         I also backported the fix to the 0.7-post-fixes git branch.
+</I>&gt;<i>
+</I>&gt;<i>         There are some installation instructions at <A HREF="http://code.google.com/p/flotsam/wiki/XmlRpcGroups">http://code.google.com/p/flotsam/wiki/XmlRpcGroups</A> but I'm not sure
+</I>&gt;<i>         how up
+</I>&gt;<i>         to date they are. Things aren't helped by the fact that the instructions in OpenSim.ini.example are currently
+</I>&gt;<i>         mangled in
+</I>&gt;<i>         OpenSim git master.
+</I>&gt;<i>
+</I>&gt;<i>         OpenSim 0.6.9 should be working fine with groups.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         On 16/11/10 00:48, ssm2017 wrote:
+</I>&gt;<i>
+</I>&gt;<i>             sorry but i have not played with that since april and i thought that
+</I>&gt;<i>             the flotsam one was working
+</I>&gt;<i>             maybe some details should not work but i think that most of the
+</I>&gt;<i>             functions are ok for 0.6.9
+</I>&gt;<i>
+</I>&gt;<i>             2010/11/16 Jor3l Boa&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jor3l at foravatars.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jor3l at foravatars.com</A>&gt;&gt;:
+</I>&gt;<i>
+</I>&gt;<i>                 ssm2017 If you have it working can you send me a copy please, I tested the
+</I>&gt;<i>                 OSGrid one and it worked but the last git is not
+</I>&gt;<i>
+</I>&gt;<i>                 2010/11/15 ssm2017&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ssm2017 at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ssm2017 at gmail.com</A>&gt;&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>                     <A HREF="http://opensimulator.org/wiki/Groups">http://opensimulator.org/wiki/Groups</A>
+</I>&gt;<i>                     the flotsam script is not working for your ?
+</I>&gt;<i>
+</I>&gt;<i>                     2010/11/16 Adam Farrugia&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">uqafarru at fdn.uq.edu.au</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">uqafarru at fdn.uq.edu.au</A>&gt;&gt;:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>                         Hi Harri (and others struggling with groups), what version of OpenSim
+</I>&gt;<i>                         are you using and what platform are you running it on?
+</I>&gt;<i>                         Me, I first got group functionality going (with some struggle!) 0n 0.6.9
+</I>&gt;<i>                         (Grid Mode) and have had it going on all releases since.
+</I>&gt;<i>                         I am using Ubuntu Server 10.4 running LAMP for Apache, MySQL, PHP.
+</I>&gt;<i>                         I found the quickest and dirtiest way to get groups going in this
+</I>&gt;<i>                         environment (funnily enough) was to install moodle and then the &quot;modlos&quot;
+</I>&gt;<i>                         block as that block has the flotsam group implementation &quot;built in&quot;. You
+</I>&gt;<i>                         then only need to configure the groups parameters in moodle and also in
+</I>&gt;<i>                         OpenSim.ini and it works like a charm :) Implementing groups in this way is
+</I>&gt;<i>                         overkill if you are not in an educational environment or don't need any kind
+</I>&gt;<i>                         of Learning Management System, but it does work :)
+</I>&gt;<i>                         I am about to migrate my grid services over to Windows because of some
+</I>&gt;<i>                         specific troubles we've had with mono's memory management capabilities and
+</I>&gt;<i>                         this will of course require re-implementing groups- NOT looking forward to
+</I>&gt;<i>                         that, for all the reasons of which you are all way to aware ;) When I get
+</I>&gt;<i>                         it going successfully, I'll write down the exact steps and pass it on to all
+</I>&gt;<i>                         through here.
+</I>&gt;<i>
+</I>&gt;<i>                         Rgds,
+</I>&gt;<i>
+</I>&gt;<i>                         Adam Farrugia
+</I>&gt;<i>
+</I>&gt;<i>                         Message: 5
+</I>&gt;<i>                         Date: Mon, 15 Nov 2010 20:35:15 +0200
+</I>&gt;<i>                         From: Harri Nyman&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">harri.nyman at shadecorp.net</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">harri.nyman at shadecorp.net</A>&gt;&gt;
+</I>&gt;<i>                         To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>                         Subject: Re: [Opensim-users] Implementing Groups
+</I>&gt;<i>                         Message-ID:
+</I>&gt;<i>                         &lt;AANLkTi=<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bz+uibejpi8BhG6szkQe-tov88V2dqV9Mcmi2 at mail.gmail.com</A>
+</I>&gt;<i>                         &lt;mailto:bz%<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">2Buibejpi8BhG6szkQe-tov88V2dqV9Mcmi2 at mail.gmail.com</A>&gt;&gt;
+</I>&gt;<i>                         Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i>                         Could someone *please* come up with cookbook-level instructions how to
+</I>&gt;<i>                         get
+</I>&gt;<i>                         groups working? I've been hitting my head into stone wall for weeks with
+</I>&gt;<i>                         this, and I do have distinct feeling I'm not alone..
+</I>&gt;<i>
+</I>&gt;<i>                         ....remember, to some of us even git is totally mythical creature...
+</I>&gt;<i>
+</I>&gt;<i>                         Harri
+</I>&gt;<i>                         -------------- next part --------------
+</I>&gt;<i>                         An HTML attachment was scrubbed...
+</I>&gt;<i>                         URL:
+</I>&gt;<i>                         &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101115/b0ca4cd1/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101115/b0ca4cd1/attachment.html</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>                         ------------------------------
+</I>&gt;<i>
+</I>&gt;<i>                         _______________________________________________
+</I>&gt;<i>                         Opensim-users mailing list
+</I>&gt;<i>                         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>                         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>                         End of Opensim-users Digest, Vol 39, Issue 21
+</I>&gt;<i>                         *********************************************
+</I>&gt;<i>                         _______________________________________________
+</I>&gt;<i>                         Opensim-users mailing list
+</I>&gt;<i>                         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>                         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>                     _______________________________________________
+</I>&gt;<i>                     Opensim-users mailing list
+</I>&gt;<i>                     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>                     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>                 _______________________________________________
+</I>&gt;<i>                 Opensim-users mailing list
+</I>&gt;<i>                 <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>                 <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>             _______________________________________________
+</I>&gt;<i>             Opensim-users mailing list
+</I>&gt;<i>             <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>             <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     Justin Clark-Casey (justincc)
+</I>&gt;<i>     <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i>     <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006148.html">[Opensim-users] Opensim-users Digest, Vol 39, Issue 21
+</A></li>
+	<LI>Next message: <A HREF="006142.html">[Opensim-users] Opensim-users Digest, Vol 39, Issue 21
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6166">[ date ]</a>
+              <a href="thread.html#6166">[ thread ]</a>
+              <a href="subject.html#6166">[ subject ]</a>
+              <a href="author.html#6166">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

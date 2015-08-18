@@ -1,0 +1,569 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] linking regions and hypergrid
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20linking%20regions%20and%20hypergrid&In-Reply-To=%3C01a201ca6195%24ad870990%2408951cb0%24%40freeserve.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003070.html">
+   <LINK REL="Next"  HREF="003075.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] linking regions and hypergrid</H1>
+    <B>Kevin Buckley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20linking%20regions%20and%20hypergrid&In-Reply-To=%3C01a201ca6195%24ad870990%2408951cb0%24%40freeserve.co.uk%3E"
+       TITLE="[Opensim-users] linking regions and hypergrid">kevin at buckley70.freeserve.co.uk
+       </A><BR>
+    <I>Tue Nov 10 00:38:02 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003070.html">[Opensim-users] linking regions and hypergrid
+</A></li>
+        <LI>Next message: <A HREF="003075.html">[Opensim-users] linking regions and hypergrid
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3073">[ date ]</a>
+              <a href="thread.html#3073">[ thread ]</a>
+              <a href="subject.html#3073">[ subject ]</a>
+              <a href="author.html#3073">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That's exactly what I tried to do.  Maybe I missed something.  OK - now you
+have confirmed that it isn't megaregion specific I'll have another go. -
+Thanks, Kevin
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>] 
+Sent: 09 November 2009 23:04
+To: Kevin Buckley
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] linking regions and hypergrid
+
+
+Nothing in the diva distro requires a 512x512 megaregion -- that's 
+simply my own preference, people can change it. I have no idea of the 
+setup you had for your previous standalone, so I'm not sure you can do 
+what you want to do.
+But here's what you can try. (Disclaimer: I haven't tried this myself, 
+because I'm not in your situation. But it should work. I think.)
+
+In your diva distro sim:
+
+1) replace Regions/RegionConfig.ini with the ini/xml of your previous 
+region. And I mean *replace* it, not just add the old ini/xml in there 
+too. I suggest you leave the ini file with the name RegionConfig.ini, so 
+that it gets migrated upon upgrades. Make sure to preserve the UUID of 
+your old region, that's very important.
+
+2) edit config-include/MyWorld.ini and change the DB credentials to be 
+those of the existing DB. Make sure to change those credentials 
+everywhere in MyWorld.ini where DB credentials are present.
+
+I think you were stuck because the login was successful, but there was 
+no old region in the system.
+
+Kevin Buckley wrote:
+&gt;<i> One last (...) question.  I have a heavily 'assetted' standalone which I
+</I>&gt;<i> want to configure for hyperlink.  However, it is a 256x256 configuration.
+</I>I
+&gt;<i> optimistically tried using the diva /bin release with my existing
+</I>&gt;<i> regions.ini and a snapshot of my MySQL data (and making the appropriate
+</I>&gt;<i> changes in the other ini's) - It sort of worked, I could see my last
+</I>&gt;<i> location, but my AV ended-up stuck just on the wrong side of the sim edge
+</I>&gt;<i> and then crashed.  I am guessing this is because your release is
+</I>&gt;<i> pre-configured for 512x512 and my region topology is not compliant with
+</I>your
+&gt;<i> guidelines?
+</I>&gt;<i> 
+</I>&gt;<i> I assume there isn't a simple way to use your release as 256x256?  I'm
+</I>&gt;<i> currently working on 0.6.7-post-release-fixes but desperate to find a
+</I>&gt;<i> solution to the 'grey avatar/white hair/white eyes' problem which I
+</I>noticed
+&gt;<i> I didn't get when I played with your release earlier today. - Thanks,
+</I>Kevin
+&gt;<i> 
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Kevin Buckley [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>] 
+</I>&gt;<i> Sent: 09 November 2009 17:30
+</I>&gt;<i> To: '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>'; '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>'
+</I>&gt;<i> Subject: RE: [Opensim-users] linking regions and hypergrid
+</I>&gt;<i> 
+</I>&gt;<i> &quot;... pull up the map and search for sims in the search box there, for
+</I>&gt;<i> example mydomain.com:9020&quot; - Excellent piece of advice!  It IS there -
+</I>&gt;<i> however, it is not at 5773, 401.  It's somewhere so far to the East I
+</I>can't
+&gt;<i> begin to estimate its position. I CAN TP to it though.  Thanks for all
+</I>your
+&gt;<i> help so far - Kevin
+</I>&gt;<i> 
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+</I>&gt;<i> Sent: 09 November 2009 15:31
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] linking regions and hypergrid
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Sorry, too early in the morning -- you're not making them neighbors, good.
+</I>&gt;<i> 
+</I>&gt;<i> It should work. There are some issues with the map images of hyperlinked 
+</I>&gt;<i> regions, they stopped working some time ago, but you should see a white 
+</I>&gt;<i> tile.
+</I>&gt;<i> 
+</I>&gt;<i> Another way of linking regions on-the-fly is to pull up the map and 
+</I>&gt;<i> search for sims in the search box there, for example mydomain.com:9020
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A> wrote:
+</I>&gt;&gt;<i> You cannot make neighbors out of hyperlinked regions -- because popular 
+</I>&gt;&gt;<i> HG regions could end up with hundreds of neighbors and corresponding 
+</I>&gt;&gt;<i> child agents...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you want your sims as neighbours, make them share the same DB.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Kevin Buckley wrote:
+</I>&gt;&gt;&gt;<i> So I now have my regions closer together: &lt;5773-5774, 398-399&gt; on ports
+</I>&gt;&gt;&gt;<i> 9010-9013, and &lt;6281-6282, 390-391&gt; on ports 9020-9023 and, if I log-in
+</I>&gt;<i> to
+</I>&gt;&gt;&gt;<i> one of them, I can 'link-region' to the other:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -------------------------------------------------------
+</I>&gt;&gt;&gt;<i> Region (root) # link-region 5773 401 myurl.com:9020
+</I>&gt;&gt;&gt;<i> 09:27:35 - &gt;&gt; MapName: myurl.com:9020
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 09:27:35 - [HGrid]: Link to myurl.com:9020, in 1477888-102656
+</I>&gt;&gt;&gt;<i> 09:27:35 - [HGrid]: Linking remote region myurl.com:9020
+</I>&gt;&gt;&gt;<i> 09:27:35 - [HGrid]: Linking to <A HREF="http://91.237.142.232:9020/">http://91.237.142.232:9020/</A>
+</I>&gt;&gt;&gt;<i> 09:27:35 - &gt;&gt; HERE, uuid: a8686b5e-a016-468e-8af4-dffd5b204929
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 09:27:35 - &gt;&gt; HERE, realHandle: 6906032534160896
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 09:27:35 - [HGrid]: Successfully linked to region_uuid
+</I>&gt;&gt;&gt;<i> a8686b5e-a016-468e-8af4-dffd5b204929
+</I>&gt;&gt;&gt;<i> 09:27:35 - [HGrid]: link region succeeded
+</I>&gt;&gt;&gt;<i> -------------------------------------------------------
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> However, when I log-in (to the first grid on port 9010) I can't see the
+</I>&gt;&gt;&gt;<i> hyperlinked region at &lt;5773, 401&gt;.  That square just shows as 'offline'
+</I>&gt;<i> on
+</I>&gt;&gt;&gt;<i> the big map.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I can't see anything different if I log-in to the other grid on port
+</I>9020
+&gt;&gt;&gt;<i> either.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Am I missing something conceptually here (lol)?  Or have I missed out a
+</I>&gt;<i> step
+</I>&gt;&gt;&gt;<i> along the way?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks, Kevin
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;&gt;<i> From: Kevin Buckley [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>] 
+</I>&gt;&gt;&gt;<i> Sent: 09 November 2009 02:31
+</I>&gt;&gt;&gt;<i> To: '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>'; '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>'
+</I>&gt;&gt;&gt;<i> Subject: RE: [Opensim-users] linking regions and hypergrid
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks - I worked that out and now have 2 instances running on my server
+</I>&gt;<i> on
+</I>&gt;&gt;&gt;<i> ports 901x and 902x and using 2 separate MySQL schemas.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I have created some (different) users in each instance and I can log
+</I>into
+&gt;&gt;&gt;<i> each instance separately, no problem.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> However, when I try to 'link-regions' I get a 'region is too far' error.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The regions (just what was in the diva release) are at 5773,398 and
+</I>&gt;&gt;&gt;<i> 6282,7391.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I seem to remember reading a while back that linked regions needed to be
+</I>&gt;&gt;&gt;<i> within a certain distance from each other (this was/is a bug) - is this
+</I>&gt;<i> the
+</I>&gt;&gt;&gt;<i> problem I am seeing?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Cheers, Kevin
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+</I>&gt;&gt;&gt;<i> Sent: 09 November 2009 01:26
+</I>&gt;&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> Subject: Re: [Opensim-users] linking regions and hypergrid
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [Warning: this is advanced material for the diva distro.]
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> If you're running several instances on the same machine you need to give
+</I>
+&gt;&gt;&gt;<i> each one different ports. That includes the HTTP port (set in 
+</I>&gt;&gt;&gt;<i> MyWorld.ini) and the regions' UDP ports (set in RegionConfig.ini).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> You then have the option of sharing one DB schema among all instances or
+</I>
+&gt;&gt;&gt;<i> having a separate DB schema for each instance -- again, that is set in 
+</I>&gt;&gt;&gt;<i> MyWorld.ini of each instance.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> If you separate the DBs, you will have straightfoward hypergrided sims 
+</I>&gt;&gt;&gt;<i> -- for going back &amp; forth between them you have to hyperlink them, etc. 
+</I>&gt;&gt;&gt;<i> just as you hyperlink with any other HG region out there.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> If you share one DB you end up with a hybrid architecture that may be 
+</I>&gt;&gt;&gt;<i> very convenient -- a serverless grid. In a serverless grid, all 
+</I>&gt;&gt;&gt;<i> instances share the same DB directly. So, for example, all instances 
+</I>&gt;&gt;&gt;<i> will be on the same map, etc.
+</I>&gt;&gt;&gt;<i> Here's a post I wrote about it a month ago: 
+</I>&gt;&gt;&gt;<i> <A HREF="http://www.metaverseink.com/blog/?p=22">http://www.metaverseink.com/blog/?p=22</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Kevin Buckley wrote:
+</I>&gt;&gt;&gt;&gt;<i> So - if I want to test this by running separate, hyperlinked,
+</I>standalone
+&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> grids on a single server:
+</I>&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> O I guess I need to give each instance its own Port base: 900x, 901x, 
+</I>&gt;&gt;&gt;&gt;<i> 902x etc.?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> O I guess each instance needs a separate MySQL schema: opensim1, 
+</I>&gt;&gt;&gt;&gt;<i> opensim2, opensim3 etc.?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks, Kevin
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> 
+</I>&gt;&gt;&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of 
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+</I>&gt;&gt;&gt;&gt;<i> Sent: 08 November 2009 23:28
+</I>&gt;&gt;&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> Subject: Re: [Opensim-users] linking regions and hypergrid
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Configure.exe simply produces the configuration files:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> config-include/MyWorld.ini
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Regions/RegionConfig.ini
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> You can edit those file afterwards and change whatever you want there.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  From what you say below, you seem to have enough experience with
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> OpenSim to fiddle with those files manually. (In general I don't
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> recommend it, but if you know what you're doing that's fine)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Kevin Buckley wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Karen
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I had a quick look at the diva hypergrid distribution.  I'm
+</I>&gt;<i> interested
+</I>&gt;&gt;&gt;&gt;<i>  &gt; because ultimately I think hypergrid is the way to go and also,
+</I>right
+&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> now,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I'm fed up with the grey avatar/white eyes syndrome and maybe doing
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; something different might fix it (hahaha).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I have a question though: what does 'configure.exe' actually do?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I'm already running a standalone with multi-regions, using MySQL,
+</I>&gt;<i> which
+</I>&gt;&gt;&gt;<i> a
+</I>&gt;&gt;&gt;&gt;<i>  &gt; few of us are using and doing some building and asset generation.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I can't use Port-9000 because it's used for something else on my 
+</I>&gt;&gt;&gt;&gt;<i> server.  So
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I use Ports 91xx for a 'Production Grid' and, if I want to test 
+</I>&gt;&gt;&gt;&gt;<i> something, I
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; snapshot the /bin directory and the MySQL schema and run an
+</I>identical
+&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; version on Ports 92xx.  If that works, then I migrate the changes to
+</I>&gt;&gt;&gt;<i> the
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Production Grid.  And I do an automated back-up of EVERYTHING! Every
+</I>&gt;&gt;&gt;<i> day,
+</I>&gt;&gt;&gt;&gt;<i>  &gt; lol.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I don't want to try playing with the diva release and find 
+</I>&gt;&gt;&gt;&gt;<i> 'configure.com'
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; trashes my existing setup or MySQL database.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Thanks, Kevin
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; -----Original Message-----
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Karen
+</I>&gt;&gt;&gt;<i> Palen
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Sent: 27 October 2009 14:12
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Subject: Re: [Opensim-users] linking regions and hypergrid
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Probably the best way to answer your questions is to install the
+</I>diva
+&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; distibution and try out the hypergrid option!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt;From the wiki:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Diva Distribution
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;     * Preconfigured hypergrided standalone. Easy to setup and to
+</I>keep
+&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> up to
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; date. Windows and Linux/Unix. Download the file diva-rNNNN.zip,
+</I>unzip
+&gt;&gt;&gt;<i> it,
+</I>&gt;&gt;&gt;&gt;<i>  &gt; read README.txt and take it from there.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; <A HREF="http://github.com/diva/diva-distribution/downloads">http://github.com/diva/diva-distribution/downloads</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I found it very easy to install with complete and explicit 
+</I>&gt;&gt;&gt;&gt;<i> instructions in
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; README files. The READMEs direct you to the wiki and other places
+</I>&gt;<i> where
+</I>&gt;&gt;&gt;&gt;<i>  &gt; fairly complete instructions for using the hypergird can be found.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; WARNING: Opensim is &quot;alpha&quot; software, Hypergid is &quot;pre-alpha&quot; and
+</I>all
+&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> kinds
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; of thing work or don't work for no apparent reason. In particular 
+</I>&gt;&gt;&gt;&gt;<i> hypergrid
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; availability depends on who has their grid turn on when you try to 
+</I>&gt;&gt;&gt;&gt;<i> connect -
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; this varies hourly!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; For all of that hypergrid is a lot of fun to experiment with, and
+</I>the
+&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> diva
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; distribution is stable enough to do development and content creation
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; provided you keep good backups!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; I do a backupPC backup every night PLUS a complete dump of my MySQL 
+</I>&gt;&gt;&gt;&gt;<i> database
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; every night! I was bitten once with database corruption and do NOT 
+</I>&gt;&gt;&gt;&gt;<i> intend to
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; lose my work again!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Good Luck and have fun!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Karen
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; --- On Tue, 10/27/09, Ken Grunke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kenearlg at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; From: Ken Grunke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kenearlg at gmail.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; Subject: [Opensim-users] linking regions and hypergrid
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; Date: Tuesday, October 27, 2009, 12:15 AM
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; Is the link-region command from the
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; console in a standalone necessary to
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; hypergrid from the SA to, say, a region in OSGrid for
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; example?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; 
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; And is the link-region command needed the other way? From
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; the grid
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; region to the standalone, that is, to be able to hypergrid
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; back to the SA?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; 
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; Ken Grunke aka Key Gruin
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;&gt; 
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;      
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003070.html">[Opensim-users] linking regions and hypergrid
+</A></li>
+	<LI>Next message: <A HREF="003075.html">[Opensim-users] linking regions and hypergrid
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3073">[ date ]</a>
+              <a href="thread.html#3073">[ thread ]</a>
+              <a href="subject.html#3073">[ subject ]</a>
+              <a href="author.html#3073">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

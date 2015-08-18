@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Receiving a rash of async_call_method exceptions in latest master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Receiving%20a%20rash%20of%20async_call_method%0A%20exceptions%20in%20latest%20master&In-Reply-To=%3C508F5993.9010606%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011154.html">
+   <LINK REL="Next"  HREF="011132.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Receiving a rash of async_call_method exceptions in latest master</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Receiving%20a%20rash%20of%20async_call_method%0A%20exceptions%20in%20latest%20master&In-Reply-To=%3C508F5993.9010606%40gmail.com%3E"
+       TITLE="[Opensim-users] Receiving a rash of async_call_method exceptions in latest master">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Tue Oct 30 05:37:39 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011154.html">[Opensim-users] Receiving a rash of async_call_method exceptions in latest master
+</A></li>
+        <LI>Next message: <A HREF="011132.html">[Opensim-users] Touch to open by other users not working?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11155">[ date ]</a>
+              <a href="thread.html#11155">[ thread ]</a>
+              <a href="subject.html#11155">[ subject ]</a>
+              <a href="author.html#11155">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I just gave the commit a try for a little while and it looks good now; 
+the new information outputted in the console is definitely useful. It 
+turns out that I do indeed have some missing sculpt assets when i 
+examine the prims at the coordinates that are in the warnings; but I do 
+know that those have been missing for a long time so I'm not too worried 
+=) The original exceptions seem to be gone now.
+
+Many thanks Justin!
+
+
+On 10/29/2012 8:54 PM, Justin Clark-Casey wrote:
+&gt;<i> It looks this was because of the new sculpt/mesh asset loading code 
+</I>&gt;<i> not checking for the callback being given a null AssetBase (which 
+</I>&gt;<i> occurs when no asset is found, asset service could not be reached 
+</I>&gt;<i> before timeout, etc.).
+</I>&gt;<i>
+</I>&gt;<i> I just fixed this in git master ff6c690.
+</I>&gt;<i>
+</I>&gt;<i> However, you will still get warnings, though they should be more 
+</I>&gt;<i> informative (you get to know prim name, location, region).  The 
+</I>&gt;<i> ODEPrim changes here aim to eliminate a race condition which used to 
+</I>&gt;<i> generate false 'asset not loaded' warnings.  The fact that you are 
+</I>&gt;<i> getting them should mean that your simulator genuinely could not 
+</I>&gt;<i> retreive the asset data.
+</I>&gt;<i>
+</I>&gt;<i> One possibility here is that for some reason the asset does not 
+</I>&gt;<i> exist.  However, I do know that on OSGrid at the moment, there's an 
+</I>&gt;<i> asset migration going on which should give better responsiveness in 
+</I>&gt;<i> the medium term but in the short term means that some requests may not 
+</I>&gt;<i> be served in a timely manner.  This would cause the same problem as if 
+</I>&gt;<i> the asset did not exist, though in that case you should also be seeing 
+</I>&gt;<i> other warnings on the console.
+</I>&gt;<i>
+</I>&gt;<i> On 27/10/12 09:48, Chris wrote:
+</I>&gt;&gt;<i> Hello every one,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have updated to the latest master 3531f29 (r/20825) and am 
+</I>&gt;&gt;<i> receiving a rash of async_call_method exceptions upon start
+</I>&gt;&gt;<i> up of the server. There seems to be at least one per loaded region 
+</I>&gt;&gt;<i> (That have objects and are possibly scripted, can't
+</I>&gt;&gt;<i> pinpoint what is actually triggering it). I can't tell if there are 
+</I>&gt;&gt;<i> any adverse effects or not.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is anyone else experiencing this as well?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Exception:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-10-27 03:13:36,746 ERROR - OpenSim.Framework.Util [UTIL]: 
+</I>&gt;&gt;<i> Continuing after async_call_method thread terminated with
+</I>&gt;&gt;<i> exception Object reference not set to an instance of an object.   at
+</I>&gt;&gt;<i> OpenSim.Region.Physics.OdePlugin.OdePrim.MeshAssetReveived(AssetBase 
+</I>&gt;&gt;<i> asset) in
+</I>&gt;&gt;<i> c:\Users\admin\Desktop\opensim-3531f29\OpenSim\Region\Physics\OdePlugin\ODEPrim.cs:line 
+</I>&gt;&gt;<i> 3355
+</I>&gt;&gt;<i>     at 
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Scenes.Scene.PhysicsAssetReceived(String id, 
+</I>&gt;&gt;<i> Object sender, AssetBase asset) in
+</I>&gt;&gt;<i> c:\Users\admin\Desktop\opensim-3531f29\OpenSim\Region\Framework\Scenes\Scene.cs:line 
+</I>&gt;&gt;<i> 5649
+</I>&gt;&gt;<i>     at
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.ServiceConnectorsOut.Asset.LocalAssetServicesConnector.&lt;&gt;c__DisplayClass3.&lt;&gt;c__DisplayClass8.&lt;Get&gt;b__2(Object 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ) in
+</I>&gt;&gt;<i> c:\Users\admin\Desktop\opensim-3531f29\OpenSim\Region\CoreModules\ServiceConnectorsOut\Asset\LocalAssetServiceConnector.cs:line 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 250
+</I>&gt;&gt;<i>     at 
+</I>&gt;&gt;<i> OpenSim.Framework.Util.&lt;&gt;c__DisplayClass6.&lt;FireAndForget&gt;b__1(Object 
+</I>&gt;&gt;<i> o) in
+</I>&gt;&gt;<i> c:\Users\admin\Desktop\opensim-3531f29\OpenSim\Framework\Util.cs:line 
+</I>&gt;&gt;<i> 1686
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.4 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011154.html">[Opensim-users] Receiving a rash of async_call_method exceptions in latest master
+</A></li>
+	<LI>Next message: <A HREF="011132.html">[Opensim-users] Touch to open by other users not working?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11155">[ date ]</a>
+              <a href="thread.html#11155">[ thread ]</a>
+              <a href="subject.html#11155">[ subject ]</a>
+              <a href="author.html#11155">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

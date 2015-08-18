@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Graphic question: View distance (more than 1	region?)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Graphic%20question%3A%20View%20distance%20%28more%20than%201%0A%09region%3F%29&In-Reply-To=%3CAANLkTi%3DO5_t45O87mGX8712f_dKXnUXNs%2BnynbMZmfNK%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005069.html">
+   <LINK REL="Next"  HREF="005062.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Graphic question: View distance (more than 1	region?)</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Graphic%20question%3A%20View%20distance%20%28more%20than%201%0A%09region%3F%29&In-Reply-To=%3CAANLkTi%3DO5_t45O87mGX8712f_dKXnUXNs%2BnynbMZmfNK%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Graphic question: View distance (more than 1	region?)">teravus at gmail.com
+       </A><BR>
+    <I>Thu Jul 29 20:00:12 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005069.html">[Opensim-users] Graphic question: View distance (more than 1	region?)
+</A></li>
+        <LI>Next message: <A HREF="005062.html">[Opensim-users] Recommended Approach for Voice for Opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5072">[ date ]</a>
+              <a href="thread.html#5072">[ thread ]</a>
+              <a href="subject.html#5072">[ subject ]</a>
+              <a href="author.html#5072">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The other option for a view distance beyond 1 neighbor region is a
+'megaregion'.     It's more complicated to set up, however, and has
+some known border crossing issues out of the megaregion that place
+your avatar in strange places.   Using a megaregion, you get to see
+all of the region segments that make up the megaregion at the same
+time up to your viewer's set draw distance and far clipping plane.   I
+think the viewer has a hard far clipping plane that is 2500 meters.
+You can see this visually <A HREF="http://www.youtube.com/watch?v=gmkJ1EJxCJc">http://www.youtube.com/watch?v=gmkJ1EJxCJc</A>
+when looking at the video, bare in mind that it's 4 regions wide and
+32 regions long or 1024mx8192m.
+
+
+For more information on MegaRegions, whitestar, zonja and a few other
+people wrote up:
+<A HREF="http://opensimulator.org/wiki/Setting_Up_Mega-Regions">http://opensimulator.org/wiki/Setting_Up_Mega-Regions</A>
+
+Regards
+
+Teravus
+
+On Thu, Jul 29, 2010 at 11:18 AM, Mic Bowman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cmickeyb at gmail.com</A>&gt; wrote:
+&gt;<i> You cannot get this effect through server &quot;configuration&quot; but you can hack
+</I>&gt;<i> two routines that determine adjacent regions to increase view distance to
+</I>&gt;<i> more than immediately adjacent regions. We used this to get 10x10 regions
+</I>&gt;<i> viewed in the yellowstone regions of sciencesim (10x10 was the max that the
+</I>&gt;<i> viewer could handle). However... the code to manage connections to neighbor
+</I>&gt;<i> regions is pretty &quot;brittle&quot; so the technique really only works well when you
+</I>&gt;<i> have an isolated &quot;island&quot; of regions and want to expose all of them.
+</I>&gt;<i>
+</I>&gt;<i> --mic
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Jul 29, 2010 at 4:42 AM, jabbaah &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jabba at annuna.net</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi there,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As I could not find anything about this topic on google I'd like to post
+</I>&gt;&gt;<i> my question here.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> OpenSim gives us the opportunity to model complete landscapes spread over
+</I>&gt;&gt;<i> several regions.
+</I>&gt;&gt;<i> And many ppl do so as cost for one or more regions is substantially lower
+</I>&gt;&gt;<i> as in Second Life.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Prerequisites:
+</I>&gt;&gt;<i> - Setting view distance of viewer (Imprudence used) to 512 meters
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> First test in Second Life (Mainland):
+</I>&gt;&gt;<i> - Can view 512 meters - meaning about 3 regions far:
+</I>&gt;&gt;<i> &#160;1st region: the one I am currently in
+</I>&gt;&gt;<i> &#160;2nd region: the direct neighbour region
+</I>&gt;&gt;<i> &#160;3rd region: the region behind the neighbor (can view only partly / 512
+</I>&gt;&gt;<i> meters)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Second test in OSGrid (same client / viewer, same configuration as above):
+</I>&gt;&gt;<i> - Can only view 2 regions far:
+</I>&gt;&gt;<i> &#160;1st region: the one I am currently in
+</I>&gt;&gt;<i> &#160;2nd region: the direct neighbour region
+</I>&gt;&gt;<i> - not depending on the region being hosted on the same sim or not (same
+</I>&gt;&gt;<i> behaviour)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can this behaviour be changed by tweaking some (server side)
+</I>&gt;&gt;<i> configuration?
+</I>&gt;&gt;<i> If not, is it planned to increase the viewing distance to more than one
+</I>&gt;&gt;<i> region in the neighbourhood?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks and greetings to everyone ;-)
+</I>&gt;&gt;<i> jabbaah / Stefan
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005069.html">[Opensim-users] Graphic question: View distance (more than 1	region?)
+</A></li>
+	<LI>Next message: <A HREF="005062.html">[Opensim-users] Recommended Approach for Voice for Opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5072">[ date ]</a>
+              <a href="thread.html#5072">[ thread ]</a>
+              <a href="subject.html#5072">[ subject ]</a>
+              <a href="author.html#5072">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

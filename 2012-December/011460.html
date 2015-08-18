@@ -1,0 +1,738 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] viewer hanging up at region handshake
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20viewer%20hanging%20up%20at%20region%20handshake&In-Reply-To=%3C000801cdda29%2432925ea0%2497b71be0%24%40secondgalaxy.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011459.html">
+   <LINK REL="Next"  HREF="011461.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] viewer hanging up at region handshake</H1>
+    <B>Emperor Starfinder</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20viewer%20hanging%20up%20at%20region%20handshake&In-Reply-To=%3C000801cdda29%2432925ea0%2497b71be0%24%40secondgalaxy.com%3E"
+       TITLE="[Opensim-users] viewer hanging up at region handshake">emperor at secondgalaxy.com
+       </A><BR>
+    <I>Fri Dec 14 19:31:13 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011459.html">[Opensim-users] viewer hanging up at region handshake
+</A></li>
+        <LI>Next message: <A HREF="011461.html">[Opensim-users] Error compiling Mod-PayPal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11460">[ date ]</a>
+              <a href="thread.html#11460">[ thread ]</a>
+              <a href="subject.html#11460">[ subject ]</a>
+              <a href="author.html#11460">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay,
+
+The good news here is I fixed the problem using the suggestions from all
+here.  Ill provide a couple of notes just in case others have this problem
+in the future.
+
+In the Regions.ini files for each region we see this:
+
+[Example Region 1]
+RegionUUID = f8ef2872-0a80-42a4-b5b5-b6d296bdebed
+Location = 1000,1000
+InternalAddress = 0.0.0.0
+InternalPort = 9000
+AllowAlternatePorts = False
+ExternalHostName = SYSTEMIP
+
+This is the standard way opensim does the initial region configuration.  The
+reason why people have a hard time getting past the region handshake even
+with the NAT Loopback is here:
+
+InternalAddress = 0.0.0.0
+
+The reason is this does not designate what the actual machine's internal IP
+is i.e. 127.0.0.1.  So if you are connected to a router no matter the router
+it will likely not work.  You need to set the machine's IP address to static
+on the machine itself as part of your NAT Loopback step. Then change the
+region config file like this:
+
+From:
+
+InternalAddress = 0.0.0.0
+
+To:
+
+InternalAddress = 192.168.1.xx
+
+The external IP Address should be the IP Address assigned by your ISP or if
+using a domain name from dyndns.org that address.  This fixes the problem as
+this binds the correct machine IP address in the simulator.  When I have
+time I will go through the source code perhaps and figure out why its like
+this.  I do hope this helps.
+
+And I do agree with Chris/ Fleep I will be getting a static IP soon.
+
+Emperor
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+Sent: Friday, December 14, 2012 9:00 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Opensim-users Digest, Vol 64, Issue 19
+
+Send Opensim-users mailing list submissions to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+
+To subscribe or unsubscribe via the World Wide Web, visit
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+or, via email, send a message with subject or body 'help' to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+
+You can reach the person managing the list at
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>
+
+When replying, please edit your Subject line so it is more specific than
+&quot;Re: Contents of Opensim-users digest...&quot;
+
+
+Today's Topics:
+
+   1. Re: viewer hanging up at region handshake (Emperor Starfinder)
+   2. Re: viewer hanging up at region handshake (R.Gunther)
+   3. Re: viewer hanging up at region handshake (Fleep Tuque)
+   4. Re: viewer hanging up at region handshake (GarminKawaguichi)
+   5. Re: viewer hanging up at region handshake (R.Gunther)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Fri, 14 Dec 2012 06:47:26 -0500
+From: &quot;Emperor Starfinder&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">emperor at secondgalaxy.com</A>&gt;
+To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Subject: Re: [Opensim-users] viewer hanging up at region handshake
+Message-ID: &lt;000301cdd9f0$ca7eabd0$5f7c0370$@secondgalaxy.com&gt;
+Content-Type: text/plain;	charset=&quot;us-ascii&quot;
+
+Yes I actually did try that.  The login is successful it just hangs at
+region hand shake.  But its not giving me any error reason either in the
+opensim log or the robust log as to whats causing the hangup.  I currently
+am using 192.168.1.50 which for kicks I did try using example.dyndns.org and
+when I changed it from 192.168.1.50 to example.dyndns.org I was not even
+able to log in from another machine on my network.  Ive now reproduced this
+on Imprudence, Firestorm, Phoenix, Hippo Viewer, etc.
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+Sent: Friday, December 14, 2012 6:00 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Opensim-users Digest, Vol 64, Issue 18
+
+Send Opensim-users mailing list submissions to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+
+To subscribe or unsubscribe via the World Wide Web, visit
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+or, via email, send a message with subject or body 'help' to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+
+You can reach the person managing the list at
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>
+
+When replying, please edit your Subject line so it is more specific than
+&quot;Re: Contents of Opensim-users digest...&quot;
+
+
+Today's Topics:
+
+   1. Re: viewer hanging up at region handshake (Emperor Starfinder)
+   2. Re: viewer hanging up at region handshake (Justin Clark-Casey)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Thu, 13 Dec 2012 19:10:13 -0500
+From: &quot;Emperor Starfinder&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">emperor at secondgalaxy.com</A>&gt;
+To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Subject: Re: [Opensim-users] viewer hanging up at region handshake
+Message-ID: &lt;000501cdd98f$63a79450$2af6bcf0$@secondgalaxy.com&gt;
+Content-Type: text/plain; charset=&quot;us-ascii&quot;
+
+Thanks for the information.  
+
+ 
+
+I've tried the following:
+
+ 
+
+1.       I ensured that NAT Loopback is set accordingly.
+
+2.       I've given the machine a static IP within my network.
+
+3.       I've experimented with changing the External IP Address from a
+numeric IP such as 192.168.1.xx to a domain name such as example.dyndns.org.
+
+4.       I've moved the machine's static IP to the DMZ as I had seen
+suggested in a forum post (forget the forum.)
+
+5.       I've double checked to be sure the firewall isn't blocking the
+ports ( I even tried this with firewall turned off).
+
+6.       I've successfully logged into the region via another pc on my
+network using multiple different viewers so it is clearly something not
+resolving the ip for viewers externally.
+
+ 
+
+These steps are all producing the same result.
+
+ 
+
+Is there a file that perhaps I can look at i.e. viewer log, etc that might
+shed light on this as well?
+
+ 
+
+Thanks.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL:
+&lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121213/9de82">https://lists.berlios.de/pipermail/opensim-users/attachments/20121213/9de82</A>
+0b5/attachment-0001.html&gt;
+
+------------------------------
+
+Message: 2
+Date: Fri, 14 Dec 2012 01:14:53 +0000
+From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] viewer hanging up at region handshake
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50CA7D8D.3000006 at googlemail.com</A>&gt;
+Content-Type: text/plain; charset=windows-1252; format=flowed
+
+Have you tried changing your external IP to the numeric external IP?  I hear
+there are problems with using FQDNs in ExternalHostNames though I keep
+forgetting the details.
+
+As for the viewer log, that's a good point.  In a sample connection I have
+
+2012-12-14T00:38:57Z INFO: addCircuitData: LLCircuit::addCircuitData for
+192.168.1.7
+
+as the first entry for the simulator's ip address, though I don't know if
+that's only printed out on a successful circuit established with the
+simulator or not.
+
+On 14/12/12 00:10, Emperor Starfinder wrote:
+&gt;<i> Thanks for the information.
+</I>&gt;<i>
+</I>&gt;<i> I?ve tried the following:
+</I>&gt;<i>
+</I>&gt;<i> 1.I ensured that NAT Loopback is set accordingly.
+</I>&gt;<i>
+</I>&gt;<i> 2.I?ve given the machine a static IP within my network.
+</I>&gt;<i>
+</I>&gt;<i> 3.I?ve experimented with changing the External IP Address from a 
+</I>&gt;<i> numeric IP such as 192.168.1.xx to a domain name such as
+</I>example.dyndns.org.
+&gt;<i>
+</I>&gt;<i> 4.I?ve moved the machine?s static IP to the DMZ as I had seen 
+</I>&gt;<i> suggested in a forum post (forget the forum.)
+</I>&gt;<i>
+</I>&gt;<i> 5.I?ve double checked to be sure the firewall isn?t blocking the ports 
+</I>&gt;<i> ( I
+</I>even tried this with firewall turned off).
+&gt;<i>
+</I>&gt;<i> 6.I?ve successfully logged into the region via another pc on my 
+</I>&gt;<i> network using multiple different viewers so it is clearly something 
+</I>&gt;<i> not
+</I>resolving the ip for viewers externally.
+&gt;<i>
+</I>&gt;<i> These steps are all producing the same result.
+</I>&gt;<i>
+</I>&gt;<i> Is there a file that perhaps I can look at i.e. viewer log, etc that 
+</I>&gt;<i> might
+</I>shed light on this as well?
+&gt;<i>
+</I>&gt;<i> Thanks.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+--
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+
+------------------------------
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+End of Opensim-users Digest, Vol 64, Issue 18
+*********************************************
+
+
+
+------------------------------
+
+Message: 2
+Date: Fri, 14 Dec 2012 14:04:46 +0100
+From: &quot;R.Gunther&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] viewer hanging up at region handshake
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50CB23EE.4070705 at rigutech.nl</A>&gt;
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+
+If you have added your external ip in the region.ini file and you cannot
+login local but others can from the internet you have the loopback problem.
+btw i would try just you external ip number first instead of dyndns. 
+also make sure you have forwarded UDP ports to, not only TCP.
+
+On 2012-12-14 12:47, Emperor Starfinder wrote:
+&gt;<i> Yes I actually did try that.  The login is successful it just hangs at 
+</I>&gt;<i> region hand shake.  But its not giving me any error reason either in 
+</I>&gt;<i> the opensim log or the robust log as to whats causing the hangup.  I 
+</I>&gt;<i> currently am using 192.168.1.50 which for kicks I did try using 
+</I>&gt;<i> example.dyndns.org and when I changed it from 192.168.1.50 to 
+</I>&gt;<i> example.dyndns.org I was not even able to log in from another machine 
+</I>&gt;<i> on my network.  Ive now reproduced this on Imprudence, Firestorm, Phoenix,
+</I>Hippo Viewer, etc.
+&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+</I>&gt;<i> Sent: Friday, December 14, 2012 6:00 AM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Opensim-users Digest, Vol 64, Issue 18
+</I>&gt;<i>
+</I>&gt;<i> Send Opensim-users mailing list submissions to
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> You can reach the person managing the list at
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> When replying, please edit your Subject line so it is more specific 
+</I>&gt;<i> than
+</I>&gt;<i> &quot;Re: Contents of Opensim-users digest...&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Today's Topics:
+</I>&gt;<i>
+</I>&gt;<i>     1. Re: viewer hanging up at region handshake (Emperor Starfinder)
+</I>&gt;<i>     2. Re: viewer hanging up at region handshake (Justin Clark-Casey)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Thu, 13 Dec 2012 19:10:13 -0500
+</I>&gt;<i> From: &quot;Emperor Starfinder&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">emperor at secondgalaxy.com</A>&gt;
+</I>&gt;<i> To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Subject: Re: [Opensim-users] viewer hanging up at region handshake
+</I>&gt;<i> Message-ID: &lt;000501cdd98f$63a79450$2af6bcf0$@secondgalaxy.com&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;us-ascii&quot;
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the information.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;<i>
+</I>&gt;<i> I've tried the following:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;<i>
+</I>&gt;<i> 1.       I ensured that NAT Loopback is set accordingly.
+</I>&gt;<i>
+</I>&gt;<i> 2.       I've given the machine a static IP within my network.
+</I>&gt;<i>
+</I>&gt;<i> 3.       I've experimented with changing the External IP Address from a
+</I>&gt;<i> numeric IP such as 192.168.1.xx to a domain name such as
+</I>example.dyndns.org.
+&gt;<i>
+</I>&gt;<i> 4.       I've moved the machine's static IP to the DMZ as I had seen
+</I>&gt;<i> suggested in a forum post (forget the forum.)
+</I>&gt;<i>
+</I>&gt;<i> 5.       I've double checked to be sure the firewall isn't blocking the
+</I>&gt;<i> ports ( I even tried this with firewall turned off).
+</I>&gt;<i>
+</I>&gt;<i> 6.       I've successfully logged into the region via another pc on my
+</I>&gt;<i> network using multiple different viewers so it is clearly something 
+</I>&gt;<i> not resolving the ip for viewers externally.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;<i>
+</I>&gt;<i> These steps are all producing the same result.
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;<i>
+</I>&gt;<i> Is there a file that perhaps I can look at i.e. viewer log, etc that 
+</I>&gt;<i> might shed light on this as well?
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;<i>
+</I>&gt;<i> Thanks.
+</I>&gt;<i>
+</I>&gt;<i> -------------- next part -------------- An HTML attachment was 
+</I>&gt;<i> scrubbed...
+</I>&gt;<i> URL:
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121213">https://lists.berlios.de/pipermail/opensim-users/attachments/20121213</A>
+</I>&gt;<i> /9de82
+</I>&gt;<i> 0b5/attachment-0001.html&gt;
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 2
+</I>&gt;<i> Date: Fri, 14 Dec 2012 01:14:53 +0000
+</I>&gt;<i> From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] viewer hanging up at region handshake
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50CA7D8D.3000006 at googlemail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=windows-1252; format=flowed
+</I>&gt;<i>
+</I>&gt;<i> Have you tried changing your external IP to the numeric external IP?  
+</I>&gt;<i> I hear there are problems with using FQDNs in ExternalHostNames though 
+</I>&gt;<i> I keep forgetting the details.
+</I>&gt;<i>
+</I>&gt;<i> As for the viewer log, that's a good point.  In a sample connection I 
+</I>&gt;<i> have
+</I>&gt;<i>
+</I>&gt;<i> 2012-12-14T00:38:57Z INFO: addCircuitData: LLCircuit::addCircuitData 
+</I>&gt;<i> for
+</I>&gt;<i> 192.168.1.7
+</I>&gt;<i>
+</I>&gt;<i> as the first entry for the simulator's ip address, though I don't know 
+</I>&gt;<i> if that's only printed out on a successful circuit established with 
+</I>&gt;<i> the simulator or not.
+</I>&gt;<i>
+</I>&gt;<i> On 14/12/12 00:10, Emperor Starfinder wrote:
+</I>&gt;&gt;<i> Thanks for the information.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I?ve tried the following:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1.I ensured that NAT Loopback is set accordingly.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2.I?ve given the machine a static IP within my network.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3.I?ve experimented with changing the External IP Address from a 
+</I>&gt;&gt;<i> numeric IP such as 192.168.1.xx to a domain name such as
+</I>&gt;<i> example.dyndns.org.
+</I>&gt;&gt;<i> 4.I?ve moved the machine?s static IP to the DMZ as I had seen 
+</I>&gt;&gt;<i> suggested in a forum post (forget the forum.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 5.I?ve double checked to be sure the firewall isn?t blocking the 
+</I>&gt;&gt;<i> ports ( I
+</I>&gt;<i> even tried this with firewall turned off).
+</I>&gt;&gt;<i> 6.I?ve successfully logged into the region via another pc on my 
+</I>&gt;&gt;<i> network using multiple different viewers so it is clearly something 
+</I>&gt;&gt;<i> not
+</I>&gt;<i> resolving the ip for viewers externally.
+</I>&gt;&gt;<i> These steps are all producing the same result.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there a file that perhaps I can look at i.e. viewer log, etc that 
+</I>&gt;&gt;<i> might
+</I>&gt;<i> shed light on this as well?
+</I>&gt;&gt;<i> Thanks.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> OSVW Consulting
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> End of Opensim-users Digest, Vol 64, Issue 18
+</I>&gt;<i> *********************************************
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+------------------------------
+
+Message: 3
+Date: Fri, 14 Dec 2012 08:27:03 -0500
+From: Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] viewer hanging up at region handshake
+Message-ID:
+	&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">CAG6z+U4mLX+TzFr8aFHMabw5PacvQw8Fi_qKu04LgOc8ZKWZpQ at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;windows-1252&quot;
+
+Hi Emperor,
+
+The key thing to note is that Opensim resolves the DNS of your region server
+locally, no matter what IP/hostname address is configured in your
+regions.ini file.  The thread I linked goes into great detail about why that
+is:
+<A HREF="http://opensim-users.2152040.n2.nabble.com/NAT-amp-Corporate-Firewall-td6223">http://opensim-users.2152040.n2.nabble.com/NAT-amp-Corporate-Firewall-td6223</A>
+654.html
+
+In the case of my home network, I followed all of the troubleshooting steps,
+too, did everything you have done, and it still just would not work until I
+ponied up to pay my ISP for a static IP address that I could use for both
+internal and external connections.  That resolved all my problems.
+
+If you are 100% sure that the NAT loopback is working, 100% sure that you've
+checked that UDP packets are getting through (with the portforward.com
+tool), and 100% sure that your firewall and virus protection software aren't
+blocking things, then that would be my recommendation - get a static IP
+address from your ISP.
+
+The networking piece is the single hardest part of setting up an Opensim
+grid.  Once you solve this problem, everything else will seem like a
+cakewalk in comparison.
+
+Best of luck,
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM) UCIT
+Instructional &amp; Research Computing University of Cincinnati 406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+
+On Thu, Dec 13, 2012 at 7:10 PM, Emperor Starfinder &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">emperor at secondgalaxy.com</A>&gt; wrote:
+
+&gt;<i> Thanks for the information.  ****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> I?ve tried the following:****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> **1.       **I ensured that NAT Loopback is set accordingly.****
+</I>&gt;<i>
+</I>&gt;<i> **2.       **I?ve given the machine a static IP within my network.****
+</I>&gt;<i>
+</I>&gt;<i> **3.       **I?ve experimented with changing the External IP Address from
+</I>&gt;<i> a numeric IP such as 192.168.1.xx to a domain name such as
+</I>&gt;<i> example.dyndns.org.****
+</I>&gt;<i>
+</I>&gt;<i> **4.       **I?ve moved the machine?s static IP to the DMZ as I had seen
+</I>&gt;<i> suggested in a forum post (forget the forum.)****
+</I>&gt;<i>
+</I>&gt;<i> **5.       **I?ve double checked to be sure the firewall isn?t blocking
+</I>&gt;<i> the ports ( I even tried this with firewall turned off).****
+</I>&gt;<i>
+</I>&gt;<i> **6.       **I?ve successfully logged into the region via another pc on
+</I>&gt;<i> my network using multiple different viewers so it is clearly something 
+</I>&gt;<i> not resolving the ip for viewers externally.****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> These steps are all producing the same result.****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> Is there a file that perhaps I can look at i.e. viewer log, etc that 
+</I>&gt;<i> might shed light on this as well?****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> Thanks.****
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL:
+&lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121214/d3d25">https://lists.berlios.de/pipermail/opensim-users/attachments/20121214/d3d25</A>
+91c/attachment-0001.html&gt;
+
+------------------------------
+
+Message: 4
+Date: Fri, 14 Dec 2012 14:31:47 +0100
+From: GarminKawaguichi &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garmin.kawaguichi at magalaxie.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] viewer hanging up at region handshake
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50CB2A43.9060702 at magalaxie.com</A>&gt;
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+
+dyndns.org does not work properly with all the personal networks. It is best
+to use your internal and external DNS in the file REGION.INI.
+
+As has been said above, set your ports correctly, eg with port 9000 for the
+simulator and the numerical sequence for regions (9001, 9002, 9003
+...) it is preferable to set the port range 9000 to 9050 in both TCP AND
+UDP.
+
+In REGION.INI file, use an internal address (192.168.1.50 as you said) to
+InternalPort and an external address (as said Justin and you can find it
+with <A HREF="http://www.mon-ip.com/">http://www.mon-ip.com/</A>) for ExternalHostname. Which gives us ...
+
+[reg1]
+RegionUUID = &quot;11111111-2222-3333-4444-555555555500&quot;
+Location = &quot;5000,4997&quot;
+InternalAddress = 192.168.1.50
+InternalPort = 9001
+AllowAlternatePorts = False
+ExternalHostName = &quot;82.236.xxx.yyy&quot;
+MasterAvatarFirstName = First Name
+MasterAvatarLastName = Last Name
+MaxPrims = 15000
+RegionType = &quot;Mainland&quot;
+
+
+[reg2]
+RegionUUID = &quot;11111111-2222-3333-4444-555555555501&quot;
+Location = &quot;5000,4998&quot;
+InternalAddress = 192.168.1.50
+InternalPort = 9002
+AllowAlternatePorts = False
+ExternalHostName = &quot;82.236.xxx.yyy&quot;
+MasterAvatarFirstName = First Name
+MasterAvatarLastName = Last Name
+MaxPrims = 15000
+RegionType = &quot;Mainland&quot;
+
+etc...etc...
+
+GCI
+
+Le 14/12/2012 12:47, Emperor Starfinder a ?crit :
+&gt;<i> when I changed it from 192.168.1.50 to example.dyndns.org I was not 
+</I>&gt;<i> even able to log in from another machine on my network
+</I>
+
+
+------------------------------
+
+Message: 5
+Date: Fri, 14 Dec 2012 14:59:55 +0100
+From: &quot;R.Gunther&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] viewer hanging up at region handshake
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">50CB30DB.1040309 at rigutech.nl</A>&gt;
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+
+I see a problem here, InternalAddress is set to  192.168.1.50 thats almost
+never good. Betetr is to set InternalAddress = 0.0.0.0 so it listen to
+everything.
+
+
+On 2012-12-14 14:31, GarminKawaguichi wrote:
+&gt;<i> dyndns.org does not work properly with all the personal networks. It 
+</I>&gt;<i> is best to use your internal and external DNS in the file REGION.INI.
+</I>&gt;<i>
+</I>&gt;<i> As has been said above, set your ports correctly, eg with port 9000 
+</I>&gt;<i> for the simulator and the numerical sequence for regions (9001, 9002,
+</I>&gt;<i> 9003 ...) it is preferable to set the port range 9000 to 9050 in both 
+</I>&gt;<i> TCP AND UDP.
+</I>&gt;<i>
+</I>&gt;<i> In REGION.INI file, use an internal address (192.168.1.50 as you said) 
+</I>&gt;<i> to InternalPort and an external address (as said Justin and you can 
+</I>&gt;<i> find it with <A HREF="http://www.mon-ip.com/">http://www.mon-ip.com/</A>) for ExternalHostname. Which gives 
+</I>&gt;<i> us ...
+</I>&gt;<i>
+</I>&gt;<i> [reg1]
+</I>&gt;<i> RegionUUID = &quot;11111111-2222-3333-4444-555555555500&quot;
+</I>&gt;<i> Location = &quot;5000,4997&quot;
+</I>&gt;<i> InternalAddress = 192.168.1.50
+</I>&gt;<i> InternalPort = 9001
+</I>&gt;<i> AllowAlternatePorts = False
+</I>&gt;<i> ExternalHostName = &quot;82.236.xxx.yyy&quot;
+</I>&gt;<i> MasterAvatarFirstName = First Name
+</I>&gt;<i> MasterAvatarLastName = Last Name
+</I>&gt;<i> MaxPrims = 15000
+</I>&gt;<i> RegionType = &quot;Mainland&quot;
+</I>
+
+
+------------------------------
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+End of Opensim-users Digest, Vol 64, Issue 19
+*********************************************
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011459.html">[Opensim-users] viewer hanging up at region handshake
+</A></li>
+	<LI>Next message: <A HREF="011461.html">[Opensim-users] Error compiling Mod-PayPal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11460">[ date ]</a>
+              <a href="thread.html#11460">[ thread ]</a>
+              <a href="subject.html#11460">[ subject ]</a>
+              <a href="author.html#11460">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Autopilot and osNPC bugs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Autopilot%20and%20osNPC%20bugs&In-Reply-To=%3C4E1CECE9.6000508%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007665.html">
+   <LINK REL="Next"  HREF="007669.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Autopilot and osNPC bugs</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Autopilot%20and%20osNPC%20bugs&In-Reply-To=%3C4E1CECE9.6000508%40googlemail.com%3E"
+       TITLE="[Opensim-users] Autopilot and osNPC bugs">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Jul 13 02:55:05 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007665.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+        <LI>Next message: <A HREF="007669.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7668">[ date ]</a>
+              <a href="thread.html#7668">[ thread ]</a>
+              <a href="subject.html#7668">[ subject ]</a>
+              <a href="author.html#7668">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 12/07/11 14:53, David Burden wrote:
+&gt;<i>
+</I>&gt;<i>  From my experience and what I've read elsewhere both the LibOMV Autopilot function in OpenSim and the osNPC
+</I>&gt;<i> functionality are broken in the latest versions of OpenSim. Since one of my favourite uses for virtual worlds is playing
+</I>&gt;<i> around autonomous avatars this is a real pain. Has anyone got any idea of the amount of effort needed to fix one or both
+</I>&gt;<i> of these, as if it's reasonable and practical we might be able to find some resource to help fix them.
+</I>
+Hi David.  As it happens, I've started to look at osNPC*() functions in the last couple of weeks (e.g. commits 22f25fa, 
+ed12e38) with a view to eventually restoring the original functionality and buttressing it with some automated 
+regression tests.  I would also love to see the code in a state where NPCs would work without a client object attached.
+
+At the moment in git master, say, create and delete work, though appearance and autopilot are broken.  For an 
+experienced OpenSim developer fixing appearance shouldn't be too hard - I think it's a case of digging around to find 
+out why the copied avatar baked textures aren't being used properly on the NPC.
+
+Fixing autopilot is more difficult.  In principle, it should use much the same code paths as sit and &quot;go here&quot; on 
+version 1 viewers, though &quot;go here&quot; itself doesn't appear to be working consistently.  It's probably a case of fixing go 
+and then reusing the code for npc autopilot.  This would be somewhat involved, more so than fixing appearance.  Fixing 
+autopilot of NPCs should also fix it for client-side bots.
+
+Any resource to help fix these would be very welcome.  I have to confess, they are low down on my priority list right now.
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007665.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+	<LI>Next message: <A HREF="007669.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7668">[ date ]</a>
+              <a href="thread.html#7668">[ thread ]</a>
+              <a href="subject.html#7668">[ subject ]</a>
+              <a href="author.html#7668">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] llParticleSystem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llParticleSystem&In-Reply-To=%3C62a72a691001100510u5b3e5540ifba7b7d23b92de39%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003427.html">
+   <LINK REL="Next"  HREF="003415.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] llParticleSystem</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llParticleSystem&In-Reply-To=%3C62a72a691001100510u5b3e5540ifba7b7d23b92de39%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] llParticleSystem">cliveg at gmail.com
+       </A><BR>
+    <I>Sun Jan 10 14:10:32 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003427.html">[Opensim-users] IRC module
+</A></li>
+        <LI>Next message: <A HREF="003415.html">[Opensim-users] OpenVCE OAR on Mega-Region?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3414">[ date ]</a>
+              <a href="thread.html#3414">[ thread ]</a>
+              <a href="subject.html#3414">[ subject ]</a>
+              <a href="author.html#3414">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+I'm in the process of copying my LSL exhibition from SL into a
+hypergrided OpenSim standalone. Eventually I hope to make this
+available as an OAR file to the community.
+
+I'm gradually copying the posters and their accompanying scripts over
+and all is well up to poster 21.
+
+I'm struggling with the poster 21 script that works fine in SL, but
+doesn't appear to work in OpenSim.
+
+I suspect the problem lies with the llParticleSystem function. I
+append the script to this posting.
+
+1) Any ideas what I need to do to get this script working?
+2) Does anyone have any llParticleSystem scripts that work in OpenSim
+that they'd be willing to share with me?
+
+Thanks very much
+
+Clive
+(SL: Clive Pro)
+
+
+// Code for Poster 21:
+
+integer second;
+
+default
+{
+    state_entry()
+    {
+        second = 0;
+        llParticleSystem( [] );  //reset system
+        state new;
+    }
+}
+
+state new
+{
+    touch_start(integer total_number)
+    {
+    // output particles
+    llParticleSystem(
+   [
+    PSYS_PART_FLAGS,         PSYS_PART_WIND_MASK | PSYS_PART_EMISSIVE_MASK,
+    PSYS_SRC_PATTERN,  PSYS_SRC_PATTERN_EXPLODE,
+    PSYS_PART_START_COLOR,   &lt;1,1,0&gt;
+   ] );
+   llSetTimerEvent( 1 );
+    }
+
+    timer ()
+    //delay 10 seconds before reset
+    {  second ++;
+        if(second &gt; 10)
+        {
+           llResetScript();  //reset
+    }
+}
+}
+
+// End of code;
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003427.html">[Opensim-users] IRC module
+</A></li>
+	<LI>Next message: <A HREF="003415.html">[Opensim-users] OpenVCE OAR on Mega-Region?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3414">[ date ]</a>
+              <a href="thread.html#3414">[ thread ]</a>
+              <a href="subject.html#3414">[ subject ]</a>
+              <a href="author.html#3414">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

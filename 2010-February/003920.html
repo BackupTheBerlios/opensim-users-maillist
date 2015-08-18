@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Question about IAR files
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20about%20IAR%20files&In-Reply-To=%3C81dc9e651002230604s1a098503r88f36fed14e177d8%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003919.html">
+   <LINK REL="Next"  HREF="003921.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Question about IAR files</H1>
+    <B>Len Brown</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20about%20IAR%20files&In-Reply-To=%3C81dc9e651002230604s1a098503r88f36fed14e177d8%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Question about IAR files">lenwbrown at gmail.com
+       </A><BR>
+    <I>Tue Feb 23 15:04:21 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003919.html">[Opensim-users] Question about IAR files
+</A></li>
+        <LI>Next message: <A HREF="003921.html">[Opensim-users] Question about IAR files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3920">[ date ]</a>
+              <a href="thread.html#3920">[ thread ]</a>
+              <a href="subject.html#3920">[ subject ]</a>
+              <a href="author.html#3920">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>As others have mentioned, there are still a few disadvantages, even with
+hacked viewers such as CryoGen.  For example, scripts and any content
+contained within an object are not saved.  This is not a huge issue with me
+as the bulk of my objects are either scriptless, or else contain only a few
+basic scripts in repetition such as door open/close scripts, basic avatar
+sit scripts and a radio script here and there for some of my music-oriented
+objects.
+
+I must also say I'm very old-school, preferring to build using the
+fundamental prim-based tools.  Many pieces of my furniture are very
+intricately detailed, but they are also built using an unbelievable number
+of prims.  With the desire for fewer prims and more detail, many designers
+these days use sculpts, or &quot;sculpties&quot;.  Since the core design of a sculptie
+is a prim that uses a sculpt map, which in essence is just a bitmap image,
+then tools like CryoGen are &quot;almost&quot; completely worthless.
+
+What one must do in this case is separately &quot;rip&quot; the textures - which
+include the sculpt maps, and then import those into OpenSim alongside the
+XML files CryoGen creates.  Otherwise, the CryoGen-copied sculpties will
+essentially rematerialize in OpenSim is a mass of non-descript &quot;bubbles&quot; or
+sculpt-prims with missing sculpt-map textures that would normally tell them
+what shape to take on.
+
+Also, along the same lines, CryoGen itself simply replicates
+prim-coordinates of items and attachments, but not all the textures
+involves.  So when the import into OpenSim is made, the object usually is
+textureless.  However, CryoGen does also record how a texture is oriented,
+repeated, etc on all the surfaces of each prim in a prim-set.  So manually
+restoring textures is generally fairly simply and when the texture is
+re-applied to the proper surfaces, it's alsoready oriented as it had been
+originally.
+
+The reason I'm giving all this detail is that maybe, someone with more
+understanding of the hacked viewer source code than I might be willing to
+undertake and aspire to overcome the few minor limitations presented here
+and see about making a true, genuine, and legitimate backup tool that we can
+all use without getting banned for simply trying to preserve our own hard
+work.
+
+- Len
+
+On Tue, Feb 23, 2010 at 2:31 AM, Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karen_palen at yahoo.com</A>&gt; wrote:
+
+&gt;<i> One of my (many) laments about this situation is that if usable tools with
+</I>&gt;<i> reasonable restrictions are not available for these legitimate uses then
+</I>&gt;<i> &quot;pirate&quot; oriented tools will be developed and used instead!
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i> --- On Mon, 2/22/10, Len Brown &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">lenwbrown at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; From: Len Brown &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">lenwbrown at gmail.com</A>&gt;
+</I>&gt;<i> &gt; Subject: Re: [Opensim-users] Question about IAR files
+</I>&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; Date: Monday, February 22, 2010, 9:30 PM
+</I>&gt;<i> &gt; On Mon, Feb 22,
+</I>&gt;<i> &gt; 2010 at 4:32 PM, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> &gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; As well as second inventory, I know that some of the other
+</I>&gt;<i> &gt; SL clients (e.g. Imprudence, Meerkat) have inventory suck
+</I>&gt;<i> &gt; and blow built in and store data using a different file
+</I>&gt;<i> &gt; format.  I'm not sure what the current state of play is
+</I>&gt;<i> &gt; there - last time I looked the contents of items themselves
+</I>&gt;<i> &gt; were not being saved/restored.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'd like to
+</I>&gt;<i> &gt; add here my own personal experience with one of the
+</I>&gt;<i> &gt; &quot;banned&quot; viewers - CryoGen.  Since obtaining a
+</I>&gt;<i> &gt; copy of it some time
+</I>&gt;<i> &gt; back I've spent a tremendous amount of time using it on
+</I>&gt;<i> &gt; my own personal
+</I>&gt;<i> &gt; OpenSim servers and have grown rather addicted to it.
+</I>&gt;<i> &gt; However, the use
+</I>&gt;<i> &gt; of it in Second Life results in immediate &quot;not open
+</I>&gt;<i> &gt; for discussion&quot;
+</I>&gt;<i> &gt; banning and account cancellation so I am very cautious not
+</I>&gt;<i> &gt; to use it to
+</I>&gt;<i> &gt; log into my SL account.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; And, of course, the obvious - that the viewer's
+</I>&gt;<i> &gt; intention is to
+</I>&gt;<i> &gt; replicate anything and everything in sight, without any
+</I>&gt;<i> &gt; regard for who
+</I>&gt;<i> &gt; owns what.  It simply ignores all rights and permissions.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So why do I think it's better than sliced bread now?
+</I>&gt;<i> &gt; Because I have
+</I>&gt;<i> &gt; been able to save thousands of items I've built over
+</I>&gt;<i> &gt; the years in
+</I>&gt;<i> &gt; Second Life and each item is saved as a simple text file -
+</I>&gt;<i> &gt; an XML file,
+</I>&gt;<i> &gt; to be exact.  Properly named and stored, I have my entire
+</I>&gt;<i> &gt; archive of
+</I>&gt;<i> &gt; furniture, buildings, you name it - all saved neatly as
+</I>&gt;<i> &gt; little text
+</I>&gt;<i> &gt; files.  Even better...  Uncompressed they total 1.54
+</I>&gt;<i> &gt; Gig, but when I 7-Zipped them, the final archive was
+</I>&gt;<i> &gt; 5.67 Megs.
+</I>&gt;<i> &gt; I kid you not.  I was then able to upload my entire
+</I>&gt;<i> &gt; prim-based Second
+</I>&gt;<i> &gt; Life inventory as a small attachment to an email, and have
+</I>&gt;<i> &gt; put a few
+</I>&gt;<i> &gt; other copies here and there on thumb drives, in my Google
+</I>&gt;<i> &gt; Docs storage
+</I>&gt;<i> &gt; not that it allows me to upload any file, etc.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; You might be wondering how I managed to backup my Second
+</I>&gt;<i> &gt; Life inventory using it without logging into Second Life.
+</I>&gt;<i> &gt; Well, that is the main reason it is so damned terrifying.
+</I>&gt;<i> &gt; Logging into Second Life using a free account and the
+</I>&gt;<i> &gt; CryoGen browser, and using my premium account to temporarily
+</I>&gt;<i> &gt; block the use of scripts on my land (which can be used to
+</I>&gt;<i> &gt; detect and auto-ban users logged in with CryoGen) I used the
+</I>&gt;<i> &gt; free account and CryoGen to walk through my various stores
+</I>&gt;<i> &gt; and replicate everything in sight.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; While I do not whatsoever condone stealing in any form,
+</I>&gt;<i> &gt; it's an interesting conundrum for me to have to use
+</I>&gt;<i> &gt; &quot;illegal&quot; software to steal MY OWN products, but
+</I>&gt;<i> &gt; as you said about Second Inventory being less than par,
+</I>&gt;<i> &gt; CryoGen does a phenomenal job of allowing me to copy
+</I>&gt;<i> &gt; perfectly replicated items from my shops in SL to my sandbox
+</I>&gt;<i> &gt; in OpenSim.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; - Len W. Brown
+</I>&gt;<i> &gt;    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">lenwbrown at gmail.com</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -----Inline Attachment Follows-----
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100223/ec87566d/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100223/ec87566d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003919.html">[Opensim-users] Question about IAR files
+</A></li>
+	<LI>Next message: <A HREF="003921.html">[Opensim-users] Question about IAR files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3920">[ date ]</a>
+              <a href="thread.html#3920">[ thread ]</a>
+              <a href="subject.html#3920">[ subject ]</a>
+              <a href="author.html#3920">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

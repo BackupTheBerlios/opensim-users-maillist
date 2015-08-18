@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Creating objects in a region module
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Creating%20objects%20in%20a%20region%20module&In-Reply-To=%3C4DF6A9CC.8040103%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007487.html">
+   <LINK REL="Next"  HREF="007499.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Creating objects in a region module</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Creating%20objects%20in%20a%20region%20module&In-Reply-To=%3C4DF6A9CC.8040103%40googlemail.com%3E"
+       TITLE="[Opensim-users] Creating objects in a region module">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Jun 14 02:22:36 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007487.html">[Opensim-users] Creating objects in a region module
+</A></li>
+        <LI>Next message: <A HREF="007499.html">[Opensim-users] Creating objects in a region module
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7498">[ date ]</a>
+              <a href="thread.html#7498">[ thread ]</a>
+              <a href="subject.html#7498">[ subject ]</a>
+              <a href="author.html#7498">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Unfortunately, I don't know of any good example code for this.
+
+In principle, it could be done by first converting the LSL into an asset, storing that asset and then creating the 
+relevant item.
+
+OpenSim/Tests/Common/Helpers/TaskInventoryHelpers.AddNotecard() provides a good template here.  You might be able to 
+replace the AssetNotecard with AssetScriptText instead.
+
+If you don't need to generate them dynamically, then you might want to consider storing scripts directly in the region 
+and copying them or rezzing the containing items as appropriate.  Then you can save and load the required OAR along with 
+your region module code.
+
+This is messy but can be easier in some situations.
+
+On 12/06/11 05:12, Karl Haas wrote:
+&gt;<i> Hi Justin,
+</I>&gt;<i>
+</I>&gt;<i> thanks for your help!
+</I>&gt;<i>
+</I>&gt;<i> What's the best way to assign scripts to a prim that i create in the region module?
+</I>&gt;<i> Are there any examples for the different script types (LSL, OSSL) available?
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> karl
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 06/09/2011 09:04 AM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> Hi Karl. There isn't a good region module example code for this yet, to my knowledge.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However, you may want to look at OpenSim/Region/ScriptEngine/Shared/Api/Implementation/LSL_Api.cs which contains all
+</I>&gt;&gt;<i> the LSL script method implementations.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You may also want to look at test code such as the package OpenSim.Region.CoreModules.Tests since these often contain
+</I>&gt;&gt;<i> code for setting up various OpenSim structures.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As a general point, please be aware that the OpenSim internal 'API' is very inconsistent since it has grown up
+</I>&gt;&gt;<i> organically. For instance, some scene methods schedule their own updates to viewers (e.g.
+</I>&gt;&gt;<i> SceneObjectPart.UpdateRotation()) whilst others leave this up to the caller. Ultimately, I believe these show all be
+</I>&gt;&gt;<i> left to the caller so that callers can group update batches.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 08/06/11 02:28, Karl Haas wrote:
+</I>&gt;&gt;&gt;<i> Hi,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'm trying to create SceneObjectGroups in an OpenSim region module and I have some problems using the Framework.
+</I>&gt;&gt;&gt;<i> Does anyone know if there is a useful documentation or some example code available?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Some questions that I have by now:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> - How can I rotate SOGs - how is Quaternion used correctly?
+</I>&gt;&gt;&gt;<i> - How can I set the texture of a SOG or a SceneObjectPart object?
+</I>&gt;&gt;&gt;<i> - How can I create the prims that the clients offer to create - PrimitiveBaseShape offers just a box, cylinder and a
+</I>&gt;&gt;&gt;<i> sphere?
+</I>&gt;&gt;&gt;<i> - How can I add a script to the object in order to track the position of the object?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks for any help in advance!!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Best regards,
+</I>&gt;&gt;&gt;<i> karl
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007487.html">[Opensim-users] Creating objects in a region module
+</A></li>
+	<LI>Next message: <A HREF="007499.html">[Opensim-users] Creating objects in a region module
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7498">[ date ]</a>
+              <a href="thread.html#7498">[ thread ]</a>
+              <a href="subject.html#7498">[ subject ]</a>
+              <a href="author.html#7498">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

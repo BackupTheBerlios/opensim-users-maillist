@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] A Script Question
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20Script%20Question&In-Reply-To=%3CBANLkTinthqZSz_i%2BEvFT2Mrsg2_%2BJXg_QQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007068.html">
+   <LINK REL="Next"  HREF="007070.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] A Script Question</H1>
+    <B>Jor3l Boa</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20Script%20Question&In-Reply-To=%3CBANLkTinthqZSz_i%2BEvFT2Mrsg2_%2BJXg_QQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] A Script Question">jor3l at foravatars.com
+       </A><BR>
+    <I>Fri Apr 15 01:49:18 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007068.html">[Opensim-users] A Script Question
+</A></li>
+        <LI>Next message: <A HREF="007070.html">[Opensim-users] A Script Question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7069">[ date ]</a>
+              <a href="thread.html#7069">[ thread ]</a>
+              <a href="subject.html#7069">[ subject ]</a>
+              <a href="author.html#7069">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You don't need OSFunctions for that, better disable them.
+
+2011/4/14 Henry Wills &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fubat.enterprises at gmail.com</A>&gt;
+
+&gt;<i> Thanks, Vanish, James, but I'm not sure I understand what all that means.
+</I>&gt;<i>
+</I>&gt;<i> First, about threat level, going into the opensim.ini, I have
+</I>&gt;<i> OSFunctionThreatLevel = VeryLow
+</I>&gt;<i>
+</I>&gt;<i> Yet, in the DivaPreferences.ini file I have
+</I>&gt;<i> [XEngine]
+</I>&gt;<i>     AllowMODFunctions = true
+</I>&gt;<i>     AllowOSFunctions = true
+</I>&gt;<i>     OSFunctionThreatLevel = Moderate
+</I>&gt;<i>
+</I>&gt;<i> Could this be a conflict error due to the different threat level settings?
+</I>&gt;<i> One example is a pretty simple point-to-point TP script, which has no
+</I>&gt;<i> osFunctions in it, just the usual lsl functions. In fact, here's the whole
+</I>&gt;<i> of the script ...
+</I>&gt;<i>
+</I>&gt;<i> *// Script Name: Teleport.lsl
+</I>&gt;<i> // Author: Encog Dod
+</I>&gt;<i> //Teleport
+</I>&gt;<i>
+</I>&gt;<i> // Downloaded from :
+</I>&gt;<i> <A HREF="http://www.free-lsl-scripts.com/freescripts.plx?ID=150">http://www.free-lsl-scripts.com/freescripts.plx?ID=150</A>
+</I>&gt;<i>
+</I>&gt;<i> // This program is free software; you can redistribute it and/or modify it.
+</I>&gt;<i> // License information must be included in any script you give out or use.
+</I>&gt;<i> // This script is licensed under the Creative Commons Attribution-Share
+</I>&gt;<i> Alike 3.0 License
+</I>&gt;<i> // from <A HREF="http://creativecommons.org/licenses/by-sa/3.0">http://creativecommons.org/licenses/by-sa/3.0</A> unless licenses are
+</I>&gt;<i> // included in the script or comments by the original author,in which case
+</I>&gt;<i> // the authors license must be followed.
+</I>&gt;<i>
+</I>&gt;<i> // Please leave any authors credits intact in any script you use or
+</I>&gt;<i> publish.
+</I>&gt;<i> ////////////////////////////////////////////////////////////////////
+</I>&gt;<i> // From the book:
+</I>&gt;<i> //
+</I>&gt;<i> // Scripting Recipes for Second Life
+</I>&gt;<i> // by Jeff Heaton (Encog Dod in SL)
+</I>&gt;<i> // ISBN: 160439000X
+</I>&gt;<i> // Copyright 2007 by Heaton Research, Inc.
+</I>&gt;<i> //
+</I>&gt;<i> // This script may be freely copied and modified so long as this header
+</I>&gt;<i> // remains unmodified.
+</I>&gt;<i> //
+</I>&gt;<i> // For more information about this book visit the following web site:
+</I>&gt;<i> //
+</I>&gt;<i> // <A HREF="http://www.heatonresearch.com/articles/series/22/">http://www.heatonresearch.com/articles/series/22/</A>
+</I>&gt;<i>
+</I>&gt;<i> vector target=&lt;190, 197, 64&gt;;
+</I>&gt;<i>
+</I>&gt;<i> vector offset;
+</I>&gt;<i>
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     moving_end()
+</I>&gt;<i>     {
+</I>&gt;<i>         offset = (target- llGetPos()) * (ZERO_ROTATION / llGetRot());
+</I>&gt;<i>         llSitTarget(offset, ZERO_ROTATION);
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     state_entry()
+</I>&gt;<i>     {
+</I>&gt;<i>         llSetText(&quot;Teleport pad&quot;,&lt;0,0,0&gt;,1.0);
+</I>&gt;<i>         offset = (target- llGetPos()) * (ZERO_ROTATION / llGetRot());
+</I>&gt;<i>         llSetSitText(&quot;Teleport&quot;);
+</I>&gt;<i>         llSitTarget(offset, ZERO_ROTATION);
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     changed(integer change)
+</I>&gt;<i>     {
+</I>&gt;<i>         if (change &amp; CHANGED_LINK)
+</I>&gt;<i>         {
+</I>&gt;<i>             llSleep(0.5);
+</I>&gt;<i>             if (llAvatarOnSitTarget() != NULL_KEY)
+</I>&gt;<i>             {
+</I>&gt;<i>                 llUnSit(llAvatarOnSitTarget());
+</I>&gt;<i>             }
+</I>&gt;<i>         }
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     touch_start(integer i)
+</I>&gt;<i>     {
+</I>&gt;<i>         llSay(0, &quot;Please right-click and select Teleport&quot;);
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i> *
+</I>&gt;<i> This one generates the error message every time I rez it. By the way, it
+</I>&gt;<i> also has a 5 to 8 second delay before the the UnSit occurs.
+</I>&gt;<i>
+</I>&gt;<i> However, I've just experimented by inserting a simple // as the very first
+</I>&gt;<i> line and then rezzed the script into a new prim. (Hope that doesn't violate
+</I>&gt;<i> the 'don't change the header' portion of the license) No error message. I'm
+</I>&gt;<i> going to mess around with that on some other scripts, like a jetpack one I
+</I>&gt;<i> am dying to get working properly.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Apr 14, 2011 at 3:56 PM, James Hughes &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jamesh at bluewallgroup.com</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>  On 04/14/2011 06:18 PM, Henry Wills wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So, I've got a bunch of OSGrid scripts and my stand-alone is using the
+</I>&gt;&gt;<i> default Xengine. With a number of the scripts I get the following error
+</I>&gt;&gt;<i> message
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;*Selected engine unavailable. Running script on XEngine*&quot;.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> To me, this says that there is at least one other script engine available.
+</I>&gt;&gt;<i> Is that so? If it is, how do I get it and install it? Currently, with
+</I>&gt;&gt;<i> scripts that generate that error, I have been recompiling (using LSL, just
+</I>&gt;&gt;<i> in case), set the script to running and it works fine. Its just a pain in
+</I>&gt;&gt;<i> the ass having to go through the extra steps.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Come to think of it, what about other Physics Engines, like nVidia PhysX,
+</I>&gt;&gt;<i> which I happen to have installed on my system. Can anyone provide links to
+</I>&gt;&gt;<i> get a different engine and installation instructions?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Look at the first line in the script. It probably has //My Script, or
+</I>&gt;&gt;<i> something similar. Make sure the first line of the script is blank or just
+</I>&gt;&gt;<i> // to be safe. The script mechanism of OpenSim is designed to support
+</I>&gt;&gt;<i> several scripting engines simultaneously. And, the way to tell OpenSim which
+</I>&gt;&gt;<i> engine to use to execute the  script is with the first line. //C# would run
+</I>&gt;&gt;<i> it with the C# engine (if you have it enabled).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> See: <A HREF="http://justincc.org/blog/2008/11/21/c-scripting-in-opensim/">http://justincc.org/blog/2008/11/21/c-scripting-in-opensim/</A> for an
+</I>&gt;&gt;<i> example of that.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110414/0732efa4/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110414/0732efa4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007068.html">[Opensim-users] A Script Question
+</A></li>
+	<LI>Next message: <A HREF="007070.html">[Opensim-users] A Script Question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7069">[ date ]</a>
+              <a href="thread.html#7069">[ thread ]</a>
+              <a href="subject.html#7069">[ subject ]</a>
+              <a href="author.html#7069">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

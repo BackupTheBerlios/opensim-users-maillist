@@ -1,0 +1,403 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim 0.6.6 release standalone hangs at 'Waiting for region handshake' (LoginPacketNeverReceived) on other intranet computers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%200.6.6%20release%20standalone%20hangs%20at%0A%20%27Waiting%20for%20region%20handshake%27%20%28LoginPacketNeverReceived%29%20on%20other%20intranet%0A%20computers&In-Reply-To=%3C001301ca4cf4%24b42c8c30%241c85a490%24%40freeserve.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002875.html">
+   <LINK REL="Next"  HREF="002878.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim 0.6.6 release standalone hangs at 'Waiting for region handshake' (LoginPacketNeverReceived) on other intranet computers</H1>
+    <B>Kevin Buckley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%200.6.6%20release%20standalone%20hangs%20at%0A%20%27Waiting%20for%20region%20handshake%27%20%28LoginPacketNeverReceived%29%20on%20other%20intranet%0A%20computers&In-Reply-To=%3C001301ca4cf4%24b42c8c30%241c85a490%24%40freeserve.co.uk%3E"
+       TITLE="[Opensim-users] Opensim 0.6.6 release standalone hangs at 'Waiting for region handshake' (LoginPacketNeverReceived) on other intranet computers">kevin at buckley70.freeserve.co.uk
+       </A><BR>
+    <I>Wed Oct 14 19:35:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002875.html">[Opensim-users] Opensim 0.6.6 release standalone hangs at	'Waiting for region handshake' (LoginPacketNeverReceived) on	other intranet computers
+</A></li>
+        <LI>Next message: <A HREF="002878.html">[Opensim-users] Opensim 0.6.6 release standalone hangs at	'Waiting for region handshake' (LoginPacketNeverReceived) on	other intranet computers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2876">[ date ]</a>
+              <a href="thread.html#2876">[ thread ]</a>
+              <a href="subject.html#2876">[ subject ]</a>
+              <a href="author.html#2876">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Can you confirm whether &quot;set external to the outside address of your modem&quot;
+and &quot;Configure your client to use the External IP address&quot; means like
+'111.222.333.444' or like 'www.mydomain.com'? - Thanks, Kevin
+
+ 
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Richard Taft
+Sent: 14 October 2009 18:09
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Opensim 0.6.6 release standalone hangs at
+'Waiting for region handshake' (LoginPacketNeverReceived) on other intranet
+computers
+
+ 
+
+I had this with a New install of 0.6.6 on a Fedora 11 server.  This is what
+I did.
+
+Set internal address to the internal address of the opensim server
+set external to the outside address of your modem
+open ports 9000 to 9020 on the router firewall
+forward ports 9000 to 9020 from the router to the internal IP address of the
+OpenSim Server
+open ports 9000 to 9020 on the servers firewall.
+Update the IPTables with the Following Commands
+
+Unix
+iptables -t nat -A OUTPUT --dst EXTERNAL_IP -p tcp --dport 9000:9010 -j DNAT
+--to-destination INTERNAL_IP
+iptables -t nat -A OUTPUT --dst EXTERNAL_IP -p udp --dport 9000:9010 -j DNAT
+--to-destination INTERNAL_IP
+service iptables restart
+
+Windows:
+
+iptables -t nat -A PREROUTING --dst EXTERNAL_IP -p tcp --dport 9000:9010 -j
+DNAT --to-destination INTERNAL_IP 
+
+iptables -t nat -A PREROUTING --dst EXTERNAL_IP -p udp --dport 9000:9010 -j
+DNAT --to-destination INTERNAL_IP
+
+ 
+
+Configure your client to use the External IP address.  All of this came
+after digging through multiple pages in the Wiki. Took me a couple of late
+nights to piece what was right and what was incorrect from the Wiki.  But
+this all seemed to work. 
+
+ 
+
+Rich
+
+ 
+
+ 
+
+  _____  
+
+From: Robert Klein &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rtkwebman at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Sent: Wed, October 14, 2009 12:53:16 PM
+Subject: Re: [Opensim-users] Opensim 0.6.6 release standalone hangs at
+'Waiting for region handshake' (LoginPacketNeverReceived) on other intranet
+computers
+
+
+Hey Kevin,
+
+This actually happened to me recently when I tried using an OpenSim.ini and
+Regions files from version 0.6.2 with the latest stable release. I had to
+re-edit the OpenSim.ini file and I believe making sure InternalIP is set to
+0.0.0.0 in the Regions.ini file too. I wish I could remember exactly what I
+did but when you are reeling late at night from screwing up an install and
+in reactive mode everything becomes a blur. :)
+
+-Robert
+
+
+Kevin Buckley wrote:
+&gt;<i> 
+</I>&gt;<i> Yes - I have tried using the actual IP address for ExternalHostName.  When
+</I>&gt;<i> I
+</I>&gt;<i> do that it makes no difference to the other PC's but the viewer running on
+</I>&gt;<i> the opensim server also now fails at the region handshake.
+</I>&gt;<i> 
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Marc Adored
+</I>&gt;<i> Sent: 13 October 2009 21:40
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] Opensim 0.6.6 release standalone hangs at
+</I>&gt;<i> 'Waiting for region handshake' (LoginPacketNeverReceived) on other
+</I>&gt;<i> intranet
+</I>&gt;<i> computers
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Have you tried using the actual ip address instead of the dns? Maybe
+</I>&gt;<i> just maybe there is some reversal issues with the handshake. It seems
+</I>&gt;<i> like its sending a request for a handshake but maybe sending the wrong
+</I>&gt;<i> information about where to make the handshake. I had the same issue
+</I>&gt;<i> when I had used 127.0.0.1 and tried to connect with a remote machine.
+</I>&gt;<i> That's what makes me think maybe its a reversal issue. Not sure how
+</I>&gt;<i> possible it is for 1 part of a program to have issues reversing a
+</I>&gt;<i> domain but not the other but its worth a shot I think.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Tue, Oct 13, 2009 at 4:12 PM, Kevin Buckley
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt; wrote:
+</I>&gt;&gt;<i> I have considered getting the bleeding-edge version, lol.  But I wanted
+</I>&gt;&gt;<i> to
+</I>&gt;&gt;<i> start with something stable (...).  Thanks for the suggestion though -
+</I>&gt;&gt;<i> but
+</I>&gt;<i> I
+</I>&gt;&gt;<i> DID check my ports with a port scanner.  I'm pretty sure a blocked port
+</I>&gt;&gt;<i> isn't the problem though.  It's weird that it works perfectly if opensim
+</I>&gt;<i> and
+</I>&gt;&gt;<i> the viewer are on the same machine - after all, they STILL talk to each
+</I>&gt;&gt;<i> other via the same network protocols - they just didn't go through a LAN
+</I>&gt;&gt;<i> card and the lower layers is all.  And there's a LOT of interaction
+</I>&gt;&gt;<i> before
+</I>&gt;&gt;<i> they get to the region handshake point - so network protocols in general
+</I>&gt;&gt;<i> seem to be just fine.  I was wondering if there is anything tangibly
+</I>&gt;&gt;<i> different about the 'loginpacket' like maybe it goes to an undocumented
+</I>&gt;<i> port
+</I>&gt;&gt;<i> or something which isn't covered in the '.ini' files.  I also have a port
+</I>&gt;&gt;<i> logger - and nothing looks untoward in that either - but it's kinda hard
+</I>&gt;<i> to
+</I>&gt;&gt;<i> analyse unless you know the protocols!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I haven't yet tried just connecting my machines to each other with the
+</I>&gt;&gt;<i> dumbest of routers, rather than going via the Belkin, to see if that
+</I>&gt;&gt;<i> makes
+</I>&gt;<i> a
+</I>&gt;&gt;<i> difference.  Cheers, Kevin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Paul
+</I>&gt;&gt;<i> Fishwick
+</I>&gt;&gt;<i> Sent: 13 October 2009 20:57
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] Opensim 0.6.6 release standalone hangs at
+</I>&gt;&gt;<i> 'Waiting for region handshake' (LoginPacketNeverReceived) on other
+</I>&gt;<i> intranet
+</I>&gt;&gt;<i> computers
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I usually run the bleeding edge version in fresh directories (to keep a
+</I>&gt;&gt;<i> trail
+</I>&gt;&gt;<i> of implementations). This is mainly because of fairly recent changes that
+</I>&gt;&gt;<i> do well with 64-bit Ubuntu. Not sure if this will help, but I have found
+</I>&gt;&gt;<i> port
+</I>&gt;&gt;<i> scanners to be useful during testing:
+</I>&gt;&gt;<i> <A HREF="http://www.t1shopper.com/tools/port-scanner/">http://www.t1shopper.com/tools/port-scanner/</A>
+</I>&gt;&gt;<i> However, if you cannot connect even behind your firewall....not sure...
+</I>&gt;&gt;<i> -p
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Kevin Buckley wrote:
+</I>&gt;&gt;&gt;<i> Yes.  And that works - because when my friend tried to login (from far
+</I>&gt;&gt;<i> away
+</I>&gt;&gt;&gt;<i> - outside the router firewall) I could see that activity on the opensim
+</I>&gt;&gt;&gt;<i> window and it got to the region handshake point (actually opensim says
+</I>&gt;&gt;&gt;<i> logged-in).  That shouldn't affect this problem though I think - all the
+</I>&gt;&gt;&gt;<i> PC's I am using are behind the router (and being explicitly addressed
+</I>&gt;&gt;<i> using
+</I>&gt;&gt;&gt;<i> internal addresses (192.168.10.x).  Do you have 0.6.6 running OK in
+</I>&gt;&gt;&gt;<i> standalone?  Thanks - Kevin
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Paul
+</I>&gt;<i> Fishwick
+</I>&gt;&gt;&gt;<i> Sent: 13 October 2009 19:53
+</I>&gt;&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> Subject: Re: [Opensim-users] Opensim 0.6.6 release standalone hangs at
+</I>&gt;&gt;&gt;<i> 'Waiting for region handshake' (LoginPacketNeverReceived) on other
+</I>&gt;&gt;<i> intranet
+</I>&gt;&gt;&gt;<i> computers
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Have you logged into your Belkin router and set up your router to
+</I>&gt;&gt;&gt;<i> forward
+</I>&gt;&gt;&gt;<i> any traffic on the port you are using (9000 for instance) to the machine
+</I>&gt;&gt;&gt;<i> where opensim is running (behind your router) ?
+</I>&gt;&gt;&gt;<i> -p
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Kevin Buckley wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I'm trying to get a 'vanilla' instance of OS-0.6.6 running
+</I>&gt;&gt;&gt;&gt;<i> 'standalone' on my PC so that I can log-in to it from outside (I have
+</I>&gt;&gt;&gt;&gt;<i> a pseudo-Static Domain: i.e. a Dynamic Domain Name from the ISP and a
+</I>&gt;&gt;&gt;&gt;<i> service from 'deerfield.com' called 'DNS2Go' that tracks it - has
+</I>&gt;&gt;&gt;&gt;<i> worked just fine with various packages for years). Ultimately I would
+</I>&gt;&gt;&gt;&gt;<i> like to get opensim running as a standalone-hypergrid implementation -
+</I>&gt;&gt;&gt;&gt;<i> but just standalone seemed a good first step. I planned to test it:
+</I>&gt;&gt;&gt;&gt;<i> viewer on same PC as opensim, viewer on different PC but within the
+</I>&gt;&gt;&gt;&gt;<i> firewall and finally: remote access using my Static Domain.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> After a few false starts, I built the release on one of my PC's
+</I>&gt;&gt;&gt;&gt;<i> (Windows XP SP2) using Port 9100 (Port 9000 is used already by my
+</I>&gt;&gt;&gt;&gt;<i> streaming music system). It works just fine if I use either the 2L
+</I>&gt;&gt;&gt;&gt;<i> viewer (v1.23.4 - 123908) or Hippo viewer, running on the same machine
+</I>&gt;&gt;&gt;&gt;<i> as opensim.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> However, if I run the viewer on different machines within my firewall
+</I>&gt;&gt;&gt;&gt;<i> (I have 2 others: Windows XP, also SP2 plus a Vista laptop - both
+</I>&gt;&gt;&gt;&gt;<i> tower PC's are high performance Pentium-4's with high-end NVIDIA
+</I>&gt;&gt;&gt;&gt;<i> graphics cards btw) it finds my opensim OK (can see the modified
+</I>&gt;&gt;&gt;&gt;<i> welcome message during login) but hangs at 'Waiting for region
+</I>&gt;&gt;&gt;&gt;<i> handshake'. Then I get the 'may have network issues message' and stops.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I also got a friend to try to login from far away (outside the
+</I>&gt;&gt;&gt;&gt;<i> firewall) with the same failure at 'Waiting for region handshake'. I
+</I>&gt;&gt;&gt;&gt;<i> am about 50h into this now and have run out of ideas (and hair). I
+</I>&gt;&gt;&gt;&gt;<i> have seen in various forums that a number of people have (are) also
+</I>&gt;&gt;&gt;&gt;<i> experienced this problem - but so far I have never seen a posted
+</I>&gt;&gt;<i> solution.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> So far I have done the following things (and they have made no
+</I>&gt;&gt;&gt;&gt;<i> difference - behaviour is exactly the same):
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried different Ports: 9100, 9200, 9217 and even 9000 by shutting
+</I>&gt;&gt;&gt;&gt;<i> down my music server (changing the port addresses in 'Regions.ini' and
+</I>&gt;&gt;&gt;&gt;<i> 'opensim.ini')
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried 'runprebuild' ('compile' runs with no errors) and
+</I>&gt;&gt;&gt;&gt;<i> 'runprebuild2008' (path error for .NETFramework - I have v3.5 btw)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried '0.0.0.0', '127.0.0.1', '192.168.10.100' (the server PC
+</I>&gt;&gt;&gt;&gt;<i> internal address) as 'InternalAddress' inside 'Regions.ini'
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried 'SYSTEMIP' and '192.168.10.100' as 'ExternalHostName' inside
+</I>&gt;&gt;&gt;&gt;<i> 'Regions.ini'
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried '127.0.0.1', '192.168.10.100' and even my external domain name
+</I>&gt;&gt;&gt;&gt;<i> in the various places in 'opensim.ini'
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried running the '/bin' application on a different PC on the
+</I>&gt;&gt;&gt;&gt;<i> intranet (so then the viewers work OK on that PC but not now on the
+</I>&gt;&gt;&gt;&gt;<i> original server PC)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried 'AllowAlternatePorts' as both True and False
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - I have inserted the 'AV rezzes as cloud' patch and rebuilt (that
+</I>&gt;&gt;&gt;&gt;<i> fixed THAT issue!)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - I have totally rebuilt from scratch many times
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - I have rebooted all the PC's at various times
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried router firewall off and on (not that it should matter - router
+</I>&gt;&gt;&gt;&gt;<i> is Belkin F5D8635-4v1 btw)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Tried Windows firewalls off and on
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Searched high and low on the internet (generally and within the
+</I>&gt;&gt;&gt;&gt;<i> opensim forums)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> All to no avail.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> All I have changed in 'opensim.ini' (and 'Regions.ini') are the Port
+</I>&gt;&gt;&gt;&gt;<i> and Internet related addresses. The only other thing I changed was
+</I>&gt;&gt;&gt;&gt;<i> somewhere I had to uncomment a line to say which version of cache to
+</I>&gt;&gt;&gt;&gt;<i> use. Everything is 'out of the box' (I did, of course, copy the
+</I>&gt;&gt;&gt;&gt;<i> '.ini.examples' and convert them to '.ini's as appropriate).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Has anyone had this issue and actually fixed it? How?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Any help really appreciated. I'm a professional programmer by the way
+</I>&gt;&gt;&gt;&gt;<i> - but I wasn't intending to have to start diving into the opensim
+</I>&gt;&gt;&gt;&gt;<i> source to fix this!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Kevin
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>------------------------------------------------------------------------
+&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Dr. Paul A. Fishwick           E-Mail: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;&gt;<i> Dept. of Computer &amp; Info       Phone &amp; FAX: (352) 392-1414
+</I>&gt;&gt;<i>  Science and Engineering       WWW: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&lt;<A HREF="http://www.cise.ufl.edu/%7Efishwick">http://www.cise.ufl.edu/%7Efishwick</A>&gt; 
+&gt;&gt;<i> University of Florida          (PGP Key available at above WWW address)
+</I>&gt;&gt;<i> P. O. Box 116120
+</I>&gt;&gt;<i> 332 Bldg. CSE, Gainesville, FL 32611-6120
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+View this message in context:
+<A HREF="http://n2.nabble.com/Opensim-0-6-6-release-standalone-hangs-at-Waiting-for-r">http://n2.nabble.com/Opensim-0-6-6-release-standalone-hangs-at-Waiting-for-r</A>
+egion-handshake-LoginPacketNeverReceived-on-os-tp3817749p3824081.html
+Sent from the opensim-users mailing list archive at Nabble.com.
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091014/a49c07d1/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091014/a49c07d1/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002875.html">[Opensim-users] Opensim 0.6.6 release standalone hangs at	'Waiting for region handshake' (LoginPacketNeverReceived) on	other intranet computers
+</A></li>
+	<LI>Next message: <A HREF="002878.html">[Opensim-users] Opensim 0.6.6 release standalone hangs at	'Waiting for region handshake' (LoginPacketNeverReceived) on	other intranet computers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2876">[ date ]</a>
+              <a href="thread.html#2876">[ thread ]</a>
+              <a href="subject.html#2876">[ subject ]</a>
+              <a href="author.html#2876">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sim Version Filtering (re: Mantis #0002361:	adding simulator release control at grid level to avoid out	of date simulator registration )
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20Version%20Filtering%20%28re%3A%20Mantis%20%230002361%3A%0A%09adding%20simulator%20release%20control%20at%20grid%20level%20to%20avoid%20out%0A%09of%20date%20simulator%20registration%20%29&In-Reply-To=%3C170fa1780811040856i56ea2472o774fdc9337142896%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000579.html">
+   <LINK REL="Next"  HREF="000601.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sim Version Filtering (re: Mantis #0002361:	adding simulator release control at grid level to avoid out	of date simulator registration )</H1>
+    <B>James Stallings II</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20Version%20Filtering%20%28re%3A%20Mantis%20%230002361%3A%0A%09adding%20simulator%20release%20control%20at%20grid%20level%20to%20avoid%20out%0A%09of%20date%20simulator%20registration%20%29&In-Reply-To=%3C170fa1780811040856i56ea2472o774fdc9337142896%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Sim Version Filtering (re: Mantis #0002361:	adding simulator release control at grid level to avoid out	of date simulator registration )">james.stallings at gmail.com
+       </A><BR>
+    <I>Tue Nov  4 17:56:04 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000579.html">[Opensim-users] Sim Version Filtering (re: Mantis #0002361: adding simulator release control at grid level to avoid out of date	simulator registration )
+</A></li>
+        <LI>Next message: <A HREF="000601.html">[Opensim-users] [PROPOSAL]: Sim version filtering (was Re: Sim Version Filtering (re: Mantis #0002361...)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#581">[ date ]</a>
+              <a href="thread.html#581">[ thread ]</a>
+              <a href="subject.html#581">[ subject ]</a>
+              <a href="author.html#581">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good points all JustinCC :D
+
+Consider, though, that this would be a feature that's enabled/disabled in
+configuration, so change-impact would be minimal, breaking only the feature,
+and that only until it was freshened up.
+
+I do admit to some curiousity as to how this would impinge on
+interoperability.
+
+Also, we -do- already implement some code that scrapes the SVN revision from
+somewhere; while it's certainly true two wrongs dont make a right, we could
+perhaps rely on the same code for this purpose and hopefully have a single
+point of focus in the source when it becomes time to adjust it.
+
+OTH, it may be that there are better approaches I am not seeing (as I dont
+code for the project, serialization of interfaces is not something that
+would have occurred to me, for instance). Might you elaborate further on
+this in terms of who it would impact and how the functionality would be
+exposed at the configuration/operation level?
+
+Cheers!
+James
+
+
+On Tue, Nov 4, 2008 at 10:42 AM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> I agree that there does need to be a way to stop regions registering that
+</I>&gt;<i> do not implement the required interface.
+</I>&gt;<i>
+</I>&gt;<i> I don't like revision number as a solution because
+</I>&gt;<i>
+</I>&gt;<i> a)  It may well not be present for people running binaries or building
+</I>&gt;<i> source that doesn't come straight from SVN
+</I>&gt;<i>
+</I>&gt;<i> b)  Revision numbers are specific to the source control system we happen to
+</I>&gt;<i> be using.  If we ever migrate this is bad.
+</I>&gt;<i> It may also be bad for people using git-svn.  It is also bad for interop
+</I>&gt;<i> with non-OpenSim virtual environment systems.
+</I>&gt;<i>
+</I>&gt;<i> Therefore, I tend to favour an approach where individual interfaces are
+</I>&gt;<i> manually versioned by the developer when the
+</I>&gt;<i> interface is changed.  I don't think that this is too much to ask.
+</I>&gt;<i>
+</I>&gt;<i> However, if somebody wants to supply a patch that implements filtering by
+</I>&gt;<i> revision that somehow avoids the problems in
+</I>&gt;<i> (a), then I will not object, though this will not be permanent.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> James Stallings II wrote:
+</I>&gt;<i> &gt; Greetings Devs :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Sacha Magne had asked me to annotate this issue in the Mantis, perhaps
+</I>&gt;<i> &gt; unawares that it was an issue rather close to my heart, as I have been
+</I>&gt;<i> &gt; asking for something like this for some time.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; As my thinking on this somewhat exceeds the scope of a note to the
+</I>&gt;<i> &gt; mantis, I decided to make my post here instead.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The short take: I think this is a feature very much in need of
+</I>&gt;<i> &gt; implementation, generally speaking - I think it impacts region (and
+</I>&gt;<i> &gt; therefore grid) stability in a sufficiently significant manner that it
+</I>&gt;<i> &gt; should take on an increased level of prioritization.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The long view: Simply put, refusing to register an out of date revision
+</I>&gt;<i> &gt; of the region is not sufficient to the cause. Additionally, there is the
+</I>&gt;<i> &gt; (valid) conern about SVN revision numbers being used to track the
+</I>&gt;<i> &gt; 'fingerprint' of a simulator that is being connected.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; First, I'll address the issue of SVN revision number as a fingerprint:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; While it may not be the most desireable means of identifying the region
+</I>&gt;<i> &gt; for these purposes, it is the one that has the ideal level of
+</I>&gt;<i> &gt; granularity - as quickly as the project moves, and as dramatic as
+</I>&gt;<i> &gt; changes in operations sometimes are, the release number is simply not
+</I>&gt;<i> &gt; sufficient to the cause as we currently stamp releases. So, in order to
+</I>&gt;<i> &gt; make this feature deliver acording to the need, we either must use the
+</I>&gt;<i> &gt; SVN revision number, or come up with some other methodology for
+</I>&gt;<i> &gt; identifying the age of the region in  terms of its functional age. The
+</I>&gt;<i> &gt; obvious thing to use is the revision number, as it tracks the level of
+</I>&gt;<i> &gt; change at precisely the right granularity. The question becomes then one
+</I>&gt;<i> &gt; of pinning the revision down in the runtime environment. There are
+</I>&gt;<i> &gt; already provisions in place for this to happen, and if the software is
+</I>&gt;<i> &gt; built to accomodate it, the revision will be available at run-time - it
+</I>&gt;<i> &gt; may be sufficient to say that from the point of the introduction of this
+</I>&gt;<i> &gt; feature, any region not built such that it identifies itself by revision
+</I>&gt;<i> &gt; number is disallowed from participation (provided, of course, that this
+</I>&gt;<i> &gt; feature is enabled in the approriate config file).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Finally, I'll address the insufficiency of this approach as a solution:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Denying registration of a new region for these purposes is good - but
+</I>&gt;<i> &gt; it's not the full solution to the problem. First, I suppose I need to
+</I>&gt;<i> &gt; point out the obvious in order to lay the groundwork for my assertion: a
+</I>&gt;<i> &gt; running simulator connected to a grid is not 'connected' in any
+</I>&gt;<i> &gt; meaningfull sense; rather, it is 'registered'. Registration means that
+</I>&gt;<i> &gt; the simulator has a) permission to use the grid services provided, and
+</I>&gt;<i> &gt; b) sufficient information on file in the grid backstore to facillitate
+</I>&gt;<i> &gt; the delivery of grid services to the simulator. This is significant
+</I>&gt;<i> &gt; because, for instance, one may upgrade a grid in the presence of many
+</I>&gt;<i> &gt; running and 'connected' simulators, and provided there is not sufficient
+</I>&gt;<i> &gt; change in the protocols, the simulator will never be the wiser for it.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Consequently, we need not only a way to refuse 'simulator X'
+</I>&gt;<i> &gt; registration on the grounds of it's revision relative to the grid, but
+</I>&gt;<i> &gt; also a mechanism for refusing service based on the relative simulator
+</I>&gt;<i> &gt; revision, and a mechanism for arbitrarily deregistering a simulator
+</I>&gt;<i> &gt; altogether. This will effectively temporarily or permanantly remove a
+</I>&gt;<i> &gt; region from the grid, given sufficient differences in the revision in
+</I>&gt;<i> &gt; the one instance, or operator intervention in the other. This will
+</I>&gt;<i> &gt; effectively implement the philosophy Sacha is attempting to express with
+</I>&gt;<i> &gt; his patch :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I think it is fairly important that we do this; not just because I am
+</I>&gt;<i> &gt; constantly beset on some border by misconfigured regions, but because it
+</I>&gt;<i> &gt; will help to ensure a more 'statistically controlled' environment from a
+</I>&gt;<i> &gt; testing and debugging standpoint; in other words, we can count on
+</I>&gt;<i> &gt; regions to behave in particular ways when we have some control over what
+</I>&gt;<i> &gt; revision is talking with the grid or with other simulators.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I apologize for being so long winded - I hope you have made it through
+</I>&gt;<i> &gt; my post without getting a headache.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Cheers
+</I>&gt;<i> &gt; James
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; ===================================
+</I>&gt;<i> &gt; The wind
+</I>&gt;<i> &gt; scours the earth for prayers
+</I>&gt;<i> &gt; The night obscures them
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="http://osgrid.org">http://osgrid.org</A>
+</I>&gt;<i> &gt; <A HREF="http://del.icio.us/SPQR">http://del.icio.us/SPQR</A>
+</I>&gt;<i> &gt; <A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+</I>&gt;<i> &gt; <A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ------------------------------------------------------------------------
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> justincc
+</I>&gt;<i> Justin Clark-Casey
+</I>&gt;<i> <A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+===================================
+The wind
+scours the earth for prayers
+The night obscures them
+
+<A HREF="http://osgrid.org">http://osgrid.org</A>
+<A HREF="http://del.icio.us/SPQR">http://del.icio.us/SPQR</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20081104/5736bbea/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20081104/5736bbea/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000579.html">[Opensim-users] Sim Version Filtering (re: Mantis #0002361: adding simulator release control at grid level to avoid out of date	simulator registration )
+</A></li>
+	<LI>Next message: <A HREF="000601.html">[Opensim-users] [PROPOSAL]: Sim version filtering (was Re: Sim Version Filtering (re: Mantis #0002361...)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#581">[ date ]</a>
+              <a href="thread.html#581">[ thread ]</a>
+              <a href="subject.html#581">[ subject ]</a>
+              <a href="author.html#581">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

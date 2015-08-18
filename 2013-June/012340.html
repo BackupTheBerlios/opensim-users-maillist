@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Animating NPCs without osNpcPlayAnimation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animating%20NPCs%20without%20osNpcPlayAnimation&In-Reply-To=%3C51AD1982.30208%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012339.html">
+   <LINK REL="Next"  HREF="012341.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Animating NPCs without osNpcPlayAnimation</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animating%20NPCs%20without%20osNpcPlayAnimation&In-Reply-To=%3C51AD1982.30208%40googlemail.com%3E"
+       TITLE="[Opensim-users] Animating NPCs without osNpcPlayAnimation">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Jun  4 00:32:34 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012339.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+        <LI>Next message: <A HREF="012341.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12340">[ date ]</a>
+              <a href="thread.html#12340">[ thread ]</a>
+              <a href="subject.html#12340">[ subject ]</a>
+              <a href="author.html#12340">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 03/06/13 22:19, Dr Ramesh Ramloll wrote:
+&gt;<i> Hello
+</I>&gt;<i> I was a surprised to see that I could animate an NPC without using the
+</I>&gt;<i> osNpcPlayAnimation OSSL command.
+</I>&gt;<i> For e.g. if you create a prim and set it to animate an avatar who sits
+</I>&gt;<i> on it, then you could use something like
+</I>&gt;<i>
+</I>&gt;<i>      run_time_permissions(integer perm)
+</I>&gt;<i>      {
+</I>&gt;<i>          if (perm &amp; PERMISSION_TRIGGER_ANIMATION)
+</I>&gt;<i>          {
+</I>&gt;<i>                  animation=llGetInventoryName(INVENTORY_ANIMATION,0);
+</I>&gt;<i>                  llStartAnimation(animation);
+</I>&gt;<i>          }
+</I>&gt;<i>      }
+</I>&gt;<i>
+</I>&gt;<i> that gets triggered when sitting is detected.
+</I>&gt;<i>
+</I>&gt;<i> However, if you get an NPC to sit on the same prim, you would not
+</I>&gt;<i> expect it to animate as well because the osNpcPlayAnimation command is
+</I>&gt;<i> not there. It's not that I do not like it, it's just that I do not
+</I>&gt;<i> understand it. And I am wondering if this is a bug. if this is fixed,
+</I>&gt;<i> then I may have to debug my scripts for all my seats at a later stage.
+</I>&gt;<i> Since my application deals with hundreds of such situations, that
+</I>&gt;<i> would be hard work in the future ... because as we well know updating
+</I>&gt;<i> code for complex stuff in opensim is so inefficient because there are
+</I>&gt;<i> no way to propagate changes for scripts that are used often in
+</I>&gt;<i> different objects.
+</I>
+The effective interpretation of llStartAnimation() is that it applies to all avatars, which includes both client 
+controlled avatars and NPCs.  osNpcPlayAnimation() does have overlapping functionality but is more general since you can 
+play animations given an NPC id, not just those which have granted PERMISSION_TRIGGER_ANIMATION.
+
+&gt;<i>
+</I>&gt;<i> on a side note, how does one efficiently update scripts for many
+</I>&gt;<i> objects that use them at once. It would be great if each script
+</I>&gt;<i> element in every prim is actually a pointer to some script in
+</I>&gt;<i> inventory, so that when we change the script in the inventory, then
+</I>&gt;<i> all scripts would know about the change. Is this something way too
+</I>&gt;<i> hard to implement?
+</I>
+I think this is a hard thing to do since the system just isn't designed to treat separate objects as clones of a master 
+object.  The two solutions that come to mind are
+
+1) Have a manual script controlled system that can llDie() all the clones on command and reinstantiate them with the 
+next script from a master object (a complex and approach).  I think this is what commands such as 
+llRemoteLoadScriptPin() may be for but I haven't done that sufficient script work to know.
+
+2) Directly edit the script asset in the database to incorporate the changes.  This will only work if you want to change 
+all instances and you know for sure that all objects are using the same script asset (which is hard to guarantee if a 
+de-duplicating asset database isn't used).  You would also need to clear the simulator's asset cache after this is done 
+(a complex and fragile approach).
+
+&gt;<i>
+</I>&gt;<i> Ramesh
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i> Rameshsharma Ramloll PhD, CEO CTO DeepSemaphore LLC, Affiliate
+</I>&gt;<i> Research Associate Professor, Idaho State University, Pocatello, ID
+</I>&gt;<i> 83209 Tel: 208-240-0040
+</I>&gt;<i> Blog, LinkedIn, DeepSemaphore LLC, Google+ profile
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012339.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+	<LI>Next message: <A HREF="012341.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12340">[ date ]</a>
+              <a href="thread.html#12340">[ thread ]</a>
+              <a href="subject.html#12340">[ subject ]</a>
+              <a href="author.html#12340">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

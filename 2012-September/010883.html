@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Issue upgrading to Open Simulator 0.7.4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Issue%20upgrading%20to%20Open%20Simulator%200.7.4&In-Reply-To=%3C504F97DE.3020804%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010882.html">
+   <LINK REL="Next"  HREF="010884.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Issue upgrading to Open Simulator 0.7.4</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Issue%20upgrading%20to%20Open%20Simulator%200.7.4&In-Reply-To=%3C504F97DE.3020804%40gmail.com%3E"
+       TITLE="[Opensim-users] Issue upgrading to Open Simulator 0.7.4">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Tue Sep 11 21:58:22 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010882.html">[Opensim-users] Issue upgrading to Open Simulator 0.7.4
+</A></li>
+        <LI>Next message: <A HREF="010884.html">[Opensim-users] Can a script be written to periodically upload	textures from a server?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10883">[ date ]</a>
+              <a href="thread.html#10883">[ thread ]</a>
+              <a href="subject.html#10883">[ subject ]</a>
+              <a href="author.html#10883">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ahhh OK. Good to hear you got it sorted out =)
+
+On 9/11/2012 1:26 PM, Kurt Reisler wrote:
+&gt;<i> *BANG*
+</I>&gt;<i> (Sound of head hitting keyboard)
+</I>&gt;<i> *BANG*
+</I>&gt;<i> (Repeatedly)
+</I>&gt;<i> The problem was not with the MySQL database login/password 
+</I>&gt;<i> (ConnectionString =), but with the line above it, which I had not 
+</I>&gt;<i> uncommented.  So, when I removed the &quot;;&quot; in front of &quot;StorageProvider 
+</I>&gt;<i> =&quot;, the problem went away and the upgrade is humming along.
+</I>&gt;<i> *BANG*
+</I>&gt;<i>
+</I>&gt;<i> Thank you
+</I>&gt;<i> Kurt
+</I>&gt;<i>
+</I>&gt;<i> On 9/10/2012 5:58 PM, Chris wrote:
+</I>&gt;&gt;<i> I would double check the database name and passwords then in both 
+</I>&gt;&gt;<i> MySQL (or which ever database you are using) and also in 
+</I>&gt;&gt;<i> StandaloneCommon. I actually ran into a similar error just a little 
+</I>&gt;&gt;<i> while ago, turns out i had mismatched passwords.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 9/10/2012 1:53 PM, Kurt Reisler wrote:
+</I>&gt;&gt;&gt;<i> Well, this line
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>     Include-Architecture = &quot;config-include/Standalone.ini&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Is uncommented in the [Architecture] section.   However, I have 
+</I>&gt;&gt;&gt;<i> pulled a fresh copy of StandaloneCommon.ini from 
+</I>&gt;&gt;&gt;<i> StandaloneCommon.ini.example and made the appropriate changes to 
+</I>&gt;&gt;&gt;<i> it.  Let's see what happens.  Same thing.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks
+</I>&gt;&gt;&gt;<i> Kurt
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 9/10/2012 2:35 PM, Chris wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hi Kurt,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Usually I get this issue upon upgrade when I forget to make a 
+</I>&gt;&gt;&gt;&gt;<i> selection in OpenSim.ini in the Architecture section. Check that 
+</I>&gt;&gt;&gt;&gt;<i> you have uncommented one of these and give it another shot =)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 9/10/2012 1:10 PM, Kurt Reisler wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> I have done upgrades before with no issue, so this one surprised 
+</I>&gt;&gt;&gt;&gt;&gt;<i> me.  Moving from OpenSim 0.7.3.1 to OpenSim 0.7.4.  Did all the 
+</I>&gt;&gt;&gt;&gt;&gt;<i> usual things; backed up, made the site specific changes to 
+</I>&gt;&gt;&gt;&gt;&gt;<i> OpenSim.ini, config-include/StandaloneCommon.ini and fired it up.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> What I get is this error, early on in the startup process:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>     2012-09-10 13:50:44,045 ERROR - OpenSim.Server.Base.ServerUtils
+</I>&gt;&gt;&gt;&gt;&gt;<i>     Error loading plugin OpenSim.Services.Interfaces.IFriendsService
+</I>&gt;&gt;&gt;&gt;&gt;<i>         from OpenSim.Services.FriendsService.dll. Exception: No
+</I>&gt;&gt;&gt;&gt;&gt;<i>     StorageProvider configured
+</I>&gt;&gt;&gt;&gt;&gt;<i>     2012-09-10 13:50:44,050 ERROR -
+</I>&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Friends.FriendsModule [FRIENDS]:
+</I>&gt;&gt;&gt;&gt;&gt;<i>     No Connector defined in section Friends, or failed to load, 
+</I>&gt;&gt;&gt;&gt;&gt;<i> cannot
+</I>&gt;&gt;&gt;&gt;&gt;<i>     continue
+</I>&gt;&gt;&gt;&gt;&gt;<i>     2012-09-10 13:50:44,054 ERROR - OpenSim.Application 
+</I>&gt;&gt;&gt;&gt;&gt;<i> [APPLICATION]:
+</I>&gt;&gt;&gt;&gt;&gt;<i>     APPLICATION EXCEPTION DETECTED: 
+</I>&gt;&gt;&gt;&gt;&gt;<i> System.UnhandledExceptionEventArgs
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>     Exception: System.Exception: Connector load error
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at
+</I>&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Friends.FriendsModule.InitModule(IConfigSource 
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>     config)
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at
+</I>&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Friends.FriendsModule.Initialise(IConfigSource 
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>     config)
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at
+</I>&gt;&gt;&gt;&gt;&gt;<i> OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControllerPlugin.Initialise(OpenSimBase 
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>     openSim)
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at OpenSim.ApplicationPluginInitialiser.Initialise(IPlugin 
+</I>&gt;&gt;&gt;&gt;&gt;<i> plugin)
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at OpenSim.Framework.PluginLoader`1.Load()
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at OpenSim.Framework.PluginLoader`1.Load(String extpoint)
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at OpenSim.OpenSimBase.LoadPlugins()
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at OpenSim.OpenSimBase.StartupSpecific()
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at OpenSim.OpenSim.StartupSpecific()
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at OpenSim.Framework.Servers.BaseOpenSimServer.Startup()
+</I>&gt;&gt;&gt;&gt;&gt;<i>        at OpenSim.Application.Main(String[] args)
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>     Application is terminating: True
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> The referenced error is occurring in the 
+</I>&gt;&gt;&gt;&gt;&gt;<i> config-include/Standalone.ini file, which is untouched.  I realize 
+</I>&gt;&gt;&gt;&gt;&gt;<i> not many are running in standalone mode, but any pointers to the 
+</I>&gt;&gt;&gt;&gt;&gt;<i> cause of the problem would be appreciated.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Thanks in advance
+</I>&gt;&gt;&gt;&gt;&gt;<i> Kurt
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.4 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120911/0cffec20/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120911/0cffec20/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010882.html">[Opensim-users] Issue upgrading to Open Simulator 0.7.4
+</A></li>
+	<LI>Next message: <A HREF="010884.html">[Opensim-users] Can a script be written to periodically upload	textures from a server?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10883">[ date ]</a>
+              <a href="thread.html#10883">[ thread ]</a>
+              <a href="subject.html#10883">[ subject ]</a>
+              <a href="author.html#10883">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

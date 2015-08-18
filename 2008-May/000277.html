@@ -1,0 +1,758 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Problem starting Linux OpenSim with MySQL
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problem%20starting%20Linux%20OpenSim%20with%20MySQL&In-Reply-To=%3C002001c8c089%24ea094df0%24be1be9d0%24%40org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000276.html">
+   <LINK REL="Next"  HREF="000278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Problem starting Linux OpenSim with MySQL</H1>
+    <B>Miss Suzhanna Rossini</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problem%20starting%20Linux%20OpenSim%20with%20MySQL&In-Reply-To=%3C002001c8c089%24ea094df0%24be1be9d0%24%40org%3E"
+       TITLE="[Opensim-users] Problem starting Linux OpenSim with MySQL">suz at balsasluts.org
+       </A><BR>
+    <I>Wed May 28 08:13:12 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000276.html">[Opensim-users] Problem starting Linux OpenSim with MySQL
+</A></li>
+        <LI>Next message: <A HREF="000278.html">[Opensim-users] Is Mantis 1398 about HTTP POST method ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#277">[ date ]</a>
+              <a href="thread.html#277">[ thread ]</a>
+              <a href="subject.html#277">[ subject ]</a>
+              <a href="author.html#277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm in no way a programmer...
+That said, I directly saw that you have used the MSSQL ini file template, and NOT the MySQL one!
+
+My mysql_connection.ini looks like this;
+
+[mysqlconnection]
+hostname=192.168.222.230
+database=opensim
+username=----
+password=----
+pooling=false
+port=3306
+
+; These entries are only for if you, for some reason, wish to customize your user server table names.
+; Do note that if you change the table names, you might have to change the sql resources too manually
+; If ommitted, default values will be used.
+
+userstablename=users
+userfriendstablename=userfriends
+agentstablename=agents
+
+As you see, it reads [mysqlconnection] and not [mssqlconnection] as you listed.
+
+/Suz
+
+
+
+&gt;<i> -----Ursprungligt meddelande-----
+</I>&gt;<i> Fr&#229;n: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:opensim-users-
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>] F&#246;r Browser [ICE]
+</I>&gt;<i> Skickat: den 28 maj 2008 00:09
+</I>&gt;<i> Till: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &#196;mne: [Opensim-users] Problem starting Linux OpenSim with MySQL
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I downloaded OpenSim v0.5.4 Linux + MySql v5.  I initially had OpenSim
+</I>&gt;<i> running on Windows XP but encountered problems with MySQL. So I decided
+</I>&gt;<i> to swtich to my Ubuntu 7.10 environment for running OpenSim.
+</I>&gt;<i> 
+</I>&gt;<i> I followed the informations to modify both my OpenSim and Mysql ini
+</I>&gt;<i> files but when I started OpenSim, it fails with an MySQL error
+</I>&gt;<i> &quot;Exception: System.Exception: Error initialising MySql Database:
+</I>&gt;<i> System.FormatException: Input string was not in the correct format&quot;. I
+</I>&gt;<i> looked it up on Google, mysql.org and OsGrid's forum but didn't find
+</I>&gt;<i> anything on it.
+</I>&gt;<i> 
+</I>&gt;<i> Here are the infos that might be needed to investigate (I masked the
+</I>&gt;<i> password). Tell me if you need anything else.  Thank you.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> MySQL
+</I>&gt;<i> 
+</I>&gt;<i> mysql&gt; status
+</I>&gt;<i> --------------
+</I>&gt;<i> mysql  Ver 14.12 Distrib 5.0.45, for pc-linux-gnu (i486) using readline
+</I>&gt;<i> 5.2
+</I>&gt;<i> 
+</I>&gt;<i> Connection id:          19
+</I>&gt;<i> Current database:
+</I>&gt;<i> Current user:           <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">root at localhost</A>
+</I>&gt;<i> SSL:                    Not in use
+</I>&gt;<i> Current pager:          stdout
+</I>&gt;<i> Using outfile:          ''
+</I>&gt;<i> Using delimiter:        ;
+</I>&gt;<i> Server version:         5.0.45-Debian_1ubuntu3.3-log Debian etch
+</I>&gt;<i> distribution
+</I>&gt;<i> Protocol version:       10
+</I>&gt;<i> Connection:             Localhost via UNIX socket
+</I>&gt;<i> Server characterset:    latin1
+</I>&gt;<i> Db     characterset:    latin1
+</I>&gt;<i> Client characterset:    latin1
+</I>&gt;<i> Conn.  characterset:    latin1
+</I>&gt;<i> UNIX socket:            /var/run/mysqld/mysqld.sock
+</I>&gt;<i> Uptime:                 55 min 17 sec
+</I>&gt;<i> 
+</I>&gt;<i> Threads: 1  Questions: 292  Slow queries: 0  Opens: 144  Flush tables:
+</I>&gt;<i> 1  Open tables: 23  Queries per second avg: 0.088
+</I>&gt;<i> --------------
+</I>&gt;<i> 
+</I>&gt;<i> mysql&gt; show databases;
+</I>&gt;<i> +--------------------+
+</I>&gt;<i> | Database           |
+</I>&gt;<i> +--------------------+
+</I>&gt;<i> | information_schema |
+</I>&gt;<i> | mysql              |
+</I>&gt;<i> | opensim            |
+</I>&gt;<i> +--------------------+
+</I>&gt;<i> 3 rows in set (0.00 sec)
+</I>&gt;<i> 
+</I>&gt;<i> mysql&gt; show tables;
+</I>&gt;<i> +-------------------+
+</I>&gt;<i> | Tables_in_opensim |
+</I>&gt;<i> +-------------------+
+</I>&gt;<i> | land              |
+</I>&gt;<i> | landaccesslist    |
+</I>&gt;<i> | primitems         |
+</I>&gt;<i> | prims             |
+</I>&gt;<i> | primshapes        |
+</I>&gt;<i> | terrain           |
+</I>&gt;<i> +-------------------+
+</I>&gt;<i> 6 rows in set (0.00 sec)
+</I>&gt;<i> 
+</I>&gt;<i> mysql&gt; select * from land;
+</I>&gt;<i> Empty set (0.00 sec)
+</I>&gt;<i> 
+</I>&gt;<i> mysql&gt; select * from landaccesslist;
+</I>&gt;<i> Empty set (0.01 sec)
+</I>&gt;<i> 
+</I>&gt;<i> mysql&gt; select * from primitems;
+</I>&gt;<i> Empty set (0.00 sec)
+</I>&gt;<i> 
+</I>&gt;<i> mysql&gt; select * from prims;
+</I>&gt;<i> Empty set (0.00 sec)
+</I>&gt;<i> 
+</I>&gt;<i> mysql&gt; select * from terrain;
+</I>&gt;<i> Empty set (0.00 sec)
+</I>&gt;<i> 
+</I>&gt;<i> -----------------------------------------------------------------------
+</I>&gt;<i> ----------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">browserice at browserice-desktop</A>:~/Desktop/VirtualWorlds/opensimbin$ mono
+</I>&gt;<i> OpenSim.exe
+</I>&gt;<i> OpenSim 0.5, SVN build
+</I>&gt;<i> 
+</I>&gt;<i> Performing compatibility checks...  Environment is compatible.
+</I>&gt;<i> 
+</I>&gt;<i> Starting...
+</I>&gt;<i> 
+</I>&gt;<i> ERROR: There was an error while scanning assembly:
+</I>&gt;<i> /home/browserice/Desktop/VirtualWorlds/opensimbin/PhysX-wrapper.dll
+</I>&gt;<i> (Could not load file or assembly
+</I>&gt;<i> '/home/browserice/Desktop/VirtualWorlds/opensimbin/PhysX-wrapper.dll'
+</I>&gt;<i> or one of its dependencies. An attempt was made to load a program with
+</I>&gt;<i> an incorrect format.)
+</I>&gt;<i> ERROR: There was an error while scanning assembly:
+</I>&gt;<i> /home/browserice/Desktop/VirtualWorlds/opensimbin/ode.dll (Could not
+</I>&gt;<i> load file or assembly
+</I>&gt;<i> '/home/browserice/Desktop/VirtualWorlds/opensimbin/ode.dll' or one of
+</I>&gt;<i> its dependencies. An attempt was made to load a program with an
+</I>&gt;<i> incorrect format.)
+</I>&gt;<i> ERROR: There was an error while scanning assembly:
+</I>&gt;<i> /home/browserice/Desktop/VirtualWorlds/opensimbin/openjpeg-libsl.dll
+</I>&gt;<i> (Could not load file or assembly
+</I>&gt;<i> '/home/browserice/Desktop/VirtualWorlds/opensimbin/openjpeg-libsl.dll'
+</I>&gt;<i> or one of its dependencies. An attempt was made to load a program with
+</I>&gt;<i> an incorrect format.)
+</I>&gt;<i> ERROR: There was an error while scanning assembly:
+</I>&gt;<i> /home/browserice/Desktop/VirtualWorlds/opensimbin/sqlite3.dll (Could
+</I>&gt;<i> not load file or assembly
+</I>&gt;<i> '/home/browserice/Desktop/VirtualWorlds/opensimbin/sqlite3.dll' or one
+</I>&gt;<i> of its dependencies. An attempt was made to load a program with an
+</I>&gt;<i> incorrect format.)
+</I>&gt;<i> 17:37:02 -
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 17:37:02 - ========================= STARTING OPENSIM
+</I>&gt;<i> =========================
+</I>&gt;<i> 17:37:02 -
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> Creating new local console
+</I>&gt;<i> 17:37:02 - [Region]: Started at 5/27/2008 5:37:02 PM
+</I>&gt;<i> 17:37:03 - [DATASTORE]: Attempting to load
+</I>&gt;<i> OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 17:37:03 - [DATASTORE]: MySql - connecting: Data
+</I>&gt;<i> Source=localhost;Database=opensim;User ID=root;Password=******;
+</I>&gt;<i> 17:37:04 - [DATASTORE]: Added IRegionDataStore Interface
+</I>&gt;<i> 17:37:04 - [ASSET SERVER]: Starting asset storage system
+</I>&gt;<i> 17:37:04 - [SQLAssetServer]: AssetStorage: Attempting to load
+</I>&gt;<i> OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i> 
+</I>&gt;<i> Exception: System.Exception: Error initialising MySql Database:
+</I>&gt;<i> System.FormatException: Input string was not in the correct format
+</I>&gt;<i>   at System.UInt32.Parse (System.String s, NumberStyles style,
+</I>&gt;<i> IFormatProvider fp) [0x00000]
+</I>&gt;<i>   at System.UInt32.Parse (System.String s, IFormatProvider provider)
+</I>&gt;<i> [0x00000]
+</I>&gt;<i>   at System.Convert.ToUInt32 (System.String value, IFormatProvider
+</I>&gt;<i> provider) [0x00000]
+</I>&gt;<i>   at System.String.System.IConvertible.ToUInt32 (IFormatProvider
+</I>&gt;<i> provider) [0x00000]
+</I>&gt;<i>   at MySql.Data.MySqlClient.MySqlConnectionStringBuilder.ConvertToUInt
+</I>&gt;<i> (System.Object value) [0x00000]
+</I>&gt;<i>   at MySql.Data.MySqlClient.MySqlConnectionStringBuilder.SetValue
+</I>&gt;<i> (Keyword kw, System.Object value) [0x00000]
+</I>&gt;<i>   at MySql.Data.MySqlClient.MySqlConnectionStringBuilder.SetValue
+</I>&gt;<i> (System.String keyword, System.Object value) [0x00000]
+</I>&gt;<i>   at MySql.Data.MySqlClient.MySqlConnectionStringBuilder.set_Item
+</I>&gt;<i> (System.String key, System.Object value) [0x00000]
+</I>&gt;<i>   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString
+</I>&gt;<i> (System.String value) [0x00000]
+</I>&gt;<i>   at MySql.Data.MySqlClient.MySqlConnectionStringBuilder..ctor
+</I>&gt;<i> (System.String connectionString) [0x00000]
+</I>&gt;<i>   at MySql.Data.MySqlClient.MySqlConnection.set_ConnectionString
+</I>&gt;<i> (System.String value) [0x00000]
+</I>&gt;<i>   at MySql.Data.MySqlClient.MySqlConnection..ctor (System.String
+</I>&gt;<i> connectionString) [0x00000]
+</I>&gt;<i>   at (wrapper remoting-invoke-with-check)
+</I>&gt;<i> MySql.Data.MySqlClient.MySqlConnection:.ctor (string)
+</I>&gt;<i>   at OpenSim.Framework.Data.MySQL.MySQLManager..ctor (System.String
+</I>&gt;<i> hostname, System.String database, System.String username, System.String
+</I>&gt;<i> password, System.String cpooling, System.String port) [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.Data.MySQL.MySQLManager..ctor (System.String
+</I>&gt;<i> hostname, System.String database, System.String username, System.String
+</I>&gt;<i> password, System.String cpooling, System.String port) [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.Data.MySQL.MySQLAssetData.Initialise ()
+</I>&gt;<i> [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.Communications.Cache.SQLAssetServer.AddPlugin
+</I>&gt;<i> (System.String FileName) [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.Communications.Cache.SQLAssetServer..ctor
+</I>&gt;<i> (System.String pluginName) [0x00000]
+</I>&gt;<i>   at OpenSim.OpenSimMain.Initialize () [0x00000]
+</I>&gt;<i>   at OpenSim.Region.ClientStack.RegionApplicationBase.StartUp ()
+</I>&gt;<i> [0x00000]
+</I>&gt;<i>   at OpenSim.OpenSimMain.StartUp () [0x00000]
+</I>&gt;<i>   at OpenSim.Application.Main (System.String[] args) [0x00000]
+</I>&gt;<i> 
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">browserice at browserice-desktop</A>:~/Desktop/VirtualWorlds/opensimbin$
+</I>&gt;<i> 
+</I>&gt;<i> -----------------------------------------------------------------------
+</I>&gt;<i> ----------------------------------------
+</I>&gt;<i> OpenSim.log
+</I>&gt;<i> 
+</I>&gt;<i> &#65279;2008-05-27 17:01:06,922 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2008-05-27 17:01:07,004 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ========================= STARTING OPENSIM =========================
+</I>&gt;<i> 2008-05-27 17:01:07,004 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2008-05-27 17:01:07,078 INFO  - OpenSim.Framework.Console.ConsoleBase
+</I>&gt;<i> [Region]: Started at 5/27/2008 5:01:07 PM
+</I>&gt;<i> 2008-05-27 17:01:07,378 INFO  -
+</I>&gt;<i> OpenSim.Region.Environment.StorageManager [DATASTORE]: Attempting to
+</I>&gt;<i> load OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 2008-05-27 17:01:07,470 INFO  -
+</I>&gt;<i> OpenSim.Framework.Data.MySQL.MySQLDataStore [DATASTORE]: MySql -
+</I>&gt;<i> connecting: Data Source=localhost;Database=opensim;User
+</I>&gt;<i> ID=root;Password=******;
+</I>&gt;<i> 2008-05-27 17:01:08,003 INFO  -
+</I>&gt;<i> OpenSim.Framework.Data.MySQL.MySQLDataStore [DATASTORE]: MySql Database
+</I>&gt;<i> doesn't exist... creating
+</I>&gt;<i> 2008-05-27 17:01:08,369 INFO  -
+</I>&gt;<i> OpenSim.Region.Environment.StorageManager [DATASTORE]: Added
+</I>&gt;<i> IRegionDataStore Interface
+</I>&gt;<i> 2008-05-27 17:01:08,379 INFO  -
+</I>&gt;<i> OpenSim.Framework.Communications.Cache.AssetServerBase [ASSET SERVER]:
+</I>&gt;<i> Starting asset storage system
+</I>&gt;<i> 2008-05-27 17:01:08,456 INFO  -
+</I>&gt;<i> OpenSim.Framework.Communications.Cache.SQLAssetServer [SQLAssetServer]:
+</I>&gt;<i> AssetStorage: Attempting to load OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 2008-05-27 17:03:12,541 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2008-05-27 17:03:12,619 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ========================= STARTING OPENSIM =========================
+</I>&gt;<i> 2008-05-27 17:03:12,628 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2008-05-27 17:03:12,698 INFO  - OpenSim.Framework.Console.ConsoleBase
+</I>&gt;<i> [Region]: Started at 5/27/2008 5:03:12 PM
+</I>&gt;<i> 2008-05-27 17:03:12,995 INFO  -
+</I>&gt;<i> OpenSim.Region.Environment.StorageManager [DATASTORE]: Attempting to
+</I>&gt;<i> load OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 2008-05-27 17:03:13,077 INFO  -
+</I>&gt;<i> OpenSim.Framework.Data.MySQL.MySQLDataStore [DATASTORE]: MySql -
+</I>&gt;<i> connecting: Data Source=localhost;Database=opensim;User
+</I>&gt;<i> ID=root;Password=******;
+</I>&gt;<i> 2008-05-27 17:03:13,812 INFO  -
+</I>&gt;<i> OpenSim.Region.Environment.StorageManager [DATASTORE]: Added
+</I>&gt;<i> IRegionDataStore Interface
+</I>&gt;<i> 2008-05-27 17:03:13,822 INFO  -
+</I>&gt;<i> OpenSim.Framework.Communications.Cache.AssetServerBase [ASSET SERVER]:
+</I>&gt;<i> Starting asset storage system
+</I>&gt;<i> 2008-05-27 17:03:13,902 INFO  -
+</I>&gt;<i> OpenSim.Framework.Communications.Cache.SQLAssetServer [SQLAssetServer]:
+</I>&gt;<i> AssetStorage: Attempting to load OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 2008-05-27 17:04:46,809 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2008-05-27 17:04:46,888 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ========================= STARTING OPENSIM =========================
+</I>&gt;<i> 2008-05-27 17:04:46,898 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2008-05-27 17:04:46,963 INFO  - OpenSim.Framework.Console.ConsoleBase
+</I>&gt;<i> [Region]: Started at 5/27/2008 5:04:46 PM
+</I>&gt;<i> 2008-05-27 17:04:47,249 INFO  -
+</I>&gt;<i> OpenSim.Region.Environment.StorageManager [DATASTORE]: Attempting to
+</I>&gt;<i> load OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 2008-05-27 17:04:47,325 INFO  -
+</I>&gt;<i> OpenSim.Framework.Data.MySQL.MySQLDataStore [DATASTORE]: MySql -
+</I>&gt;<i> connecting: Data Source=localhost;Database=opensim;User
+</I>&gt;<i> ID=root;Password=******;
+</I>&gt;<i> 2008-05-27 17:04:48,077 INFO  -
+</I>&gt;<i> OpenSim.Region.Environment.StorageManager [DATASTORE]: Added
+</I>&gt;<i> IRegionDataStore Interface
+</I>&gt;<i> 2008-05-27 17:04:48,087 INFO  -
+</I>&gt;<i> OpenSim.Framework.Communications.Cache.AssetServerBase [ASSET SERVER]:
+</I>&gt;<i> Starting asset storage system
+</I>&gt;<i> 2008-05-27 17:04:48,162 INFO  -
+</I>&gt;<i> OpenSim.Framework.Communications.Cache.SQLAssetServer [SQLAssetServer]:
+</I>&gt;<i> AssetStorage: Attempting to load OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 2008-05-27 17:37:02,862 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2008-05-27 17:37:02,956 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ========================= STARTING OPENSIM =========================
+</I>&gt;<i> 2008-05-27 17:37:02,956 INFO  - OpenSim.OpenSimMain
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2008-05-27 17:37:02,993 INFO  - OpenSim.Framework.Console.ConsoleBase
+</I>&gt;<i> [Region]: Started at 5/27/2008 5:37:02 PM
+</I>&gt;<i> 2008-05-27 17:37:03,289 INFO  -
+</I>&gt;<i> OpenSim.Region.Environment.StorageManager [DATASTORE]: Attempting to
+</I>&gt;<i> load OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 2008-05-27 17:37:03,343 INFO  -
+</I>&gt;<i> OpenSim.Framework.Data.MySQL.MySQLDataStore [DATASTORE]: MySql -
+</I>&gt;<i> connecting: Data Source=localhost;Database=opensim;User
+</I>&gt;<i> ID=root;Password=******;
+</I>&gt;<i> 2008-05-27 17:37:04,122 INFO  -
+</I>&gt;<i> OpenSim.Region.Environment.StorageManager [DATASTORE]: Added
+</I>&gt;<i> IRegionDataStore Interface
+</I>&gt;<i> 2008-05-27 17:37:04,139 INFO  -
+</I>&gt;<i> OpenSim.Framework.Communications.Cache.AssetServerBase [ASSET SERVER]:
+</I>&gt;<i> Starting asset storage system
+</I>&gt;<i> 2008-05-27 17:37:04,184 INFO  -
+</I>&gt;<i> OpenSim.Framework.Communications.Cache.SQLAssetServer [SQLAssetServer]:
+</I>&gt;<i> AssetStorage: Attempting to load OpenSim.Framework.Data.MySQL.dll
+</I>&gt;<i> 
+</I>&gt;<i> -----------------------------------------------------------------------
+</I>&gt;<i> ----------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> OpenSim.ini
+</I>&gt;<i> 
+</I>&gt;<i> [Startup]
+</I>&gt;<i> gridmode = false
+</I>&gt;<i> 
+</I>&gt;<i> ; ##
+</I>&gt;<i> ; ## STORAGE
+</I>&gt;<i> ; ##
+</I>&gt;<i> 
+</I>&gt;<i> ; *** Prim Storage - only leave one storage_plugin uncommented ***
+</I>&gt;<i> ; --- The NullStorage stores nothing - effectively disabling
+</I>&gt;<i> persistence:
+</I>&gt;<i> ;storage_plugin = &quot;OpenSim.DataStore.NullStorage.dll&quot;
+</I>&gt;<i> 
+</I>&gt;<i> ; --- To use sqlite as region storage:
+</I>&gt;<i> ;storage_plugin = &quot;OpenSim.Framework.Data.SQLite.dll&quot;
+</I>&gt;<i> ;storage_connection_string=&quot;URI=file:OpenSim.db,version=3&quot;;
+</I>&gt;<i> 
+</I>&gt;<i> ; --- To use MySQL storage, supply your own connectionstring (this is
+</I>&gt;<i> only an example):
+</I>&gt;<i> ;     note that the supplied account needs create privilegies if you
+</I>&gt;<i> want it to auto-create needed tables.
+</I>&gt;<i> storage_plugin=&quot;OpenSim.Framework.Data.MySQL.dll&quot;
+</I>&gt;<i> storage_connection_string=&quot;Data Source=localhost;Database=opensim;User
+</I>&gt;<i> ID=root;Password=******;&quot;;
+</I>&gt;<i> 
+</I>&gt;<i> ; turn on experimental storage of prim inventories in the region
+</I>&gt;<i> database
+</I>&gt;<i> 
+</I>&gt;<i> ; Prim inventory storage is now turned on by default
+</I>&gt;<i> ; However, this option remains in case it needs to be disabled
+</I>&gt;<i> ; More details of the current state of this can be found at
+</I>&gt;<i> ;
+</I>&gt;<i> ; <A HREF="http://opensimulator.org/wiki/OpenSim:Prim_Inventory_Persistence">http://opensimulator.org/wiki/OpenSim:Prim_Inventory_Persistence</A>
+</I>&gt;<i> ;
+</I>&gt;<i> storage_prim_inventories = true
+</I>&gt;<i> 
+</I>&gt;<i> ; Avatar appearance persistence
+</I>&gt;<i> appearance_persist = false
+</I>&gt;<i> appearance_connection_string = &quot;Data
+</I>&gt;<i> Source=localhost;Database=avatar_appearance;User
+</I>&gt;<i> ID=root;Password=******;pooling=false;&quot;
+</I>&gt;<i> 
+</I>&gt;<i> ; Select whether you want to use local or grid asset storage.
+</I>&gt;<i> ;
+</I>&gt;<i> ; If you're running in standalone, you definitely want local, since
+</I>&gt;<i> there is no grid (hence this is redundant, and should
+</I>&gt;<i> ; really be eliminated).  The database itself is defined in
+</I>&gt;<i> asset_plugin below
+</I>&gt;<i> ;
+</I>&gt;<i> ; If you're running a region server connecting to a grid, you probably
+</I>&gt;<i> want grid mode, since this will use the
+</I>&gt;<i> ; grid asset server.  If you select local in grid mode, then you will
+</I>&gt;<i> use a database as specified in asset_plugin to store assets
+</I>&gt;<i> ; locally.  This will mean you won't be able to take items using your
+</I>&gt;<i> assets to other people's regions.
+</I>&gt;<i> asset_database = &quot;local&quot;
+</I>&gt;<i> ;asset_database = &quot;grid&quot;
+</I>&gt;<i> 
+</I>&gt;<i> ; Should avatars in neighbor sims see objects in this sim?
+</I>&gt;<i> see_into_this_sim_from_neighbor = True
+</I>&gt;<i> 
+</I>&gt;<i> ; ##
+</I>&gt;<i> ; ## PHYSICS
+</I>&gt;<i> ; ##
+</I>&gt;<i> 
+</I>&gt;<i> ; Select a mesher here. ZeroMesher is save and fast.
+</I>&gt;<i> ; ZeroMesher also means that the physics engine models the physics of
+</I>&gt;<i> prims
+</I>&gt;<i> ; sticking to the basic shapes the engine does support. Usually this is
+</I>&gt;<i> only a box.
+</I>&gt;<i> ; Meshmerizer gives a better handling of complex prims by using
+</I>&gt;<i> triangle meshes.
+</I>&gt;<i> ; Note, that only ODE physics currently deals with meshed prims in a
+</I>&gt;<i> satisfactoring way
+</I>&gt;<i> ;
+</I>&gt;<i> ;meshing = ZeroMesher
+</I>&gt;<i> meshing = Meshmerizer
+</I>&gt;<i> 
+</I>&gt;<i> ; Choose one of the physics engines below
+</I>&gt;<i> ;physics = basicphysics
+</I>&gt;<i> ;physics = POS
+</I>&gt;<i> physics = OpenDynamicsEngine
+</I>&gt;<i> ;physics = modified_BulletX
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> startup_console_commands_file = &quot;startup_commands.txt&quot;
+</I>&gt;<i> shutdown_console_commands_file = &quot;shutdown_commands.txt&quot;
+</I>&gt;<i> serverside_object_permissions = false
+</I>&gt;<i> 
+</I>&gt;<i> ; if you would like to allow prims to be physical and move by physics
+</I>&gt;<i> with the physical checkbox in the client set this to true.
+</I>&gt;<i> physical_prim = true
+</I>&gt;<i> 
+</I>&gt;<i> ; To run a script every few minutes, set the script filename here
+</I>&gt;<i> ; timer_Script = &quot;filename&quot;
+</I>&gt;<i> 
+</I>&gt;<i> ; ##
+</I>&gt;<i> ; ## ScriptEngine
+</I>&gt;<i> ; ##
+</I>&gt;<i> ; These are region modules loaded into each region to provide script
+</I>&gt;<i> support
+</I>&gt;<i> ; Scripts may be everything from LSL or C# scripts put in prims to
+</I>&gt;<i> whole game systems that controls the whole grid.
+</I>&gt;<i> ; You can load multiple modules by separating them with a coma.
+</I>&gt;<i> ;
+</I>&gt;<i> ; Example:
+</I>&gt;<i> ;script_engine =
+</I>&gt;<i> OpenSim.Region.ScriptEngine.DotNetEngine.dll,OpenSim.Region.ScriptEngin
+</I>&gt;<i> e.RemoteServer.dll
+</I>&gt;<i> ;
+</I>&gt;<i> ; This is the current and most stable ScriptEngine:
+</I>&gt;<i> script_engine = OpenSim.Region.ScriptEngine.DotNetEngine.dll
+</I>&gt;<i> 
+</I>&gt;<i> ;Experimental remote ScriptServer plugin (does not currently work):
+</I>&gt;<i> ;script_engine = OpenSim.Region.ScriptEngine.RemoteServer.dll
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> [StandAlone]
+</I>&gt;<i> accounts_authenticate = true
+</I>&gt;<i> welcome_message = &quot;Welcome to Browser_ice's OpenSim&quot;
+</I>&gt;<i> 
+</I>&gt;<i> ; Asset database provider
+</I>&gt;<i> ;asset_plugin = &quot;OpenSim.Framework.Data.SQLite.dll&quot;
+</I>&gt;<i> asset_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+</I>&gt;<i> 
+</I>&gt;<i> ; Inventory database provider
+</I>&gt;<i> ;inventory_plugin = &quot;OpenSim.Framework.Data.SQLite.dll&quot;
+</I>&gt;<i> inventory_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+</I>&gt;<i> 
+</I>&gt;<i> ; User Data Database provider
+</I>&gt;<i> ;userDatabase_plugin = &quot;OpenSim.Framework.Data.SQLite.dll&quot;
+</I>&gt;<i> userDatabase_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+</I>&gt;<i> 
+</I>&gt;<i> default_location_x = 1000
+</I>&gt;<i> default_location_y = 1000
+</I>&gt;<i> dump_assets_to_file = false
+</I>&gt;<i> 
+</I>&gt;<i> [Network]
+</I>&gt;<i> http_listener_port = 9000
+</I>&gt;<i> remoting_listener_port = 8895
+</I>&gt;<i> 
+</I>&gt;<i> ; Uncomment below to enable llRemoteData/remote channels
+</I>&gt;<i> ; remoteDataPort = 20800
+</I>&gt;<i> 
+</I>&gt;<i> grid_server_url = &quot;<A HREF="http://127.0.0.1:8001">http://127.0.0.1:8001</A>&quot;
+</I>&gt;<i> grid_send_key = &quot;null&quot;
+</I>&gt;<i> grid_recv_key = &quot;null&quot;
+</I>&gt;<i> 
+</I>&gt;<i> user_server_url = &quot;<A HREF="http://127.0.0.1:8002">http://127.0.0.1:8002</A>&quot;
+</I>&gt;<i> user_send_key = &quot;null&quot;
+</I>&gt;<i> user_recv_key = &quot;null&quot;
+</I>&gt;<i> 
+</I>&gt;<i> asset_server_url = &quot;<A HREF="http://127.0.0.1:8003">http://127.0.0.1:8003</A>&quot;
+</I>&gt;<i> 
+</I>&gt;<i> inventory_server_url = &quot;<A HREF="http://127.0.0.1:8004">http://127.0.0.1:8004</A>&quot;
+</I>&gt;<i> 
+</I>&gt;<i> [Chat]
+</I>&gt;<i> whisper_distance = 10
+</I>&gt;<i> say_distance = 30
+</I>&gt;<i> shout_distance = 100
+</I>&gt;<i> 
+</I>&gt;<i> ; Uncomment the following for IRC bridge
+</I>&gt;<i> ; experimental, so if it breaks... keep both parts... yada yada
+</I>&gt;<i> ; also, not good error detection when it fails
+</I>&gt;<i> ;[IRC]
+</I>&gt;<i> ;server  = name.of.irc.server.on.the.net
+</I>&gt;<i> ;nick    = OpenSimBotNameProbablyMakeThisShorter
+</I>&gt;<i> ;channel = #the_irc_channel_you_want_to_connect_to
+</I>&gt;<i> ;port = 6667
+</I>&gt;<i> ;MSGformat fields : 0=botnick, 1=user, 2=region, 3=message
+</I>&gt;<i> ; must start with &quot;PRIVMSG {0} : &quot; or irc server will get upset
+</I>&gt;<i> ;for : :
+</I>&gt;<i> ;msgformat = &quot;PRIVMSG {0} :: {3}&quot;
+</I>&gt;<i> ;for : -  :
+</I>&gt;<i> msgformat = &quot;PRIVMSG {0} : {3} - {1} of {2}&quot;
+</I>&gt;<i> ;for : - from  :
+</I>&gt;<i> ;msgformat = &quot;PRIVMSG {0} : {3} - from {1}&quot;
+</I>&gt;<i> 
+</I>&gt;<i> ; Uncomment the following to control the progression of daytime
+</I>&gt;<i> ; in the Sim.  The defaults are what is shown below
+</I>&gt;<i> [Sun]
+</I>&gt;<i> ; number of wall clock hours for an opensim day.  24.0 would mean
+</I>&gt;<i> realtime
+</I>&gt;<i> day_length = 6.0
+</I>&gt;<i> 
+</I>&gt;<i> ; send a Sun update ever frame_rate # of frames.  A lower number will
+</I>&gt;<i> ; make for smoother sun transition at the cost of network
+</I>&gt;<i> frame_rate = 100
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> [ScriptEngine.DotNetEngine]
+</I>&gt;<i> ;
+</I>&gt;<i> ; These settings are specific to DotNetEngine script engine
+</I>&gt;<i> ; Other script engines based on OpenSim.Region.ScriptEngine.Common.dll
+</I>&gt;<i> will have almost identical settings, but in another section of this
+</I>&gt;<i> config file.
+</I>&gt;<i> ;
+</I>&gt;<i> 
+</I>&gt;<i> ; When a script receives an event the event is queued.
+</I>&gt;<i> ; Any free thread will start executing this event. One script can only
+</I>&gt;<i> have one event executed simultaneously.
+</I>&gt;<i> ; If you have only one thread, and one script has a loop or does a lot
+</I>&gt;<i> of work, then no other scripts can run at the same time.
+</I>&gt;<i> ; Same if you have 10 threads, then only 10 scripts can be run
+</I>&gt;<i> simultaneously.
+</I>&gt;<i> ; But because most scripts exit after their task, the threads are free
+</I>&gt;<i> to go on to the next script.
+</I>&gt;<i> 
+</I>&gt;<i> ; Refresh ScriptEngine config options (these settings) every xx seconds
+</I>&gt;<i> ; 0 = Do not refresh
+</I>&gt;<i> ; Set it to number of seconds between refresh, for example 30.
+</I>&gt;<i> ; Will allow you to change ScriptEngine settings while server is
+</I>&gt;<i> running just by using &quot;CONFIG SET&quot; on console
+</I>&gt;<i> ; For example to increase or decrease number of threads: CONFIG SET
+</I>&gt;<i> NumberOfScriptThreads 10
+</I>&gt;<i> ; NOTE! Disabled for now. Feature does not work.
+</I>&gt;<i> RefreshConfig=0
+</I>&gt;<i> 
+</I>&gt;<i> ; Number of threads to use for script event execution
+</I>&gt;<i> ; Threads are shared across all regions
+</I>&gt;<i> NumberOfScriptThreads=2
+</I>&gt;<i> 
+</I>&gt;<i> ; Script event execution thread priority inside application.
+</I>&gt;<i> ; Valid values: Lowest, BelowNormal, Normal, AboveNormal, Highest
+</I>&gt;<i> ScriptThreadPriority=BelowNormal
+</I>&gt;<i> 
+</I>&gt;<i> ; How long MAX should a script event be allowed to run (per event
+</I>&gt;<i> execution)?
+</I>&gt;<i> ; Do not set this too low (like 50ms) as there are some time wasted in
+</I>&gt;<i> simply executing a function
+</I>&gt;<i> ; There is also a small speed penalty for every kill that is made
+</I>&gt;<i> MaxEventExecutionTimeMs=5000
+</I>&gt;<i> 
+</I>&gt;<i> ; Should we enable the max script event execution thread to look for
+</I>&gt;<i> scripts that exceed their timeslice?
+</I>&gt;<i> EnforceMaxEventExecutionTime=true
+</I>&gt;<i> 
+</I>&gt;<i> ; Should we stop the script completely when time exceeds?
+</I>&gt;<i> ; This is useful if you have a high  and want to deactivate scripts
+</I>&gt;<i> that go wrong
+</I>&gt;<i> ; Note that for example physics engine can slow down the system and
+</I>&gt;<i> make scripts spend more time
+</I>&gt;<i> DeactivateScriptOnTimeout=false
+</I>&gt;<i> 
+</I>&gt;<i> ; If no scripts have executed in this pass how long should we sleep
+</I>&gt;<i> before checking again
+</I>&gt;<i> ; Impact:
+</I>&gt;<i> ; Too low and you will waste lots of CPU
+</I>&gt;<i> ; Too high and people touching object or similar will have to wait up
+</I>&gt;<i> to this amount of time before script responding
+</I>&gt;<i> SleepTimeIfNoScriptExecutionMs=50
+</I>&gt;<i> 
+</I>&gt;<i> ; AppDomains are used for two things:
+</I>&gt;<i> ; * Security: Scripts inside AppDomains are limited in permissions.
+</I>&gt;<i> ; * Script unloading: When a script is deactivated it can not be
+</I>&gt;<i> unloaded. Only whole AppDomains can be unloaded.
+</I>&gt;<i> ;                     AppDomains are therefore only unloaded once ALL
+</I>&gt;<i> active scripts inside it has been deactivated (removed from prims).
+</I>&gt;<i> ; Each AppDomain has some memory overhead. But leaving dead scripts in
+</I>&gt;<i> memory also has memory overhead.
+</I>&gt;<i> ScriptsPerAppDomain=1
+</I>&gt;<i> 
+</I>&gt;<i> ; MaintenanceLoop
+</I>&gt;<i> ; How often to run maintenance loop
+</I>&gt;<i> ; Maintenance loop is doing: script compile/load, script unload, reload
+</I>&gt;<i> config, adjust running config and enforce max execution time
+</I>&gt;<i> MaintenanceLoopms=50
+</I>&gt;<i> 
+</I>&gt;<i> ; How many maintenanceloops between each of these.
+</I>&gt;<i> ; (if 2 then function will be executed every MaintenanceLoopms*2 ms)
+</I>&gt;<i> ; Script loading/unloading
+</I>&gt;<i> 
+</I>&gt;<i> ; How long load/unload thread should sleep if there is nothing to do
+</I>&gt;<i> ; Higher value makes it respond slower when scripts are added/removed
+</I>&gt;<i> from prims
+</I>&gt;<i> ; But once active it will process all in queue before sleeping again
+</I>&gt;<i> MaintenanceLoopTicks_ScriptLoadUnload=1
+</I>&gt;<i> 
+</I>&gt;<i> ; Other tasks
+</I>&gt;<i> ; check if we need to reload config, adjust running config and enforce
+</I>&gt;<i> max execution time
+</I>&gt;<i> MaintenanceLoopTicks_Other=10
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ; Maximum number of items in load/unload queue before we start
+</I>&gt;<i> rejecting loads
+</I>&gt;<i> ; Note that we will only be rejecting load. Unloads will still be able
+</I>&gt;<i> to queue.
+</I>&gt;<i> LoadUnloadMaxQueueSize=100
+</I>&gt;<i> 
+</I>&gt;<i> ; Maximum number of (LSL) events that can be queued before new events
+</I>&gt;<i> are ignored.
+</I>&gt;<i> EventExecutionMaxQueueSize=300
+</I>&gt;<i> 
+</I>&gt;<i> ; Async LL command sleep
+</I>&gt;<i> ; If no async LL commands are waiting, how long should thread sleep
+</I>&gt;<i> before checking again
+</I>&gt;<i> ; Async LL commands are LSL-commands that causes an event to be fired
+</I>&gt;<i> back with result
+</I>&gt;<i> AsyncLLCommandLoopms=50
+</I>&gt;<i> 
+</I>&gt;<i> ; When script is converted from LSL to C#, or just plain compiled, a
+</I>&gt;<i> copy of the script source will be put in the ScriptEngine folder
+</I>&gt;<i> WriteScriptSourceToDebugFile=true
+</I>&gt;<i> 
+</I>&gt;<i> ; Specify default script compiler
+</I>&gt;<i> ; If you do not specify //cs, //vb, //js or //lsl tag as the first
+</I>&gt;<i> characters of your script then the default compiler will be chosen
+</I>&gt;<i> ; Valid languages are: lsl, cs, js and vb
+</I>&gt;<i> DefaultCompileLanguage=lsl
+</I>&gt;<i> 
+</I>&gt;<i> ; Specify what compilers are allowed to be used
+</I>&gt;<i> ; Note vb only works on Windows for now (Mono lacks VB compile support)
+</I>&gt;<i> ; Valid languages are: lsl, cs, js and vb
+</I>&gt;<i> AllowedCompilers=lsl,cs,js,vb
+</I>&gt;<i> 
+</I>&gt;<i> ; Compile scripts with debugging
+</I>&gt;<i> ; Probably a thousand times slower, but gives you a line number when
+</I>&gt;<i> something goes wrong.
+</I>&gt;<i> CompileWithDebugInformation=true
+</I>&gt;<i> 
+</I>&gt;<i> ; Remove old scripts on next startup
+</I>&gt;<i> CleanUpOldScriptsOnStartup=true
+</I>&gt;<i> 
+</I>&gt;<i> [LL-Functions]
+</I>&gt;<i> ; Set the following to true to allow administrator owned scripts to
+</I>&gt;<i> execute console commands
+</I>&gt;<i> AllowosConsoleCommand=false
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -----------------------------------------------------------------------
+</I>&gt;<i> ----------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> mysql_connection.ini
+</I>&gt;<i> 
+</I>&gt;<i> ; The IniConfig.cs that parses this file by just finding the first
+</I>&gt;<i> key={value} in the whole text so comments aren't really honoured.
+</I>&gt;<i> ; Also, this algorithm can probably lead to 'amusing' results in
+</I>&gt;<i> unfortunate cases.
+</I>&gt;<i> 
+</I>&gt;<i> [mssqlconnection]
+</I>&gt;<i> data_source=\SQLEXPRESS
+</I>&gt;<i> initial_catalog=database
+</I>&gt;<i> persist_security_info=True
+</I>&gt;<i> database=opensim
+</I>&gt;<i> user_id=root
+</I>&gt;<i> password=******
+</I>&gt;<i> 
+</I>&gt;<i> ; These entries are only for if you, for some reason, wish to customize
+</I>&gt;<i> your user server table names.
+</I>&gt;<i> ; Do note that if you change the table names, you might have to change
+</I>&gt;<i> the sql resources too manually
+</I>&gt;<i> ; If ommitted, default values will be used.
+</I>&gt;<i> 
+</I>&gt;<i> userstablename=users
+</I>&gt;<i> userfriendstablename=userfriends
+</I>&gt;<i> agentstablename=agents
+</I>&gt;<i> regionstablename=regions
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _________________________________________________________________
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000276.html">[Opensim-users] Problem starting Linux OpenSim with MySQL
+</A></li>
+	<LI>Next message: <A HREF="000278.html">[Opensim-users] Is Mantis 1398 about HTTP POST method ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#277">[ date ]</a>
+              <a href="thread.html#277">[ thread ]</a>
+              <a href="subject.html#277">[ subject ]</a>
+              <a href="author.html#277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

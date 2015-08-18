@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] save iar / no longer saves the 'root' &quot;My Inventory&quot; folder - it just saves the Objects, Assets, etc. folders instead
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20save%20iar%20/%20no%20longer%20saves%20the%20%27root%27%20%22My%0A%20Inventory%22%20folder%20-%20it%20just%20saves%20the%20Objects%2C%20Assets%2C%20etc.%20folders%20instead&In-Reply-To=%3C511EF1D5.3050503%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011768.html">
+   <LINK REL="Next"  HREF="011764.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] save iar / no longer saves the 'root' &quot;My Inventory&quot; folder - it just saves the Objects, Assets, etc. folders instead</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20save%20iar%20/%20no%20longer%20saves%20the%20%27root%27%20%22My%0A%20Inventory%22%20folder%20-%20it%20just%20saves%20the%20Objects%2C%20Assets%2C%20etc.%20folders%20instead&In-Reply-To=%3C511EF1D5.3050503%40googlemail.com%3E"
+       TITLE="[Opensim-users] save iar / no longer saves the 'root' &quot;My Inventory&quot; folder - it just saves the Objects, Assets, etc. folders instead">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Feb 16 03:41:25 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011768.html">[Opensim-users] Server Side Baking
+</A></li>
+        <LI>Next message: <A HREF="011764.html">[Opensim-users] Avatar texture corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11761">[ date ]</a>
+              <a href="thread.html#11761">[ thread ]</a>
+              <a href="subject.html#11761">[ subject ]</a>
+              <a href="author.html#11761">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi folks.  Just a small note to say that in OpenSimulator development code commit d54d3180 (Sat Feb 16 00:49:06 2013), I 
+have changed &quot;save iar&quot; so that specifying / as the internal inventory path.  For instance,
+
+save iar Justin Clark-Casey / password
+
+will now save all the folders below &quot;My Inventory&quot; (Objects, Textures, etc) rather than &quot;My Inventory&quot; itself.
+
+I believe this is more correct than saving an actual &quot;My Inventory&quot; folder, since &quot;My Inventory&quot; is not a real folder - 
+it's really just the name of the user's inventory.
+
+This also means that IARs saved like this can be used to restore an entire user's inventory, using the &quot;load iar 
+--merge&quot; functionas detailed at [1], rather than leaving you stuck with everything under a duplicate &quot;My Inventory&quot; 
+folder on restore.
+
+The same effect could be achieved by using /* as the save iar path and this will continue to work but it's more 
+intuitive to use /.
+
+This change does not affect any other path.  If you wanted to save only the contents of a/b/c for example and not the 
+folder itself, you would need to use the path a/b/c/*
+
+This isn't a big change but I thought that I would let people know.
+
+[1] <A HREF="http://opensimulator.org/wiki/Inventory_Archives#Saving_an_entire_user.27s_inventory">http://opensimulator.org/wiki/Inventory_Archives#Saving_an_entire_user.27s_inventory</A>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011768.html">[Opensim-users] Server Side Baking
+</A></li>
+	<LI>Next message: <A HREF="011764.html">[Opensim-users] Avatar texture corruption
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11761">[ date ]</a>
+              <a href="thread.html#11761">[ thread ]</a>
+              <a href="subject.html#11761">[ subject ]</a>
+              <a href="author.html#11761">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

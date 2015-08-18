@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] trying to set up freeswitch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAEtfgb7vfWVHi5VSZMgjobnCgAAAEAAAAPBq3RG3JC1Eicvr20uaICkBAAAAAA%3D%3D%40yahoo.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006209.html">
+   <LINK REL="Next"  HREF="006210.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] trying to set up freeswitch</H1>
+    <B>Olli Aro</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAEtfgb7vfWVHi5VSZMgjobnCgAAAEAAAAPBq3RG3JC1Eicvr20uaICkBAAAAAA%3D%3D%40yahoo.co.uk%3E"
+       TITLE="[Opensim-users] trying to set up freeswitch">olli_aro at yahoo.co.uk
+       </A><BR>
+    <I>Sat Nov 20 21:35:14 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006209.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+        <LI>Next message: <A HREF="006210.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6214">[ date ]</a>
+              <a href="thread.html#6214">[ thread ]</a>
+              <a href="subject.html#6214">[ subject ]</a>
+              <a href="author.html#6214">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry not seen an error trace like this before. But would definitely say it
+is something to do with line:
+
+&quot;returning empty as it's for another context&quot; 
+
+Also the following line in your client output looks suspicious:
+
+&quot;2010-11-20T19:13:06Z INFO: LLVoiceClient::sessionAddedEvent: Could not
+generate caller id from uri, using hash of uri&quot;
+
+Unfortunately I have never used imprudence.
+
+Sorry can't be more help at this time.
+
+Olli
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Gregor Mendle
+Sent: 20 November 2010 19:30
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] trying to set up freeswitch
+
+Hi!
+
+Oili, Yes, i am behind a NAT and something was wrong with the my router. But
+in order to fix FreeSwitch first and then checking my router i changed my
+config files as suggested by enauman and used my local IP address for both
+opensim and FreeSwitch. I made some progress because after logging into my
+sim using my local IP as loginuri i can see activity at the FreeSwitch
+console. This is a block of the
+messages:
+
+2010-11-20 19:47:50.363527 [NOTICE] switch_channel.c:779 New Channel
+sofia/external/xzel3s0PGReqdMv-IcCR0qQ==@192.168.0.101
+[4c5bbfab-6b36-48c5-97e7-0b737b79887b]
+2010-11-20 19:47:50.370714 [INFO] mod_dialplan_xml.c:331 Processing R2
+D2
+&lt;xzel3s0PGReqdMv-IcCR0qQ==&gt;-&gt;conf-xNjMyMGIxNDgtOGMyNi00ZjFiLTkyMWMtODZmY2EzN
+Tk3OGZm
+in context public
+2010-11-20 19:47:50.419539 [ERR] mod_xml_curl.c:301 Error Parsing Result!
+2010-11-20 19:47:50.420538 [NOTICE] switch_core_state_machine.c:185
+sofia/external/xzel3s0PGReqdMv-IcCR0qQ==@192.168.0.101 has executed the last
+dialplan instruction, hanging up.
+2010-11-20 19:47:50.420538 [NOTICE] switch_core_state_machine.c:187 Hangup
+sofia/external/xzel3s0PGReqdMv-IcCR0qQ==@192.168.0.101
+[CS_EXECUTE] [NORMAL_CLEARING]
+2010-11-20 19:47:50.420538 [NOTICE] switch_core_session.c:1220 Session
+462 (sofia/external/xzel3s0PGReqdMv-IcCR0qQ==@192.168.0.101) Ended
+2010-11-20 19:47:50.420538 [NOTICE] switch_core_session.c:1222 Close Channel
+sofia/external/xzel3s0PGReqdMv-IcCR0qQ==@192.168.0.101
+[CS_DESTROY]
+
+As you can see, there is an error parsing results and the session is closed.
+This is the log for session 462. These messages are repeated a lot of times
+with increasing session number.
+
+some of the messages in the sim console are:
+
+20:07:12 - [FreeSwitchDirectory]: requestBody item section dialplan
+20:07:12 - [FreeSwitchDirectory]: requestBody item variable_direction
+inbound
+20:07:12 - [FreeSwitchDirectory]: requestBody item Hunt-ANI
+xzel3s0PGReqdMv-IcCR0qQ==
+20:07:12 - [FreeSwitchDirectory]: requestBody item Caller-Username
+xzel3s0PGReqdMv-IcCR0qQ==
+20:07:12 - [FreeSwitchDirectory]: requestBody item Event-Calling-Function
+dialplan_xml_locate
+20:07:12 - [FreeSwitchDirectory]: requestBody item
+variable_sip_local_network_addr 192.168.0.101
+20:07:12 - [FreeSwitchDirectory]: requestBody item Caller-Caller-ID-Name R2
+D2
+20:07:12 - [FreeSwitchDirectory]: requestBody item Call-Direction inbound
+20:07:12 - [FreeSwitchDirectory]: requestBody item variable_sip_user_agent
+Vivox-SDK-2.1.3010.6270-Lin
+(Mar--8-2009/23:18:55)
+20:07:12 - [FreeSwitchDirectory]: requestBody item Unique-ID
+a402f9fa-b3e5-4fa5-8b64-afee69305622
+20:07:12 - [FreeSwitchDirectory]: returning empty as it's for another
+context
+20:07:12 - [FreeSwitchVoice]: FreeSwitchConfigHTTPHandler return
+
+
+could the line: &quot;returning empty as it's for another context&quot; be the one
+causing the parse error in freeswitch?
+
+
+Starting the viewer (imprudence) from an xterm i can see the following
+messages in the terminal when i activate voice chat:
+
+I don't know why the first line containg 127.0.0.1 because i changed every
+reference to an IP address in the config files for robust opensim and
+freeswitch to 192.168.0.101 (my local IP) and i don't know if this could be
+a problem
+
+
+Listening for requests on tcp:127.0.0.1:44125 Initializing Logging
+/home/mburgos/Library/Logs/Vivox/, SdkServer, .txt, -1 2010-11-20T19:13:05Z
+INFO: LLVoiceClient::connectorCreateResponse:
+Connector.Create succeeded, Vivox SDK version is 2.1.3010.6270
+2010-11-20T19:13:06Z INFO: LLVoiceClient::buildLocalAudioUpdates:
+Setting speaker mute to false
+2010-11-20T19:13:06Z INFO: LLVoiceClient::buildLocalAudioUpdates:
+Setting speaker volume to 13
+2010-11-20T19:13:06Z INFO: LLVoiceClient::buildLocalAudioUpdates:
+Setting mic volume to 44
+2010-11-20T19:13:06Z INFO: LLVoiceClient::sendFriendsListUpdates:
+Checking vivox buddy list against friends list...
+2010-11-20T19:13:06Z INFO: LLVoiceClient::sendFriendsListUpdates:
+Sending friend list updates...
+2010-11-20T19:13:06Z WARNING: LLVoiceClient::stateMachine:
+stateSessionTerminated with NULL mAudioSession 2010-11-20T19:13:06Z INFO:
+LLVoiceClient::sessionCreateResponse:
+Session.Create response received (success), session handle is
+c1_m1000xzel3s0PGReqdMv-IcCR0qQ==0
+2010-11-20T19:13:06Z INFO: LLVoiceClient::sessionAddedEvent: session
+sip:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">conf-xNjMyMGIxNDgtOGMyNi00ZjFiLTkyMWMtODZmY2EzNTk3OGZm at 192.168.0.101</A>,
+alias , name  handle c1_m1000xzel3s0PGReqdMv-IcCR0qQ==0
+2010-11-20T19:13:06Z INFO: LLVoiceClient::sessionAddedEvent: Could not
+generate caller id from uri, using hash of uri
+sip:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">conf-xNjMyMGIxNDgtOGMyNi00ZjFiLTkyMWMtODZmY2EzNTk3OGZm at 192.168.0.101</A>
+2010-11-20T19:13:06Z INFO: LLVoiceClient::sessionAddedEvent: caller
+ID: 01d5c5ab-0f8c-bd70-bebd-275f80d7010a
+2010-11-20T19:13:06Z INFO: LLVoiceClient::sessionRemovedEvent: handle
+c1_m1000xzel3s0PGReqdMv-IcCR0qQ==0
+2010-11-20T19:13:06Z WARNING: LLVoiceClient::leftAudioSession: left session
+c1_m1000xzel3s0PGReqdMv-IcCR0qQ==0 in state stateSessionTerminated
+
+
+Thanks for your help and for reading such a long email
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006209.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+	<LI>Next message: <A HREF="006210.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6214">[ date ]</a>
+              <a href="thread.html#6214">[ thread ]</a>
+              <a href="subject.html#6214">[ subject ]</a>
+              <a href="author.html#6214">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] would it possible to make message about scripts	less &quot;chatty&quot;..??
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20would%20it%20possible%20to%20make%20message%20about%20scripts%0A%09less%20%22chatty%22..%3F%3F&In-Reply-To=%3CAA376496FD404CBCB8878D10B7332D5B%40demoraum%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005853.html">
+   <LINK REL="Next"  HREF="005855.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] would it possible to make message about scripts	less &quot;chatty&quot;..??</H1>
+    <B>drwhiet at spacefriends.de</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20would%20it%20possible%20to%20make%20message%20about%20scripts%0A%09less%20%22chatty%22..%3F%3F&In-Reply-To=%3CAA376496FD404CBCB8878D10B7332D5B%40demoraum%3E"
+       TITLE="[Opensim-users] would it possible to make message about scripts	less &quot;chatty&quot;..??">drwhiet at spacefriends.de
+       </A><BR>
+    <I>Tue Oct 19 22:05:56 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005853.html">[Opensim-users] would it possible to make message about scripts less &quot;chatty&quot;..??
+</A></li>
+        <LI>Next message: <A HREF="005855.html">[Opensim-users] would it possible to make message about scripts less &quot;chatty&quot;..??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5854">[ date ]</a>
+              <a href="thread.html#5854">[ thread ]</a>
+              <a href="subject.html#5854">[ subject ]</a>
+              <a href="author.html#5854">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I used this some time now .. i only log error messages in
+the log file .. The needed    OpenSim.32BitLaunch.exe.config
+In my case looks like this .. :
+
+
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;configuration&gt;
+  &lt;configSections&gt;
+    &lt;section name=&quot;log4net&quot;
+type=&quot;log4net.Config.Log4NetConfigurationSectionHandler,log4net&quot; /&gt;
+  &lt;/configSections&gt;
+  &lt;runtime&gt;
+    &lt;gcConcurrent enabled=&quot;true&quot; /&gt;
+	&lt;gcServer enabled=&quot;true&quot; /&gt;
+  &lt;/runtime&gt;
+  &lt;appSettings&gt;
+  &lt;/appSettings&gt;
+  &lt;log4net&gt;
+    &lt;appender name=&quot;Console&quot;
+type=&quot;OpenSim.Framework.Console.OpenSimAppender, OpenSim.Framework.Console&quot;&gt;
+      &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;
+        &lt;conversionPattern value=&quot;%date{HH:mm:ss} - %message%newline&quot; /&gt;
+      &lt;/layout&gt;
+    &lt;/appender&gt;
+    &lt;appender name=&quot;LogFileAppender&quot; type=&quot;log4net.Appender.FileAppender&quot;&gt;
+      &lt;file value=&quot;OpenSim.32BitLaunch.log&quot; /&gt;
+      &lt;appendToFile value=&quot;true&quot; /&gt;
+      &lt;layout type=&quot;log4net.Layout.PatternLayout&quot;&gt;
+        &lt;conversionPattern value=&quot;%date %-5level - %logger %message%newline&quot;
+/&gt;
+      &lt;/layout&gt;
+	 &lt;filter type=&quot;log4net.Filter.LevelRangeFilter&quot;&gt;
+       &lt;levelMin value=&quot;WARN&quot; /&gt;
+       &lt;levelMax value=&quot;FATAL&quot; /&gt;
+     &lt;/filter&gt;
+    &lt;/appender&gt;
+
+    &lt;root&gt;
+      &lt;level value=&quot;DEBUG&quot; /&gt;
+      &lt;appender-ref ref=&quot;Console&quot; /&gt;
+      &lt;appender-ref ref=&quot;LogFileAppender&quot; /&gt;
+    &lt;/root&gt;
+  &lt;/log4net&gt;
+&lt;/configuration&gt;
+
+
+Hope this helps ..
+best regards,
+WordfromtheWise 
+
+
+-----Urspr&#252;ngliche Nachricht-----
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] Im Auftrag von DutchGlory
+Gesendet: Dienstag, 19. Oktober 2010 21:54
+An: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Betreff: Re: [Opensim-users] would it possible to make message about scripts
+less &quot;chatty&quot;..??
+
+
+thank you, very interesting....
+
+
+Dutch
+--
+View this message in context:
+<A HREF="http://opensim-users.2152040.n2.nabble.com/would-it-possible-to-make-message">http://opensim-users.2152040.n2.nabble.com/would-it-possible-to-make-message</A>
+-about-scripts-less-chatty-tp5651879p5652345.html
+Sent from the opensim-users mailing list archive at Nabble.com.
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005853.html">[Opensim-users] would it possible to make message about scripts less &quot;chatty&quot;..??
+</A></li>
+	<LI>Next message: <A HREF="005855.html">[Opensim-users] would it possible to make message about scripts less &quot;chatty&quot;..??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5854">[ date ]</a>
+              <a href="thread.html#5854">[ thread ]</a>
+              <a href="subject.html#5854">[ subject ]</a>
+              <a href="author.html#5854">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

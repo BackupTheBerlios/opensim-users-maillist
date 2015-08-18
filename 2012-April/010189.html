@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Troubles with OAR and IAR files following HD	crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Troubles%20with%20OAR%20and%20IAR%20files%20following%20HD%0A%09crash&In-Reply-To=%3CCAG6z%2BU7bhxZgsgwCnHd0JdX9MK7SDEGjS_XVfgKcWyxBXKxJ5g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010184.html">
+   <LINK REL="Next"  HREF="010191.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Troubles with OAR and IAR files following HD	crash</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Troubles%20with%20OAR%20and%20IAR%20files%20following%20HD%0A%09crash&In-Reply-To=%3CCAG6z%2BU7bhxZgsgwCnHd0JdX9MK7SDEGjS_XVfgKcWyxBXKxJ5g%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Troubles with OAR and IAR files following HD	crash">fleep513 at gmail.com
+       </A><BR>
+    <I>Wed Apr 25 20:39:52 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010184.html">[Opensim-users] Troubles with OAR and IAR files following HD crash
+</A></li>
+        <LI>Next message: <A HREF="010191.html">[Opensim-users] Troubles with OAR and IAR files following HD crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10189">[ date ]</a>
+              <a href="thread.html#10189">[ thread ]</a>
+              <a href="subject.html#10189">[ subject ]</a>
+              <a href="author.html#10189">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Justin,
+
+1)  Yes, it was the same failures every time, for both IAR and OAR files.
+
+2)  Taking the UUID from the error line in the region console that looks
+like:
+
+14:25:14 - [ARCHIVER]: Could not find asset
+482b4c38-63c4-23d5-88eb-2d84a278616f
+
+And running the command &quot;dump asset &lt;UUID&gt;&quot; on the ROBUST console yields:
+
+ERROR: No asset found with ID 482b4c38-63c4-23d5-88eb-2d84a278616f
+ERROR: No asset found with ID 482b4c38-63c4-23d5-88eb-2d84a278616f
+
+3)  I _think_ the problem assets are all textures, though I don't know how
+to verify that other than to say the only visible symptom I see from the
+uploaded OAR or IAR file are missing textures, primarily on clothing items
+that were stored inside another object.
+
+
+The [Archiver] tells me it can't find these bazillion assets with UUID
+whatever, but I don't know which assets those are and don't know how to
+figure it out either.  In the absence of being able to fix the problem
+assets, I'd be happy to just DELETE them so at least I'd know which items
+on the region (or in inventory) were ok, but since the problem UUIDs don't
+show up in the assets table, the prim table, or with the show asset
+command, I'm stumped about what to do to resolve the issue.
+
+For now, I'm going through the restored OAR file item by item on the sim
+and checking it and its contents for problems or missing textures, and
+where I find them, I'm replacing the texture on the original sim so
+hopefully in the next OAR save, that item will be ok.
+
+- Chris/Fleep
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Tue, Apr 24, 2012 at 11:05 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> Is it exactly the same failures every time?  What happens if you dump out
+</I>&gt;<i> the asset using the &quot;dump asset&quot; command on the robust console?  (don't do
+</I>&gt;<i> this on region in case it's cached).  Does the dump output appear to
+</I>&gt;<i> contain the assets?  What exactly are they, serialized object files,
+</I>&gt;<i> textures?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 24/04/12 14:54, Fleep Tuque wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Since the FleepGrid hard drive crash a few weeks ago, I've been trying to
+</I>&gt;&gt;<i> backup content in a variety of ways to make
+</I>&gt;&gt;<i> sure I never lose anything again, but I keep running into issues making
+</I>&gt;&gt;<i> both OAR files and IAR files with content that
+</I>&gt;&gt;<i> exists on the sim or in my inventory.  When the hard drive failed and had
+</I>&gt;&gt;<i> to be replaced, I restored the opensim
+</I>&gt;&gt;<i> database from a mysql dump file, and restored all of the regions with OAR
+</I>&gt;&gt;<i> backups.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It seemed to me that everything restored ok, but apparently that isn't
+</I>&gt;&gt;<i> the case since I can't seem to make good new
+</I>&gt;&gt;<i> copies of some of the restored items.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For example, I just tried to make an IAR backup of my &quot;product boxes&quot; -
+</I>&gt;&gt;<i> these are items I've created and packaged up as
+</I>&gt;&gt;<i> freebies.  The boxes are sitting on a region that I restored from an OAR
+</I>&gt;&gt;<i> file.  I go to the region, take a copy of the
+</I>&gt;&gt;<i> boxes sitting out on the sim, and neatly organize them by category in my
+</I>&gt;&gt;<i> inventory, then run the command to make an IAR
+</I>&gt;&gt;<i> file and I see a ton of these error messages on the region console:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 08:56:16 - [ASYNC REQUEST]: Request GET <A HREF="http://74.83.148.18:8003/**">http://74.83.148.18:8003/**</A>
+</I>&gt;&gt;<i> assets/5857ed38 &lt;<A HREF="http://74.83.148.18:8003/assets/5857ed38">http://74.83.148.18:8003/assets/5857ed38</A>&gt;
+</I>&gt;&gt;<i> -0f21-4225-96de-3a0fb7e5a666 failed with status ConnectFailure and
+</I>&gt;&gt;<i> message Unabl
+</I>&gt;&gt;<i> e to connect to the remote server
+</I>&gt;&gt;<i> 08:56:16 - [ASYNC REQUEST]: Request GET <A HREF="http://74.83.148.18:8003/**">http://74.83.148.18:8003/**</A>
+</I>&gt;&gt;<i> assets/0d4d6aac &lt;<A HREF="http://74.83.148.18:8003/assets/0d4d6aac">http://74.83.148.18:8003/assets/0d4d6aac</A>&gt;
+</I>&gt;&gt;<i> -9400-4f44-a4d9-311512e29c1b failed with status ConnectFailure and
+</I>&gt;&gt;<i> message Unabl
+</I>&gt;&gt;<i> e to connect to the remote server
+</I>&gt;&gt;<i> 08:56:16 - [ASYNC REQUEST]: Request GET <A HREF="http://74.83.148.18:8003/**">http://74.83.148.18:8003/**</A>
+</I>&gt;&gt;<i> assets/53ad28a3 &lt;<A HREF="http://74.83.148.18:8003/assets/53ad28a3">http://74.83.148.18:8003/assets/53ad28a3</A>&gt;
+</I>&gt;&gt;<i> -c0f1-4e4c-ad2c-85ec41110fc2 failed with status ConnectFailure and
+</I>&gt;&gt;<i> message Unabl
+</I>&gt;&gt;<i> e to connect to the remote server
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On the ROBUST console, at the same time, these errors pop up:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 08:56:16 - [BASE HTTP SERVER]: slow GET request for
+</I>&gt;&gt;<i> /assets/7474c82c-f428-4b76-b
+</I>&gt;&gt;<i> 2dd-10859beeb9d3 from 74.83.148.18:4431 &lt;<A HREF="http://74.83.148.18:4431">http://74.83.148.18:4431</A>&gt; took
+</I>&gt;&gt;<i> 3891 ms
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 08:56:16 - [BASE HTTP SERVER]: slow GET request for
+</I>&gt;&gt;<i> /assets/203ccc0c-52eb-40cf-8
+</I>&gt;&gt;<i> f56-6dfb30f032c3 from 74.83.148.18:4582 &lt;<A HREF="http://74.83.148.18:4582">http://74.83.148.18:4582</A>&gt; took
+</I>&gt;&gt;<i> 3078 ms
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 08:56:16 - [BASE HTTP SERVER]: slow GET request for
+</I>&gt;&gt;<i> /assets/6a137fba-7eec-4db8-8
+</I>&gt;&gt;<i> 038-e94250fbc8d3 from 74.83.148.18:3828 &lt;<A HREF="http://74.83.148.18:3828">http://74.83.148.18:3828</A>&gt; took
+</I>&gt;&gt;<i> 3906 ms
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> At the end of the IAR file save process, again on the region console, the
+</I>&gt;&gt;<i> following appears:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 08:56:17 - [ARCHIVER]: Added 1200 assets to archive
+</I>&gt;&gt;<i> 08:56:19 - [ARCHIVER]: Successfully added 1248 assets (1319 assets not
+</I>&gt;&gt;<i> found but
+</I>&gt;&gt;<i>  these may be expected invalid references)
+</I>&gt;&gt;<i> 08:56:19 - [INVENTORY ARCHIVER]: Saved archive for Fleep Tuque
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Something similar happens when I try to make an OAR file backup of the
+</I>&gt;&gt;<i> sim where these objects are rezzed, too, and I
+</I>&gt;&gt;<i> haven't yet tested with the IAR file, but with the OAR file, the items
+</I>&gt;&gt;<i> will appear when the OAR is loaded, but the
+</I>&gt;&gt;<i> object textures are missing from all the contents in the boxes.  (i.e. a
+</I>&gt;&gt;<i> shirt object will be in the box, but the
+</I>&gt;&gt;<i> texture will be blank white).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The funny thing is, as far as I can tell the original items restored from
+</I>&gt;&gt;<i> the OAR backup are all ok.  I have cleared
+</I>&gt;&gt;<i> cache in Imprudence and can open the boxes and pull out the same shirt
+</I>&gt;&gt;<i> and the texture seems fine, but I see yet another
+</I>&gt;&gt;<i> error on the console that looks like this when I right click &gt; open the
+</I>&gt;&gt;<i> item and try to copy the contents to my inventory:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 09:24:17 - [PRIM INVENTORY]: Move of inventory item
+</I>&gt;&gt;<i> 00000000-0000-0000-0000-0000
+</I>&gt;&gt;<i> 00000000 from prim with local id 2578958302 failed because the inventory
+</I>&gt;&gt;<i> item co
+</I>&gt;&gt;<i> uld not be found
+</I>&gt;&gt;<i> 09:24:17 - [PRIM INVENTORY]: Adding item 11c3f1e6-b1fb-4a9f-a5bd-**9eee564e2316
+</I>&gt;&gt;<i> fr
+</I>&gt;&gt;<i> om FleepGrid - Button Blouse - Disco to folder 217c52c6-5474-31ef-f3cb-**
+</I>&gt;&gt;<i> 66563b109
+</I>&gt;&gt;<i> a4d for Fleep Tuque
+</I>&gt;&gt;<i> 09:24:17 - [PRIM INVENTORY]: Adding item ed499528-d851-47a7-a74c-**7963f9e44667
+</I>&gt;&gt;<i> fr
+</I>&gt;&gt;<i> om FleepGrid - Button Blouse - Disco to folder 217c52c6-5474-31ef-f3cb-**
+</I>&gt;&gt;<i> 66563b109
+</I>&gt;&gt;<i> a4d for Fleep Tuque
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So two questions:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1) I don't think I have anything misconfigured (though it's certainly a
+</I>&gt;&gt;<i> possibility!) so I'm not sure why the region
+</I>&gt;&gt;<i> console would be giving an error that it can't connect to the remote
+</I>&gt;&gt;<i> server when trying to make the IAR file, especially
+</I>&gt;&gt;<i> since all the processes run on the same server.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2)  I don't understand what's wrong with the restored items rezzed out on
+</I>&gt;&gt;<i> the sim.  The box is there, the contents are
+</I>&gt;&gt;<i> there, the textures all appear ok even after clearing cache, but I'm
+</I>&gt;&gt;<i> getting errors when trying to copy them to my
+</I>&gt;&gt;<i> inventory, or saving out OAR or IAR files.  Any ideas what could cause
+</I>&gt;&gt;<i> that or better yet how to fix it so I don't have
+</I>&gt;&gt;<i> to recreate everything from scratch?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I can't bear the thought of starting over completely, but if I can't
+</I>&gt;&gt;<i> figure out which items are .. broken for want of a
+</I>&gt;&gt;<i> better word, and which ones are ok, then I'm not sure what to do.  I
+</I>&gt;&gt;<i> don't want to keep building and developing on
+</I>&gt;&gt;<i> regions that I can't backup, or working with inventory items that might
+</I>&gt;&gt;<i> be corrupt somehow.  I'm really not sure what to do.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> FleepGrid Opensim Server Info
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Version:  0.7.3 Release
+</I>&gt;&gt;<i> Architecture:  Grid mode w/ multiple opensim processes (~4 regions per
+</I>&gt;&gt;<i> process), all processes on same server
+</I>&gt;&gt;<i> HG Enabled:  Yes
+</I>&gt;&gt;<i> OS:  Windows XP 32-bit
+</I>&gt;&gt;<i> Dbase:  MySQL 5.1
+</I>&gt;&gt;<i> Modules:  Diva Wifi for ROBUST, Mimetic Core's Opensim Services bundle,
+</I>&gt;&gt;<i> Vivox voice
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any advice much appreciated, as always!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Chris/Fleep
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;&gt;<i> University of Cincinnati
+</I>&gt;&gt;<i> 406A Zimmer Hall
+</I>&gt;&gt;<i> 315 College Drive
+</I>&gt;&gt;<i> PO BOX 210088
+</I>&gt;&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;&gt;<i> (513) 556-3018
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120425/b7383bd2/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120425/b7383bd2/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010184.html">[Opensim-users] Troubles with OAR and IAR files following HD crash
+</A></li>
+	<LI>Next message: <A HREF="010191.html">[Opensim-users] Troubles with OAR and IAR files following HD crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10189">[ date ]</a>
+              <a href="thread.html#10189">[ thread ]</a>
+              <a href="subject.html#10189">[ subject ]</a>
+              <a href="author.html#10189">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

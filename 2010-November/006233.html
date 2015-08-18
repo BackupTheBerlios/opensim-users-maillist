@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Out of Memory Exception on IAR Save?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Out%20of%20Memory%20Exception%20on%20IAR%20Save%3F&In-Reply-To=%3C4CEC5321.9060704%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006237.html">
+   <LINK REL="Next"  HREF="006240.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Out of Memory Exception on IAR Save?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Out%20of%20Memory%20Exception%20on%20IAR%20Save%3F&In-Reply-To=%3C4CEC5321.9060704%40cox.net%3E"
+       TITLE="[Opensim-users] Out of Memory Exception on IAR Save?">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Wed Nov 24 00:49:53 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006237.html">[Opensim-users] region modules in 0.7.0.2
+</A></li>
+        <LI>Next message: <A HREF="006240.html">[Opensim-users] Out of Memory Exception on IAR Save?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6233">[ date ]</a>
+              <a href="thread.html#6233">[ thread ]</a>
+              <a href="subject.html#6233">[ subject ]</a>
+              <a href="author.html#6233">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all. I've recently been getting 'System.OutOfMemoryException' errors 
+when I attempt to save my avatar's entire inventory with the Inventory 
+Archiver. It will go through the usual process of finding the 
+directories to archive and after it finds so many it will give me that 
+exception and then terminate the IAR job (usually before it ever reaches 
+the assets stage). I usually have to restart the server several times 
+(and try to save an IAR each time) in order to get it to save the IAR 
+successfully.
+
+I have checked to make sure that I am not running out of RAM (still have 
+~1.5 gigs free while every thing is up and running and IAR is being 
+saved) or Virtual Memory/Page File when I attempt this and I have plenty 
+of HD space where I am saving the IAR so I am at a loss as to why this 
+is happening all of a sudden. I did notice something strange in the 
+exception message that I received and that is the fact that it seems to 
+be trying to access &quot;New Folder&quot; on my desktop when there isn't a 
+directory on my desktop called &quot;New Folder&quot; and I didn't direct it to 
+save to New Folder either (I am saving to C:\inventory.iar btw)
+
+Any suggestions or insight would be much appreciated =)
+
+Exception:
+2010-11-23 00:13:27,406 ERROR - OpenSim.Application Command error: 
+System.OutOfMemoryException: Exception
+
+of type 'System.OutOfMemoryException' was thrown.
+    at System.String.Replace(String oldValue, String newValue)
+    at 
+OpenSim.Region.Framework.Scenes.Serialization.SceneObjectSerializer.FromOriginalXmlFormat(UUID 
+
+
+fromUserInventoryItemID, String xmlData) in c:\Documents and 
+Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\Framework\Scenes\Serialization\SceneObjectSerializer.cs:line 
+69
+    at 
+OpenSim.Region.Framework.Scenes.Serialization.SceneObjectSerializer.FromOriginalXmlFormat(String 
+
+
+serialization) in c:\Documents and Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\Framework\Scenes\Serialization\SceneObjectSerializer.cs:line 
+55
+    at 
+OpenSim.Region.Framework.Scenes.UuidGatherer.GetSceneObjectAssetUuids(UUID 
+sceneObjectUuid,
+
+IDictionary`2 assetUuids) in c:\Documents and Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\Framework\Scenes\UuidGatherer.cs:line 280
+    at 
+OpenSim.Region.Framework.Scenes.UuidGatherer.GatherAssetUuids(UUID 
+assetUuid, AssetType assetType,
+
+IDictionary`2 assetUuids) in c:\Documents and Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\Framework\Scenes\UuidGatherer.cs:line 105
+    at
+
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.SaveInvItem(InventoryIt
+
+emBase inventoryItem, String path) in c:\Documents and 
+Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+156
+    at
+
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.SaveInvFolder(Inventory
+
+FolderBase inventoryFolder, String path, Boolean saveThisFolderItself) 
+in c:\Documents and
+
+Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+207
+    at
+
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.SaveInvFolder(Inventory
+
+FolderBase inventoryFolder, String path, Boolean saveThisFolderItself) 
+in c:\Documents and
+
+Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+202
+    at
+
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.SaveInvFolder(Inventory
+
+FolderBase inventoryFolder, String path, Boolean saveThisFolderItself) 
+in c:\Documents and
+
+Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+202
+    at 
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.Execute() 
+in
+
+c:\Documents and Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+303
+    at 
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiverModule.ArchiveInventory(Guid 
+
+
+id, String firstName, String lastName, String invPath, String pass, 
+String savePath) in c:\Documents and
+
+Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiverModule.cs:line 
+174
+    at
+
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiverModule.HandleSaveInvConsoleCommand(
+
+String module, String[] cmdparams) in c:\Documents and 
+Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiverModule.cs:line 
+341
+    at OpenSim.Framework.Console.Commands.Resolve(String[] cmd) in 
+c:\Documents and
+
+Settings\Chris\Desktop\New 
+Folder\OpenSim\Framework\Console\CommandConsole.cs:line 364
+    at OpenSim.Framework.Console.LocalConsole.ReadLine(String p, Boolean 
+isCommand, Boolean e) in
+
+c:\Documents and Settings\Chris\Desktop\New 
+Folder\OpenSim\Framework\Console\LocalConsole.cs:line 473
+    at OpenSim.Framework.Console.CommandConsole.Prompt() in c:\Documents 
+and Settings\Chris\Desktop\New
+
+Folder\OpenSim\Framework\Console\CommandConsole.cs:line 583
+    at OpenSim.Application.Main(String[] args) in c:\Documents and 
+Settings\Chris\Desktop\New
+
+Folder\OpenSim\Region\Application\Application.cs:line 165
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006237.html">[Opensim-users] region modules in 0.7.0.2
+</A></li>
+	<LI>Next message: <A HREF="006240.html">[Opensim-users] Out of Memory Exception on IAR Save?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6233">[ date ]</a>
+              <a href="thread.html#6233">[ thread ]</a>
+              <a href="subject.html#6233">[ subject ]</a>
+              <a href="author.html#6233">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

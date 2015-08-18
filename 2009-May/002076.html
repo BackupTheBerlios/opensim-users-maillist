@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Assets 101
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Assets%20101&In-Reply-To=%3CBLU134-W45E81D41FA3D7859C31499D56D0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="002079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Assets 101</H1>
+    <B>Stefan Andersson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Assets%20101&In-Reply-To=%3CBLU134-W45E81D41FA3D7859C31499D56D0%40phx.gbl%3E"
+       TITLE="[Opensim-users] Assets 101">stefan at tribalmedia.se
+       </A><BR>
+    <I>Fri May  1 14:42:33 CEST 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="002079.html">[Opensim-users] Assets 101
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2076">[ date ]</a>
+              <a href="thread.html#2076">[ thread ]</a>
+              <a href="subject.html#2076">[ subject ]</a>
+              <a href="author.html#2076">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Has anybody tried this feature out? Does it work?
+
+Best regards,
+Stefan Andersson
+
+
+
+ 
+
+
+Date: Thu, 5 Feb 2009 22:18:08 +0000
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jcundill at gmail.com</A>
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Assets 101
+
+Hi
+
+
+Just knocked together a quick and dirty prototype for this, and using the Terrain Upload/ Download for OAR files actually works quite well.
+
+
+- Noticed Limitations 
+
+
+Viewer needs you to have .raw on the end of the filename. So you end up downloading and uploading files named house.oar.raw rather than house.oar.
+
+
+Maybe the Hippo Viewer people could do something about this if this goes further.
+
+
+It is slow, and little feedback is given to the user until it has completed, so the 2.4 Mb house from the Free Assets page takes around 4 mins to upload or download on a localhost standalone.
+
+
+I have regions with 30Mb oar files - that would take nearly half an hour to transfer, probalby longer across the internet.
+
+
+You can probably send Estate Messages with some progress indication to alleviate this.
+
+
+As well as OAR files, this technique can also probably be used to upload/download R32 or BMP type terrain file formats instead of LLRAW ones - that might be useful.
+
+
+If there is interest in pursuing this, and unless someone beats me to it, I'll tidy up the code and submit a patch for review
+
+
+jonc
+
+
+
+
+2009/2/5 Sean Hennessee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">sean at uci.edu</A>&gt;
+
+
+Excellent idea, Stefan. +1
+~Sean
+
+
+
+
+Stefan Andersson wrote: 
+aaand coming in from the flank here...
+ 
+is there any other way than 'terrain download/upload' to download content to file thru the viewer?
+
+If not, I guess that you could just supplant the terrain ul/dl with an oar dl/ul.
+ 
+That is, instead of sending an 'raw' bbinary, we could sent a save-oar xml file. Provided permissions, of course.
+ 
+am I correct that the client actually sends an asynch request for the data, then starts streaming it?
+ 
+if so, I guess we could just do something like
+ 
+a) user requests terrain ul/dl and specifies filename
+b) region sends a dialog box asking &quot;you want RAW, OAR, Log File excerpt or Save-xml2?&quot;
+c) user answers
+d) region starts sending specified content, client stores it to that file
+ 
+Would be quite a nifty and convenient way to work with region content given access to no console, I'd say.
+
+Best regards,
+Stefan Andersson
+Tribal Media AB
+
+
+
+
+
+
+
+
+Date: Thu, 5 Feb 2009 10:27:24 -0800
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">sean at uci.edu</A>
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Assets 101
+
+When I said &quot;...connect a region to OSGrid...&quot; I meant the old fashion way of starting an OpenSim.exe that connects a new blank region to OSGrid. You would not need to do any hypergridding. Since the new region you connect to OSGrid is running on your server, you would have access to the console to do save-oar's to your hearts content. Then the transfer to your own stand-alone would just be a matter of file copy and load-oar. Although, now that you mention it, doing a hypergrid region might actually make the transfer easier; that is, once you get hypergrid working.
+
+If you're trying to get stuff from LL's grid, SI is about the only thing going.
+
+Peace,
+Sean
+
+Robert Klein wrote: 
+
+LOL Sean, that is a great idea, but for those of us who have yet to get the
+whole hypergrid thing going we are kind of stuck with relying on Second
+Inventory or someone else making the oar files available. Hmm, if only LL
+would open up the SL grid for 24 hours... :)
+
+-Robert
+
+
+Sean Hennessee wrote:
+  
+Robert,
+
+The easiest way, (or at least a way), to grab assets from OSGrid is to 
+connect a region to OSGrid, rez the assets on your region, then save-oar 
+of your region. This will give you an OAR file of those assets that you 
+can then upload to your stand-alone or any other region that you have 
+access to the console.
+
+Peace,
+Sean
+
+
+      
+-- 
+
+Sean Hennessee
+Central Computing Support
+Network &amp; Academic Computing Services
+UC Irvine
+
+
+... . .- -. /  .... . -. -. . ... ... . .
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090501/924a04a5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090501/924a04a5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="002079.html">[Opensim-users] Assets 101
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2076">[ date ]</a>
+              <a href="thread.html#2076">[ thread ]</a>
+              <a href="subject.html#2076">[ subject ]</a>
+              <a href="author.html#2076">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

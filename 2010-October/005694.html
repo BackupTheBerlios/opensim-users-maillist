@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Running OpenSim on a Nokia N900 Smartphone
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Running%20OpenSim%20on%20a%20Nokia%20N900%20Smartphone&In-Reply-To=%3C4CB269C0.1000904%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005687.html">
+   <LINK REL="Next"  HREF="005675.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Running OpenSim on a Nokia N900 Smartphone</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Running%20OpenSim%20on%20a%20Nokia%20N900%20Smartphone&In-Reply-To=%3C4CB269C0.1000904%40googlemail.com%3E"
+       TITLE="[Opensim-users] Running OpenSim on a Nokia N900 Smartphone">jjustincc at googlemail.com
+       </A><BR>
+    <I>Mon Oct 11 03:34:56 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005687.html">[Opensim-users] Running OpenSim on a Nokia N900 Smartphone
+</A></li>
+        <LI>Next message: <A HREF="005675.html">[Opensim-users] html on prim not working anymore.....help
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5694">[ date ]</a>
+              <a href="thread.html#5694">[ thread ]</a>
+              <a href="subject.html#5694">[ subject ]</a>
+              <a href="author.html#5694">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 10/10/10 15:15, Aldon Hynes wrote:
+&gt;&gt;<i> From: Justin Clark-Casey
+</I>&gt;&gt;<i> On 08/10/10 19:04, Aldon Hynes wrote:
+</I>&gt;&gt;&gt;<i> Okay, I realize this is probably pushing the envelope a little bit, but
+</I>&gt;&gt;&gt;<i> I've made a little bit of progress in running OpenSim on a Nokia N900
+</I>&gt;&gt;&gt;<i> smartphone.
+</I>&gt;&gt;&gt;<i> The Nokia N900 is a linux based phone. There is limited Mono support on
+</I>&gt;&gt;&gt;<i> it, so I thought I would see if I could run OpenSim on it.
+</I>&gt;&gt;&gt;<i> I actually got pretty far, but it seems to be failing when I get to the
+</I>&gt;&gt;&gt;<i> Loading Region's modules (old style) section.
+</I>&gt;&gt;&gt;<i> I get an error saying Could not load types fo [MySql.Data ... ]
+</I>&gt;&gt;&gt;<i> I don't believe that the Mono on the N900 supports MySql. On the other
+</I>&gt;&gt;&gt;<i> hand, I'm using sqlite3 for my database, so I'm wondering why I'm
+</I>&gt;&gt;&gt;<i> getting the MySql.Data error and if there is some configuration I can do
+</I>&gt;&gt;&gt;<i> to get around this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It looks like this is a consequence of our module loading system.
+</I>&gt;&gt;<i>   If you move or remove OpenSim.Data.Tests.dll then
+</I>&gt;&gt;<i> OpenSim may start correctly without the MySQL library (it does on
+</I>&gt;&gt;<i> my local master).  For some reason, module loading is
+</I>&gt;&gt;<i> loading OpenSim.Data.Tests.dll and then trying to resolve the
+</I>&gt;&gt;<i> MySQL libraries that it references further on.
+</I>&gt;<i>
+</I>&gt;<i> I removed OpenSim.Data.Tests.dll from the opensim/bin directory.  Still
+</I>&gt;<i> getting the same error.
+</I>
+I recommend just trying to remove MySql.data.dll first and then reading the error message carefully.  At the top it 
+should tell you what dll was trying to load it.  Eliminate that and keep working backwards until things work or you've 
+deleted every DLL ;)
+
+&gt;<i>
+</I>&gt;<i> I wondered if maybe it was some other Test dll, so I moved all of the files
+</I>&gt;<i> with *Test* out of the opensim/bin directory, and still got the same error.
+</I>&gt;<i>
+</I>&gt;<i> So, is there something else I can do to get around the MySQL problem?
+</I>&gt;<i> I tried using SQLLiteLegacyStandalone.ini and I seemed to get further, but
+</I>&gt;<i> it gave me an error about failing to load plugin
+</I>&gt;<i> OpenSim.Data.IXInventoryData  I tried tweaking SQLLiteLegacyStandalone.ini
+</I>&gt;<i> but without any luck.
+</I>&gt;<i>
+</I>&gt;<i> Also, when I am running an OpenSim region, do I need the test files?
+</I>&gt;<i> Especially if I'm trying to run a pared down version on a mobile device?
+</I>
+No, you don't need them.  We should improve the release process to delete them, but for now you can just remove them 
+manually.
+
+&gt;<i>
+</I>&gt;<i> Aldon
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I discovered this by first removing Data.MySQL.dll and then
+</I>&gt;&gt;<i> working back along the chain of resolution problems it
+</I>&gt;&gt;<i> complained about.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> For more details, check my blog post
+</I>&gt;&gt;&gt;<i> Building Virtual Worlds on the #N900
+</I>&gt;&gt;&gt;<i> <A HREF="http://www.orient-lodge.com/node/4281">http://www.orient-lodge.com/node/4281</A>
+</I>&gt;&gt;&gt;<i> Aldon
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005687.html">[Opensim-users] Running OpenSim on a Nokia N900 Smartphone
+</A></li>
+	<LI>Next message: <A HREF="005675.html">[Opensim-users] html on prim not working anymore.....help
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5694">[ date ]</a>
+              <a href="thread.html#5694">[ thread ]</a>
+              <a href="subject.html#5694">[ subject ]</a>
+              <a href="author.html#5694">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

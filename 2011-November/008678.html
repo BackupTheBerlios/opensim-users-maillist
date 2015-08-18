@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [opensim-edu] OpenSim services bundle test
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bopensim-edu%5D%20OpenSim%20services%20bundle%20test&In-Reply-To=%3CEE93C9E6-3252-4BE3-BD82-A69DB52FF705%40gwynethllewelyn.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008666.html">
+   <LINK REL="Next"  HREF="008717.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [opensim-edu] OpenSim services bundle test</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bopensim-edu%5D%20OpenSim%20services%20bundle%20test&In-Reply-To=%3CEE93C9E6-3252-4BE3-BD82-A69DB52FF705%40gwynethllewelyn.net%3E"
+       TITLE="[Opensim-users] [opensim-edu] OpenSim services bundle test">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Mon Nov 28 17:53:03 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008666.html">[Opensim-users] [opensim-edu] OpenSim services bundle test
+</A></li>
+        <LI>Next message: <A HREF="008717.html">[Opensim-users] [opensim-edu] Opensim services bundle test
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8678">[ date ]</a>
+              <a href="thread.html#8678">[ thread ]</a>
+              <a href="subject.html#8678">[ subject ]</a>
+              <a href="author.html#8678">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I had that very same problem for at least two reasons, one very silly, one a bit more complex!
+
+The very silly reason is that I had precisely copied &amp; pasted the database information from one config file to another. I didn't even realise that each module (obviously!) called the variables differently :-) So that was easy to fix, of course.
+
+The other reason was completely forgetting that my hosting provider's compiled-in PHP module does NOT have XML-RPC built-in. This would make things &quot;not persistent&quot; on profiles, but otherwise I got no errors. Then I just had to patiently rewrite both the profile core and the search core to use an external XML-RPC library (I'm fond of Incutio XML-RPC, which is used by all WordPress installations). That made profiles &amp; search work flawlessly. Actually, I sent the updated files to this mailing list, but because they are about 90KBytes in size, and the attachment limit for this mailing list is just 40KBytes, that message of mine is somewhere waiting for moderator approval. I'll be happy to send (or post) those two files anywhere else where they may be useful for people without the compiled-in XML-RPC PHP extension.
+
+Hopefully this is helpful to Chris to debug his own installation. Good luck!
+
+	- Gwyn
+
+On 2011/11/27, at 04:38, core wrote:
+[...]
+&gt;<i> as for the profiles issue Chris mentioned, i wasn't able to re-create the problem, though i do remember experiencing it before.  unfortunately i can't recall the specific circumstances under which it occurred :/  were there any error messages in the console?
+</I>&gt;<i> 
+</I>&gt;<i> there has also been a recent update to the search module and i believe one pending for the profile as well.  for bundle fans, i'll be posting an updated download soon.
+</I>&gt;<i> 
+</I>&gt;<i> best to all.
+</I>&gt;<i> 
+</I>&gt;<i> - Core/Jason
+</I>&gt;<i> 
+</I>&gt;<i> On 11/26/2011 2:59 PM, Chris wrote:
+</I>&gt;&gt;<i> I was also able to install your bundle following your setup guide as well with minimal issue =)
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Just as a note for Windows users using MySQL Admin (No I haven't switched over to the newer GUI Workbench ... It's a real PITA to work with =| ) you may need to check the box to ignore errors when restoring the tables for services_all.sql file. I ran into errors with it unchecked. But it seems to be working fine after checking that box despite the fact.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Thanks a lot for this package Core!
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> On a side note... Would anyone happen to know why text typed into the profiles about box, etc doesn't want to persist? The apply button is there, is clickable, and the data does seem to be finding its way to the MySQL database upon querying it; but other wise won't show up when the edited profile is re-opened.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Groups seems to be working fine. I was able to create a new group and assign different roles, etc. Though I have not tested farther than this (Deeding land, objects, etc.)
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I do not know how well search works as I did not opt to install and configure this option.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> meatspace: jason
+</I>&gt;<i> cyberspace: mimetic.core
+</I>&gt;<i> chicago, il us
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">core at odosys.net</A>
+</I>&gt;<i> twitter: @odosys
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008666.html">[Opensim-users] [opensim-edu] OpenSim services bundle test
+</A></li>
+	<LI>Next message: <A HREF="008717.html">[Opensim-users] [opensim-edu] Opensim services bundle test
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8678">[ date ]</a>
+              <a href="thread.html#8678">[ thread ]</a>
+              <a href="subject.html#8678">[ subject ]</a>
+              <a href="author.html#8678">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

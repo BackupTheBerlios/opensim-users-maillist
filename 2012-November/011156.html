@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow handling of POST -
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3CCAHi41x%2Bu_uHaF76tDw5tg7qaypFG0-GWwsWxt0HOOCsT%2BBYfeA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="011157.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow handling of POST -</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3CCAHi41x%2Bu_uHaF76tDw5tg7qaypFG0-GWwsWxt0HOOCsT%2BBYfeA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Slow handling of POST -">r.ramloll at gmail.com
+       </A><BR>
+    <I>Fri Nov  2 04:36:20 CET 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="011157.html">[Opensim-users] refreshing the simulator in opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11156">[ date ]</a>
+              <a href="thread.html#11156">[ thread ]</a>
+              <a href="subject.html#11156">[ subject ]</a>
+              <a href="author.html#11156">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello until this problem is sorted, can someone tell me what is the
+final recommendations? Uncheck http for texture and inventory in debug
+menu?
+I am also experiencing instances where contents of objects with other
+objects taking forever to load, don't know if this is related.
+
+On Tue, Oct 23, 2012 at 11:03 PM, Justin Clark-Casey
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+&gt;<i> OSgrid services architecture has an nginx instance that is acting as a load
+</I>&gt;<i> balancer before requests are passed on to SRAS instances which implement the
+</I>&gt;<i> asset service.
+</I>&gt;<i>
+</I>&gt;<i> The 504 gateway timeouts you are seeing are because SRAS instances are not
+</I>&gt;<i> responding with data before the nginx 60 second timeout, unless you have
+</I>&gt;<i> another proxy between your simulator and osgrid.
+</I>&gt;<i>
+</I>&gt;<i> Making enquiries today, I now know that osgrid has been doing an asset
+</I>&gt;<i> service migration since the start of October.  In the medium term this will
+</I>&gt;<i> result in a more responsive asset service.  However, right now it's possible
+</I>&gt;<i> that for periods the asset service is slow to respond.  This is due to
+</I>&gt;<i> continue for at least another couple of weeks.
+</I>&gt;<i>
+</I>&gt;<i> Changes have now been made to cache data on nginx rather than always hit
+</I>&gt;<i> SRAS.  This may help.
+</I>&gt;<i>
+</I>&gt;<i> I'm not sure whether this might be the underlying cause of your earlier
+</I>&gt;<i> problems or not.  Either way, while it exists it's hard to debug anything
+</I>&gt;<i> else.
+</I>&gt;<i>
+</I>&gt;<i> This might also be the cause of recent white texture problems on osgrid.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately, this is pegging the disk
+</I>&gt;<i>
+</I>&gt;<i> On 23/10/12 09:28, Ai Austin wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Just to report a bit more on this from my testing in recent weeks.  I have
+</I>&gt;&gt;<i> used various OpenSim 0.7.5 dev master copies
+</I>&gt;&gt;<i> in between the last OSGrid packaged release 3 weeks ago and one released
+</I>&gt;&gt;<i> just a few hours ago.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I tried the changes that Diva Canto made for proxy handling just prior to
+</I>&gt;&gt;<i> reverting the changes so people could test,
+</I>&gt;&gt;<i> and I did not observe any change in the slow post issues in the week I ran
+</I>&gt;&gt;<i> that version.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I also installed a version after some changes by Melanie to increase the
+</I>&gt;&gt;<i> number of concurrent connections from the
+</I>&gt;&gt;<i> original 2... I was still seeing the slow post issues.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> More to the point, I just installed the r/20777 today from the
+</I>&gt;&gt;<i> OSGridfpackaged reelase of 0.7.5 dev master and on
+</I>&gt;&gt;<i> startup I still see a lot of VERY slow responses - can they really be
+</I>&gt;&gt;<i> taking 69 seconds? -   even before any avatar has
+</I>&gt;&gt;<i> logged into the region.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is one extract from the startup log just now on first run of the
+</I>&gt;&gt;<i> OpernSim.exe instance of some regions with
+</I>&gt;&gt;<i> relatively little content as add-on region to OSGrid...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 09:17:02 - [SynchronousRestObjectRequester]: WebException for GET
+</I>&gt;&gt;<i> <A HREF="http://assets.">http://assets.</A>
+</I>&gt;&gt;<i> osgrid.org/assets/7c2ee836-dc42-4100-be85-ff983385d78b
+</I>&gt;&gt;<i> OpenSim.Framework.AssetBa
+</I>&gt;&gt;<i> se: The remote server returned an error: (504) Gateway Timeout.    at
+</I>&gt;&gt;<i> System.Net
+</I>&gt;&gt;<i> .HttpWebRequest.GetResponse()
+</I>&gt;&gt;<i>     at
+</I>&gt;&gt;<i> OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+</I>&gt;&gt;<i> ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, Int32
+</I>&gt;&gt;<i> maxCo
+</I>&gt;&gt;<i> nnections) in d:\OSGRID\OSGRID 0.7
+</I>&gt;&gt;<i> RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+</I>&gt;&gt;<i> 3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 09:17:02 - [SynchronousRestObjectRequester]: Slow request 113 GET
+</I>&gt;&gt;<i> <A HREF="http://assets.">http://assets.</A>
+</I>&gt;&gt;<i> osgrid.org/assets/7c2ee836-dc42-4100-be85-ff983385d78b took 60139ms, 0ms
+</I>&gt;&gt;<i> writing,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 09:18:49 - [SynchronousRestObjectRequester]: WebException for GET
+</I>&gt;&gt;<i> <A HREF="http://assets.">http://assets.</A>
+</I>&gt;&gt;<i> osgrid.org/assets/783f8b90-c2e9-4555-a16f-8a57185c3069
+</I>&gt;&gt;<i> OpenSim.Framework.AssetBa
+</I>&gt;&gt;<i> se: The remote server returned an error: (504) Gateway Timeout.    at
+</I>&gt;&gt;<i> System.Net
+</I>&gt;&gt;<i> .HttpWebRequest.GetResponse()
+</I>&gt;&gt;<i>     at
+</I>&gt;&gt;<i> OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+</I>&gt;&gt;<i> ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, Int32
+</I>&gt;&gt;<i> maxCo
+</I>&gt;&gt;<i> nnections) in d:\OSGRID\OSGRID 0.7
+</I>&gt;&gt;<i> RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+</I>&gt;&gt;<i> 3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 09:18:49 - [SynchronousRestObjectRequester]: Slow request 175 GET
+</I>&gt;&gt;<i> <A HREF="http://assets.">http://assets.</A>
+</I>&gt;&gt;<i> osgrid.org/assets/783f8b90-c2e9-4555-a16f-8a57185c3069 took 63133ms, 0ms
+</I>&gt;&gt;<i> writing,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 09:20:09 - [SynchronousRestObjectRequester]: WebException for GET
+</I>&gt;&gt;<i> <A HREF="http://assets.">http://assets.</A>
+</I>&gt;&gt;<i> osgrid.org/assets/dd2854dd-314b-4118-a8b7-2c33794e6c9f
+</I>&gt;&gt;<i> OpenSim.Framework.AssetBa
+</I>&gt;&gt;<i> se: The remote server returned an error: (504) Gateway Timeout.    at
+</I>&gt;&gt;<i> System.Net
+</I>&gt;&gt;<i> .HttpWebRequest.GetResponse()
+</I>&gt;&gt;<i>     at
+</I>&gt;&gt;<i> OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+</I>&gt;&gt;<i> ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, Int32
+</I>&gt;&gt;<i> maxCo
+</I>&gt;&gt;<i> nnections) in d:\OSGRID\OSGRID 0.7
+</I>&gt;&gt;<i> RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+</I>&gt;&gt;<i> 3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 09:20:09 - [SynchronousRestObjectRequester]: Slow request 185 GET
+</I>&gt;&gt;<i> <A HREF="http://assets.">http://assets.</A>
+</I>&gt;&gt;<i> osgrid.org/assets/dd2854dd-314b-4118-a8b7-2c33794e6c9f took 69451ms, 0ms
+</I>&gt;&gt;<i> writing,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> OSVW Consulting
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+Rameshsharma Ramloll PhD, CEO CTO DeepSemaphore LLC, Affiliate
+Research Associate Professor, Idaho State University, Pocatello, ID
+83209 Tel: 208-240-0040
+Blog, LinkedIn, DeepSemaphore LLC, Google+ profile
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="011157.html">[Opensim-users] refreshing the simulator in opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11156">[ date ]</a>
+              <a href="thread.html#11156">[ thread ]</a>
+              <a href="subject.html#11156">[ subject ]</a>
+              <a href="author.html#11156">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

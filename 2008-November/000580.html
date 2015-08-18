@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] save/load xml region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20save/load%20xml%20region&In-Reply-To=%3C49107C28.1010909%40mindspring.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000578.html">
+   <LINK REL="Next"  HREF="000582.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] save/load xml region</H1>
+    <B>matt raffel</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20save/load%20xml%20region&In-Reply-To=%3C49107C28.1010909%40mindspring.com%3E"
+       TITLE="[Opensim-users] save/load xml region">matt.raffel at mindspring.com
+       </A><BR>
+    <I>Tue Nov  4 17:45:28 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000578.html">[Opensim-users] save/load xml region
+</A></li>
+        <LI>Next message: <A HREF="000582.html">[Opensim-users] save/load xml region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#580">[ date ]</a>
+              <a href="thread.html#580">[ thread ]</a>
+              <a href="subject.html#580">[ subject ]</a>
+              <a href="author.html#580">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Paul
+
+One more thing.   While it is important to follow the directions on the 
+link below, I found there is a slight discrepancy in them as well (makes 
+it tough to know what is right). 
+
+The first couple of stepst that work for me are:
+1)  new map
+2) Design.inflate (click next)
+3) On the next screen x = 512, y = 512  and Horiz. scale = 1  (I wish I 
+knew what was best for horz scale) (click next)
+4) no changes (click next)
+from there its your own preferences.
+
+btw, if it makes a difference I am using L3DT standard V2.6
+
+Matt
+
+
+matt raffel wrote:
+&gt;<i> Paul
+</I>&gt;<i>
+</I>&gt;<i> PNG does not work for terrain load-tile functions.  It has to be a R32 
+</I>&gt;<i> or F32 file.    I wish I would have kept the email reply that I received 
+</I>&gt;<i> concerning that.    (you can use PNG for terrain load, but that works 
+</I>&gt;<i> for a single region only and you have to change-region before issuing 
+</I>&gt;<i> the command).
+</I>&gt;<i>
+</I>&gt;<i> I used L3DT to create my land and create the RAW file.   I believe it 
+</I>&gt;<i> can be used to create a RAW file from PNG.  Just remember to follow the 
+</I>&gt;<i> directions about exporting a raw from L3DT (i didn't follow them at 
+</I>&gt;<i> first duh!).    I did not create PNG files.  I used the generating 
+</I>&gt;<i> functions in L3DT to start my terrain.  I then used its 3D editor to 
+</I>&gt;<i> customize the terrain.   I also used the heightfield operation &quot;change 
+</I>&gt;<i> vert. scale&quot; to adjust the terrain.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Using_L3DT">http://opensimulator.org/wiki/Using_L3DT</A>
+</I>&gt;<i>
+</I>&gt;<i> Matt
+</I>&gt;<i>  
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Matt
+</I>&gt;&gt;<i>  Hmm... here is what I get (I have a 512 x 512 PNG file):
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Region (root):
+</I>&gt;&gt;<i> terrain load-tile terrain6.png 2 2 1000 1000
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [Console]: Command [terrain laod-tile terrain6.png 2 2 1000 1000] failed
+</I>&gt;&gt;<i> with exception System.NotImplementedException.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am using the Windows binary from Nov. 1st
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -paul
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> matt raffel wrote:
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i> Paul
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I was just learning about this method myself.  Hope I got this right.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> When you use load-tile you have to be in root.   You specify the lower 
+</I>&gt;&gt;&gt;<i> left grid as the starting point in your command.  So in your map, 1000 
+</I>&gt;&gt;&gt;<i> 1000 is the bottom left region.   1001, 1000 and 1000, 1001 and 1001, 
+</I>&gt;&gt;&gt;<i> 1001 all get updated from the map since your map is 512x512.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Matt
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Paul Fishwick wrote:
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;<i> Stefan
+</I>&gt;&gt;&gt;&gt;<i>   This helps, and lead me to a related question. I had a problem
+</I>&gt;&gt;&gt;&gt;<i> earlier loading a new terrain using:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  terrain load-tile my512x512terrainmap.png 2 2 1000 1000
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> and I think I was probably in &quot;(root)&quot; and not Metaphorz (which is
+</I>&gt;&gt;&gt;&gt;<i> the lower left region of the 2x2 grid), where I should have been since the
+</I>&gt;&gt;&gt;&gt;<i> 512x512 terrain load didn't work correctly. Should I be in the lower
+</I>&gt;&gt;&gt;&gt;<i> left region to do this terrain command?
+</I>&gt;&gt;&gt;&gt;<i> -paul
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Stefan Andersson wrote:
+</I>&gt;&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;<i> Paul,
+</I>&gt;&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;&gt;<i> there is no 'root' region - 'root' means 'all regions' for the 
+</I>&gt;&gt;&gt;&gt;&gt;<i> commands that work on all loaded regions.
+</I>&gt;&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;&gt;<i> save-xml2 does not do that, so it simply picks the region that happens 
+</I>&gt;&gt;&gt;&gt;&gt;<i> to be first in the list. (Internally, it uses the CurrentOrFirst method)
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Best regards,
+</I>&gt;&gt;&gt;&gt;&gt;<i> Stefan Andersson
+</I>&gt;&gt;&gt;&gt;&gt;<i> Tribal Media AB
+</I>&gt;&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;&gt;<i> Join the 3d web revolution : <A HREF="http://tribalnet.se/">http://tribalnet.se/</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>  
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Date: Tue, 4 Nov 2008 10:16:13 -0500
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Subject: Re: [Opensim-users] save/load xml region
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> OK, this is interesting -- my &quot;root&quot; region is called &quot;Metaphorz&quot;.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I do this one successfully:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> change-region Metaphorz
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> &quot;Currently selected region is Metaphorz&quot;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> save-xml2
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> &quot;Saving prims in xml2 format for region Metaphorz to prim-backup.xml&quot;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> But then:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> change-region root
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> &quot;Currently selected region is root&quot; (which I thought was Metaphorz)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> save-xml2
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> &quot;Saving prims in xml2 format for region Cheshire to prim-backup.xml&quot;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> NOTE: Cheshire is another region in the 2x2 grid
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> -p
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Paul Fishwick wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>               
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> I tried creating a megaprim on my 2x2 grid and while that worked
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> fine, there was an issue with the region. If I am in the root region
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> (i.e., in the OpenSim console window), I would think that
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> save-xml2 &lt;xml file&gt; would save prims from the root region. Instead,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> it picked another region in the grid and saved those prims.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> The plan was to use
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> change-region &lt;region-name&gt;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> save-xml2
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> but saves are done for one of my other regions that I did
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> not specify, and which is not the current one in the OpenSim
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> window.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Am I misusing the load/save xml2 feature?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>               
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>                 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> What does change-region say when you change the region? The region 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>               
+</I>&gt;&gt;&gt;&gt;&gt;<i> should start showing up in the command line, e.g.
+</I>&gt;&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> change-region Test2
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Currently selected region is Test2
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Region (Test2) # :
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> did this happen?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>               
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Paul Fishwick, PhD
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Professor and Director, Digital Arts and Sciences Programs
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> University of Florida
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Computer &amp; Information Science and Eng. Dept.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Bldg. CSE, Room 301
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> P.O. Box 116120
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Gainesville, FL 32611
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Phone: (352) 392-1414
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Fax: (352) 392-1220
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>             
+</I>&gt;&gt;&gt;&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;&gt;&gt;<i>           
+</I>&gt;&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000578.html">[Opensim-users] save/load xml region
+</A></li>
+	<LI>Next message: <A HREF="000582.html">[Opensim-users] save/load xml region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#580">[ date ]</a>
+              <a href="thread.html#580">[ thread ]</a>
+              <a href="subject.html#580">[ subject ]</a>
+              <a href="author.html#580">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Which file over-rides which?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Which%20file%20over-rides%20which%3F&In-Reply-To=%3CCAPk7T4Dsr%2BfD%2BZhxGPR%2BTuPBuzKFivtOwMN98ujv0V2FtGQToQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010505.html">
+   <LINK REL="Next"  HREF="010507.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Which file over-rides which?</H1>
+    <B>Sarge Misfit</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Which%20file%20over-rides%20which%3F&In-Reply-To=%3CCAPk7T4Dsr%2BfD%2BZhxGPR%2BTuPBuzKFivtOwMN98ujv0V2FtGQToQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Which file over-rides which?">fubat.enterprises at gmail.com
+       </A><BR>
+    <I>Mon Jun 11 03:07:03 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010505.html">[Opensim-users] Which file over-rides which?
+</A></li>
+        <LI>Next message: <A HREF="010507.html">[Opensim-users] Need help with a HUD image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10506">[ date ]</a>
+              <a href="thread.html#10506">[ thread ]</a>
+              <a href="subject.html#10506">[ subject ]</a>
+              <a href="author.html#10506">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks
+
+I saw the include entries and everything. Mostly, I just wanted to know
+which settings will get reset/changed by INI files that are red later.
+Knowing which order the files are read will make some configuring easier now
+
+Sarge
+
+On Sun, Jun 10, 2012 at 5:06 PM, Mister Blue &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">misterblue at misterblue.com</A>&gt;wrote:
+
+&gt;<i> What OpenSim actually does is read &quot;OpenSimDefaults.ini&quot;, then
+</I>&gt;<i> &quot;OpenSim.ini&quot; and finally &quot;config/*.ini&quot;. Later overriding the earlier.
+</I>&gt;<i>
+</I>&gt;<i> Some of the ini files have &quot;include&quot; statements which pull in other ini
+</I>&gt;<i> files. The default &quot;OpenSim.ini&quot; file, for instance, has an include near
+</I>&gt;<i> the end for selecting the architecture configuration from
+</I>&gt;<i> 'config-include/'. Since this 'include' is at the end of &quot;OpenSim.ini&quot;, the
+</I>&gt;<i> &quot;config-include/&quot; ini files override what has already been specified.
+</I>&gt;<i>
+</I>&gt;<i> This is a flexible system allowing the implementation of several competing
+</I>&gt;<i> configuration approaches.
+</I>&gt;<i>
+</I>&gt;<i> I expect you can find an 'include' in the OpenSim.ini of the Diva
+</I>&gt;<i> distribution which includes DivaPreferences.ini and MyWorld.ini. To
+</I>&gt;<i> localize all of your changes, I would guess that, for the Diva
+</I>&gt;<i> distribution, you put your changes into &quot;MyWorld.ini&quot;.
+</I>&gt;<i>
+</I>&gt;<i> -- ra
+</I>&gt;<i>
+</I>&gt;<i> P.S.: the above is a simplification of OpenSim's parameter specification.
+</I>&gt;<i> The names &quot;OpenSimDefaults.ini&quot; and &quot;OpenSim.ini&quot; and &quot;config/&quot; can be
+</I>&gt;<i> changed with command line arguments. Additionally, they can be URLs which
+</I>&gt;<i> point at XML formatted configuration specifications. The latter enables
+</I>&gt;<i> automated and database driven configuration.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Jun 9, 2012 at 4:20 PM, Olivier van Helden &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">olivier at van-helden.net</A>
+</I>&gt;<i> &gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Actually, it's not exactly true
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> OpenSimDefaults.ini is overridden by OpenSim.ini
+</I>&gt;&gt;<i> This result is overridden by config-include/DivaPreferences.ini
+</I>&gt;&gt;<i> This result is overridden by config-include/MyWorld.ini
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So IMHO the best place to make changes is MyWorld.ini
+</I>&gt;&gt;<i> But as James said, it's OK to copy sections from any of the above ini
+</I>&gt;&gt;<i> files in MyWorld.ini to change the default settings.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    --
+</I>&gt;&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Le 10 juin 2012 &#224; 00:30, Sarge Misfit a &#233;crit :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, Jun 9, 2012 at 7:16 AM, James Hughes &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jamesh at bluewallgroup.com</A>&gt;wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 06/09/2012 10:01 AM, Sarge Misfit wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I'm running the SoaS Diva Distro. In /bin there's two files, OpenSim.ini
+</I>&gt;&gt;&gt;&gt;<i> and OpenSimDefaults.ini.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Which file over-rides which?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Sarge
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> OpenSim.ini is the one that overrides and is the correct place to make
+</I>&gt;&gt;&gt;<i> changes. It is OK to copy sections of the OpenSimDefaults.ini over to your
+</I>&gt;&gt;&gt;<i> OpenSim.ini to change the default settings.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -BlueWall
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120610/f93a1d3e/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120610/f93a1d3e/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010505.html">[Opensim-users] Which file over-rides which?
+</A></li>
+	<LI>Next message: <A HREF="010507.html">[Opensim-users] Need help with a HUD image
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10506">[ date ]</a>
+              <a href="thread.html#10506">[ thread ]</a>
+              <a href="subject.html#10506">[ subject ]</a>
+              <a href="author.html#10506">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

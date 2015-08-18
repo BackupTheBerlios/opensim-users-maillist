@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim-users Digest, Vol 30, Issue 47
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Digest%2C%20Vol%2030%2C%20Issue%2047&In-Reply-To=%3C704c3e201002161503y22ce9255kd288c0d716cfa26a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003848.html">
+   <LINK REL="Next"  HREF="003899.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim-users Digest, Vol 30, Issue 47</H1>
+    <B>John Mieske</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Digest%2C%20Vol%2030%2C%20Issue%2047&In-Reply-To=%3C704c3e201002161503y22ce9255kd288c0d716cfa26a%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Opensim-users Digest, Vol 30, Issue 47">johnmieske at gmail.com
+       </A><BR>
+    <I>Wed Feb 17 00:03:30 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003848.html">[Opensim-users] Opensim-users Digest, Vol 30, Issue 47
+</A></li>
+        <LI>Next message: <A HREF="003899.html">[Opensim-users] Opensim-users Digest, Vol 30, Issue 47
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3849">[ date ]</a>
+              <a href="thread.html#3849">[ thread ]</a>
+              <a href="subject.html#3849">[ subject ]</a>
+              <a href="author.html#3849">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'll just post it here.
+Here is what I use.. Change the Password=password to your password and then
+change <A HREF="http://yourserver:8002">http://yourserver:8002</A> to your IP or domain name.
+-------------------------------------------
+
+; * The startup section lists all the connectors to start up in this server
+; * instance. This may be only one, or it may be the entire server suite.
+; * Multiple connectors should be seaprated by commas.
+; *
+; * These are the IN connectors the server uses, the in connectors
+; * read this config file and load the needed OUT and database connectors
+; *
+; * Add &quot;OpenSim.Server.Handlers.dll:AuthenticationServiceConnector&quot; to
+; * enable the experimental authentication service
+; *
+[Startup]
+ServiceConnectors =
+&quot;OpenSim.Server.Handlers.dll:AssetServiceConnector,OpenSim.Server.Handlers.dll:InventoryServiceInConnector,OpenSim.Server.Handlers.dll:FreeswitchServerConnector,OpenSim.Server.Handlers.dll:GridServiceConnector&quot;
+
+; * This is common for all services, it's the network setup for the entire
+; * server instance
+; *
+[Network]
+port = 8003
+
+; * The following are for the remote console
+; * They have no effect for the local or basic console types
+; * Leave commented to diable logins to the console
+;ConsoleUser = Test
+;ConsolePass = secret
+
+; * As an example, the below configuration precisely mimicks the legacy
+; * asset server. It is read by the asset IN connector (defined above)
+; * and it then loads the OUT connector (a local database module). That,
+; * in turn, reads the asset loader and database connection information
+; *
+[AssetService]
+LocalServiceModule = &quot;OpenSim.Services.AssetService.dll:AssetService&quot;
+DefaultAssetLoader = &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+AssetLoaderArgs = &quot;assets/AssetSets.xml&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+ConnectionString = &quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=password;&quot;
+
+; * This configuration loads the inventory server modules. It duplicates
+; * the function of the legacy inventory server
+; *
+[InventoryService]
+LocalServiceModule =
+&quot;OpenSim.Services.InventoryService.dll:InventoryService&quot;
+UserServerURI = &quot;<A HREF="http://yourserver:8002">http://yourserver:8002</A>&quot;
+SessionAuthentication = &quot;false&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+ConnectionString = &quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=password;&quot;
+
+; * This is the configuration for the freeswitch server in grid mode
+[FreeswitchService]
+LocalServiceModule =
+&quot;OpenSim.Services.FreeswitchService.dll:FreeswitchService&quot;
+
+; * This is the new style authentication service. Currently, only MySQL
+; * is implemented. &quot;Realm&quot; is the table that is used for user lookup.
+; * By setting it to &quot;users&quot;, you can use the old style users table
+; * as an authentication source.
+; *
+[AuthenticationService]
+AuthenticationServiceModule =
+&quot;OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+ConnectionString = &quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=password;&quot;
+; Realm = &quot;users&quot;
+
+; * This is the new style user service.
+; * &quot;Realm&quot; is the table that is used for user lookup.
+; * It defaults to &quot;users&quot;, which uses the legacy tables
+; *
+[UserAccountService]
+AuthenticationServiceModule =
+&quot;OpenSim.Services.UserService.dll:UserAccountService&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+ConnectionString = &quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=password;&quot;
+; Realm = &quot;users&quot;
+
+; * This is the new style grid service.
+; * &quot;Realm&quot; is the table that is used for user lookup.
+; * It defaults to &quot;regions&quot;, which uses the legacy tables
+; *
+[GridService]
+LocalServiceModule = &quot;OpenSim.Services.GridService.dll:GridService&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll:MySqlRegionData&quot;
+ConnectionString = &quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=password;&quot;
+Realm = &quot;regions&quot;
+
+-----------------------------------------
+John Mieske / Winword Exonar
+<A HREF="http://johnmieske.org">http://johnmieske.org</A>
+Space Grid Station
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100216/3676e5cc/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100216/3676e5cc/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003848.html">[Opensim-users] Opensim-users Digest, Vol 30, Issue 47
+</A></li>
+	<LI>Next message: <A HREF="003899.html">[Opensim-users] Opensim-users Digest, Vol 30, Issue 47
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3849">[ date ]</a>
+              <a href="thread.html#3849">[ thread ]</a>
+              <a href="subject.html#3849">[ subject ]</a>
+              <a href="author.html#3849">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

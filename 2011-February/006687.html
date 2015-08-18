@@ -1,0 +1,433 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] User exists in MySQL but ROBUST says user not	found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20User%20exists%20in%20MySQL%20but%20ROBUST%20says%20user%20not%0A%09found&In-Reply-To=%3CAANLkTi%3DyDMHFuZYzo1q0_FP5UexQHOyje_Z-VZzkWOXH%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006686.html">
+   <LINK REL="Next"  HREF="006691.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] User exists in MySQL but ROBUST says user not	found</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20User%20exists%20in%20MySQL%20but%20ROBUST%20says%20user%20not%0A%09found&In-Reply-To=%3CAANLkTi%3DyDMHFuZYzo1q0_FP5UexQHOyje_Z-VZzkWOXH%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] User exists in MySQL but ROBUST says user not	found">fleep513 at gmail.com
+       </A><BR>
+    <I>Wed Feb 23 19:37:06 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006686.html">[Opensim-users] User exists in MySQL but ROBUST says user not	found
+</A></li>
+        <LI>Next message: <A HREF="006691.html">[Opensim-users] User exists in MySQL but ROBUST says user not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6687">[ date ]</a>
+              <a href="thread.html#6687">[ thread ]</a>
+              <a href="subject.html#6687">[ subject ]</a>
+              <a href="author.html#6687">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK in continuing to try to troubleshoot this, I realized I tried stopping
+and starting both the ROBUST and opensim services, but I did NOT try
+stopping and restarting the MySQL database service itself.
+
+When I did that, suddenly I could log in again...
+
+So, still don't know what the error message I saw before means:
+
+ 10:59:51 - [GRID HANDLER]: Exception System.NullReferenceException: Object
+refer
+ence not set to an instance of an object.
+
+But it seems as if somehow the ROBUST service lost (?) connection to the
+database and .. maybe when it tried to query for the user and got no
+response it interpreted as user not found even though the issue actually was
+that it no longer had a connection to the database?
+
+I don't know, I'm pretty n00b at all this, but if restarting the MySQL
+database resolved the issue then my next question is why did it stop working
+in the first place and how do I prevent it from happening again.
+
+
+Thanks as always,
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL: Fleep Tuque)
+Project Manager, UC Second Life
+Second Life Ambassador, Ohio Learning Network
+UCit Instructional &amp; Research Computing
+University of Cincinnati
+406E Zimmer Hall
+PO Box 210088
+Cincinnati, OH 45221-0088
+(513)556-3018
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+
+UC Second Life:   <A HREF="http://homepages.uc.edu/secondlife">http://homepages.uc.edu/secondlife</A>
+OLN Second Life: <A HREF="http://www.oln.org/emerging_technologies/emtech.php">http://www.oln.org/emerging_technologies/emtech.php</A>
+
+
+
+
+
+
+
+On Wed, Feb 23, 2011 at 12:02 PM, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt; wrote:
+
+&gt;<i> Also, in case it's helpful, here's the console output when I successfully
+</I>&gt;<i> logged in this morning:
+</I>&gt;<i>
+</I>&gt;<i> *Successful login from internal IP looks like this on ROBUST:*
+</I>&gt;<i>
+</I>&gt;<i> 04:38:57 - [LLOGIN SERVICE]: Login request for Fleep Tuque from
+</I>&gt;<i> 10.24.146.106 wi
+</I>&gt;<i>
+</I>&gt;<i> th user agent Imprudence 1.3.0 / Second Life 1.23.5.136262 starting in last
+</I>&gt;<i> 04:38:57 - [PASS AUTH]: got ; hashed = ; stored =
+</I>&gt;<i> 04:38:57 - [LLOGIN SERVICE]: 0 active gestures
+</I>&gt;<i> 04:38:57 - [PRESENCE SERVICE]: LoginAgent
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-26a19884e839 w
+</I>&gt;<i> ith session c9112461-9b79-4e5f-b876-b71c70bd4083 and ssession
+</I>&gt;<i> 27e0f832-62ce-41b6
+</I>&gt;<i> -96f7-70f621d3ef78
+</I>&gt;<i> 04:38:57 - [GRID USER SERVICE]: User 3cc87096-b350-4ded-b7b3-26a19884e839
+</I>&gt;<i> is onl
+</I>&gt;<i> ine
+</I>&gt;<i> 04:38:57 - [LLOGIN SERVICE]: FindDestination for start location last
+</I>&gt;<i> 04:38:57 - [REMOTE SIMULATION CONNECTOR]: Posted CreateAgent request to
+</I>&gt;<i> remote s
+</I>&gt;<i> im <A HREF="http://10.23.23.149:9000/agent/3cc87096-b350-4ded-b7b3-26a19884e839/,">http://10.23.23.149:9000/agent/3cc87096-b350-4ded-b7b3-26a19884e839/,</A>
+</I>&gt;<i> region
+</I>&gt;<i> University of Cincinnati, x=2304000 y=2304000
+</I>&gt;<i> 04:38:58 - [REMOTE SIMULATION CONNECTOR]: DoCreateChildAgentCall reply was
+</I>&gt;<i> {&quot;suc
+</I>&gt;<i> cess&quot;:true,&quot;your_ip&quot;:&quot;10.23.23.148&quot;}
+</I>&gt;<i> 04:38:58 - [LLOGIN SERVICE]: Retrieved 0 friends
+</I>&gt;<i> 04:38:58 - [LLOGIN]: Library has 19 folders
+</I>&gt;<i> 04:38:58 - [LLOGIN SERVICE]: All clear. Sending login response to client.
+</I>&gt;<i> 04:38:59 - [AVATAR SERVICE]: SetAvatar for
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-26a19884e839,
+</I>&gt;<i> attachs=1
+</I>&gt;<i> 04:38:59 - [PRESENCE SERVICE]: ReportAgent with session
+</I>&gt;<i> c9112461-9b79-4e5f-b876-
+</I>&gt;<i> b71c70bd4083 in region 5985af1b-4223-4a12-ba87-1c3830a44e97
+</I>&gt;<i> 04:39:00 - [GRID SERVICE]: region University of Cincinnati has 0 neighours
+</I>&gt;<i> 04:39:33 - [PRESENCE SERVICE]: Session c9112461-9b79-4e5f-b876-b71c70bd4083
+</I>&gt;<i> logo
+</I>&gt;<i> ut
+</I>&gt;<i> 04:39:33 - [GRID USER SERVICE]: User 3cc87096-b350-4ded-b7b3-26a19884e839
+</I>&gt;<i> is off
+</I>&gt;<i> line
+</I>&gt;<i>
+</I>&gt;<i> *Successful login from internal IP looks like this on OPENSIM:*
+</I>&gt;<i>
+</I>&gt;<i> 04:38:54 - [LOCAL SIMULATION CONNECTOR]: Found region University of
+</I>&gt;<i> Cincinnati t
+</I>&gt;<i> o send SendCreateChildAgent
+</I>&gt;<i> 04:38:54 - [CONNECTION BEGIN]: Region University of Cincinnati told of
+</I>&gt;<i> incoming
+</I>&gt;<i> root agent Fleep Tuque 3cc87096-b350-4ded-b7b3-26a19884e839 (circuit code
+</I>&gt;<i> 153707
+</I>&gt;<i> 9610, teleportflags 128)
+</I>&gt;<i> 04:38:54 - [CONNECTION BEGIN]: Region University of Cincinnati
+</I>&gt;<i> authenticated and
+</I>&gt;<i> authorized incoming root agent Fleep Tuque
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-26a19884e839
+</I>&gt;<i> (circuit code 1537079610)
+</I>&gt;<i> 04:38:54 - [CAPS]: Registered seed capability
+</I>&gt;<i> /CAPS/a0b03555-745c-4b59-9100-229c
+</I>&gt;<i> 526c32f50000/ for 3cc87096-b350-4ded-b7b3-26a19884e839
+</I>&gt;<i> 04:38:54 - [EVENTQUEUE]: Adding new queue for agent
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-26a1
+</I>&gt;<i> 9884e839 in region University of Cincinnati
+</I>&gt;<i> 04:38:54 - [OBJECTADD]: /CAPS/OA/9d6729c7-c198-4a4a-868b-ae80926a36fb/
+</I>&gt;<i> 04:38:54 - [GETTEXTURE]: /CAPS/19bff37d-59e8-4176-b50d-17f1bc0eea6f
+</I>&gt;<i> 04:38:55 - [CAPS]: Seed Caps Request in region: University of Cincinnati
+</I>&gt;<i> 04:38:55 - [SCENE]: Incoming client Fleep Tuque in region University of
+</I>&gt;<i> Cincinna
+</I>&gt;<i> ti via regular login. Client IP verification not performed.
+</I>&gt;<i> 04:38:56 - [LLUDPSERVER]: Handling UseCircuitCode packet from
+</I>&gt;<i> 10.24.146.106:5423
+</I>&gt;<i> 9
+</I>&gt;<i> 04:38:56 - [SCENE]: Adding new agent Fleep Tuque to scene University of
+</I>&gt;<i> Cincinna
+</I>&gt;<i> ti
+</I>&gt;<i> 04:38:56 - [ACCOUNTS CONNECTOR]: GetUserAccount
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-26a19884
+</I>&gt;<i> e839
+</I>&gt;<i> 04:38:56 - [USER CACHE]: cached user 3cc87096-b350-4ded-b7b3-26a19884e839
+</I>&gt;<i> 04:38:56 - [ATTACHMENTS MODULE]: Rezzing single attachment from item
+</I>&gt;<i> 2c3a10fc-a8
+</I>&gt;<i> 82-45a3-8a14-2332bc96edf9 for Fleep Tuque
+</I>&gt;<i> 04:38:56 - [XINVENTORY CONNECTOR]: GetItem
+</I>&gt;<i> 2c3a10fc-a882-45a3-8a14-2332bc96edf9
+</I>&gt;<i> 04:38:56 - [XINVENTORY CONNECTOR]: GetItem
+</I>&gt;<i> 2c3a10fc-a882-45a3-8a14-2332bc96edf9
+</I>&gt;<i> 04:38:56 - [SCENE]: Upgrading child to root agent for Fleep Tuque in
+</I>&gt;<i> University
+</I>&gt;<i> of Cincinnati
+</I>&gt;<i> 04:38:56 - [APPEARANCE]: UpdateDatabase
+</I>&gt;<i> 04:38:56 - [PRESENCE DETECTOR]: Detected root presence
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-2
+</I>&gt;<i> 6a19884e839 in University of Cincinnati
+</I>&gt;<i> 04:38:57 - [ACTIVITY DETECTOR]: Detected root presence
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-2
+</I>&gt;<i> 6a19884e839 in University of Cincinnati
+</I>&gt;<i> 04:38:57 - [ATTACHMENTS MODULE]: Updating inventory of Fleep Tuque to show
+</I>&gt;<i> attac
+</I>&gt;<i> hment of Test Object 1 (item ID 2c3a10fc-a882-45a3-8a14-2332bc96edf9)
+</I>&gt;<i> 04:38:57 - [XINVENTORY CONNECTOR]: GetItem
+</I>&gt;<i> 2c3a10fc-a882-45a3-8a14-2332bc96edf9
+</I>&gt;<i> 04:38:57 - [WORLD MAP]: Starting remote MapItem request thread
+</I>&gt;<i> 04:38:57 - [ATTACHMENT]: Rezzed attachment in point 2 from item
+</I>&gt;<i> 2c3a10fc-a882-45
+</I>&gt;<i> a3-8a14-2332bc96edf9 and asset 00000000-0000-0000-0000-000000000000
+</I>&gt;<i> (a907aee9-25
+</I>&gt;<i> 7f-4b47-a11e-ed6f054fe3c1)
+</I>&gt;<i> 04:38:57 - [SCENE]: Received request for wearables of Fleep Tuque
+</I>&gt;<i> 04:38:58 - [PHYSICS]: trying to change capsule size, but the following ODE
+</I>&gt;<i> data
+</I>&gt;<i> is missing - Shell Body Amotor
+</I>&gt;<i> 04:38:58 - [XINVENTORY CONNECTOR]: GetItem
+</I>&gt;<i> 2c3a10fc-a882-45a3-8a14-2332bc96edf9
+</I>&gt;<i> 04:38:58 - [WATCHDOG]: Started tracking thread &quot;MapItemRequestThread&quot; (ID
+</I>&gt;<i> 27)
+</I>&gt;<i> 04:38:58 - [CAPS]: UploadBakedTexture Request in region: University of
+</I>&gt;<i> Cincinnat
+</I>&gt;<i> i
+</I>&gt;<i> 04:38:58 - [CAPS]: Received baked texture
+</I>&gt;<i> aff25517-16a9-47da-b11d-cacb4e0916b6
+</I>&gt;<i> 04:38:59 - [CAPS]: UploadBakedTexture Request in region: University of
+</I>&gt;<i> Cincinnat
+</I>&gt;<i> i
+</I>&gt;<i> 04:38:59 - [CAPS]: UploadBakedTexture Request in region: University of
+</I>&gt;<i> Cincinnat
+</I>&gt;<i> i
+</I>&gt;<i> 04:38:59 - [CAPS]: UploadBakedTexture Request in region: University of
+</I>&gt;<i> Cincinnat
+</I>&gt;<i> i
+</I>&gt;<i> 04:39:00 - [CAPS]: UploadBakedTexture Request in region: University of
+</I>&gt;<i> Cincinnat
+</I>&gt;<i> i
+</I>&gt;<i> 04:39:00 - [CAPS]: Received baked texture
+</I>&gt;<i> 532db0d5-53f4-4635-b6cd-b9d90b776d76
+</I>&gt;<i> 04:39:00 - [CAPS]: Received baked texture
+</I>&gt;<i> 9c5ba2b3-019e-4d3b-b413-2b0ff50b2268
+</I>&gt;<i> 04:39:00 - [CAPS]: Received baked texture
+</I>&gt;<i> 7e7d35d1-3280-41f3-889b-ce6811f1d647
+</I>&gt;<i> 04:39:01 - [CAPS]: UploadBakedTexture Request in region: University of
+</I>&gt;<i> Cincinnat
+</I>&gt;<i> i
+</I>&gt;<i> 04:39:01 - [CAPS]: Received baked texture
+</I>&gt;<i> 2d9e9051-80e5-4d3b-9452-6a318d6ffc18
+</I>&gt;<i> 04:39:01 - [CAPS]: Received baked texture
+</I>&gt;<i> b7035f7b-6cf8-4da1-882b-bac89d391648
+</I>&gt;<i> 04:39:01 - [CAPS]: UploadBakedTexture Request in region: University of
+</I>&gt;<i> Cincinnat
+</I>&gt;<i> i
+</I>&gt;<i> 04:39:01 - [CAPS]: UploadBakedTexture Request in region: University of
+</I>&gt;<i> Cincinnat
+</I>&gt;<i> i
+</I>&gt;<i> 04:39:02 - [CAPS]: Received baked texture
+</I>&gt;<i> 9f27db59-f8bc-4bc4-9017-b2ea900df6b1
+</I>&gt;<i> 04:39:02 - [CAPS]: Received baked texture
+</I>&gt;<i> b44ae4f1-a839-4086-af02-eecb5004a9f5
+</I>&gt;<i> 04:39:30 - [CLIENT]: Got a logout request for Fleep Tuque in University of
+</I>&gt;<i> Cinci
+</I>&gt;<i> nnati
+</I>&gt;<i> 04:39:30 - [CLIENT]: Close has been called for Fleep Tuque attached to
+</I>&gt;<i> scene Uni
+</I>&gt;<i> versity of Cincinnati
+</I>&gt;<i> 04:39:30 - [PRESENCE DETECTOR]: Detected client logout
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-2
+</I>&gt;<i> 6a19884e839 in University of Cincinnati
+</I>&gt;<i> 04:39:30 - [ACTIVITY DETECTOR]: Detected client logout
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-2
+</I>&gt;<i> 6a19884e839 in University of Cincinnati
+</I>&gt;<i> 04:39:30 - [SCENE]: Removing root agent
+</I>&gt;<i> 3cc87096-b350-4ded-b7b3-26a19884e839 fro
+</I>&gt;<i> m region University of Cincinnati
+</I>&gt;<i> 04:39:30 - [EVENTQUEUE]: Closed client 3cc87096-b350-4ded-b7b3-26a19884e839
+</I>&gt;<i> in r
+</I>&gt;<i> egion University of Cincinnati
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> As far as I know nothing changed between then and my next login attempt a
+</I>&gt;<i> few hours later when ROBUST reported:
+</I>&gt;<i>
+</I>&gt;<i> 10:59:51 - [GRID HANDLER]: Exception System.NullReferenceException: Object
+</I>&gt;<i> refer
+</I>&gt;<i> ence not set to an instance of an object.
+</I>&gt;<i> 11:01:33 - [LLOGIN SERVICE]: Login request for Fleep Tuque from
+</I>&gt;<i> 10.24.146.106 wi
+</I>&gt;<i> th user agent Imprudence 1.3.0  / Second Life 1.23.5.136262 starting in
+</I>&gt;<i> last
+</I>&gt;<i> 11:01:33 - [LLOGIN SERVICE]: Login failed, reason: user not found
+</I>&gt;<i>
+</I>&gt;<i> Thanks again for any thoughts..
+</I>&gt;<i>
+</I>&gt;<i> - Chris/Fleep
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Chris M. Collins (SL: Fleep Tuque)
+</I>&gt;<i> Project Manager, UC Second Life
+</I>&gt;<i> Second Life Ambassador, Ohio Learning Network
+</I>&gt;<i> UCit Instructional &amp; Research Computing
+</I>&gt;<i> University of Cincinnati
+</I>&gt;<i> 406E Zimmer Hall
+</I>&gt;<i> PO Box 210088
+</I>&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;<i> (513)556-3018
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;<i>
+</I>&gt;<i> UC Second Life:   <A HREF="http://homepages.uc.edu/secondlife">http://homepages.uc.edu/secondlife</A>
+</I>&gt;<i> OLN Second Life: <A HREF="http://www.oln.org/emerging_technologies/emtech.php">http://www.oln.org/emerging_technologies/emtech.php</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Feb 23, 2011 at 11:52 AM, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm attempting to get 0.7.0.2 running in grid mode on our campus Win2008
+</I>&gt;&gt;<i> servers and I can't figure out for the life of me what's wrong.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've got FleepGrid running 0.7.0.2 on WinXP in grid mode at home, the only
+</I>&gt;&gt;<i> other difference is that FleepGrid is all on a single physical machine, and
+</I>&gt;&gt;<i> the campus grid is running on two separate virtual machines.  This is the
+</I>&gt;&gt;<i> first time I've tried setting up a grid where the grid services are on a
+</I>&gt;&gt;<i> different (virtual) machine than the simulators.  At the moment, I am just
+</I>&gt;&gt;<i> trying to get everything working properly on the university's internal
+</I>&gt;&gt;<i> network.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This morning when I first installed everything, it seemed to go fine.  I
+</I>&gt;&gt;<i> successfully created a user &quot;Fleep Tuque&quot; through ROBUST console.  I added
+</I>&gt;&gt;<i> the first region &quot;University of Cincinnati&quot; to the region.ini file.  I
+</I>&gt;&gt;<i> logged in.  All seemed well.  I rezzed a prim, stored in inventory, attached
+</I>&gt;&gt;<i> to head to test attachment points.  Still good, I see everything coming
+</I>&gt;&gt;<i> through on the console.  I upload an OAR file with our campus build in
+</I>&gt;&gt;<i> progress, still all good - everything seems to load properly, it looks right
+</I>&gt;&gt;<i> in-world.  I'm thinking yay, all good at least on the internal network.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I go away for a few hours.  Come back, create some new accounts on the
+</I>&gt;&gt;<i> ROBUST console to get my staff all set up, and then try to login myself and
+</I>&gt;&gt;<i> get this on the ROBUST console:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 10:59:51 - [GRID HANDLER]: Exception System.NullReferenceException: Object
+</I>&gt;&gt;<i> refer
+</I>&gt;&gt;<i> ence not set to an instance of an object.
+</I>&gt;&gt;<i> 11:01:33 - [LLOGIN SERVICE]: Login request for Fleep Tuque from
+</I>&gt;&gt;<i> 10.24.146.106 wi
+</I>&gt;&gt;<i> th user agent Imprudence 1.3.0  / Second Life 1.23.5.136262 starting in
+</I>&gt;&gt;<i> last
+</I>&gt;&gt;<i> 11:01:33 - [LLOGIN SERVICE]: Login failed, reason: user not found
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Things I've tried so far:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1.  Shutting down opensim and ROBUST and restarting.  No love.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2.  Double checking the database connection string in PRIM STORAGE section
+</I>&gt;&gt;<i> opensim.ini
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> storage_plugin=&quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;&gt;<i>     storage_connection_string=&quot;Data
+</I>&gt;&gt;<i> Source=10.23.23.148;Database=opensim;User ID=opensim;Password=MYPASSWORD;&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3.  Changing the URLs in gridcommon.ini to IP addresses instead of
+</I>&gt;&gt;<i> FQDN (one example, they all say the same thing):
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> WAS
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [UserAccountService]
+</I>&gt;&gt;<i>     ;
+</I>&gt;&gt;<i>     ; change this to your grid-wide user accounts server
+</I>&gt;&gt;<i>     ;
+</I>&gt;&gt;<i>     UserAccountServerURI = &quot;<A HREF="http://ucsim.uc.edu:8003">http://ucsim.uc.edu:8003</A>&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> NOW
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [UserAccountService]
+</I>&gt;&gt;<i>     ;
+</I>&gt;&gt;<i>     ; change this to your grid-wide user accounts server
+</I>&gt;&gt;<i>     ;
+</I>&gt;&gt;<i>     UserAccountServerURI = &quot;<A HREF="http://10.23.23.148:8003">http://10.23.23.148:8003</A>&quot;  &lt;--- Machine where
+</I>&gt;&gt;<i> ROBUST and MySQL are running
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Still no luck.  So my questions are:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1.  What does this error mean:  11:24:24 - [GRID HANDLER]: Exception
+</I>&gt;&gt;<i> System.NullReferenceException: Object refer
+</I>&gt;&gt;<i> ence not set to an instance of an object.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2.  Why is ROBUST not seeing that the user exists in the database?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3.  Why was I successfully able to login initially but not now?  What
+</I>&gt;&gt;<i> changed?  (That is, I'm pretty sure I didn't change anything between my last
+</I>&gt;&gt;<i> successful login and my first unsuccessful login.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any help much appreciated!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sincerely,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Chris/Fleep
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris M. Collins (SL: Fleep Tuque)
+</I>&gt;&gt;<i> Project Manager, UC Second Life
+</I>&gt;&gt;<i> Second Life Ambassador, Ohio Learning Network
+</I>&gt;&gt;<i> UCit Instructional &amp; Research Computing
+</I>&gt;&gt;<i> University of Cincinnati
+</I>&gt;&gt;<i> 406E Zimmer Hall
+</I>&gt;&gt;<i> PO Box 210088
+</I>&gt;&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;&gt;<i> (513)556-3018
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> UC Second Life:   <A HREF="http://homepages.uc.edu/secondlife">http://homepages.uc.edu/secondlife</A>
+</I>&gt;&gt;<i> OLN Second Life: <A HREF="http://www.oln.org/emerging_technologies/emtech.php">http://www.oln.org/emerging_technologies/emtech.php</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110223/8ede13ed/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110223/8ede13ed/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006686.html">[Opensim-users] User exists in MySQL but ROBUST says user not	found
+</A></li>
+	<LI>Next message: <A HREF="006691.html">[Opensim-users] User exists in MySQL but ROBUST says user not found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6687">[ date ]</a>
+              <a href="thread.html#6687">[ thread ]</a>
+              <a href="subject.html#6687">[ subject ]</a>
+              <a href="author.html#6687">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

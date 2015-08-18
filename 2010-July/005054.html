@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.7 upgrade - phantom objects
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.7%20upgrade%20-%20phantom%20objects&In-Reply-To=%3CAANLkTimjgHLW0T5KKH3H0-2RTbvLoD%3DoRGP6beA3MYAS%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005055.html">
+   <LINK REL="Next"  HREF="005056.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.7 upgrade - phantom objects</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.7%20upgrade%20-%20phantom%20objects&In-Reply-To=%3CAANLkTimjgHLW0T5KKH3H0-2RTbvLoD%3DoRGP6beA3MYAS%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] OpenSim 0.7 upgrade - phantom objects">cliveg at gmail.com
+       </A><BR>
+    <I>Wed Jul 28 21:47:37 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005055.html">[Opensim-users] local computer problem
+</A></li>
+        <LI>Next message: <A HREF="005056.html">[Opensim-users] OpenSim 0.7 upgrade - phantom objects
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5054">[ date ]</a>
+              <a href="thread.html#5054">[ thread ]</a>
+              <a href="subject.html#5054">[ subject ]</a>
+              <a href="author.html#5054">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+Thanks for the prompt feedback :)
+
+1) I've solved the problem with the phantom objects. The objects were
+not marked as phantom, but were behaving as phantom. During the
+upgrade, in editing OpenSim.ini I has set CombineContiguousRegions =
+false, whereas before the upgrade this had been set to true. Setting
+this parameter back to true and restarting the simulator solved the
+problem and the objects are no longer phantom :)
+
+2) Some of the linked objects originally imported from SL have now
+reappeared, some appear occasionally after a simulator restart/client
+cache clear, and some are invisible/uneditable but can't be walked
+through!
+
+I have found comment stripping invaluable in getting a manageable
+version of OpenSim.ini. Can I please put in a plea? When future
+releases of OpenSim come out and someone creates OpenSim.ini.example
+can they please put all ; delimited comments on a separate line and
+also remove any unnecessary semi-colons?
+
+Lines such as
+
+http_listener_ssl_cert = &quot;&quot; ; Currently unused, but will be used for
+OSHttpServer
+enabled = true;
+
+make using grep -v &quot;;&quot; much harder to use for comment stripping ;)
+
+Thanks everyone
+
+Clive
+
+
+
+
+--------------------------------------------------------------------------------
+
+On 28/07/10 12:56, Clive Gould wrote:
+&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> I've just upgraded out test server from opensim-0.6.9 to opensim-0.7
+</I>&gt;<i>
+</I>&gt;<i> We're running under mono and Linux.
+</I>&gt;<i>
+</I>&gt;<i> 1) Can anyone suggest, why after the upgrade certain objects that were
+</I>&gt;<i> not phantom before are behaving as if they were phantom now? (Many of
+</I>&gt;<i> these objects were originally derived from an OAR import)
+</I>
+Are they actually marked phantom or just behaving that way?
+
+If they're not marked then it might be related to this issue
+
+<A HREF="http://opensimulator.org/mantis/view.php?id=4716">http://opensimulator.org/mantis/view.php?id=4716</A>
+
+The mantis is assigned to me but I haven't had a chance to look
+further into it and might still not for some time.  So
+if anybody else wants to fix it please feel free.
+
+&gt;<i>
+</I>&gt;<i> 2) Also any ideas why another set of linked objects originally
+</I>&gt;<i> imported from SL has become invisible since the upgrade? I cannot see
+</I>&gt;<i> them and I cannot edit them, but at the same time I cannot walk
+</I>&gt;<i> through where they used to be either as something is getting in my
+</I>&gt;<i> way!
+</I>
+I believe there are still quite a few bugs relating to linked objects
+- you might have got unlucky.
+
+You could try to restore the object by saving it to inventory and
+re-rezzing it in the old OpenSim version, or perhaps
+by saving it to an IAR in the old version and loading it back into the new.
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005055.html">[Opensim-users] local computer problem
+</A></li>
+	<LI>Next message: <A HREF="005056.html">[Opensim-users] OpenSim 0.7 upgrade - phantom objects
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5054">[ date ]</a>
+              <a href="thread.html#5054">[ thread ]</a>
+              <a href="subject.html#5054">[ subject ]</a>
+              <a href="author.html#5054">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

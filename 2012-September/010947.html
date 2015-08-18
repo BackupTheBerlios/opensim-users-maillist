@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Loading TerrainMap That's Larger Than 256x256
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20TerrainMap%20That%27s%20Larger%20Than%20256x256&In-Reply-To=%3CCAPk7T4CXudLH_8PJ53KEtQh%2BrHkrjE2XWPJE6e2bAoRACuGOHw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010944.html">
+   <LINK REL="Next"  HREF="010948.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Loading TerrainMap That's Larger Than 256x256</H1>
+    <B>Sarge Misfit</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20TerrainMap%20That%27s%20Larger%20Than%20256x256&In-Reply-To=%3CCAPk7T4CXudLH_8PJ53KEtQh%2BrHkrjE2XWPJE6e2bAoRACuGOHw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Loading TerrainMap That's Larger Than 256x256">fubat.enterprises at gmail.com
+       </A><BR>
+    <I>Wed Sep 26 06:18:18 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010944.html">[Opensim-users] Loading TerrainMap That's Larger Than 256x256
+</A></li>
+        <LI>Next message: <A HREF="010948.html">[Opensim-users] [opensim-users] Couple of Easy Questions(?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10947">[ date ]</a>
+              <a href="thread.html#10947">[ thread ]</a>
+              <a href="subject.html#10947">[ subject ]</a>
+              <a href="author.html#10947">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks everyone. :-)
+
+I got it figured out. I ended up using terrain load-tile in the end. For
+some reason, Gmail had marked this as read before I actually read all the
+info. Got some issues with crappy ISP.
+
+Had the terrain map saved as a .PNG file, so no problem there. It was the
+info about the number of tiles (not tile size) and using the grid
+coordinates, not the sim's. Got it loaded now and I'm happy with the result.
+
+Thanks again
+
+Sarge Misfit
+
+On Tue, Sep 25, 2012 at 6:35 AM, Robert Martin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">robertltux at gmail.com</A>&gt; wrote:
+
+&gt;<i> On Tue, Sep 25, 2012 at 8:00 AM, GarminKawaguichi
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garmin.kawaguichi at magalaxie.com</A>&gt; wrote:
+</I>&gt;<i> &gt; If your terrain map is a .PNG, you can try the server command : terrain
+</I>&gt;<i> &gt; load-tile ; I use it with success for MegaRegion.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; GCI
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Le 25/09/2012 02:45, Sarge Misfit a &#233;crit :
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have a terrain map that is 1024x1024 and I want to use it across a 4x4
+</I>&gt;<i> &gt; MegaRegion. I tried to break it down into 256x256 files by cropping using
+</I>&gt;<i> &gt; PhotoShop, Gimp and Paint but I can't get the dimensions right. I tried
+</I>&gt;<i> &gt; using terrain load-tile in the console but I don't think I am setting the
+</I>&gt;<i> &gt; arguments right. Any ideas or help will be appreciated.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Sarge Misfit
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> easiest way to do this is to setup your terrain file as a png with a
+</I>&gt;<i> &quot;floor&quot; of say 5 or 6 greyscale (NOT ZERO).  cutting a previous
+</I>&gt;<i> message in
+</I>&gt;<i> &quot;terrain load-tile is a solution; image.png is your &quot;the &quot;map&quot; for a
+</I>&gt;<i> 3X3 mega region&quot;
+</I>&gt;<i> change region reg1
+</I>&gt;<i> terrain load-tile c:\path\image.png 3 3 8990 7654 (where 8990 is XLOC
+</I>&gt;<i> address and 7654 is YLOC of the left-most bottommost region)
+</I>&gt;<i> change region reg2
+</I>&gt;<i> terrain load-tile c:\path\image.png 3 3 8990 7654 (yes always same values)
+</I>&gt;<i> ----- -----change region reg9
+</I>&gt;<i> terrain load-tile c:\path\image.png 3 3 8990 7654
+</I>&gt;<i> but if the region reg1 is the root for that server(and this must be
+</I>&gt;<i> true for a 3x3 Megaregion) you canuse:
+</I>&gt;<i> change region root
+</I>&gt;<i> terrain load-tile c:\path\image.png 3 3 8990 7654
+</I>&gt;<i> and all the nine terrain regions will be loaded!&quot;
+</I>&gt;<i> --
+</I>&gt;<i> Robert L Martin
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120925/420b0691/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120925/420b0691/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010944.html">[Opensim-users] Loading TerrainMap That's Larger Than 256x256
+</A></li>
+	<LI>Next message: <A HREF="010948.html">[Opensim-users] [opensim-users] Couple of Easy Questions(?)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10947">[ date ]</a>
+              <a href="thread.html#10947">[ thread ]</a>
+              <a href="subject.html#10947">[ subject ]</a>
+              <a href="author.html#10947">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

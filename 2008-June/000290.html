@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Asset server problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Asset%20server%20problems&In-Reply-To=%3C1212481763.6305.8.camel%40ugo%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000286.html">
+   <LINK REL="Next"  HREF="000291.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Asset server problems</H1>
+    <B>Nicola</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Asset%20server%20problems&In-Reply-To=%3C1212481763.6305.8.camel%40ugo%3E"
+       TITLE="[Opensim-users] Asset server problems">zod at oziosi.org
+       </A><BR>
+    <I>Tue Jun  3 10:29:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000286.html">[Opensim-users] 'terrain' table filling and no index defined
+</A></li>
+        <LI>Next message: <A HREF="000291.html">[Opensim-users] Asset server problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#290">[ date ]</a>
+              <a href="thread.html#290">[ thread ]</a>
+              <a href="subject.html#290">[ subject ]</a>
+              <a href="author.html#290">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hi
+I'm new in the list and with OpenSim, this is my situation:
+
+OpenSim.ini
+
+[Startup]
+gridmode = true
+storage_plugin = OpenSim.Data.MySQL.dll
+storage_connection_string = &quot;Data Source=localhost;Database=opensim;User
+ID=dbuser;Password=********;&quot;;
+storage_prim_inventories = true
+appearance_persist = false
+appearance_database = &quot;mysql&quot;
+appearance_connection_string = &quot;Data
+Source=localhost;Database=opensim;User
+ID=dbuser;Password=********;pooling=false;&quot;;
+asset_database = &quot;grid&quot;
+see_into_this_sim_from_neighbor = True
+meshing = Meshmerizer
+physics = OpenDynamicsEngine
+startup_console_commands_file = startup_commands.txt
+shutdown_console_commands_file = shutdown_commands.txt
+serverside_object_permissions = false
+physical_prim = true
+script_engine = OpenSim.Region.ScriptEngine.DotNetEngine.dll
+[StandAlone]
+accounts_authenticate = true
+welcome_message = Suca
+asset_plugin = OpenSim.Data.MySQL.dll
+inventory_plugin = OpenSim.Data.MySQL.dll
+userDatabase_plugin = OpenSim.Data.MySQL.dll
+default_location_x = 1000
+default_location_y = 1000
+dump_assets_to_file = false
+[Network]
+http_listener_port = 9000
+remoting_listener_port = 8895
+grid_server_url = <A HREF="http://opensim.oziosi.org:8001">http://opensim.oziosi.org:8001</A>
+grid_send_key = null
+grid_recv_key = null
+user_server_url = <A HREF="http://opensim.oziosi.org:8002">http://opensim.oziosi.org:8002</A>
+user_send_key = null
+user_recv_key = null
+asset_server_url = <A HREF="http://opensim.oziosi.org:8003">http://opensim.oziosi.org:8003</A>
+inventory_server_url = <A HREF="http://opensim.oziosi.org:8004">http://opensim.oziosi.org:8004</A>
+
+
+this is the &quot;mono OpenSim.Grid.AssetServer.exe&quot; output:
+
+12:30:12 - [ASSET SERVER]: LoadDatabasePlugin: Attempting to load
+OpenSim.Data.MySQL.dll
+12:30:12 - [ASSET]: setupDB() - Exception occured
+12:30:12 - [ASSET]: System.Exception: Error initialising MySql Database:
+System.ArgumentException: Keyword not supported.
+Parameter name: DATA SOURCE
+  at MySql.Data.MySqlClient.MySqlConnectionStringBuilder.GetKey
+(System.String key) [0x00000] 
+  at MySql.Data.MySqlClient.MySqlConnectionStringBuilder.SetValue
+(System.String keyword, System.Object value) [0x00000] 
+  at MySql.Data.MySqlClient.MySqlConnectionStringBuilder.set_Item
+(System.String key, System.Object value) [0x00000] 
+  at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString
+(System.String value) [0x00000] 
+  at MySql.Data.MySqlClient.MySqlConnectionStringBuilder..ctor
+(System.String connectionString) [0x00000] 
+  at MySql.Data.MySqlClient.MySqlConnection.set_ConnectionString
+(System.String value) [0x00000] 
+  at MySql.Data.MySqlClient.MySqlConnection..ctor (System.String
+connectionString) [0x00000] 
+  at (wrapper remoting-invoke-with-check)
+MySql.Data.MySqlClient.MySqlConnection:.ctor (string)
+  at OpenSim.Data.MySQL.MySQLManager.Initialise (System.String connect)
+[0x00000] 
+  at OpenSim.Data.MySQL.MySQLManager.Initialise (System.String connect)
+[0x00000] 
+  at OpenSim.Data.MySQL.MySQLManager..ctor (System.String connect)
+[0x00000] 
+  at OpenSim.Data.MySQL.MySQLAssetData.Initialise (System.String
+connect) [0x00000] 
+  at OpenSim.Grid.AssetServer.OpenAsset_Main.LoadDatabasePlugin
+(System.String FileName, System.String connect) [0x00000] 
+  at OpenSim.Grid.AssetServer.OpenAsset_Main.setupDB
+(OpenSim.Framework.AssetConfig config) [0x00000] 
+12:30:12 - [ASSET]: Loading default asset set..
+
+[...]
+
+Unhandled Exception: System.NullReferenceException: Object reference not
+set to an instance of an object
+  at OpenSim.Grid.AssetServer.OpenAsset_Main.StoreAsset
+(OpenSim.Framework.AssetBase asset) [0x00000] 
+  at
+System.Collections.Generic.List`1[OpenSim.Framework.AssetBase].ForEach
+(System.Action`1 action) [0x00000] 
+  at
+OpenSim.Framework.AssetLoader.Filesystem.AssetLoaderFileSystem.ForEachDefaultXmlAsset (System.String assetSetFilename, System.Action`1 action) [0x00000] 
+  at
+OpenSim.Framework.AssetLoader.Filesystem.AssetLoaderFileSystem.ForEachDefaultXmlAsset (System.Action`1 action) [0x00000] 
+  at OpenSim.Grid.AssetServer.OpenAsset_Main.LoadDefaultAssets ()
+[0x00000] 
+  at OpenSim.Grid.AssetServer.OpenAsset_Main.Startup () [0x00000] 
+  at OpenSim.Grid.AssetServer.OpenAsset_Main.Main (System.String[] args)
+[0x00000]
+
+the the asset server die...
+In particular this line:
+
+12:30:12 - [ASSET]: System.Exception: Error initialising MySql Database:
+System.ArgumentException: Keyword not supported.
+
+What does this mean?
+thank you...
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000286.html">[Opensim-users] 'terrain' table filling and no index defined
+</A></li>
+	<LI>Next message: <A HREF="000291.html">[Opensim-users] Asset server problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#290">[ date ]</a>
+              <a href="thread.html#290">[ thread ]</a>
+              <a href="subject.html#290">[ subject ]</a>
+              <a href="author.html#290">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

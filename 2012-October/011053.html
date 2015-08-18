@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Grid Security
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Grid%20Security&In-Reply-To=%3CCAK91jKvcjcqFZBRT6nXbQU-YyBWpKA6g4mnzEXzanPEVEySOgw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011048.html">
+   <LINK REL="Next"  HREF="011055.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Grid Security</H1>
+    <B>Joshua Rubeck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Grid%20Security&In-Reply-To=%3CCAK91jKvcjcqFZBRT6nXbQU-YyBWpKA6g4mnzEXzanPEVEySOgw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Grid Security">jrubeck1989 at gmail.com
+       </A><BR>
+    <I>Tue Oct  9 16:20:07 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011048.html">[Opensim-users] Grid Security
+</A></li>
+        <LI>Next message: <A HREF="011055.html">[Opensim-users] Grid Security
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11053">[ date ]</a>
+              <a href="thread.html#11053">[ thread ]</a>
+              <a href="subject.html#11053">[ subject ]</a>
+              <a href="author.html#11053">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Found out that MaxPrims are only honored in regions.ini if the Module
+PrimLimitsModule is activated in permissions in the OpenSim.ini.
+
+Right now I am still trying to figure out how to force the software to kick
+or ban someone from a region. That seems to be a pretty big hole but I dont
+know if there is something in the configuration I am missing or what. I
+know some of the god tools are not working, wondering if this is related at
+all, but probably not.
+
+On Mon, Oct 8, 2012 at 9:17 PM, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>
+&gt;<i> wrote:
+</I>
+&gt;<i> Prim limits should be respected when set in Regions.ini.  If not, then
+</I>&gt;<i> that's a reportable bug.
+</I>&gt;<i>
+</I>&gt;<i> You can also set prim limits per parcel in the viewer which is a different
+</I>&gt;<i> mechanism.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 08/10/12 13:15, James Stallings II wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> To summarize:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - No SQL server needs to be accessible over the network except in the
+</I>&gt;&gt;<i> event of a 'special case' (e.g., an
+</I>&gt;&gt;<i> externally-hosted web front end).
+</I>&gt;&gt;<i> - No other ports but 8002 in a standard or default ROBUST configuration
+</I>&gt;&gt;<i> need be accessible to the viewer-based end user.
+</I>&gt;&gt;<i> - The keys were removed by consensus because they provided *no* security.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Joshua:
+</I>&gt;&gt;<i> Use the similar settings in the OpenSim.ini file, the one's in the
+</I>&gt;&gt;<i> Region.ini file should be removed.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cheers
+</I>&gt;&gt;<i> James/Hiro
+</I>&gt;&gt;<i> <A HREF="http://SimHost.com">http://SimHost.com</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mon, Oct 8, 2012 at 3:01 AM, Joshua Rubeck &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jrubeck1989 at gmail.com</A>&lt;mailto:
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jrubeck1989 at gmail.com</A>&gt;**&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Thanks for the info guys, that was very helpful. One of the other
+</I>&gt;&gt;<i> things we were having issues with is the MaxPrims
+</I>&gt;&gt;<i>     setting in the region INI files. Clearly this setting is available,
+</I>&gt;&gt;<i> however it does not appear to work. I am sure on
+</I>&gt;&gt;<i>     my grids this is not an issue after all OpenSimulator is usually used
+</I>&gt;&gt;<i> to eliminate many of the restrictions SL has.
+</I>&gt;&gt;<i>     However for us we are trying to follow the same style of region and
+</I>&gt;&gt;<i> prims counts as SL for the sole reason that it
+</I>&gt;&gt;<i>     appears to be more cost effective in terms of resources. I mean we
+</I>&gt;&gt;<i> can have more regions on Server A if each region
+</I>&gt;&gt;<i>     is limited to 15k prim, where as Server B can only host a few safely
+</I>&gt;&gt;<i> without thos limitations. Any idea how to make
+</I>&gt;&gt;<i>     sure the software enforces the max prim limitations?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     On Sun, Oct 7, 2012 at 10:12 PM, Tom Haines &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">hainest at gmail.com</A>&lt;mailto:
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">hainest at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Blocking port 8003 on the firewall to block unauthorized regions
+</I>&gt;&gt;<i> doesn't work if you have an external
+</I>&gt;&gt;<i>         organization that hosts a region server that connects to your
+</I>&gt;&gt;<i> grid and has OpenSim users both NATing to the same
+</I>&gt;&gt;<i>         IP address. And situations like this tend to pop up for
+</I>&gt;&gt;<i> political, and not technical reasons, which means there
+</I>&gt;&gt;<i>         is little recourse for the grid operator.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         I've considered SSH tunneling for the 8003 connection, but have
+</I>&gt;&gt;<i> not had a chance to experiment.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         And to confirm, there is no communication directly between viewer
+</I>&gt;&gt;<i> and SQL server. The database will, and should
+</I>&gt;&gt;<i>         be run unexposed to the end user.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         On Sunday, October 7, 2012, wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>             Further to this i understand there should be no reason for a
+</I>&gt;&gt;<i> normal viewer
+</I>&gt;&gt;<i>             to talk directly to the SQL server. It is all done via the
+</I>&gt;&gt;<i> simulator.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>             As such it would be feasible to set your SQL server to only
+</I>&gt;&gt;<i> allow your
+</I>&gt;&gt;<i>             OpenSim users to authenticate from servers you run (usually
+</I>&gt;&gt;<i> by IP or
+</I>&gt;&gt;<i>             FQDN). There should always be a focus on security but I would
+</I>&gt;&gt;<i> imagine all
+</I>&gt;&gt;<i>             these factors would make it at least very difficult for
+</I>&gt;&gt;<i> someone to
+</I>&gt;&gt;<i>             casually connect a simulator to your grid even without
+</I>&gt;&gt;<i> additional
+</I>&gt;&gt;<i>             authentication in OpenSim.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>              &gt; unless there have been profound recent changes in the OS
+</I>&gt;&gt;<i> services
+</I>&gt;&gt;<i>              &gt; connectors structure that i've failed to notice (which is
+</I>&gt;&gt;<i> QUITE
+</I>&gt;&gt;<i>              &gt; possible), all end-user accessibility is handled by port
+</I>&gt;&gt;<i> 8002 and the
+</I>&gt;&gt;<i>              &gt; rest (connection services) is governed by port 8003 (in a
+</I>&gt;&gt;<i> standard
+</I>&gt;&gt;<i>              &gt; ROBUST based grid setup).  therefore, placing :8003 behind
+</I>&gt;&gt;<i> your firewall
+</I>&gt;&gt;<i>              &gt; (thus preventing 'unauthorized' outside users from
+</I>&gt;&gt;<i> attaching to your
+</I>&gt;&gt;<i>              &gt; grid services) should not interfere with public/open
+</I>&gt;&gt;<i> access via viewers
+</I>&gt;&gt;<i>              &gt; on :8002 which would remain outside the firewall.  afaik,
+</I>&gt;&gt;<i> this is the
+</I>&gt;&gt;<i>              &gt; only reliable and in my experience completely effective
+</I>&gt;&gt;<i> solution to the
+</I>&gt;&gt;<i>              &gt; problem.
+</I>&gt;&gt;<i>              &gt;
+</I>&gt;&gt;<i>              &gt; i also believe the security key function was removed by
+</I>&gt;&gt;<i> concensus as it
+</I>&gt;&gt;<i>              &gt; didn't provide any hardcore security.
+</I>&gt;&gt;<i>              &gt;
+</I>&gt;&gt;<i>              &gt; hope this helps and is remotely correct in it's technical
+</I>&gt;&gt;<i> assumptions -
+</I>&gt;&gt;<i>              &gt; or at least follows the path your concerns and argument
+</I>&gt;&gt;<i> were headed...
+</I>&gt;&gt;<i>              &gt;
+</I>&gt;&gt;<i>              &gt; - core
+</I>&gt;&gt;<i>              &gt;
+</I>&gt;&gt;<i>              &gt; On 10/7/2012 11:50 AM, Tom Haines wrote:
+</I>&gt;&gt;<i>              &gt;&gt; I disagree that this should not be considered a concern.
+</I>&gt;&gt;<i> Under this
+</I>&gt;&gt;<i>              &gt;&gt; security model, anyone with the information to connect to
+</I>&gt;&gt;<i> the grid as
+</I>&gt;&gt;<i>              &gt;&gt; a user has enough information to connect a region to the
+</I>&gt;&gt;<i> grid.
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt; I am concerned with this as an operator of an educational
+</I>&gt;&gt;<i> grid. We
+</I>&gt;&gt;<i>              &gt;&gt; offer our services to students and educators with the
+</I>&gt;&gt;<i> understanding
+</I>&gt;&gt;<i>              &gt;&gt; that we can limit the objectionable content they would be
+</I>&gt;&gt;<i> exposed to
+</I>&gt;&gt;<i>              &gt;&gt; in SL or other public OpenSim grids. Obviously if anyone
+</I>&gt;&gt;<i> can connect
+</I>&gt;&gt;<i>              &gt;&gt; their own regions without authorization from the grid
+</I>&gt;&gt;<i> operators, our
+</I>&gt;&gt;<i>              &gt;&gt; ability to offer this service is compromised.
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt; I know there were pass keys used in the past to
+</I>&gt;&gt;<i> authenticate regions,
+</I>&gt;&gt;<i>              &gt;&gt; but I believe this functionality has been removed. I
+</I>&gt;&gt;<i> haven't seen
+</I>&gt;&gt;<i>              &gt;&gt; anything on the website regarding this. I've read before
+</I>&gt;&gt;<i> that
+</I>&gt;&gt;<i>              &gt;&gt; firewalls are the best defense, but this is untenable,
+</I>&gt;&gt;<i> since our usage
+</I>&gt;&gt;<i>              &gt;&gt; requirements demand controlled access by region
+</I>&gt;&gt;<i> operators, but open
+</I>&gt;&gt;<i>              &gt;&gt; access to end users from heterogeneous network
+</I>&gt;&gt;<i> environments.
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt; Could someone weigh in with the official line on this?
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt; On Sunday, October 7, 2012, Fleep Tuque wrote:
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;     Hi Josh,
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;     As far as I know, in order to connect a region to
+</I>&gt;&gt;<i> your grid,
+</I>&gt;&gt;<i>              &gt;&gt;     someone would need to know all the connection details
+</I>&gt;&gt;<i> and unless
+</I>&gt;&gt;<i>              &gt;&gt;     you provide that information, I'm not sure how anyone
+</I>&gt;&gt;<i> would know
+</I>&gt;&gt;<i>              &gt;&gt;     how to or be able to connect to your grid.  FleepGrid
+</I>&gt;&gt;<i> has been
+</I>&gt;&gt;<i>              &gt;&gt;     running for nearly 2 years and I've never seen any
+</I>&gt;&gt;<i> attempts to
+</I>&gt;&gt;<i>              &gt;&gt;     connect a rogue region as far as I know, so I'm not
+</I>&gt;&gt;<i> sure it's much
+</I>&gt;&gt;<i>              &gt;&gt;     of a concern.
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;     I'll let someone with more knowledge of the possible
+</I>&gt;&gt;<i> configuration
+</I>&gt;&gt;<i>              &gt;&gt;     options address any .ini settings that you might be
+</I>&gt;&gt;<i> able to use to
+</I>&gt;&gt;<i>              &gt;&gt;     disable region connections, but if this is a security
+</I>&gt;&gt;<i> issue or
+</I>&gt;&gt;<i>              &gt;&gt;     problem, it's the first I've heard of it.
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;     Sincerely,
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;     - Chris/Fleep
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;     Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;&gt;<i>              &gt;&gt;     Center for Simulations &amp; Virtual Environments
+</I>&gt;&gt;<i> Research (UCSIM)
+</I>&gt;&gt;<i>              &gt;&gt;     UCIT Instructional &amp; Research Computing
+</I>&gt;&gt;<i>              &gt;&gt;     University of Cincinnati
+</I>&gt;&gt;<i>              &gt;&gt;     406A Zimmer Hall
+</I>&gt;&gt;<i>              &gt;&gt;     315 College Drive
+</I>&gt;&gt;<i>              &gt;&gt;     PO BOX 210088
+</I>&gt;&gt;<i>              &gt;&gt;     Cincinnati, OH 45221-0088
+</I>&gt;&gt;<i>              &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;javascript:_e({}, 'cvml',
+</I>&gt;&gt;<i>              &gt;&gt;     '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>');&gt;
+</I>&gt;&gt;<i>              &gt;&gt; (513) 556-3018 &lt;tel:%28513%29%20556-3018&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt; <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;     On Sun, Oct 7, 2012 at 9:52 AM, Joshua Rubeck
+</I>&gt;&gt;<i>              &gt;&gt;     &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jrubeck1989 at gmail.com</A> &lt;javascript:_e({}, 'cvml',
+</I>&gt;&gt;<i>              &gt;&gt;     '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jrubeck1989 at gmail.com</A>');&gt;&gt; wrote:
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;         Okay so here is a question for everyone. Myself
+</I>&gt;&gt;<i> and a few
+</I>&gt;&gt;<i>              &gt;&gt;         others are setting up a grid for public use, but
+</I>&gt;&gt;<i> we do not
+</I>&gt;&gt;<i>              &gt;&gt;         want other people to be able to connect their
+</I>&gt;&gt;<i> regions on a
+</I>&gt;&gt;<i>              &gt;&gt;         home based computer to our grid. One of my
+</I>&gt;&gt;<i> friends remembers
+</I>&gt;&gt;<i>              &gt;&gt;         that there used to be a setting that would
+</I>&gt;&gt;<i> prevent an
+</I>&gt;&gt;<i>              &gt;&gt;         opensimulator instance from connectiong to robust
+</I>&gt;&gt;<i> without
+</I>&gt;&gt;<i>              &gt;&gt;         authentication but I cannot find that in the
+</I>&gt;&gt;<i> configuration
+</I>&gt;&gt;<i>              &gt;&gt;         files. Is there a configuration that allows us to
+</I>&gt;&gt;<i> run a public
+</I>&gt;&gt;<i>              &gt;&gt;         grid without other people being able to connect
+</I>&gt;&gt;<i> their regions
+</I>&gt;&gt;<i>              &gt;&gt;         to our gird.
+</I>&gt;&gt;<i>              &gt;&gt;         ______________________________**_________________
+</I>&gt;&gt;<i>              &gt;&gt;         Opensim-users mailing list
+</I>&gt;&gt;<i>              &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;javascript:_e({}, 'cvml',
+</I>&gt;&gt;<i>              &gt;&gt;         '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.</A>**de&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> ');&gt;
+</I>&gt;&gt;<i>              &gt;&gt; <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt;
+</I>&gt;&gt;<i>              &gt;&gt; ______________________________**_________________
+</I>&gt;&gt;<i>              &gt;&gt; Opensim-users mailing list
+</I>&gt;&gt;<i>              &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i>              &gt;&gt; <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>              &gt;
+</I>&gt;&gt;<i>              &gt; ______________________________**_________________
+</I>&gt;&gt;<i>              &gt; Opensim-users mailing list
+</I>&gt;&gt;<i>              &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i>              &gt; <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>             ______________________________**_________________
+</I>&gt;&gt;<i>             Opensim-users mailing list
+</I>&gt;&gt;<i>             <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i>             <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         ______________________________**_________________
+</I>&gt;&gt;<i>         Opensim-users mailing list
+</I>&gt;&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.</A>**
+</I>&gt;&gt;<i> berlios.de &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ______________________________**_________________
+</I>&gt;&gt;<i>     Opensim-users mailing list
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.</A>**
+</I>&gt;&gt;<i> berlios.de &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> ==============================**=====
+</I>&gt;&gt;<i> <A HREF="http://simhost.com">http://simhost.com</A>
+</I>&gt;&gt;<i> <A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+</I>&gt;&gt;<i> <A HREF="http://www.linkedin.com/pub/5/**770/a49&lt;http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/**770/a49&lt;http://www.linkedin.com/pub/5/770/a49</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> OSVW Consulting
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121009/2a3e100b/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20121009/2a3e100b/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011048.html">[Opensim-users] Grid Security
+</A></li>
+	<LI>Next message: <A HREF="011055.html">[Opensim-users] Grid Security
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11053">[ date ]</a>
+              <a href="thread.html#11053">[ thread ]</a>
+              <a href="subject.html#11053">[ subject ]</a>
+              <a href="author.html#11053">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

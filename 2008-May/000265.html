@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] load-tile syntax?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20load-tile%20syntax%3F&In-Reply-To=%3C002601c8b722%24f58fc430%24e0af4c90%24%40org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000264.html">
+   <LINK REL="Next"  HREF="000266.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] load-tile syntax?</H1>
+    <B>Miss Suzhanna Rossini</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20load-tile%20syntax%3F&In-Reply-To=%3C002601c8b722%24f58fc430%24e0af4c90%24%40org%3E"
+       TITLE="[Opensim-users] load-tile syntax?">suz at balsasluts.org
+       </A><BR>
+    <I>Fri May 16 09:03:17 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000264.html">[Opensim-users] load-tile syntax?
+</A></li>
+        <LI>Next message: <A HREF="000266.html">[Opensim-users] ports and firewalls..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#265">[ date ]</a>
+              <a href="thread.html#265">[ thread ]</a>
+              <a href="subject.html#265">[ subject ]</a>
+              <a href="author.html#265">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> One might request that you could point the rest of us who have
+</I>&gt;<i> not-so-great google-fu to the appropriate answer?
+</I>&gt;<i> 
+</I>&gt;<i> One would appreciate it. :)
+</I>&gt;<i> 
+</I>&gt;<i> -Kyle H
+</I>&gt;<i> 
+</I>&gt;<i> On Thu, May 15, 2008 at 9:51 AM, Miss Suzhanna Rossini
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">suz at balsasluts.org</A>&gt; wrote:
+</I>&gt;<i> &gt;&gt; I just don't understand the 'terrain load-tile' syntax... It seems
+</I>&gt;<i> like
+</I>&gt;<i> &gt;&gt; no matter how I try, nothing at all happens.
+</I>&gt;<i> &gt;&gt; I downloaded the 3x3-island.raw file from the opensimulator.org
+</I>&gt;<i> site,
+</I>&gt;<i> &gt;&gt; and I'm aiming to use it on a 9-region setup in 3 different blocks.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The regions are placed like this:
+</I>&gt;<i> &gt;&gt; 3 3 3
+</I>&gt;<i> &gt;&gt; 2 2 2
+</I>&gt;<i> &gt;&gt; 1 1 1
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; How do I load the mid part of the terrain file to the regions on
+</I>&gt;<i> &gt;&gt; simulator 2?
+</I>&gt;<i> &gt;&gt; I tried like 'terrain load-tile 3x3-island.raw 768 768 0 256' and
+</I>&gt;<i> &gt;&gt; 'terrain load-tile 3x3-island.raw 3 3 0 1' ..
+</I>&gt;<i> &gt;&gt; Nothing happens, nothing at all... My thought was to use the file
+</I>&gt;<i> for
+</I>&gt;<i> &gt;&gt; all 3 simulators to populate all the 9 regions coherently, but I
+</I>&gt;<i> just
+</I>&gt;<i> &gt;&gt; can't get it to work.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Advice anyone, please?
+</I>&gt;<i> &gt;&gt; Suz
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; After a whole LOT of Googling, I found the solution.. Thanks to
+</I>&gt;<i> whoever posted their findings in their blogs!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; My next question is about OpenSim.ini.. Which are the absolute
+</I>&gt;<i> minimum configuration lines needed for a simulator that connects to a
+</I>&gt;<i> grid?
+</I>&gt;<i> &gt; My guess would be the URLs for the grid servers, and not much more,
+</I>&gt;<i> am I right about that?
+</I>
+
+I'm happy to share Kyle.. ;-)
+I just forgot about it when posting, sorry..
+
+Anyway, first of all, the terrain file *must* be a RAW file, then it also *must* have the file extension .r32 (tested .raw, didn't work..).
+
+Then the syntax is just as described in the documentation, but the numbers to use are not as many describe them, apparently it's been changed recently.
+
+In my case I have a terrain file measuring 768x768 pixels, made for a 3x3 region grid, the grid layout is as I described initially, laid out on 3 simulators (1, 2 &amp; 3) as this:
+3 3 3
+2 2 2
+1 1 1
+
+The &quot;lowest&quot; position (SW) is located at 2000,2000 in the grid.
+
+What confused me most was how to figure out how the load-tile should figure out how to map the tiles onto the regions correctly and seamlessly. It was easier than I thought.. ;-)
+
+On ALL THREE of the simulators, I use this: &quot;terrain load-tile 3x3-island.r32 3 3 2000 2000&quot;
+The numbers after the file name are &quot;file width in TILES&quot;, &quot;file height in TILES&quot; (Not pixels, but in region tiles..), then where ON THE ENTIRE GRID the starting point of the layout is, in my case my SW region, placed at 2000,2000 in the grid.
+
+The load-tile function figures out from and to what points in the terrain file it should start mapping to the regions at hand, after all, all regions &quot;knows&quot; where in the grid they are.. ;-)
+
+I hope this helps.. I thought I'd post it in the opensimulator wiki as well, but I just don't understand the wiki syntax.. So if anyone reading this do know how to work it, feel free to post it, I'm sure someone can be helped!
+
+Hugs etc..
+Suz.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000264.html">[Opensim-users] load-tile syntax?
+</A></li>
+	<LI>Next message: <A HREF="000266.html">[Opensim-users] ports and firewalls..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#265">[ date ]</a>
+              <a href="thread.html#265">[ thread ]</a>
+              <a href="subject.html#265">[ subject ]</a>
+              <a href="author.html#265">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

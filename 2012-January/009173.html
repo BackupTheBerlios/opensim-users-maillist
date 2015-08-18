@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] FreeBSD libODE issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20FreeBSD%20libODE%20issue&In-Reply-To=%3C154C1C77-5CC2-43D0-AD0D-A100E85BBB3D%40spekuloos.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009167.html">
+   <LINK REL="Next"  HREF="009201.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] FreeBSD libODE issue</H1>
+    <B>Gudule Lapointe</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20FreeBSD%20libODE%20issue&In-Reply-To=%3C154C1C77-5CC2-43D0-AD0D-A100E85BBB3D%40spekuloos.be%3E"
+       TITLE="[Opensim-users] FreeBSD libODE issue">gudule at spekuloos.be
+       </A><BR>
+    <I>Tue Jan 24 00:52:31 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009167.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+        <LI>Next message: <A HREF="009201.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9173">[ date ]</a>
+              <a href="thread.html#9173">[ thread ]</a>
+              <a href="subject.html#9173">[ subject ]</a>
+              <a href="author.html#9173">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> trunk is an svn thing which has no parallel in git.  I don't see trunk mentioned in the current instructions.
+</I>
+Well, it is not mentioned, you're right, but that's the problem: anyhow, the &quot;unmanaged&quot; directory is child of &quot;trunk&quot; directory in the git clone...
+
+# ls opensim-libs/
+BulletPhysics HttpServer    README.txt    old
+DotNetOpenId  LibOMV_2568   libomv-0.7.0  trunk
+
+# find opensim-libs -name &quot;OpenDynamicsEngine-*&quot;
+opensim-libs/trunk/unmanaged/OpenDynamicsEngine-0.10.1
+opensim-libs/trunk/unmanaged/OpenDynamicsEngine-r1755
+
+(I just made a new clone right now to be sure I was checking from the git clone directory)
+
+
+Le 24 janv. 2012 &#224; 00:27, Justin Clark-Casey a &#233;crit :
+
+&gt;<i> On 23/01/12 23:19, Gudule Lapointe wrote:
+</I>&gt;&gt;<i> Thanks for the additional information and the update of the page.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Just tried again with new instructions, I had to change some things to have it working. And it works!
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> git clone <A HREF="git://opensimulator.org/git/opensim-libs">git://opensimulator.org/git/opensim-libs</A>
+</I>&gt;&gt;&gt;<i> cd opensim-libs/unmanaged/OpenDynamicsEngine-r1755
+</I>&gt;&gt;&gt;<i> sh autogen.sh
+</I>&gt;&gt;&gt;<i> ./configure --enable-shared --enable-release --disable-demos --without-x --enable-old-trimesh
+</I>&gt;&gt;&gt;<i> make
+</I>&gt;&gt;&gt;<i> mv ./ode/src/.libs/libode.so /opensim/installation/directory/opensim/bin/libode.so (32 bit)
+</I>&gt;&gt;&gt;<i> mv ./ode/src/.libs/libode.so /opensim/installation/directory/opensim/bin/libode-x86_64.so (64 bit)
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 1&#176;	As far I remember, in the previous version of the page, the git url included /trunk/ subpath. As it is now, the following cd command is now incorrect
+</I>&gt;&gt;<i> 2&#176;	in ode/src/.libs, I see libode.so is a softlink to libode.so.2
+</I>&gt;&gt;<i> 	Doesn't the original file also need to be moved?
+</I>&gt;<i> 
+</I>&gt;<i> trunk is an svn thing which has no parallel in git.  I don't see trunk mentioned in the current instructions.
+</I>&gt;<i> 
+</I>&gt;<i> I changed the moves to copies.  It is the original file that needs to be copied.  I prefer copying to linking for clarity's sake, but whatever works to make the libode.so reference valid in the file system if fine, of course.
+</I>&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> So, what I did is
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 	git clone <A HREF="git://opensimulator.org/git/opensim-libs">git://opensimulator.org/git/opensim-libs</A>
+</I>&gt;&gt;<i> 	cd opensim-libs/trunk/unmanaged/OpenDynamicsEngine-r1755   				### changed
+</I>&gt;&gt;<i> 	sh autogen.sh
+</I>&gt;&gt;<i> 	./configure --enable-shared --enable-release --disable-demos --without-x --enable-old-trimesh
+</I>&gt;&gt;<i> 	make
+</I>&gt;&gt;<i> 	mv ./ode/src/.libs/libode.so* /opensim/installation/directory/opensim/bin/libode.so (32 bit)		### changed
+</I>&gt;&gt;<i> 	cd /opensim/installation/directory/opensim/bin/					### changed
+</I>&gt;&gt;<i> 	rm libode-x86_64.so											### changed
+</I>&gt;&gt;<i> 	ln -s libode.so.2 libode-x86_64.so								### changed
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> My server is supposed to be 64bits, but uname shows 32bits (i'll investigate that later), so I am not sure if the last 3 lines are needed and/or useful
+</I>&gt;<i> 
+</I>&gt;<i> If uname says 32 bits then you have the 32 bit version of the OS installed.
+</I>&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Le 23 janv. 2012 &#224; 23:18, Justin Clark-Casey a &#233;crit :
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> The error log indicates that OpenSim cannot find the require ode library (System.DllNotFoundException: libode).
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> OpenSim won't pick up a system installed ode library, only those in its own bin directory.  It only ships with compiled libraries for linux (32 and 64 bit), Windows (32 bit only currently, for various reasons) and Mac OSX.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Compiling ODE for BSD and replacing the existing libode.so (32 bit) or libode-x86_64.so (64 bit) might work since these are used when the platform is not windows or mac, but this is not guaranteed.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> I updated the build instructions but I can't test them for accuracy.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> On 22/01/12 22:51, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hello
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> I try to install OpenSim on a FreeBSD server. Whatever approach I try, I get the same kind of error.
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> I tried
+</I>&gt;&gt;&gt;&gt;<i> 	- from last release
+</I>&gt;&gt;&gt;&gt;<i> 	- from current snapshot (well, tried on several ones)
+</I>&gt;&gt;&gt;&gt;<i> 	- from osgrid and diva distributions.
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> I also tried the build instructions on <A HREF="http://opensimulator.org/wiki/Build_Instructions#FreeBSD">http://opensimulator.org/wiki/Build_Instructions#FreeBSD</A>
+</I>&gt;&gt;&gt;&gt;<i> but the part concerning ODE Physics is out of date. It mentions opensim-libs/unmanaged/OpenDynamicsEngine2, which doesn't exists, and there are two related folders: OpenDynamicsEngine-0.10.1 and OpenDynamicsEngine-r1755 . I tried both, with same error.
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> Here is my config:
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 	FreeBSD 8.2-RELEASE-p5 #2: Wed Dec 28 16:51:23 CET 2011
+</I>&gt;&gt;&gt;&gt;<i> 	Opensim version (last try): 24b20f6 r17847 2012-01-22 15:35:14 +0000
+</I>&gt;&gt;&gt;&gt;<i> 	Mono JIT compiler version 2.10.6 (tarball Wed Nov 16 19:42:09 CET 2011)
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> And below is the error log.
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> BTW: I installed successfully OpenSim on Ubuntu and MacOS X Lion. So the problem is not related to &quot;global&quot; understanding of the installation process. ;-)
+</I>&gt;&gt;&gt;&gt;<i> Now I need to have it working on a production server, which runs FreeBSD (and I can't change that)
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> If anyone has an idea, it would be greatly appreciated.
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 23:28:06 - [APPLICATION]:
+</I>&gt;&gt;&gt;&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> Exception: System.DllNotFoundException: libode
+</I>&gt;&gt;&gt;&gt;<i>  at (wrapper managed-to-native) Ode.NET.d:InitODE ()
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Region.Physics.OdePlugin.OdePlugin.GetScene (System.String sceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Region.Physics.Manager.PhysicsPluginManager.GetPhysicsScene (System.String physEngineName, System.String meshEngineName, IConfigSource config, System.String regionName) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Region.ClientStack.RegionApplicationBase.GetPhysicsScene (System.String engine, System.String meshEngine, IConfigSource config, System.String osSceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.GetPhysicsScene (System.String osSceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo regionInfo, Int32 proxyOffset, IConfigSource configSource, IClientNetworkServer&amp;   clientServer) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp;   mscene) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp;   scene) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSim.StartupSpecific () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Application.Main (System.String[] args) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> Application is terminating: True
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> [ERROR] FATAL UNHANDLED EXCEPTION: System.DllNotFoundException: libode
+</I>&gt;&gt;&gt;&gt;<i>  at (wrapper managed-to-native) Ode.NET.d:InitODE ()
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Region.Physics.OdePlugin.OdePlugin.GetScene (System.String sceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Region.Physics.Manager.PhysicsPluginManager.GetPhysicsScene (System.String physEngineName, System.String meshEngineName, IConfigSource config, System.String regionName) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Region.ClientStack.RegionApplicationBase.GetPhysicsScene (System.String engine, System.String meshEngine, IConfigSource config, System.String osSceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.GetPhysicsScene (System.String osSceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo regionInfo, Int32 proxyOffset, IConfigSource configSource, IClientNetworkServer&amp;   clientServer) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp;   mscene) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp;   scene) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.OpenSim.StartupSpecific () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i>  at OpenSim.Application.Main (System.String[] args) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009167.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+	<LI>Next message: <A HREF="009201.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9173">[ date ]</a>
+              <a href="thread.html#9173">[ thread ]</a>
+              <a href="subject.html#9173">[ subject ]</a>
+              <a href="author.html#9173">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

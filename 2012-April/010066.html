@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database clean up
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20clean%20up&In-Reply-To=%3CCA%2BRcaTQrGshEck9Wk7F7d9wA3jKpR80vhdsnjofwev8apuGHLg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010061.html">
+   <LINK REL="Next"  HREF="010073.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database clean up</H1>
+    <B>M.E. Verhagen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20clean%20up&In-Reply-To=%3CCA%2BRcaTQrGshEck9Wk7F7d9wA3jKpR80vhdsnjofwev8apuGHLg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Database clean up">marceled9 at gmail.com
+       </A><BR>
+    <I>Sat Apr  7 09:01:16 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010061.html">[Opensim-users] Database clean up
+</A></li>
+        <LI>Next message: <A HREF="010073.html">[Opensim-users] Database clean up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10066">[ date ]</a>
+              <a href="thread.html#10066">[ thread ]</a>
+              <a href="subject.html#10066">[ subject ]</a>
+              <a href="author.html#10066">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>maybe it helps when you optize your mysql:
+
+<A HREF="http://www.debianhelp.co.uk/mysqlperformance.htm">http://www.debianhelp.co.uk/mysqlperformance.htm</A>
+
+Op zaterdag 7 april 2012 schreef Gudule Lapointe (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>) het
+volgende:
+
+&gt;<i> Thank you very much Justin for this detailed information.
+</I>&gt;<i>
+</I>&gt;<i> Actually, the monitoring I made since a couple of days allowed me to
+</I>&gt;<i> eliminate a range of possible causes (including network, disk, machine
+</I>&gt;<i> overload, etc). My conclusion to focus on mysql performance is far more
+</I>&gt;<i> than an assumption, even if I didn't detailed my tests here.
+</I>&gt;<i>
+</I>&gt;<i> The monitoring tools I have for mysql told me a range of causes of
+</I>&gt;<i> performance loose, including the index. But no precise indication on which
+</I>&gt;<i> database, with tables or which queries.
+</I>&gt;<i>
+</I>&gt;<i> The explanations you gave confirm me that the size of the grid (and the
+</I>&gt;<i> database) should not be a problem -- in normal operating conditions.
+</I>&gt;<i> So I am happy not to have to enter in the adventure to split databases
+</I>&gt;<i> right now.
+</I>&gt;<i>
+</I>&gt;<i> I'll check now if something like db/index corruption is in the air
+</I>&gt;<i> (anyway, a db optimization shouldn't hurt). And still investigating on
+</I>&gt;<i> other possible causes.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;<i>
+</I>&gt;<i> Le 7 avr. 2012 &#224; 03:10, Justin Clark-Casey a &#233;crit :
+</I>&gt;<i>
+</I>&gt;<i> On 06/04/12 18:53, Gudule Lapointe wrote:
+</I>&gt;<i>
+</I>&gt;<i> I experience lot of timeout problems. I checked every side of the
+</I>&gt;<i> installation, and I suspect the database to be the
+</I>&gt;<i>
+</I>&gt;<i> bottleneck.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The main question is: how can I clean up the database? Detail description
+</I>&gt;<i> below&#8230;
+</I>&gt;<i>
+</I>&gt;<i> Any advice on any part of the problem is welcome.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> From the data below I'm quite surprised you're having problems - this is
+</I>&gt;<i> not a particularly large grid.  I strongly recommend actually measuring
+</I>&gt;<i> performance where you can and finding the actual bottleneck, rather than
+</I>&gt;<i> assuming that certain things are issues.  You might find that the issue is
+</I>&gt;<i> not actually OpenSimulator related (e.g. a network issue, machine
+</I>&gt;<i> overloaded for other reasons, etc).  In particular, I don't think 2.3Gb is
+</I>&gt;<i> all that large for an asset database.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately, I'm not aware of tools to measure things such as inventory
+</I>&gt;<i> service response, though in principle they would not be all that hard to
+</I>&gt;<i> write.
+</I>&gt;<i>
+</I>&gt;<i> pCampbot [1] can do some simulator testing where many libomv clients are
+</I>&gt;<i> logged onto a simulator at once, though some of its actions are currently
+</I>&gt;<i> highly unrealistic (e.g. logging in 20 bots simultaneously).
+</I>&gt;<i>
+</I>&gt;<i> I've written up some grid performance discussion and possible solutions at
+</I>&gt;<i> [1].  However, this only covers the issues I've personally seen.  In
+</I>&gt;<i> general, scaling a grid is very hard and largely a step into an evolving
+</I>&gt;<i> unknown.  It's also the hardest area to work in since diaganosing issues is
+</I>&gt;<i> very time consuming (and not always something I have the time to help with,
+</I>&gt;<i> unfortunately, not least because it's an area I'm still learning about).
+</I>&gt;<i>  But again, I don't think your grid numbers are actually high enough to
+</I>&gt;<i> encounter the more complex issues.
+</I>&gt;<i>
+</I>&gt;<i> More comments below.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Current setup comes from an initial test installation, and changed a lot
+</I>&gt;<i> before going to prod (versions changes, server
+</I>&gt;<i>
+</I>&gt;<i> changes, oar save and load, etc).
+</I>&gt;<i>
+</I>&gt;<i> However it has been working quite fine for more than 3 months, since
+</I>&gt;<i> latest big change.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - version: 0.7.3-post-fixes
+</I>&gt;<i>
+</I>&gt;<i> - robust server, with 7 simulators, for a total of 56 regions
+</I>&gt;<i>
+</I>&gt;<i> - From these region, I would say 15 &#224; 20 are really active, others are
+</I>&gt;<i> placeholders, without content.
+</I>&gt;<i>
+</I>&gt;<i> - About 20 registered users. Usually 3 or 4 concurrent users
+</I>&gt;<i>
+</I>&gt;<i> - Each region has it's own mysql database, and robust uses a single one.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Since around 5 days, I get continuous timeout, access to inventory or
+</I>&gt;<i> assets errors and sometimes region crashes.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Though they were no recent change on the set up when the problems began.
+</I>&gt;<i> Hence my suspicions on the database.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> (CPU, memory and disk usage don't show any overload)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Regions database are fairly light (~20MB)
+</I>&gt;<i>
+</I>&gt;<i> Robust database is huge: 2.6 GB
+</I>&gt;<i>
+</I>&gt;<i> I am not sure such a big database is common for setup like ours.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This is not a very unusual size and I don't think that it's a problem to
+</I>&gt;<i> be honest.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So it looks obvious that I should clean up the database, which may contain
+</I>&gt;<i> a lot of outdated items.
+</I>&gt;<i>
+</I>&gt;<i> Fair enough. How can I do?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I would like to know
+</I>&gt;<i>
+</I>&gt;<i> - which tables I can empty without losses, at all
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Nothing that would make any significant difference compared to
+</I>&gt;<i> deleting/deduplicating assets.  There are some (a) suggestion for asset
+</I>&gt;<i> dedupe at [1].  Asset deletion is a hard problem, though I think there
+</I>&gt;<i> might be some future stuff that can be done by deleting/retiring assets
+</I>&gt;<i> that haven't been accessed for a very, very long time.
+</I>&gt;<i>
+</I>&gt;<i> - which tables I can empty after having made a successful oar save of my
+</I>&gt;<i> regions
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> You could empty the region database, naturally.  I'm assuming you're not
+</I>&gt;<i> storing all region and service data in a single database.  Even then there
+</I>&gt;<i> is a list of region tables on the wiki.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+-- 
+Groningen en Hannover Opensims:   <A HREF="secondlife://meverhagen.nl:8002:Hannover">secondlife://meverhagen.nl:8002:Hannover</A>
+ZW/
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120407/a144fca3/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120407/a144fca3/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010061.html">[Opensim-users] Database clean up
+</A></li>
+	<LI>Next message: <A HREF="010073.html">[Opensim-users] Database clean up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10066">[ date ]</a>
+              <a href="thread.html#10066">[ thread ]</a>
+              <a href="subject.html#10066">[ subject ]</a>
+              <a href="author.html#10066">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Loading oar files crashes opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20oar%20files%20crashes%20opensim&In-Reply-To=%3C4D62F0D5.9010002%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006641.html">
+   <LINK REL="Next"  HREF="006631.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Loading oar files crashes opensim</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20oar%20files%20crashes%20opensim&In-Reply-To=%3C4D62F0D5.9010002%40googlemail.com%3E"
+       TITLE="[Opensim-users] Loading oar files crashes opensim">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Feb 22 00:10:13 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006641.html">[Opensim-users] Loading oar files crashes opensim
+</A></li>
+        <LI>Next message: <A HREF="006631.html">[Opensim-users] Multiple Opensim Standalone Regions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6668">[ date ]</a>
+              <a href="thread.html#6668">[ thread ]</a>
+              <a href="subject.html#6668">[ subject ]</a>
+              <a href="author.html#6668">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 20/02/11 17:27, Robin Turner wrote:
+&gt;<i> On 19 February 2011 22:01, DutchGlory&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">info at verwijs-pc.nl</A>&gt;  wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> well don't build mono from source, this is still VERY UNSTABLE!!
+</I>&gt;&gt;<i> Just install  &quot;mono complete&quot; with debian &quot;Software center&quot;.
+</I>&gt;&gt;<i> Then download opensim with git or
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/viewgit/?a=shortlog&amp;p=opensim">http://opensimulator.org/viewgit/?a=shortlog&amp;p=opensim</A> here  and unpack/copy
+</I>&gt;&gt;<i> to your &quot;/home/&lt;yourname&gt;/opensim/&quot; folder.
+</I>&gt;&gt;<i> Download &quot;nant-0.91-alpha2&quot;
+</I>&gt;&gt;<i> <A HREF="http://sourceforge.net/projects/nant/files/nant/0.91-alpha2/">http://sourceforge.net/projects/nant/files/nant/0.91-alpha2/</A> here  and
+</I>&gt;&gt;<i> unpack in your &quot;/home/&lt;yourname&gt;/&quot; folder.
+</I>&gt;&gt;<i> (you will see: &quot;/home/&lt;yourname&gt;/nant-0.91-alpha2&quot;)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (replace&lt;yourname&gt;  with your debian (login)username)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> go to your opensim folder and run &quot;runprebuild.sh&quot;. When ready put this in
+</I>&gt;&gt;<i> &quot;run-nant.sh&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- begin --
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> #!/bin/sh
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # Possible values for &quot;t:&quot; include:
+</I>&gt;&gt;<i> #
+</I>&gt;&gt;<i> # mono-1.0 (Mono 1.0 Profile)
+</I>&gt;&gt;<i> # mono-2.0 (Mono 2.0 Profile)
+</I>&gt;&gt;<i> # mono-3.5 (Mono 3.5 Profile)
+</I>&gt;&gt;<i> #
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> cd /
+</I>&gt;&gt;<i> cd /home/&lt;yourname&gt;/opensim/
+</I>&gt;&gt;<i> exec mono /home/&lt;yourname&gt;/nant-0.91-alpha2/bin/NAnt.exe -t:mono-3.5&gt;
+</I>&gt;&gt;<i> OpenSimCompile.log
+</I>&gt;&gt;<i> echo &quot;Ready...&quot;
+</I>&gt;&gt;<i> sleep 3s
+</I>&gt;&gt;<i> -- end --
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and copy to &quot;/home/&lt;yourname&gt;/opensim/&quot;  folder and run it. This wil take a
+</I>&gt;&gt;<i> while,
+</I>&gt;&gt;<i> but then opensim is compliled perfectly. Now copy your opensim .ini  files
+</I>&gt;&gt;<i> to &quot;opensim/bin&quot; and
+</I>&gt;&gt;<i> &quot;opensim/config-include&quot; or make new ones with &quot;.example&quot; files.  After that
+</I>&gt;&gt;<i> opensim should work perfectly....
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately it doesn't, but I do get more detailed debugging messages ;-)
+</I>&gt;<i>
+</I>&gt;<i> Stacktrace:
+</I>&gt;<i>
+</I>&gt;<i>    at (wrapper managed-to-native)
+</I>&gt;<i> System.Diagnostics.Process.WaitForExit_internal (intptr,int)&lt;0x00004&gt;
+</I>&gt;<i>    at (wrapper managed-to-native)
+</I>&gt;<i> System.Diagnostics.Process.WaitForExit_internal (intptr,int)&lt;0x00004&gt;
+</I>&gt;<i>    at System.Diagnostics.Process.WaitForExit (int)&lt;0x0025b&gt;
+</I>&gt;<i>    at System.Diagnostics.Process.WaitForExit ()&lt;0x00012&gt;
+</I>&gt;<i>    at (wrapper remoting-invoke-with-check)
+</I>&gt;<i> System.Diagnostics.Process.WaitForExit ()&lt;0x00053&gt;
+</I>&gt;<i>    at Mono.CSharp.CSharpCodeCompiler.CompileFromFileBatch
+</I>&gt;<i> (System.CodeDom.Compiler.CompilerParameters,string[])&lt;0x004a9&gt;
+</I>&gt;<i>    at Mono.CSharp.CSharpCodeCompiler.CompileAssemblyFromFileBatch
+</I>&gt;<i> (System.CodeDom.Compiler.CompilerParameters,string[])&lt;0x00022&gt;
+</I>&gt;<i>    at Mono.CSharp.CSharpCodeCompiler.CompileAssemblyFromFile
+</I>&gt;<i> (System.CodeDom.Compiler.CompilerParameters,string)&lt;0x00049&gt;
+</I>&gt;<i>    at System.Xml.Serialization.XmlSerializer.GenerateSerializers
+</I>&gt;<i> (System.Xml.Serialization.XmlSerializer/GenerationBatch,System.CodeDom.Compiler.CompilerParameters)
+</I>&gt;<i> &lt;0x0065c&gt;
+</I>&gt;<i>    at System.Xml.Serialization.XmlSerializer.RunSerializerGeneration
+</I>&gt;<i> (object)&lt;0x0003f&gt;
+</I>&gt;<i>    at (wrapper runtime-invoke)
+</I>&gt;<i> object.runtime_invoke_void__this___object
+</I>&gt;<i> (object,intptr,intptr,intptr)&lt;0x00046&gt;
+</I>&gt;<i>
+</I>&gt;<i> Native stacktrace:
+</I>&gt;<i>
+</I>&gt;<i> 	mono() [0x80d5c59]
+</I>&gt;<i> 	mono() [0x810f8eb]
+</I>&gt;<i> 	[0xb77cb40c]
+</I>&gt;<i> 	mono() [0x81f3786]
+</I>&gt;<i> 	mono() [0x8215d88]
+</I>&gt;<i> 	[0xb584b60f]
+</I>&gt;<i> 	[0xb584b52c]
+</I>&gt;<i> 	[0xb584b2bb]
+</I>&gt;<i> 	[0xb584b274]
+</I>&gt;<i> 	[0xb3d1f1d2]
+</I>&gt;<i> 	[0xb3d1eca3]
+</I>&gt;<i> 	[0xb3d1ec6a]
+</I>&gt;<i> 	[0xb3e3bfad]
+</I>&gt;<i> 	[0xb3e3b8f8]
+</I>&gt;<i> 	[0xb70cf0bf]
+</I>&gt;<i> 	mono() [0x8064568]
+</I>&gt;<i> 	mono(mono_runtime_invoke+0x40) [0x8131f30]
+</I>&gt;<i> 	mono(mono_runtime_invoke_array+0x28c) [0x813774c]
+</I>&gt;<i> 	mono() [0x8137bfe]
+</I>&gt;<i> 	mono() [0x81b9fd1]
+</I>&gt;<i> 	mono() [0x81ba4d8]
+</I>&gt;<i> 	mono() [0x81a314b]
+</I>&gt;<i> 	mono() [0x81e878e]
+</I>&gt;<i> 	mono() [0x8209a38]
+</I>&gt;<i> 	/lib/i686/cmov/libpthread.so.0(+0x5955) [0xb76cd955]
+</I>&gt;<i> 	/lib/i686/cmov/libc.so.6(clone+0x5e) [0xb7627e7e]
+</I>&gt;<i>
+</I>&gt;<i> Debug info from gdb:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> =================================================================
+</I>&gt;<i> Got a SIGSEGV while executing native code. This usually indicates
+</I>&gt;<i> a fatal error in the mono runtime or one of the native libraries
+</I>&gt;<i> used by your application.
+</I>&gt;<i> =================================================================
+</I>&gt;<i>
+</I>&gt;<i> Aborted
+</I>&gt;<i>
+</I>&gt;<i> With BOTH mono and opensim compiled, it is as before - I can load an
+</I>&gt;<i> oar with just a few regions running and it will keep going, with a few
+</I>&gt;<i> error messages, but with a large number of regions it crashes. Could
+</I>&gt;<i> be RAM related, perhaps. Since I have no physical access to the
+</I>&gt;<i> server, I'll ask them to install a minimal Ubuntu system and take it
+</I>&gt;<i> from there. There shouldn't be much difference between the two
+</I>&gt;<i> distros, but if it's a version problem, thatmight solve it. If it
+</I>&gt;<i> doesn't, I'll just have to see if I can find a bigger box ;-)
+</I>&gt;<i>
+</I>&gt;<i> Thanks for all the help - hopefully in a while I'll be able to invite
+</I>&gt;<i> you all over to our sim!
+</I>&gt;<i>
+</I>&gt;<i> Robin
+</I>
+As Dutch says, these do look very much like Mono or possibly hardware issues than OAR loading problems per se.
+
+As another test, I would recommend sticking with Mono 2.6.4.  This has always been very stable for me in Ubuntu 10.10. 
+Anecdotally, the Mono 2.8 series seems less stable so far.
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006641.html">[Opensim-users] Loading oar files crashes opensim
+</A></li>
+	<LI>Next message: <A HREF="006631.html">[Opensim-users] Multiple Opensim Standalone Regions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6668">[ date ]</a>
+              <a href="thread.html#6668">[ thread ]</a>
+              <a href="subject.html#6668">[ subject ]</a>
+              <a href="author.html#6668">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

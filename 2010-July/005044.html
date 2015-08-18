@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] HG1.5 Tests - Arielle Popstar
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HG1.5%20Tests%20-%20Arielle%20Popstar&In-Reply-To=%3C4c4fec44.42ecd80a.5798.ffffaba0%40mx.google.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005057.html">
+   <LINK REL="Next"  HREF="005051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] HG1.5 Tests - Arielle Popstar</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HG1.5%20Tests%20-%20Arielle%20Popstar&In-Reply-To=%3C4c4fec44.42ecd80a.5798.ffffaba0%40mx.google.com%3E"
+       TITLE="[Opensim-users] HG1.5 Tests - Arielle Popstar">ai.ai.austin at gmail.com
+       </A><BR>
+    <I>Wed Jul 28 10:37:17 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005057.html">[Opensim-users] [Opensim-dev] Recommended Approach for Voice	for Opensim
+</A></li>
+        <LI>Next message: <A HREF="005051.html">[Opensim-users] HG1.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5044">[ date ]</a>
+              <a href="thread.html#5044">[ thread ]</a>
+              <a href="subject.html#5044">[ subject ]</a>
+              <a href="author.html#5044">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+&gt;<i>From: Diva Canto &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>The thing to have in mind is that the viewer's presented TCP address
+</I>&gt;<i>must be the same throughout the entire session, to all grids,
+</I>&gt;<i>independent of the relation between the viewer machine and the grids. If
+</I>&gt;<i>ppl have  networking setups where a viewer presents an address to a grid
+</I>&gt;<i>inside the same network, and another address to another grid outside
+</I>&gt;<i>that network, HG TPs between those grids will fail.
+</I>&gt;<i>
+</I>&gt;<i>This may still require some tuning on my part for 0.7.1, so I would be
+</I>&gt;<i>interested in finding out more technical details of the network setups
+</I>&gt;<i>of these cases that are failing -- are these dyndns cases only?  Etc.
+</I>
+We should try to ensure that IP number, DNS name and any alias will 
+all work and be treated as a valid check.  not try to only directly 
+match what is presented.  As we note Opensim uses numbers sometimes 
+even where configurations give DNS names.
+
+So one thing we ought to check is that the tests are not trying to 
+limit the verification check to a DNS name where its given in some 
+parts of Opensim versus an IP address where Opensim uses that in 
+another context.  We note IP numbers for the machines we run our grid 
+and sims on are often presented as IP numbers in the Opensim.log 
+whereas we always use a DNS name such as virtual.aiai.ed.ac.uk in our 
+config files throughout, including in region.ini files.  So Opensim 
+is getting the underlying IP number and using it in some way even 
+where the config gives a DNS name.
+
+Of course the DNS name must be reverse lookupable from the number and 
+vice versa, we understand that.  In fact we always use &quot;service&quot; 
+aliases which are again reverse lookupable.  The underlying machine 
+name has these are aliases.
+
+See our example by using
+      nslookup virtual.aiai.ed.ac.uk
+
+Name:    killegray.aiai.ed.ac.uk
+Address:  129.215.219.138
+Aliases:  virtual.aiai.ed.ac.uk 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005057.html">[Opensim-users] [Opensim-dev] Recommended Approach for Voice	for Opensim
+</A></li>
+	<LI>Next message: <A HREF="005051.html">[Opensim-users] HG1.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5044">[ date ]</a>
+              <a href="thread.html#5044">[ thread ]</a>
+              <a href="subject.html#5044">[ subject ]</a>
+              <a href="author.html#5044">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

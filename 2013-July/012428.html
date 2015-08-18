@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] what version of collada is expected by various standard viewers &amp; opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20what%20version%20of%20collada%20is%20expected%20by%20various%0A%20standard%20viewers%20%26%20opensim&In-Reply-To=%3CCAAQTD4WfRqjeyGkVKRoT8Wt1cGfybjGp4BaTKyajF-TkX-J3wg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012427.html">
+   <LINK REL="Next"  HREF="012429.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] what version of collada is expected by various standard viewers &amp; opensim</H1>
+    <B>Dahlia Trimble</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20what%20version%20of%20collada%20is%20expected%20by%20various%0A%20standard%20viewers%20%26%20opensim&In-Reply-To=%3CCAAQTD4WfRqjeyGkVKRoT8Wt1cGfybjGp4BaTKyajF-TkX-J3wg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] what version of collada is expected by various standard viewers &amp; opensim">dahliatrimble at gmail.com
+       </A><BR>
+    <I>Sat Jul  6 04:57:06 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012427.html">[Opensim-users] what version of collada is expected by various standard viewers &amp; opensim
+</A></li>
+        <LI>Next message: <A HREF="012429.html">[Opensim-users] what version of collada is expected by various standard viewers &amp; opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12428">[ date ]</a>
+              <a href="thread.html#12428">[ thread ]</a>
+              <a href="subject.html#12428">[ subject ]</a>
+              <a href="author.html#12428">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'll try explaining it differently.
+
+If you upload a single mesh then there is one asset the viewer needs to
+download. If you upload several meshes, there are several that the viewer
+needs to download. It doesn't matter if the meshes are the same or not, the
+viewer needs to download one copy of every asset it needs to display. Since
+mesh assets can be quite large compared to other network traffic, it's a
+better choice to only upload *one* copy of a unique mesh and then just
+duplicate it in the scene.
+
+Each mesh object in a scene consists of a small chunk of information (asset
+reference, location, orientation, texture references, etc.). The viewer
+will (should) only download assets that it doesn't yet have a copy of. If
+there are many chunks of grass and they all use the same mesh asset, then
+the viewer only needs to download that asset once. If, however, you
+uploaded a unique mesh many times, then each upload would create a new
+asset and the viewer would need to download each one.
+
+
+
+On Fri, Jul 5, 2013 at 7:07 PM, Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt;wrote:
+
+&gt;<i> Hi Dahlia,
+</I>&gt;<i> If I understand you correctly, if I upload a grass plant in mesh and
+</I>&gt;<i> then just multiple copy it inworld, it would not make a difference if
+</I>&gt;<i> made a grass patch in mesh and then uploaded it. Let me know, am kind
+</I>&gt;<i> of dabbling with this issue right now. Am thinking in the way for
+</I>&gt;<i> leaves in a tree.
+</I>&gt;<i> R
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Jul 5, 2013 at 9:43 PM, Dahlia Trimble &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dahliatrimble at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; If an object is made up of many pieces, all of which are the same mesh,
+</I>&gt;<i> then
+</I>&gt;<i> &gt; it would be better to upload the mesh once and just duplicate it. This is
+</I>&gt;<i> &gt; because the mesh is a single asset and the viewer *should* only download
+</I>&gt;<i> it
+</I>&gt;<i> &gt; once. However, each piece is still a single &quot;prim&quot; whether it's a prim, a
+</I>&gt;<i> &gt; sculpt, or a mesh, and will still require a message from the sim
+</I>&gt;<i> &gt; (ObjectUpdate packet) telling the viewer that it is there. This message
+</I>&gt;<i> is
+</I>&gt;<i> &gt; quite small compared to the size of the mesh asset though and many of
+</I>&gt;<i> them
+</I>&gt;<i> &gt; can be sent quite quickly. If the same mesh was uploaded many times and
+</I>&gt;<i> &gt; these different uploads were used in the same scene, then each mesh would
+</I>&gt;<i> &gt; get a different Asset ID and the viewers would have no way of knowing
+</I>&gt;<i> they
+</I>&gt;<i> &gt; were all the same and would need to download each copy separately; this
+</I>&gt;<i> &gt; could put quite a strain on the simulator and the network and should be
+</I>&gt;<i> &gt; avoided.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Note that in Second Life, &quot;Land Impact&quot; may be adversely influenced by
+</I>&gt;<i> many
+</I>&gt;<i> &gt; copies of the same mesh *even though the mesh only has to be sent to each
+</I>&gt;<i> &gt; viewer once*. This is an oversight in the design of Land Impact and
+</I>&gt;<i> &gt; OpenSimulator does not have this issue as it does not implement Land
+</I>&gt;<i> Impact.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Fri, Jul 5, 2013 at 5:49 PM, John Sheridan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; re : &quot;The various editors I tried require a lot of gymnastics just to
+</I>&gt;<i> get
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; objects that render well in them to be imported into opensim.
+</I>&gt;<i> &gt;&gt; I am only familiar with ac3d, and Blender somewhat.&quot;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I've been working with Blender 2.6, and while I'll admit it takes a bit
+</I>&gt;<i> of
+</I>&gt;<i> &gt;&gt; adjusting if you're moving from prim based modeling it works perfectly
+</I>&gt;<i> with
+</I>&gt;<i> &gt;&gt; opensim uploading through either Firestorm or Kokua.  Scaling is a bit
+</I>&gt;<i> of a
+</I>&gt;<i> &gt;&gt; headache but after upload my models show exactly as they did in Blender
+</I>&gt;<i> and
+</I>&gt;<i> &gt;&gt; oddly enough, they seem to actually load a bit faster.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; While on the topic of mesh, I did have a quick question to anyone out
+</I>&gt;<i> &gt;&gt; there regarding instancing.  Awhile back (before the advent of mesh) I
+</I>&gt;<i> seem
+</I>&gt;<i> &gt;&gt; to remember someone mentioning that sculpts were superior to normal
+</I>&gt;<i> prims as
+</I>&gt;<i> &gt;&gt; only one copy of the sculpt is downloaded and then applied to all
+</I>&gt;<i> objects it
+</I>&gt;<i> &gt;&gt; was used on by the viewer.  Would anyone happen to know if the same
+</I>&gt;<i> holds
+</I>&gt;<i> &gt;&gt; true for mesh?  Say in the case of an model with multiple duplicated
+</I>&gt;<i> pieces,
+</I>&gt;<i> &gt;&gt; would it make better sense to include one copy of the duplicate piece
+</I>&gt;<i> in the
+</I>&gt;<i> &gt;&gt; dae and then duplicate it in world or just glob it all together during
+</I>&gt;<i> the
+</I>&gt;<i> &gt;&gt; import?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Thanks, :)
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; - John / Orion Pseudo
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On 07/05/2013 08:08 PM, Nebadon Izumi wrote:
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; The various editors I tried require a lot of gymnastics just to get
+</I>&gt;<i> &gt;&gt;&gt; objects that render well in them to be imported into opensim.
+</I>&gt;<i> &gt;&gt;&gt; I am only familiar with ac3d, and Blender somewhat.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i> Rameshsharma Ramloll PhD, CEO CTO DeepSemaphore LLC, Affiliate
+</I>&gt;<i> Research Associate Professor, Idaho State University, Pocatello, ID
+</I>&gt;<i> 83209 Tel: 208-240-0040
+</I>&gt;<i> Blog, LinkedIn, DeepSemaphore LLC, Google+ profile
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130705/334da267/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130705/334da267/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012427.html">[Opensim-users] what version of collada is expected by various standard viewers &amp; opensim
+</A></li>
+	<LI>Next message: <A HREF="012429.html">[Opensim-users] what version of collada is expected by various standard viewers &amp; opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12428">[ date ]</a>
+              <a href="thread.html#12428">[ thread ]</a>
+              <a href="subject.html#12428">[ subject ]</a>
+              <a href="author.html#12428">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

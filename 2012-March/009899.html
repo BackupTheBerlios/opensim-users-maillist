@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sim size limits
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3C4F6BF121.60809%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009889.html">
+   <LINK REL="Next"  HREF="009890.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sim size limits</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3C4F6BF121.60809%40googlemail.com%3E"
+       TITLE="[Opensim-users] Sim size limits">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Mar 23 04:42:25 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009889.html">[Opensim-users] Sim size limits
+</A></li>
+        <LI>Next message: <A HREF="009890.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9899">[ date ]</a>
+              <a href="thread.html#9899">[ thread ]</a>
+              <a href="subject.html#9899">[ subject ]</a>
+              <a href="author.html#9899">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Chris, this is why we recommend that one does not re-use configurations between OpenSim installations, particularly with 
+non-mainstream architectures such as serverless grid.
+
+I haven't heard of any such major problems with the out-of-the-box configs in 0.7.3 (or 0.7.2).
+
+On 21/03/12 04:15, Ovi Chris Rouly wrote:
+&gt;<i> Hi Justin,
+</I>&gt;<i>
+</I>&gt;<i> I finally got my Sa-Hg 0.7.3 &quot;serverless grid&quot; to work based on OS website
+</I>&gt;<i> source download and compile.  However, there were numerous undocumented
+</I>&gt;<i> changes that I had to guess at, reason-out based on the error logs and from
+</I>&gt;<i> comparisons between the OS downloads and the Diva Distro, and many others I
+</I>&gt;<i> had to just &quot;pull out of the air.&quot;
+</I>&gt;<i>
+</I>&gt;<i> For example, the login calls to the MySQL dBase no longer &quot;tolerated&quot; a
+</I>&gt;<i> literal &quot;10.0.0.10&quot; address in their &quot;DataSource&quot; field.  (It seems like
+</I>&gt;<i> only the &quot;localhost&quot; now suffices?)  Deletion of the &quot;null.dll&quot; lines in
+</I>&gt;<i> &quot;almost&quot; every case relative to their MySQL counterpart insertions wasn't so
+</I>&gt;<i> shocking but I found it was necessary in almost every case.  (I'm thinking
+</I>&gt;<i> that was new to 0.7.3?)  A substitution of more than a half-dozen HG-centric
+</I>&gt;<i> lines taken from the Diva Distro configs and copied into the Hypergrid.ini
+</I>&gt;<i> config was not listed in the OpenSim website downloads. And what can only be
+</I>&gt;<i> described as an &quot;innovative omission&quot; of how to handle the PresenceService
+</I>&gt;<i> null.dll line in the Hypergrid.ini file.  That little bugger had to be
+</I>&gt;<i> deleted outright.
+</I>&gt;<i>
+</I>&gt;<i> My test was a simple: a 4 Sim X 16 region/Sim demo with meter-scale L3DT
+</I>&gt;<i> prepared USGS DEMS on a 32-bit XP SP3 machine.  This demo (kernel) can now
+</I>&gt;<i> be expanded to my main 64-bit platform with port-mapping for 256 regions.  I
+</I>&gt;<i> am truly appreciative for all the development teams hard work.  The region
+</I>&gt;<i> crossings are better, the physics is impressive, and much much more.  Unity
+</I>&gt;<i> still can't lay a finger on this technology.
+</I>&gt;<i>
+</I>&gt;<i> Respectfully yours,
+</I>&gt;<i>
+</I>&gt;<i> Chris
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----- Original Message -----
+</I>&gt;<i> From: &quot;Justin Clark-Casey&quot;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> To:&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Sent: Monday, March 19, 2012 8:38 PM
+</I>&gt;<i> Subject: Re: [Opensim-users] Sim size limits
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> I think I'm mistakenly giving the impression that they're much more flaky
+</I>&gt;<i> than they actually are (which might not be
+</I>&gt;&gt;<i> particularly flaky, more requiring some workarounds).  I do suggest trying
+</I>&gt;<i> them out.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It certainly is possible to improve things in this area, it's just
+</I>&gt;<i> difficult to estimate since it requires
+</I>&gt;&gt;<i> adaptation/improvements on both client and server side.  If I was to
+</I>&gt;<i> hazard a guess I would say a solid month on the
+</I>&gt;&gt;<i> server side and the same on the viewer side.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 19/03/12 09:54, David Burden wrote:
+</I>&gt;&gt;&gt;<i>      Thanks for all the feedback.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>      Sarge - Looked at Aurora ages ago, might be time for another look
+</I>&gt;<i> (if I can get it to work).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>      James/Justin- got the impression from this list that Megaregions
+</I>&gt;<i> were still very flaky, and also a bit of kludge
+</I>&gt;&gt;&gt;<i>      rather than true large regions
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>      Toni - I'll have a play with region size. Using Mesh terrain might
+</I>&gt;<i> be fine. And we've done the @scale piece before,
+</I>&gt;&gt;&gt;<i>      worked really well when we put an Apache HUD on and started flying
+</I>&gt;<i> over it like a flightsim
+</I>&gt;&gt;&gt;<i>
+</I>&gt;<i> (<A HREF="http://www.daden.co.uk/blog/2012/03/opensim-as-apache-flightsim.html">http://www.daden.co.uk/blog/2012/03/opensim-as-apache-flightsim.html</A>), but
+</I>&gt;<i> these use cases needs real avatars.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>      Diva - is yours just a Vanilla opensim build with 64+ sims? Any
+</I>&gt;<i> problems with building across the boundaries - is it
+</I>&gt;&gt;&gt;<i>      urban or rural? Any special tools to generate/manage it? 64 OAR
+</I>&gt;<i> files?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>      It's interesting how much of this depends on the viewer, which tends
+</I>&gt;<i> to echo some of the other discussion about the
+</I>&gt;&gt;&gt;<i>      need for an &quot;opensim&quot; viewer.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>      Only reason for mentioning money was that the stock (commercial)
+</I>&gt;<i> developer response is that of course it's possible,
+</I>&gt;&gt;&gt;<i>      it just depends about how much money you've got, so just wanted to
+</I>&gt;<i> get passed that. And I'm with InuYasha about
+</I>&gt;&gt;&gt;<i>      spending my lottery win (along with buying the GDW Traveller
+</I>&gt;<i> licence).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> .
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009889.html">[Opensim-users] Sim size limits
+</A></li>
+	<LI>Next message: <A HREF="009890.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9899">[ date ]</a>
+              <a href="thread.html#9899">[ thread ]</a>
+              <a href="subject.html#9899">[ subject ]</a>
+              <a href="author.html#9899">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

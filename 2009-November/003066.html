@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MySQL backups (was RE: linking regions and	hypergrid)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20backups%20%28was%20RE%3A%20linking%20regions%20and%0A%09hypergrid%29&In-Reply-To=%3Cdaf7207d0911091026s57dfcfecnf6173c7595c1deb2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003065.html">
+   <LINK REL="Next"  HREF="003068.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MySQL backups (was RE: linking regions and	hypergrid)</H1>
+    <B>William Magee</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20backups%20%28was%20RE%3A%20linking%20regions%20and%0A%09hypergrid%29&In-Reply-To=%3Cdaf7207d0911091026s57dfcfecnf6173c7595c1deb2%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] MySQL backups (was RE: linking regions and	hypergrid)">billmagee at gmail.com
+       </A><BR>
+    <I>Mon Nov  9 19:26:50 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003065.html">[Opensim-users] MySQL backups (was RE: linking regions	and	hypergrid)
+</A></li>
+        <LI>Next message: <A HREF="003068.html">[Opensim-users] MySQL backups (was RE: linking regions and	hypergrid)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3066">[ date ]</a>
+              <a href="thread.html#3066">[ thread ]</a>
+              <a href="subject.html#3066">[ subject ]</a>
+              <a href="author.html#3066">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks Karen, you are right about /var/lib/mysql. This could have been
+a crucial error on my part!
+
+I use a bash script for backup:
+
+bkupname=databasename_bkup_$(date +&quot;%a_%b_%d_%Y_%H_%M_%S&quot;).mysql_bkup
+mysqldump -u username -p databasename &gt; $bkupname
+
+On Tue, Nov 10, 2009 at 1:43 AM, Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karen_palen at yahoo.com</A>&gt; wrote:
+&gt;<i> The database is critical enough that I do both - NOW!
+</I>&gt;<i>
+</I>&gt;<i> I use MySQL Administrator which includes a simple database backup. It also drives some database checking and repair tools that are worthwhile.
+</I>&gt;<i>
+</I>&gt;<i> I don't have a lot of experience with MySQL, but I have had enough experience with databases in the past to know that they get to be the &quot;family jewels&quot; of your entire project!
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i> --- On Mon, 11/9/09, Kevin Buckley &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> From: Kevin Buckley &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt;
+</I>&gt;&gt;<i> Subject: [Opensim-users] MySQL backups (was RE: linking regions and hypergrid)
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Date: Monday, November 9, 2009, 2:05 AM
+</I>&gt;&gt;<i> I'm using a batch file (modified from
+</I>&gt;&gt;<i> something I found on the net) in
+</I>&gt;&gt;<i> Windows Scheduler to do my backup at 5am using
+</I>&gt;&gt;<i> 'mysqldump':
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> REM Rock's quick database backup script
+</I>&gt;&gt;<i> REM Place this batch file into Microsoft Scheduler, set to
+</I>&gt;&gt;<i> daily
+</I>&gt;&gt;<i> cd &quot;c:\Program Files\MySQL\MySQL Server 5.1\bin&quot;
+</I>&gt;&gt;<i> mysqldump --opt -uroot -p***** opensim2 &gt;
+</I>&gt;&gt;<i> z:\MySQLBackup\opensim2.sql
+</I>&gt;&gt;<i> REM Now rename &amp; datestamp the file
+</I>&gt;&gt;<i> z:
+</I>&gt;&gt;<i> cd &quot;z:\MySQLBackup\&quot;
+</I>&gt;&gt;<i> ren opensim2.sql
+</I>&gt;&gt;<i> &quot;%date:~6,4%-%date:~3,2%-%date:~0,2%opensim2.sql&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This avoids having to know anything about the MySQL
+</I>&gt;&gt;<i> installation.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> z: is a remote 1Tb network drive on my system. opensim2 is
+</I>&gt;&gt;<i> the name of the
+</I>&gt;&gt;<i> database.&#160; The individual backups are named like
+</I>&gt;&gt;<i> '2009-11-09opensim2.sql'.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Using this method do I still need to backup the other stuff
+</I>&gt;&gt;<i> separately?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Kevin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>]
+</I>&gt;&gt;<i> On Behalf Of Karen Palen
+</I>&gt;&gt;<i> Sent: 09 November 2009 08:45
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] linking regions and hypergrid
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you are using Linux, be sure you backup include the
+</I>&gt;&gt;<i> /var/* directory!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What bit me is that MySQL uses /var/MySql/... for the
+</I>&gt;&gt;<i> database by default
+</I>&gt;&gt;<i> and /var/* was NOT being backed up! Unfortunately there are
+</I>&gt;&gt;<i> good reasons fo
+</I>&gt;&gt;<i> rnot including /var/* in a backup (it is intended as
+</I>&gt;&gt;<i> transient files after
+</I>&gt;&gt;<i> all!), but you do need to be sure that you make an
+</I>&gt;&gt;<i> exception for
+</I>&gt;&gt;<i> /var/mysql/* !!!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I use Linux/Ubuntu, but the issue is the same for every OS,
+</I>&gt;&gt;<i> only the names
+</I>&gt;&gt;<i> of the guilty parties will change!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You would be amazed at how much work you hav eput into that
+</I>&gt;&gt;<i> database WHEN
+</I>&gt;&gt;<i> you have to rebuild it!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Having said that remember that sailors are divided into
+</I>&gt;&gt;<i> three groups: those
+</I>&gt;&gt;<i> who have run aground, those who ARE aground and LIARS!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Forewarned is forearmed!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Karen
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --- On Sun, 11/8/09, Kevin Buckley &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt;&#160; And I do an automated back-up of
+</I>&gt;&gt;<i> &gt; EVERYTHING! Every day,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; I do a backupPC backup every night PLUS a complete
+</I>&gt;&gt;<i> dump of
+</I>&gt;&gt;<i> &gt; my MySQL database
+</I>&gt;&gt;<i> &gt; every night! I was bitten once with database
+</I>&gt;&gt;<i> corruption and
+</I>&gt;&gt;<i> &gt; do NOT intend to
+</I>&gt;&gt;<i> &gt; lose my work again!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+William Magee, Ph.D.
+XVIth Congress of the IABS, Planning Committee Chair
+Dharma Drum Buddhist College
+Jinshan, Taiwan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003065.html">[Opensim-users] MySQL backups (was RE: linking regions	and	hypergrid)
+</A></li>
+	<LI>Next message: <A HREF="003068.html">[Opensim-users] MySQL backups (was RE: linking regions and	hypergrid)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3066">[ date ]</a>
+              <a href="thread.html#3066">[ thread ]</a>
+              <a href="subject.html#3066">[ subject ]</a>
+              <a href="author.html#3066">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

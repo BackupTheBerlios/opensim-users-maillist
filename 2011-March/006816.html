@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Floating text not going away
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Floating%20text%20not%20going%20away&In-Reply-To=%3C234B056E9C7348D8AE812FBE6D994B3F%40Deimos%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006815.html">
+   <LINK REL="Next"  HREF="006817.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Floating text not going away</H1>
+    <B>Garmin Kawaguichi</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Floating%20text%20not%20going%20away&In-Reply-To=%3C234B056E9C7348D8AE812FBE6D994B3F%40Deimos%3E"
+       TITLE="[Opensim-users] Floating text not going away">garmin.kawaguichi at magalaxie.com
+       </A><BR>
+    <I>Thu Mar 17 12:45:28 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006815.html">[Opensim-users] Floating text not going away
+</A></li>
+        <LI>Next message: <A HREF="006817.html">[Opensim-users] money
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6816">[ date ]</a>
+              <a href="thread.html#6816">[ thread ]</a>
+              <a href="subject.html#6816">[ subject ]</a>
+              <a href="author.html#6816">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>// Prim Turn Off Properties
+
+default
+{
+     state_entry()
+     {
+         // Turn off any previously set sit target on prim
+         llSitTarget(ZERO_VECTOR,ZERO_ROTATION);
+
+         // Stop any rotation
+         llTargetOmega(&lt;0,0,0&gt;,0,0);
+
+         // Turn off any particle effects in prim
+         llParticleSystem([]);
+
+         // Turn off any sounds in prim - see 
+<A HREF="http://wiki.secondlife.com/wiki/LlStopSound">http://wiki.secondlife.com/wiki/LlStopSound</A>
+         llStopSound();
+
+         llSetText(&quot;&quot;, &lt;1,1,1&gt;, 1.0);
+         llSetSitText(&quot;&quot;);
+     }
+
+     touch_start (integer num_detected){llResetScript();}
+
+    on_rez(integer iPNumb){llRsetScript();}
+}
+
+:<i>)))
+</I>
+GCI
+
+----- Original Message ----- 
+From: &quot;Ai Austin&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at gmail.com</A>&gt;
+To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Sent: Thursday, March 17, 2011 12:19 PM
+Subject: Re: [Opensim-users] Floating text not going away
+
+
+&gt;<i> There are a number of persistent properties of objects which stay 
+</I>&gt;<i> even when the scripts which originally set up the values or 
+</I>&gt;<i> properties are removed.  You can explicitly remove the properties 
+</I>&gt;<i> with a script which sets things to some null or empty state 
+</I>&gt;<i> typically.  The properties include:
+</I>&gt;<i> 
+</I>&gt;<i> Text Label
+</I>&gt;<i> Rotation
+</I>&gt;<i> Particle Effect
+</I>&gt;<i> Sound Emitted and Volume Level
+</I>&gt;<i> Sit Position
+</I>&gt;<i> 
+</I>&gt;<i> Here is an LSL script I keep handy to pup in a prim I want to remove 
+</I>&gt;<i> properties from.  I just put this in the object and then remove it 
+</I>&gt;<i> again, just to make sure I start with things in a default or empty 
+</I>&gt;<i> state where I reuse complicated objects.
+</I>&gt;<i> 
+</I>&gt;<i> // Prim Turn Off Properties
+</I>&gt;<i> 
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     state_entry()
+</I>&gt;<i>     {
+</I>&gt;<i>         // Turn off any previously set sit target on prim
+</I>&gt;<i>         llSitTarget(ZERO_VECTOR,ZERO_ROTATION);
+</I>&gt;<i> 
+</I>&gt;<i>         // Stop any rotation
+</I>&gt;<i>         llTargetOmega(&lt;0,0,0&gt;,0,0);
+</I>&gt;<i> 
+</I>&gt;<i>         // Turn off any particle effects in prim
+</I>&gt;<i>         llParticleSystem([]);
+</I>&gt;<i> 
+</I>&gt;<i>         // Turn off any sounds in prim - see 
+</I>&gt;<i> <A HREF="http://wiki.secondlife.com/wiki/LlStopSound">http://wiki.secondlife.com/wiki/LlStopSound</A>
+</I>&gt;<i>         llStopSound();
+</I>&gt;<i> 
+</I>&gt;<i>         llSetText(&quot;&quot;, &lt;1,1,1&gt;, 1.0);
+</I>&gt;<i>         llSetSitText(&quot;&quot;);
+</I>&gt;<i>     }
+</I>&gt;<i> 
+</I>&gt;<i>     touch_start (integer num_detected) {
+</I>&gt;<i>         // Turn off any previously set sit target on prim
+</I>&gt;<i>         llSitTarget(ZERO_VECTOR,ZERO_ROTATION);
+</I>&gt;<i> 
+</I>&gt;<i>         // Stop any rotation
+</I>&gt;<i>         llTargetOmega(&lt;0,0,0&gt;,0,0);
+</I>&gt;<i> 
+</I>&gt;<i>         // Turn off any particle effects in prim
+</I>&gt;<i>         llParticleSystem([]);
+</I>&gt;<i> 
+</I>&gt;<i>         // Turn off any sounds in prim - see 
+</I>&gt;<i> <A HREF="http://wiki.secondlife.com/wiki/LlStopSound">http://wiki.secondlife.com/wiki/LlStopSound</A>
+</I>&gt;<i>         llStopSound();
+</I>&gt;<i> 
+</I>&gt;<i>         llSetText(&quot;&quot;, &lt;1,1,1&gt;, 1.0);
+</I>&gt;<i>         llSetSitText(&quot;&quot;);
+</I>&gt;<i> 
+</I>&gt;<i>         llSitTarget(ZERO_VECTOR,ZERO_ROTATION);
+</I>&gt;<i> 
+</I>&gt;<i>     }
+</I>&gt;<i> 
+</I>&gt;<i> }
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006815.html">[Opensim-users] Floating text not going away
+</A></li>
+	<LI>Next message: <A HREF="006817.html">[Opensim-users] money
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6816">[ date ]</a>
+              <a href="thread.html#6816">[ thread ]</a>
+              <a href="subject.html#6816">[ subject ]</a>
+              <a href="author.html#6816">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

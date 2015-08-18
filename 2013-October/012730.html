@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] RemoteAdmin Create Region Workaround?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20RemoteAdmin%20Create%20Region%20Workaround%3F&In-Reply-To=%3C52605A6D.8000006%40t-data.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012729.html">
+   <LINK REL="Next"  HREF="012726.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] RemoteAdmin Create Region Workaround?</H1>
+    <B>Melanie</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20RemoteAdmin%20Create%20Region%20Workaround%3F&In-Reply-To=%3C52605A6D.8000006%40t-data.com%3E"
+       TITLE="[Opensim-users] RemoteAdmin Create Region Workaround?">melanie at t-data.com
+       </A><BR>
+    <I>Thu Oct 17 23:45:17 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012729.html">[Opensim-users] RemoteAdmin Create Region Workaround?
+</A></li>
+        <LI>Next message: <A HREF="012726.html">[Opensim-users] quick question: mega-region standalone external port
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12730">[ date ]</a>
+              <a href="thread.html#12730">[ thread ]</a>
+              <a href="subject.html#12730">[ subject ]</a>
+              <a href="author.html#12730">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>While patching it like that would work, it is not the
+architecturally correct way to address this issue.
+
+In fact, the connector architecture is wholly independent of scenes.
+Just because in this instance a scene reference was used to obtain
+an instance of the UserAccount service, the ROBUST architecture
+actually allows you to just instantiate a UserAccountService object
+and use it. It needs a few parameters, none of which is a scene, and
+then you can use your local object.
+
+Melanie
+
+On 17/10/2013 21:52, Justin Clark-Casey wrote:
+&gt;<i> On 17/10/13 11:58, Timothy Rogers wrote:
+</I>&gt;&gt;<i> I really need a work around for RemoteAdmin_Create_Region function, since it is tossing issues. I have replied to the
+</I>&gt;&gt;<i> mantis about the issue.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Does anyone know of any way to work around this issue?
+</I>&gt;<i> 
+</I>&gt;<i> Unfortunately this is not easy to fix, as architecturally the user account service isn't currently available if there 
+</I>&gt;<i> are no scenes present.
+</I>&gt;<i> 
+</I>&gt;<i> If you're willing to patch the code, one workaround might be to give an estate_owner_uuid and comment out the parts of 
+</I>&gt;<i> the code (lines 659-664 in RemoteAdmin) which check if that uuid actually exists.  Then it would be up to you not to 
+</I>&gt;<i> make sure that you aren't giving invalid UUIDs.
+</I>&gt;<i> 
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012729.html">[Opensim-users] RemoteAdmin Create Region Workaround?
+</A></li>
+	<LI>Next message: <A HREF="012726.html">[Opensim-users] quick question: mega-region standalone external port
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12730">[ date ]</a>
+              <a href="thread.html#12730">[ thread ]</a>
+              <a href="subject.html#12730">[ subject ]</a>
+              <a href="author.html#12730">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

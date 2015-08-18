@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 0x10c emulation and I/O on a prim question
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200x10c%20emulation%20and%20I/O%20on%20a%20prim%20question&In-Reply-To=%3CCADCqwr0UiG5%2B984BC4iSETPPfLf14nDAxFGYkxWnL_yLBpMXKQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010102.html">
+   <LINK REL="Next"  HREF="010119.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 0x10c emulation and I/O on a prim question</H1>
+    <B>Rick Anderson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200x10c%20emulation%20and%20I/O%20on%20a%20prim%20question&In-Reply-To=%3CCADCqwr0UiG5%2B984BC4iSETPPfLf14nDAxFGYkxWnL_yLBpMXKQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] 0x10c emulation and I/O on a prim question">rianders at docs.rutgers.edu
+       </A><BR>
+    <I>Mon Apr 16 20:24:38 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010102.html">[Opensim-users] 0x10c emulation and I/O on a prim question
+</A></li>
+        <LI>Next message: <A HREF="010119.html">[Opensim-users] 0x10c emulation and I/O on a prim question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10116">[ date ]</a>
+              <a href="thread.html#10116">[ thread ]</a>
+              <a href="subject.html#10116">[ subject ]</a>
+              <a href="author.html#10116">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've been thinking about what you said a little more closely.
+
+Would it be possible to use a Notecard as an HTTP object that could be
+displayed by WebKit for MOAP? That would allow for an in world object
+to contain HTML/CSS/Javacsript and at decent interaction speeds.
+
+With some kind of prim message passing,  chat channel,  and
+lslhttprequest communication. It could potentially be integrated into
+normal interaction modes for OpenSIm.
+
+Could enable much nicer interaction in HUD etc.
+
+--Rick
+
+On Wed, Apr 11, 2012 at 10:48 PM, Rick Anderson
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rianders at docs.rutgers.edu</A>&gt; wrote:
+&gt;<i> Thanks for the feedback. I'll try and find out what happens. :-)
+</I>&gt;<i> --Rick
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Apr 11, 2012 at 6:04 PM, Justin Clark-Casey
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> On 10/04/12 22:32, Rick Anderson wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've been following the development of 0x10c, and they've got really
+</I>&gt;&gt;&gt;<i> excellent in game computer concept. Fully emulated 16 bit computer in
+</I>&gt;&gt;&gt;<i> game. The spec is available and many implementation have been created
+</I>&gt;&gt;&gt;<i> in the couple weeks of development. &#160;I could be wrong, but it seems
+</I>&gt;&gt;&gt;<i> possible to emulate this in LSL. Here's the spec:
+</I>&gt;&gt;&gt;<i> <A HREF="http://0x10c.com/doc/dcpu-16.txt">http://0x10c.com/doc/dcpu-16.txt</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Any chance it's possible to have an in game computer display like:
+</I>&gt;&gt;&gt;<i> <A HREF="http://0x10cwiki.com/wiki/File:DCPU_Basic_1.0.png">http://0x10cwiki.com/wiki/File:DCPU_Basic_1.0.png</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I think it could be done in chat, but I don't think there are
+</I>&gt;&gt;&gt;<i> interactive textures on a prim. Is it possible?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It might be possible to some extent by using the vector texture rendering
+</I>&gt;&gt;<i> OSSL functions [1] (I believe assets generated this way are temporary and
+</I>&gt;&gt;<i> won't clog the system). &#160;There is a mantis report that these functions are
+</I>&gt;&gt;<i> causing memory issues but unfortunately no-one has had time to investigate
+</I>&gt;&gt;<i> yet and it's not a problem I've encountered myself. &#160;Also, it will be a
+</I>&gt;&gt;<i> pretty slow display since all changes are an entire texture refresh.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> In them meantime I'm adding acces to this emulator via MOAP.
+</I>&gt;&gt;&gt;<i> <A HREF="http://dwilliamson.github.com/">http://dwilliamson.github.com/</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You could do something cheeky and generate the required permalink URL to
+</I>&gt;&gt;<i> that address and directly put the non-interactive http page on a prim (also
+</I>&gt;&gt;<i> see [1]). &#160;But then input would have to be via a notecard or similar which
+</I>&gt;&gt;<i> would be a bit strange. &#160;But at least everyone would see the same thing if
+</I>&gt;&gt;<i> that's a concern.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [1] <A HREF="http://opensimulator.org/wiki/OSSL_TextureDrawing">http://opensimulator.org/wiki/OSSL_TextureDrawing</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Oh, and Github just added it as a officially supported assembly language:
+</I>&gt;&gt;&gt;<i> <A HREF="https://github.com/blog/1098-take-over-the-galaxy-with-github">https://github.com/blog/1098-take-over-the-galaxy-with-github</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -_Rick
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Rick Anderson
+</I>&gt;<i> Director of Virtual Worlds
+</I>&gt;<i> Division of Continuing Studies (DoCS)
+</I>&gt;<i> Rutgers University
+</I>&gt;<i> (732) 586-3265
+</I>
+
+
+-- 
+Rick Anderson
+Director of Virtual Worlds
+Division of Continuing Studies (DoCS)
+Rutgers University
+(732) 586-3265
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010102.html">[Opensim-users] 0x10c emulation and I/O on a prim question
+</A></li>
+	<LI>Next message: <A HREF="010119.html">[Opensim-users] 0x10c emulation and I/O on a prim question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10116">[ date ]</a>
+              <a href="thread.html#10116">[ thread ]</a>
+              <a href="subject.html#10116">[ subject ]</a>
+              <a href="author.html#10116">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

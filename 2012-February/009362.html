@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Intermittent crashing -	System.OutofMemoryException
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Intermittent%20crashing%20-%0A%09System.OutofMemoryException&In-Reply-To=%3CCAG6z%2BU6wfNSFjcQqC3HyYOyq-vi5RrXRP3gyzwXXNx1u799qqA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009361.html">
+   <LINK REL="Next"  HREF="009363.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Intermittent crashing -	System.OutofMemoryException</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Intermittent%20crashing%20-%0A%09System.OutofMemoryException&In-Reply-To=%3CCAG6z%2BU6wfNSFjcQqC3HyYOyq-vi5RrXRP3gyzwXXNx1u799qqA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Intermittent crashing -	System.OutofMemoryException">fleep513 at gmail.com
+       </A><BR>
+    <I>Tue Feb 14 14:09:17 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009361.html">[Opensim-users] Intermittent crashing -	System.OutofMemoryException
+</A></li>
+        <LI>Next message: <A HREF="009363.html">[Opensim-users] Intermittent crashing -	System.OutofMemoryException
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9362">[ date ]</a>
+              <a href="thread.html#9362">[ thread ]</a>
+              <a href="subject.html#9362">[ subject ]</a>
+              <a href="author.html#9362">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks all for the info and thoughts, sounds like scheduling daily restarts
+is probably the best option.
+
+I'm pretty sure I haven't messed with whatever the default settings are for
+the flotsam cache, I never copy over old config files when I upgrade, I go
+through and update by hand and usually just base settings to make sure the
+upgrade was successful and then turn on other options that we've tested.
+
+I have to say, it's almost funny that FleepGrid, which is running Windows
+XP on a P4 box that was gathering dust and cat hair in the basement, 4GB of
+RAM, and at least 8 sims full of content and scripts isn't having that
+problem, but the new poweredge server running WinServer2008, tons of RAM,
+and only 3 or 4 sims of content is flaking out.  In fact, three of the
+regions on the UCSIM grid are identical to the ones on FleepGrid since I
+ported them over as OAR files, so it can't be much of a difference in
+content..
+
+Think I'll try going through the log files again, I'd sure like to know
+what's tipping the out of memory exception!
+
+Thanks again.
+
+- Chris/Fleep
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Tue, Feb 14, 2012 at 7:29 AM, James Stallings II &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">james.stallings at gmail.com</A>&gt; wrote:
+
+&gt;<i> Regardless the amount of RAM on your system, the .net runtime uses a
+</I>&gt;<i> memory model of a specific size (2 GB) and cannot address more than that
+</I>&gt;<i> except under special circumstances.
+</I>&gt;<i>
+</I>&gt;<i> There is a hack around, involving the use of a Visual Studio C++ utility
+</I>&gt;<i> to make a .net binary 'large memory aware', which will allow it to address
+</I>&gt;<i> 4 GB, but then only on operating systems that can address &gt;2 GB (e.g., not
+</I>&gt;<i> 32 bit operating systems).
+</I>&gt;<i>
+</I>&gt;<i> Note that such measures will only help if the memory exhaustion is being
+</I>&gt;<i> caused by the amount/complexity of content. If the problem is truly a
+</I>&gt;<i> memory leak, this workaround will only prolong the inevitable, as it will
+</I>&gt;<i> simply provide more memory for the leaking.
+</I>&gt;<i>
+</I>&gt;<i> I saw this problem *very* briefly in the 0.7.3 series about a month ago. I
+</I>&gt;<i> never did have any indication of what was causing it, and it occurred day
+</I>&gt;<i> over day, without significant changes to the content. It went away just as
+</I>&gt;<i> fast as it came.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> FYI this is on a 25 region megaregion with &gt;50k prims and at least several
+</I>&gt;<i> rather complex scripts in play.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Cheers
+</I>&gt;<i> James/Hiro
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Feb 13, 2012 at 8:39 PM, Gary Banham &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">banham1 at telus.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Fleep I&#8217;m running into exactly the same problem I check the flotsam cache
+</I>&gt;&gt;<i> to make sure I wasn&#8217;t using memory ****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My server runs windows seven but has the same amount of memory  I have
+</I>&gt;&gt;<i> about 8 regions on the server some with quite a few scripts****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I rolled back the instance to 7.1.1 to see what would happen and it
+</I>&gt;&gt;<i> worked fine there must be something different in the way 7.2 release uses
+</I>&gt;&gt;<i> the memory****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I&#8217;m in the process of distributing the regions over a number of 7.2
+</I>&gt;&gt;<i> instances I&#8217;m not sure if that&#8217;s going to cause other problems****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> TC****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Gary****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *From:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] *On Behalf Of *Fleep Tuque
+</I>&gt;&gt;<i> *Sent:* February-13-12 11:06 AM
+</I>&gt;&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> *Subject:* [Opensim-users] Intermittent crashing -
+</I>&gt;&gt;<i> System.OutofMemoryException****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi all,****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Our campus opensim system (running version 0.7.2 Release in grid mode)
+</I>&gt;&gt;<i> seems to intermittently be crashing the last week or so and I can't figure
+</I>&gt;&gt;<i> out why or how to reproduce it.  An out of memory exception doesn't make
+</I>&gt;&gt;<i> sense to me, the server has 24GB RAM and has very light load since we're
+</I>&gt;&gt;<i> still in pilot/testing phase.  No more than 5 or 6 users concurrent, only a
+</I>&gt;&gt;<i> few sims with much content..  ****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Does this error mean anything to anyone?****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 012-02-11 18:18:33,738 ERROR - OpenSim.Application [APPLICATION]: ****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Exception: System.OutOfMemoryException: Exception of type
+</I>&gt;&gt;<i> 'System.OutOfMemoryException' was thrown.****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Threading.Thread.StartInternal(IPrincipal principal,
+</I>&gt;&gt;<i> StackCrawlMark&amp; stackMark)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Threading.Thread.Start()****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at Amib.Threading.SmartThreadPool.StartThreads(Int32 threadsCount)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at Amib.Threading.SmartThreadPool.Enqueue(WorkItem workItem, Boolean
+</I>&gt;&gt;<i> incrementWorkItems)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at Amib.Threading.SmartThreadPool.QueueWorkItem(WorkItemCallback
+</I>&gt;&gt;<i> callback, Object state)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at OpenSim.Framework.Util.FireAndForget(WaitCallback callback, Object
+</I>&gt;&gt;<i> obj)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at
+</I>&gt;&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.PacketReceived(UDPPacketBuffer
+</I>&gt;&gt;<i> buffer)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at OpenMetaverse.OpenSimUDPBase.AsyncEndReceive(IAsyncResult iar)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Net.LazyAsyncResult.Complete(IntPtr userToken)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Net.ContextAwareResult.CompleteCallback(Object state)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Threading.ExecutionContext.runTryCode(Object userData)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at
+</I>&gt;&gt;<i> System.Runtime.CompilerServices.RuntimeHelpers.ExecuteCodeWithGuaranteedCleanup(TryCode
+</I>&gt;&gt;<i> code, CleanupCode backoutCode, Object userData)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Threading.ExecutionContext.RunInternal(ExecutionContext
+</I>&gt;&gt;<i> executionContext, ContextCallback callback, Object state)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Threading.ExecutionContext.Run(ExecutionContext
+</I>&gt;&gt;<i> executionContext, ContextCallback callback, Object state)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Net.ContextAwareResult.Complete(IntPtr userToken)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Net.LazyAsyncResult.ProtectedInvokeCallback(Object result,
+</I>&gt;&gt;<i> IntPtr userToken)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at
+</I>&gt;&gt;<i> System.Net.Sockets.BaseOverlappedAsyncResult.CompletionPortCallback(UInt32
+</I>&gt;&gt;<i> errorCode, UInt32 numBytes, NativeOverlapped* nativeOverlapped)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at
+</I>&gt;&gt;<i> System.Threading._IOCompletionCallback.PerformIOCompletionCallback(UInt32
+</I>&gt;&gt;<i> errorCode, UInt32 numBytes, NativeOverlapped* pOVERLAP)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Application is terminating: True****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any pointers or advice appreciated!****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Chris/Fleep****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> UCIT Instructional &amp; Research Computing****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> University of Cincinnati****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 406A Zimmer Hall****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 315 College Drive****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> PO BOX 210088****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cincinnati, OH 45221-0088****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (513) 556-3018****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://ucsim.uc.edu****">http://ucsim.uc.edu****</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> ===================================
+</I>&gt;<i> <A HREF="http://simhost.com">http://simhost.com</A>
+</I>&gt;<i> <A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+</I>&gt;<i> <A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120214/c48026dd/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120214/c48026dd/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009361.html">[Opensim-users] Intermittent crashing -	System.OutofMemoryException
+</A></li>
+	<LI>Next message: <A HREF="009363.html">[Opensim-users] Intermittent crashing -	System.OutofMemoryException
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9362">[ date ]</a>
+              <a href="thread.html#9362">[ thread ]</a>
+              <a href="subject.html#9362">[ subject ]</a>
+              <a href="author.html#9362">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

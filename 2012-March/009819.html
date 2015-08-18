@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Fucntion to read a landmark
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Fucntion%20to%20read%20a%20landmark&In-Reply-To=%3CE0CD9EF5-22E7-4910-A007-AB6BE0467C8A%40spekuloos.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009812.html">
+   <LINK REL="Next"  HREF="009820.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Fucntion to read a landmark</H1>
+    <B>Gudule Lapointe</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Fucntion%20to%20read%20a%20landmark&In-Reply-To=%3CE0CD9EF5-22E7-4910-A007-AB6BE0467C8A%40spekuloos.be%3E"
+       TITLE="[Opensim-users] Fucntion to read a landmark">gudule at spekuloos.be
+       </A><BR>
+    <I>Tue Mar 13 18:35:38 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009812.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+        <LI>Next message: <A HREF="009820.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9819">[ date ]</a>
+              <a href="thread.html#9819">[ thread ]</a>
+              <a href="subject.html#9819">[ subject ]</a>
+              <a href="author.html#9819">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>We are working on a osGetInventoryLandmarkURL function, and it's working great.
+
+Now, it's time to choose the format of the URL ;-)
+
+I found two slightly different schemes, which seem to be handled the same way
+So my question is &quot;what is their scope?&quot;&#8230;
+(this is to choose a relevant constant name)
+
+	speculoos.net:8002:Agora
+	-&gt; handled in 
+		- map search
+		- in osTeleport (without http)
+
+	<A HREF="http://speculoos.net:8002/">http://speculoos.net:8002/</A> Agora
+	-&gt; handled in
+		- map search
+		- in osTeleport
+
+The third scheme is more obvious:
+
+	<A HREF="secondlife://speculoos.net:8002:Agora/">secondlife://speculoos.net:8002:Agora/</A>
+	-&gt; handled in 
+		- local chat and web only
+
+--
+<A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+<A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+Speculoos, the belgian cookie-flavored metaverse
+
+Le 13 mars 2012 &#224; 11:34, BlueWall a &#233;crit :
+
+&gt;<i> 
+</I>&gt;<i> Here is the asset data from a landmark:
+</I>&gt;<i> 
+</I>&gt;<i> Landmark version 2
+</I>&gt;<i> region_id afd7aa20-a820-11de-8a39-0800200c9a66
+</I>&gt;<i> local_pos 129.1343 124.0458 22.16408
+</I>&gt;<i> region_handle 10621282326789120
+</I>&gt;<i> gatekeeper <A HREF="http://grid.nebadon2025.homeftp.net:8002">http://grid.nebadon2025.homeftp.net:8002</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -BlueWall
+</I>&gt;<i> 
+</I>&gt;<i> On Tue, 2012-03-13 at 02:47 +0100, Gudule Lapointe wrote:
+</I>&gt;&gt;<i> I updated mantis <A HREF="http://opensimulator.org/mantis/view.php?id=5927">http://opensimulator.org/mantis/view.php?id=5927</A> with
+</I>&gt;&gt;<i> an alternative patch to provide
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> osGetInventoryDesc(string item) instead of osGetInventoryDesc(int
+</I>&gt;&gt;<i> type, int number)
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Anyway, thank you ME Verhagen for pointing this workaround.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Still wondering if I can figure a real way to get the landmark
+</I>&gt;&gt;<i> properties without relying on description field&#8230;
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Le 13 mars 2012 &#224; 01:49, Gudule Lapointe a &#233;crit :
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> OK, I have a concern about that, and IMHO an issue.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> First the issue:
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Using (int type, int number) like in llGetInventoryName() forces an
+</I>&gt;&gt;&gt;<i> duplicate search.
+</I>&gt;&gt;&gt;<i> I'll post the full explanation on mantis.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Second, my concern:
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Description is a user-modifiable field. Actually, lot of scripters
+</I>&gt;&gt;&gt;<i> (including me) use it to pass additional values to scripts. So, this
+</I>&gt;&gt;&gt;<i> function is a really interesting workaround, but would not be 100%
+</I>&gt;&gt;&gt;<i> reliable to get landmark destination. (though I admit there is less
+</I>&gt;&gt;&gt;<i> chances to change desc of a landmark than other objects)
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Le 13 mars 2012 &#224; 01:08, M.E. Verhagen a &#233;crit :
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> the description property.
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> and the hypergrid adres is stored in the description, for instance
+</I>&gt;&gt;&gt;&gt;<i> 'region-name @ speculoos.net:8002'
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> Op dinsdag 13 maart 2012 schreef Gudule Lapointe
+</I>&gt;&gt;&gt;&gt;<i> (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>) het volgende:
+</I>&gt;&gt;&gt;&gt;&gt;<i> The word &quot;Desc&quot; is ambiguous. Is it related to all object
+</I>&gt;&gt;&gt;&gt;<i> properties or to only the &quot;description&quot; property?
+</I>&gt;&gt;&gt;&gt;&gt;<i> Of course, description property does not help for the landmark
+</I>&gt;&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;&gt;<i> Le 12 mars 2012 &#224; 23:46, M.E. Verhagen a &#233;crit :
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> yes a function to get the description of an object in the
+</I>&gt;&gt;&gt;&gt;<i> inventory of prim.
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> i looked into it and it was suprisingly easy to do, since there
+</I>&gt;&gt;&gt;&gt;<i> is already a function to get the name.
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=5927">http://opensimulator.org/mantis/view.php?id=5927</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> Op maandag 12 maart 2012 schreef Justin Clark-Casey
+</I>&gt;&gt;&gt;&gt;<i> (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>) het volgende:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> There does seem to be no function to do this (it looks like
+</I>&gt;&gt;&gt;&gt;<i> it's done in SL by roundabout web queries).
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> It would be interesting to have something like an
+</I>&gt;&gt;&gt;&gt;<i> osRequestInventoryData(string name, list rules) where rules
+</I>&gt;&gt;&gt;&gt;<i> contains some constant like LANDMARK_REGION_NAME.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> On 10/03/12 21:39, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> That is interesting, but not enough&#8230;.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> But the only thing I get seems to be the global (wold
+</I>&gt;&gt;&gt;&gt;<i> coordinate) position of the object:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> like&lt;256128.1, 256127.4, 27.73114&gt;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Not even the region name, and in case of HG landmark, no
+</I>&gt;&gt;&gt;&gt;<i> indication on the grid url
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Le 10 mars 2012 &#224; 22:13, M.E. Verhagen a &#233;crit :
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> the following lsl function can be used to extract some data
+</I>&gt;&gt;&gt;&gt;<i> out of landmaks:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://wiki.secondlife.com/wiki/LlRequestInventoryData">http://wiki.secondlife.com/wiki/LlRequestInventoryData</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Op zaterdag 10 maart 2012 schreef Gudule Lapointe
+</I>&gt;&gt;&gt;&gt;<i> (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>&gt;) het volgende:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Is there a way to read the coordinates of a landmark from
+</I>&gt;&gt;&gt;&gt;<i> within a script?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> I made several flavors of blame gates and I would like to
+</I>&gt;&gt;&gt;&gt;<i> be able to drop a landmark in the prim instead of encoding
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> the uri
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120313/5d9508f5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120313/5d9508f5/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009812.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+	<LI>Next message: <A HREF="009820.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9819">[ date ]</a>
+              <a href="thread.html#9819">[ thread ]</a>
+              <a href="subject.html#9819">[ subject ]</a>
+              <a href="author.html#9819">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

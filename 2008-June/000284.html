@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Loading regions configuration from a	webserver...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20regions%20configuration%20from%20a%0A%09webserver...&In-Reply-To=%3C48429AC5.8090606%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000285.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Loading regions configuration from a	webserver...</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20regions%20configuration%20from%20a%0A%09webserver...&In-Reply-To=%3C48429AC5.8090606%40googlemail.com%3E"
+       TITLE="[Opensim-users] Loading regions configuration from a	webserver...">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sun Jun  1 14:49:09 CEST 2008</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000285.html">[Opensim-users] Loading regions configuration from a	webserver...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#284">[ date ]</a>
+              <a href="thread.html#284">[ thread ]</a>
+              <a href="subject.html#284">[ subject ]</a>
+              <a href="author.html#284">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Olish Newman wrote:
+&gt;<i> Hello !
+</I>&gt;<i> 
+</I>&gt;<i> I'm not sure, but is it possible to load a region config file 
+</I>&gt;<i> (/Regions/default.xml) from a webserver. Does one of the command line 
+</I>&gt;<i> option for the opensim.exe is used for this ?
+</I>&gt;<i> -config or -configfile or another ?
+</I>
+Curiously, there is a mechanism for this but I've never seen it used. 
+The code is contained in the OpenSim.Framework.RegionLoader.Web 
+namespace.  To make OpenSim use this rather than the usual file loader 
+it looks like one would need to set something like
+
+region_info_source = &quot;web&quot;
+region_webserver_url = &quot;<A HREF="http://site/your-region-file.xml">http://site/your-region-file.xml</A>&quot;;
+
+in OpenSim.ini (neither of these switches appear in OpenSim.ini.example)
+
+The xml file itself would contain all the usual region xml, but that 
+would be wrapped up in a &lt;Regions&gt; tag (rather than the &lt;Root&gt; tag, I 
+suspect).  However, I'm purely guessing from just reading the code.
+
+I'm not sure how much this is supported or whether it even works 
+currently.  I'm interested Olish, could you explain further how this 
+would make things easier to manage?
+
+Also, is anybody currently using this facility?  Would this be a 
+generally useful facility for other people too?
+
+&gt;<i> 
+</I>&gt;<i> As an example, a region config file is hosted on a local webserver at 
+</I>&gt;<i> <A HREF="http://localhost/myfile.xml">http://localhost/myfile.xml</A> and this file could be :
+</I>&gt;<i> 
+</I>&gt;<i> &lt;Root&gt;
+</I>&gt;<i>   &lt;Config sim_UUID=&quot;b19966b7-6264-4e1f-ade8-b4ebca894ee4&quot; sim_name=&quot;My 
+</I>&gt;<i> Island&quot; sim_location_x=&quot;1000&quot; sim_location_y=&quot;1000&quot; 
+</I>&gt;<i> internal_ip_address=&quot;0.0.0.0&quot; internal_ip_port=&quot;9000&quot; 
+</I>&gt;<i> allow_alternate_ports=&quot;false&quot; external_host_name=&quot;127.0.0.1&quot; 
+</I>&gt;<i> master_avatar_uuid=&quot;00000000-0000-0000-0000-000000000000&quot; 
+</I>&gt;<i> estate_covanant_uuid=&quot;4a439117-d3f1-417f-9d8c-7c466c298f7e&quot; 
+</I>&gt;<i> master_avatar_first=&quot;Test&quot; master_avatar_last=&quot;User&quot; 
+</I>&gt;<i> master_avatar_pass=&quot;Password&quot; /&gt;
+</I>&gt;<i> &lt;/Root&gt;
+</I>&gt;<i> 
+</I>&gt;<i> This way it would be easier to manage.
+</I>&gt;<i> Any help is much appreciated. Thanks in advance. :)
+</I>&gt;<i> 
+</I>&gt;<i> Kind regards,
+</I>&gt;<i> Olish.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000285.html">[Opensim-users] Loading regions configuration from a	webserver...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#284">[ date ]</a>
+              <a href="thread.html#284">[ thread ]</a>
+              <a href="subject.html#284">[ subject ]</a>
+              <a href="author.html#284">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

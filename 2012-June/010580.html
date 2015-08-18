@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Script Engine Messages
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20Engine%20Messages&In-Reply-To=%3C4FE88B62.2060603%40t-data.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010576.html">
+   <LINK REL="Next"  HREF="010577.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Script Engine Messages</H1>
+    <B>Melanie</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20Engine%20Messages&In-Reply-To=%3C4FE88B62.2060603%40t-data.com%3E"
+       TITLE="[Opensim-users] Script Engine Messages">melanie at t-data.com
+       </A><BR>
+    <I>Mon Jun 25 18:01:38 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010576.html">[Opensim-users] Script Engine Messages
+</A></li>
+        <LI>Next message: <A HREF="010577.html">[Opensim-users] Script Engine Messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10580">[ date ]</a>
+              <a href="thread.html#10580">[ thread ]</a>
+              <a href="subject.html#10580">[ subject ]</a>
+              <a href="author.html#10580">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Actually, OpenSim never had a distinction between mono and non-mono.
+The non-mono engine in SL was called LSO engine, which was a
+proprietary bytecode ony SL used. Viewers have the checkbox because
+SL needs it, you are right in that it us ignored by OpenSim.
+
+All scripting in OpenSim will run on .net in windows and on mono
+everywhere else. So, in fact, OpenSim has &quot;mono scripting&quot; on every
+platform where mono is used.
+
+The script engine that you mentioned was called DotNetEngine and
+worked ok as far as it went. It was, however, unable to handle a lot
+of constructs and I wrote XEngine to replace it some years back.
+
+DotNetEngine (DNE) was deprecated and removed from core a while
+later, when it was determined that it appeared to not have any users
+anymore.
+
+DNE and XEngine use similar mechanisms to execute scripts, but are
+vastly different i the way they organize them. While DNE used a
+rather complex set of regular expressions to address LSL syntax
+atrocities and produce compilable C#, XEngine parses LSL into an
+abstract syntax tree (AST) using a BNF notation of LSL, then emits
+that tree as clean c# for compilation. I did not write that part,
+though.
+
+Currently, a number of different implementations of script engines
+exist outside of core and the script engine selection mechanism
+allows them to coexist. It may sometimes be easier to write a
+separate script engine to implement another language than to try and
+have that language compile to .net assemblies.
+
+The message you're seeing is harmless and not really an issue in
+terms of performance as it's only emitted when a script is first
+run. You can ignore it or avoid it via the methods already discussed.
+
+Melanie
+
+On 25/06/2012 15:39, James Stallings II wrote:
+&gt;<i> There are actually many supported scripting languages, but some that were
+</I>&gt;<i> once supported no longer are (Iron Python? Javascript?) in any event, mono
+</I>&gt;<i> was never supported and removed, and unless something has changed
+</I>&gt;<i> dramatically recently, I don't think mono is supported in opensim now; I
+</I>&gt;<i> believe the mono checkbox in the viewer is completely ignored by the
+</I>&gt;<i> scripting engine.
+</I>&gt;<i> 
+</I>&gt;<i> Cheers
+</I>&gt;<i> James
+</I>&gt;<i> aka Hiro Protagonist
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Mon, Jun 25, 2012 at 7:16 AM, Tim Gildersleeve &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">t.gildersleeve at bradfordcollege.ac.uk</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> I may be wrong, but I believe that this is because there used to be a
+</I>&gt;&gt;<i> dedicated mono scripting engine in opensim which was removed a while
+</I>&gt;&gt;<i> back.  The Xengine can now handle mono script as well as lsl so it was
+</I>&gt;&gt;<i> no longer needed and having two that did the same thing was &quot;clunky&quot;.
+</I>&gt;&gt;<i> As I say, this is as I remember it but may be wrong.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Ai Austin
+</I>&gt;&gt;<i> Sent: 25 June 2012 11:21
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: [Opensim-users] Script Engine Messages
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I seem to get a lot of messages like this &quot;Selected engine unavailable
+</I>&gt;&gt;<i> running on Xengine&quot;.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I only have Xengine configured on all our regions - I have just left the
+</I>&gt;&gt;<i> defaults in place in other words.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I had assumed it could relate to some scripts already being compiled
+</I>&gt;&gt;<i> before with an older script engine.  But I see this on newly created
+</I>&gt;&gt;<i> scripts that are all by default ticked for &quot;Mono&quot; too.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;; Default script engine to use. Currently, we only have XEngine
+</I>&gt;&gt;<i>     ; DefaultScriptEngine = &quot;XEngine&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     [XEngine]
+</I>&gt;&gt;<i>     ; Enabled = true
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is this message one that should not be coming up?  Coud it be a
+</I>&gt;&gt;<i> configuration problem in some area?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Email from Bradford College is subject to a disclaimer, the full
+</I>&gt;&gt;<i> contents of which are available for viewing at the following link:
+</I>&gt;&gt;<i> <A HREF="http://www.bradfordcollege.ac.uk/emaildisclaimer.htm">http://www.bradfordcollege.ac.uk/emaildisclaimer.htm</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I></PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010576.html">[Opensim-users] Script Engine Messages
+</A></li>
+	<LI>Next message: <A HREF="010577.html">[Opensim-users] Script Engine Messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10580">[ date ]</a>
+              <a href="thread.html#10580">[ thread ]</a>
+              <a href="subject.html#10580">[ subject ]</a>
+              <a href="author.html#10580">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

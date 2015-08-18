@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Loading TerrainMap That's Larger Than 256x256
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20TerrainMap%20That%27s%20Larger%20Than%20256x256&In-Reply-To=%3CCANyFgZ7L9eikSkw-Px5_mxEur1maHuEjUPFYHr6uRseXfB6Sgg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010943.html">
+   <LINK REL="Next"  HREF="010947.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Loading TerrainMap That's Larger Than 256x256</H1>
+    <B>Robert Martin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20TerrainMap%20That%27s%20Larger%20Than%20256x256&In-Reply-To=%3CCANyFgZ7L9eikSkw-Px5_mxEur1maHuEjUPFYHr6uRseXfB6Sgg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Loading TerrainMap That's Larger Than 256x256">robertltux at gmail.com
+       </A><BR>
+    <I>Tue Sep 25 15:35:37 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010943.html">[Opensim-users] Loading TerrainMap That's Larger Than 256x256
+</A></li>
+        <LI>Next message: <A HREF="010947.html">[Opensim-users] Loading TerrainMap That's Larger Than 256x256
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10944">[ date ]</a>
+              <a href="thread.html#10944">[ thread ]</a>
+              <a href="subject.html#10944">[ subject ]</a>
+              <a href="author.html#10944">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Sep 25, 2012 at 8:00 AM, GarminKawaguichi
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garmin.kawaguichi at magalaxie.com</A>&gt; wrote:
+&gt;<i> If your terrain map is a .PNG, you can try the server command : terrain
+</I>&gt;<i> load-tile ; I use it with success for MegaRegion.
+</I>&gt;<i>
+</I>&gt;<i> GCI
+</I>&gt;<i>
+</I>&gt;<i> Le 25/09/2012 02:45, Sarge Misfit a &#233;crit :
+</I>&gt;<i>
+</I>&gt;<i> I have a terrain map that is 1024x1024 and I want to use it across a 4x4
+</I>&gt;<i> MegaRegion. I tried to break it down into 256x256 files by cropping using
+</I>&gt;<i> PhotoShop, Gimp and Paint but I can't get the dimensions right. I tried
+</I>&gt;<i> using terrain load-tile in the console but I don't think I am setting the
+</I>&gt;<i> arguments right. Any ideas or help will be appreciated.
+</I>&gt;<i>
+</I>&gt;<i> Sarge Misfit
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+easiest way to do this is to setup your terrain file as a png with a
+&quot;floor&quot; of say 5 or 6 greyscale (NOT ZERO).  cutting a previous
+message in
+&quot;terrain load-tile is a solution; image.png is your &quot;the &quot;map&quot; for a
+3X3 mega region&quot;
+change region reg1
+terrain load-tile c:\path\image.png 3 3 8990 7654 (where 8990 is XLOC
+address and 7654 is YLOC of the left-most bottommost region)
+change region reg2
+terrain load-tile c:\path\image.png 3 3 8990 7654 (yes always same values)
+----- -----change region reg9
+terrain load-tile c:\path\image.png 3 3 8990 7654
+but if the region reg1 is the root for that server(and this must be
+true for a 3x3 Megaregion) you canuse:
+change region root
+terrain load-tile c:\path\image.png 3 3 8990 7654
+and all the nine terrain regions will be loaded!&quot;
+-- 
+Robert L Martin
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010943.html">[Opensim-users] Loading TerrainMap That's Larger Than 256x256
+</A></li>
+	<LI>Next message: <A HREF="010947.html">[Opensim-users] Loading TerrainMap That's Larger Than 256x256
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10944">[ date ]</a>
+              <a href="thread.html#10944">[ thread ]</a>
+              <a href="subject.html#10944">[ subject ]</a>
+              <a href="author.html#10944">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MySQL on seperate server?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20on%20seperate%20server%3F&In-Reply-To=%3Cc5851bcf1002190056h4000189ama65d3167dc296774%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003879.html">
+   <LINK REL="Next"  HREF="003883.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MySQL on seperate server?</H1>
+    <B>Impalah Shenzhou</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20on%20seperate%20server%3F&In-Reply-To=%3Cc5851bcf1002190056h4000189ama65d3167dc296774%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] MySQL on seperate server?">impalah at gmail.com
+       </A><BR>
+    <I>Fri Feb 19 09:56:41 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003879.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+        <LI>Next message: <A HREF="003883.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3882">[ date ]</a>
+              <a href="thread.html#3882">[ thread ]</a>
+              <a href="subject.html#3882">[ subject ]</a>
+              <a href="author.html#3882">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I had the temptation to do a cron script to delete &quot;orphan&quot; assets but,
+using grid configuration, I've found that:
+- Assets are disconnected from users. So the only way to know the owner of
+an asset is to request info to Inventory Servers. Not a real problem... or
+direct accessing to inventory database or implementing a method for querying
+on inventory server.
+- Objects in regions are not in any user inventory, so the script has to
+query all regions in the grid.
+- It is possible that a user has his/her own inventory server, so each of
+them should be checked as well.
+- And of course the script should query the user server first to get user
+data, and then the inventory server defined in the data.
+- Could be possible to query the last access for an asset too but... which
+is the time window to consider an asset &quot;useless&quot;?
+
+So maybe for 10-20 regions I won't have too much problems but &quot;what if&quot; I
+have 100?
+
+Opensim does not provide some methods natively (I understand that it is a
+secondary problem nowadays) so the easy solution is direct access to
+database.
+
+
+
+
+2010/2/18 Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karen_palen at yahoo.com</A>&gt;
+
+&gt;<i> I have to wonder if there is not some MySQL problem that is contributing to
+</I>&gt;<i> this.
+</I>&gt;<i>
+</I>&gt;<i> Bob Wellman&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bob.wellman at hotmail.co.uk</A>&gt; and I had an extended discussion
+</I>&gt;<i> about this a couple of weeks ago.
+</I>&gt;<i>
+</I>&gt;<i> We both have observed that the OpenSim database never deletes database
+</I>&gt;<i> entries for assets! In addition there are numerous duplicate entries,
+</I>&gt;<i> especially
+</I>&gt;<i>
+</I>&gt;<i> Bob has actually done something about this and has written some PHP based
+</I>&gt;<i> MySQL scripts to remove duplicate entries and unused entries. Right now he
+</I>&gt;<i> is upgrading his scripts to make them somewhat portable and I anticipate
+</I>&gt;<i> testing them on my private region in the near future.
+</I>&gt;<i>
+</I>&gt;<i> My database grew to over 1.2Gb for a single region! I used a very crude way
+</I>&gt;<i> to fix the problem, I dumped all of my inventory to an IAR file, then dumped
+</I>&gt;<i> the region data to an OAR file.
+</I>&gt;<i>
+</I>&gt;<i> Now with 5 regions the database occupies less than 200Mb!
+</I>&gt;<i>
+</I>&gt;<i> Obviously if there is that much difference in the database size then you
+</I>&gt;<i> are going to see a performance difference in the database!
+</I>&gt;<i>
+</I>&gt;<i> This has not been a problem with OpenSim so far, probably because very few
+</I>&gt;<i> users have kept a database for more than a month or so. Our feeling is that
+</I>&gt;<i> this will soon become a problem since OPenSim is now stable enough to get
+</I>&gt;<i> some serious use!
+</I>&gt;<i>
+</I>&gt;<i> We will be posting updates here and on the Wiki as soon as there is
+</I>&gt;<i> anything to share!
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i> --- On Thu, 2/18/10, Master_Mirage &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mirage123 at verizon.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; From: Master_Mirage &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mirage123 at verizon.net</A>&gt;
+</I>&gt;<i> &gt; Subject: Re: [Opensim-users] MySQL on seperate server?
+</I>&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; Date: Thursday, February 18, 2010, 9:56 AM
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I arrive late, as usual :-)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; When a region has around 12000 primitives, with a db server
+</I>&gt;<i> &gt; on the same
+</I>&gt;<i> &gt; machine you will have hell on earth or something like
+</I>&gt;<i> &gt; that.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Boot up time is around 10 minutes and is impossible to do
+</I>&gt;<i> &gt; anything but using
+</I>&gt;<i> &gt; zoom. Impossible to move.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have tested this with 3 machines (4Gb ram, 500Gb hd RAID,
+</I>&gt;<i> &gt; Intel Core Duo
+</I>&gt;<i> &gt; 1,73, Intel Core duo 2,3 and amd64) running windows XP,
+</I>&gt;<i> &gt; Vista and Windows
+</I>&gt;<i> &gt; 7-64 bits.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I was using grid mode (grid server on separate computer...
+</I>&gt;<i> &gt; no ROBUST or
+</I>&gt;<i> &gt; UGAIM, it uses a PHP ugaim system).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Separating Mysql to another machine on the same local
+</I>&gt;<i> &gt; network (100 Mbps nc)
+</I>&gt;<i> &gt; I could move, build, and even another avatar could enter.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Exporting db and running it on separate server with Linux
+</I>&gt;<i> &gt; (ubuntu server
+</I>&gt;<i> &gt; 9.04) I could fill the region with 5000 more prims and 2
+</I>&gt;<i> &gt; avatars could work
+</I>&gt;<i> &gt; smooth.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Running opensim on Linux (amd64, 4gb ram, ubuntu server
+</I>&gt;<i> &gt; 9.04 64 bits) and db
+</I>&gt;<i> &gt; on separate linux server 2 avatars could work smoothly and
+</I>&gt;<i> &gt; filling the
+</I>&gt;<i> &gt; region with 25000 prims (no simple prims, but different
+</I>&gt;<i> &gt; sizes, texturized
+</I>&gt;<i> &gt; and scripted).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Anyway, that were my &quot;home&quot; experiences... My conclusion:
+</I>&gt;<i> &gt; separate db, don't
+</I>&gt;<i> &gt; use windows.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Greetings
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Well 1st a bit on that. going back in time 1.5 years now
+</I>&gt;<i> &gt; running
+</I>&gt;<i> &gt; opensimulator, At 1st it dident really matter as there
+</I>&gt;<i> &gt; wasent enough of a DB
+</I>&gt;<i> &gt; to become a problem with YET. I had to take in account
+</I>&gt;<i> &gt; baised on (no was
+</I>&gt;<i> &gt; really shure about anything) what it was i wanted someday.
+</I>&gt;<i> &gt; I knew that both
+</I>&gt;<i> &gt; linux and win were used but seemed a hot argument and still
+</I>&gt;<i> &gt; no one really
+</I>&gt;<i> &gt; had an answer for whats best for running a grid on. I
+</I>&gt;<i> &gt; Decided  that the only
+</I>&gt;<i> &gt; true way to know is run both and see.
+</I>&gt;<i> &gt; So i purchaced 5 quad core servers all the same equip. ram
+</I>&gt;<i> &gt; ect. To me this
+</I>&gt;<i> &gt; would be enough putter power to find out with. Remeber that
+</I>&gt;<i> &gt; opensimulator is
+</I>&gt;<i> &gt; still alpha and was more so then.
+</I>&gt;<i> &gt; I begain testing the MANY ways a grid can be formed and the
+</I>&gt;<i> &gt; equip. made it a
+</I>&gt;<i> &gt; bit easyer to see it Side By Side in real time.
+</I>&gt;<i> &gt; It dident take long to see that mysql would grow in
+</I>&gt;<i> &gt; perpotion to the db size
+</I>&gt;<i> &gt; as to its own demands.
+</I>&gt;<i> &gt; At 1st it was faster to have mysql local to the services
+</I>&gt;<i> &gt; and was for
+</I>&gt;<i> &gt; sometime. Later it started to glom onto the same resources
+</I>&gt;<i> &gt; the instances
+</I>&gt;<i> &gt; needed and begain to get verry slow. At that point assets
+</I>&gt;<i> &gt; were around 3-4
+</I>&gt;<i> &gt; gigs. Seeing the problem i knew i had to do something as
+</I>&gt;<i> &gt; the longer i waited
+</I>&gt;<i> &gt; the worse it would get.
+</I>&gt;<i> &gt; Moved Mysql to another box knowing latency would be there.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; That indeed delt with the 'tipping point' it reached. It
+</I>&gt;<i> &gt; wasent hard to see
+</I>&gt;<i> &gt; for my selph what happend.
+</I>&gt;<i> &gt; That worked well for sometime but it begain to develop its
+</I>&gt;<i> &gt; own problems due
+</I>&gt;<i> &gt; to the unknowen) as to its settings. Had to readj the MySql
+</I>&gt;<i> &gt; settings 4 times
+</I>&gt;<i> &gt; and 2 total rebuilds due to the never ending growth of
+</I>&gt;<i> &gt; assest data. When it
+</I>&gt;<i> &gt; hit around 10-11gigs assests a whole new set of problems
+</I>&gt;<i> &gt; showed up. The big
+</I>&gt;<i> &gt; one is all that data has to be maintained and backed up.
+</I>&gt;<i> &gt; This took most of a
+</I>&gt;<i> &gt; day of downtime as why its doing all that its locking the
+</I>&gt;<i> &gt; tables and
+</I>&gt;<i> &gt; Opensimulator freeks. Thats not good and not only is the
+</I>&gt;<i> &gt; grid offline but
+</I>&gt;<i> &gt; the amout of time by me to work on it became excessive. As
+</I>&gt;<i> &gt; orginaly i had
+</I>&gt;<i> &gt; bee wise and bought enough computers i spent a good while
+</I>&gt;<i> &gt; learing about
+</I>&gt;<i> &gt; Mysql replication. This does solve some of the problems as
+</I>&gt;<i> &gt; it lets me switch
+</I>&gt;<i> &gt; the services to use the other Mysql and allows maint to
+</I>&gt;<i> &gt; happen with little
+</I>&gt;<i> &gt; effort.
+</I>&gt;<i> &gt; Only the one maint is beeing done on has tables locked not
+</I>&gt;<i> &gt; both.
+</I>&gt;<i> &gt; Moveing to current time. 23+gigs assests and at my goal of
+</I>&gt;<i> &gt; 100 regions
+</I>&gt;<i> &gt; (un-told amout of prims and scripts whatever) it was a
+</I>&gt;<i> &gt; verry good plan.
+</I>&gt;<i> &gt; Is it as fast as it could be? Nope! The problem will
+</I>&gt;<i> &gt; allways be there. Is it
+</I>&gt;<i> &gt; scaleable? You betcha!.
+</I>&gt;<i> &gt; I guess my point is Depends on what you expect your grid
+</I>&gt;<i> &gt; tobe and planning
+</I>&gt;<i> &gt; assuming worse case as best as you can.
+</I>&gt;<i> &gt; Opensimulator is made to be as felxable as it needs tobe
+</I>&gt;<i> &gt; and what oper.
+</I>&gt;<i> &gt; system i find is a push. Both do an excellent job and Both
+</I>&gt;<i> &gt; can and do show
+</I>&gt;<i> &gt; the same performance when set up properly.
+</I>&gt;<i> &gt; For me the differances realy boiled down to what was more
+</I>&gt;<i> &gt; comfortable for me
+</I>&gt;<i> &gt; to maintain. In my case im dealing with many servers acting
+</I>&gt;<i> &gt; as one. If you
+</I>&gt;<i> &gt; ask me whats better ill say none.
+</I>&gt;<i> &gt; My best suggestion for ppl starting out is expect nothing
+</I>&gt;<i> &gt; and be really
+</I>&gt;<i> &gt; happy when it all works better than you though
+</I>&gt;<i> &gt; :-)
+</I>&gt;<i> &gt; There will allways be argument and theroy and thats a good
+</I>&gt;<i> &gt; thing but there
+</I>&gt;<i> &gt; is no better judge than you and what you can see in
+</I>&gt;<i> &gt; realtime.
+</I>&gt;<i> &gt; :working:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; View this message in context:
+</I>&gt;<i> <A HREF="http://n2.nabble.com/MySQL-on-seperate-server-tp4575740p4592890.html">http://n2.nabble.com/MySQL-on-seperate-server-tp4575740p4592890.html</A>
+</I>&gt;<i> &gt; Sent from the opensim-users mailing list archive at
+</I>&gt;<i> &gt; Nabble.com.
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100219/8a5505f5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100219/8a5505f5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003879.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+	<LI>Next message: <A HREF="003883.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3882">[ date ]</a>
+              <a href="thread.html#3882">[ thread ]</a>
+              <a href="subject.html#3882">[ subject ]</a>
+              <a href="author.html#3882">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

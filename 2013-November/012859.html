@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Help with Hypergrid TP's please.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%20with%20Hypergrid%20TP%27s%20please.&In-Reply-To=%3C528E3EF9.8040909%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012858.html">
+   <LINK REL="Next"  HREF="012862.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Help with Hypergrid TP's please.</H1>
+    <B>Gary Beck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%20with%20Hypergrid%20TP%27s%20please.&In-Reply-To=%3C528E3EF9.8040909%40gmail.com%3E"
+       TITLE="[Opensim-users] Help with Hypergrid TP's please.">gab4gab at gmail.com
+       </A><BR>
+    <I>Thu Nov 21 18:12:25 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012858.html">[Opensim-users] Help with Hypergrid TP's please.
+</A></li>
+        <LI>Next message: <A HREF="012862.html">[Opensim-users] Help with Hypergrid TP's please.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12859">[ date ]</a>
+              <a href="thread.html#12859">[ thread ]</a>
+              <a href="subject.html#12859">[ subject ]</a>
+              <a href="author.html#12859">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Allex,
+   I have a similar situation.  Perhaps I can add some clues.
+   I read somewhere (&amp; can no longer find) an explanation of the 
+approach used to validate incoming hypergrid viewer connections. The 
+main idea was that the incoming viewer IP address should match the home 
+grids stored IP address for that viewer.  For users external to the home 
+grid LAN this would be the external IP address.  Users residing on the 
+home grid LAN typically have some local LAN IP address stored rather 
+than the external IP address. The design is to handle this as an 
+acceptable exception as long as the stored viewer IP at the home grid 
+matches the home grid IP address.
+   I'm running OpenSim 0.7.6 as a stand alone hypergrid.  I have two PCs 
+in my local LAN.  If I run a viewer on the server PC I am able to jump 
+out to other grids.  However I can't teleport home.  If I run a viewer 
+on the non-server PC I can again jump out to other grids.  In this case 
+I can teleport home.
+   There are message in my OpenSim log which I think show the values 
+being compared.  If you can find these if might make clear what is 
+happening.  I'll paste what I see for the two cases I've described.
+
+When logged on local to the server PC:
+
+Outgoing:
+[USER AGENT SERVICE]: Comparing 71.89.173.18 with login IP 127.0.0.1 and 
+MyIP 127.0.0.1; result is true
+Returning:
+[USER AGENT SERVICE]: Comparing 192.168.1.1 with login IP 127.0.0.1 and 
+MyIP 127.0.0.1; result is false
+
+When logged on local to a non-server PC:
+
+Outgoing:
+[USER AGENT SERVICE]: Comparing 71.89.173.18 with login IP 192.168.1.1 
+and MyIP 192.168.1.1; result is true
+Returning:
+[USER AGENT SERVICE]: Comparing 192.168.1.1 with login IP 192.168.1.1 
+and MyIP 192.168.1.1; result is true
+
+
+I hope that's of some help.
+
+- Gary Beck
+
+On 11/20/2013 8:26 AM, Fleep Tuque wrote:
+&gt;<i> Likely answers to your question (but not guaranteed!) at:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/can-t-tp-home-after-hypergrid-jump-td6227904.html">http://opensim-users.2152040.n2.nabble.com/can-t-tp-home-after-hypergrid-jump-td6227904.html</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/Hypergrid-Outbound-Probs-amp-HG-Address-Confusion-td6821084.html">http://opensim-users.2152040.n2.nabble.com/Hypergrid-Outbound-Probs-amp-HG-Address-Confusion-td6821084.html</A>
+</I>&gt;<i>
+</I>&gt;<i> - Chris
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Chris M. Collins (Avatar: Fleep Tuque)
+</I>&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;<i> UCIT Research &amp; Development
+</I>&gt;<i> UC Office of Information Technologies
+</I>&gt;<i> University of Cincinnati
+</I>&gt;<i> 400 University Hall
+</I>&gt;<i> PO Box 210658
+</I>&gt;<i> Cincinnati, OH 45221-0658
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;<i> (513) 556-3018
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Nov 20, 2013 at 2:12 AM, allex &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">pvcol at live.co.za</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">pvcol at live.co.za</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     Hi All.
+</I>&gt;<i>     I seriously need some advice about HG TP's, I have looked around
+</I>&gt;<i>     but cant
+</I>&gt;<i>     seem to pin point my issue.
+</I>&gt;<i>
+</I>&gt;<i>     I have done the following :-
+</I>&gt;<i>
+</I>&gt;<i>     Registered a domain name and pointed its NS to no-ip NS which in
+</I>&gt;<i>     tern point
+</I>&gt;<i>     to my Dynamic IP.
+</I>&gt;<i>     Setup OSG dev.0.8.0 - running and can access the HG and TP out to
+</I>&gt;<i>     other
+</I>&gt;<i>     enabled grids.
+</I>&gt;<i>
+</I>&gt;<i>     Problem is getting home... before leaving my region I set home,
+</I>&gt;<i>     and when
+</I>&gt;<i>     trying to return to it
+</I>&gt;<i>     I get an error that the viewer could not communicate with the
+</I>&gt;<i>     server. OK. so
+</I>&gt;<i>     I have tried various other
+</I>&gt;<i>     viewers with the same result.
+</I>&gt;<i>
+</I>&gt;<i>     I thought maybe a port issue, so I tried to access my region using the
+</I>&gt;<i>     domain name from another PC
+</I>&gt;<i>     totally independant of my system and was able to log onto my region.
+</I>&gt;<i>
+</I>&gt;<i>     If i enter my domain name into the map search the system returns
+</I>&gt;<i>     &quot;region not
+</I>&gt;<i>     found&quot;
+</I>&gt;<i>
+</I>&gt;<i>     Any ideas anyone? I really dont know what i am missing here....
+</I>&gt;<i>
+</I>&gt;<i>     oh I have checked and re-checked the .ini files and i have only my
+</I>&gt;<i>     domain
+</I>&gt;<i>     name entered everywhere.
+</I>&gt;<i>
+</I>&gt;<i>     Thanks.
+</I>&gt;<i>     Allex
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     View this message in context:
+</I>&gt;<i>     <A HREF="http://opensim-users.2152040.n2.nabble.com/Help-with-Hypergrid-TP-s-please-tp7580663.html">http://opensim-users.2152040.n2.nabble.com/Help-with-Hypergrid-TP-s-please-tp7580663.html</A>
+</I>&gt;<i>     Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20131121/a0c227f0/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20131121/a0c227f0/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012858.html">[Opensim-users] Help with Hypergrid TP's please.
+</A></li>
+	<LI>Next message: <A HREF="012862.html">[Opensim-users] Help with Hypergrid TP's please.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12859">[ date ]</a>
+              <a href="thread.html#12859">[ thread ]</a>
+              <a href="subject.html#12859">[ subject ]</a>
+              <a href="author.html#12859">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

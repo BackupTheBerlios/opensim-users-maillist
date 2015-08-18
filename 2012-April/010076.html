@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database clean up
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20clean%20up&In-Reply-To=%3Cp06240800cba62f2facf7%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010075.html">
+   <LINK REL="Next"  HREF="010053.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database clean up</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20clean%20up&In-Reply-To=%3Cp06240800cba62f2facf7%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] Database clean up">opensim at pescadoo.net
+       </A><BR>
+    <I>Sat Apr  7 20:32:19 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010075.html">[Opensim-users] Database clean up
+</A></li>
+        <LI>Next message: <A HREF="010053.html">[Opensim-users] Updated experimental
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10076">[ date ]</a>
+              <a href="thread.html#10076">[ thread ]</a>
+              <a href="subject.html#10076">[ subject ]</a>
+              <a href="author.html#10076">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>At 7:53 PM +0200 4/6/12, Gudule Lapointe wrote:
+
+&gt;<i> how can I clean up the inventory and assets server, without having
+</I>&gt;<i> my users loosing their inventory?
+</I>
+Tough topic.
+
+The general answer is : you can't.
+
+The special answer is : on a small, personal grid, where you have extended
+knowledge over your assets, you may try to find assets which:
+
+  - are not referenced in inventoryitems (agent inventories)
+  - are not referenced in primitems (inworld objects' inventories)
+  - does not belong to Library
+
+Maybe you will find assets you *know* have been deleted, for example old
+versions of scripts or notecards.
+
+However, you still get assets referenced inside objects inside inventory
+(agent or object), recursively. They live inside SceneObjectGroup blobs and
+not directly accessible.
+
+
+Finally, if you had accounts deleted, you may catch useless inventory
+folders and items with:
+
+SELECT * FROM inventoryitems   WHERE avatarID NOT IN (SELECT UUID FROM users);
+SELECT * FROM inventoryfolders WHERE  agentID NOT IN (SELECT UUID FROM users);
+
+orphaned folders and items:
+
+SELECT * FROM inventoryitems   WHERE parentFolderID NOT IN (SELECT folderID
+FROM inventoryfolders);
+SELECT * FROM inventoryfolders WHERE parentFolderID NOT IN (SELECT folderID
+FROM inventoryfolders);
+(the latter will catch inventory roots, children of NULL_KEY)
+
+dangling inventoryitems:
+
+SELECT assetID,assetType,inventoryName FROM inventoryitems WHERE assetID
+NOT IN (SELECT id FROM assets);
+
+objects belonging to deleted regions:
+
+SELECT name,UUID FROM prims WHERE RegionUUID NOT IN (SELECT RegionUUID FROM
+regionsettings);
+
+Of course, never blindly DELETE with such queries. They are just a quick
+way to check db health after many crashes and upgrades. Mine is 3 years old.
+
+More &quot;useful queries&quot; on the wiki and OSGrid forum.
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010075.html">[Opensim-users] Database clean up
+</A></li>
+	<LI>Next message: <A HREF="010053.html">[Opensim-users] Updated experimental
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10076">[ date ]</a>
+              <a href="thread.html#10076">[ thread ]</a>
+              <a href="subject.html#10076">[ subject ]</a>
+              <a href="author.html#10076">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

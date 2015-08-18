@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MapItemRequestThread errors
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MapItemRequestThread%20errors&In-Reply-To=%3CCAPk7T4C9VSYgN6AP9a0AhjrJTBO6SC75psaWVHwTNz1bcM5MSA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010454.html">
+   <LINK REL="Next"  HREF="010456.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MapItemRequestThread errors</H1>
+    <B>Sarge Misfit</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MapItemRequestThread%20errors&In-Reply-To=%3CCAPk7T4C9VSYgN6AP9a0AhjrJTBO6SC75psaWVHwTNz1bcM5MSA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] MapItemRequestThread errors">fubat.enterprises at gmail.com
+       </A><BR>
+    <I>Tue Jun  5 04:39:04 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010454.html">[Opensim-users] MapItemRequestThread errors
+</A></li>
+        <LI>Next message: <A HREF="010456.html">[Opensim-users] MapItemRequestThread errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10455">[ date ]</a>
+              <a href="thread.html#10455">[ thread ]</a>
+              <a href="subject.html#10455">[ subject ]</a>
+              <a href="author.html#10455">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks, Justin.
+
+I guess I should clarify, there's 19 regions on my offline standalone, all
+nonContiguous. This is the system I use for all my building. Anyway, when I
+enter &quot;show thread&quot; I get a Last Update of 1060ms for each region.
+
+I've noticed that the red error messages are showing an increasing period.
+When I posted this it was at 5835ms and now they are up to 6584ms.
+
+I'll file a Mantis and will include log entries.
+
+Sarge
+
+
+
+On Mon, Jun 4, 2012 at 6:23 PM, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>
+&gt;<i> wrote:
+</I>
+&gt;<i> On 04/06/12 13:37, Sarge Misfit wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I am seeing red error messages as follows:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ERROR - OpenSim.OpenSim [WATCHDOG]: Timeout detected for thread
+</I>&gt;&gt;<i> &quot;MapItemRequestThread (Workshop)&quot;.
+</I>&gt;&gt;<i> ThreadState=Background. Last tick was 5835ms ago
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I don't think this is anything to worry about as this is my offline
+</I>&gt;&gt;<i> standalone, so I am the only user and don't need the
+</I>&gt;&gt;<i> Map, but I would like to fix this anyway.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This thread is used in the WorldMapModule to serve map item requests by
+</I>&gt;<i> the looks of it (I'm not an expert in this area).  The targets are other
+</I>&gt;<i> regions - possibly in standalone mode a network request is still being made
+</I>&gt;<i> (not ideal but possible).
+</I>&gt;<i>
+</I>&gt;<i> It looks like there an 80ms thread whilst the thread waits for responses.
+</I>&gt;<i>  From a quick scan of this code, I'm not sure those requests have timeouts,
+</I>&gt;<i> though no response would be odd if all the regions are local.  If there are
+</I>&gt;<i> no timeouts or even long ones, then that would tie up the thread
+</I>&gt;<i> sufficiently to cause the timeout warning.
+</I>&gt;<i>
+</I>&gt;<i> If the thread is permanently tied up then I suspect the symptom would be
+</I>&gt;<i> that map items no longer work.  You could determine this by executing &quot;show
+</I>&gt;<i> threads&quot; on the region console.  If you see a MapItemRequestThread
+</I>&gt;<i> (&lt;region-name&gt;) with a high LAST UPDATE (MS) then this would indicate that
+</I>&gt;<i> it's stalled.
+</I>&gt;<i>
+</I>&gt;<i> It would be good if you could file a mantis on this with all the details,
+</I>&gt;<i> though no guarantee of a quick fix.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120604/3b1aca84/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120604/3b1aca84/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010454.html">[Opensim-users] MapItemRequestThread errors
+</A></li>
+	<LI>Next message: <A HREF="010456.html">[Opensim-users] MapItemRequestThread errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10455">[ date ]</a>
+              <a href="thread.html#10455">[ thread ]</a>
+              <a href="subject.html#10455">[ subject ]</a>
+              <a href="author.html#10455">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

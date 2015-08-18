@@ -1,0 +1,373 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Avatar texture corruption
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Avatar%20texture%20corruption&In-Reply-To=%3C20130214071623.851065yi24zttnk0%4074.50.85.33%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011807.html">
+   <LINK REL="Next"  HREF="011754.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Avatar texture corruption</H1>
+    <B>Emperor Starfinder</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Avatar%20texture%20corruption&In-Reply-To=%3C20130214071623.851065yi24zttnk0%4074.50.85.33%3E"
+       TITLE="[Opensim-users] Avatar texture corruption">emperor at secondgalaxy.com
+       </A><BR>
+    <I>Thu Feb 14 13:16:23 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011807.html">[Opensim-users] Whisper module
+</A></li>
+        <LI>Next message: <A HREF="011754.html">[Opensim-users] Sloodle problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11753">[ date ]</a>
+              <a href="thread.html#11753">[ thread ]</a>
+              <a href="subject.html#11753">[ subject ]</a>
+              <a href="author.html#11753">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have tested this on adjacent regions on our grid in an attempt to  
+determine why we keep seeing these types of messages fly acrossed our  
+consoles.  Avatar textures appear to work okay for us, however we do  
+see the error when uploading an oar file.  Additionally we also see  
+the EOC Codestream Marker is corrupted after j2kDecode throws errors  
+relating to textures.  This appears to happen with mesh as well though  
+I suspect it is because the texture hasn't been decoded previously.
+
+The one time in the past we had the problem with the avatar textures  
+not rezzing I cleared out the database (not recommended if you've done  
+a lot of work or have a big user base and you should always backup  
+your database tables) and reloaded the avatar related stuff into the  
+database which appeared to correct our problem.
+
+I did notice however, that some viewers do seem to take longer to rez  
+the avatar for the first time.  Usually this is due to inventory  
+fetching however it could be something with the viewer to as we've  
+been seeing odd behavior with viewers rezzing avatars but haven't  
+found the actual problem as of yet.
+
+I tested so far on Imprudence (a viewer 1.23 version based viewer) and  
+Firestorm (For Opensim) which is the current viewer 3 based code and  
+actually found that the problem with avatars taking to long is longer  
+in the viewer 3 code.
+
+Thus I would conclude that it could just be the texture file type that  
+j2kDecode doesn&#146;t particularly like.  A good way to test this would be  
+trying avatars for example from lindakellie.com or another opensource  
+site to see if they work.  If they do work it would mean that there is  
+something with your particular avatar textures.  I have done this to  
+find that the image decode process seems to not like some formats  
+though it does ultimately decode it to the closest format it believes  
+to be relevant.
+
+I am not sure if this will be of any help to you, however it might at  
+least give you an idea of ways to determine if it&#146;s the textures  
+themselves or a larger issue.  Hopefully it would just be the textures  
+and not a bigger bug.
+
+Emperor
+
+&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Thu, 14 Feb 2013 01:14:30 -0600
+</I>&gt;<i> From: Chris &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at gmail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] What setting and level is needed to show
+</I>&gt;<i> 	LSL errors on console ?
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">511C8ED6.7040401 at gmail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+</I>&gt;<i>
+</I>&gt;<i> On 2/13/2013 7:48 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> In this case, Chris, this only controls one log message about loading
+</I>&gt;&gt;<i> scripts in the XEngine class (since this can get very noisy on console).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> XEngine in OpenSimulator 0.7.5, unlike previous versions, is actually
+</I>&gt;&gt;<i> currently logging script failures to the console for debug purposes.
+</I>&gt;&gt;<i> This may also prove too noisy and have to be tuned down, possibly this
+</I>&gt;&gt;<i> time with an explicit debug level.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Ahhh I see. Thanks for clarifying that Justin =)
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> OpenSim: 10 Region Standalone on 0.7.5 Dev
+</I>&gt;<i> Physics: Open Dynamics Engine
+</I>&gt;<i> OS: Windows 7 (x64)
+</I>&gt;<i> CPU: AMD Phenom II X4 840 3.2 GHz
+</I>&gt;<i> Memory: 11 GB DDR3
+</I>&gt;<i> Database: MySQL 5.1.63 (x64)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 2
+</I>&gt;<i> Date: Thu, 14 Feb 2013 10:05:38 +0100
+</I>&gt;<i> From: caro t hart &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">caro.thart at macaris.nl</A>&gt;
+</I>&gt;<i> To: &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Subject: Re: [Opensim-users] Avatar texture corruption(InuYasha Meiji)
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">1360832738.511ca8e2d5812 at 192.168.2.110</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;utf-8&quot;
+</I>&gt;<i>
+</I>&gt;<i> Justin,
+</I>&gt;<i> Thanks for the clarification about the textures.
+</I>&gt;<i> The problem does not occur when teleporting into another simulator.
+</I>&gt;<i> It only happens when walking into an adjacent region which runs on
+</I>&gt;<i> another opensim instance.? The problem never happens when teleporting
+</I>&gt;<i> into a region or crossing boundaries of regions running in the same
+</I>&gt;<i> opensim instance.? I've tried 3 viewers and the pattern of missing
+</I>&gt;<i> textures is consisent on my system.
+</I>&gt;<i> So I really don't know why this is happening, only that it happens
+</I>&gt;<i> consistently.
+</I>&gt;<i> InuYashy confirms the problem, and I hope that some of the readers
+</I>&gt;<i> running multiple opensim instances with adjacent regions are willing
+</I>&gt;<i> to do the test and do the console &quot;appearance show&quot; after a walk into
+</I>&gt;<i> an adjacent region.
+</I>&gt;<i> Btw. I am running Windows 7, opensim in grid mode, with 8 opensim
+</I>&gt;<i> servers running in total 11 regions (7 * 1 region and 1 * 4 region).
+</I>&gt;<i>
+</I>&gt;<i> Please see testoverview in previous thread (sorry, I seem te make a
+</I>&gt;<i> mess of the message threads).Met vriendelijke groet,
+</I>&gt;<i>
+</I>&gt;<i> Caro
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> An HTML attachment was scrubbed...
+</I>&gt;<i> URL:  
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130214/46b74733/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130214/46b74733/attachment-0001.html</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 3
+</I>&gt;<i> Date: Thu, 14 Feb 2013 04:09:40 -0500
+</I>&gt;<i> From: John Sheridan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] Vivox module question - enable echo back?
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">511CA9D4.3050501 at pseudospace.net</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;; Format=&quot;flowed&quot;
+</I>&gt;<i>
+</I>&gt;<i> @Nebadon - I have but they stated that they don't provide support for
+</I>&gt;<i> OpenSim and suggested that I ask on the list.
+</I>&gt;<i> @InuYasha - After hearing back from the Vivox support rep I didn't get
+</I>&gt;<i> the impression that this was a high level (paid) feature.  Its likely
+</I>&gt;<i> just a configurations witch somewhere along the line.
+</I>&gt;<i> @Justin and Toni - I'll have to do some digging around to see if I can
+</I>&gt;<i> find an API reference for Vivox.  If its available I'll gladly do some
+</I>&gt;<i> poking around in the module to see if I can add in a configuration flag.
+</I>&gt;<i>
+</I>&gt;<i> Thanks :)
+</I>&gt;<i>
+</I>&gt;<i> John Sheridan / Orion Pseudo
+</I>&gt;<i> Pseudospace Virtual Worlds
+</I>&gt;<i> (HG Middle) grid.pseudospace.net:8002:Ellis Island
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 02/14/2013 01:42 AM, Toni Alatalo wrote:
+</I>&gt;&gt;<i> On Thu, Feb 14, 2013 at 5:36 AM, InuYasha Meiji
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Hey, I am happy to be able to use what Vivox gave us.  If we want
+</I>&gt;&gt;<i>     things available to us that vivox allows in SL then we might end
+</I>&gt;&gt;<i>     up paying the huge licencing fee that Vivox requires of SL to get
+</I>&gt;&gt;<i>     those other options.  I for one can't afford a change like that
+</I>&gt;&gt;<i>     for my simple hobby sized grid.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I wouldn't think that is a risk really.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My assumption is that the licensing model that Vivox generously offers
+</I>&gt;&gt;<i> to Opensimulator users is based on the business model / type of usage
+</I>&gt;&gt;<i> and perhaps for using open source in general -- not mainly about a
+</I>&gt;&gt;<i> restricted featureset. I mean the difference is exactly that you have
+</I>&gt;&gt;<i> (more of a) hobby grid, whereas something like Linden with SL is a
+</I>&gt;&gt;<i> corporation running a commercial service .. not that in SL you can
+</I>&gt;&gt;<i> test audio settings which would be crippled with Opensimulator.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And even if there are features they reserve for paying customers, I'd
+</I>&gt;&gt;<i> imagine that giving a nice simple way to test voice is not among them
+</I>&gt;&gt;<i> but something that is good to have always available to make Vivox
+</I>&gt;&gt;<i> usable, is elementary I think that voice settings and quality etc. can
+</I>&gt;&gt;<i> be tested.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I guess the case is simply that you need to setup such a service
+</I>&gt;&gt;<i> somehow, have the behaviour with the loopback audio implemented ..
+</I>&gt;&gt;<i> exactly what Justin was after with setting up channels and wondering
+</I>&gt;&gt;<i> about the API they provide.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So I'd also just ask them .. or study the API if they have something
+</I>&gt;&gt;<i> suitable.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     InuYasha.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ~Toni
+</I>&gt;&gt;<i> BTW: thanks for the reminder, I've always really liked the Echo Canyon
+</I>&gt;&gt;<i> .. and we currently don't have it implemented with the Mumble plugin
+</I>&gt;&gt;<i> that's used with Tundra in realXtend. There is a audio settings wizard
+</I>&gt;&gt;<i> GUI which has a local loopback for setting mic level etc. but I think
+</I>&gt;&gt;<i> a service for testing the audio over the net, which the Echo Canyon
+</I>&gt;&gt;<i> and Skype test call do, would be good too. That voice impl is quite
+</I>&gt;&gt;<i> decent nowadays, is good I think that there's also an open source
+</I>&gt;&gt;<i> option as well even though Vivox is good and friendly (and with Tundra
+</I>&gt;&gt;<i> we don't currently have the option for Vivox anyways, might be
+</I>&gt;&gt;<i> interesting if also that integration would exist but AFAIK we'll be
+</I>&gt;&gt;<i> just using mumble/murmur .. there's sometimes been talk of Skype etc
+</I>&gt;&gt;<i> integrations though as they also have an SDK &amp; API nowadays).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 2/13/2013 8:51 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Interesting. Unfortunately, there's no obvious switch for this in
+</I>&gt;&gt;<i>     the Vivox module currently, let alone something that would be user
+</I>&gt;&gt;<i>     configurable.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     However, I would imagine that this would be the place to turn it
+</I>&gt;&gt;<i>     on, maybe a channel creation parameters in
+</I>&gt;&gt;<i>     VivoxVoiceModule.VivoxTryCreateChannel().  Unfortunately, I don't
+</I>&gt;&gt;<i>     know if there is any public doc for the options that Vivox will
+</I>&gt;&gt;<i>     accept through their API.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     On 12/02/13 19:59, John Sheridan wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Hi gang,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>            I just got voice setup and running with Vivox and had a
+</I>&gt;&gt;<i>         quick question regarding configuration options.  Over in the
+</I>&gt;&gt;<i>         evil alternate universe (SL) there's a region called Voice
+</I>&gt;&gt;<i>         Echo Canyon where users can go to self adjust their own
+</I>&gt;&gt;<i>         viewer voice settings. Mainly, when you speak on mic your
+</I>&gt;&gt;<i>         voice is echoed back to you. Would anyone happen to know if
+</I>&gt;&gt;<i>         there's an option in the Vivox module somewhere to enable a
+</I>&gt;&gt;<i>         similar echo-back for an OpenSim instance?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Thanks, :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         John Sheridan / Orion Pseudo
+</I>&gt;&gt;<i>         Pseudospace Virtual Worlds
+</I>&gt;&gt;<i>         HG (Middle): <A HREF="http://grid.pseudospace.net:8002/ellis">http://grid.pseudospace.net:8002/ellis</A>
+</I>&gt;&gt;<i>         _______________________________________________
+</I>&gt;&gt;<i>         Opensim-users mailing list
+</I>&gt;&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i>         &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ________________________________________________________________________
+</I>&gt;&gt;<i>     Opensim User: In Gridmode  on Version 0.7.4. Nine Instances with
+</I>&gt;&gt;<i>     56 Regions. on Windows 7, 64-bit. Phenom 9500 2.2 GHz Quad Core,
+</I>&gt;&gt;<i>     Terabyte Hard Drive, 8gig DDR2 RAM.  Used XAMPP to load PHP
+</I>&gt;&gt;<i>     Version 5.3.0, Apache
+</I>&gt;&gt;<i>     and MySQL 5.1.41-community edition.  Groups, Profiles, Vivox Voice and
+</I>&gt;&gt;<i>     Offline Messages all working. (Not yet Public, 10 user accounts so
+</I>&gt;&gt;<i>     far).
+</I>&gt;&gt;<i>     ________________________________________________________________________
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     _______________________________________________
+</I>&gt;&gt;<i>     Opensim-users mailing list
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> An HTML attachment was scrubbed...
+</I>&gt;<i> URL:  
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130214/a4376a35/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130214/a4376a35/attachment-0001.html</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 4
+</I>&gt;<i> Date: Thu, 14 Feb 2013 11:53:01 +0200
+</I>&gt;<i> From: Fokides Manos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fokides at aegean.gr</A>&gt;
+</I>&gt;<i> To: &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Subject: [Opensim-users] Whisper module
+</I>&gt;<i> Message-ID:
+</I>&gt;<i> 	&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">E4909B869CD8CD44B18FA0760806E7E503B55DF23F25 at hermes.aegean.gr</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> Is anywhere available or has anyome compiled the whisper module  
+</I>&gt;<i> (Whisper.dll, Ice.dll, Glacier2.dll) for opensim 0.7.5?
+</I>&gt;<i> The dlls for the 0.7.4 version doesn't seem to work in 0.7.5 and  
+</I>&gt;<i> opensim crashes.
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advace for your replies
+</I>&gt;<i>
+</I>&gt;<i> Emmanuel Fokides
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> An HTML attachment was scrubbed...
+</I>&gt;<i> URL:  
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130214/742cb513/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130214/742cb513/attachment-0001.html</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> End of Opensim-users Digest, Vol 66, Issue 19
+</I>&gt;<i> *********************************************
+</I>&gt;<i>
+</I>
+
+
+Emperor Starfinder
+Core Developer
+Second Galaxy Development Team
+<A HREF="http://www.secondgalaxy.com">http://www.secondgalaxy.com</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011807.html">[Opensim-users] Whisper module
+</A></li>
+	<LI>Next message: <A HREF="011754.html">[Opensim-users] Sloodle problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11753">[ date ]</a>
+              <a href="thread.html#11753">[ thread ]</a>
+              <a href="subject.html#11753">[ subject ]</a>
+              <a href="author.html#11753">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

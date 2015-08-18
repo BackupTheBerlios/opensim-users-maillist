@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Very bizarre HUD issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Very%20bizarre%20HUD%20issues&In-Reply-To=%3C4D6BF2B3.90601%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006729.html">
+   <LINK REL="Next"  HREF="006731.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Very bizarre HUD issues</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Very%20bizarre%20HUD%20issues&In-Reply-To=%3C4D6BF2B3.90601%40googlemail.com%3E"
+       TITLE="[Opensim-users] Very bizarre HUD issues">jjustincc at googlemail.com
+       </A><BR>
+    <I>Mon Feb 28 20:08:35 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006729.html">[Opensim-users] Very bizarre HUD issues
+</A></li>
+        <LI>Next message: <A HREF="006731.html">[Opensim-users] change mysql database name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6730">[ date ]</a>
+              <a href="thread.html#6730">[ thread ]</a>
+              <a href="subject.html#6730">[ subject ]</a>
+              <a href="author.html#6730">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>No, I think this is a different issue.
+
+In fact, it's one I see as well - on player login their hud briefly flashes on other user's screens.  Not sure if there 
+is a Mantis or not.
+
+On 28/02/11 18:35, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drwhiet at spacefriends.de</A> wrote:
+&gt;<i> are you sure, you are not falling into error MANTIS #5122
+</I>&gt;<i> <A HREF="http://opensimulator.org/mantis/bug_view_advanced_page.php?bug_id=5122">http://opensimulator.org/mantis/bug_view_advanced_page.php?bug_id=5122</A>
+</I>&gt;<i> best regards
+</I>&gt;<i> Wordfromthe Wise
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------------------------------------------------------
+</I>&gt;<i> *Von:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] *Im Auftrag von *Charlie White
+</I>&gt;<i> *Gesendet:* Montag, 28. Februar 2011 16:53
+</I>&gt;<i> *An:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Betreff:* [Opensim-users] Very bizarre HUD issues
+</I>&gt;<i>
+</I>&gt;<i> I am on OpenSim v0.7.0.2 running in StandAlone mode on a Linux (Ubuntu 64-bit system). I have noticed a strange
+</I>&gt;<i> phenomena recently that seems to be affecting my avatars. When a player signs in to the sim or signs out of the sim, for
+</I>&gt;<i> a brief few seconds, the entering or exiting player's HUD is appearing on all other players' viewers. Most of the time
+</I>&gt;<i> just the outline of the HUD appears, along with 1 or 2 textures. Then it vanishes after a few seconds. It also seems as
+</I>&gt;<i> though it is not appearing at the attachment point it is designed for (upper left) and seems to be grabbing the center
+</I>&gt;<i> of the screen. It does not rez in the environment (on the ground) only as a HUD attachment to the other players. Also,
+</I>&gt;<i> occasionally, a transparent piece of the HUD will momentarily attach to the center HUD attachment point and block you
+</I>&gt;<i> from clicking on other objects in the environment. If I right click to see the owner/creator there is no information and
+</I>&gt;<i> if you turn left and right it disappears. This behavior does not seem to coincide with another avatar signing in or out.
+</I>&gt;<i>
+</I>&gt;<i> I have not seen anything like this in the Mantis (unless I am not choosing proper search keywords). I would logically
+</I>&gt;<i> assume that when you sign in or out some event is triggering that is firing an event to all viewers. Perhaps I have
+</I>&gt;<i> coded something incorrectly? Here is the script in my root prim:
+</I>&gt;<i>
+</I>&gt;<i> integer Version_Channel = 15;
+</I>&gt;<i> integer attachflag = 0;
+</I>&gt;<i> default {
+</I>&gt;<i> state_entry() {
+</I>&gt;<i> llSay(0, &quot;HUD&quot;);
+</I>&gt;<i> }
+</I>&gt;<i> run_time_permissions(integer perm) {
+</I>&gt;<i> if (perm &amp; PERMISSION_ATTACH) {
+</I>&gt;<i> if(attachflag) {
+</I>&gt;<i> llSetAlpha(1.0,ALL_SIDES);
+</I>&gt;<i> llOwnerSay(&quot;attachToAvatar&quot;);
+</I>&gt;<i> llAttachToAvatar(ATTACH_HUD_TOP_LEFT);
+</I>&gt;<i> }
+</I>&gt;<i> else {
+</I>&gt;<i> llOwnerSay(&quot;detachFromAvatar&quot;);
+</I>&gt;<i> llDetachFromAvatar();
+</I>&gt;<i> }
+</I>&gt;<i> }
+</I>&gt;<i> else {
+</I>&gt;<i> llDie();
+</I>&gt;<i> }
+</I>&gt;<i> }
+</I>&gt;<i> attach(key attached) {
+</I>&gt;<i> llListen(Version_Channel,&quot;&quot;,NULL_KEY,&quot;&quot;);
+</I>&gt;<i> if (attached != NULL_KEY) // object has been detached
+</I>&gt;<i> {
+</I>&gt;<i> llRegionSay(Version_Channel,&quot;version&quot;);
+</I>&gt;<i> }
+</I>&gt;<i> else {
+</I>&gt;<i> llDie();
+</I>&gt;<i> }
+</I>&gt;<i> }
+</I>&gt;<i> listen(integer channel, string name, key id, string message) {
+</I>&gt;<i> if(channel == Version_Channel) {
+</I>&gt;<i> if(message != llGetObjectName() &amp;&amp; message != &quot;version&quot;) {
+</I>&gt;<i> attachflag = 0;
+</I>&gt;<i> llOwnerSay(&quot;Old Version of the HUD. Click on game board for new version.&quot;);
+</I>&gt;<i> llRequestPermissions(llGetOwner(), PERMISSION_ATTACH);
+</I>&gt;<i> }
+</I>&gt;<i> }
+</I>&gt;<i> }
+</I>&gt;<i> on_rez(integer total_number) {
+</I>&gt;<i> llSetAlpha(0.0,ALL_SIDES);
+</I>&gt;<i> attachflag = 1;
+</I>&gt;<i> llOwnerSay(&quot;attachflag setted.&quot;);
+</I>&gt;<i> llRequestPermissions(llGetOwner(), PERMISSION_ATTACH);
+</I>&gt;<i> }
+</I>&gt;<i> }
+</I>&gt;<i> --
+</I>&gt;<i> ------------------------------------------------------------------------------------------------------------------------
+</I>&gt;<i> Charlie White
+</I>&gt;<i> Chief Operating Officer/Co-Founder
+</I>&gt;<i> Thwakk, Inc.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006729.html">[Opensim-users] Very bizarre HUD issues
+</A></li>
+	<LI>Next message: <A HREF="006731.html">[Opensim-users] change mysql database name
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6730">[ date ]</a>
+              <a href="thread.html#6730">[ thread ]</a>
+              <a href="subject.html#6730">[ subject ]</a>
+              <a href="author.html#6730">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

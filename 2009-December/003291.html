@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] SLoodle in OpenSim: Email module
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SLoodle%20in%20OpenSim%3A%20Email%20module&In-Reply-To=%3CF701CD3EA52BFF4084E313DA9B0274215616%40dt-svr-1.dreamtechnologies.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003289.html">
+   <LINK REL="Next"  HREF="003263.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] SLoodle in OpenSim: Email module</H1>
+    <B>Adelle Fitzgerald</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SLoodle%20in%20OpenSim%3A%20Email%20module&In-Reply-To=%3CF701CD3EA52BFF4084E313DA9B0274215616%40dt-svr-1.dreamtechnologies.co.uk%3E"
+       TITLE="[Opensim-users] SLoodle in OpenSim: Email module">Adelle at DreamTechnologies.co.uk
+       </A><BR>
+    <I>Fri Dec 11 11:49:02 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003289.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+        <LI>Next message: <A HREF="003263.html">[Opensim-users] Free objects (dmu1 and dmu2 .IAR files)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3291">[ date ]</a>
+              <a href="thread.html#3291">[ thread ]</a>
+              <a href="subject.html#3291">[ subject ]</a>
+              <a href="author.html#3291">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tom,
+
+ 
+
+As you suggest if you went down the route of managing security on a local SMTP relay, then yes that would work to a point and would work along the lines of this:
+
+Region object &#224; local SMTP relay/server (rules are set here) &#224; ISP SMTP server &#224; recipients
+
+ 
+
+However, you need to look into what kind of rules you apply, and some mail servers/SMTP engines are not very friendly with rules etc, such as MS Exchange (though I cannot comment about the 2007 version yet). You would need to decide what kind of rules you do implement; from, to etc. You could allow it from a single object e-mail address, but that would give you a headache if the UUID changed as you would need to update your rules for that each time the UUID changed, such as creating a copy of the object and deleting the old one. You could implement that only x, y and z recipients can receive mail from @domain. Again this would be an administrative nightmare if users were constantly changing, unless some kind of autonomous system was implemented to update the rules when a user 'used' the object; again probably more trouble than it is worth. The alternatives are just simply do not use e-mail, again out of the question for some, or disable scripts on your region for everyone other than yourself. All are not good solutions and it really is a balance between functionality and risk.
+
+ 
+
+It has been a while since I last played with e-mail in OpenSim, but when I last had it setup I created a separate SMTP connector in MS Exchange, on a different port and IP on my local lan all for the purpose of letting my region objects use it. I also locked it right down so that it would ONLY send to my own local domain, and that was about as far as I ever got with it. I would personally love to see email fully implemented on every instance of OpenSim for object to object comms and would open up a whole range of possibilities for those that wanted to use such, such as inter-grid object to object comms. Yes, I do believe this would work providing you knew the recipient object e-mail address, but regardless of the possibilities the risk shall always remain (I'm also not sure if llGetNextEmail is implemented or not).
+
+ 
+
+However there is one possibility I can think of that would really lower the risk of email being abused and that would be to take the current llEmail function and make an OSSL function (osEmail, or osSendEmail) that did exactly the same as llEmail, but with the added benefit that a region owner could choose which avatar UUID could use the function. I'm really not sure what would be involved in creating a new OSSL email function, but it is certainly something I will look into, when I have the chance.
+
+ 
+
+Adelle
+
+ 
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Tom Willans
+Sent: 11 December 2009 08:17
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] SLoodle in OpenSim: Email module
+
+ 
+
+Adelle,
+
+ 
+
+This is useful advice, and a good reminder to look at security issues in general. It is my understanding that you can still use an external ISP if you are doing it via a local SMTP server whose security you can manage at your end. Presumably it is also less of a risk, provided you can ensure only trusted individuals have access to your region as may be the case for private development uses. Any views welcome.
+
+ 
+
+Tom
+
+ 
+
+ 
+
+Can I clarify that if you use your own smtp server and that then uses an external public ISP you should also be OK. By running 
+
+On 10 Dec 2009, at 13:40, Adelle Fitzgerald wrote:
+
+
+
+
+
+Please be aware of the risks of enabling e-mail on your region and that it could be used for spam purposes. It would be very easy for someone to write a simple LSL script to fetch a whole bunch of e-mail addresses from an external database/website and then loop sending each one a spam message. IMHO, enabling SMTP on a region should only be done if you can control the flow of mail at your SMTP server, and do not use a public or ISP SMTP server as you have no control over it.
+
+ 
+
+My suggestion if you do have access to your own SMTP server is to create a rule where the sending domain can only be sent to destination domain, and no other. By doing that it will minimise the risk of spam messages. The first thing spammers do is see if a relay is open before they flood it with spam. If they try and get no message through, they will move on to their next target. Alternatively, running an SMTP server in a closed environment with no external access would be ok.
+
+ 
+
+Adelle.
+
+ 
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Andy Konstandinidis
+Sent: 10 December 2009 09:56
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] SLoodle in OpenSim: Email module
+
+ 
+
+Thanks for the prompt reply! I will try this and get back to you!
+
+On Thu, Dec 10, 2009 at 11:50 AM, Olish Newman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">olish at newworldgrid.com</A>&gt; wrote:
+
+Hi Andy,
+
+In order to get emails working through the llEmail() LSL function, you need to configure the following section in your OpenSim.ini file :
+
+[SMTP]
+    enabled = true
+    internal_object_host = lsl.opensim.local
+    host_domain_header_from = 127.0.0.1
+    SMTP_SERVER_HOSTNAME = smtp.yourdomain.com &lt;<A HREF="http://smtp.yourdomain.com/">http://smtp.yourdomain.com/</A>&gt; 
+    SMTP_SERVER_PORT = 25
+    SMTP_SERVER_LOGIN = smtp_user
+    SMTP_SERVER_PASSWORD = smtp_password
+
+Replace your current SMTP section in the OpenSim.ini by the code above. You need to provide your own SMTP server information and it should work.
+
+Regards,
+Olish.
+
+
+
+
+
+2009/12/10 Andy Konstandinidis &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">knave84 at gmail.com</A>&gt;
+
+Hello! I'm trying to use SLoodle in Opensim! I have setup my Opensim server and it is working fine. I have also loaded the .oar file of the Sloodle set. Yet when I try to configure the sloodle set to connect to the moodle site (by touching it in the 3D world) I get an error:
+
+SLOODLE Set 0.9 (RC1) -- COMPLETE (Fix 1.0): llGetNextEmail: email module not configured
+
+ 
+
+Anyone know how this issue can be resolved? Thanks! 
+
+-- 
+Andreas Konstantinidis  
+
+Research Assistant, SEERC (South- East European Research Center)
+PhD Candidate, Informatics Dept., A.U.TH &lt;<A HREF="http://a.u.th/">http://a.u.th/</A>&gt; .
+
+ 
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+-- 
+Andreas Konstantinidis  
+
+Research Assistant, SEERC (South- East European Research Center)
+PhD Candidate, Informatics Dept., A.U.TH.
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+ 
+
+Tom Willans 
+
+Managing Director
+
+Bessacarr Publications Ltd
+
+3 Highfield, Hatton Park, Warwick, CV35 7TQ
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tom.willans at bessacarr.com</A>  
+
++44 (0) 1926 402055   +44 (0) 121 288 0281
+
+Registered in England and Wales at the above address.  Company No: 4925067. VAT No:GB 823 9317 24.
+
+ 
+
+This e-mail is confidential and intended solely for the use of the individual to whom it is addressed. Any views or opinions presented are solely those of the author and do not necessarily represent those of Bessacarr Publications Ltd. If you are not the intended recipient you have received this e-mail in error and that any use, dissemination, forwarding, printing or copying of this e-mail is strictly prohibited. Please return it to the sender immediately. The contents of this message may be legally privileged.
+
+ 
+
+ 
+
+
+
+
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091211/e52cf0ae/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091211/e52cf0ae/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003289.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+	<LI>Next message: <A HREF="003263.html">[Opensim-users] Free objects (dmu1 and dmu2 .IAR files)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3291">[ date ]</a>
+              <a href="thread.html#3291">[ thread ]</a>
+              <a href="subject.html#3291">[ subject ]</a>
+              <a href="author.html#3291">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

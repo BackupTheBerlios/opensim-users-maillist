@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow LSL timers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3C4CF99AE4.3020100%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006348.html">
+   <LINK REL="Next"  HREF="006351.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow LSL timers</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3C4CF99AE4.3020100%40googlemail.com%3E"
+       TITLE="[Opensim-users] Slow LSL timers">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Dec  4 02:35:32 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006348.html">[Opensim-users] Slow LSL timers
+</A></li>
+        <LI>Next message: <A HREF="006351.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6349">[ date ]</a>
+              <a href="thread.html#6349">[ thread ]</a>
+              <a href="subject.html#6349">[ subject ]</a>
+              <a href="author.html#6349">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm not familiar with the this area of the code but I had a quick look since I was curious (the meat is in 
+OpenSim/Region/ScriptEngine/Shared/Api/Plugins/Timer.cs).  The code isn't using C# timers so I'm not totally surprised 
+at the behaviour that you're seeing.
+
+I suspect addressing this would require a considerably different implementation.
+
+On 03/12/10 17:18, Jorge Lima wrote:
+&gt;<i> Ran 100 timer events with a single if(++i&gt;  100) inside. I suppose
+</I>&gt;<i> decrementing and comparing to 0 might be faster, but I also
+</I>&gt;<i> copy-pasted 100 inlined if clauses and the time to run them was
+</I>&gt;<i> negligible.
+</I>&gt;<i>
+</I>&gt;<i> llSetTimerEvent(0.1) -&gt;  59 s -&gt;  490% overhead
+</I>&gt;<i> llSetTimerEvent(0.2) -&gt;  59 s -&gt;  195% overhead
+</I>&gt;<i> llSetTimerEvent(0.5) -&gt;  59 s -&gt;  18% overhead
+</I>&gt;<i> llSetTimerEvent(0.75) -&gt;  81 s -&gt;  8% overhead
+</I>&gt;<i> llSetTimerEvent(1.0) -&gt;  108 s -&gt;  8% overhead
+</I>&gt;<i> llSetTimerEvent(2.0) -&gt;  209 s -&gt;  4.5% overhead
+</I>&gt;<i> llSetTimerEvent(4.0) -&gt;  407 s -&gt;  1.75% overhead
+</I>&gt;<i>
+</I>&gt;<i> I am guessing that the overhead is, therefore, internal to the timer
+</I>&gt;<i> implementation. I haven't tested raw C# timers as comparison but 100ms
+</I>&gt;<i> is an eternity in modern computing, I can ping servers across the
+</I>&gt;<i> Atlantic ocean in less than that!
+</I>&gt;<i>
+</I>&gt;<i> I went through the code but I haven't yet found the part that handles
+</I>&gt;<i> timers. It's not in EventManager.
+</I>&gt;<i> Does anyone know what's going on? The code works fine in SL.
+</I>&gt;<i> Should I be posting this in the dev list? I'd like to see if I can fix it.
+</I>&gt;<i> Any thoughts on how to get fast timers in OpenSim?
+</I>&gt;<i> Faster computer? (I did check and was only getting about 20% CPU usage...)
+</I>&gt;<i> Porting them to a Real-Time operating system? :)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006348.html">[Opensim-users] Slow LSL timers
+</A></li>
+	<LI>Next message: <A HREF="006351.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6349">[ date ]</a>
+              <a href="thread.html#6349">[ thread ]</a>
+              <a href="subject.html#6349">[ subject ]</a>
+              <a href="author.html#6349">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

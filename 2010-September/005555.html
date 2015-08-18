@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20an%20other%20glitch%2C%0A%20sorry%20-%20Configuration%20file%20is%20missing%20the%20%5BSimulationDataStore%5D%0A%20section&In-Reply-To=%3C4C94E046.20406%40nexgo.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005554.html">
+   <LINK REL="Next"  HREF="005556.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section</H1>
+    <B>Marck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20an%20other%20glitch%2C%0A%20sorry%20-%20Configuration%20file%20is%20missing%20the%20%5BSimulationDataStore%5D%0A%20section&In-Reply-To=%3C4C94E046.20406%40nexgo.de%3E"
+       TITLE="[Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section">marck00 at nexgo.de
+       </A><BR>
+    <I>Sat Sep 18 17:52:38 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005554.html">[Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section
+</A></li>
+        <LI>Next message: <A HREF="005556.html">[Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5555">[ date ]</a>
+              <a href="thread.html#5555">[ thread ]</a>
+              <a href="subject.html#5555">[ subject ]</a>
+              <a href="author.html#5555">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In fact, there are two sections missing from StandaloneHypergrid.ini,SimulationDataStore andEstateDataStore. Try to copy those sections from Standalone.ini:
+
+[SimulationDataStore]
+     LocalServiceModule = &quot;OpenSim.Services.Connectors.dll:SimulationDataService&quot;
+
+[EstateDataStore]
+     LocalServiceModule = &quot;OpenSim.Services.Connectors.dll:EstateDataService&quot;
+
+I ran into the same problem and adding those lines to StandaloneHypergrid.ini at least made OpenSim.exe start up okay.
+
+I still see an issue with migrating SQLite databases to the current git master. When I try to use my existing *.db files with the recent versions from git, then none of the script assets are found. Same for many (all?) of the textures. A setup from scratch with no data to migrate works okay though.
+
+
+DutchGlory wrote:
+&gt;<i>
+</I>&gt;<i> run in to an other glitch with git master.....
+</I>&gt;<i>
+</I>&gt;<i> 2010-09-18 15:45:53,784 INFO  - OpenSim.Application [OPENSIM MAIN]:
+</I>&gt;<i> configured log4net using default OpenSim.exe.config
+</I>&gt;<i> 2010-09-18 15:45:53,870 INFO  - OpenSim.Application [OPENSIM MAIN]: Runtime
+</I>&gt;<i> gave us 500 worker threads and 1000 IOCP threads
+</I>&gt;<i> 2010-09-18 15:45:53,873 INFO  - OpenSim.Application Performing compatibility
+</I>&gt;<i> checks...
+</I>&gt;<i>
+</I>&gt;<i> 2010-09-18 15:45:54,131 INFO  - OpenSim.Application Environment is
+</I>&gt;<i> compatible.
+</I>&gt;<i>
+</I>&gt;<i> 2010-09-18 15:45:54,247 INFO  - OpenSim.ConfigurationLoader [CONFIG]:
+</I>&gt;<i> Reading configuration settings
+</I>&gt;<i> 2010-09-18 15:45:54,248 INFO  - OpenSim.ConfigurationLoader [CONFIG]:
+</I>&gt;<i> Reading configuration file C:\OPENSIM\bin\OpenSimDefaults.ini
+</I>&gt;<i> 2010-09-18 15:45:54,281 INFO  - OpenSim.ConfigurationLoader [CONFIG]:
+</I>&gt;<i> Reading configuration file C:\OPENSIM\bin\OpenSim.ini
+</I>&gt;<i> 2010-09-18 15:45:54,285 INFO  - OpenSim.ConfigurationLoader [CONFIG]:
+</I>&gt;<i> Reading configuration file
+</I>&gt;<i> C:\OPENSIM\bin\config-include\StandaloneHypergrid.ini
+</I>&gt;<i> 2010-09-18 15:45:54,299 INFO  - OpenSim.ConfigurationLoader [CONFIG]:
+</I>&gt;<i> Reading configuration file
+</I>&gt;<i> C:\OPENSIM\bin\config-include\StandaloneCommon.ini
+</I>&gt;<i> 2010-09-18 15:45:54,306 INFO  - OpenSim.ConfigurationLoader [CONFIG]:
+</I>&gt;<i> Reading configuration file C:\OPENSIM\bin\config-include\CenomeCache.ini
+</I>&gt;<i> 2010-09-18 15:45:54,362 INFO  - OpenSim.OpenSim [LOGGING]: Logging started
+</I>&gt;<i> to file C:\OPENSIM\bin\OpenSim.log
+</I>&gt;<i> 2010-09-18 15:45:54,485 INFO  - OpenSim.OpenSim [OPENSIM MAIN]: Using
+</I>&gt;<i> async_call_method SmartThreadPool
+</I>&gt;<i> 2010-09-18 15:45:54,486 INFO  - OpenSim.Framework.Servers.BaseOpenSimServer
+</I>&gt;<i> [STARTUP]: Beginning startup processing
+</I>&gt;<i> 2010-09-18 15:45:54,488 INFO  - OpenSim.Framework.Servers.BaseOpenSimServer
+</I>&gt;<i> [STARTUP]: OpenSimulator version: OpenSim 0.7.1 Dev
+</I>&gt;<i>
+</I>&gt;<i> 2010-09-18 15:45:54,488 INFO  - OpenSim.Framework.Servers.BaseOpenSimServer
+</I>&gt;<i> [STARTUP]: Operating system version: Microsoft Windows NT 6.0.6002 Service
+</I>&gt;<i> Pack 2
+</I>&gt;<i>
+</I>&gt;<i> 2010-09-18 15:45:54,549 INFO  - OpenSim.OpenSim
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2010-09-18 15:45:54,549 INFO  - OpenSim.OpenSim =========================
+</I>&gt;<i> STARTING OPENSIM =========================
+</I>&gt;<i> 2010-09-18 15:45:54,549 INFO  - OpenSim.OpenSim
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 2010-09-18 15:45:54,550 INFO  - OpenSim.OpenSim [OPENSIM MAIN]: Running
+</I>&gt;<i> 2010-09-18 15:45:55,198 ERROR - OpenSim.Application [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.Exception: Configuration file is missing the
+</I>&gt;<i> [SimulationDataStore] section
+</I>&gt;<i>     bij OpenSim.OpenSimBase.StartupSpecific() in
+</I>&gt;<i> c:\OPENSIM\OpenSim\Region\Application\OpenSimBase.cs:regel 193
+</I>&gt;<i>     bij OpenSim.OpenSim.StartupSpecific() in
+</I>&gt;<i> c:\OPENSIM\OpenSim\Region\Application\OpenSim.cs:regel 154
+</I>&gt;<i>     bij OpenSim.Framework.Servers.BaseOpenSimServer.Startup() in
+</I>&gt;<i> c:\OPENSIM\OpenSim\Framework\Servers\BaseOpenSimServer.cs:regel 289
+</I>&gt;<i>     bij OpenSim.Application.Main(String[] args) in
+</I>&gt;<i> c:\OPENSIM\OpenSim\Region\Application\Application.cs:regel 272
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> i copied all from .example only changed database connection string for Mysql
+</I>&gt;<i> (and reference to  &quot;OpenSim.Data.MySQL.dll&quot; )
+</I>&gt;<i>
+</I>&gt;<i> where should put &quot;[SimulationDataStore]&quot; section?  and what...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> thank you...
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005554.html">[Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section
+</A></li>
+	<LI>Next message: <A HREF="005556.html">[Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5555">[ date ]</a>
+              <a href="thread.html#5555">[ thread ]</a>
+              <a href="subject.html#5555">[ subject ]</a>
+              <a href="author.html#5555">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

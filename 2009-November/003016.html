@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] XML-RPC Working :)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20XML-RPC%20Working%20%3A%29&In-Reply-To=%3C62a72a690911020127j4f25ace2x14a9d316859ba2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003015.html">
+   <LINK REL="Next"  HREF="003014.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] XML-RPC Working :)</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20XML-RPC%20Working%20%3A%29&In-Reply-To=%3C62a72a690911020127j4f25ace2x14a9d316859ba2%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] XML-RPC Working :)">cliveg at gmail.com
+       </A><BR>
+    <I>Mon Nov  2 10:27:54 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003015.html">[Opensim-users] Test of 0.6.7 post-fixes
+</A></li>
+        <LI>Next message: <A HREF="003014.html">[Opensim-users] OpenSim to MySQL connection question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3016">[ date ]</a>
+              <a href="thread.html#3016">[ thread ]</a>
+              <a href="subject.html#3016">[ subject ]</a>
+              <a href="author.html#3016">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi everyone
+
+Just to say thanks for all the help and guidance (especially from
+BlueWall Slade) that has enabled me to get XML-RPC working
+successfully with OpenSim 0.6.7
+
+The solution is outlined below.
+
+Best wishes
+
+Clive
+
+
+1) Enable the following parameters in OpenSim.ini
+
+[NETWORK]
+remoteDataPort = 20800
+ExternalHostNameForLSL=standbyvle.bromley.ac.uk
+
+[XMLRPC]
+XmlRpcRouterModule = &quot;XmlRpcRouterModule&quot;
+XmlRpcPort = 20800
+
+2) Install PEAR on the Webserver running the PHP code and use PEAR to
+install XML_RPC2
+
+3) Use the following PHP script:
+
+&lt;?php
+
+        require_once('XML/RPC2/Client.php');
+
+        $conn=@mysql_connect(&quot;localhost&quot;, &quot;yyyyyyyy&quot;, &quot;xxxxxxxx&quot;)
+                                        or die(&quot;Err:Conn&quot;);
+
+        $rs=@mysql_select_db(&quot;sl&quot;, $conn)
+                                        or die(&quot;Err:Db&quot;);
+
+        $sql=&quot;select * from key_table where region = '$region'&quot;;
+
+        $rs=mysql_query($sql,$conn);
+
+        while( $row = mysql_fetch_array($rs) )
+        {
+                $channel=$row[&quot;lslkey&quot;];
+        }
+
+         if ($action == 'delete')
+        {
+                $sql1=&quot;delete from key_table where lslkey = '$channel'&quot;;
+                $rs1=mysql_query($sql1,$conn);
+        }
+
+        $intval=&quot;2010&quot;;
+
+        // Create the client with the target uri
+        $client =
+XML_RPC2_Client::create('<A HREF="http://standbyvle.bromley.ac.uk:20800">http://standbyvle.bromley.ac.uk:20800</A>
+
+                 ');
+
+        // an array with the data for our call to the channel in the simulator
+        $llPacket = array(
+                'Channel' =&gt; $channel,
+                'IntValue' =&gt; $intval,
+                'StringValue' =&gt; $action);
+
+        // call the rpc to get a response
+        $xresponse = $client-&gt;llRemoteData($llPacket);
+
+        // print the contents of the array in the browser window;
+        print_r ($xresponse);
+?&gt;
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003015.html">[Opensim-users] Test of 0.6.7 post-fixes
+</A></li>
+	<LI>Next message: <A HREF="003014.html">[Opensim-users] OpenSim to MySQL connection question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3016">[ date ]</a>
+              <a href="thread.html#3016">[ thread ]</a>
+              <a href="subject.html#3016">[ subject ]</a>
+              <a href="author.html#3016">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

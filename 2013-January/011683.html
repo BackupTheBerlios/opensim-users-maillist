@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] robust with distant services
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20robust%20with%20distant%20services&In-Reply-To=%3CCAE2ni0HomF1swZ%3DLL%2BnT1bG%2B13%3DULzz%3Dm1L_n9TM%3Drv5xQcFFA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011677.html">
+   <LINK REL="Next"  HREF="011684.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] robust with distant services</H1>
+    <B>ssm2017</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20robust%20with%20distant%20services&In-Reply-To=%3CCAE2ni0HomF1swZ%3DLL%2BnT1bG%2B13%3DULzz%3Dm1L_n9TM%3Drv5xQcFFA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] robust with distant services">ssm2017 at gmail.com
+       </A><BR>
+    <I>Wed Jan 30 05:01:58 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011677.html">[Opensim-users] robust with distant services
+</A></li>
+        <LI>Next message: <A HREF="011684.html">[Opensim-users] robust with distant services
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11683">[ date ]</a>
+              <a href="thread.html#11683">[ thread ]</a>
+              <a href="subject.html#11683">[ subject ]</a>
+              <a href="author.html#11683">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hello
+here are the results of my experiments.
+i have tried with both configurations and both have the same result.
+without using hypergrid, everything is working fine.
+
+1/
+[AssetService]
+AssetServerURI = <A HREF="http://mysras_server:8005">http://mysras_server:8005</A>
+[GridService]
+AssetService = &quot;OpenSim.Services.Connectors.dll:AssetServicesConnector&quot;
+
+2/
+[AssetService]
+    LocalServiceModule = &quot;OpenSim.Services.AssetService.dll:AssetService&quot;
+    DefaultAssetLoader = &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+    AssetLoaderArgs = &quot;./assets/AssetSets.xml&quot;
+[GridService]
+AssetService = &quot;OpenSim.Services.AssetService.dll:AssetService&quot;
+
+with a blank grid and a blank sim and region
+
+steps :
+1/ start at home
+2/ edit outfit
+3/ the outfit is saved inside sras
+4/ im going to lbsa plaza on osgrid
+5/ the console of the grid is telling me that the &quot;my outfit&quot; folder was
+created but it is not appearing in the inventory
+5/ im going back home
+6/ the &quot;my outfit&quot; folder is now displayed in the inventory
+7/ the sras logs are telling me that some assets could not been found
+8/ im going back to lbsa plaza
+9/ im taking one of the offered avatars
+10/ the content is appearing in the &quot;my suitcase&quot; folder
+11/ im going back home
+12/ im using the inventory command &quot;replace outfit&quot; with the taken clothes
+folder from the &quot;my suitcase&quot; folder
+13/ the sras logs are telling me that the assets could not been found
+14/ my avatar is white.
+
+i have asked Nebadon about the config to use in the Robust.HG.ini and he
+told me that there is nothing special and that they use hg 1.0.
+
+i will ask anyway the same question on the osgrid forums
+
+
+
+2013/1/29 Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+
+&gt;<i> Perhaps I'm misunderstanding you, Diva, but doesn't the Hypergrid grid
+</I>&gt;<i> service (using HypergridLinker) In OpenSim.ini.example load its own
+</I>&gt;<i> AssetService copy to service the home grid's map tiles?  The AssetService
+</I>&gt;<i> then makes its database connections.  The issue here is that ssm2017 wants
+</I>&gt;<i> to use SRAS as the asset service so this isn't possible.
+</I>&gt;<i>
+</I>&gt;<i> However, it struck me that OSGrid must already be doing this in their
+</I>&gt;<i> Robust configuration as they use SRAS and allow Hypergrid.  Perhaps Nebadon
+</I>&gt;<i> could comment or you might ask on the osgrid technical forums?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 28/01/13 11:40, Diva Canto wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Loading most of the services as configured will work. The only exception
+</I>&gt;&gt;<i> is the UserAgentsService. It is an exception
+</I>&gt;&gt;<i> because it manages information that doesn't offload to the DB, it keeps
+</I>&gt;&gt;<i> it in memory. Therefore, anyone who interacts
+</I>&gt;&gt;<i> with the UAS needs to interact with exactly 1 and the same UAS instance.
+</I>&gt;&gt;<i> If you're splitting things, wherever there is
+</I>&gt;&gt;<i> the UAS dll, that should be replaced by the corresponding connector.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 1/28/2013 2:13 AM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The problem is that the default configuration of the OpenSimulator
+</I>&gt;&gt;&gt;<i> Hypergrid grid (linker) service effectively loads
+</I>&gt;&gt;&gt;<i> its own AssetService instance from OpenSim.Services.AssetService.**dll.
+</I>&gt;&gt;&gt;<i> This then talks directly to the database.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> What one would want to do is load an AssetServicesConnector from
+</I>&gt;&gt;&gt;<i> OpenSim.Services.Connectors instead - the same code
+</I>&gt;&gt;&gt;<i> that an OpenSimulator instance uses to talk to remote ROBUST/SRAS
+</I>&gt;&gt;&gt;<i> services in grid mode.  Possibly this could be done
+</I>&gt;&gt;&gt;<i> with
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [GridService]
+</I>&gt;&gt;&gt;<i> AssetService = &quot;OpenSim.Services.Connectors.**
+</I>&gt;&gt;&gt;<i> dll:AssetServicesConnector&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> with
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [AssetService]
+</I>&gt;&gt;&gt;<i> AssetServerURI = &quot;<A HREF="http://localhost:8003">http://localhost:8003</A>&quot; // replace this with the sras
+</I>&gt;&gt;&gt;<i> asset service address
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> but this is off the top of my head so I'm not sure if it will work.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 27/01/13 14:09, ssm2017 wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> hello
+</I>&gt;&gt;&gt;&gt;<i> is there someone that can help me or show me an example on how to
+</I>&gt;&gt;&gt;&gt;<i> configure robust to use a distant asset server instead
+</I>&gt;&gt;&gt;&gt;<i> of a local service ?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> as Justin told me one day, robust needs to speak to the asset server to
+</I>&gt;&gt;&gt;&gt;<i> store and retrieve region maps.
+</I>&gt;&gt;&gt;&gt;<i> i dont know what to say to robust.hg.ini
+</I>&gt;&gt;&gt;&gt;<i> here :
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://github.com/opensim/**opensim/blob/master/bin/**">https://github.com/opensim/**opensim/blob/master/bin/**</A>
+</I>&gt;&gt;&gt;&gt;<i> Robust.HG.ini.example#L110&lt;<A HREF="https://github.com/opensim/opensim/blob/master/bin/Robust.HG.ini.example#L110">https://github.com/opensim/opensim/blob/master/bin/Robust.HG.ini.example#L110</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> and there :
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://github.com/opensim/**opensim/blob/master/bin/**">https://github.com/opensim/**opensim/blob/master/bin/**</A>
+</I>&gt;&gt;&gt;&gt;<i> Robust.HG.ini.example#L514&lt;<A HREF="https://github.com/opensim/opensim/blob/master/bin/Robust.HG.ini.example#L514">https://github.com/opensim/opensim/blob/master/bin/Robust.HG.ini.example#L514</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> my goal is to use sras as an asset server.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> OSVW Consulting
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130130/736a112b/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130130/736a112b/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011677.html">[Opensim-users] robust with distant services
+</A></li>
+	<LI>Next message: <A HREF="011684.html">[Opensim-users] robust with distant services
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11683">[ date ]</a>
+              <a href="thread.html#11683">[ thread ]</a>
+              <a href="subject.html#11683">[ subject ]</a>
+              <a href="author.html#11683">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

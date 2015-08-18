@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Script Engine Messages
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20Engine%20Messages&In-Reply-To=%3C4FECCFE1.50101%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010594.html">
+   <LINK REL="Next"  HREF="010599.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Script Engine Messages</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20Engine%20Messages&In-Reply-To=%3C4FECCFE1.50101%40googlemail.com%3E"
+       TITLE="[Opensim-users] Script Engine Messages">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Jun 28 23:42:57 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010594.html">[Opensim-users] Script Engine Messages
+</A></li>
+        <LI>Next message: <A HREF="010599.html">[Opensim-users] Script Engine Messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10598">[ date ]</a>
+              <a href="thread.html#10598">[ thread ]</a>
+              <a href="subject.html#10598">[ subject ]</a>
+              <a href="author.html#10598">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have made a refinement in commit 972b0b5 to still warn if no explicit language was set.  I believe the false positives 
+will be lower here, since lines are less likely to end with colons for completely separate reasons.
+
+This is about balancing the known false positives against any use of this alternative engine specification facility. 
+This problem (false positives because of : in the first line) has come up a lot in the past as well as now.  On the 
+other hand. are you (or anybody else on this list) aware of any current cases of people using this ability to specify a 
+different script engine?  I'm not currently aware of any.
+
+The only other current script engine implementations I'm aware of are apart from XEngine are DNE (long discarded from 
+core), ForthMinus (abandoned by Alondira over 4 years ago), some other DNE derived engine that was long abandoned and 
+your own proprietary engine.  I don't count engines running on forked codebases since they have moved away from 
+OpenSimulator compatibility.
+
+To be honest, I think this is an over-specified feature that was only brought in originally to avoid making a decision 
+about OpenSimulator's script engine.  I find it hard to believe that anyone would want to deal with the complexity of 
+running some scripts in one engine and other scripts in another in the same simulator, just for some theoretical 
+performance advantage.  I rather doubt you're running 2 engines for the same language since that would be a nightmare to 
+explain to users (happy to be corrected on this point).
+
+Really, I think we should adopt a better way of specifying the script language/engine than looking for a : than be stuck 
+with this issue forever.
+
+On 28/06/12 02:50, Melanie wrote:
+&gt;<i> I'm afraid that can't be done this way. Selecting an engine without
+</I>&gt;<i> giving it an explicit language, e.g. // SCEngine: is legal.
+</I>&gt;<i> Therefore, with this patch, the defaulting to XEngine is no longer
+</I>&gt;<i> reported int these cases. Since the reporting was introduced to
+</I>&gt;<i> ensure that scripts are not run on engines with lesser
+</I>&gt;<i> functionality, the entire purpose of the message is completely
+</I>&gt;<i> defeated by this. With this patch, we might as well not notify users
+</I>&gt;<i> at all and just let them crash and burn.
+</I>&gt;<i>
+</I>&gt;<i> Melanie
+</I>&gt;<i>
+</I>&gt;<i> On 28/06/2012 02:49, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> Okay Edmund, commit 25baa2d contains a change which should eliminate reporting of these false positives.  Please give it
+</I>&gt;&gt;<i> a whirl.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 26/06/12 01:38, Edmund Edgar wrote:
+</I>&gt;&gt;&gt;<i> On 26 June 2012 08:58, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> I don't like the way script language/desired engine detection was done - a
+</I>&gt;&gt;&gt;&gt;<i> clash with existing scripts could have been avoided by requiring some
+</I>&gt;&gt;&gt;&gt;<i> special preceeding chracters rather than simple c#, lsl:DotNetEngine, etc
+</I>&gt;&gt;&gt;&gt;<i> (like #! in shell scripts, for instance).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Agreed, but on the assumption that we're stuck with this convention
+</I>&gt;&gt;&gt;<i> now, would it be possible to tighten up the pattern matching a bit? It
+</I>&gt;&gt;&gt;<i> feels like the system should be able to tell the difference between
+</I>&gt;&gt;&gt;<i> //c#
+</I>&gt;&gt;&gt;<i> ...and
+</I>&gt;&gt;&gt;<i> // This is a comment consisting of multiple words. What it has to do
+</I>&gt;&gt;&gt;<i> with script engines: Nothing.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Just checking for a colon seems a bit broad. One of the mind-numbing
+</I>&gt;&gt;&gt;<i> busywork tasks on my TODO list this morning is cleaning up some
+</I>&gt;&gt;&gt;<i> scripts somebody checked in since I last fixed our iar. Their editor -
+</I>&gt;&gt;&gt;<i> I think it's the Eclipse plugin - has helpfully added:
+</I>&gt;&gt;&gt;<i> // LSL script generated:
+</I>&gt;&gt;&gt;<i> furniture-1.0.object_definitions.presentation_seating.lslp Sat Nov 19
+</I>&gt;&gt;&gt;<i> 14:36:29 Tokyo Standard Time 2011
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010594.html">[Opensim-users] Script Engine Messages
+</A></li>
+	<LI>Next message: <A HREF="010599.html">[Opensim-users] Script Engine Messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10598">[ date ]</a>
+              <a href="thread.html#10598">[ thread ]</a>
+              <a href="subject.html#10598">[ subject ]</a>
+              <a href="author.html#10598">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

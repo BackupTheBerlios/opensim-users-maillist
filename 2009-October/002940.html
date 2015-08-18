@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Standalone, MySQL &amp; creating new regions crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Standalone%2C%20MySQL%20%26%20creating%20new%20regions%20crash&In-Reply-To=%3C4ADF18DC.2090102%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002939.html">
+   <LINK REL="Next"  HREF="002945.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Standalone, MySQL &amp; creating new regions crash</H1>
+    <B>diva at metaverseink.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Standalone%2C%20MySQL%20%26%20creating%20new%20regions%20crash&In-Reply-To=%3C4ADF18DC.2090102%40metaverseink.com%3E"
+       TITLE="[Opensim-users] Standalone, MySQL &amp; creating new regions crash">diva at metaverseink.com
+       </A><BR>
+    <I>Wed Oct 21 16:21:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002939.html">[Opensim-users] Standalone, MySQL &amp; creating new regions crash
+</A></li>
+        <LI>Next message: <A HREF="002945.html">[Opensim-users] Standalone, MySQL &amp; creating new regions crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2940">[ date ]</a>
+              <a href="thread.html#2940">[ thread ]</a>
+              <a href="subject.html#2940">[ subject ]</a>
+              <a href="author.html#2940">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A &quot;grid&quot; (map) exists always, even in standalone. The error you're 
+getting seems to be because you are trying to place that region in the 
+same coordinates of some other you already have.
+
+If an HG standalone is what you want, you may want to try the distro I 
+maintain, the diva distro:
+<A HREF="http://github.com/diva/diva-distribution/downloads">http://github.com/diva/diva-distribution/downloads</A>
+The post that describes it:
+<A HREF="http://www.metaverseink.com/blog/?p=21">http://www.metaverseink.com/blog/?p=21</A>
+
+I will be making a new release this week, but old ones are easily 
+upgraded by running Upgrade.
+
+Kevin Buckley wrote:
+&gt;<i> I&#8217;m trying to get a stable standalone working with the ultimate 
+</I>&gt;<i> objective of operating in hypergrid standalone.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> I&#8217;m using a binary set downloaded from OSGrid as this seems to be better 
+</I>&gt;<i> (less &#8216;flailing&#8217; with physics enabled for example) than the version 
+</I>&gt;<i> 0.6.7 release.  I&#8217;ve changed the various .ini files for standalone (not 
+</I>&gt;<i> hypergrid at this time) and I&#8217;m using MySQL (because I want to separate 
+</I>&gt;<i> the data from the executables) and generally it works OK.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> However, I have suddenly found I can&#8217;t add any more regions.  It crashes 
+</I>&gt;<i> with this error:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> 2009-10-21 11:28:27,025 DEBUG - OpenSim.Region.Framework.Scenes.Scene 
+</I>&gt;<i> [SCENE]: Registering with InterregionCommsIn
+</I>&gt;<i> 
+</I>&gt;<i> 2009-10-21 11:28:27,085 WARN  - OpenSim.Services.GridService.GridService 
+</I>&gt;<i> [GRID SERVICE]: Region 4f5d4aa6-a66e-4ae0-9933-8a7c6b16096c tried to 
+</I>&gt;<i> register in coordinates 102400, 102400 which are already in use in scope 
+</I>&gt;<i> 00000000-0000-0000-0000-000000000000.
+</I>&gt;<i> 
+</I>&gt;<i> 2009-10-21 11:28:27,105 ERROR - OpenSim.OpenSimBase [STARTUP]: 
+</I>&gt;<i> Registration of region with grid failed, aborting startup -    at 
+</I>&gt;<i> OpenSim.Region.Framework.Scenes.Scene.RegisterRegionWithGrid() in 
+</I>&gt;<i> d:\OSGRID\OSGRID 
+</I>&gt;<i> RELEASES\10-14-2009.osgrid.release.6d3d985511a8e70624c3a06a042890002f223978\OpenSim\Region\Framework\Scenes\Scene.cs:line 
+</I>&gt;<i> 1352
+</I>&gt;<i> 
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion(RegionInfo regionInfo, Boolean 
+</I>&gt;<i> portadd_flag, Boolean do_post_init, IScene&amp; mscene) in d:\OSGRID\OSGRID 
+</I>&gt;<i> RELEASES\10-14-2009.osgrid.release.6d3d985511a8e70624c3a06a042890002f223978\OpenSim\Region\Application\OpenSimBase.cs:line 
+</I>&gt;<i> 398
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> I don&#8217;t understand why it is trying to register with the grid as I have 
+</I>&gt;<i> set gridmode = false in Opensim.ini.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Can anyone else who is running in standalone, with multiple regions, 
+</I>&gt;<i> shed any light on this?
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Would it be better to go back to v0.6.7?  If so, how to fix the 
+</I>&gt;<i> &#8216;flailing&#8217; when I enable ODE physics (because I want prims to not be 
+</I>&gt;<i> phantom)?
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Thanks - Kevin
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> *From:* Kevin Buckley [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>]
+</I>&gt;<i> *Sent:* 20 October 2009 18:13
+</I>&gt;<i> *To:* '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>'
+</I>&gt;<i> *Subject:* Standalone, MySQL &amp; creating new regions crash
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Today I ran into a problem with creating new regions in standalone 
+</I>&gt;<i> mode.  And I noticed that someone else has filed a mantise about it 
+</I>&gt;<i> (<A HREF="http://opensimulator.org/mantis/view.php?id=4279&amp;nbn=2">http://opensimulator.org/mantis/view.php?id=4279&amp;nbn=2</A> 
+</I>&gt;<i> &lt;<A HREF="http://opensimulator.org/mantis/view.php?id=4279&amp;nbn=2">http://opensimulator.org/mantis/view.php?id=4279&amp;nbn=2</A>&gt;).
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Can anyone enlighten me what the advice &#8220;So stay with Memory storage for 
+</I>&gt;<i> regions in standalone, for now.&#8221; means, or more specifically what the 
+</I>&gt;<i> implications are? - Kevin
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Want to find out when you can get an iPhone with Orange? _Register here_ 
+</I>&gt;<i> &lt;<A HREF="https://interest.orange.co.uk/default.aspx">https://interest.orange.co.uk/default.aspx</A>&gt; and we'll let you know.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002939.html">[Opensim-users] Standalone, MySQL &amp; creating new regions crash
+</A></li>
+	<LI>Next message: <A HREF="002945.html">[Opensim-users] Standalone, MySQL &amp; creating new regions crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2940">[ date ]</a>
+              <a href="thread.html#2940">[ thread ]</a>
+              <a href="subject.html#2940">[ subject ]</a>
+              <a href="author.html#2940">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

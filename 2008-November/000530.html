@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MySQL problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20problems&In-Reply-To=%3C490CA8C8.2030501%40cise.ufl.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000528.html">
+   <LINK REL="Next"  HREF="000533.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MySQL problems</H1>
+    <B>Paul Fishwick</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20problems&In-Reply-To=%3C490CA8C8.2030501%40cise.ufl.edu%3E"
+       TITLE="[Opensim-users] MySQL problems">fishwick at cise.ufl.edu
+       </A><BR>
+    <I>Sat Nov  1 20:06:48 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000528.html">[Opensim-users] MySQL problems
+</A></li>
+        <LI>Next message: <A HREF="000533.html">[Opensim-users] problems with compiling on CentOS 5.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#530">[ date ]</a>
+              <a href="thread.html#530">[ thread ]</a>
+              <a href="subject.html#530">[ subject ]</a>
+              <a href="author.html#530">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Butch
+ Thanks - I'll remove the mysql_connection.ini that I was working with.
+In opensim.ini (which I have included verbatim below), I set MySQL
+to replace SQLite. Do you see anything amiss with this .ini file? I ask
+this because when I try to run OpenSim.Grid.UserServer.exe, I get
+a crash with the error message:
+
+&quot;Using obsoletely mysql_connection.ini, try using user_source connect
+string instead&quot;
+
+Here is my OpenSim.ini (with the password masked out)
+
+&gt;<i> [Startup]
+</I>&gt;<i> gridmode = True
+</I>&gt;<i> physics = OpenDynamicsEngine
+</I>&gt;<i> meshing = ZeroMesher
+</I>&gt;<i> physical_prim = True
+</I>&gt;<i> see_into_this_sim_from_neighbor = True
+</I>&gt;<i> serverside_object_permissions = False
+</I>&gt;<i> storage_plugin = OpenSim.Data.MySQL.dll
+</I>&gt;<i> storage_connection_string = URI=file:OpenSimdb.db,version=3
+</I>&gt;<i> storage_prim_inventories = True
+</I>&gt;<i> startup_console_commands_file =
+</I>&gt;<i> shutdown_console_commands_file =
+</I>&gt;<i> DefaultScriptEngine = ScriptEngine.DotNetEngine
+</I>&gt;<i> asset_database = mysql
+</I>&gt;<i> clientstack_plugin = OpenSim.Region.ClientStack.LindenUDP.dll
+</I>&gt;<i> [StandAlone]
+</I>&gt;<i> accounts_authenticate = False
+</I>&gt;<i> welcome_message = Welcome to Metaphorz
+</I>&gt;<i> inventory_plugin = OpenSim.Data.MySQL.dll
+</I>&gt;<i> inventory_source =
+</I>&gt;<i> userDatabase_plugin = OpenSim.Data.MySQL.dll
+</I>&gt;<i> user_source =
+</I>&gt;<i> asset_plugin = OpenSim.Data.MySQL.dll
+</I>&gt;<i> asset_source =
+</I>&gt;<i> dump_assets_to_file = False
+</I>&gt;<i> [Network]
+</I>&gt;<i> default_location_x = 1000
+</I>&gt;<i> default_location_y = 1000
+</I>&gt;<i> http_listener_port = 9000
+</I>&gt;<i> remoting_listener_port = 8895
+</I>&gt;<i> grid_server_url = <A HREF="http://127.0.0.1:8001">http://127.0.0.1:8001</A>
+</I>&gt;<i> grid_send_key = null
+</I>&gt;<i> grid_recv_key = null
+</I>&gt;<i> user_server_url = <A HREF="http://127.0.0.1:8002">http://127.0.0.1:8002</A>
+</I>&gt;<i> user_send_key = null
+</I>&gt;<i> user_recv_key = null
+</I>&gt;<i> asset_server_url = <A HREF="http://127.0.0.1:8003">http://127.0.0.1:8003</A>
+</I>&gt;<i> inventory_server_url = <A HREF="http://127.0.0.1:8004">http://127.0.0.1:8004</A>
+</I>&gt;<i> secure_inventory_server = true
+</I>
+ 
+-paul
+
+
+
+Butch Arnold wrote:
+&gt;<i> Hi Paul,
+</I>&gt;<i>
+</I>&gt;<i> You no longer need to use the mysql_connection.ini file.
+</I>&gt;<i> The opensim.ini file contains areas for you to define your connection 
+</I>&gt;<i> string for mysql and the UGAIM servers also have their own mysql config 
+</I>&gt;<i> strings.
+</I>&gt;<i> To learn more about the mysql syntax for adding a user... here's a few 
+</I>&gt;<i> examples.....
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://dev.mysql.com/doc/refman/5.0/en/adding-users.html">http://dev.mysql.com/doc/refman/5.0/en/adding-users.html</A>
+</I>&gt;<i>
+</I>&gt;<i> -Butch
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Matt asked about how I set up MySQL and the version.
+</I>&gt;&gt;<i> I seem to be using: 5.0.67-community-nt according to my
+</I>&gt;&gt;<i> implementation using the Administrator log in via Windows
+</I>&gt;&gt;<i> XP.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As to the instructions on:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/wiki/Mysql-config">http://opensimulator.org/wiki/Mysql-config</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> They are confusing because of the caveats, warnings, and &quot;notes&quot;
+</I>&gt;&gt;<i> in boldface.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can someone confirm what exactly is required to create the appropriate
+</I>&gt;&gt;<i> MySQL database?  There are some steps at the top of the web page
+</I>&gt;&gt;<i> I  just referenced:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1. Create a database for OpenSim to user.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     how? Is &quot;mysql -u root -p&quot; and then &quot;create database opensim&quot; 
+</I>&gt;&gt;<i> sufficient?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2. Import the table structure (which according to the boldface comment, is
+</I>&gt;&gt;<i>     no longer required).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3. Edit bin/mysql_connection.ini.   There is no file by that name, but 
+</I>&gt;&gt;<i> there is one
+</I>&gt;&gt;<i>     called bin/mssql_connectionexample.ini. Should I rename that one?
+</I>&gt;&gt;<i>     The instructions say &quot;put in connection information&quot;. What does this 
+</I>&gt;&gt;<i> mean?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 4. Edit bin/Opensim.ini and setup the mysql-connector. The example is a dump
+</I>&gt;&gt;<i>     of the file, but what exactly needs to change or be added to &quot;set up the
+</I>&gt;&gt;<i>     mysql-connector&quot; ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 5. I tried the GRANT ALL PRIVILEGES command and it was bad syntax,
+</I>&gt;&gt;<i>     apparently. Is this a necessary command?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sorry for all of the questions - I am just finding this web page to be 
+</I>&gt;&gt;<i> confusing.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> p
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i> Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+-- 
+Paul Fishwick, PhD
+Professor and Director, Digital Arts and Sciences Programs
+University of Florida
+Computer &amp; Information Science and Eng. Dept.
+Bldg. CSE, Room 301
+P.O. Box 116120
+Gainesville, FL 32611
+Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+Phone: (352) 392-1414
+Fax: (352) 392-1220
+Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000528.html">[Opensim-users] MySQL problems
+</A></li>
+	<LI>Next message: <A HREF="000533.html">[Opensim-users] problems with compiling on CentOS 5.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#530">[ date ]</a>
+              <a href="thread.html#530">[ thread ]</a>
+              <a href="subject.html#530">[ subject ]</a>
+              <a href="author.html#530">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

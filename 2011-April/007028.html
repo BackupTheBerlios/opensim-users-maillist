@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Help setting up 0.7.1-dev in grid mode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%20setting%20up%200.7.1-dev%20in%20grid%20mode&In-Reply-To=%3C1302570764.8745.250.camel%40iam.wayward4now.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007026.html">
+   <LINK REL="Next"  HREF="007033.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Help setting up 0.7.1-dev in grid mode</H1>
+    <B>Ric Moore</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%20setting%20up%200.7.1-dev%20in%20grid%20mode&In-Reply-To=%3C1302570764.8745.250.camel%40iam.wayward4now.net%3E"
+       TITLE="[Opensim-users] Help setting up 0.7.1-dev in grid mode">wayward4now at gmail.com
+       </A><BR>
+    <I>Tue Apr 12 03:12:44 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007026.html">[Opensim-users] Help setting up 0.7.1-dev in grid mode
+</A></li>
+        <LI>Next message: <A HREF="007033.html">[Opensim-users] Help setting up 0.7.1-dev in grid mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7028">[ date ]</a>
+              <a href="thread.html#7028">[ thread ]</a>
+              <a href="subject.html#7028">[ subject ]</a>
+              <a href="author.html#7028">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, 2011-04-11 at 23:45 +0200, Daniel Radu wrote:
+&gt;<i> Good day,
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> since this is my first post, I apologize in advance if the question is
+</I>&gt;<i> fairly stupid, but there it goes:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> i'm trying to set up 0.7.1-dev in ubuntu 10.10 in grid mode, and I'm
+</I>&gt;<i> quite stuck.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I tried to follow up <A HREF="http://opensimulator.org/wiki/Configuration">http://opensimulator.org/wiki/Configuration</A> and
+</I>&gt;<i> configured Robust.ini to use MySql,  edited all the *URI in
+</I>&gt;<i> config-include/GridCommon.ini to point to my local server,
+</I>&gt;<i> R.O.B.U.S.T.# stats okay, modified the  Include-Architecture to point
+</I>&gt;<i> to &quot;config-include/Grid.ini&quot; and added 
+</I>
+You are running MySQL on localhost, instead of your server ip address?
+If so, you would have it config'ed to &quot;localhost&quot; or 127.0.0.1. and not
+your network facing IP address.
+20:57:37 - [OPENSIM MAIN]: Running 
+20:57:37 - [DATASTORE]: Attempting to load OpenSim.Data.MySQL.dll
+20:57:37 - [REGION DB]: MySql - connecting: Data Source=localhost;Database=opensim;User ID=XXXXXX;Password=XXXXXX;
+20:57:38 - [REGION DB]: Connection wait timeout 28860 seconds
+20:57:39 - [MIGRATIONS]: EstateStore up to date, no migrations to apply
+20:57:39 - [MIGRATIONS]: RegionStore up to date, no migrations to apply
+
+my data source is at localhost
+
+Yet the data to be displayed is sent outbound via OpenSim, which serves
+to 192.168.0.2, my machine's IP address. 
+
+20:59:32 - [WORLD MAP]: JPEG Map location: <A HREF="http://192.168.0.2:9000/index.php?method=regionImage6a73d852d50f4088b494d465ce088c45">http://192.168.0.2:9000/index.php?method=regionImage6a73d852d50f4088b494d465ce088c45</A>
+...using the fixed IP I gave myself on my localnet. OpenSim faces the
+network, so it needs an IP address, known to a network. Your database
+(mysql) needs only to be known by OpenSim, nor do you want anyone to
+accidentally have access rights to it, so I run it as localhost. Other's
+may chime in with their settings, but this works for me on Ubuntu 10.4
+as I prefer that MySQL not face the network. :) Ric
+
+
+-- 
+My father, Victor Moore (Vic) used to say:
+&quot;There are two Great Sins in the world...
+..the Sin of Ignorance, and the Sin of Stupidity.
+Only the former may be overcome.&quot; R.I.P. Dad.
+Linux user# 44256 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007026.html">[Opensim-users] Help setting up 0.7.1-dev in grid mode
+</A></li>
+	<LI>Next message: <A HREF="007033.html">[Opensim-users] Help setting up 0.7.1-dev in grid mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7028">[ date ]</a>
+              <a href="thread.html#7028">[ thread ]</a>
+              <a href="subject.html#7028">[ subject ]</a>
+              <a href="author.html#7028">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

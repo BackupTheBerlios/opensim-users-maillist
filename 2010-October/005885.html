@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OAR not receiving asset data in time
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OAR%20not%20receiving%20asset%20data%20in%20time&In-Reply-To=%3C4CC0EB7B.3030501%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005883.html">
+   <LINK REL="Next"  HREF="005893.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OAR not receiving asset data in time</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OAR%20not%20receiving%20asset%20data%20in%20time&In-Reply-To=%3C4CC0EB7B.3030501%40googlemail.com%3E"
+       TITLE="[Opensim-users] OAR not receiving asset data in time">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Oct 22 03:40:11 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005883.html">[Opensim-users] OAR not receiving asset data in time
+</A></li>
+        <LI>Next message: <A HREF="005893.html">[Opensim-users] OAR not receiving asset data in time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5885">[ date ]</a>
+              <a href="thread.html#5885">[ thread ]</a>
+              <a href="subject.html#5885">[ subject ]</a>
+              <a href="author.html#5885">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 21/10/10 23:57, John Hopkin wrote:
+&gt;<i> Thanks, Justin. Do you happen to know if the first save will be
+</I>&gt;<i> reliable (other than the missing assets)? It's that word &quot;aborted&quot;
+</I>&gt;<i> that worries me.
+</I>
+You're right to be worried - the first OAR will not be usable.  I have added some text to the error message to make that 
+clear.
+
+&gt;<i>
+</I>&gt;<i> And how can I go about removing references to the missing assets? Is
+</I>&gt;<i> this a case of hacking the MySQL database?
+</I>
+No, unfortunately it's more complicated than that.  The missing assets could be referenced anywhere (within serialized 
+objects, asset metadata or even hardcoded within scripts).
+
+In principle, you could untar the successfully saved OAR and grep all the files for the missing asset UUIDs.  That would 
+highlight where they are being referenced.
+
+But really, the missing asset problem should not be causing your initial OAR abort.  The asset service should return 
+notification of missing assets as quickly as it returns actual assets.  Are you using a stock asset service?  Also, how 
+many assets actually end up being saved - is it a very populated region?
+
+&gt;<i>
+</I>&gt;<i> John
+</I>&gt;<i>
+</I>&gt;<i> Justin Clark-Casey wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> OAR save times out after 60 seconds if it doesn't receive all the assets it's asked for.  This is to prevent completely
+</I>&gt;&gt;<i> or very unresponsive servers from keeping the file open indefinitely.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The errors you're seeing suggest that the assets not being delivered are missing anyway, otherwise they would get into
+</I>&gt;&gt;<i> the subsequent save.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 21/10/10 00:35, John Hopkin wrote:
+</I>&gt;&gt;&gt;<i> Finding this a lot while doing &quot;save OAR&quot; (text in&lt;&gt;   is variable):
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 00:10:27 - [ARCHIVER]: Asset service failed to return information
+</I>&gt;&gt;&gt;<i> about&lt;n&gt;   requested assets
+</I>&gt;&gt;&gt;<i> 00:10:32 - [ARCHIVER]: No information about asset&lt;UUID&gt;   received
+</I>&gt;&gt;&gt;<i> [repeated&lt;n&gt;   times]
+</I>&gt;&gt;&gt;<i> 00:10:32 - [ARCHIVER]: OAR save aborted.
+</I>&gt;&gt;&gt;<i> [...]
+</I>&gt;&gt;&gt;<i> 00:10:53 - [ARCHIVER]: Received information about asset&lt;UUID&gt;   after
+</I>&gt;&gt;&gt;<i> archive save abortion.  Ignoring.
+</I>&gt;&gt;&gt;<i> [repeated&lt;n&gt;   times]
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So, I'll get several &quot;No information&quot; lines, followed by &quot;OAR save
+</I>&gt;&gt;&gt;<i> aborted&quot; and, a few seconds later, several &quot;received information&quot;
+</I>&gt;&gt;&gt;<i> messages.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The OAR checks as complete with gzip, but I don't know if it's
+</I>&gt;&gt;&gt;<i> complete or not. When performing several &quot;save OAR&quot;s in a command
+</I>&gt;&gt;&gt;<i> script, it's not clear which region is affected, or even that there
+</I>&gt;&gt;&gt;<i> has been an error at all unless one looks for it.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> This could lead to incomplete saves being archived. Obviously, this is
+</I>&gt;&gt;&gt;<i> dangerous.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On rerunning the &quot;save oars&quot; during the same OpenSim.exe session, I
+</I>&gt;&gt;&gt;<i> get the message:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [00:29:35] - [ARCHIVER]: Could not find asset&lt;UUID&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> for each of the above lines . This time, there is no &quot;OAR save
+</I>&gt;&gt;&gt;<i> aborted&quot; message; presumably, the OAR worked.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Any ideas?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> OpenSim v0.7.1 8731c2b, OS is Ubuntu Meerkat latest; database is MySQL
+</I>&gt;&gt;&gt;<i> 14.14;  Mono is 2.6.7; physics is Meshmerizer/ODE.
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005883.html">[Opensim-users] OAR not receiving asset data in time
+</A></li>
+	<LI>Next message: <A HREF="005893.html">[Opensim-users] OAR not receiving asset data in time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5885">[ date ]</a>
+              <a href="thread.html#5885">[ thread ]</a>
+              <a href="subject.html#5885">[ subject ]</a>
+              <a href="author.html#5885">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

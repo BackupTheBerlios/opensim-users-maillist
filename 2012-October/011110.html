@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow handling of POST -
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3C5086554a.45b80e0a.629e.3059%40mx.google.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011108.html">
+   <LINK REL="Next"  HREF="011111.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow handling of POST -</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3C5086554a.45b80e0a.629e.3059%40mx.google.com%3E"
+       TITLE="[Opensim-users] Slow handling of POST -">ai.ai.austin at gmail.com
+       </A><BR>
+    <I>Tue Oct 23 10:28:59 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011108.html">[Opensim-users] (no subject)
+</A></li>
+        <LI>Next message: <A HREF="011111.html">[Opensim-users] Slow handling of POST -
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11110">[ date ]</a>
+              <a href="thread.html#11110">[ thread ]</a>
+              <a href="subject.html#11110">[ subject ]</a>
+              <a href="author.html#11110">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Just to report a bit more on this from my testing in recent weeks.  I 
+have used various OpenSim 0.7.5 dev master copies in between the last 
+OSGrid packaged release 3 weeks ago and one released just a few hours ago.
+
+I tried the changes that Diva Canto made for proxy handling just 
+prior to reverting the changes so people could test, and I did not 
+observe any change in the slow post issues in the week I ran that version.
+
+I also installed a version after some changes by Melanie to increase 
+the number of concurrent connections from the original 2... I was 
+still seeing the slow post issues.
+
+More to the point, I just installed the r/20777 today from the 
+OSGridfpackaged reelase of 0.7.5 dev master and on startup I still 
+see a lot of VERY slow responses - can they really be taking 69 
+seconds? -   even before any avatar has logged into the region.
+
+Here is one extract from the startup log just now on first run of the 
+OpernSim.exe instance of some regions with relatively little content 
+as add-on region to OSGrid...
+
+09:17:02 - [SynchronousRestObjectRequester]: WebException for GET 
+<A HREF="http://assets.">http://assets.</A>
+osgrid.org/assets/7c2ee836-dc42-4100-be85-ff983385d78b 
+OpenSim.Framework.AssetBa
+se: The remote server returned an error: (504) Gateway Timeout.    at 
+System.Net
+.HttpWebRequest.GetResponse()
+    at 
+OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, 
+Int32 maxCo
+nnections) in d:\OSGRID\OSGRID 0.7 
+RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+
+09:17:02 - [SynchronousRestObjectRequester]: Slow request 113 GET 
+<A HREF="http://assets.">http://assets.</A>
+osgrid.org/assets/7c2ee836-dc42-4100-be85-ff983385d78b took 60139ms, 
+0ms writing,
+
+[WARNING]: EOC marker not found. Codestream is corrupted.
+
+09:18:49 - [SynchronousRestObjectRequester]: WebException for GET 
+<A HREF="http://assets.">http://assets.</A>
+osgrid.org/assets/783f8b90-c2e9-4555-a16f-8a57185c3069 
+OpenSim.Framework.AssetBa
+se: The remote server returned an error: (504) Gateway Timeout.    at 
+System.Net
+.HttpWebRequest.GetResponse()
+    at 
+OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, 
+Int32 maxCo
+nnections) in d:\OSGRID\OSGRID 0.7 
+RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+
+09:18:49 - [SynchronousRestObjectRequester]: Slow request 175 GET 
+<A HREF="http://assets.">http://assets.</A>
+osgrid.org/assets/783f8b90-c2e9-4555-a16f-8a57185c3069 took 63133ms, 
+0ms writing,
+
+09:20:09 - [SynchronousRestObjectRequester]: WebException for GET 
+<A HREF="http://assets.">http://assets.</A>
+osgrid.org/assets/dd2854dd-314b-4118-a8b7-2c33794e6c9f 
+OpenSim.Framework.AssetBa
+se: The remote server returned an error: (504) Gateway Timeout.    at 
+System.Net
+.HttpWebRequest.GetResponse()
+    at 
+OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, 
+Int32 maxCo
+nnections) in d:\OSGRID\OSGRID 0.7 
+RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+
+09:20:09 - [SynchronousRestObjectRequester]: Slow request 185 GET 
+<A HREF="http://assets.">http://assets.</A>
+osgrid.org/assets/dd2854dd-314b-4118-a8b7-2c33794e6c9f took 69451ms, 
+0ms writing,
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011108.html">[Opensim-users] (no subject)
+</A></li>
+	<LI>Next message: <A HREF="011111.html">[Opensim-users] Slow handling of POST -
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11110">[ date ]</a>
+              <a href="thread.html#11110">[ thread ]</a>
+              <a href="subject.html#11110">[ subject ]</a>
+              <a href="author.html#11110">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

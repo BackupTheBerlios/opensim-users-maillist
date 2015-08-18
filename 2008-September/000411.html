@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Help! Region server crash on startup due to request	time out
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%21%20Region%20server%20crash%20on%20startup%20due%20to%20request%0A%09time%20out&In-Reply-To=%3C89c27dce0809020130q5ea6c7g2368ee2656654daa%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000410.html">
+   <LINK REL="Next"  HREF="000412.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Help! Region server crash on startup due to request	time out</H1>
+    <B>Bin Chen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%21%20Region%20server%20crash%20on%20startup%20due%20to%20request%0A%09time%20out&In-Reply-To=%3C89c27dce0809020130q5ea6c7g2368ee2656654daa%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Help! Region server crash on startup due to request	time out">chbpku at gmail.com
+       </A><BR>
+    <I>Tue Sep  2 10:30:59 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000410.html">[Opensim-users] OpenSim(r6074) in Grid mode on Grid server machine	crashes on startup..
+</A></li>
+        <LI>Next message: <A HREF="000412.html">[Opensim-users] new forge project: linux client utilitites
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#411">[ date ]</a>
+              <a href="thread.html#411">[ thread ]</a>
+              <a href="subject.html#411">[ subject ]</a>
+              <a href="author.html#411">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Our grid includes 9 regions, and they were normal till this afternoon.
+
+UGAIM servers are all running smoothly. when region server successfully
+started the first 3 regions, when the 4th region was starting, we
+encountered following error:
+
+-----------------
+16:16:37 - [MAPTILE
+]: Generating Maptile Step 1: Terrain
+16:16:37 - Fetched texture b8d3965a-ad78-bf43-699b-bff8eca6c975, found:
+False
+16:16:37 - Fetched texture abb783e6-3e93-26c0-248a-247666855da3, found:
+False
+16:16:37 - Fetched texture 179cdabd-398a-9b6b-1391-4dc333ba321f, found:
+False
+16:16:37 - Fetched texture beb169c7-11ea-fff2-efe5-0f24dc881df2, found:
+False
+16:16:37 - [MAPTILE
+]: Generating Maptile Step 1: Done in 332 ms
+16:16:38 - [MAPTILE
+]: STORING MAPTILE IMAGE
+
+16:16:38 - [GRID ASSET CLIENT
+]: Sending store request for asset ea0ce59a-b1ce-4c4b-b8c6-6258c38071f5
+
+16:18:18 - [GRID ASSET CLIENT]: System.Net.WebException: The request timed
+out
+  at System.Net.HttpWebRequest.GetRequestStream () [0x00000]
+  at OpenSim.Framework.Servers.RestObjectPoster.BeginPostObject[AssetBase]
+(System.String verb, System.String requestUrl, OpenSim.Framework.AssetBase
+obj) [0x00000]
+  at OpenSim.Framework.Servers.RestObjectPoster.BeginPostObject[AssetBase]
+(System.String requestUrl, OpenSim.Framework.AssetBase obj) [0x00000]
+  at OpenSim.Framework.Communications.Cache.GridAssetClient.StoreAsset
+(OpenSim.Framework.AssetBase asset) [0x00000]
+
+16:18:18 - [OGS1 GRID SERVICES
+]: Attempting to register region pku4-1 with grid at
+<A HREF="http://222.35.32.76:8001">http://222.35.32.76:8001</A>
+
+16:19:48 - [STARTUP]: Registration of region with grid failed, aborting
+startup - System.Exception: Unable to connect to grid at
+<A HREF="http://222.35.32.76:8001.">http://222.35.32.76:8001.</A> Grid service not running? ---&gt;
+System.Net.WebException: The request timed out
+  at System.Net.HttpWebRequest.GetRequestStream () [0x00000]
+  at Nwc.XmlRpc.XmlRpcRequest.Send (System.String url, Int32 timeout)
+[0x00000]
+  at OpenSim.Region.Communications.OGS1.OGS1GridServices.RegisterRegion
+(OpenSim.Framework.RegionInfo regionInfo) [0x00000] --- End of inner
+exception stack trace ---
+
+  at OpenSim.Region.Communications.OGS1.OGS1GridServices.RegisterRegion
+(OpenSim.Framework.RegionInfo regionInfo) [0x00000]
+  at
+OpenSim.Region.Environment.Scenes.SceneCommunicationService.RegisterRegion
+(OpenSim.Framework.RegionInfo regionInfos) [0x00000]
+  at OpenSim.Region.Environment.Scenes.Scene.RegisterRegionWithGrid ()
+[0x00000]
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+regionInfo, Boolean portadd_flag, Boolean do_post_init) [0x00000]
+---------------------------------
+
+This situation is totally confusing, How can I deal with it?
+
+Thanks!
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20080902/e1bbf145/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20080902/e1bbf145/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000410.html">[Opensim-users] OpenSim(r6074) in Grid mode on Grid server machine	crashes on startup..
+</A></li>
+	<LI>Next message: <A HREF="000412.html">[Opensim-users] new forge project: linux client utilitites
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#411">[ date ]</a>
+              <a href="thread.html#411">[ thread ]</a>
+              <a href="subject.html#411">[ subject ]</a>
+              <a href="author.html#411">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] remoteadmin help
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20remoteadmin%20help&In-Reply-To=%3C201005170900.38174.info%40os-networks.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004486.html">
+   <LINK REL="Next"  HREF="004487.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] remoteadmin help</H1>
+    <B>Jeroen van Veen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20remoteadmin%20help&In-Reply-To=%3C201005170900.38174.info%40os-networks.net%3E"
+       TITLE="[Opensim-users] remoteadmin help">j.veenvan at gmail.com
+       </A><BR>
+    <I>Mon May 17 09:00:38 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004486.html">[Opensim-users] remoteadmin help
+</A></li>
+        <LI>Next message: <A HREF="004487.html">[Opensim-users] invalidCastException in LSL script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4496">[ date ]</a>
+              <a href="thread.html#4496">[ thread ]</a>
+              <a href="subject.html#4496">[ subject ]</a>
+              <a href="author.html#4496">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey,
+
+There are multiple examples here: <A HREF="http://opensimulator.org/wiki/RemoteAdmin">http://opensimulator.org/wiki/RemoteAdmin</A>
+Also you can find the available commands with its parameters at that page.
+There is also a remote admin class from the abondened wixtd project which is 
+nice and short:
+
+&lt;?php
+/*
+ * Copyright (c) 2008, 2009 WiXTD Contributors, 
+<A HREF="http://forge.opensimulator.org/gf/project/wixtd/">http://forge.opensimulator.org/gf/project/wixtd/</A>
+ * See install/LICENSE for the full licensing terms of this file.
+*/
+
+class remote {
+
+	function __construct($simUri,$rpcPort) {
+	$this-&gt;simUri = $simUri;
+	$this-&gt;rpcPort = $rpcPort;
+	}
+	
+	function call($command,$parameters = NULL) {
+	$request = xmlrpc_encode_request($command, $parameters);
+	$ch = curl_init();
+	$str  = array(
+	&quot;Content-Type: text/xml&quot;,
+	&quot;Request URI: /RPC2&quot;
+	);
+	curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);	
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $str);	
+	curl_setopt($ch, CURLOPT_URL, $this-&gt;simUri.&quot;/RPC2&quot;);
+	curl_setopt($ch, CURLOPT_PORT, $this-&gt;rpcPort);	
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 1);	
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+	$result = curl_exec($ch);
+	curl_close($ch); 
+	if($result) return xmlrpc_decode($result);
+	else return false;
+	}
+}
+?&gt;
+?&gt;
+
+initiate with something like(may be a little wrong, my php is kinda rusty): 
+ra = new remote('<A HREF="http://localhost">http://localhost</A>',9000);
+$params = array(&quot;param1&quot; =&gt; &quot;value1&quot;,&quot;param2&quot; =&gt; &quot;value2&quot;);
+result = ra.call('my_rm_command',$params);
+
+Good luck!
+
+Jeroen
+
+On Thursday 13 May 2010 20:43:58 andrew johnson wrote:
+&gt;<i> i looked at how setting up the remoteadmin for my opensim
+</I>&gt;<i> for example my friend starts up my Opensim on remote computer
+</I>&gt;<i> so i am confused because the page on opensim didn't provide the clear step
+</I>&gt;<i> to step how set up it - i wanted use PHP thanks
+</I>&gt;<i> 
+</I>&gt;<i> _________________________________________________________________
+</I>&gt;<i> <A HREF="http://clk.atdmt.com/UKM/go/195013117/direct/01/">http://clk.atdmt.com/UKM/go/195013117/direct/01/</A>
+</I>&gt;<i> We want to hear all your funny, exciting and crazy Hotmail stories. Tell us
+</I>&gt;<i> now _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004486.html">[Opensim-users] remoteadmin help
+</A></li>
+	<LI>Next message: <A HREF="004487.html">[Opensim-users] invalidCastException in LSL script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4496">[ date ]</a>
+              <a href="thread.html#4496">[ thread ]</a>
+              <a href="subject.html#4496">[ subject ]</a>
+              <a href="author.html#4496">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

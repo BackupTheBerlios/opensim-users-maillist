@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NAT and standalone opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%3D%3Futf-8%3Fq%3FNAT_and_standalone_opensim%3F%3D&In-Reply-To=%3C20080408134104.C32D0FA9F8%40mail.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000209.html">
+   <LINK REL="Next"  HREF="000213.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NAT and standalone opensim</H1>
+    <B>ursula.matova at klintcentral.net</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%3D%3Futf-8%3Fq%3FNAT_and_standalone_opensim%3F%3D&In-Reply-To=%3C20080408134104.C32D0FA9F8%40mail.berlios.de%3E"
+       TITLE="[Opensim-users] NAT and standalone opensim">ursula.matova at klintcentral.net
+       </A><BR>
+    <I>Tue Apr  8 15:39:10 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000209.html">[Opensim-users] NAT and standalone opensim
+</A></li>
+        <LI>Next message: <A HREF="000213.html">[Opensim-users] load-xml in later versions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#212">[ date ]</a>
+              <a href="thread.html#212">[ thread ]</a>
+              <a href="subject.html#212">[ subject ]</a>
+              <a href="author.html#212">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Thomas,
+
+I forgot something important ... 
+When I use a hostname from Dyndns.org, it's because my own DNS server did the name resolution for internal servers.
+
+So, your external_ip should be your &quot;public IP&quot; or your &quot;external hostname&quot; that refer to that public IP.
+
+For a standalone Sim, it works, but in grid mode ... It's a bit more difficult ( impossible ) ... test in progress at home :)
+
+Let me back home in a few hours and I'll try to send you more precise informations about the configuration.
+
+Please, let me know about the firewall you are using. It's really different from an os to another ;)
+
+Regards,
+
+Ursula.
+
+Mekota, Thomas (NSN - DE/Muenich) &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">thomas.mekota at nsn.com</A>&gt; a &#233;crit :
+
+&gt;<i> Hi Ursula,
+</I>&gt;<i> thanks for the fast response, I tried some of your hints but to no success.
+</I>&gt;<i> From my region file:
+</I>&gt;<i> 	internal_ip_address=&quot;10.44.38.253
+</I>&gt;<i> 	external_host_name=&quot;pc74&quot;
+</I>&gt;<i> From my OpenSim.ini
+</I>&gt;<i> 	[Network]
+</I>&gt;<i> 	default_location_x = 1000
+</I>&gt;<i> 	default_location_y = 1000
+</I>&gt;<i> 	http_listener_port = 9000
+</I>&gt;<i> 	remoting_listener_port = 8895
+</I>&gt;<i> 	grid_server_url = <A HREF="http://pc74:8001">http://pc74:8001</A>
+</I>&gt;<i> 	grid_send_key = null
+</I>&gt;<i> 	grid_recv_key = null
+</I>&gt;<i> 	user_server_url = <A HREF="http://pc74:8002">http://pc74:8002</A>
+</I>&gt;<i> 	user_send_key = null
+</I>&gt;<i> 	user_recv_key = null
+</I>&gt;<i> 	asset_server_url = <A HREF="http://pc74:8003">http://pc74:8003</A>
+</I>&gt;<i> 	inventory_server_url = <A HREF="http://pc74:8004">http://pc74:8004</A>
+</I>&gt;<i> 
+</I>&gt;<i> Perhaps I should describe a little bit more about my setup.
+</I>&gt;<i> Currently I do not use a dyndns, but relaying only on the hosts file.
+</I>&gt;<i> My firewall, that is also translating the address is a checkpoint R6.
+</I>&gt;<i> Within the firewall I opened port 9000 for udp and tcp, but I don't think
+</I>&gt;<i> the firewall is the problem as I'm logging the dropped packets and do not
+</I>&gt;<i> see any of these 800x ports.
+</I>&gt;<i> I went through the exchanged packets and looking for my names or IP
+</I>&gt;<i> addresses,
+</I>&gt;<i> So far I didn't discover anything special, on the client side I see the
+</I>&gt;<i> external
+</I>&gt;<i> IP address only and on the server side the internal one, as expected.
+</I>&gt;<i> 
+</I>&gt;<i> Do you know who is starting that region handshake?
+</I>&gt;<i> 
+</I>&gt;<i> Thanks again
+</I>&gt;<i> 
+</I>&gt;<i> Thomas
+</I>&gt;<i> 
+</I>&gt;<i> -----Urspr&#252;ngliche Nachricht-----
+</I>&gt;<i> Von: ext <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ursula.matova at klintcentral.net</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ursula.matova at klintcentral.net</A>]
+</I>&gt;<i> 
+</I>&gt;<i> Gesendet: Dienstag, 8. April 2008 09:55
+</I>&gt;<i> An: Mekota, Thomas (NSN - DE/Muenich); <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Betreff: Re: [Opensim-users] NAT and standalone opensim
+</I>&gt;<i> 
+</I>&gt;<i> Hi Thomas,
+</I>&gt;<i> 
+</I>&gt;<i> I use that at Home, Standalone OpenSim, behind my &quot;home made&quot;
+</I>&gt;<i> firewall.
+</I>&gt;<i> I'm not at home for now. But I'll try to remind my configuration and to give
+</I>&gt;<i> you some informations. ( And I'll check this evening if needed ).
+</I>&gt;<i> 
+</I>&gt;<i> First, I have created a dyndns entry, ( myserver.dyndns.org ) that refers to my
+</I>&gt;<i> public IP ( my Firewall public IP ),
+</I>&gt;<i> 
+</I>&gt;<i> Then, when I setup my Regions XML files : I use &quot;server.dyndns.org&quot;
+</I>&gt;<i> for the external IP address, and your local IP ( the one of your opensim server
+</I>&gt;<i> ) for the internal IP address.
+</I>&gt;<i> In OpenSim.ini also update URL for ports 8001, 8002, ... 8004 to
+</I>&gt;<i> &quot;server.dyndns.org&quot;.
+</I>&gt;<i> 
+</I>&gt;<i> Once done, 
+</I>&gt;<i> 
+</I>&gt;<i> You have to setup Firewall Rules and NAT.
+</I>&gt;<i> 
+</I>&gt;<i> My Firewall is NetBSD using IPF/IPNat.
+</I>&gt;<i> 
+</I>&gt;<i> In my IPNat config file, you have to &quot;RDR&quot; incoming packets from any
+</I>&gt;<i> outside to your local opensim server. Do that for ports 8000 TCP , 8001 TCP ,
+</I>&gt;<i> 8002 TCP , .... 8004, 9000 UDP &amp; TCP and for your external network card.
+</I>&gt;<i> 
+</I>&gt;<i> In order to be able to connect to your OpenSim from &quot;Inside&quot;, you
+</I>&gt;<i> also have to add a similar line for your internal network card.
+</I>&gt;<i> 
+</I>&gt;<i> Then, you also have to add some rules for these ports in your firewall
+</I>&gt;<i> rules.
+</I>&gt;<i> 
+</I>&gt;<i> Restart everything and should work.
+</I>&gt;<i> 
+</I>&gt;<i> Sorry, it's not very clear and my english is bad this morning. :)
+</I>&gt;<i> 
+</I>&gt;<i> Let me know if it works.
+</I>&gt;<i> 
+</I>&gt;<i> Regards,
+</I>&gt;<i> 
+</I>&gt;<i> Ursula.
+</I>&gt;<i> 
+</I>&gt;<i> Mekota, Thomas (NSN - DE/Muenich) &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">thomas.mekota at nsn.com</A>&gt;
+</I>&gt;<i> a &#233;crit :
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Hello everybody,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I'm still struggling with my standalone OpenSim and NAT.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; As long as I put the external IP address in the regions file everything
+</I>&gt;<i> works fine and I can access the region.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; As soon as I put in the host name (DNS entries exist) in the region file,
+</I>&gt;<i> the client starts up normally, but
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; stops at the 'region handshake' and tells me after the timeout unable to
+</I>&gt;<i> connect &#8230;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Within Wireshark I can see a lot of packets going back and forth until the
+</I>&gt;<i> region handshake starts.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I feel very stupid right now, but does anybody have an idea where my
+</I>&gt;<i> mistake is?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;  
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Mit freundlichem Gru&#223; / Best regards 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Thomas Mekota
+</I>&gt;<i> 
+</I>&gt;<i> ___________________________________
+</I>&gt;<i> NOCC, <A HREF="http://nocc.sourceforge.net">http://nocc.sourceforge.net</A>
+</I>
+___________________________________
+NOCC, <A HREF="http://nocc.sourceforge.net">http://nocc.sourceforge.net</A>
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000209.html">[Opensim-users] NAT and standalone opensim
+</A></li>
+	<LI>Next message: <A HREF="000213.html">[Opensim-users] load-xml in later versions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#212">[ date ]</a>
+              <a href="thread.html#212">[ thread ]</a>
+              <a href="subject.html#212">[ subject ]</a>
+              <a href="author.html#212">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mucking%20around%20with%20IAR%20asset%20UUIDs%20outside%0A%20OpenSim%3A%20Will%20anything%20bad%20happen%3F&In-Reply-To=%3CCA%2Bsu7OVSwPR9wZsKRsEPMzCDWoLzdCM0Rjw6BJb1USHFiqHhAg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010624.html">
+   <LINK REL="Next"  HREF="010602.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?</H1>
+    <B>Edmund Edgar</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mucking%20around%20with%20IAR%20asset%20UUIDs%20outside%0A%20OpenSim%3A%20Will%20anything%20bad%20happen%3F&In-Reply-To=%3CCA%2Bsu7OVSwPR9wZsKRsEPMzCDWoLzdCM0Rjw6BJb1USHFiqHhAg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?">ed at avatarclassroom.com
+       </A><BR>
+    <I>Fri Jun 29 08:43:39 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010624.html">[Opensim-users] Exception
+</A></li>
+        <LI>Next message: <A HREF="010602.html">[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10601">[ date ]</a>
+              <a href="thread.html#10601">[ thread ]</a>
+              <a href="subject.html#10601">[ subject ]</a>
+              <a href="author.html#10601">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have some situations where I want to export an object as an IAR,
+faff with the LSL code, and reimport it.
+
+This is working fine, except that sometimes the UUIDs of the scripts
+I've faffed with already exist in OpenSim, resulting in the new
+version not being imported.
+(I'm pretty sure that's what's happening - I've tried clearing the
+viewer cache and deleting stuff under bin/ScriptEngines and so forth.)
+
+To avoid this, I want to change the UUIDs of the scripts I've faffed
+with in my IAR every time I make a change to their content. I've tried
+this and it seems to work, but I as I don't understand the internals
+of this stuff I just wanted to check if there's some important thing
+I'm overlooking that will cause death and devastation to rain down on
+me and the unlucky people who use my IAR.
+
+Specifically what I do is:
+1) Export IAR, untar it.
+2) Faff with scripts.
+3) For each script that's changed, make a new UUID by taking the md5
+sum of the contents, and sticking in some hyphens where they appear to
+belong.
+4) Rename the &lt;old UUID&gt;_script.lsl under assets/ to use the new UUID.
+4) Run sed on anything called &quot;.xml&quot; in the archive to change any
+reference to the old UUID to the new UUID.
+5) Retar the IAR.
+6) Reimport.
+
+This is the script I run to do it:
+<A HREF="https://github.com/sloodle/sloodle_development_tools/blob/master/opensim_sync/fixuuid.sh">https://github.com/sloodle/sloodle_development_tools/blob/master/opensim_sync/fixuuid.sh</A>
+
+This seems to be working OK, but can anyone think of anything bad
+that's going to happen?
+
+-- 
+Edmund Edgar
+Avatar Classroom
+Your classroom, on the web, in a virtual world.
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ed at avatarclassroom.com</A>
++81 090 3912 3380
+Skype: edmundedgar
+Second Life: Edmund Earp
+Linked In: edmundedgar
+Twitter: @edmundedgar
+<A HREF="http://www.avatarclassroom.com">http://www.avatarclassroom.com</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010624.html">[Opensim-users] Exception
+</A></li>
+	<LI>Next message: <A HREF="010602.html">[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10601">[ date ]</a>
+              <a href="thread.html#10601">[ thread ]</a>
+              <a href="subject.html#10601">[ subject ]</a>
+              <a href="author.html#10601">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Grid starting problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Grid%20starting%20problem&In-Reply-To=%3Cf12efd270901021309v237c5d8ey502dfe6929093029%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000960.html">
+   <LINK REL="Next"  HREF="000962.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Grid starting problem</H1>
+    <B>sal6734v</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Grid%20starting%20problem&In-Reply-To=%3Cf12efd270901021309v237c5d8ey502dfe6929093029%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Grid starting problem">sal6734v at gmail.com
+       </A><BR>
+    <I>Fri Jan  2 22:09:10 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000960.html">[Opensim-users] Hypergrid
+</A></li>
+        <LI>Next message: <A HREF="000962.html">[Opensim-users] Grid starting problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#961">[ date ]</a>
+              <a href="thread.html#961">[ thread ]</a>
+              <a href="subject.html#961">[ subject ]</a>
+              <a href="author.html#961">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello all
+
+Sorry to bother you with a stupid question on this user-list, but I'm not
+able to get OpenSim working in Grid mode after many tries, and it seems to
+be my last hope to get some advice here. I've been running successfully the
+standalone mode with MySQL for a long time already (on a Linux/Mono box) and
+upgrade quite often to the latest SVN-version. Of course I've read and
+applied all the steps described in many tutorials for running the Grid
+server mode, specially also the one in the opensimulator.org wiki.
+
+But still yet, after starting the UGAIM servers successfully, the Region
+server start (on the same machine, with the same OpenSim.ini) aborts with an
+exception of the OGS1 Grid Services while attempting to listen on port 8895,
+although the application exception seems to point to a DNS resolving
+problem, which I think is highly improbably. Maybe I'm not able anymore to
+see the bug in my config by now, so here go the descriptions of 1) my
+system, 2) the error reported, 3) the relevant config sniplets of the
+OpenSim.ini, and 4) the default.xml region. After reviewing them, I assume
+the five UGAIM ..._Config.xml and the estate_settings.xml are ok, but I
+could post them if needed.
+
+Thanks a lot for any hint, and I'd gladly append some remarks to the wiki,
+if this would be help others with similar problems.
+
+Thanks a lot for all the great work, greetings and Happy New Year,
+Martin
+
+
+1) System running OpenSim
+-----------------------------------------
+- Physical server with Linux Debian Etch (updated) and Mono 1.9.1.
+- No other services connected to the relevant ports 8001 to 8006, 8895 and
+9000 to 9003 (had to move a Tomcat shutdown service running on 8005 to some
+other port though). And btw, one question here: which service of OpenSim
+runs on port 8005? And where could I change this specific port-nr. 8005 like
+all the others?
+- Firewall (iptables) opened for incoming and outgoing connections for all
+these ports.
+- DNS is well configured, also reverse mapping, and tested with dig, but I'm
+using fixed IP's anyway.
+- MySQL 5.0.x running perfectly in OpenSim standalone mode for user-, asset-
+and inventory-DB's.
+- UGAIM servers started through 5 different screen sessions.
+- I'm not attempting to run HyperGrid (at this moment at least) !
+
+2) Error reported after having started the UGAIM servers successfully and
+trying to start the Region server with &quot;mono OpenSim.exe -gridmode=true&quot;
+----------------------------------------------------------------------------------------------------------------------
+[...snip...]
+19:40:01 - [LIBRARY INVENTORY]: Loading library control file
+./inventory/Libraries.xml
+19:40:01 - [OGS1 GRID SERVICES]: Exception while attempting to listen on TCP
+port 8895.
+19:40:01 - [APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+Exception: System.Net.Sockets.SocketException: No such host is known
+  at System.Net.Dns.GetHostByName (System.String hostName) [0x00000]
+  at System.Net.Dns.Resolve (System.String hostName) [0x00000]
+  at System.Runtime.Remoting.Channels.Tcp.TcpServerChannel.Init
+(IServerChannelSinkProvider serverSinkProvider) [0x00000]
+  at System.Runtime.Remoting.Channels.Tcp.TcpServerChannel..ctor
+(IDictionary properties, IServerChannelSinkProvider serverSinkProvider)
+[0x00000]
+  at System.Runtime.Remoting.Channels.Tcp.TcpChannel.Init (IDictionary
+properties, IClientChannelSinkProvider clientSink,
+IServerChannelSinkProvider serverSink) [0x00000]
+  at System.Runtime.Remoting.Channels.Tcp.TcpChannel..ctor (Int32 port)
+[0x00000]
+  at OpenSim.Region.Communications.OGS1.OGS1GridServices.StartRemoting ()
+[0x00000]
+Application is terminating: True
+[...end...]
+
+3) Excerpts from the OpenSim.ini, which is the same for the UGAIM servers
+and the Region server. Only meaningful lines listed, the rest has been
+ommited; IP's and passwords have been changed and are shown in &lt;&gt;.
+-----------------------------------------------------------------------------------------------------------------------------
+[Startup]
+    gridmode = true
+    storage_plugin=&quot;OpenSim.Data.MySQL.dll&quot;
+    storage_connection_string=&quot;Data Source=&lt;my server
+IP&gt;;Database=opensim;User ID=&lt;username&gt;;Password=&lt;password&gt;;&quot;;
+    estate_connection_string=&quot;Data Source=&lt;my server
+IP&gt;;Database=opensim;User ID=&lt;username&gt;;Password=&lt;password&gt;;&quot;;
+    asset_database = &quot;grid&quot;
+    WorldMapModule = &quot;WorldMap&quot;
+[StandAlone]
+    asset_plugin = &quot;OpenSim.Data.MySQL.dll&quot; ; for mysql
+    asset_source = &quot;Data Source=&lt;my server IP&gt;;Database=opensim;User
+ID=&lt;username&gt;;Password=&lt;password&gt;;&quot;
+    inventory_plugin = &quot;OpenSim.Data.MySQL.dll&quot;
+    inventory_source = &quot;Data Source=&lt;my server IP&gt;;Database=opensim;User
+ID=&lt;username&gt;;Password=&lt;password&gt;;&quot;
+    userDatabase_plugin = &quot;OpenSim.Data.MySQL.dll&quot;
+    user_source =&quot;Data Source=&lt;my server IP&gt;;Database=opensim;User
+ID=&lt;username&gt;;Password=&lt;password&gt;;&quot;
+[Network]
+    http_listener_port = 9000
+    remoting_listener_port = 8895
+    ;remoteDataPort = 20800
+    grid_server_url = &quot;<A HREF="http://&lt;my">http://&lt;my</A> server IP&gt;:8001&quot;
+    grid_send_key = &quot;1234&quot;
+    grid_recv_key = &quot;1234&quot;
+    user_server_url = &quot;<A HREF="http://&lt;my">http://&lt;my</A> server IP&gt;:8002&quot;
+    user_send_key = &quot;1234&quot;
+    user_recv_key = &quot;1234&quot;
+    asset_server_url = &quot;<A HREF="http://&lt;my">http://&lt;my</A> server IP&gt;:8003&quot;
+    inventory_server_url = &quot;<A HREF="http://&lt;my">http://&lt;my</A> server IP&gt;:8004&quot;
+    messaging_server_url = &quot;<A HREF="http://&lt;my">http://&lt;my</A> server IP&gt;:8006&quot;
+
+4) Single region being started: default.xml (also tried with
+internal_ip_port=&quot;9000&quot;)
+-------------------------------------------------------------
+&lt;Root&gt;
+  &lt;Config sim_UUID=&quot;f64f10e3-d753-4e4f-b03e-b73a3456ab51&quot; sim_name=&quot;Hondar1&quot;
+sim_location_x=&quot;1172&quot; sim_location_y=&quot;1172&quot; internal_ip_address=&quot;0.0.0.0&quot;
+internal_ip_port=&quot;9001&quot; allow_alternate_ports=&quot;false&quot;
+external_host_name=&quot;&lt;my server IP&gt;&quot;
+master_avatar_uuid=&quot;00000000-0000-0000-0000-000000000000&quot;
+master_avatar_first=&quot;&lt;firstname&gt;&quot; master_avatar_last=&quot;&lt;lastname&gt;&quot;
+master_avatar_pass=&quot;&lt;password&gt;&quot;
+lastmap_uuid=&quot;8b5f3f95-850d-43e1-92ab-181a4a7492a0&quot;
+lastmap_refresh=&quot;1230824676&quot; /&gt;
+&lt;/Root&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090102/7cb1cff2/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090102/7cb1cff2/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000960.html">[Opensim-users] Hypergrid
+</A></li>
+	<LI>Next message: <A HREF="000962.html">[Opensim-users] Grid starting problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#961">[ date ]</a>
+              <a href="thread.html#961">[ thread ]</a>
+              <a href="subject.html#961">[ subject ]</a>
+              <a href="author.html#961">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

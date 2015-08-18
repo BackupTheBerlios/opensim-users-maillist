@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] SoaS 0.7.3 &amp; phpMyAdmin
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SoaS%200.7.3%20%26%20phpMyAdmin&In-Reply-To=%3CCAJjoDCyPAjG70TEkmNK2iVAosV_d7RAziYJ%3Dnf%2B1Zvmd5bCOXA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010570.html">
+   <LINK REL="Next"  HREF="010530.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] SoaS 0.7.3 &amp; phpMyAdmin</H1>
+    <B>Cider Jack</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SoaS%200.7.3%20%26%20phpMyAdmin&In-Reply-To=%3CCAJjoDCyPAjG70TEkmNK2iVAosV_d7RAziYJ%3Dnf%2B1Zvmd5bCOXA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] SoaS 0.7.3 &amp; phpMyAdmin">ciderjack.vw at gmail.com
+       </A><BR>
+    <I>Sun Jun 24 07:28:28 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010570.html">[Opensim-users] SoaS 0.7.3 &amp; phpMyAdmin
+</A></li>
+        <LI>Next message: <A HREF="010530.html">[Opensim-users] Reminder: OpenSim Meetup in Zurich
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10571">[ date ]</a>
+              <a href="thread.html#10571">[ thread ]</a>
+              <a href="subject.html#10571">[ subject ]</a>
+              <a href="author.html#10571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ener suggested a few things, including checking if Apache was running
+by trying the wifi module, changing port setting on the MyWorld.ini
+file (since the error concerned socket configuration).
+
+Anyway, the wifi module worked just fine, so Apache was running. Tried
+changing the .ini file port settings (all 21 of them) from 9100 to
+9000 and it didn't solve the problem, in fact made things worse as I
+could still connect to the server homepage, but now couldn't even get
+the error page from phpMyAdmin.
+
+By this time I figured that since I was already prepared to re-install
+SoaS for the nth time, I may as well try phpMyAdmin with SoaS 0.7.3.1
+- and am happy to report a resounding SUCCESS! So at this point I
+think it will be easier just to reconfigure 7.3.1 to my preferences
+rather than keep banging away at this issue with 7.3.0...
+
+I should have just done this from the beginning I suppose, but I was
+hoping for a simple fix on what I have, rather than having to start
+(almost) all over. But after this much time &amp; effort, and not really
+any closer to a solution, this will work just peaches afaic!
+
+Alright, now I have no excuse to hold me back! Ok back to work... ma&#241;ana... ;)
+
+~!CJ
+
+On 6/24/12, Cider Jack &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ciderjack.vw at gmail.com</A>&gt; wrote:
+&gt;<i> Ok, I decided to check log files (should have started there, I
+</I>&gt;<i> suppose). They look fine, no errors - BUT I did notice somewhere along
+</I>&gt;<i> the line Apache switched from listening over port 80 to port 26535. So
+</I>&gt;<i> I switched that back to 80 and started up SoaS. Everything seemed to
+</I>&gt;<i> be working fine, could log in with Imprudence just fine... I point my
+</I>&gt;<i> browser at localhost, and the server homepage loads up. Great!
+</I>&gt;<i> except...
+</I>&gt;<i>
+</I>&gt;<i> --Apache 2.2.11 is running
+</I>&gt;<i> --PHP 5.3.5 works
+</I>&gt;<i> **MySql is not running**
+</I>&gt;<i>
+</I>&gt;<i> Hmmm,very odd that Mowes reports MySql as running... and obviously it
+</I>&gt;<i> is or SoaS wouldn't work at all. Anyway, I click the link on that page
+</I>&gt;<i> to open phpMyAdmin and get the same old error, can't connect to the
+</I>&gt;<i> server.
+</I>&gt;<i>
+</I>&gt;<i> So I change the listening port back to 26535 and restart SoaS. Point
+</I>&gt;<i> browser at localhost:26535 and get to the server homepage. Same thing:
+</I>&gt;<i> MySql is not running (even though it is). This time however when I
+</I>&gt;<i> click the link to open phpMyAdmin, I get &quot;Welcome to phpMyAdmin&quot; -
+</I>&gt;<i> Awesome! Oh waitaminnit...
+</I>&gt;<i>
+</I>&gt;<i> --Error: #2002 The server is not responding (or the local MySQL
+</I>&gt;<i> server's socket is not correctly configured)
+</I>&gt;<i>
+</I>&gt;<i> ...So I'm thinking phpMyAdmin changes the listening port when it
+</I>&gt;<i> installs (security maybe?). However even though now that I can get to
+</I>&gt;<i> my server homepage, phpMyAdmin still seems broken. And why the
+</I>&gt;<i> conflict of Mowes reporting MySQL running while the server homepage
+</I>&gt;<i> reports it as /not/ running? Ugh, this is just leading to more and
+</I>&gt;<i> more questions. Guess it's time to back up Simona's iars and reinstall
+</I>&gt;<i> from scratch. That's all I can figure at this point, though honestly I
+</I>&gt;<i> have no faith as I've done this half a dozen times already (where's
+</I>&gt;<i> the banging-head-against-the-wall emoticon when you need it?)...
+</I>&gt;<i>
+</I>&gt;<i> On 6/19/12, Cider Jack &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ciderjack.vw at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Thanks Justin, good idea - I'll try that and reply in this thread with
+</I>&gt;&gt;<i> any info I can glean. I thought I should add I've posted this problem
+</I>&gt;&gt;<i> on the Mowes forum several months ago with no response.
+</I>&gt;&gt;<i> Cheers,
+</I>&gt;&gt;<i> ~!CJ
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 6/19/12, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Not sure what's happening here, but I presume you've tried asking Ener
+</I>&gt;&gt;&gt;<i> Hax
+</I>&gt;&gt;&gt;<i> directly?  I'm not sure she follows this list.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 16/06/12 06:11, Cider Jack wrote:
+</I>&gt;&gt;&gt;&gt;<i> Trying to run phpMyAdmin with SoaS 0.7.3 in Win7, and cannot connect.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I had about a year ago (with a previous version of SoaS on WinXP)
+</I>&gt;&gt;&gt;&gt;<i> installed phpMyAdmin along with SoaS, as per
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://www.chsoftware.net/en/mowes/mowesmixer/mowesmixer.htm?step=2">http://www.chsoftware.net/en/mowes/mowesmixer/mowesmixer.htm?step=2</A>
+</I>&gt;&gt;&gt;&gt;<i> and it worked as advertised. Then one day it just quit working for no
+</I>&gt;&gt;&gt;&gt;<i> obvious reason. I run SoaS and go to localhost on my browser and get
+</I>&gt;&gt;&gt;&gt;<i> the error (on Firefox):
+</I>&gt;&gt;&gt;&gt;<i> &quot;Firefox can't establish a connection to the server at localhost.&quot;
+</I>&gt;&gt;&gt;&gt;<i> (or on Chromium):
+</I>&gt;&gt;&gt;&gt;<i> &quot;Chromium's connection attempt to localhost was rejected. The website
+</I>&gt;&gt;&gt;&gt;<i> may be down or your network may not be properly configured.&quot;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> To me, this would seem to imply that Mowe's Apache server isn't
+</I>&gt;&gt;&gt;&gt;<i> running, however I have no problem logging in to SoaS via Imprudence,
+</I>&gt;&gt;&gt;&gt;<i> so clearly the server is fine.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Have reinstalled SoaS, tried more recent versions, reinstalled
+</I>&gt;&gt;&gt;&gt;<i> phpMyAdmin, all to no avail. I've since even moved to Win7&amp;  installed
+</I>&gt;&gt;&gt;&gt;<i> a fresh download of SoaS and phpMyAdmin, and yet I am still running
+</I>&gt;&gt;&gt;&gt;<i> into the same exact issue! I just watched over my partner's shoulder
+</I>&gt;&gt;&gt;&gt;<i> as she installed phpMyAdmin onto her SoaS and it worked without a
+</I>&gt;&gt;&gt;&gt;<i> hitch, so I know it's not something I'm doing wrong (and Mowes doesn't
+</I>&gt;&gt;&gt;&gt;<i> seem to have any trouble finding&amp;  installing the phpMyAdmin package).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I use Privoxy, but this wasn't an issue when phpMyAdmin was working.
+</I>&gt;&gt;&gt;&gt;<i> When I try to run phpMyAdmin without Privoxy, it still doesn't work. I
+</I>&gt;&gt;&gt;&gt;<i> don't use a firewall on my PC (not even Windows firewall), relying on
+</I>&gt;&gt;&gt;&gt;<i> the modem firewall. It's been the same modem all along so that doesn't
+</I>&gt;&gt;&gt;&gt;<i> seem likely. I've tried disabling all Firefox plugins when using
+</I>&gt;&gt;&gt;&gt;<i> Firefox, but again this had no effect.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Anyone else having this problem? Any suggestions on something I might
+</I>&gt;&gt;&gt;&gt;<i> try? Ready to pull my hair out here!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ~!CJ
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010570.html">[Opensim-users] SoaS 0.7.3 &amp; phpMyAdmin
+</A></li>
+	<LI>Next message: <A HREF="010530.html">[Opensim-users] Reminder: OpenSim Meetup in Zurich
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10571">[ date ]</a>
+              <a href="thread.html#10571">[ thread ]</a>
+              <a href="subject.html#10571">[ subject ]</a>
+              <a href="author.html#10571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

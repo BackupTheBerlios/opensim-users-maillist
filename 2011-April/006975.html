@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NAT &amp; Corporate Firewall
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3CBANLkTim_GScBTv4x4RZJYaQLfJcf1Mi5Sg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006970.html">
+   <LINK REL="Next"  HREF="006977.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NAT &amp; Corporate Firewall</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3CBANLkTim_GScBTv4x4RZJYaQLfJcf1Mi5Sg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] NAT &amp; Corporate Firewall">fleep513 at gmail.com
+       </A><BR>
+    <I>Tue Apr  5 16:34:47 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006970.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+        <LI>Next message: <A HREF="006977.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6975">[ date ]</a>
+              <a href="thread.html#6975">[ thread ]</a>
+              <a href="subject.html#6975">[ subject ]</a>
+              <a href="author.html#6975">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Gary's explanation that an IP address instead of a hostname is being passed
+to the client for the UDP handshake seems to fit the symptoms I'm seeing.
+ We have verified that UDP ports are open in the firewall and that UDP
+packets can be sent and received from off campus, so I'm 99.99% sure that
+this isn't a firewall problem.
+
+I've also double checked the opensim.ini, robust.ini, gridcommon.ini, and
+region.ini files and do not have a single IP address listed anywhere, all
+the configuration options I've set use a hostname.  However, when I try to
+connect with a client from off campus and capture packet traffic with
+Wireshark, I see the TCP packets being sent to the right destination IP
+address, but the UDP packets are being sent to an internal IP address
+(10.23.23.x) which of course will never work from off campus.  Something is
+sending the client that internal IP address to be sure!  :)
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL: Fleep Tuque)
+Project Manager, UC Second Life
+Second Life Ambassador, Ohio Learning Network
+UCit Instructional &amp; Research Computing
+University of Cincinnati
+406E Zimmer Hall
+PO Box 210088
+Cincinnati, OH 45221-0088
+(513)556-3018
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+
+UC Second Life:   <A HREF="http://homepages.uc.edu/secondlife">http://homepages.uc.edu/secondlife</A>
+OLN Second Life: <A HREF="http://www.oln.org/emerging_technologies/emtech.php">http://www.oln.org/emerging_technologies/emtech.php</A>
+
+
+
+
+
+On Tue, Apr 5, 2011 at 7:57 AM, Diva Canto &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+
+&gt;<i> On 4/4/2011 9:23 PM, Gary Beck wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Diva Canto wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> DNS resolution is made by the client. The server simply passes the name
+</I>&gt;&gt;&gt;<i> over. Make sure to use domain names consistently in all configuration files.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> ----------------------------------------------------------------------
+</I>&gt;&gt;<i> My testing seems to show the IP address rather than domain name is passed
+</I>&gt;&gt;<i> to the client for region/UDP.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have one region using ExternalHostName=SYSTEMIP and the others using
+</I>&gt;&gt;<i> ExternalHostName=something.dyndns-mail.com
+</I>&gt;&gt;<i> I run Opensim 0.7.0.2 on a VISTA system, stand alone mode, client access
+</I>&gt;&gt;<i> both local and external, NAT loopback on.
+</I>&gt;&gt;<i> All that works fine.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> SYSTEMIP is an IP address. If that's what you have, that's what will be
+</I>&gt;<i> sent to the client.
+</I>&gt;<i> I suggest people people use domain names everywhere for ExternalHostName
+</I>&gt;<i> and do local DNS mapping if necessary -- this may be needed in home
+</I>&gt;<i> networks.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  One other item I found that suggests IP addresses are being passes rather
+</I>&gt;&gt;<i> than domain names is the Entity Transfer Module entries in the server log
+</I>&gt;&gt;<i> 2011-04-04 22:24:53,759 INFO  -
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+</I>&gt;&gt;<i> [ENTITY TRANSFER MODULE]: Starting to inform client about neighbour 999,
+</I>&gt;&gt;<i> 999(174.124.181.36:9009)
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This has nothing to do with client communications -- it's the backend
+</I>&gt;<i> server-to-server communications for handing the agent over to the other sim.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110405/22e5d9c6/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110405/22e5d9c6/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006970.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+	<LI>Next message: <A HREF="006977.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6975">[ date ]</a>
+              <a href="thread.html#6975">[ thread ]</a>
+              <a href="subject.html#6975">[ subject ]</a>
+              <a href="author.html#6975">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

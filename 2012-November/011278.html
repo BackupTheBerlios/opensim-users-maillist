@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Announcement%20of%20inventory%20tool%20%28MyInventory%29%2C%0A%20mostly%20of%20interest%20to%20grid%20operators/grid%20nauts&In-Reply-To=%3C50A63C27.2060902%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011273.html">
+   <LINK REL="Next"  HREF="011280.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts</H1>
+    <B>Diva Canto</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Announcement%20of%20inventory%20tool%20%28MyInventory%29%2C%0A%20mostly%20of%20interest%20to%20grid%20operators/grid%20nauts&In-Reply-To=%3C50A63C27.2060902%40metaverseink.com%3E"
+       TITLE="[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts">diva at metaverseink.com
+       </A><BR>
+    <I>Fri Nov 16 14:14:15 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011273.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+        <LI>Next message: <A HREF="011280.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11278">[ date ]</a>
+              <a href="thread.html#11278">[ thread ]</a>
+              <a href="subject.html#11278">[ subject ]</a>
+              <a href="author.html#11278">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 11/15/2012 11:34 PM, Snowcrash Short wrote:
+&gt;<i> I'm not terribly familiar with the terminology used by the core, to 
+</I>&gt;<i> somebody with my intelligence or lack thereof the number of interfaces 
+</I>&gt;<i> and their differences are a bit bewildering (but hey, my code is 
+</I>&gt;<i> bewildering too). The webservices I rely on can be found in the config 
+</I>&gt;<i> files under [AssetService] and [InventoryService]. E.g.
+</I>&gt;<i> AssetServerURI = &quot;<A HREF="http://assets.osgrid.org">http://assets.osgrid.org</A>&quot;
+</I>&gt;<i> InventoryServerURI = &quot;<A HREF="http://inventory.osgrid.org">http://inventory.osgrid.org</A>&quot;
+</I>
+This would be a really bad idea, and I'll be the first to discourage 
+grid operators from doing this. You're basically asking grid operators 
+to place their internal inventory services on the Internet, which would 
+put inventories at risk. Wiping out entire inventories would be trivial. 
+(Yes, osgrid does this, but that's because it has no choice, given its 
+purpose and configuration)
+
+These services are designed to be called by the simulators *only*. They 
+are devoid of any security or permissions checks *whatsoever*. They're 
+basically just getters/setters for the database. That's on purpose; in a 
+system like what we have at hand, the simulators are the ones doing the 
+security / permissions checks, so doing them again in the backend 
+[internal] services would be redundant.
+
+That's why we have been designing other services on top of the database, 
+the HG services, which toughen security. So pointing this to the HG 
+services might make sense. You'll find those configs in the HG versions 
+of the configuration files under the [LoginService] section.
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011273.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+	<LI>Next message: <A HREF="011280.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11278">[ date ]</a>
+              <a href="thread.html#11278">[ thread ]</a>
+              <a href="subject.html#11278">[ subject ]</a>
+              <a href="author.html#11278">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,357 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Out of Memory Exception on IAR Save?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Out%20of%20Memory%20Exception%20on%20IAR%20Save%3F&In-Reply-To=%3C4CF4A576.8060407%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006306.html">
+   <LINK REL="Next"  HREF="006235.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Out of Memory Exception on IAR Save?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Out%20of%20Memory%20Exception%20on%20IAR%20Save%3F&In-Reply-To=%3C4CF4A576.8060407%40cox.net%3E"
+       TITLE="[Opensim-users] Out of Memory Exception on IAR Save?">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Tue Nov 30 08:19:18 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006306.html">[Opensim-users] Out of Memory Exception on IAR Save?
+</A></li>
+        <LI>Next message: <A HREF="006235.html">[Opensim-users] Open-Simulator GIT server is Down..??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6307">[ date ]</a>
+              <a href="thread.html#6307">[ thread ]</a>
+              <a href="subject.html#6307">[ subject ]</a>
+              <a href="author.html#6307">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm will give that a try and see if there's anything that might be 
+holding it up. I did notice something however, and I put it in as a note 
+on the Mantis i filed on it, but:
+
+On a whim I tried disabling XEngine by setting Enabled = false in that 
+section of OpenSim.ini restarted the server and then attempted an IAR 
+save. It went without a hitch; I was able to save an IAR of that avatar 
+multiple times with no problem. Re-enabled XEngine and tried an IAR save 
+and I get the red flood of text in the middle of its folder search 
+telling me it's out of memory. Disabled XEngine again just to be sure 
+and surely enough it was able to save my IAR no problem.
+
+Thank you for the suggestions =)
+
+On 11/29/2010 10:35 PM, Justin Clark-Casey wrote:
+&gt;<i> On 27/11/10 04:19, Chris wrote:
+</I>&gt;&gt;<i> Built on the latest code for 0.6.9 and tried an IAR save... It 
+</I>&gt;&gt;<i> reported back a few random objects in my inventory that I
+</I>&gt;&gt;<i> managed to find using the search by UUID feature in the viewer I'm 
+</I>&gt;&gt;<i> using. What puzzles me is I have these objects rezzed
+</I>&gt;&gt;<i> out in my regions and saving an OAR of these regions with those 
+</I>&gt;&gt;<i> objects works perfectly fine. For instance, one of the
+</I>&gt;&gt;<i> said object UUID's refers to a house that I built a while back (OS 
+</I>&gt;&gt;<i> 0.6.7 I believe). Nothing big I don't think lol or
+</I>&gt;&gt;<i> fancy; 136 prims and not using any textures larger than 1024x1024 (I 
+</I>&gt;&gt;<i> don't know if it's possible to use textures larger
+</I>&gt;&gt;<i> than this anyway) and never had a problem including this object in 
+</I>&gt;&gt;<i> the IAR up until recently.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've also transferred the offending objects to a newly created avatar 
+</I>&gt;&gt;<i> and tried saving an IAR off that avatar and it had
+</I>&gt;&gt;<i> no problem. So I am not sure if it's a matter of an insanely huge 
+</I>&gt;&gt;<i> asset that is holding it up... However, when I do
+</I>&gt;&gt;<i> manage to sucessfully save the IAR, the resulting file is around 
+</I>&gt;&gt;<i> 800-ish megs. Is it possible that the av's inventory is
+</I>&gt;&gt;<i> just too large in general? Or perhaps, relating to a question I asked 
+</I>&gt;&gt;<i> a little while back, could deeply nested folders
+</I>&gt;&gt;<i> (or just too many folders) be the culprit?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> i.e. My Inventory
+</I>&gt;&gt;<i> Folder 1
+</I>&gt;&gt;<i> Folder 2
+</I>&gt;&gt;<i> Folder 3
+</I>&gt;&gt;<i> Folder 4
+</I>&gt;&gt;<i> etc.
+</I>&gt;<i>
+</I>&gt;<i> 800 mb is a massive size for an IAR so I suspect that it's simply your 
+</I>&gt;<i> huge inventory that's causing the problem.  Even very deep nests of 
+</I>&gt;<i> directories shouldn't be an issue.
+</I>&gt;<i>
+</I>&gt;<i> You might want to try untarring the IAR (it's an ordinary tar.gz) and 
+</I>&gt;<i> seeing if there's any one particular asset which is surprisingly big.
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 11/26/2010 7:42 PM, Chris wrote:
+</I>&gt;&gt;&gt;<i> Alright, will do that. Thank you!
+</I>&gt;&gt;&gt;<i> I posted a mantis on this 
+</I>&gt;&gt;&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=5238">http://opensimulator.org/mantis/view.php?id=5238</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Will report on my findings soon =)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 11/26/2010 6:57 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;&gt;<i> It looks like OpenSim is somehow running out of memory during a 
+</I>&gt;&gt;&gt;&gt;<i> search and replace operation. I should think that the
+</I>&gt;&gt;&gt;&gt;<i> same problem would exist on 0.7.0.2 and master.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The only thing I can think of is that one of your assets is 
+</I>&gt;&gt;&gt;&gt;<i> absolutely huge, much bigger than could be reasonably
+</I>&gt;&gt;&gt;&gt;<i> expected.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I patched 0.6.9-post-fixes (and master, 0.7-post-fixes) to log on 
+</I>&gt;&gt;&gt;&gt;<i> the console which asset causes the problem. If you
+</I>&gt;&gt;&gt;&gt;<i> can build 0.6.9-post-fixes from source then I suggest that you try 
+</I>&gt;&gt;&gt;&gt;<i> this and then look in the database to see if
+</I>&gt;&gt;&gt;&gt;<i> there's anything unusual about that asset (e.g. if it's very very 
+</I>&gt;&gt;&gt;&gt;<i> large).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Otherwise, I'm afraid you will have to wait until 0.7.1 is released 
+</I>&gt;&gt;&gt;&gt;<i> before you can get this information.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 25/11/10 05:29, Chris wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> That is odd because I'm not actually running OpenSim from any 
+</I>&gt;&gt;&gt;&gt;&gt;<i> directory with &quot;New Folder&quot; in it... This is the path I'm
+</I>&gt;&gt;&gt;&gt;&gt;<i> running from: C:\Documents and Settings\Chris\Desktop\OpenSim\OS 
+</I>&gt;&gt;&gt;&gt;&gt;<i> 069 Post Fixes\bin
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> This is OpenSim 0.6.9 Post-Fixes I am using; Since the latest 
+</I>&gt;&gt;&gt;&gt;&gt;<i> stable is 0.7.0.2 should I still file a Mantis report on
+</I>&gt;&gt;&gt;&gt;&gt;<i> it? Thank you! =)
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> On 11/24/2010 5:33 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> On 23/11/10 23:49, Chris wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Hi all. I've recently been getting 'System.OutOfMemoryException' 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> errors when I attempt to save my avatar's entire
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> inventory with the Inventory Archiver. It will go through the 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> usual process of finding the directories to archive and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> after it finds so many it will give me that exception and then 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> terminate the IAR job (usually before it ever
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> reaches the
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> assets stage). I usually have to restart the server several 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> times (and try to save an IAR each time) in order to
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> get it
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> to save the IAR successfully.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> I have checked to make sure that I am not running out of RAM 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> (still have ~1.5 gigs free while every thing is up and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> running and IAR is being saved) or Virtual Memory/Page File when 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> I attempt this and I have plenty of HD space
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> where I am
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> saving the IAR so I am at a loss as to why this is happening all 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> of a sudden. I did notice something strange in the
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> exception message that I received and that is the fact that it 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> seems to be trying to access &quot;New Folder&quot; on my
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> desktop
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> when there isn't a directory on my desktop called &quot;New Folder&quot; 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> and I didn't direct it to save to New Folder either
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> (I am
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> saving to C:\inventory.iar btw)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> This is strange. Could you open a Mantis bug report and put this 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> information there, along with the exact version
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> number or Git revision of OpenSim that you're using.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> From the stack trace, you're running OpenSim from the path
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> &quot;c:\Documents and Settings\Chris\Desktop\New Folder&quot;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> which I imagine is where &quot;New Folder&quot; is coming from.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Any suggestions or insight would be much appreciated =)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Exception:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 2010-11-23 00:13:27,406 ERROR - OpenSim.Application Command 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> error: System.OutOfMemoryException: Exception
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> of type 'System.OutOfMemoryException' was thrown.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at System.String.Replace(String oldValue, String newValue)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.Framework.Scenes.Serialization.SceneObjectSerializer.FromOriginalXmlFormat(UUID 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> fromUserInventoryItemID, String xmlData) in c:\Documents and 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\Framework\Scenes\Serialization\SceneObjectSerializer.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 69
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.Framework.Scenes.Serialization.SceneObjectSerializer.FromOriginalXmlFormat(String 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> serialization) in c:\Documents and Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\Framework\Scenes\Serialization\SceneObjectSerializer.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 55
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.Framework.Scenes.UuidGatherer.GetSceneObjectAssetUuids(UUID 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> sceneObjectUuid,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> IDictionary`2 assetUuids) in c:\Documents and 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\Framework\Scenes\UuidGatherer.cs:line 280
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.Framework.Scenes.UuidGatherer.GatherAssetUuids(UUID 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> assetUuid, AssetType assetType,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> IDictionary`2 assetUuids) in c:\Documents and 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\Framework\Scenes\UuidGatherer.cs:line 105
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.SaveInvItem(InventoryIt 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> emBase inventoryItem, String path) in c:\Documents and 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 156
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.SaveInvFolder(Inventory 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> FolderBase inventoryFolder, String path, Boolean 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> saveThisFolderItself) in c:\Documents and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 207
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.SaveInvFolder(Inventory 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> FolderBase inventoryFolder, String path, Boolean 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> saveThisFolderItself) in c:\Documents and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 202
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.SaveInvFolder(Inventory 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> FolderBase inventoryFolder, String path, Boolean 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> saveThisFolderItself) in c:\Documents and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 202
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveWriteRequest.Execute() 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> in
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> c:\Documents and Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiveWriteRequest.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 303
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiverModule.ArchiveInventory(Guid 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> id, String firstName, String lastName, String invPath, String 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> pass, String savePath) in c:\Documents and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiverModule.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 174
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiverModule.HandleSaveInvConsoleCommand( 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> String module, String[] cmdparams) in c:\Documents and 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\CoreModules\Avatar\Inventory\Archiver\InventoryArchiverModule.cs:line 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 341
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Framework.Console.Commands.Resolve(String[] cmd) in 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> c:\Documents and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Framework\Console\CommandConsole.cs:line 364
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Framework.Console.LocalConsole.ReadLine(String p, 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Boolean isCommand, Boolean e) in
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> c:\Documents and Settings\Chris\Desktop\New 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Framework\Console\LocalConsole.cs:line 473
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Framework.Console.CommandConsole.Prompt() in 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> c:\Documents and Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Framework\Console\CommandConsole.cs:line 583
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> at OpenSim.Application.Main(String[] args) in c:\Documents and 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Settings\Chris\Desktop\New
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Folder\OpenSim\Region\Application\Application.cs:line 165
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006306.html">[Opensim-users] Out of Memory Exception on IAR Save?
+</A></li>
+	<LI>Next message: <A HREF="006235.html">[Opensim-users] Open-Simulator GIT server is Down..??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6307">[ date ]</a>
+              <a href="thread.html#6307">[ thread ]</a>
+              <a href="subject.html#6307">[ subject ]</a>
+              <a href="author.html#6307">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

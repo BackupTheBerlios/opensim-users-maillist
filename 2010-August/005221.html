@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Several problem on scripting and physics
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Several%20problem%20on%20scripting%20and%20physics&In-Reply-To=%3C4C647C08.7060808%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005220.html">
+   <LINK REL="Next"  HREF="005212.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Several problem on scripting and physics</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Several%20problem%20on%20scripting%20and%20physics&In-Reply-To=%3C4C647C08.7060808%40googlemail.com%3E"
+       TITLE="[Opensim-users] Several problem on scripting and physics">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Aug 13 00:56:08 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005220.html">[Opensim-users] Several problem on scripting and physics
+</A></li>
+        <LI>Next message: <A HREF="005212.html">[Opensim-users] Clearing Trash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5221">[ date ]</a>
+              <a href="thread.html#5221">[ thread ]</a>
+              <a href="subject.html#5221">[ subject ]</a>
+              <a href="author.html#5221">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 12/08/10 23:50, Tzu-Lun Wong wrote:
+&gt;<i> Hey, thanks for the reply.
+</I>&gt;<i> 1) No, it doesn't treat the avatar as phantom and it will interact with
+</I>&gt;<i> *some* physical object just fine (when they're fine, they don't tend
+</I>&gt;<i> have the problem any more).
+</I>&gt;<i>
+</I>&gt;<i> Sorry, but I'm relatively new to OpenSim, I'm not sure what you meant by
+</I>&gt;<i> &quot;git Master code&quot; but I encountered this problem using 0.6.9 and
+</I>&gt;<i> recently just changed to 0.7.1 and still encountering this problem. I've
+</I>&gt;<i> looked into the ODE section under OpenSim.ini but found nothing really
+</I>&gt;<i> useful in there.
+</I>
+No problem - I just meant the latest cutting edge code in our source repository (which is git).  But 0.7.0.1 is very 
+recent, so it's very similar to what is in Master.
+
+&gt;<i>
+</I>&gt;<i> 2) I have played around on 0.7.1 and this problem don't seen to be
+</I>&gt;<i> occurring any more. I have everything set as default when using 0.6.9
+</I>&gt;<i> however.
+</I>
+Curious, I haven't heard of this particular problem with the 0.6.9 packages.
+
+&gt;<i>
+</I>&gt;<i> 3) Interesting. I am currently using OpenSim under windows, and the page
+</I>&gt;<i> don't seen to have much details on using ODE 11.1. I will give it a try
+</I>&gt;<i> though, but any extra help would be appreciated!
+</I>
+Be aware that if you're using the 64 bit version of Windows, it's better so start OpenSim in 32 bit mode (using 
+OpenSim.32BitLaunch.exe).  There have been problems compiling a 64 bit version of ODE for Windows, so we can only ship 
+32 bit libraries.
+
+&gt;<i>
+</I>&gt;<i> Thanks again!
+</I>&gt;<i>
+</I>&gt;<i> On 13 August 2010 09:42, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     On 12/08/10 10:33, Tzu-Lun Wong wrote:
+</I>&gt;<i>
+</I>&gt;<i>         Hi all, I've posted this on the OSgrid technical forum and was
+</I>&gt;<i>         redirected here.
+</I>&gt;<i>
+</I>&gt;<i>         I'm currently working on a project for an University on exploring
+</I>&gt;<i>         opensim as a possibility for a learning environment for physics.
+</I>&gt;<i>         I've
+</I>&gt;<i>         encountered several problem on my local opensim region. (NOTE: all
+</I>&gt;<i>         problem below are encountered on the ODE physics engine)
+</I>&gt;<i>
+</I>&gt;<i>         1) Sometimes when object are set physical, it'll treat other
+</I>&gt;<i>         object as
+</I>&gt;<i>         &quot;phantom&quot;. For example, I've set up a platform (8m x 6m x 0.1m)
+</I>&gt;<i>         floating
+</I>&gt;<i>         in mid air, and a lot of the time when I try to place anything
+</I>&gt;<i>         physical
+</I>&gt;<i>         on it, the physical object will ignore the platform and fall
+</I>&gt;<i>         through it.
+</I>&gt;<i>         I can't seen to find out why as I have tried various shapes and
+</I>&gt;<i>         sizes
+</I>&gt;<i>         and the problem isn't consistent, sometime it doesn't fall through
+</I>&gt;<i>         sometime it does.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Does it also treat the avatar as phantom?
+</I>&gt;<i>
+</I>&gt;<i>     Just in case, you might want to try the latest git Master code,
+</I>&gt;<i>     since I recently put in a fix that stops non-root prims being
+</I>&gt;<i>     'phantom' on initial shift-copy in-world duplication (though things
+</I>&gt;<i>     are fine after a server restart).  I suspect that this doesn't have
+</I>&gt;<i>     anything to do with your problem but it's worth checking.
+</I>&gt;<i>
+</I>&gt;<i>     As a last resort you may want to fiddle with the
+</I>&gt;<i>     [ODEPhysicsSettings] section in OpenSim.ini, though I've no real
+</I>&gt;<i>     idea if this will help.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         2) When restarting my opensim server/region, all the object's script
+</I>&gt;<i>         disappears. This means I have to save everything into my inventory
+</I>&gt;<i>         before I close down the server and then rez them back and
+</I>&gt;<i>         relocate them
+</I>&gt;<i>         EVERY TIME. Is this a known problem or is there a step where I
+</I>&gt;<i>         missed
+</I>&gt;<i>         that will save the script before I quit the server?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     In prim scripts should be being saved without any extra user
+</I>&gt;<i>     actions.  I suggest you carefully check your OpenSim configuration.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         3) This one is probably unsolvable unless there's an update on
+</I>&gt;<i>         physic
+</I>&gt;<i>         engine. My partner on the same project made a pendulum that
+</I>&gt;<i>         pivot on a
+</I>&gt;<i>         triangular shape. When the pendulum reaches it's highest peak on
+</I>&gt;<i>         it's
+</I>&gt;<i>         swing, it shakes vigorously. After a long time the pendulum will
+</I>&gt;<i>         eventually shift position. I'm guessing this is due to rounding
+</I>&gt;<i>         calculation on the contact point of the pivot point when it
+</I>&gt;<i>         reaches it's
+</I>&gt;<i>         highest peak, causing the pendulum to &quot;shift-slightly&quot; causing it to
+</I>&gt;<i>         &quot;shake&quot;.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     I suspect you're right, though I'm no physics expert.  OpenSim
+</I>&gt;<i>     currently uses ODE 10.1.  Some folks are experimenting with ODE 11.1
+</I>&gt;<i>     with good results.  I updated the OpenSim wiki at
+</I>&gt;<i>
+</I>&gt;<i>     <A HREF="http://opensimulator.org/wiki/PhysicsEngines">http://opensimulator.org/wiki/PhysicsEngines</A>
+</I>&gt;<i>
+</I>&gt;<i>     with those instructions (I haven't actually tried this myself).
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Regards,
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     Justin Clark-Casey (justincc)
+</I>&gt;<i>     <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i>     <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005220.html">[Opensim-users] Several problem on scripting and physics
+</A></li>
+	<LI>Next message: <A HREF="005212.html">[Opensim-users] Clearing Trash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5221">[ date ]</a>
+              <a href="thread.html#5221">[ thread ]</a>
+              <a href="subject.html#5221">[ subject ]</a>
+              <a href="author.html#5221">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

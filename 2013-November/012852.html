@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [scripting] A llCastRay-based path finder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bscripting%5D%20A%20llCastRay-based%20path%20finder&In-Reply-To=%3Cp06240801ceb133315a62%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012851.html">
+   <LINK REL="Next"  HREF="012853.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [scripting] A llCastRay-based path finder</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bscripting%5D%20A%20llCastRay-based%20path%20finder&In-Reply-To=%3Cp06240801ceb133315a62%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] [scripting] A llCastRay-based path finder">opensim at pescadoo.net
+       </A><BR>
+    <I>Tue Nov 19 18:47:44 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012851.html">[Opensim-users] Cloudy avatar when hypergriding from 0.7.6 to lower
+</A></li>
+        <LI>Next message: <A HREF="012853.html">[Opensim-users] [scripting] A llCastRay-based path finder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12852">[ date ]</a>
+              <a href="thread.html#12852">[ thread ]</a>
+              <a href="subject.html#12852">[ subject ]</a>
+              <a href="author.html#12852">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>As you may have noticed, since 0.7.6 llCastRay is now functional. We 
+can think about helping our NPC to find their way in a closed 
+environment.
+
+This method relies on marker prims, or beacons, defining waypoints. 
+The following script computes the connexity matrix between a set of 
+waypoints. A one in [ i,j ] means there is a direct path from i to j.
+
+Build some walls on a flat ground. At corners and intersections, lay 
+a number a thin prims named wp1, wp2 and so on.  Their altitude 
+should be higher than or equal to the wall's base, so that rays 
+casted between two waypoints will hit the walls. Here is a picture of 
+my test rig: <A HREF="http://www.pescadoo.net/tmp/NPC_maze.png">http://www.pescadoo.net/tmp/NPC_maze.png</A>
+
+It is advised to allow osSetPrimitiveParams. We'll get a nice demo 
+for the price. Let's now browse the code.
+
+First, we sense the waypoints. We iterate on llSense, incrementing 
+the index until we get a no_sensor event. The waypoints names, 
+locations and keys are stored in a strided list.
+
+Then, we compute the matrix calling llCastRay for each couple of 
+waypoints. We analyse the hits and declare the two waypoints are 
+connex if we hit any object whose name IS NOT &quot;wp*&quot;. This rule may be 
+refined (using the object's height, volume, or some more 
+sophisticated rule depending on the environment, a rug should no 
+count as a wall). As the matrix is symmetric, we compute only a 
+half-matrix and fill the transposed cells with the same value. We 
+also fill the diagonal with ones. The matrix is stored as a string a 
+'0' and '1', with pseudo-array accessors.
+
+Finally, we enter a listening state. Saying &quot;wp3&quot; will highlight 
+waypoint 3 in blue, and all connex waypoints in green (that's why we 
+need osSetPrimitiveParams).That's the point your NPC can reach 
+without bumping into the walls. Unreachable waypoints are colored red.
+
+The script stops here for today. You guess it, the next step is to 
+find a path from waypoint A to waypoint B. A classical graph theory 
+exercise, the &quot; transitive closure&quot;. I assume you know how to make a 
+NPC move from point A to point B.
+
+Have fun!
+
+
+
+
+DEBUG (string msg) { llOwnerSay (msg); }
+PRINT (string msg) { llSay (0, msg); }
+
+//
+// Waypoints list and accessors
+//
+
+list WayPoints; // Strided list (name, location, key)
+
+string WPnam (integer i) { return llList2String (WayPoints, 3*i+0); }
+vector WPLoc (integer i) { return llList2String (WayPoints, 3*i+1); }
+key    WPKey (integer i) { return llList2Key    (WayPoints, 3*i+2); }
+integer WPnumber ()      { return llGetListLength (WayPoints) / 3;  }
+
+integer FindWP (string name) {
+     integer i = llListFindList (WayPoints, [name]);
+     if (i== -1) return i;
+     else        return i/3;
+}
+
+
+//
+// Connexity matrix and accessors
+//
+
+string Matrix; // Matrix NxN of booleans implemented as string of 0/1
+
+MatrixNew (integer size) {
+     integer n=0; for (n=0; n&lt;size*size; n++)
+         Matrix += &quot;0&quot;;
+}
+
+MatrixSet (integer i, integer j, integer value) {
+     integer size = (integer)llSqrt(llStringLength (Matrix));
+     integer index = i*size+j;
+     Matrix = llDeleteSubString (Matrix, index, index);
+     Matrix = llInsertString (Matrix, index, (string)value);
+}
+
+integer MatrixGet (integer i, integer j) {
+     integer size = (integer)llSqrt(llStringLength (Matrix));
+     integer index = i*size+j;
+     return (integer)llGetSubString (Matrix, index, index);
+}
+
+MatrixPrint () {
+     integer size = (integer)llSqrt(llStringLength (Matrix));
+     integer n=0; for (n=0; n&lt;size; n++) {
+         PRINT (llGetSubString(Matrix, n*size, n*size+size-1));
+     }
+}
+
+
+//
+// Colors, osFunctions to change color by ID
+//
+
+vector RED      = &lt;1.0, 0.0, 0.0&gt;;
+vector GREEN    = &lt;0.0, 1.0, 0.0&gt;;
+vector BLUE     = &lt;0.0, 0.0, 1.0&gt;;
+vector BLACK    = &lt;0.0, 0.0, 0.0&gt;;
+vector GREY     = &lt;0.5, 0.5, 0.5&gt;;
+vector WHITE    = &lt;1.0, 1.0, 1.0&gt;;
+
+
+SetIDColor (key id, vector color) {
+     osSetPrimitiveParams(id, [PRIM_COLOR, ALL_SIDES, color, 1.0]);
+}
+
+BlinkIDColor (key id, vector color) {
+     integer i; for (i=0; i&lt;2; i++) {
+         osSetPrimitiveParams(id, [PRIM_COLOR, ALL_SIDES, color, 
+1.0]); llSleep (0.1);
+         osSetPrimitiveParams(id, [PRIM_COLOR, ALL_SIDES, WHITE, 
+1.0]); llSleep (0.1);
+     }
+}
+
+ResetAll () {
+     integer i; for (i=0; i&lt;WPnumber(); i++)
+         SetIDColor (WPKey(i), GREY);
+}
+
+
+//
+// Waypoints sensing
+//
+
+integer wpindex;    // The current waypoint index
+
+SenseNext () {
+     string target = &quot;wp&quot;+(string)(++wpindex);
+     llSensor (target, &quot;&quot;, PASSIVE, 200.0, PI);
+}
+
+SenseDone (string theNam, key theKey, vector theLoc) {
+     if (theKey == NULL_KEY) state deux;
+
+     DEBUG (theNam +&quot; &quot;+(string)theLoc);
+     WayPoints += [ theNam, theLoc, theKey ];
+     SenseNext();
+}
+
+string Key2Name (key id) {
+     list dtls = llGetObjectDetails (id, [OBJECT_NAME]);
+     return llList2String (dtls, 0);
+}
+
+float Key2Height (key id) {
+     list dtls = llGetObjectDetails (id, [OBJECT_POS]);
+     vector pos = llList2Vector (dtls, 0);
+     return pos.z;
+}
+
+//
+// Connexity test
+//
+
+integer TestPath (integer wp1, integer wp2) {
+     string nam1 = WPnam(wp1); vector loc1 = WPLoc(wp1); key key1 = WPKey (wp1);
+     string nam2 = WPnam(wp2); vector loc2 = WPLoc(wp2); key key2 = WPKey (wp2);
+
+     list hits = llCastRay (loc1, loc2, [RC_MAX_HITS,5]);
+     integer found  = (llGetListLength(hits)-1) / 2;
+     integer status = llList2Integer(hits, -1);
+
+     DEBUG (&quot;&quot;);
+     DEBUG (&quot;CastRay from &quot; +nam1 +&quot; to &quot; +nam2 +&quot;, Hits/Status : &quot;
+                 +(string)found +&quot; &quot; +(string)status);
+
+     integer numocclu = 0;
+     integer i; for (i=0; i&lt;found; i++) {
+         key    hitKey = llList2Key    (hits, 2*i+0);
+         vector hitLoc = llList2Vector (hits, 2*i+1);
+         string hitNam = Key2Name (hitKey);
+         float  hitHei = Key2Height (hitKey);
+         float  hitDis = llVecDist (hitLoc, loc1);
+
+         // Test d'occlusion. Ici, on se base sur le nom
+         // On peut se baser sur la hauteur mais ne pas
+         // utiliser hitLoc qui est le point d'interception
+
+         integer occlusion = (llGetSubString(hitNam,0,1) != &quot;wp&quot;);
+         DEBUG (&quot;[&quot;+(string)i+&quot;] &quot;+hitNam+&quot; &quot;+(string)hitHei+&quot; 
+&quot;+(string)occlusion);
+         if (occlusion) ++numocclu;
+     }
+
+     // Waypoints are connex if zero occlusion
+
+     integer connex = (numocclu == 0);
+     DEBUG (nam1 +&quot; to &quot; +nam2 +&quot; : &quot;+(string)connex);
+     return connex;
+}
+
+
+//
+// Highlight connex waypoints
+//
+
+ShowNeighbours (integer wp1) {
+     ResetAll ();
+
+     key key1 = WPKey (wp1);
+     SetIDColor (key1, BLUE);
+
+     integer wp2;  for (wp2=0; wp2&lt;WPnumber(); wp2++) {
+         integer reach = MatrixGet (wp1, wp2);
+         key key2 = WPKey (wp2);
+         if (wp1 != wp2)
+             if (reach)  SetIDColor (key2, GREEN);
+             else            SetIDColor (key2, RED);
+     }
+}
+
+
+///////////////////////////////////////////////////////
+// Step 1 : sense all waypoints and make a structure
+///////////////////////////////////////////////////////
+
+default {
+
+     state_entry() {
+         PRINT (&quot;Sensing waypoints&quot;);
+         SenseNext();
+     }
+
+     sensor(integer num) {
+         key    hisKey = llDetectedKey  (0);
+         vector hisPos = llDetectedPos  (0);
+         string hisNam = llDetectedName (0);
+         SenseDone (hisNam, hisKey, hisPos);
+     }
+
+     no_sensor() {
+         SenseDone (&quot;&quot;, NULL_KEY, ZERO_VECTOR);
+     }
+
+     state_exit() {
+         PRINT ((string)WPnumber()+&quot; found&quot;);
+     }
+
+}
+
+///////////////////////////////////////////////////////
+// Step 2 : compute the connexity matrix
+///////////////////////////////////////////////////////
+
+state deux {
+
+     state_entry() {
+         PRINT (&quot;Computing Matrix&quot;);
+         MatrixNew (WPnumber());
+
+         integer wp1; integer wp2;
+         for (wp1=0; wp1&lt;WPnumber(); wp1++)
+             for (wp2=wp1+1; wp2&lt;WPnumber(); wp2++) {
+                 integer reach = TestPath (wp1, wp2);
+                 MatrixSet (wp1, wp2, reach);
+                 MatrixSet (wp2, wp1, reach);
+                 MatrixSet (wp1, wp1, TRUE);
+         }
+
+         MatrixPrint ();
+         state trois;
+     }
+
+}
+
+///////////////////////////////////////////////////////
+// Step 3 : listen for waypoint and highlight result
+///////////////////////////////////////////////////////
+
+state trois {
+
+     state_entry() {
+         PRINT (&quot;Listening to commands&quot;);
+         llListen (0, &quot;&quot;, llGetOwner(), &quot;&quot;);
+     }
+
+     listen (integer channel, string name, key id, string message) {
+         integer wp = FindWP (message);
+         if (wp != -1) ShowNeighbours (wp);
+     }
+
+}
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012851.html">[Opensim-users] Cloudy avatar when hypergriding from 0.7.6 to lower
+</A></li>
+	<LI>Next message: <A HREF="012853.html">[Opensim-users] [scripting] A llCastRay-based path finder
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12852">[ date ]</a>
+              <a href="thread.html#12852">[ thread ]</a>
+              <a href="subject.html#12852">[ subject ]</a>
+              <a href="author.html#12852">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SYSTEMIP%20and%20a%20repeated%20UseCircuitCode&In-Reply-To=%3CAANLkTinIZ-Apv5SvW7m9CasPH0r0d2pFB3pz09ZD_6hB%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004775.html">
+   <LINK REL="Next"  HREF="004778.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] SYSTEMIP and a repeated UseCircuitCode</H1>
+    <B>Bulli</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SYSTEMIP%20and%20a%20repeated%20UseCircuitCode&In-Reply-To=%3CAANLkTinIZ-Apv5SvW7m9CasPH0r0d2pFB3pz09ZD_6hB%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] SYSTEMIP and a repeated UseCircuitCode">avdleeuw at gmail.com
+       </A><BR>
+    <I>Thu Jun 24 12:12:20 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004775.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+        <LI>Next message: <A HREF="004778.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4776">[ date ]</a>
+              <a href="thread.html#4776">[ thread ]</a>
+              <a href="subject.html#4776">[ subject ]</a>
+              <a href="author.html#4776">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>and setting all values in the ini files to there, after startup I find
+
+&gt;<i> the following line in the opensim.log:
+</I>&gt;<i>
+</I>&gt;<i> INFO - OpenSim.OpenSim [NETWORK]: Using xx.xx.xx.228 as SYSTEMIP
+</I>&gt;<i>
+</I>&gt;<i> ...but that's my default IP address.
+</I>&gt;<i>
+</I>&gt;<i> Please be aware that this message is completely valid, and only informing
+</I>you of the fact that the variable SYSTEMIP has been filled with the value
+xx.xx.xx.228
+
+Quick look in the code:
+
+m_log.InfoFormat(&quot;[NETWORK]: Using {0} as SYSTEMIP&quot;,
+Util.GetLocalHost().ToString());
+
+So the value of SYSTEMIP is based on the local host definition.
+
+This does NOT mean that the value SYSTEMIP would actually be used in any
+other place.
+
+What did you grep for? SYSTEMIP, the hostname or the actual IP-address?
+Remember that an IP-address of 0.0.0.0 will also map to the default.
+
+Any chance you have (old) XML region files lying around with the default
+IP-address?
+
+Regards,
+
+Bulli Schumann
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100624/c8ba95a0/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100624/c8ba95a0/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004775.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+	<LI>Next message: <A HREF="004778.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4776">[ date ]</a>
+              <a href="thread.html#4776">[ thread ]</a>
+              <a href="subject.html#4776">[ subject ]</a>
+              <a href="author.html#4776">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

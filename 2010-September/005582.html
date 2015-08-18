@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] How do you force a clean install instead of an	upgrade?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20do%20you%20force%20a%20clean%20install%20instead%20of%20an%0A%09upgrade%3F&In-Reply-To=%3CAANLkTikV0JfRC3-a1TrH2-iSPwM%2B1DL2M4rQp_VUKtuK%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005580.html">
+   <LINK REL="Next"  HREF="005586.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] How do you force a clean install instead of an	upgrade?</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20do%20you%20force%20a%20clean%20install%20instead%20of%20an%0A%09upgrade%3F&In-Reply-To=%3CAANLkTikV0JfRC3-a1TrH2-iSPwM%2B1DL2M4rQp_VUKtuK%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] How do you force a clean install instead of an	upgrade?">teravus at gmail.com
+       </A><BR>
+    <I>Thu Sep 23 06:33:50 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005580.html">[Opensim-users] How do you force a clean install instead of an	upgrade?
+</A></li>
+        <LI>Next message: <A HREF="005586.html">[Opensim-users] How do you force a clean install instead of an	upgrade?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5582">[ date ]</a>
+              <a href="thread.html#5582">[ thread ]</a>
+              <a href="subject.html#5582">[ subject ]</a>
+              <a href="author.html#5582">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Unfortunately, SQLite is broken on a mac post 0.6.9 because of a
+crypto library incompatibility with mac.
+
+I'd suggest dumping the database and setting it up on a mySQL server
+temporarily.   It's been broken like this for about 4 months.
+
+Regards
+
+Teravus
+
+On Wed, Sep 22, 2010 at 11:28 PM, bodzette Coignet
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bodzettecoignet at gmail.com</A>&gt; wrote:
+&gt;<i> Hi, on my mac I have somehow corrupted the db's when upgrading from 0.6.9 to
+</I>&gt;<i> 0.7.
+</I>&gt;<i> The problem now is it's irrevocably corrupted. Even if I drop the directory
+</I>&gt;<i> and copy fresh files down from the open simulator site and run the install
+</I>&gt;<i> again it somehow finds corruption from previous installs and chokes out.
+</I>&gt;<i> I think there is a duplicate entry somewhere and I can't get rid of it.
+</I>&gt;<i> Is there any way to either: uninstall sqlite and all sqlite databases
+</I>&gt;<i> OR
+</I>&gt;<i> force a clean install of 0.7?
+</I>&gt;<i> FYI here are the errors I get:
+</I>&gt;<i> 21:24:47 - [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i> Exception: System.Exception: There was a SQL error or connection string
+</I>&gt;<i> configuration error when saving the region settings. &#160;This could be a bug,
+</I>&gt;<i> it could also happen if ConnectionString is defined in the [DatabaseService]
+</I>&gt;<i> section of StandaloneCommon.ini in the config_include folder. &#160;This could
+</I>&gt;<i> also happen if the config_include folder doesn't exist or if the OpenSim.ini
+</I>&gt;<i> [Architecture] section isn't set. &#160;If this is your first time running
+</I>&gt;<i> OpenSimulator, please restart the simulator and bug a developer to fix this!
+</I>&gt;<i> ---&gt; Mono.Data.Sqlite.SqliteException: Abort due to constraint violation
+</I>&gt;<i> column regionUUID is not unique
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SQLite3.Reset (Mono.Data.Sqlite.SqliteStatement stmt)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SQLite3.Step (Mono.Data.Sqlite.SqliteStatement stmt)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SqliteDataReader.NextResult () [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at (wrapper remoting-invoke-with-check)
+</I>&gt;<i> Mono.Data.Sqlite.SqliteDataReader:NextResult ()
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SqliteDataReader..ctor (Mono.Data.Sqlite.SqliteCommand
+</I>&gt;<i> cmd, CommandBehavior behave) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at (wrapper remoting-invoke-with-check)
+</I>&gt;<i> Mono.Data.Sqlite.SqliteDataReader:.ctor
+</I>&gt;<i> (Mono.Data.Sqlite.SqliteCommand,System.Data.CommandBehavior)
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SqliteCommand.ExecuteReader (CommandBehavior behavior)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SqliteCommand.ExecuteDbDataReader (CommandBehavior
+</I>&gt;<i> behavior) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at System.Data.Common.DbCommand.ExecuteReader (CommandBehavior behavior)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader
+</I>&gt;<i> (CommandBehavior behavior) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at System.Data.Common.DbDataAdapter.Update (System.Data.DataRow[]
+</I>&gt;<i> dataRows, System.Data.Common.DataTableMapping tableMapping) [0x00000] in
+</I>&gt;<i> &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;--- End of inner exception stack trace ---
+</I>&gt;<i> &#160;&#160;at OpenSim.Data.SQLite.SQLiteRegionData.Commit () [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Data.SQLite.SQLiteRegionData.StoreRegionSettings
+</I>&gt;<i> (OpenSim.Framework.RegionSettings rs) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Data.SQLite.SQLiteRegionData.LoadRegionSettings (UUID
+</I>&gt;<i> regionUUID) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Region.Framework.Scenes.Scene..ctor
+</I>&gt;<i> (OpenSim.Framework.RegionInfo regInfo, OpenSim.Framework.AgentCircuitManager
+</I>&gt;<i> authen, OpenSim.Region.Framework.Scenes.SceneCommunicationService
+</I>&gt;<i> sceneGridService, OpenSim.Region.Framework.StorageManager storeManager,
+</I>&gt;<i> OpenSim.Region.Framework.ModuleLoader moduleLoader, Boolean
+</I>&gt;<i> dumpAssetsToFile, Boolean physicalPrim, Boolean SeeIntoRegionFromNeighbor,
+</I>&gt;<i> IConfigSource config, System.String simulatorVersion) [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSimBase.CreateScene (OpenSim.Framework.RegionInfo
+</I>&gt;<i> regionInfo, OpenSim.Region.Framework.StorageManager storageManager,
+</I>&gt;<i> OpenSim.Framework.AgentCircuitManager circuitManager) [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo
+</I>&gt;<i> regionInfo, Int32 proxyOffset, IConfigSource configSource,
+</I>&gt;<i> IClientNetworkServer&amp; clientServer) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+</I>&gt;<i> regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp; mscene)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+</I>&gt;<i> regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise
+</I>&gt;<i> () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSim.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in
+</I>&gt;<i> &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> InnerException: Mono.Data.Sqlite.SqliteException: Abort due to constraint
+</I>&gt;<i> violation
+</I>&gt;<i> column regionUUID is not unique
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SQLite3.Reset (Mono.Data.Sqlite.SqliteStatement stmt)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SQLite3.Step (Mono.Data.Sqlite.SqliteStatement stmt)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SqliteDataReader.NextResult () [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at (wrapper remoting-invoke-with-check)
+</I>&gt;<i> Mono.Data.Sqlite.SqliteDataReader:NextResult ()
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SqliteDataReader..ctor (Mono.Data.Sqlite.SqliteCommand
+</I>&gt;<i> cmd, CommandBehavior behave) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at (wrapper remoting-invoke-with-check)
+</I>&gt;<i> Mono.Data.Sqlite.SqliteDataReader:.ctor
+</I>&gt;<i> (Mono.Data.Sqlite.SqliteCommand,System.Data.CommandBehavior)
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SqliteCommand.ExecuteReader (CommandBehavior behavior)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at Mono.Data.Sqlite.SqliteCommand.ExecuteDbDataReader (CommandBehavior
+</I>&gt;<i> behavior) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at System.Data.Common.DbCommand.ExecuteReader (CommandBehavior behavior)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader
+</I>&gt;<i> (CommandBehavior behavior) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at System.Data.Common.DbDataAdapter.Update (System.Data.DataRow[]
+</I>&gt;<i> dataRows, System.Data.Common.DataTableMapping tableMapping) [0x00000] in
+</I>&gt;<i> &lt;filename unknown&gt;:0
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005580.html">[Opensim-users] How do you force a clean install instead of an	upgrade?
+</A></li>
+	<LI>Next message: <A HREF="005586.html">[Opensim-users] How do you force a clean install instead of an	upgrade?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5582">[ date ]</a>
+              <a href="thread.html#5582">[ thread ]</a>
+              <a href="subject.html#5582">[ subject ]</a>
+              <a href="author.html#5582">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

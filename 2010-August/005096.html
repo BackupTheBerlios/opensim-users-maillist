@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim Webinterface Redux
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%20Webinterface%20Redux&In-Reply-To=%3CAANLkTindYXeqWoyMHameohDK-J81U2-bYpfqaOO2OLp6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="005097.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim Webinterface Redux</H1>
+    <B>marcel verhagen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%20Webinterface%20Redux&In-Reply-To=%3CAANLkTindYXeqWoyMHameohDK-J81U2-bYpfqaOO2OLp6%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Opensim Webinterface Redux">marceled9 at gmail.com
+       </A><BR>
+    <I>Sun Aug  1 01:50:09 CEST 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="005097.html">[Opensim-users] Running OpenSIm on server - Xeon 3200 Windows	2008
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5096">[ date ]</a>
+              <a href="thread.html#5096">[ thread ]</a>
+              <a href="subject.html#5096">[ subject ]</a>
+              <a href="author.html#5096">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The most of the time I try to use the newest versions of the software
+availiable. But I am not afraid thing crash or will will melt my harddrive
+or something like that. Mine runs with php 5.3, it gives a lot of warning
+though. But so does opensim when I compile it. Fortunately the display of
+these warnings can be disabled and the opensim compile warning scroll way to
+fast out of the console to can actually what the warning is about. (Hey
+those are not like the windowz warnings wich can couse you computer to
+restart without letting you log in, you should more see them like an advice
+in the sence of there is better way to code that :))
+
+
+I just copied the xoopensim module to the modules directory and installed
+the module in the admin interface.
+
+Enabled the block for the xoopersim and so doing got basic xoopensim up and
+running. (I can see the map withouth loggin in from the web)
+
+Not sure what you mean with the xmlrpc thing, you probably think you just
+need to set up some config. But I am afraid you should do a bit more to get
+things running. Let me try to give you a few hints.
+
+XMLRPC should be asa module in you php installation, try 'php -m' (from the
+cmd or shell) it should list xml, xmlreader, xmlrpc and xmlwriter.
+
+&gt;<i>From opensim you should also do some setup.
+</I>
+- The profile, first the compile part:
+
+The profile module (with is nice) should be compiled seperately, simply copy
+it to the opensim source dir and then compile (I do runprebuild.sh and then
+nant, I do not know how to do that in windows should be something like
+runprebuild.sh and then copile.bat) It should copy the nessesary files to
+the opensim bin dir automaticly.
+
+- Then the money thing: (there are some dragons here)
+
+Download the money server from our japanese friends, and apply the money
+path on the opensim source. Outcomment the OnNewClient function in the
+Momenymodule.cs script. (that should be enabled or opensim will not update
+the viewer about the money change) and I bet some other little changed are
+nessesay I cannot remenber wich other small changes I made to make it
+functionally. Sure some more work needs to be done on this script to make
+the currency word. Like the approuch though since it does not give delays
+when crossing sim borders. I definately do not like the way the currency is
+processed. I also changed the currency and helper scripts in xoopensim and
+added some payment methods. The basis is there though. You can skip the
+money dragon if wish to.
+
+- The classifieds
+
+The classifieds are a part of the profile, they should work when you
+properly set up the profile. Some more rewiting of some other php script is
+needed to make the classifieds work with currecy like the parser.php script.
+
+- The search
+
+For the search you should download the search component from the opensim
+forge and install as an addon in the opensim dir. The search php scripts I
+installed into a subdir of xoopersim.
+
+- The groups
+
+The groups have a little dragon to. For the groups to work you should
+install the sql file in the
+/modules/xoopensim/flotsam_XmlRpcGroup/groups.sql
+
+- Then you should recompile opensim from the opensim dir. (in this stage you
+should have mad 3 different compilations, one for the profile, one for the
+money server and one compile for the opensim)
+
+When this all went oke then you can go on the configuration op the opensim
+and all the different things you installed.
+
+I dropped all in the same database. (think this is the easiest ..)
+
+Database config should be set in:
+
+-xoops, you did this when you installed xoops
+-/modules/xoopensim/flotsam_XmlRpcGroup/xmlrpcgroups_config.php (lol, indeed
+the groups should work even if you are not logged into xoops)
+-/modules/xoopersim/helper/databaseinfo.php (is used for the search
+query.php en parser.php scripts, again the database info is set here so that
+opensim can acces these scipts without logging into xoops)
+-for robust in Robust.ini or Robust.HG.ini set the mysql config variabels as
+they should. Set the economy entry to <A HREF="https://yourserver:8008/">https://yourserver:8008/</A> (mind the
+https, it will not work without)
+
+The xoopersim config should also be set oki. I added a few config vars for
+banker avatar and a buy url, but that should not be nessesary to get it
+running.
+
+The money server has his own config in the opensim bin dir MoneyServer.ini
+the confirm url should point to the currency.php script in the xoopensim dir
+/modules/xoopensim/helper/currency.php since this is the url where the
+transactions go when the avatar does not have enough OS$
+
+The settings in the opensim.ini are also interesting:
+
+I have got the mine as follows: (change to yourserver to your domain or ip
+adres)
+
+    DrawPrimOnMapTile = true
+    TextureOnMapTile = false
+[Messaging]
+    ; the mute.php script does not do anything yet. it should be there
+though
+    InstantMessageModule = InstantMessageModule
+    MessageTransferModule = MessageTransferModule
+    OfflineMessageModule = OfflineMessageModule
+    OfflineMessageURL =
+<A HREF="http://yourserver/sims/modules/xoopensim/helper/offline.php">http://yourserver/sims/modules/xoopensim/helper/offline.php</A>
+    MuteListModule = MuteListModule
+    MuteListURL = <A HREF="http://yuourserver/sims/modules/xoopensim/helper/Mute.php">http://yuourserver/sims/modules/xoopensim/helper/Mute.php</A>
+    ForwardOfflineGroupMessages = true
+[DataSnapshot]
+; for the search, it gets it info from here
+    index_sims = true
+    data_exposure = minimum
+    gridname = &quot;RaWHiDe&quot;
+    default_snapshot_period = 1200
+    snapshot_cache_directory = &quot;DataSnapshot&quot;
+[Economy]
+; to make the currency work
+    EconomyModule  = DTLMoneyModule
+   CurrencyServer = <A HREF="https://yourserver:8008/">https://yourserver:8008/</A>
+    EconomyBaseAccount = f7554dd3-4443-487c-ab4e-12599f682580
+    UserServer = <A HREF="http://yourserver:8002/">http://yourserver:8002/</A>
+    PriceUpload = 100
+    PriceGroupCreate = 100
+
+[Groups]
+; the groups in opensim
+    Enabled = true
+    Module  = GroupsModule
+    NoticesEnabled   = true
+    DebugEnabled     = false
+    MessagingModule = GroupsMessagingModule
+    MessagingEnabled = true
+    GroupsServerURI        =
+<A HREF="http://yourserver/sims/modules/xoopensim/helper/xmlgroups.php">http://yourserver/sims/modules/xoopensim/helper/xmlgroups.php</A>
+    ServicesConnectorModule = XmlRpcGroupsServicesConnector
+    XmlRpcServiceURL        =
+<A HREF="http://yourserver/sims/modules/xoopensim/helper/xmlgroups.php">http://yourserver/sims/modules/xoopensim/helper/xmlgroups.php</A>
+    XmlRpcServiceReadKey    = 1234
+    XmlRpcServiceWriteKey   = 1234
+[Architecture]
+    ; choose grid or hggrid, I think it needs for some part the grid thing
+    Include-Grid         = &quot;config-include/Grid.ini&quot;
+    ;Include-HGGrid       = &quot;config-include/GridHypergrid.ini&quot;
+
+[XMLRPC]
+    ; not sure if opensim uses the 20800 port, but when xmlrpc does not work
+you can try to open this port in your router
+    XmlRpcRouterModule = &quot;XmlRpcRouterModule&quot;
+    XmlRpcPort = 20800
+
+[Search]
+   ; where can opensim find the search script
+SearchURL = <A HREF="http://yourserverl/sims/modules/xoopensim/helper/query.php">http://yourserverl/sims/modules/xoopensim/helper/query.php</A>
+
+[Profile]
+  ; and where the profile ?
+ProfileURL = <A HREF="http://yourserver/sims/modules/xoopensim/helper/profile.php">http://yourserver/sims/modules/xoopensim/helper/profile.php</A>
+
+
+It is quite tricky to get all runnig. Took me weeks to figure it all out.
+And still there are things witch do not work oki yet. (like the mute and
+some things)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100801/d7e1b36c/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100801/d7e1b36c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="005097.html">[Opensim-users] Running OpenSIm on server - Xeon 3200 Windows	2008
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5096">[ date ]</a>
+              <a href="thread.html#5096">[ thread ]</a>
+              <a href="subject.html#5096">[ subject ]</a>
+              <a href="author.html#5096">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

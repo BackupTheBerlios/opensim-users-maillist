@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] the concept of &quot;visitor&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20the%20concept%20of%20%22visitor%22&In-Reply-To=%3C4B689163.5080106%40cise.ufl.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003660.html">
+   <LINK REL="Next"  HREF="003664.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] the concept of &quot;visitor&quot;</H1>
+    <B>Paul Fishwick</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20the%20concept%20of%20%22visitor%22&In-Reply-To=%3C4B689163.5080106%40cise.ufl.edu%3E"
+       TITLE="[Opensim-users] the concept of &quot;visitor&quot;">fishwick at cise.ufl.edu
+       </A><BR>
+    <I>Tue Feb  2 21:56:03 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003660.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+        <LI>Next message: <A HREF="003664.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3663">[ date ]</a>
+              <a href="thread.html#3663">[ thread ]</a>
+              <a href="subject.html#3663">[ subject ]</a>
+              <a href="author.html#3663">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good suggestions. I have someone working on an opensim SQL toolkit and 
+it probably could
+be adapted in that way. The toolkit will also include the option to do a 
+db cleaning, deleting
+users, deleting regions, showing specific stats, etc.
+
+The separate db for the timelimit is an interesting idea  -- that would 
+certainly clean the slate,
+say, every 24 hours. 
+
+@Master_Mirage: the kruft ... it isn't clear to me how much there is yet 
+but I do know that our
+database has grown at a significant rate that does not appear to be 
+commensurate with the added
+assets and prims that we have put into it. Still needs some analysis to 
+know exactly what is going
+on. Once the SQL tool has been developed, we should have results of this 
+analysis.
+
+p
+
+John Mieske wrote:
+&gt;<i> why not add a PHP file that does this all for you ?  Example : They 
+</I>&gt;<i> click a button that says Visitor John. It gives them a temp user and 
+</I>&gt;<i> PW with full instructions to their e-mail. They log in. Now the timer 
+</I>&gt;<i> on the PHP can delete the temp user and PW after 24 hours. You can 
+</I>&gt;<i> even have a php that refreshes every hour that checks the database and 
+</I>&gt;<i> removes the temp users that has no need to be there. Make sure you 
+</I>&gt;<i> create a seperate database for the time limit so that it wont have to 
+</I>&gt;<i> be added to the MAIN SQL database. If the &quot;extra&quot; SQL databse has the 
+</I>&gt;<i> name and user's time stamp ready for deletion then it removes it from 
+</I>&gt;<i> the MAIN database for the name and PW and then goes back to the temp 
+</I>&gt;<i> and removes it there too. So two databases with name and PW to show 
+</I>&gt;<i> which is fake.
+</I>&gt;<i>
+</I>&gt;<i> This can be done in many ways. Just a thought.
+</I>&gt;<i>
+</I>&gt;<i> John Mieske / Sonya Penucca
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Feb 2, 2010 at 10:49 AM, Paul Fishwick &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     I would like to open up one of our worlds to the general public by
+</I>&gt;<i>     allowing people
+</I>&gt;<i>     to log in as visitors. This is related to the &quot;anonymous login&quot;
+</I>&gt;<i>     and has
+</I>&gt;<i>     been discussed
+</I>&gt;<i>     in various forms, but here is the concept - not sure if anything
+</I>&gt;<i>     exists
+</I>&gt;<i>     yet in trunk to
+</I>&gt;<i>     support this:
+</I>&gt;<i>
+</I>&gt;<i>     1. A user logs in using whatever name they want. If authentication is
+</I>&gt;<i>     turned off, this is
+</I>&gt;<i>       no problem. However, what would be ideal is that when the user logs
+</I>&gt;<i>     off, any trace
+</I>&gt;<i>       of them is removed from the database-- they do not persist.
+</I>&gt;<i>
+</I>&gt;<i>     2. When the user logs in, they have access to the Library part of the
+</I>&gt;<i>     inventory, but are
+</I>&gt;<i>        unable to load any assets to the server, thus they would have
+</I>&gt;<i>     nothing under &quot;My Inventory&quot;
+</I>&gt;<i>        or be able to copy items from the Library or the world into My
+</I>&gt;<i>     Inventory. The Library
+</I>&gt;<i>        would contain all necessities (clothing, basic objects and scripts
+</I>&gt;<i>     that they require
+</I>&gt;<i>        in the space).
+</I>&gt;<i>
+</I>&gt;<i>     3. The user cannot build on the island but can run scripts and
+</I>&gt;<i>     navigate
+</I>&gt;<i>     performing full
+</I>&gt;<i>        interaction.
+</I>&gt;<i>
+</I>&gt;<i>     #1 is not a huge issue since I would imagine that the incremental
+</I>&gt;<i>     space
+</I>&gt;<i>     allocation for
+</I>&gt;<i>     users just means additional rows in the user/agent tables -- shouldn't
+</I>&gt;<i>     take up too much
+</I>&gt;<i>     room. #2 is a bigger problem - visitors should not be taxing the asset
+</I>&gt;<i>     server. #3
+</I>&gt;<i>     can be handled by unchecking both boxes next to Create Objects in
+</I>&gt;<i>     About
+</I>&gt;<i>     Land-&gt;Options.
+</I>&gt;<i>
+</I>&gt;<i>     Are either #1 or #2 possible? They would seem to be a prerequisite for
+</I>&gt;<i>     something approaching
+</I>&gt;<i>     basic web page services: people come in, visit, and exit while
+</I>&gt;<i>     leaving a
+</I>&gt;<i>     minimal trace.
+</I>&gt;<i>     Builders on the other hand, have special login names that give
+</I>&gt;<i>     them the
+</I>&gt;<i>     capability to build
+</I>&gt;<i>     and load assets (possible with groups?).
+</I>&gt;<i>
+</I>&gt;<i>     -p
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     Paul Fishwick, PhD
+</I>&gt;<i>     Professor
+</I>&gt;<i>     University of Florida
+</I>&gt;<i>     CISE Department, CSE 301
+</I>&gt;<i>     Gainesville, FL 32611
+</I>&gt;<i>     Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt;
+</I>&gt;<i>     Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;<i>     &lt;<A HREF="http://www.cise.ufl.edu/%7Efishwick">http://www.cise.ufl.edu/%7Efishwick</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>   
+</I>
+
+-- 
+Paul Fishwick, PhD
+Professor
+University of Florida
+CISE Department, CSE 301
+Gainesville, FL 32611
+Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003660.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+	<LI>Next message: <A HREF="003664.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3663">[ date ]</a>
+              <a href="thread.html#3663">[ thread ]</a>
+              <a href="subject.html#3663">[ subject ]</a>
+              <a href="author.html#3663">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

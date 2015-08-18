@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Awaiting region handshake
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Awaiting%20region%20handshake&In-Reply-To=%3C9B397D2508754241A3BCB218C26CB4FC%40GABPC%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008042.html">
+   <LINK REL="Next"  HREF="008048.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Awaiting region handshake</H1>
+    <B>Gary Beck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Awaiting%20region%20handshake&In-Reply-To=%3C9B397D2508754241A3BCB218C26CB4FC%40GABPC%3E"
+       TITLE="[Opensim-users] Awaiting region handshake">gab4gab at gmail.com
+       </A><BR>
+    <I>Sun Aug 28 20:13:31 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008042.html">[Opensim-users] Awaiting region handshake
+</A></li>
+        <LI>Next message: <A HREF="008048.html">[Opensim-users] Awaiting region handshake
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8043">[ date ]</a>
+              <a href="thread.html#8043">[ thread ]</a>
+              <a href="subject.html#8043">[ subject ]</a>
+              <a href="author.html#8043">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dmitre,
+    The value you use for ExternalHostName in your region parameters will be used by the server to pass an IP address to the viewer.  For external viewers the address needs to be your the external IP address of your server, not the internal IP address.  Due to your #8 your server will pass your internal IP address to the external viewer at handshake time.  That will cause the 'Awaiting region handshake' timeout.
+    Things that you can do that should allow your external users to complete region handshake: (1) Removing the host file entry.  (2) Revise the host file entry to be the external IP address. (3) Use the actual external IP address for your region ExternalHoseName value.
+    The server passes an IP address, not a domain name, to set up the UDP communication (region handshake.)  That isn't always apparent in the documentation.  It looks like a Hosts file entry will provide the ability to use both an internal and external IP address at the same time.  Unfortunately it's not really a solution and causes problems.
+    Good luck with your further testing.
+- Gary Beck
+  ----- Original Message ----- 
+  From: Dmitre Raposo 
+  To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> 
+  Sent: Sunday, August 28, 2011 12:27 PM
+  Subject: [Opensim-users] Awaiting region handshake
+
+
+
+  I have been following this subject step by step and silently testing the things as suggested. I have this same problem &#8220; Awaiting region handshake&#8221; and didn't want to break the 
+  sequence since I realized that each case is a case in this subject. I tried many of the suggestions here and still having the problem.
+
+  I have installed Diva D2 distribution working fine from the computers in my Local network even with 127.0.0.1 and domain name:9000.
+
+  My friends can't login from remote. Using imprudence, they are able to get grid info and also sign up for an account.
+
+  So, I am listing below some info that you guys should ask to understand better my case:
+
+  1- OS = Windows Vista
+  2- Using Diva Distro r-15592 distribution
+  3- The installation followed the txt files provided and also the slides from Michael_Brade
+  4- MySql is runing well
+  5- Windows Firewall: the ports 9000-9003 are open inbound and outbound, TCP and UDP. The grid was tested with firewall on and off.
+  6- Router: Forwarded to inbound and outbound, 9000-9003, TCP and UDP, using the internal IP 192.168.x.x. Also tested with port 9000 only to TCP and 
+  9000-9003 to UDP, due the some instructions from opensimulator tuto.
+  7- I got dyndns domain name to use when run configure.exe
+  8- NAT issue:  A line was inserted to the file hosts.   internal IP 192.168.x.x SPACE domain name
+  9- The file divaPreferences.ini is intact
+  10- The file MyWord.ini show &#8220;<A HREF="http://dyndnsdomainname:9000&#8221;">http://dyndnsdomainname:9000&#8221;</A> for all
+  11- The file RegionConfig.ini shows
+  InternalAddress = &quot;0.0.0.0&quot; 
+  InternalPort = &quot;9000&quot; 
+  ExternalHostName = &quot;dyndnsdomain name&quot; 
+  (it was the internal IP address.  I changed by the logic to domain name. It was before the Internal IP like 192.168.x.x) Anyway I tried both 
+  with no success.
+
+  I am sorry about so long email.
+
+  I am on this problem about a mounth. But I realized I learned a lot about Opensim. I hope soon I can contribute with the community.
+
+  Please, I need help. Say what I have to fix or to do in order to make people connect to my grid.
+
+
+------------------------------------------------------------------------------
+
+
+  _______________________________________________
+  Opensim-users mailing list
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110828/7f72f59b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110828/7f72f59b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008042.html">[Opensim-users] Awaiting region handshake
+</A></li>
+	<LI>Next message: <A HREF="008048.html">[Opensim-users] Awaiting region handshake
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8043">[ date ]</a>
+              <a href="thread.html#8043">[ thread ]</a>
+              <a href="subject.html#8043">[ subject ]</a>
+              <a href="author.html#8043">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

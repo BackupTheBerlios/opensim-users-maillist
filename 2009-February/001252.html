@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] What are some solutions for oar file sharing?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20What%20are%20some%20solutions%20for%20oar%20file%20sharing%3F&In-Reply-To=%3C4985FEA7.7070003%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001251.html">
+   <LINK REL="Next"  HREF="001256.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] What are some solutions for oar file sharing?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20What%20are%20some%20solutions%20for%20oar%20file%20sharing%3F&In-Reply-To=%3C4985FEA7.7070003%40googlemail.com%3E"
+       TITLE="[Opensim-users] What are some solutions for oar file sharing?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sun Feb  1 20:57:27 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001251.html">[Opensim-users] What are some solutions for oar file sharing?
+</A></li>
+        <LI>Next message: <A HREF="001256.html">[Opensim-users] What are some solutions for oar file sharing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1252">[ date ]</a>
+              <a href="thread.html#1252">[ thread ]</a>
+              <a href="subject.html#1252">[ subject ]</a>
+              <a href="author.html#1252">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Mo Hax wrote:
+&gt;<i> I have heard of this and am only experimenting now with it, but doesn't 
+</I>&gt;<i> that imply some cleanup of the output from a save-oar against an entire 
+</I>&gt;<i> region? Even if that region has nothing in it but the new items you have 
+</I>&gt;<i> built? and are targetting for later sharing as OAR.
+</I>&gt;<i> 
+</I>&gt;<i> This also raises a best-practice question about the amount of content to 
+</I>&gt;<i> generally put in an OAR in any sharing site. OARs could be as granular 
+</I>&gt;<i> as one per, say, sofa, or as broad as one per city block.
+</I>
+I would anticipate that something as small as a sofa would be transported as an inventory item rather than as part of a 
+region (which might still be suitable for city blocks).  Indeed, there is experimental code for an inventory archive 
+format that I intend to do something with fairly soon.
+
+As Robert said, OAR files are bulky.  To some extent this is a tradeoff of convenience against file size.  If all the 
+necessary assets weren't contained in the oar then they would need to be requested over the web.  There is a certain 
+inconvenience in making assets publicly available.  It's also not ideal if you want to keep those assets private between 
+yourself and some trusted receivers.
+
+However, the advantages are probably great enough for a way for an asset service to request assets dynamically via urls 
+to evolve in the future.  These urls would probably be embedded in the object url so that one could just toss xml files 
+about (though I think there are still good reasons for bundling multiple objects to gether).  Indeed, Cable Beach may 
+already be anticipating this.  I would anticipate that this alternative would supplement archives rather than replace them.
+
+&gt;<i> 
+</I>&gt;<i> Perhaps that is something that does not lend itself to convention and 
+</I>&gt;<i> should just be left up to the content provider, but it seems to me the 
+</I>&gt;<i> more granular the content contained in the OAR package the more 
+</I>&gt;<i> consumable they become overall.
+</I>&gt;<i> 
+</I>&gt;<i> I have always dreamed of something of an SL Xchange site where people 
+</I>&gt;<i> could search out such packaged (OAR) content, view a few snapshots of 
+</I>&gt;<i> it, and click a button to download it, even load it into their opensim 
+</I>&gt;<i> directly. Someday it will come one way or another. Funny, if XStreet 
+</I>&gt;<i> allowed file upload and download and PayPal payment as well as just 
+</I>&gt;<i> Linden it could almost serve that purpose right now and we could have a 
+</I>&gt;<i> content 'mall' to piggy back for even for-sale content as well.
+</I>&gt;<i> 
+</I>&gt;<i> On Sat, Jan 31, 2009 at 8:55 PM, Frisby, Adam &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">adam at deepthink.com.au</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">adam at deepthink.com.au</A>&gt;&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i>     Well, the OAR doesn't have to be entire regions &#8211; it's basically a
+</I>&gt;<i>     archive file (targz) containing:
+</I>&gt;<i> 
+</I>&gt;<i>      
+</I>&gt;<i> 
+</I>&gt;<i>     -          An XML file for each object
+</I>&gt;<i> 
+</I>&gt;<i>     -          All associated assets
+</I>&gt;<i> 
+</I>&gt;<i>      
+</I>&gt;<i> 
+</I>&gt;<i>     There's no reason why the number of XML files has to match the
+</I>&gt;<i>     entire region, I believe being able to seamlessly import these
+</I>&gt;<i>     without a wipe probably makes some sense.
+</I>&gt;<i> 
+</I>&gt;<i>      
+</I>&gt;<i> 
+</I>&gt;<i>     Adam
+</I>&gt;<i> 
+</I>&gt;<i>      
+</I>&gt;<i> 
+</I>&gt;<i>     *From:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&gt;
+</I>&gt;<i>     [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&gt;] *On Behalf Of *Mo Hax
+</I>&gt;<i>     *Sent:* Saturday, 31 January 2009 5:17 PM
+</I>&gt;<i>     *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     *Subject:* Re: [Opensim-users] What are some solutions for oar file
+</I>&gt;<i>     sharing?
+</I>&gt;<i> 
+</I>&gt;<i>      
+</I>&gt;<i> 
+</I>&gt;<i>     Ok, another thread never hurts I suppose. ;)
+</I>&gt;<i> 
+</I>&gt;<i>     Agreed no wikis for content sharing ultimately.
+</I>&gt;<i> 
+</I>&gt;<i>     I agree with others forge is the place.
+</I>&gt;<i> 
+</I>&gt;<i>     Are we in agreement that OARs are the standard? Don't they represent
+</I>&gt;<i>     entire regions?
+</I>&gt;<i> 
+</I>&gt;<i>     The standard workflow, then, seems to be becoming that every grid
+</I>&gt;<i>     have an OAR landing pad that gets wiped and redone for each OAR
+</I>&gt;<i>     import as content is moved into other locations on that grid. Did I
+</I>&gt;<i>     get that right? Someday a client side way to do the same would be
+</I>&gt;<i>     nice, but Second Inventory seems to have that locked up at the
+</I>&gt;<i>     moment, although I would love to reduce our dependence on it.
+</I>&gt;<i> 
+</I>&gt;<i>     On Sat, Jan 31, 2009 at 7:51 PM, Robert Klein &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rtkwebman at gmail.com</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rtkwebman at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>     All,
+</I>&gt;<i> 
+</I>&gt;<i>     I have noticed there are several seperate threads trying to deal
+</I>&gt;<i>     with this
+</I>&gt;<i>     subject. How about we roll it under this one thread to make it easier to
+</I>&gt;<i>     follow? The problem is we have and will have a ton of oar files to
+</I>&gt;<i>     share and
+</I>&gt;<i>     need a solid way to accomplish it other than clogging up a wiki server.
+</I>&gt;<i>     Mirrors? Bit torrent? What are your thoughts? Thanks!
+</I>&gt;<i> 
+</I>&gt;<i>     -Robert
+</I>&gt;<i>     --
+</I>&gt;<i>     View this message in context:
+</I>&gt;<i>     <A HREF="http://n2.nabble.com/What-are-some-solutions-for-oar-file-sharing--tp2252065p2252065.html">http://n2.nabble.com/What-are-some-solutions-for-oar-file-sharing--tp2252065p2252065.html</A>
+</I>&gt;<i>     Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> 
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>     -- 
+</I>&gt;<i>     Mo Hax
+</I>&gt;<i>     <A HREF="http://imohax.com/about">http://imohax.com/about</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Mo Hax
+</I>&gt;<i> <A HREF="http://imohax.com/about">http://imohax.com/about</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001251.html">[Opensim-users] What are some solutions for oar file sharing?
+</A></li>
+	<LI>Next message: <A HREF="001256.html">[Opensim-users] What are some solutions for oar file sharing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1252">[ date ]</a>
+              <a href="thread.html#1252">[ thread ]</a>
+              <a href="subject.html#1252">[ subject ]</a>
+              <a href="author.html#1252">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

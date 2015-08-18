@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200.6.8-post-fixes%20as%20standalone%3A%20Exception%3A%0A%09System.Exception%3A%20No%20IAssetService%20available.&In-Reply-To=%3Ccb14b4b11001232220n3770d3adtefe8f69545ad4dee%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003581.html">
+   <LINK REL="Next"  HREF="003584.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.</H1>
+    <B>Jane Foxclaw</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200.6.8-post-fixes%20as%20standalone%3A%20Exception%3A%0A%09System.Exception%3A%20No%20IAssetService%20available.&In-Reply-To=%3Ccb14b4b11001232220n3770d3adtefe8f69545ad4dee%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.">janefoxclaw at gmail.com
+       </A><BR>
+    <I>Sun Jan 24 07:20:53 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003581.html">[Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.
+</A></li>
+        <LI>Next message: <A HREF="003584.html">[Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3582">[ date ]</a>
+              <a href="thread.html#3582">[ thread ]</a>
+              <a href="subject.html#3582">[ subject ]</a>
+              <a href="author.html#3582">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ok few questions this brings up to me is Are you in Standalone mode where it
+says GRID MODE = FALSE ?  because if this is TRUE and you have not run the
+other Asset servers, then you would get this error. Also, if you are running
+this in Grid mode and your not changing at the very bottom of the
+OpenSim.ini file where it says Include make sure you have included ONLY the
+Grid.ini file.
+
+Now the texture maps, do you have the TWO uncommented to look like this ?
+
+    ; ##
+    ; ## WORLD MAP
+    ; ##
+
+    WorldMapModule = &quot;WorldMap&quot;
+    MapImageModule = &quot;MapImageModule&quot;
+
+Hopefully you do.. lol
+
+Hope that gives some help.
+
+Sonya
+
+On Sat, Jan 23, 2010 at 5:48 PM, Ryan Tanay &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ryantanay at newevolution.org</A>&gt;wrote:
+
+&gt;<i> I'm getting the following error when trying to launch 0.6.8-post-fixes in
+</I>&gt;<i> standalone mode:
+</I>&gt;<i>
+</I>&gt;<i> 17:43:26 - [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.Exception: No IAssetService available.
+</I>&gt;<i>  at OpenSim.Region.Framework.Scenes.Scene.get_AssetService () [0x00000]
+</I>&gt;<i>  at
+</I>&gt;<i> OpenSim.Region.CoreModules.World.WorldMap.TexturedMapTileRenderer.fetchTexture
+</I>&gt;<i> (UUID id) [0x00000]
+</I>&gt;<i>  at
+</I>&gt;<i> OpenSim.Region.CoreModules.World.WorldMap.TexturedMapTileRenderer.computeAverageColor
+</I>&gt;<i> (UUID textureID, Color defaultColor) [0x00000]
+</I>&gt;<i>  at
+</I>&gt;<i> OpenSim.Region.CoreModules.World.WorldMap.TexturedMapTileRenderer.TerrainToBitmap
+</I>&gt;<i> (System.Drawing.Bitmap mapbmp) [0x00000]
+</I>&gt;<i>  at
+</I>&gt;<i> OpenSim.Region.CoreModules.World.WorldMap.MapImageModule.WriteJpeg2000Image
+</I>&gt;<i> (System.String gradientmap) [0x00000]
+</I>&gt;<i>  at OpenSim.Region.Framework.Scenes.Scene.CreateTerrainTexture (Boolean
+</I>&gt;<i> temporary) [0x00000]
+</I>&gt;<i>  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+</I>&gt;<i> regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp; mscene)
+</I>&gt;<i> [0x00000]
+</I>&gt;<i>  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+</I>&gt;<i> regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000]
+</I>&gt;<i>  at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise
+</I>&gt;<i> () [0x00000]
+</I>&gt;<i>  at OpenSim.OpenSimBase.StartupSpecific () [0x00000]
+</I>&gt;<i>  at OpenSim.OpenSim.StartupSpecific () [0x00000]
+</I>&gt;<i>  at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000]
+</I>&gt;<i>  at OpenSim.Application.Main (System.String[] args) [0x00000]
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I'm using the default settings in StandaloneCommmon.ini as follows:
+</I>&gt;<i>
+</I>&gt;<i> [AssetService]
+</I>&gt;<i>
+</I>&gt;<i>    DefaultAssetLoader = &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+</I>&gt;<i>    AssetLoaderArgs = &quot;assets/AssetSets.xml&quot;
+</I>&gt;<i>
+</I>&gt;<i> As far as I can tell, those files and paths are correct.  I've found this
+</I>&gt;<i> in Mantis, but it doesn't really offer any advice whatsoever:
+</I>&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=3781">http://opensimulator.org/mantis/view.php?id=3781</A>
+</I>&gt;<i>
+</I>&gt;<i> I'd appreciate any help I can get.  Thanks!
+</I>&gt;<i>
+</I>&gt;<i> ~Ryan
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100124/e9aa6f94/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100124/e9aa6f94/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003581.html">[Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.
+</A></li>
+	<LI>Next message: <A HREF="003584.html">[Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3582">[ date ]</a>
+              <a href="thread.html#3582">[ thread ]</a>
+              <a href="subject.html#3582">[ subject ]</a>
+              <a href="author.html#3582">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

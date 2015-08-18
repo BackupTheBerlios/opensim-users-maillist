@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Could not find asset ...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Could%20not%20find%20asset%20...&In-Reply-To=%3C52ABC6C4.4040609%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012936.html">
+   <LINK REL="Next"  HREF="012937.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Could not find asset ...</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Could%20not%20find%20asset%20...&In-Reply-To=%3C52ABC6C4.4040609%40googlemail.com%3E"
+       TITLE="[Opensim-users] Could not find asset ...">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Dec 14 03:47:32 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012936.html">[Opensim-users] Could not find asset ...
+</A></li>
+        <LI>Next message: <A HREF="012937.html">[Opensim-users] Diva 0.7.6 issues with config and MyWorld.ini
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12954">[ date ]</a>
+              <a href="thread.html#12954">[ thread ]</a>
+              <a href="subject.html#12954">[ subject ]</a>
+              <a href="author.html#12954">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I haven't removed the texture length entry msg yet since it has been useful in the past to check that there isn't some 
+underlying issue with corrupt texture data.  Possibly this messages could be hidden behind a conditional, though.
+
+On 12/12/13 10:36, Oren Hurvitz wrote:
+&gt;<i> The log messages here are unfortunately misleading. The real error is &quot;Failed
+</I>&gt;<i> to get part&quot;, and it happened because the prim has an invalid Particle
+</I>&gt;<i> System. I'm somewhat responsible, since I'm the one that added support for
+</I>&gt;<i> particle systems to UuidGatherer... That wasn't present in OpenSim 0.7.4,
+</I>&gt;<i> which is why you didn't see these error messages then (but you didn't get
+</I>&gt;<i> the particle system's texture saved in the OAR, either).
+</I>&gt;<i>
+</I>&gt;<i> The message that says &quot;Texture entry length for prim was {0} (min is 46)&quot; is
+</I>&gt;<i> always printed whenever *any* problem happens, but it's not actually an
+</I>&gt;<i> error. This message should be removed.
+</I>&gt;<i>
+</I>&gt;<i> So to summarize, there are two changes that should be made here:
+</I>&gt;<i> 1) Add a try/catch around the code that parses the ParticleSystem, and if
+</I>&gt;<i> that fails just log a warning and continue, since the rest of the prim is
+</I>&gt;<i> fine.
+</I>&gt;<i> 2) Remove the message that says &quot;Texture entry length for prim was {0} (min
+</I>&gt;<i> is 46)&quot;. It's not really useful.
+</I>&gt;<i>
+</I>&gt;<i> I would do this myself, but I'm very busy right now and it would take a long
+</I>&gt;<i> time before I can submit a patch for this.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Could-not-find-asset-tp7580776p7580779.html">http://opensim-users.2152040.n2.nabble.com/Could-not-find-asset-tp7580776p7580779.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012936.html">[Opensim-users] Could not find asset ...
+</A></li>
+	<LI>Next message: <A HREF="012937.html">[Opensim-users] Diva 0.7.6 issues with config and MyWorld.ini
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12954">[ date ]</a>
+              <a href="thread.html#12954">[ thread ]</a>
+              <a href="subject.html#12954">[ subject ]</a>
+              <a href="author.html#12954">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

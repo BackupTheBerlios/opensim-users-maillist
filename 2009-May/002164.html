@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Difficulty build SVN 9480
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Difficulty%20build%20SVN%209480&In-Reply-To=%3C1242880500.3328.38.camel%40localhost.localdomain%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002163.html">
+   <LINK REL="Next"  HREF="002159.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Difficulty build SVN 9480</H1>
+    <B>Mike Dickson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Difficulty%20build%20SVN%209480&In-Reply-To=%3C1242880500.3328.38.camel%40localhost.localdomain%3E"
+       TITLE="[Opensim-users] Difficulty build SVN 9480">mike.dickson at hp.com
+       </A><BR>
+    <I>Thu May 21 06:35:00 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002163.html">[Opensim-users] Difficulty build SVN 9480
+</A></li>
+        <LI>Next message: <A HREF="002159.html">[Opensim-users] How to find out which openSim your avatar is in
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2164">[ date ]</a>
+              <a href="thread.html#2164">[ thread ]</a>
+              <a href="subject.html#2164">[ subject ]</a>
+              <a href="author.html#2164">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On my CentOS server I've deinstalled all of the standard Mono and built
+mono 2.4 (minus the libgdiplus code with Mono 2.4, I used the system one
+for that, issues with ODE and the recent one in Mono 2.4).  I used the
+standard install to /usr/local.  Adding a LD_CONFIG_PATH entry
+for /usr/local/lib and it came up fine.  You'll also need to define
+PKG_CONFIG_PATH to build Nant.  Here's the entries in my profile that
+are relevant.
+
+export MONO_THREADS_PER_CPU=25
+
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+
+In summary, use the system libgdi* rather than the mono drop. Build the
+mono-2.4 tarball and the Nant tarball and install.  That's enough to run
+prebuild and build and run OpenSim.
+
+Note, I'm running the 0.6.4 production build. I keep up on head but
+generally don't run it.
+
+Mike
+
+On Thu, 2009-05-21 at 04:11 +0000, Brent Seidel wrote:
+&gt;<i> Hi John,
+</I>&gt;<i> 
+</I>&gt;<i> It turns out that there is a bug in the Mono 1.9.1 libraries.  Mantis  
+</I>&gt;<i> #3626 goes on and on about this.  It also turns out that updating the  
+</I>&gt;<i> version of Mono may *not* overwrite the buggy library.  What I had to  
+</I>&gt;<i> do was configure mono using &quot;./configure -- prefix=/usr&quot; and then  
+</I>&gt;<i> build and install it (I'm using mono 2.4).  I was then able to get  
+</I>&gt;<i> later versions (currently running 9561) to build.
+</I>&gt;<i> 
+</I>&gt;<i> I did add a note about this to the CentOS specific build  
+</I>&gt;<i> instructions.  Perhaps it should be part of the more general  
+</I>&gt;<i> instructions.
+</I>&gt;<i> 
+</I>&gt;<i> I hope that this helps.
+</I>&gt;<i> 
+</I>&gt;<i> brent
+</I>&gt;<i> 
+</I>&gt;<i> On 20-May-2009, at 9:02 PM, John Sheridan wrote:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Actually, I'm getting this same problem with the 0.6.5-rc1 checkout  
+</I>&gt;<i> &gt; with
+</I>&gt;<i> &gt; Mono 1.9.1 and 2.0.  Yet I've seen other using this release.  Is there
+</I>&gt;<i> &gt; some trick to getting this one to build other then the normal
+</I>&gt;<i> &gt; instructions from the wiki?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thanks, :)
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002163.html">[Opensim-users] Difficulty build SVN 9480
+</A></li>
+	<LI>Next message: <A HREF="002159.html">[Opensim-users] How to find out which openSim your avatar is in
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2164">[ date ]</a>
+              <a href="thread.html#2164">[ thread ]</a>
+              <a href="subject.html#2164">[ subject ]</a>
+              <a href="author.html#2164">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Announcement%20of%20inventory%20tool%20%28MyInventory%29%2C%0A%20mostly%20of%20interest%20to%20grid%20operators/grid%20nauts&In-Reply-To=%3CCAMvcWdhAtk1H_xQ5L%2BEfT1qfZonsDMNuATAy%3D5M2tkNnr26BmA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011269.html">
+   <LINK REL="Next"  HREF="011278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts</H1>
+    <B>Snowcrash Short</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Announcement%20of%20inventory%20tool%20%28MyInventory%29%2C%0A%20mostly%20of%20interest%20to%20grid%20operators/grid%20nauts&In-Reply-To=%3CCAMvcWdhAtk1H_xQ5L%2BEfT1qfZonsDMNuATAy%3D5M2tkNnr26BmA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts">snowcrash.short at gmail.com
+       </A><BR>
+    <I>Fri Nov 16 08:34:54 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011269.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+        <LI>Next message: <A HREF="011278.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11273">[ date ]</a>
+              <a href="thread.html#11273">[ thread ]</a>
+              <a href="subject.html#11273">[ subject ]</a>
+              <a href="author.html#11273">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Nov 16, 2012 at 6:23 AM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> On 15/11/12 11:31, Snowcrash Short wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Yes, adding the entries will make it easier to access the backing
+</I>&gt;&gt;<i> web-services, although there isn't that much of a
+</I>&gt;&gt;<i> performance gain going directly to the web-services, it does make it
+</I>&gt;&gt;<i> possible for MyInventory to avoid duplicating
+</I>&gt;&gt;<i> already existing assets, imagine this scenario:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Users A and B  downloads an .iar file, both decide to upload the same
+</I>&gt;&gt;<i> inventory item from the .iar file, using UDP/CAPS
+</I>&gt;&gt;<i> there is no way to know if the asset already exists in the asset db of
+</I>&gt;&gt;<i> the grid and/or specify the asset id, hence if
+</I>&gt;&gt;<i> the asset store isn't &quot;single instance&quot; or &quot;deduplicating&quot;, - which my
+</I>&gt;&gt;<i> cursory read of the asset code in opensim
+</I>&gt;&gt;<i> suggests to me it isnt' - two identical streams of binary data may be
+</I>&gt;&gt;<i> stored in the asset database.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Using direct access to the asset service it is possible to detect this
+</I>&gt;&gt;<i> duplication and simply create inventory items
+</I>&gt;&gt;<i> referring to an existing asset id. Thus avoiding duplication of assets.
+</I>&gt;&gt;<i> Currently this is done using 'GET' since 'HEAD'
+</I>&gt;&gt;<i> always seems to report 200.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hi Snowcrash.  There is an experimental deduplicating asset service in
+</I>&gt;<i> core called XAssetService [1].  This appears to work fine - I haven't had a
+</I>&gt;<i> chance to progress it since I wanted to think through how migration would
+</I>&gt;<i> (or would not) work.
+</I>&gt;<i>
+</I>&gt;<i> I noticed the code for an XAsset service, but also noted the comments in
+</I>the code. I sincerely hope to see it go live soon. The asset service in
+MyInventory is &quot;Deduplicating&quot; or as I call it &quot;single instance&quot; and in my
+testing I have encountered quite a few duplicates.
+
+
+&gt;<i> My chief reason for doing this was that I was interested myself in
+</I>&gt;<i> providing an external optional &quot;load iar&quot; mechanism which did not rely on
+</I>&gt;<i> client interface operations and did not rely on exposing the internal
+</I>&gt;<i> service port.  I was reluctant to provide another avenue for uploading data
+</I>&gt;<i> before some kind of default deduplication was in place.
+</I>&gt;<i>
+</I>&gt;<i> There is also an assets/&lt;asset-id&gt;/metadata URL available that would
+</I>&gt;<i> return asset ID if one is willing to rely on this.  Unfortunately, this is
+</I>&gt;<i> not yet documented.
+</I>&gt;<i>
+</I>&gt;<i> That could be very useful, currently I'm using GET on the asset service in
+</I>order to determine if the asset already exists, which is a bit overkill,
+ideally the web service would support &quot;HEAD&quot; but a meta data check
+would/should work equally well.
+
+I'm also interested in providing a license/doc mechanism in IARs/OARs,
+&gt;<i> chiefly so that anybody can add doc a license that could be displayed on
+</I>&gt;<i> reloading the IAR/OAR.  Unfortunately, stretching this into the main body
+</I>&gt;<i> of the system itself would be considerably more complicated.
+</I>&gt;<i>
+</I>In my implementation, the asset document is for most parts a small document
+containing a reference to something I have named a &quot;bytestream&quot;. The byte
+stream has an array Creator/LicenceId properties which identifies the
+license the creator has chosen (currently set to default to:
+&quot;proprietary-closed&quot;.
+
+&gt;<i>
+</I>&gt;<i> I would have to counsel anybody to think very carefully before opening up
+</I>&gt;<i> their internal asset and inventory services. As Diva says, it may be better
+</I>&gt;<i> to use the HG gatekeepers to these services though that may involve
+</I>&gt;<i> compromise.
+</I>&gt;<i>
+</I>&gt;<i> I'm not terribly familiar with the terminology used by the core, to
+</I>somebody with my intelligence or lack thereof the number of interfaces and
+their differences are a bit bewildering (but hey, my code is bewildering
+too). The webservices I rely on can be found in the config files under
+[AssetService] and [InventoryService]. E.g.
+AssetServerURI = &quot;<A HREF="http://assets.osgrid.org">http://assets.osgrid.org</A>&quot;
+InventoryServerURI = &quot;<A HREF="http://inventory.osgrid.org">http://inventory.osgrid.org</A>&quot;
+
+as recorded in the GridCommon.ini config file distributed with the OSGrid
+edition of open simulator.
+
+The use of these URL's was a relative latecomer to the project once I
+realized that the opensim asset store wasn't single instance. If - and that
+is a big if - this tool becomes popular it could lead to a lot of duplicate
+assets, I decided that MyInventory needed a way to lessen the impact it
+will have on the infrastructure servers backing opensim.
+
+
+ I'm very happy to see experimentation in this field because it's a major
+&gt;<i> issue.  And it's up to individuals to make these decisions.  But I would
+</I>&gt;<i> say OpenSimulator itself will remain with default config options very
+</I>&gt;<i> similar to what we have now (e.g. no service exposure).
+</I>&gt;<i>
+</I>&gt;<i> On a final note - it's will be much easier if you make your code
+</I>&gt;<i> BSD/MIT/Apache before releasing for interaction with existing codebases
+</I>&gt;<i> with a similar license.  AGPL is a wildly different license.
+</I>&gt;<i>
+</I>&gt;<i> Once the code is more stable the licence will be modified to BSD. AGPL was
+</I>selected by me in the hopes that any changes would flow back to the
+original project (I know it doesn't have to) and prevent wild forking until
+the dust has settled a bit. I know that this won't deter the hardcore black
+hatters, but they already have quite a toolset at their disposal.
+
+[1] <A HREF="http://opensimulator.org/wiki/**Feature_Proposals/**">http://opensimulator.org/wiki/**Feature_Proposals/**</A>
+&gt;<i> Deduplicating_Asset_Service&lt;<A HREF="http://opensimulator.org/wiki/Feature_Proposals/Deduplicating_Asset_Service">http://opensimulator.org/wiki/Feature_Proposals/Deduplicating_Asset_Service</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> best regards
+</I>&gt;&gt;<i> Snowcrash
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Nov 15, 2012 at 11:55 AM, Melanie &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">melanie at t-data.com</A> &lt;mailto:
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">melanie at t-data.com</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Apparently, the extra entries are for more efficient upload. Unless
+</I>&gt;&gt;<i>     a grid specifies the policy they want, open download and the
+</I>&gt;&gt;<i>     inefficient upload mechanism will be in effect for it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Melanie
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     On 15/11/2012 11:32, InuYasha Meiji wrote:
+</I>&gt;&gt;<i>      &gt; Sorry, this is what I get for writing email at 5:31am.  So you are
+</I>&gt;&gt;<i>      &gt; saying I would have to give you the gridinventory service link in
+</I>&gt;&gt;<i> order
+</I>&gt;&gt;<i>      &gt; to choose to suport this service.  Ok then I guess I am goo dfor
+</I>&gt;&gt;<i> now,
+</I>&gt;&gt;<i>      &gt; just won't give that info out.  Sorry I got confused.
+</I>&gt;&gt;<i>      &gt;
+</I>&gt;&gt;<i>      &gt; Inu.
+</I>&gt;&gt;<i>      &gt;
+</I>&gt;&gt;<i>      &gt;
+</I>&gt;&gt;<i>      &gt; On 11/15/2012 4:44 AM, Snowcrash Short wrote:
+</I>&gt;&gt;<i>      &gt;&gt; Hi
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; I've been working on a client side tool for decentralizing user
+</I>&gt;&gt;<i>      &gt;&gt; inventories, which I will release as an open source tool in two
+</I>&gt;&gt;<i> weeks,
+</I>&gt;&gt;<i>      &gt;&gt; some of the features may be relevant to grid operators.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; The basic premise of the tool is that the inventory and the
+</I>&gt;&gt;<i> backing
+</I>&gt;&gt;<i>      &gt;&gt; assets of the inventory items really should be controlled by the
+</I>&gt;&gt;<i> user.
+</I>&gt;&gt;<i>      &gt;&gt; The tool is born out of a frustration of having visited a number
+</I>&gt;&gt;<i> of
+</I>&gt;&gt;<i>      &gt;&gt; grids. Each visit to a new grid presents me with an empty
+</I>&gt;&gt;<i> inventory,
+</I>&gt;&gt;<i>      &gt;&gt; and I can then spend time searching for suitable item, clothing,
+</I>&gt;&gt;<i>      &gt;&gt; attachments and other accessories.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; For this purpose I have created a tool which will allow me to
+</I>&gt;&gt;<i> backup
+</I>&gt;&gt;<i>      &gt;&gt; my inventory to a local cache and then upload the contents to
+</I>&gt;&gt;<i> another
+</I>&gt;&gt;<i>      &gt;&gt; grid.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; If my tool becomes popular, both the upload and download
+</I>&gt;&gt;<i> mechanisms
+</I>&gt;&gt;<i>      &gt;&gt; may have some impact on the grid-operators, hence this email to
+</I>&gt;&gt;<i> serve
+</I>&gt;&gt;<i>      &gt;&gt; as a notice.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; The basic architecture is pretty simple, consisting of a number of
+</I>&gt;&gt;<i>      &gt;&gt; import agents, which can import the users inventory and backing
+</I>&gt;&gt;<i> assets
+</I>&gt;&gt;<i>      &gt;&gt; to a local database, and a number of upload agents which can
+</I>&gt;&gt;<i> upload
+</I>&gt;&gt;<i>      &gt;&gt; inventory content to a specific account.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; Backup/Import
+</I>&gt;&gt;<i>      &gt;&gt; There are two import agents, one which will import .iar files and
+</I>&gt;&gt;<i> one
+</I>&gt;&gt;<i>      &gt;&gt; which works very much like I believe &quot;Stored Inventory&quot; works,
+</I>&gt;&gt;<i> which
+</I>&gt;&gt;<i>      &gt;&gt; can backup the inventory of an avatars inventory. Avatar
+</I>&gt;&gt;<i> backup/Import
+</I>&gt;&gt;<i>      &gt;&gt; is governed by a policy. Currently there are two policies,
+</I>&gt;&gt;<i>      &gt;&gt; one complying with a very restrictive interpretation of the Linden
+</I>&gt;&gt;<i>      &gt;&gt; Labs policy on backups, and a completely unrestricted policy,
+</I>&gt;&gt;<i> where
+</I>&gt;&gt;<i>      &gt;&gt; anything that can be downloaded will be downloaded.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; When a new account is registered in MyInventory it checks if the
+</I>&gt;&gt;<i>      &gt;&gt; account is for a Linden Lab grid and limits the choices of
+</I>&gt;&gt;<i> policies to
+</I>&gt;&gt;<i>      &gt;&gt; policies suitable for LL's TOS, I cannot and do not know if other
+</I>&gt;&gt;<i>      &gt;&gt; grids have similar policies, I can well imagine that Avination
+</I>&gt;&gt;<i> has a
+</I>&gt;&gt;<i>      &gt;&gt; similar restrictions, and would like similar logic implemented to
+</I>&gt;&gt;<i>      &gt;&gt; restrict the download. Any grid operator which would like to have
+</I>&gt;&gt;<i>      &gt;&gt; backup governed by a more restrictive policy are invited to
+</I>&gt;&gt;<i> notify me
+</I>&gt;&gt;<i>      &gt;&gt; and I will attempt to implement the policy prior to the first
+</I>&gt;&gt;<i> release
+</I>&gt;&gt;<i>      &gt;&gt; of the source code. or supply patches at a later time.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; Upload/Export
+</I>&gt;&gt;<i>      &gt;&gt; MyInventory supports two mechanisms for uploading inventory
+</I>&gt;&gt;<i>      &gt;&gt; content, traditional upload using UDP/CAPS and direct access to
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i>      &gt;&gt; inventory and asset web-services.
+</I>&gt;&gt;<i>      &gt;&gt; Due to limitations in the UDP/CAPS protocol each upload will
+</I>&gt;&gt;<i> create
+</I>&gt;&gt;<i>      &gt;&gt; new assets, and as of my latest read of the Open Simulator code
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i>      &gt;&gt; asset store does not support &quot;single instance assets&quot;, i.e. it
+</I>&gt;&gt;<i> does
+</I>&gt;&gt;<i>      &gt;&gt; not use a checksum to verify if the asset already exists, for this
+</I>&gt;&gt;<i>      &gt;&gt; reason MyInventory prefers to upload using direct access to asset
+</I>&gt;&gt;<i> and
+</I>&gt;&gt;<i>      &gt;&gt; inventory web-services.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; I would propose that the grids which chooses to support
+</I>&gt;&gt;<i> MyInventory
+</I>&gt;&gt;<i>      &gt;&gt; augment their &quot;GridInfoService&quot; entries with the url's for the
+</I>&gt;&gt;<i> asset
+</I>&gt;&gt;<i>      &gt;&gt; and inventory web-services, e.g.
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; [GridInfoService]
+</I>&gt;&gt;<i>      &gt;&gt;     assets = <A HREF="http://assets.osgrid.org">http://assets.osgrid.org</A>
+</I>&gt;&gt;<i>      &gt;&gt;     inventory = <A HREF="http://inventory.osgrid.org">http://inventory.osgrid.org</A>
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; Best regards
+</I>&gt;&gt;<i>      &gt;&gt; Snowcrash
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt;
+</I>&gt;&gt;<i>      &gt;&gt; ______________________________**_________________
+</I>&gt;&gt;<i>      &gt;&gt; Opensim-users mailing list
+</I>&gt;&gt;<i>      &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.</A>**
+</I>&gt;&gt;<i> berlios.de &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>      &gt;&gt; <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>      &gt;
+</I>&gt;&gt;<i>      &gt;
+</I>&gt;&gt;<i>     ______________________________**_________________
+</I>&gt;&gt;<i>     Opensim-users mailing list
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.</A>**
+</I>&gt;&gt;<i> berlios.de &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> OSVW Consulting
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121116/bc3feddf/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20121116/bc3feddf/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011269.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+	<LI>Next message: <A HREF="011278.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11273">[ date ]</a>
+              <a href="thread.html#11273">[ thread ]</a>
+              <a href="subject.html#11273">[ subject ]</a>
+              <a href="author.html#11273">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

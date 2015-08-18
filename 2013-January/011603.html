@@ -1,0 +1,934 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Robust and Hypergrid configuration?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Robust%20and%20Hypergrid%20configuration%3F&In-Reply-To=%3C50F61B9B.8060505%40pseudospace.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011602.html">
+   <LINK REL="Next"  HREF="011604.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Robust and Hypergrid configuration?</H1>
+    <B>John Sheridan</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Robust%20and%20Hypergrid%20configuration%3F&In-Reply-To=%3C50F61B9B.8060505%40pseudospace.net%3E"
+       TITLE="[Opensim-users] Robust and Hypergrid configuration?">john at pseudospace.net
+       </A><BR>
+    <I>Wed Jan 16 04:16:43 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011602.html">[Opensim-users] Robust and Hypergrid configuration?
+</A></li>
+        <LI>Next message: <A HREF="011604.html">[Opensim-users] Robust and Hypergrid configuration?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11603">[ date ]</a>
+              <a href="thread.html#11603">[ thread ]</a>
+              <a href="subject.html#11603">[ subject ]</a>
+              <a href="author.html#11603">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OOH! OOH!  Ok, got it to work.  I was able to jump over to Hyperica!  
+Now to figure out why its not letting me access my inventory remotely...  :P
+
+On 01/15/2013 09:30 PM, John Sheridan wrote:
+&gt;<i> Hi Justin.  I've tried the 0.7.4 and 0.7.5 binaries from the website, 
+</I>&gt;<i> and now I'm a build of 0.7.5-postifxes I pulled via git.  All three 
+</I>&gt;<i> are doing the same thing, which makes me think this is likely a case 
+</I>&gt;<i> of stupid user syndrome on my part.  Everything seems to be working 
+</I>&gt;<i> just fine, except each time I try to pull up a hypergrid link it gives 
+</I>&gt;<i> me:
+</I>&gt;<i>
+</I>&gt;<i> [18:21] Orion Pseudo: 
+</I>&gt;<i> <A HREF="secondlife://hg.hyperica.com:8022:Hyperica%20Lower/99/103/25">secondlife://hg.hyperica.com:8022:Hyperica%20Lower/99/103/25</A>
+</I>&gt;<i> [18:21] Second Life: No regions found with that name.
+</I>&gt;<i>
+</I>&gt;<i> The output from config show is as follows for the robust server:
+</I>&gt;<i>
+</I>&gt;<i> [Startup]
+</I>&gt;<i>   RegistryLocation = .
+</I>&gt;<i>   ConfigDirectory = /home/opensim/etc/Configs
+</I>&gt;<i> [ServiceList]
+</I>&gt;<i>   AssetServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:AssetServiceConnector
+</I>&gt;<i>   InventoryInConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:XInventoryInConnector
+</I>&gt;<i>   VoiceConnector = 
+</I>&gt;<i> 8004/OpenSim.Server.Handlers.dll:FreeswitchServerConnector
+</I>&gt;<i>   GridServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:GridServiceConnector
+</I>&gt;<i>   GridInfoServerInConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:GridInfoServerInConnector
+</I>&gt;<i>   AuthenticationServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:AuthenticationServiceConnector
+</I>&gt;<i>   OpenIdServerConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:OpenIdServerConnector
+</I>&gt;<i>   AvatarServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:AvatarServiceConnector
+</I>&gt;<i>   LLLoginServiceInConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:LLLoginServiceInConnector
+</I>&gt;<i>   PresenceServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:PresenceServiceConnector
+</I>&gt;<i>   UserAccountServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:UserAccountServiceConnector
+</I>&gt;<i>   GridUserServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:GridUserServiceConnector
+</I>&gt;<i>   FriendsServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:FriendsServiceConnector
+</I>&gt;<i>   MapAddServiceConnector = 
+</I>&gt;<i> 8003/OpenSim.Server.Handlers.dll:MapAddServiceConnector
+</I>&gt;<i>   MapGetServiceConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:MapGetServiceConnector
+</I>&gt;<i>   GatekeeperServiceInConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:GatekeeperServiceInConnector
+</I>&gt;<i>   UserAgentServerConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:UserAgentServerConnector
+</I>&gt;<i>   HeloServiceInConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:HeloServiceInConnector
+</I>&gt;<i>   HGFriendsServerConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:HGFriendsServerConnector
+</I>&gt;<i>   InstantMessageServerConnector = 
+</I>&gt;<i> 8002/OpenSim.Server.Handlers.dll:InstantMessageServerConnector
+</I>&gt;<i>   HGInventoryServiceConnector = 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">HGInventoryService at 8002</A>/OpenSim.Server.Handlers.dll:XInventoryInConnector
+</I>&gt;<i>   HGAssetServiceConnector = 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">HGAssetService at 8002</A>/OpenSim.Server.Handlers.dll:AssetServiceConnector
+</I>&gt;<i> [Network]
+</I>&gt;<i>   port = 8003
+</I>&gt;<i> [DatabaseService]
+</I>&gt;<i>   StorageProvider = OpenSim.Data.MySQL.dll
+</I>&gt;<i>   ConnectionString = Data Source=localhost;Database=grid;User 
+</I>&gt;<i> ID=opensim;Password=CENSORED;Old Guids=true;
+</I>&gt;<i> [AssetService]
+</I>&gt;<i>   LocalServiceModule = OpenSim.Services.AssetService.dll:AssetService
+</I>&gt;<i>   DefaultAssetLoader = OpenSim.Framework.AssetLoader.Filesystem.dll
+</I>&gt;<i>   AssetLoaderArgs = ./assets/AssetSets.xml
+</I>&gt;<i> [InventoryService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.InventoryService.dll:XInventoryService
+</I>&gt;<i> [GridService]
+</I>&gt;<i>   LocalServiceModule = OpenSim.Services.GridService.dll:GridService
+</I>&gt;<i>   HypergridLinker = true
+</I>&gt;<i>   AssetService = OpenSim.Services.AssetService.dll:AssetService
+</I>&gt;<i>   Gatekeeper = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [FreeswitchService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.FreeswitchService.dll:FreeswitchService
+</I>&gt;<i> [AuthenticationService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService
+</I>&gt;<i> [OpenIdService]
+</I>&gt;<i>   AuthenticationServiceModule = 
+</I>&gt;<i> OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService
+</I>&gt;<i>   UserAccountServiceModule = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:UserAccountService
+</I>&gt;<i> [UserAccountService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:UserAccountService
+</I>&gt;<i>   AuthenticationService = 
+</I>&gt;<i> OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService
+</I>&gt;<i>   PresenceService = OpenSim.Services.PresenceService.dll:PresenceService
+</I>&gt;<i>   GridService = OpenSim.Services.GridService.dll:GridService
+</I>&gt;<i>   InventoryService = 
+</I>&gt;<i> OpenSim.Services.InventoryService.dll:XInventoryService
+</I>&gt;<i>   AvatarService = OpenSim.Services.AvatarService.dll:AvatarService
+</I>&gt;<i>   CreateDefaultAvatarEntries = true
+</I>&gt;<i> [GridUserService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:GridUserService
+</I>&gt;<i> [PresenceService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.PresenceService.dll:PresenceService
+</I>&gt;<i> [AvatarService]
+</I>&gt;<i>   LocalServiceModule = OpenSim.Services.AvatarService.dll:AvatarService
+</I>&gt;<i> [FriendsService]
+</I>&gt;<i>   LocalServiceModule = OpenSim.Services.FriendsService.dll:FriendsService
+</I>&gt;<i> [LibraryService]
+</I>&gt;<i>   LibraryName = OpenSim Library
+</I>&gt;<i>   DefaultLibrary = ./inventory/Libraries.xml
+</I>&gt;<i> [LoginService]
+</I>&gt;<i>   LocalServiceModule = OpenSim.Services.LLLoginService.dll:LLLoginService
+</I>&gt;<i>   UserAccountService = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:UserAccountService
+</I>&gt;<i>   GridUserService = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:GridUserService
+</I>&gt;<i>   AuthenticationService = 
+</I>&gt;<i> OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService
+</I>&gt;<i>   InventoryService = 
+</I>&gt;<i> OpenSim.Services.InventoryService.dll:XInventoryService
+</I>&gt;<i>   AvatarService = OpenSim.Services.AvatarService.dll:AvatarService
+</I>&gt;<i>   PresenceService = OpenSim.Services.PresenceService.dll:PresenceService
+</I>&gt;<i>   GridService = OpenSim.Services.GridService.dll:GridService
+</I>&gt;<i>   SimulationService = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:SimulationServiceConnector
+</I>&gt;<i>   LibraryService = OpenSim.Services.InventoryService.dll:LibraryService
+</I>&gt;<i>   UserAgentService = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:UserAgentService
+</I>&gt;<i>   FriendsService = OpenSim.Services.FriendsService.dll:FriendsService
+</I>&gt;<i>   WelcomeMessage = Welcome to Pseudospace!
+</I>&gt;<i>   AllowRemoteSetLoginLevel = false
+</I>&gt;<i>   MapTileURL = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   GatekeeperURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   SRV_HomeURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   SRV_InventoryServerURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   SRV_AssetServerURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   SRV_ProfileServerURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   SRV_FriendsServerURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   SRV_IMServerURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   DSTZone = America/Los_Angeles;Pacific Standard Time
+</I>&gt;<i> [MapImageService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.MapImageService.dll:MapImageService
+</I>&gt;<i> [GridInfoService]
+</I>&gt;<i>   login = <A HREF="http://grid.pseudospace.net:8002/">http://grid.pseudospace.net:8002/</A>
+</I>&gt;<i>   gridname = Pseudospace
+</I>&gt;<i>   gridnick = pseudospace
+</I>&gt;<i>   welcome = <A HREF="http://www.pseudospace.net/welcome">http://www.pseudospace.net/welcome</A>
+</I>&gt;<i>   about = <A HREF="http://www.pseudospace.net/about/">http://www.pseudospace.net/about/</A>
+</I>&gt;<i>   gatekeeper = <A HREF="http://grid.pseudospace.net:8002/">http://grid.pseudospace.net:8002/</A>
+</I>&gt;<i>   uas = <A HREF="http://grid.pseudospace.net:8002/">http://grid.pseudospace.net:8002/</A>
+</I>&gt;<i> [GatekeeperService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:GatekeeperService
+</I>&gt;<i>   UserAccountService = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:UserAccountService
+</I>&gt;<i>   UserAgentService = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:UserAgentService
+</I>&gt;<i>   PresenceService = OpenSim.Services.PresenceService.dll:PresenceService
+</I>&gt;<i>   GridService = OpenSim.Services.GridService.dll:GridService
+</I>&gt;<i>   AuthenticationService = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:AuthenticationServicesConnector
+</I>&gt;<i>   SimulationService = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:SimulationServiceConnector
+</I>&gt;<i>   ExternalName = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   AllowTeleportsToAnyRegion = true
+</I>&gt;<i>   ForeignAgentsAllowed = true
+</I>&gt;<i> [UserAgentService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:UserAgentService
+</I>&gt;<i>   GridUserService = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:GridUserService
+</I>&gt;<i>   GridService = OpenSim.Services.GridService.dll:GridService
+</I>&gt;<i>   GatekeeperService = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:GatekeeperService
+</I>&gt;<i>   PresenceService = OpenSim.Services.PresenceService.dll:PresenceService
+</I>&gt;<i>   FriendsService = OpenSim.Services.FriendsService.dll:FriendsService
+</I>&gt;<i>   UserAccountService = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:UserAccountService
+</I>&gt;<i> [HGInventoryService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:HGSuitcaseInventoryService
+</I>&gt;<i>   UserAccountsService = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:UserAccountService
+</I>&gt;<i>   AvatarService = OpenSim.Services.AvatarService.dll:AvatarService
+</I>&gt;<i>   HomeURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [HGAssetService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:HGAssetService
+</I>&gt;<i>   UserAccountsService = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:UserAccountService
+</I>&gt;<i>   HomeURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [HGFriendsService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:HGFriendsService
+</I>&gt;<i>   UserAgentService = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:UserAgentService
+</I>&gt;<i>   FriendsService = OpenSim.Services.FriendsService.dll:FriendsService
+</I>&gt;<i>   UserAccountService = 
+</I>&gt;<i> OpenSim.Services.UserAccountService.dll:UserAccountService
+</I>&gt;<i>   GridService = OpenSim.Services.GridService.dll:GridService
+</I>&gt;<i>   PresenceService = OpenSim.Services.PresenceService.dll:PresenceService
+</I>&gt;<i> [HGInstantMessageService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:HGInstantMessageService
+</I>&gt;<i>   GridService = OpenSim.Services.GridService.dll:GridService
+</I>&gt;<i>   PresenceService = OpenSim.Services.PresenceService.dll:PresenceService
+</I>&gt;<i>   UserAgentService = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:UserAgentService
+</I>&gt;<i>   InGatekeeper = True
+</I>&gt;<i> [Messaging]
+</I>&gt;<i>
+</I>&gt;<i> And from the region server:
+</I>&gt;<i>
+</I>&gt;<i> [Startup]
+</I>&gt;<i>   region_info_source = filesystem
+</I>&gt;<i>   physics = OpenDynamicsEngine
+</I>&gt;<i>   meshing = Meshmerizer
+</I>&gt;<i>   physical_prim = true
+</I>&gt;<i>   see_into_this_sim_from_neighbor = True
+</I>&gt;<i>   serverside_object_permissions = true
+</I>&gt;<i>   storage_plugin = OpenSim.Data.SQLite.dll
+</I>&gt;<i>   storage_connection_string = URI=file:OpenSim.db,version=3
+</I>&gt;<i>   storage_prim_inventories = True
+</I>&gt;<i>   startup_console_commands_file = startup_commands.txt
+</I>&gt;<i>   shutdown_console_commands_file = shutdown_commands.txt
+</I>&gt;<i>   DefaultScriptEngine = XEngine
+</I>&gt;<i>   clientstack_plugin = OpenSim.Region.ClientStack.LindenUDP.dll
+</I>&gt;<i>   EventQueue = True
+</I>&gt;<i>   ConsolePrompt = Region (\R)
+</I>&gt;<i>   save_crashes = false
+</I>&gt;<i>   crash_dir = crashes
+</I>&gt;<i>   async_call_method = SmartThreadPool
+</I>&gt;<i>   MaxPoolThreads = 15
+</I>&gt;<i>   allow_regionless = false
+</I>&gt;<i>   MaxPrimUndos = 20
+</I>&gt;<i>   NonPhysicalPrimMax = 256
+</I>&gt;<i>   PhysicalPrimMax = 10
+</I>&gt;<i>   ClampPrimSize = false
+</I>&gt;<i>   LinksetPrims = 0
+</I>&gt;<i>   AllowScriptCrossing = true
+</I>&gt;<i>   TrustBinaries = false
+</I>&gt;<i>   CombineContiguousRegions = false
+</I>&gt;<i>   DefaultDrawDistance = 255.0
+</I>&gt;<i>   InworldRestartShutsDown = false
+</I>&gt;<i>   MinFrameTime = 0.089
+</I>&gt;<i>   UpdateObjectsEveryNFrames = 1
+</I>&gt;<i>   UpdateAgentsEveryNFrames = 1
+</I>&gt;<i>   UpdateEntityMovementEveryNFrames = 1
+</I>&gt;<i>   UpdateCoarseLocationsEveryNFrames = 50
+</I>&gt;<i>   UpdatePhysicsEveryNFrames = 1
+</I>&gt;<i>   UpdateTempCleaningEveryNFrames = 1000
+</I>&gt;<i>   UpdateEventsEveryNFrames = 1
+</I>&gt;<i>   UpdateTerrainEveryNFrames = 50
+</I>&gt;<i>   UpdateStorageEveryNFrames = 200
+</I>&gt;<i>   MinimumTimeBeforePersistenceConsidered = 60
+</I>&gt;<i>   MaximumTimeBeforePersistenceConsidered = 600
+</I>&gt;<i>   collidable_prim = true
+</I>&gt;<i>   allow_grid_gods = false
+</I>&gt;<i>   DrawPrimOnMapTile = true
+</I>&gt;<i>   TextureOnMapTile = true
+</I>&gt;<i>   enableflyslow = false
+</I>&gt;<i>   UseTrashOnDelete = True
+</I>&gt;<i>   WorldMapModule = HGWorldMap
+</I>&gt;<i> [Network]
+</I>&gt;<i>   http_listener_port = 9000
+</I>&gt;<i>   ConsoleUser = Test
+</I>&gt;<i>   ConsolePass = secret
+</I>&gt;<i>   console_port = 0
+</I>&gt;<i>   http_listener_ssl = false
+</I>&gt;<i>   http_listener_cn = localhost
+</I>&gt;<i>   http_listener_sslport = 9001
+</I>&gt;<i>   http_listener_ssl_cert =
+</I>&gt;<i>   shard = OpenSim
+</I>&gt;<i> [RegionReady]
+</I>&gt;<i>   enabled = true
+</I>&gt;<i>   channel_notify = -800
+</I>&gt;<i>   login_disable = true
+</I>&gt;<i> [EstateManagement]
+</I>&gt;<i>   AllowRegionRestartFromClient = true
+</I>&gt;<i> [SMTP]
+</I>&gt;<i>   enabled = false
+</I>&gt;<i> [ClientStack.LindenUDP]
+</I>&gt;<i>   enable_adaptive_throttles = true
+</I>&gt;<i> [ClientStack.LindenCaps]
+</I>&gt;<i>   Cap_AttachmentResources =
+</I>&gt;<i>   Cap_AvatarPickerSearch =
+</I>&gt;<i>   Cap_ChatSessionRequest =
+</I>&gt;<i>   Cap_CopyInventoryFromNotecard = localhost
+</I>&gt;<i>   Cap_DispatchRegionInfo =
+</I>&gt;<i>   Cap_EstateChangeInfo =
+</I>&gt;<i>   Cap_EnvironmentSettings = localhost
+</I>&gt;<i>   Cap_EventQueueGet = localhost
+</I>&gt;<i>   Cap_FetchInventory =
+</I>&gt;<i>   Cap_ObjectMedia = localhost
+</I>&gt;<i>   Cap_ObjectMediaNavigate = localhost
+</I>&gt;<i>   Cap_FetchLib =
+</I>&gt;<i>   Cap_FetchLibDescendents =
+</I>&gt;<i>   Cap_GetDisplayNames =
+</I>&gt;<i>   Cap_GetTexture = localhost
+</I>&gt;<i>   Cap_GetMesh = localhost
+</I>&gt;<i>   Cap_GetObjectCost =
+</I>&gt;<i>   Cap_GetObjectPhysicsData =
+</I>&gt;<i>   Cap_GroupProposalBallot =
+</I>&gt;<i>   Cap_HomeLocation =
+</I>&gt;<i>   Cap_LandResources =
+</I>&gt;<i>   Cap_MapLayer = localhost
+</I>&gt;<i>   Cap_MapLayerGod = localhost
+</I>&gt;<i>   Cap_NewFileAgentInventory = localhost
+</I>&gt;<i>   Cap_NewFileAgentInventoryVariablePrice = localhost
+</I>&gt;<i>   Cap_ObjectAdd = localhost
+</I>&gt;<i>   Cap_ParcelPropertiesUpdate = localhost
+</I>&gt;<i>   Cap_ParcelMediaURLFilterList =
+</I>&gt;<i>   Cap_ParcelNavigateMedia =
+</I>&gt;<i>   Cap_ParcelVoiceInfoRequest =
+</I>&gt;<i>   Cap_ProductInfoRequest =
+</I>&gt;<i>   Cap_ProvisionVoiceAccountRequest =
+</I>&gt;<i>   Cap_RemoteParcelRequest = localhost
+</I>&gt;<i>   Cap_RequestTextureDownload =
+</I>&gt;<i>   Cap_SearchStatRequest =
+</I>&gt;<i>   Cap_SearchStatTracking =
+</I>&gt;<i>   Cap_SendPostcard =
+</I>&gt;<i>   Cap_SendUserReport =
+</I>&gt;<i>   Cap_SendUserReportWithScreenshot =
+</I>&gt;<i>   Cap_ServerReleaseNotes =
+</I>&gt;<i>   Cap_SimConsole =
+</I>&gt;<i>   Cap_SimulatorFeatures =
+</I>&gt;<i>   Cap_SetDisplayName =
+</I>&gt;<i>   Cap_StartGroupProposal =
+</I>&gt;<i>   Cap_TextureStats =
+</I>&gt;<i>   Cap_UntrustedSimulatorMessage =
+</I>&gt;<i>   Cap_UpdateAgentInformation =
+</I>&gt;<i>   Cap_UpdateAgentLanguage =
+</I>&gt;<i>   Cap_UpdateGestureAgentInventory =
+</I>&gt;<i>   Cap_UpdateNotecardAgentInventory = localhost
+</I>&gt;<i>   Cap_UpdateScriptAgent = localhost
+</I>&gt;<i>   Cap_UpdateGestureTaskInventory =
+</I>&gt;<i>   Cap_UpdateNotecardTaskInventory = localhost
+</I>&gt;<i>   Cap_UpdateScriptTask = localhost
+</I>&gt;<i>   Cap_UploadBakedTexture = localhost
+</I>&gt;<i>   Cap_UploadObjectAsset = localhost
+</I>&gt;<i>   Cap_ViewerStartAuction =
+</I>&gt;<i>   Cap_ViewerStats =
+</I>&gt;<i>   Cap_WebFetchInventoryDescendents =
+</I>&gt;<i>   Cap_FetchInventoryDescendents2 = localhost
+</I>&gt;<i>   Cap_FetchInventory2 = localhost
+</I>&gt;<i> [Chat]
+</I>&gt;<i>   enabled = true
+</I>&gt;<i>   whisper_distance = 10
+</I>&gt;<i>   say_distance = 20
+</I>&gt;<i>   shout_distance = 100
+</I>&gt;<i> [EntityTransfer]
+</I>&gt;<i>   max_distance = 4095
+</I>&gt;<i>   LevelHGTeleport = 0
+</I>&gt;<i> [Messaging]
+</I>&gt;<i>   InstantMessageModule = InstantMessageModule
+</I>&gt;<i>   MessageTransferModule = HGMessageTransferModule
+</I>&gt;<i>   LureModule = HGLureModule
+</I>&gt;<i>   Gatekeeper = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [Inventory]
+</I>&gt;<i>   CoalesceMultipleObjectsToInventory = true
+</I>&gt;<i> [Appearance]
+</I>&gt;<i>   PersistBakedTextures = false
+</I>&gt;<i>   DelayBeforeAppearanceSave = 5
+</I>&gt;<i>   DelayBeforeAppearanceSend = 2
+</I>&gt;<i>   ResendAppearanceUpdates = true
+</I>&gt;<i> [Attachments]
+</I>&gt;<i>   Enabled = true
+</I>&gt;<i> [Mesh]
+</I>&gt;<i>   AllowMeshUpload = true
+</I>&gt;<i>   UseMeshiesPhysicsMesh = true
+</I>&gt;<i> [Textures]
+</I>&gt;<i>   ReuseDynamicTextures = false
+</I>&gt;<i>   ReuseDynamicLowDataTextures = false
+</I>&gt;<i> [ODEPhysicsSettings]
+</I>&gt;<i>   collect_stats = false
+</I>&gt;<i>   world_gravityx = 0
+</I>&gt;<i>   world_gravityy = 0
+</I>&gt;<i>   world_gravityz = -9.8
+</I>&gt;<i>   avatar_terminal_velocity = 54
+</I>&gt;<i>   world_stepsize = 0.0178
+</I>&gt;<i>   world_internal_steps_without_collisions = 10
+</I>&gt;<i>   world_hashspace_size_low = -4
+</I>&gt;<i>   world_hashSpace_size_high = 128
+</I>&gt;<i>   meters_in_small_space = 29.9
+</I>&gt;<i>   small_hashspace_size_low = -4
+</I>&gt;<i>   small_hashspace_size_high = 66
+</I>&gt;<i>   world_contact_surface_layer = 0.001
+</I>&gt;<i>   filter_collisions = false
+</I>&gt;<i>   nm_terraincontact_friction = 255.0
+</I>&gt;<i>   nm_terraincontact_bounce = 0.1
+</I>&gt;<i>   nm_terraincontact_erp = 0.1025
+</I>&gt;<i>   m_terraincontact_friction = 75.0
+</I>&gt;<i>   m_terraincontact_bounce = 0.05
+</I>&gt;<i>   m_terrainContact_erp = 0.05025
+</I>&gt;<i>   m_avatarobjectcontact_friction = 75.0
+</I>&gt;<i>   m_avatarobjectcontact_bounce = 0.1
+</I>&gt;<i>   objectcontact_friction = 250.0
+</I>&gt;<i>   objectcontact_bounce = 0.2
+</I>&gt;<i>   av_pid_derivative_linux = 2200.0
+</I>&gt;<i>   av_pid_proportional_linux = 900.0
+</I>&gt;<i>   av_pid_derivative_win = 2200.0
+</I>&gt;<i>   av_pid_proportional_win = 900.0
+</I>&gt;<i>   av_capsule_radius = 0.37
+</I>&gt;<i>   av_capsule_standup_tensor_win = 550000
+</I>&gt;<i>   av_capsule_standup_tensor_linux = 550000
+</I>&gt;<i>   av_capsule_tilted = false
+</I>&gt;<i>   av_density = 80
+</I>&gt;<i>   av_movement_divisor_walk = 1.3
+</I>&gt;<i>   av_movement_divisor_run = 0.8
+</I>&gt;<i>   minimum_ground_flight_offset = 3.0
+</I>&gt;<i>   av_planted = false
+</I>&gt;<i>   av_av_collisions_off = false
+</I>&gt;<i>   geometry_default_density = 10.000006836
+</I>&gt;<i>   body_frames_auto_disable = 20
+</I>&gt;<i>   body_pid_derivative = 35
+</I>&gt;<i>   body_pid_gain = 25
+</I>&gt;<i>   contacts_per_collision = 80
+</I>&gt;<i>   geom_crossing_failures_before_outofbounds = 5
+</I>&gt;<i>   geom_contactpoints_start_throttling = 3
+</I>&gt;<i>   geom_updates_before_throttled_update = 15
+</I>&gt;<i>   body_motor_joint_maxforce_tensor_linux = 5
+</I>&gt;<i>   body_motor_joint_maxforce_tensor_win = 5
+</I>&gt;<i>   maximum_mass_object = 10000.01
+</I>&gt;<i>   mesh_sculpted_prim = true
+</I>&gt;<i>   mesh_lod = 32
+</I>&gt;<i>   mesh_physical_lod = 16
+</I>&gt;<i> [BulletSim]
+</I>&gt;<i>   DefaultFriction = 0.20
+</I>&gt;<i>   DefaultDensity = 10.000006836
+</I>&gt;<i>   DefaultRestitution = 0.0
+</I>&gt;<i>   Gravity = -9.80665
+</I>&gt;<i>   TerrainFriction = 0.30
+</I>&gt;<i>   TerrainHitFraction = 0.8
+</I>&gt;<i>   TerrainRestitution = 0
+</I>&gt;<i>   TerrainCollisionMargin = 0.04
+</I>&gt;<i>   AvatarFriction = 0.2
+</I>&gt;<i>   AvatarStandingFriction = 10.0
+</I>&gt;<i>   AvatarRestitution = 0.0
+</I>&gt;<i>   AvatarDensity = 3.5
+</I>&gt;<i>   AvatarCapsuleWidth = 0.6
+</I>&gt;<i>   AvatarCapsuleDepth = 0.45
+</I>&gt;<i>   AvatarCapsuleHeight = 1.5
+</I>&gt;<i>   AvatarContactProcessingThreshold = 0.1
+</I>&gt;<i>   MaxObjectMass = 10000.01
+</I>&gt;<i>   LinearDamping = 0.0
+</I>&gt;<i>   AngularDamping = 0.0
+</I>&gt;<i>   DeactivationTime = 0.2
+</I>&gt;<i>   CollisionMargin = 0.04
+</I>&gt;<i>   LinkImplementation = 1
+</I>&gt;<i>   LinkConstraintUseFrameOffset = False
+</I>&gt;<i>   LinkConstraintEnableTransMotor = True
+</I>&gt;<i>   LinkConstraintTransMotorMaxVel = 5.0
+</I>&gt;<i>   LinkConstraintTransMotorMaxForce = 0.1
+</I>&gt;<i>   MeshSculptedPrim = true
+</I>&gt;<i>   ForceSimplePrimMeshing = false
+</I>&gt;<i>   MeshLevelOfDetail = 8
+</I>&gt;<i>   MeshLevelOfDetailMegaPrimThreshold = 10
+</I>&gt;<i>   MeshLevelOfDetailMegaPrim = 16
+</I>&gt;<i>   SculptLevelOfDetail = 32
+</I>&gt;<i>   MaxSubSteps = 10
+</I>&gt;<i>   FixedTimeStep = .01667
+</I>&gt;<i>   MaxCollisionsPerFrame = 2048
+</I>&gt;<i>   MaxUpdatesPerFrame = 8192
+</I>&gt;<i>   PhysicsLoggingEnabled = False
+</I>&gt;<i>   PhysicsLoggingDir = .
+</I>&gt;<i>   VehicleLoggingEnabled = False
+</I>&gt;<i> [RemoteAdmin]
+</I>&gt;<i>   enabled = false
+</I>&gt;<i>   port = 0
+</I>&gt;<i>   bind_ip_address = 0.0.0.0
+</I>&gt;<i>   access_password = unknown
+</I>&gt;<i>   create_region_enable_voice = false
+</I>&gt;<i>   create_region_public = false
+</I>&gt;<i>   region_file_template = {0}x{1}-{2}.ini
+</I>&gt;<i>   enabled_methods = all
+</I>&gt;<i> [IRC]
+</I>&gt;<i>   enabled = false
+</I>&gt;<i> [Sun]
+</I>&gt;<i> [Wind]
+</I>&gt;<i>   enabled = true
+</I>&gt;<i>   wind_update_rate = 150
+</I>&gt;<i>   wind_plugin = SimpleRandomWind
+</I>&gt;<i>   strength = 1.0
+</I>&gt;<i> [Cloud]
+</I>&gt;<i>   enabled = false
+</I>&gt;<i>   density = 0.5
+</I>&gt;<i>   cloud_update_rate = 1000
+</I>&gt;<i> [LightShare]
+</I>&gt;<i>   enable_windlight = false
+</I>&gt;<i> [Trees]
+</I>&gt;<i>   active_trees = false
+</I>&gt;<i>   tree_density = 1000.0
+</I>&gt;<i> [VectorRender]
+</I>&gt;<i> [LL-Functions]
+</I>&gt;<i>   AllowGodFunctions = false
+</I>&gt;<i>   max_listens_per_region = 1000
+</I>&gt;<i>   max_listens_per_script = 64
+</I>&gt;<i>   max_external_urls_per_simulator = 100
+</I>&gt;<i> [DataSnapshot]
+</I>&gt;<i>   index_sims = false
+</I>&gt;<i>   data_exposure = minimum
+</I>&gt;<i>   gridname = OSGrid
+</I>&gt;<i>   default_snapshot_period = 1200
+</I>&gt;<i>   snapshot_cache_directory = DataSnapshot
+</I>&gt;<i> [Economy]
+</I>&gt;<i>   SellEnabled = true
+</I>&gt;<i>   PriceUpload = 0
+</I>&gt;<i>   PriceGroupCreate = 0
+</I>&gt;<i>   ObjectCount = 0
+</I>&gt;<i>   PriceEnergyUnit = 100
+</I>&gt;<i>   PriceObjectClaim = 10
+</I>&gt;<i>   PricePublicObjectDecay = 4
+</I>&gt;<i>   PricePublicObjectDelete = 4
+</I>&gt;<i>   PriceParcelClaim = 1
+</I>&gt;<i>   PriceParcelClaimFactor = 1
+</I>&gt;<i>   PriceRentLight = 5
+</I>&gt;<i>   TeleportMinPrice = 2
+</I>&gt;<i>   TeleportPriceExponent = 2
+</I>&gt;<i>   EnergyEfficiency = 1
+</I>&gt;<i>   PriceObjectRent = 1
+</I>&gt;<i>   PriceObjectScaleFactor = 10
+</I>&gt;<i>   PriceParcelRent = 1
+</I>&gt;<i> [XEngine]
+</I>&gt;<i>   Enabled = true
+</I>&gt;<i>   MinThreads = 2
+</I>&gt;<i>   MaxThreads = 100
+</I>&gt;<i>   IdleTimeout = 60
+</I>&gt;<i>   Priority = BelowNormal
+</I>&gt;<i>   MaxScriptEventQueue = 300
+</I>&gt;<i>   ThreadStackSize = 262144
+</I>&gt;<i>   AppDomainLoading = true
+</I>&gt;<i>   WriteScriptSourceToDebugFile = false
+</I>&gt;<i>   DefaultCompileLanguage = lsl
+</I>&gt;<i>   AllowedCompilers = lsl
+</I>&gt;<i>   CompileWithDebugInformation = true
+</I>&gt;<i>   AllowMODFunctions = false
+</I>&gt;<i>   AllowOSFunctions = false
+</I>&gt;<i>   AllowLightShareFunctions = false
+</I>&gt;<i>   OSFunctionThreatLevel = VeryLow
+</I>&gt;<i>   SaveInterval = 120
+</I>&gt;<i>   MaintenanceInterval = 10
+</I>&gt;<i>   EventLimit = 30
+</I>&gt;<i>   KillTimedOutScripts = false
+</I>&gt;<i>   WaitForEventCompletionOnScriptStop = 1000
+</I>&gt;<i>   ScriptDelayFactor = 1.0
+</I>&gt;<i>   ScriptDistanceLimitFactor = 1.0
+</I>&gt;<i>   SensorMaxRange = 96.0
+</I>&gt;<i>   SensorMaxResults = 16
+</I>&gt;<i> [Concierge]
+</I>&gt;<i>   enabled = false
+</I>&gt;<i>   whoami = jeeves
+</I>&gt;<i>   password = SECRET
+</I>&gt;<i>   regions = ^MeetingSpace-
+</I>&gt;<i>   welcomes = /path/to/welcome/template/directory
+</I>&gt;<i>   broker = <A HREF="http://broker.place.com/{1">http://broker.place.com/{1</A>}
+</I>&gt;<i> [MRM]
+</I>&gt;<i>   Enabled = false
+</I>&gt;<i>   Sandboxed = true
+</I>&gt;<i>   SandboxLevel = Internet
+</I>&gt;<i>   OwnerOnly = true
+</I>&gt;<i> [Hypergrid]
+</I>&gt;<i>   safemode = false
+</I>&gt;<i> [VivoxVoice]
+</I>&gt;<i>   enabled = false
+</I>&gt;<i>   vivox_server = www.foobar.vivox.com
+</I>&gt;<i>   vivox_sip_uri = foobar.vivox.com
+</I>&gt;<i>   vivox_admin_user = DeepThroat
+</I>&gt;<i>   vivox_admin_password = VoiceG4te
+</I>&gt;<i> [Groups]
+</I>&gt;<i>   Enabled = false
+</I>&gt;<i>   Module = Default
+</I>&gt;<i>   DebugEnabled = false
+</I>&gt;<i>   GroupsCacheTimeout = 30
+</I>&gt;<i>   MessagingModule = GroupsMessagingModule
+</I>&gt;<i>   MessageOnlineUsersOnly = false
+</I>&gt;<i> [PacketPool]
+</I>&gt;<i>   RecycleBaseUDPPackets = true
+</I>&gt;<i> [InterestManagement]
+</I>&gt;<i>   UpdatePrioritizationScheme = BestAvatarResponsiveness
+</I>&gt;<i>   ReprioritizationEnabled = true
+</I>&gt;<i>   ReprioritizationInterval = 2000.0
+</I>&gt;<i>   RootReprioritizationDistance = 10.0
+</I>&gt;<i>   ChildReprioritizationDistance = 20.0
+</I>&gt;<i> [Monitoring]
+</I>&gt;<i>   Enabled = true
+</I>&gt;<i> [WebStats]
+</I>&gt;<i> [MediaOnAPrim]
+</I>&gt;<i>   Enabled = true
+</I>&gt;<i> [NPC]
+</I>&gt;<i>   Enabled = false
+</I>&gt;<i> [Terrain]
+</I>&gt;<i>   InitialTerrain = pinhead-island
+</I>&gt;<i> [SimianGridMaptiles]
+</I>&gt;<i>   Enabled = False
+</I>&gt;<i>   MaptileURL = <A HREF="http://www.mygrid.com/Grid/">http://www.mygrid.com/Grid/</A>
+</I>&gt;<i>   RefreshTime = 3600
+</I>&gt;<i> [JsonStore]
+</I>&gt;<i>   Enabled = False
+</I>&gt;<i> [AssetService]
+</I>&gt;<i>   DefaultAssetLoader = OpenSim.Framework.AssetLoader.Filesystem.dll
+</I>&gt;<i>   AssetLoaderArgs = assets/AssetSets.xml
+</I>&gt;<i>   AssetLoaderEnabled = true
+</I>&gt;<i>   LocalGridAssetService = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:AssetServicesConnector
+</I>&gt;<i>   HypergridAssetService = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:HGAssetServiceConnector
+</I>&gt;<i>   AssetServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [GridService]
+</I>&gt;<i>   StorageProvider = OpenSim.Data.Null.dll:NullRegionData
+</I>&gt;<i>   LocalServiceModule = OpenSim.Services.GridService.dll:GridService
+</I>&gt;<i>   NetworkConnector = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:GridServicesConnector
+</I>&gt;<i>   AssetService = OpenSim.Services.Connectors.dll:AssetServicesConnector
+</I>&gt;<i>   HypergridLinker = true
+</I>&gt;<i>   AllowHypergridMapSearch = true
+</I>&gt;<i>   GridServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i>   MapTileDirectory = ./maptiles
+</I>&gt;<i>   Gatekeeper = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [AutoBackupModule]
+</I>&gt;<i>   AutoBackupModuleEnabled = false
+</I>&gt;<i> [Sounds]
+</I>&gt;<i>   Module = OpenSim.Region.CoreModules.dll:SoundModule
+</I>&gt;<i>   MaxDistance = 100.0
+</I>&gt;<i> [Modules]
+</I>&gt;<i>   Include-modules = addon-modules/*/config/*.ini
+</I>&gt;<i>   AssetServices = HGAssetBroker
+</I>&gt;<i>   InventoryServices = HGInventoryBroker
+</I>&gt;<i>   GridServices = RemoteGridServicesConnector
+</I>&gt;<i>   AvatarServices = RemoteAvatarServicesConnector
+</I>&gt;<i>   NeighbourServices = RemoteNeighbourServicesConnector
+</I>&gt;<i>   AuthenticationServices = RemoteAuthenticationServicesConnector
+</I>&gt;<i>   AuthorizationServices = LocalAuthorizationServicesConnector
+</I>&gt;<i>   PresenceServices = RemotePresenceServicesConnector
+</I>&gt;<i>   UserAccountServices = RemoteUserAccountServicesConnector
+</I>&gt;<i>   GridUserServices = RemoteGridUserServicesConnector
+</I>&gt;<i>   SimulationServices = RemoteSimulationConnectorModule
+</I>&gt;<i>   EntityTransferModule = HGEntityTransferModule
+</I>&gt;<i>   InventoryAccessModule = HGInventoryAccessModule
+</I>&gt;<i>   LandServices = RemoteLandServicesConnector
+</I>&gt;<i>   FriendsModule = HGFriendsModule
+</I>&gt;<i>   MapImageService = MapImageServiceModule
+</I>&gt;<i>   UserManagementModule = HGUserManagementModule
+</I>&gt;<i>   LandServiceInConnector = true
+</I>&gt;<i>   NeighbourServiceInConnector = true
+</I>&gt;<i>   SimulationServiceInConnector = true
+</I>&gt;<i>   LibraryModule = true
+</I>&gt;<i>   AssetCaching = FlotsamAssetCache
+</I>&gt;<i>   Include-FlotsamCache = config-include/FlotsamCache.ini
+</I>&gt;<i> [Estates]
+</I>&gt;<i> [XMLRPC]
+</I>&gt;<i> [SimulatorFeatures]
+</I>&gt;<i> [FreeSwitchVoice]
+</I>&gt;<i> [Architecture]
+</I>&gt;<i>   Include-Architecture = config-include/GridHypergrid.ini
+</I>&gt;<i> [Includes]
+</I>&gt;<i>   Include-Common = config-include/GridCommon.ini
+</I>&gt;<i> [Profile]
+</I>&gt;<i>   Module = BasicProfileModule
+</I>&gt;<i> [SimulationDataStore]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:SimulationDataService
+</I>&gt;<i> [EstateDataStore]
+</I>&gt;<i>   LocalServiceModule = OpenSim.Services.Connectors.dll:EstateDataService
+</I>&gt;<i> [InventoryService]
+</I>&gt;<i>   LocalGridInventoryService = 
+</I>&gt;<i> OpenSim.Region.CoreModules.dll:RemoteXInventoryServicesConnector
+</I>&gt;<i>   InventoryServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [LibraryService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.InventoryService.dll:LibraryService
+</I>&gt;<i>   LibraryName = OpenSim Library
+</I>&gt;<i>   DefaultLibrary = ./inventory/Libraries.xml
+</I>&gt;<i> [Friends]
+</I>&gt;<i>   Connector = OpenSim.Services.Connectors.dll:FriendsServicesConnector
+</I>&gt;<i> [HGInstantMessageService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.HypergridService.dll:HGInstantMessageService
+</I>&gt;<i>   GridService = OpenSim.Services.Connectors.dll:GridServicesConnector
+</I>&gt;<i>   PresenceService = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:PresenceServicesConnector
+</I>&gt;<i>   UserAgentService = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:UserAgentServiceConnector
+</I>&gt;<i> [MapImageService]
+</I>&gt;<i>   LocalServiceModule = 
+</I>&gt;<i> OpenSim.Services.Connectors.dll:MapImageServicesConnector
+</I>&gt;<i>   RefreshTime = 60
+</I>&gt;<i>   MapImageServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [DatabaseService]
+</I>&gt;<i>   StorageProvider = OpenSim.Data.MySQL.dll
+</I>&gt;<i>   ConnectionString = Data Source=localhost;Database=sim;User 
+</I>&gt;<i> ID=opensim;Password=CENSORED;Old Guids=true;
+</I>&gt;<i> [GridInfo]
+</I>&gt;<i>   GridInfoURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [AvatarService]
+</I>&gt;<i>   AvatarServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [PresenceService]
+</I>&gt;<i>   PresenceServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [UserAccountService]
+</I>&gt;<i>   UserAccountServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [GridUserService]
+</I>&gt;<i>   GridUserServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [AuthenticationService]
+</I>&gt;<i>   AuthenticationServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [FriendsService]
+</I>&gt;<i>   FriendsServerURI = <A HREF="http://grid.pseudospace.net:8003">http://grid.pseudospace.net:8003</A>
+</I>&gt;<i> [HGInventoryAccessModule]
+</I>&gt;<i>   HomeURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i>   Gatekeeper = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [HGAssetService]
+</I>&gt;<i>   HomeURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [HGFriendsModule]
+</I>&gt;<i> [UserAgentService]
+</I>&gt;<i>   UserAgentServerURI = <A HREF="http://grid.pseudospace.net:8002">http://grid.pseudospace.net:8002</A>
+</I>&gt;<i> [AuthorizationService]
+</I>&gt;<i> [AssetCache]
+</I>&gt;<i>   CacheDirectory = ./assetcache
+</I>&gt;<i>   LogLevel = 0
+</I>&gt;<i>   HitRateDisplay = 100
+</I>&gt;<i>   MemoryCacheEnabled = false
+</I>&gt;<i>   FileCacheEnabled = true
+</I>&gt;<i>   MemoryCacheTimeout = 2
+</I>&gt;<i>   FileCacheTimeout = 48
+</I>&gt;<i>   FileCleanupTimer = 1.0
+</I>&gt;<i> [StandAlone]
+</I>&gt;<i>
+</I>&gt;<i> I hope this helps :)
+</I>&gt;<i>
+</I>&gt;<i> - John / Orion
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 01/15/2013 07:27 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> Hi John.  Was that OpenSimulator 0.7.4 or 0.7.5-rc1?  Both should 
+</I>&gt;&gt;<i> work, but 0.7.5-rc1 also has a ROBUST console command - &quot;config show&quot; 
+</I>&gt;&gt;<i> that will print the config file actually being used.  If you post 
+</I>&gt;&gt;<i> that here (with anything sensitive redacted) we might be able to help 
+</I>&gt;&gt;<i> further.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Fleep - it doesn't actually matter if the file is loaded as 
+</I>&gt;&gt;<i> Robust.HG.ini or Robust.ini, as long as it's Robust.HG.ini.example 
+</I>&gt;&gt;<i> that is being used.  Though naturally it's easier to use the inifile 
+</I>&gt;&gt;<i> option if one might be running both HG and non-HG at different times.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 15/01/13 23:53, John Sheridan wrote:
+</I>&gt;&gt;&gt;<i> Hi Chris/Fleep,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>    I tried that but wound up with the same result.  I can only guess 
+</I>&gt;&gt;&gt;<i> I'm either entering something wrong into the config
+</I>&gt;&gt;&gt;<i> or I'm possibly using a bad release?  I just downloaded the 
+</I>&gt;&gt;&gt;<i> precompiled binaries from the opensim website, so instead
+</I>&gt;&gt;&gt;<i> I'll try grabbing the source from git and building it myself.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks, :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   - John / Orion
+</I>&gt;&gt;&gt;<i> On 01/15/2013 02:15 PM, Fleep Tuque wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hi John,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> To enable HG for the grid server, you actually use Robust.HG.ini 
+</I>&gt;&gt;&gt;&gt;<i> /instead/ of Robust.ini.  So you don't need to copy
+</I>&gt;&gt;&gt;&gt;<i> the example file over to Robust.ini, instead you need to make a new 
+</I>&gt;&gt;&gt;&gt;<i> Robust.HG.ini file using the example as a
+</I>&gt;&gt;&gt;&gt;<i> template, then when you start the ROBUST service, you call the 
+</I>&gt;&gt;&gt;&gt;<i> Robust.HG.ini file.  On my windows machine, from the
+</I>&gt;&gt;&gt;&gt;<i> command line the startup command is:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Robust.exe -inifile=Robust.HG.ini
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Hope that helps!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> - Chris/Fleep
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;&gt;&gt;&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;&gt;&gt;&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;&gt;&gt;&gt;<i> University of Cincinnati
+</I>&gt;&gt;&gt;&gt;<i> 406A Zimmer Hall
+</I>&gt;&gt;&gt;&gt;<i> 315 College Drive
+</I>&gt;&gt;&gt;&gt;<i> PO BOX 210088
+</I>&gt;&gt;&gt;&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> (513) 556-3018
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Tue, Jan 15, 2013 at 12:04 PM, John Sheridan 
+</I>&gt;&gt;&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A>&gt;&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     Ok, this one is driving me batty and I remember having a 
+</I>&gt;&gt;&gt;&gt;<i> similar issue years ago but I'll be damned if I can
+</I>&gt;&gt;&gt;&gt;<i>     remember what the solution was.  I'm starting off with a new 
+</I>&gt;&gt;&gt;&gt;<i> setup running the stock opensim in grid mode.  I
+</I>&gt;&gt;&gt;&gt;<i>     /think/ I have the Robust.ini setup as it should be to enable 
+</I>&gt;&gt;&gt;&gt;<i> Hypergrid, wherein I copied Robust.HG.ini.Example
+</I>&gt;&gt;&gt;&gt;<i>     over to Robust.ini and set all of the 127.0.0.1 addresses to my 
+</I>&gt;&gt;&gt;&gt;<i> external address (grid.pseudospace.net
+</I>&gt;&gt;&gt;&gt;<i>     &lt;<A HREF="http://grid.pseudospace.net">http://grid.pseudospace.net</A>&gt;). However, whenever I go to 
+</I>&gt;&gt;&gt;&gt;<i> create an account, its leaving the HomeURI,
+</I>&gt;&gt;&gt;&gt;<i>     GateKeeperURI, etc. fields blank.  So far I'm able to log in 
+</I>&gt;&gt;&gt;&gt;<i> and move about the grid internally, but its cut off
+</I>&gt;&gt;&gt;&gt;<i>     from the outside world in terms of Hypergrid in that I can't 
+</I>&gt;&gt;&gt;&gt;<i> get out and nobody can get in.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     10:54:31 - [SERVER]: AssetServiceConnector loaded successfully
+</I>&gt;&gt;&gt;&gt;<i>     R.O.B.U.S.T.# create user Orion Pseudo
+</I>&gt;&gt;&gt;&gt;<i>     Password:
+</I>&gt;&gt;&gt;&gt;<i>     Email []: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>     User ID [3f6c4e7b-37bb-4ec0-8e28-ceec2a67eb15]:
+</I>&gt;&gt;&gt;&gt;<i>     10:54:44 - [AUTHENTICATION DB]: Set password for principalID 
+</I>&gt;&gt;&gt;&gt;<i> 3f6c4e7b-37bb-4ec0-8e28-ceec2a67eb15
+</I>&gt;&gt;&gt;&gt;<i>     10:54:44 - [GRID SERVICE]: GetDefaultRegions returning 0 regions
+</I>&gt;&gt;&gt;&gt;<i>     10:54:44 - [USER ACCOUNT SERVICE]: Unable to set home for 
+</I>&gt;&gt;&gt;&gt;<i> account Orion Pseudo.
+</I>&gt;&gt;&gt;&gt;<i>     10:54:44 - [USER ACCOUNT SERVICE]: Created user inventory for 
+</I>&gt;&gt;&gt;&gt;<i> Orion Pseudo
+</I>&gt;&gt;&gt;&gt;<i>     10:54:44 - [USER ACCOUNT SERVICE]: Creating default appearance 
+</I>&gt;&gt;&gt;&gt;<i> items for 3f6c4e7b-37bb-4ec0-8e28-ceec2a67eb15
+</I>&gt;&gt;&gt;&gt;<i>     10:54:44 - [USER ACCOUNT SERVICE]: Creating default avatar 
+</I>&gt;&gt;&gt;&gt;<i> entries for 3f6c4e7b-37bb-4ec0-8e28-ceec2a67eb15
+</I>&gt;&gt;&gt;&gt;<i>     10:54:44 - [USER ACCOUNT SERVICE]: Account Orion Pseudo 
+</I>&gt;&gt;&gt;&gt;<i> 3f6c4e7b-37bb-4ec0-8e28-ceec2a67eb15 created successfully
+</I>&gt;&gt;&gt;&gt;<i>     R.O.B.U.S.T.# show account Orion Pseudo
+</I>&gt;&gt;&gt;&gt;<i>     Name:    Orion Pseudo
+</I>&gt;&gt;&gt;&gt;<i>     ID:      3f6c4e7b-37bb-4ec0-8e28-ceec2a67eb15
+</I>&gt;&gt;&gt;&gt;<i>     Title:
+</I>&gt;&gt;&gt;&gt;<i>     E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>     Created: 1/15/2013 4:54:44 PM
+</I>&gt;&gt;&gt;&gt;<i>     Level:   0
+</I>&gt;&gt;&gt;&gt;<i>     Flags:   0
+</I>&gt;&gt;&gt;&gt;<i>     HomeURI:
+</I>&gt;&gt;&gt;&gt;<i>     GatekeeperURI:
+</I>&gt;&gt;&gt;&gt;<i>     InventoryServerURI:
+</I>&gt;&gt;&gt;&gt;<i>     AssetServerURI:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i>     Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> 
+</I>&gt;&gt;&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011602.html">[Opensim-users] Robust and Hypergrid configuration?
+</A></li>
+	<LI>Next message: <A HREF="011604.html">[Opensim-users] Robust and Hypergrid configuration?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11603">[ date ]</a>
+              <a href="thread.html#11603">[ thread ]</a>
+              <a href="subject.html#11603">[ subject ]</a>
+              <a href="author.html#11603">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Help: Self registration script no longer working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%3A%20Self%20registration%20script%20no%20longer%20working&In-Reply-To=%3CAANLkTi%3Dvehvgrsu9WquvPbC4u-9YsfTSoeRdTnTz_mv7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006776.html">
+   <LINK REL="Next"  HREF="006777.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Help: Self registration script no longer working</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%3A%20Self%20registration%20script%20no%20longer%20working&In-Reply-To=%3CAANLkTi%3Dvehvgrsu9WquvPbC4u-9YsfTSoeRdTnTz_mv7%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Help: Self registration script no longer working">cliveg at gmail.com
+       </A><BR>
+    <I>Fri Mar 11 17:01:52 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006776.html">[Opensim-users] Help: Self registration script no longer working
+</A></li>
+        <LI>Next message: <A HREF="006777.html">[Opensim-users] Help: Self registration script no longer working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6778">[ date ]</a>
+              <a href="thread.html#6778">[ thread ]</a>
+              <a href="subject.html#6778">[ subject ]</a>
+              <a href="author.html#6778">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Jefferson
+
+I append the verify.php script which writes to the OpenSim database.
+
+Thanks very much for your interest :)
+
+Clive
+
+Clive Gould
+HE PAL ICT
+Bromley College
+<A HREF="http://www.linuxtraining.org.uk">http://www.linuxtraining.org.uk</A>
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">root at vleinternal</A> www]# cat verify.php
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;
+                      &quot;<A HREF="http://www.w3.org/TR/html401/loose.dtd">http://www.w3.org/TR/html401/loose.dtd</A>&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=iso-8859-1&quot;&gt;
+&lt;title&gt;Registration Complete&lt;/title&gt;
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;osstyle.css&quot; /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!-- Do not change this block and include ibossur!.txt in any distribution
+--&gt;
+&lt;!-- Web Interface to register (and later administrate) Open Simulator users
+--&gt;
+&lt;!-- Copyright (C) 2009, Ferdinand Francino --&gt;
+&lt;!-- see ibossur!.txt for license --&gt;
+&lt;!-- /end of block! --&gt;
+&lt;?php
+// open the database using the configuration and connect files
+include 'config.php';
+include 'connect.php';
+// this function generates a UUID for the user
+function uuid()
+{
+$chars = md5(uniqid(mt_rand(), true));
+$uuid  = substr($chars,0,8) . '-';
+$uuid .= substr($chars,8,4) . '-';
+$uuid .= substr($chars,12,4) . '-';
+$uuid .= substr($chars,16,4) . '-';
+$uuid .= substr($chars,20,12);
+return $uuid;
+}
+$queryString = $_SERVER['QUERY_STRING'];
+if ($queryString !==&quot;&quot;)
+{
+$query = &quot;SELECT * FROM registration&quot;;
+$result = mysql_query($query) or die(mysql_error());
+  while($row = mysql_fetch_array($result))
+{
+if ($queryString == $row[&quot;activationkey&quot;])
+        {
+// don't remember why this line is commented out, seems to work w/o it
+// $userInfo = &quot;SELECT * FROM registration WHERE (id = $row[id])&quot;;
+// Database insertion
+include 'settings.php';
+// pay attention to the database table being used!!!
+$table = &quot;users&quot;;
+$username=$row['username'];
+$lastname=$row['lastname'];
+$password=$row['password'];
+$email=$row['email'];
+$this_id=uuid();
+$time = time();
+$passwordHash = md5(md5($password) . &quot;:&quot; ); // salt is not yet included in
+this
+$insert = mysql_query(&quot;INSERT INTO  $table  (UUID, username, lastname,
+passwordHash, passwordSalt, homeRegion, homeLocationX, homeLocationY,
+homeLocationZ, homeLookAtX, homeLookAtY, homeLookAtZ, created, lastLogin,
+userInventoryURI,userAssetURI, profileCanDoMask, profileWantDoMask,
+profileAboutText, profileFirstText, profileImage, profileFirstImage,
+webLoginKey,      homeRegionID,userFlags,godLevel,customType,partner,email)
+        VALUES
+('$this_id','$username','$lastname','$passwordHash','','$homeRegion','$homelocX','$homelocY','$homelocZ','$homelookX','$homelookY','$homelookZ','$time','0','$userInventoryURI','$userAssetURI','0','0','','','00000000-0000-0000-0000-000000000000',
+'00000000-0000-0000-0000-000000000000',
+'00000000-0000-0000-0000-000000000000',
+'$homeRegionID','0','0','','00000000-0000-0000-0000-000000000000','$email')&quot;);
+// Success output, change at will
+print &quot;Congratulations! &quot; . $row[&quot;username&quot;] . &quot; &quot;. $row[&quot;lastname&quot;] .&quot; is
+now registered for access to OpenSim at Bromley College&quot;;
+$sql=&quot;UPDATE registration SET activationkey = '', status='activated' WHERE
+(id = $row[id])&quot;;
+$verified=&quot;done&quot;;
+ if (!mysql_query($sql))
+                {
+die('Error: ' . mysql_error());
+                }
+        }
+}
+include 'done.php';
+}
+else {
+print &quot;The Validation String is empty, paste the complete link into your
+browser address bar.&lt;br&gt;&quot;;
+}
+?&gt;
+&lt;?php
+// close the database when things are done.
+include 'close.php';
+?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+
+On Fri, Mar 11, 2011 at 3:53 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jeffersontwig at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hey, could you email me the old ones? I can that way take a look, email to
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jeffersontwig at gmail.com</A> thanks.
+</I>&gt;<i>
+</I>&gt;<i> Jefferson
+</I>&gt;<i> iLifegrid founder
+</I>&gt;<i>
+</I>&gt;<i> Sent from my iPhone
+</I>&gt;<i>
+</I>&gt;<i> On 11 Mar 2011, at 03:43 p.m., Clive Gould &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cliveg at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Hi
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have a set of PHP scripts originally developed at Glagow Caledonian
+</I>&gt;<i> University that allow users to self register with our OpenSim standalone
+</I>&gt;<i> installation, provided they have a valid institutional email address.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; These worked fine with OpenSim 0.6.9 but no longer work with OpenSim 0.7
+</I>&gt;<i> as there appears to have been a change in the database tables between the
+</I>&gt;<i> two versions.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Looking at the original script, which worked with 0.6.9 the following
+</I>&gt;<i> user table settings are written:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; UUID, username, lastname, passwordHash, passwordSalt, homeRegion,
+</I>&gt;<i> homeLocationX, homeLocationY, homeLocationZ, homeLookAtX, homeLookAtY,
+</I>&gt;<i> homeLookAtZ, created, lastLogin, userInventoryURI,userAssetURI,
+</I>&gt;<i> profileCanDoMask, profileWantDoMask, profileAboutText, profileFirstText,
+</I>&gt;<i> profileImage, profileFirstImage, webLoginKey,
+</I>&gt;<i>  homeRegionID,userFlags,godLevel,customType,partner,email
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Looking at the new database structure with 0.7 the UserAccounts table now
+</I>&gt;<i> contains the following fields:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; PrincipalID, ScopeID, FirstName, LastName, Email, ServiceURLs, Created,
+</I>&gt;<i> UserLevel, UserFlags, UserTitle
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Does anyone have a set of self-registration scripts that will work with
+</I>&gt;<i> OpenSim 0.7 or can advise me what tables a self registration script would
+</I>&gt;<i> now need to write to?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thanks very much
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Clive
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110311/49d1189b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110311/49d1189b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006776.html">[Opensim-users] Help: Self registration script no longer working
+</A></li>
+	<LI>Next message: <A HREF="006777.html">[Opensim-users] Help: Self registration script no longer working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6778">[ date ]</a>
+              <a href="thread.html#6778">[ thread ]</a>
+              <a href="subject.html#6778">[ subject ]</a>
+              <a href="author.html#6778">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

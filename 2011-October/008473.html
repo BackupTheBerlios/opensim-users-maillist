@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Config option to lower Xengine debugging level?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Config%20option%20to%20lower%20Xengine%20debugging%20level%3F&In-Reply-To=%3C4EAB218F.10901%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008457.html">
+   <LINK REL="Next"  HREF="008456.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Config option to lower Xengine debugging level?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Config%20option%20to%20lower%20Xengine%20debugging%20level%3F&In-Reply-To=%3C4EAB218F.10901%40googlemail.com%3E"
+       TITLE="[Opensim-users] Config option to lower Xengine debugging level?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Oct 28 23:41:35 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008457.html">[Opensim-users] Config option to lower Xengine debugging level?
+</A></li>
+        <LI>Next message: <A HREF="008456.html">[Opensim-users] Allied Media Conference
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8473">[ date ]</a>
+              <a href="thread.html#8473">[ thread ]</a>
+              <a href="subject.html#8473">[ subject ]</a>
+              <a href="author.html#8473">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes, the traditional log setting has been DEBUG for OpenSim as an alpha level project.
+
+I actually find the discipline of this quite good - it encourages people not to leave a huge amount of logging output in 
+debug and make it extremely difficult to pin down an error when you do need some such output.  But it's a debatable 
+point since one could adjust the log4net stuff instead.
+
+As you say, it's not the highest priority item to address :)
+
+On 27/10/11 16:36, Oren Hurvitz wrote:
+&gt;<i> OpenSim uses the log4net library for logging, and it supports this behavior.
+</I>&gt;<i> Just add the following lines to OpenSim.exe.config, inside the&lt;log4net&gt;
+</I>&gt;<i> section:
+</I>&gt;<i>
+</I>&gt;<i>      &lt;logger name=&quot;OpenSim.Region.ScriptEngine.XEngine.XEngine&quot;&gt;
+</I>&gt;<i>          &lt;level value=&quot;INFO&quot; /&gt;
+</I>&gt;<i>      &lt;/logger&gt;
+</I>&gt;<i>
+</I>&gt;<i> The log lines that you referred to have a log level of DEBUG, so they won't
+</I>&gt;<i> be printed anymore.
+</I>&gt;<i>
+</I>&gt;<i> (By the way, I noticed that the standard practice in the OpenSim codebase is
+</I>&gt;<i> to add lots of logging during development, but then comment out most of the
+</I>&gt;<i> lines before committing the code. This could be done better by writing the
+</I>&gt;<i> log lines using DEBUG, and then setting the default log level for that
+</I>&gt;<i> module to INFO in the configuration. That way, whenever anyone wants to see
+</I>&gt;<i> those lines again they only have to change the configuration file; they
+</I>&gt;<i> don't have to recompile OpenSim. This is what I do in my own code. However,
+</I>&gt;<i> going back and implementing this change for existing modules is probably not
+</I>&gt;<i> high on anyone's list of priorities...)
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Config-option-to-lower-Xengine-debugging-level-tp6933729p6936819.html">http://opensim-users.2152040.n2.nabble.com/Config-option-to-lower-Xengine-debugging-level-tp6933729p6936819.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008457.html">[Opensim-users] Config option to lower Xengine debugging level?
+</A></li>
+	<LI>Next message: <A HREF="008456.html">[Opensim-users] Allied Media Conference
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8473">[ date ]</a>
+              <a href="thread.html#8473">[ thread ]</a>
+              <a href="subject.html#8473">[ subject ]</a>
+              <a href="author.html#8473">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

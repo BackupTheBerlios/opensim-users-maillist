@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Ubuntu%20and%20magic%20mini-trampolines%20%28crash%0A%09problem%29&In-Reply-To=%3C7e8b2c180904230834i3c562803wb5b2238b8610f79a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002017.html">
+   <LINK REL="Next"  HREF="002022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)</H1>
+    <B>Mic Bowman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Ubuntu%20and%20magic%20mini-trampolines%20%28crash%0A%09problem%29&In-Reply-To=%3C7e8b2c180904230834i3c562803wb5b2238b8610f79a%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)">cmickeyb at gmail.com
+       </A><BR>
+    <I>Thu Apr 23 17:34:36 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002017.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+        <LI>Next message: <A HREF="002022.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2021">[ date ]</a>
+              <a href="thread.html#2021">[ thread ]</a>
+              <a href="subject.html#2021">[ subject ]</a>
+              <a href="author.html#2021">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>GC may also be a problem. Though my experience with 2.4 at least is
+that memory utilization is very good and in this case we have... &quot;more
+than enough&quot; memory. :-)
+
+Also... the consistency with which the problem occurs in log4net
+methods called from within an executing script suggests that its not
+just garbage collection. I'm not sufficiently mono-smart to root cause
+this... so I'm looking for bandaids (which in this case amounts to
+commenting out log4net calls in the call stack that caused the
+problem) that work consistently. If someone with mono-smarts would
+like to suggest some other ways to get data on this, I'm more than
+willing to try something different.
+
+--mic
+
+On Thu, Apr 23, 2009 at 6:09 AM, BlueWall Slade
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bluewall.slade at gmail.com</A>&gt; wrote:
+&gt;<i> I tested the 2.2/2.4 waters and regressed back to 2.0.1 . But, I did find
+</I>&gt;<i> that the 2.2/2.4 works much better if you can keep some headroom in RAM.
+</I>&gt;<i> Things seem to take a turn for the worse when you start swapping. Maybe the
+</I>&gt;<i> GC has a hard time dealing with cached pages?
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i> BlueWall
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Apr 23, 2009 at 8:53 AM, John Hopkin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at jfhopkin.karoo.co.uk</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Dr Scofield wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt;John Hopkin wrote:
+</I>&gt;&gt;<i> &gt;&gt; I've just upgraded Mono from 2.1 to 2.2 under Ubuntu Hardy, using Dr
+</I>&gt;&gt;<i> &gt;&gt; Scofield's script from here:
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="http://xyzzyxyzzy.net/2009/02/17/updated-mono-build-script-mono-22/">http://xyzzyxyzzy.net/2009/02/17/updated-mono-build-script-mono-22/</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;i've found that 2.2 has major problems and have since gone back to 2.0.1.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;i'll add a comment to the blog, sorry about not doing it earlier.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'd really, really like to stay on 2.2 if possible - under 2.1, the
+</I>&gt;&gt;<i> setup had recently become so slow and temperamental it was practically
+</I>&gt;&gt;<i> unusable, which is why I tried the upgrade. &#160;With 2.2, this problem
+</I>&gt;&gt;<i> aside, there've been none of the performance issues, and generally
+</I>&gt;&gt;<i> it's a *lot* smoother than it has been for months.
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> John Hopkin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002017.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+	<LI>Next message: <A HREF="002022.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2021">[ date ]</a>
+              <a href="thread.html#2021">[ thread ]</a>
+              <a href="subject.html#2021">[ subject ]</a>
+              <a href="author.html#2021">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

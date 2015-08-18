@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] trouble with new osgrid region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trouble%20with%20new%20osgrid%20region&In-Reply-To=%3CCAOaG_2ZzdM7h8qAdz40tAQyW6qNj24L0AyQMK763NNOaPuQd%3DQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012690.html">
+   <LINK REL="Next"  HREF="012694.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] trouble with new osgrid region</H1>
+    <B>James Stallings II</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trouble%20with%20new%20osgrid%20region&In-Reply-To=%3CCAOaG_2ZzdM7h8qAdz40tAQyW6qNj24L0AyQMK763NNOaPuQd%3DQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] trouble with new osgrid region">james.stallings at gmail.com
+       </A><BR>
+    <I>Sat Oct  5 00:08:45 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012690.html">[Opensim-users] trouble with new osgrid region
+</A></li>
+        <LI>Next message: <A HREF="012694.html">[Opensim-users] trouble with new osgrid region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12691">[ date ]</a>
+              <a href="thread.html#12691">[ thread ]</a>
+              <a href="subject.html#12691">[ subject ]</a>
+              <a href="author.html#12691">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Serendipity,
+
+Lets take some deep breaths and attempt to make some sense of these things.
+
+Firstly, there's no 'linux' flavor of opensim -- opensim is implemented in
+c# precisely so that the same source code and the same binaries work
+equally well on all supported platforms. Or, at least that is the intention
+;)
+
+Next:
+
+DNS vs IP addresses. If (and only if) your DNS entries for a given IP
+address are all right and proper, there's no real reason they can't be used
+interchangeably in your config files. That being said, if the DNS entries
+for a given IP address are *not* right and proper, trouble will ensue if
+you attempt using the DNS name instead of a plain IP address.
+
+Now this message:
+
+&quot;PUT
+<A HREF="http://mariaclaude.no-ip.org:9000/agent/544eab0f-01a9-5f8d-e0d9-de89e9ea46dd/">http://mariaclaude.no-ip.org:9000/agent/544eab0f-01a9-5f8d-e0d9-de89e9ea46dd/</A>
+took
+10000ms, 0ms writing, {&quot;message_type&quot;:&quot;AgentPosition&quot;,&quot;region_handle&quot;
+:<i>&quot;10966528977991424&quot;,&quot;circuit_code&quot;:&quot;0&quot;,&quot;agent_uuid&quot;:
+</I>21:41:36 - [WEB UTIL]: ServiceOSD request 107
+<A HREF="http://mariaclaude.no-ip.org:9000/agent/544eab0f-01a9-5f8d-e0d9-de89e9ea46dd/">http://mariaclaude.no-ip.org:9000/agent/544eab0f-01a9-5f8d-e0d9-de89e9ea46dd/</A>
+PUT
+FAILED: The request timed out&quot;
+
+
+is not all that strange. It is typical of the formats opensim employs in
+exchanges with the viewer and other regions when 'things are happening&quot;.
+What is surprising about it is that you are seeing it. What this message is
+about is the (re)positioning or possibly the arrival of an avatar in the
+region. That avatar is originally logged in from '
+<A HREF="http://mariaclaude.no-ip.org:9000/">http://mariaclaude.no-ip.org:9000/</A>'. Hypergrid? In any case, that it failed
+(and how it failed) is telling of trouble with your networking. This
+trouble could actually be with the avatar as reflected in the message; it
+might look something like this if the person closed the viewer before their
+jump completed.
+
+Given your level of experience and understanding, I'd say that this was one
+of 1) a transient network issue not of your making or possibly 2) you
+fat-fingered one or more of the numbers in your IP address (it happens to
+the best of us from time to time ;)
+
+If the case be the former, then you will know when it clears up without
+being fixed. If the latter, well, you'll need to make some corrections to
+your configs.
+
+What I recommend is that you go through each of your config files, and
+standardize on IP addresses throughout your configuration. This will
+provide you the opportunity to insure that each is correct, and eliminate
+any possibility of DNS issues being the cause. One reason for configuring
+this way for production is that it eliminates the time required to look up
+the IP address using the DNS system, which can sometimes be substantial
+under load.
+
+Concerning your scripting troubles, I'd suggest that you not even bother
+yourself with that until such time as these other issues are settled,
+because if your region is failing in the general sense, there's no real
+expectation that the particulars should be expected to work either.
+
+LASTLY:
+
+When it comes to opensims, VPS are bad, and are not supported
+configurations. You need real hardware under your opensims. This is
+something you should see to as soon as possible.
+
+
+ Best of luck, and do let us know how it goes :)
+
+Cheers!
+James/Hiro
+
+
+
+
+On Fri, Oct 4, 2013 at 4:03 PM, Serendipity Seraph
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">seren.seraph at gmail.com</A>&gt;wrote:
+
+&gt;<i> High.  I pulled the latest linux osgrid opensimulator package and cranked
+</I>&gt;<i> it up on a new VPS.  Something appears to be very off.  I have a static IP
+</I>&gt;<i> on the region and originally did not have a DNS pointing to it.  I don't
+</I>&gt;<i> know if that or something else got it confused but I see a couple of
+</I>&gt;<i> issues.  The region did come up fine on osgrid.
+</I>&gt;<i>
+</I>&gt;<i> First I see strange messages as if something things the region is at some
+</I>&gt;<i> other address.  Like:
+</I>&gt;<i> PUT
+</I>&gt;<i> <A HREF="http://mariaclaude.no-ip.org:9000/agent/544eab0f-01a9-5f8d-e0d9-de89e9ea46dd/took">http://mariaclaude.no-ip.org:9000/agent/544eab0f-01a9-5f8d-e0d9-de89e9ea46dd/took</A> 10000ms, 0ms writing,
+</I>&gt;<i> {&quot;message_type&quot;:&quot;AgentPosition&quot;,&quot;region_handle&quot;:&quot;10966528977991424&quot;,&quot;circuit_code&quot;:&quot;0&quot;,&quot;agent_uuid&quot;:
+</I>&gt;<i> 21:41:36 - [WEB UTIL]: ServiceOSD request 107
+</I>&gt;<i> <A HREF="http://mariaclaude.no-ip.org:9000/agent/544eab0f-01a9-5f8d-e0d9-de89e9ea46dd/PUT">http://mariaclaude.no-ip.org:9000/agent/544eab0f-01a9-5f8d-e0d9-de89e9ea46dd/PUT</A> FAILED: The request timed out
+</I>&gt;<i>
+</I>&gt;<i> I have no ide who or what mariaclaude.no-ip.org may be but it is sure not
+</I>&gt;<i> me.  I did a ping and the address shown is not my IP address at all.   I
+</I>&gt;<i> have since set my DNS for one of my domains to point to this and changed it
+</I>&gt;<i> in my Region.ini but to no avail.  Restart leaves it all the same.
+</I>&gt;<i>
+</I>&gt;<i> I also loaded an OAR from a kitely region to my region but that doesn't
+</I>&gt;<i> seem to have anything to do with it.
+</I>&gt;<i>
+</I>&gt;<i> The other and more serious problem is that I get errors every time I try
+</I>&gt;<i> to compile a script and no scripts seem to want to run, at least not ones I
+</I>&gt;<i> build.
+</I>&gt;<i>
+</I>&gt;<i> If I right click and hit compile (both compile LSL and compile Mono give
+</I>&gt;<i> same problem) I get
+</I>&gt;<i> (0,0) Error: [ERROR] FATAL UNHANDLED EXCEPTION: System.TypeLoadException:
+</I>&gt;<i> A type load exception has occurred.
+</I>&gt;<i>
+</I>&gt;<i> HELP!
+</I>&gt;<i>
+</I>&gt;<i> Thanks.
+</I>&gt;<i>
+</I>&gt;<i> - seren
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+===================================
+<A HREF="http://osgrid.org/">http://osgrid.org/</A>
+<A HREF="http://simhost.com">http://simhost.com</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20131004/8f2a7c76/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20131004/8f2a7c76/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012690.html">[Opensim-users] trouble with new osgrid region
+</A></li>
+	<LI>Next message: <A HREF="012694.html">[Opensim-users] trouble with new osgrid region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12691">[ date ]</a>
+              <a href="thread.html#12691">[ thread ]</a>
+              <a href="subject.html#12691">[ subject ]</a>
+              <a href="author.html#12691">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

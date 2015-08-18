@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow handling of POST -
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3C50875A7C.4000208%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011110.html">
+   <LINK REL="Next"  HREF="011112.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow handling of POST -</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3C50875A7C.4000208%40googlemail.com%3E"
+       TITLE="[Opensim-users] Slow handling of POST -">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Oct 24 05:03:24 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011110.html">[Opensim-users] Slow handling of POST -
+</A></li>
+        <LI>Next message: <A HREF="011112.html">[Opensim-users] Avatar on sit target and region crossing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11111">[ date ]</a>
+              <a href="thread.html#11111">[ thread ]</a>
+              <a href="subject.html#11111">[ subject ]</a>
+              <a href="author.html#11111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OSgrid services architecture has an nginx instance that is acting as a load balancer before requests are passed on to 
+SRAS instances which implement the asset service.
+
+The 504 gateway timeouts you are seeing are because SRAS instances are not responding with data before the nginx 60 
+second timeout, unless you have another proxy between your simulator and osgrid.
+
+Making enquiries today, I now know that osgrid has been doing an asset service migration since the start of October.  In 
+the medium term this will result in a more responsive asset service.  However, right now it's possible that for periods 
+the asset service is slow to respond.  This is due to continue for at least another couple of weeks.
+
+Changes have now been made to cache data on nginx rather than always hit SRAS.  This may help.
+
+I'm not sure whether this might be the underlying cause of your earlier problems or not.  Either way, while it exists 
+it's hard to debug anything else.
+
+This might also be the cause of recent white texture problems on osgrid.
+
+Unfortunately, this is pegging the disk
+On 23/10/12 09:28, Ai Austin wrote:
+&gt;<i> Just to report a bit more on this from my testing in recent weeks.  I have used various OpenSim 0.7.5 dev master copies
+</I>&gt;<i> in between the last OSGrid packaged release 3 weeks ago and one released just a few hours ago.
+</I>&gt;<i>
+</I>&gt;<i> I tried the changes that Diva Canto made for proxy handling just prior to reverting the changes so people could test,
+</I>&gt;<i> and I did not observe any change in the slow post issues in the week I ran that version.
+</I>&gt;<i>
+</I>&gt;<i> I also installed a version after some changes by Melanie to increase the number of concurrent connections from the
+</I>&gt;<i> original 2... I was still seeing the slow post issues.
+</I>&gt;<i>
+</I>&gt;<i> More to the point, I just installed the r/20777 today from the OSGridfpackaged reelase of 0.7.5 dev master and on
+</I>&gt;<i> startup I still see a lot of VERY slow responses - can they really be taking 69 seconds? -   even before any avatar has
+</I>&gt;<i> logged into the region.
+</I>&gt;<i>
+</I>&gt;<i> Here is one extract from the startup log just now on first run of the OpernSim.exe instance of some regions with
+</I>&gt;<i> relatively little content as add-on region to OSGrid...
+</I>&gt;<i>
+</I>&gt;<i> 09:17:02 - [SynchronousRestObjectRequester]: WebException for GET <A HREF="http://assets.">http://assets.</A>
+</I>&gt;<i> osgrid.org/assets/7c2ee836-dc42-4100-be85-ff983385d78b OpenSim.Framework.AssetBa
+</I>&gt;<i> se: The remote server returned an error: (504) Gateway Timeout.    at System.Net
+</I>&gt;<i> .HttpWebRequest.GetResponse()
+</I>&gt;<i>     at OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+</I>&gt;<i> ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, Int32 maxCo
+</I>&gt;<i> nnections) in d:\OSGRID\OSGRID 0.7 RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+</I>&gt;<i> 3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+</I>&gt;<i>
+</I>&gt;<i> 09:17:02 - [SynchronousRestObjectRequester]: Slow request 113 GET <A HREF="http://assets.">http://assets.</A>
+</I>&gt;<i> osgrid.org/assets/7c2ee836-dc42-4100-be85-ff983385d78b took 60139ms, 0ms writing,
+</I>&gt;<i>
+</I>&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;<i>
+</I>&gt;<i> 09:18:49 - [SynchronousRestObjectRequester]: WebException for GET <A HREF="http://assets.">http://assets.</A>
+</I>&gt;<i> osgrid.org/assets/783f8b90-c2e9-4555-a16f-8a57185c3069 OpenSim.Framework.AssetBa
+</I>&gt;<i> se: The remote server returned an error: (504) Gateway Timeout.    at System.Net
+</I>&gt;<i> .HttpWebRequest.GetResponse()
+</I>&gt;<i>     at OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+</I>&gt;<i> ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, Int32 maxCo
+</I>&gt;<i> nnections) in d:\OSGRID\OSGRID 0.7 RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+</I>&gt;<i> 3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+</I>&gt;<i>
+</I>&gt;<i> 09:18:49 - [SynchronousRestObjectRequester]: Slow request 175 GET <A HREF="http://assets.">http://assets.</A>
+</I>&gt;<i> osgrid.org/assets/783f8b90-c2e9-4555-a16f-8a57185c3069 took 63133ms, 0ms writing,
+</I>&gt;<i>
+</I>&gt;<i> 09:20:09 - [SynchronousRestObjectRequester]: WebException for GET <A HREF="http://assets.">http://assets.</A>
+</I>&gt;<i> osgrid.org/assets/dd2854dd-314b-4118-a8b7-2c33794e6c9f OpenSim.Framework.AssetBa
+</I>&gt;<i> se: The remote server returned an error: (504) Gateway Timeout.    at System.Net
+</I>&gt;<i> .HttpWebRequest.GetResponse()
+</I>&gt;<i>     at OpenSim.Framework.SynchronousRestObjectRequester.MakeRequest[TRequest,TRes
+</I>&gt;<i> ponse](String verb, String requestUrl, TRequest obj, Int32 pTimeout, Int32 maxCo
+</I>&gt;<i> nnections) in d:\OSGRID\OSGRID 0.7 RELEASES\osgrid.opensim-10232012.v0.7.5-36bfd
+</I>&gt;<i> 3667c44f7cd4e66e880c45c34903ed34842\OpenSim\Framework\WebUtil.cs:line 1126
+</I>&gt;<i>
+</I>&gt;<i> 09:20:09 - [SynchronousRestObjectRequester]: Slow request 185 GET <A HREF="http://assets.">http://assets.</A>
+</I>&gt;<i> osgrid.org/assets/dd2854dd-314b-4118-a8b7-2c33794e6c9f took 69451ms, 0ms writing,
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011110.html">[Opensim-users] Slow handling of POST -
+</A></li>
+	<LI>Next message: <A HREF="011112.html">[Opensim-users] Avatar on sit target and region crossing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11111">[ date ]</a>
+              <a href="thread.html#11111">[ thread ]</a>
+              <a href="subject.html#11111">[ subject ]</a>
+              <a href="author.html#11111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

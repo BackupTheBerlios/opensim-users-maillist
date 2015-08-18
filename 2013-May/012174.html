@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NPC not getting removed as expected
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20not%20getting%20removed%20as%20expected&In-Reply-To=%3C518416BB.6030204%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012164.html">
+   <LINK REL="Next"  HREF="012175.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NPC not getting removed as expected</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20not%20getting%20removed%20as%20expected&In-Reply-To=%3C518416BB.6030204%40googlemail.com%3E"
+       TITLE="[Opensim-users] NPC not getting removed as expected">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri May  3 21:57:47 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012164.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+        <LI>Next message: <A HREF="012175.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12174">[ date ]</a>
+              <a href="thread.html#12174">[ thread ]</a>
+              <a href="subject.html#12174">[ subject ]</a>
+              <a href="author.html#12174">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I would consider that llGetOwner() behaviour with NPCs to be a bug - it should be returning the NPCs own ID.  The 
+osNpcGetOwner() function is available if one wants to know which avatar spawned an owned NPC.
+
+Indeed, it's already the case that regression tests check that the attachment objects themselves are correctly 'owned' 
+by the avatar but this wasn't done for items within objects.
+
+On 01/05/13 15:04, Dr Ramesh Ramloll wrote:
+&gt;<i> And sadly the attach() function does not seem to be producing the right UUID for the NPC as well ... this is what I get
+</I>&gt;<i> when trying to have an NPC say its UUID
+</I>&gt;<i> My UUID is 00000000-0000-0000-0000-000000000000
+</I>&gt;<i> I think the problem lies elsewhere for the NPC removal part, because all the other functions are working fine e.g. sit
+</I>&gt;<i> on taget, moving to some point etc etc
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, May 1, 2013 at 9:43 AM, Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     Just a note here to state something baffling to me ...
+</I>&gt;<i>
+</I>&gt;<i>     the code snippet you provided does not compile, it gives an error:
+</I>&gt;<i>     (0,0):Error: /usr/local/node/opensim2/Opensim.Region.ScriptEngine.SharedApi.Runtime.dll error (Location of the
+</I>&gt;<i>     symbol related to previous warning)
+</I>&gt;<i>
+</I>&gt;<i>     I just needed to change the variable NPC to something else for it to compile ... I can't understand this.
+</I>&gt;<i>
+</I>&gt;<i>     R
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     On Wed, May 1, 2013 at 7:48 AM, Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>         Thanks dz I will definitely try your suggestion. Thank you.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         On Wed, May 1, 2013 at 1:37 AM, dz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dz at bitzend.net</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dz at bitzend.net</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>             Date: Tue, 30 Apr 2013 17:10:34 -0400
+</I>&gt;<i>             From: Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt;&gt;
+</I>&gt;<i>             To: opensim-users &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;<i>             Subject: Re: [Opensim-users] NPC not getting removed as expected
+</I>&gt;<i>             Message-ID:
+</I>&gt;<i>                      &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">CAHi41xK6v-qPH9rCc0+pDunHOPcB7UO6VOSs7QeCVrwnfd1+9w at mail.gmail.com</A>
+</I>&gt;<i>             &lt;mailto:CAHi41xK6v-qPH9rCc0%2BpDunHOPcB7UO6VOSs7QeCVrwnfd1%<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">2B9w at mail.gmail.com</A>&gt;&gt;
+</I>&gt;<i>             Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>             Hello,
+</I>&gt;<i>             Before I file a mantis report, try wearing an attachment with this trivial
+</I>&gt;<i>             script
+</I>&gt;<i>
+</I>&gt;<i>             default
+</I>&gt;<i>             {
+</I>&gt;<i>                  touch_start(integer i){
+</I>&gt;<i>                      osNpcRemove(llGetOwner());
+</I>&gt;<i>                  }
+</I>&gt;<i>             }
+</I>&gt;<i>
+</I>&gt;<i>             clone youself, then create an NPC using the example script here NPC
+</I>&gt;<i>             Automator script
+</I>&gt;<i>             <A HREF="http://opensimulator.org/wiki/OSSLNPC">http://opensimulator.org/wiki/OSSLNPC</A>
+</I>&gt;<i>
+</I>&gt;<i>             Let me know if others are getting the same behavior, the NPC is expected to
+</I>&gt;<i>             delete itself when attachment is clicked.
+</I>&gt;<i>
+</I>&gt;<i>             I filed a Mantis on this behavior when the NPC functions were released.
+</I>&gt;<i>             I cannot find it now, large numbers of reports seem to have been removed.
+</I>&gt;<i>             The call to GetOwner() does not return the correct UUID for the NPC
+</I>&gt;<i>
+</I>&gt;<i>             The workaround is to add code to handle the attached event
+</I>&gt;<i>
+</I>&gt;<i>                  attach(key id) {
+</I>&gt;<i>                      Initialize(id);
+</I>&gt;<i>                  }
+</I>&gt;<i>
+</I>&gt;<i>             The key returned as id in this function is always the key of the avatar/NPC the item is attached to.
+</I>&gt;<i>             This script should do what you expect.
+</I>&gt;<i>
+</I>&gt;<i>             key NPC = NULL_KEY;
+</I>&gt;<i>             default
+</I>&gt;<i>             {
+</I>&gt;<i>                  touch_start(integer i){
+</I>&gt;<i>                      osNpcRemove(NPC);
+</I>&gt;<i>                  }
+</I>&gt;<i>
+</I>&gt;<i>                  attach(key id) {
+</I>&gt;<i>                      NPC=id;
+</I>&gt;<i>                  }
+</I>&gt;<i>             }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>             _______________________________________________
+</I>&gt;<i>             Opensim-users mailing list
+</I>&gt;<i>             <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>             <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         --
+</I>&gt;<i>         'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i>         *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate /Research Associate Professor/, Idaho State
+</I>&gt;<i>         University, Pocatello, ID 83209 Tel: 208-240-0040 &lt;tel:208-240-0040&gt;
+</I>&gt;<i>         Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn &lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;, DeepSemaphore
+</I>&gt;<i>         LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile &lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i>     *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate /Research Associate Professor/, Idaho State
+</I>&gt;<i>     University, Pocatello, ID 83209 Tel: 208-240-0040 &lt;tel:208-240-0040&gt;
+</I>&gt;<i>     Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn &lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;, DeepSemaphore LLC
+</I>&gt;<i>     &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile &lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i> *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate /Research Associate Professor/, Idaho State University,
+</I>&gt;<i> Pocatello, ID 83209 Tel: 208-240-0040
+</I>&gt;<i> Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn &lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;, DeepSemaphore LLC
+</I>&gt;<i> &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile &lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012164.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+	<LI>Next message: <A HREF="012175.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12174">[ date ]</a>
+              <a href="thread.html#12174">[ thread ]</a>
+              <a href="subject.html#12174">[ subject ]</a>
+              <a href="author.html#12174">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

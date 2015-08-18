@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] HUD textures not rendering OpenSim 0.7.3,	SL V3.3.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HUD%20textures%20not%20rendering%20OpenSim%200.7.3%2C%0A%09SL%20V3.3.0&In-Reply-To=%3CCAC4YQqH-1diHso95tQpT%3Do-SbwSNaX2zzxqsYwe0eeN%2BvofF3Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010256.html">
+   <LINK REL="Next"  HREF="010258.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] HUD textures not rendering OpenSim 0.7.3,	SL V3.3.0</H1>
+    <B>Neil Canham</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HUD%20textures%20not%20rendering%20OpenSim%200.7.3%2C%0A%09SL%20V3.3.0&In-Reply-To=%3CCAC4YQqH-1diHso95tQpT%3Do-SbwSNaX2zzxqsYwe0eeN%2BvofF3Q%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] HUD textures not rendering OpenSim 0.7.3,	SL V3.3.0">neil at knowsense.co.uk
+       </A><BR>
+    <I>Fri May  4 19:01:30 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010256.html">[Opensim-users] HUD textures not rendering OpenSim 0.7.3,	SL V3.3.0
+</A></li>
+        <LI>Next message: <A HREF="010258.html">[Opensim-users] HUD textures not rendering OpenSim 0.7.3,	SL V3.3.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10257">[ date ]</a>
+              <a href="thread.html#10257">[ thread ]</a>
+              <a href="subject.html#10257">[ subject ]</a>
+              <a href="author.html#10257">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry to hear that James.  But for me, this seems to have fixed it -
+rebuilding one of the HUDs with an additional transparent prim at the back
+as the root prim, the problem seems to have gone (10 log out / in cycles
+without issue so far).  Interestingly it seems to have also auto-magically
+fixed the other HUD too... more investigation needed to see how that might
+be possible.
+
+Neil
+
+On Fri, May 4, 2012 at 5:47 PM, James Stallings II &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">james.stallings at gmail.com</A>&gt; wrote:
+
+&gt;<i> Not for me; the attachment in question for me is a TP hud for teleporting
+</I>&gt;<i> around a large megaregion. I consists of a stack of several cube prims, all
+</I>&gt;<i> linked, and all exhibit the trouble.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, May 4, 2012 at 11:30 AM, Neil Canham &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">neil at knowsense.co.uk</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Ah that is an interesting point - I checked and sure enough it is only
+</I>&gt;&gt;<i> the root prim textures that are vanishing.  So a work-around is to
+</I>&gt;&gt;<i> restructure the HUD to have a small transparent root prim.  But I'd like to
+</I>&gt;&gt;<i> try to see what is going on - I noticed reading an old description of the
+</I>&gt;&gt;<i> viewer architecture that textures are assigned a boost value - HUDs should
+</I>&gt;&gt;<i> be assigned fairly high and selected (clicked on) textures get very high
+</I>&gt;&gt;<i> too.  One possibility is that the root prim in the HUD isn't always getting
+</I>&gt;&gt;<i> this boost value set correctly so other textures in the scene are taking
+</I>&gt;&gt;<i> precedence.  Vague idea I know...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for the root prim hint!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Neil
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, May 3, 2012 at 8:01 PM, R.Gunther &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> In my viewer i see always the root prim thats getting invisible on my
+</I>&gt;&gt;&gt;<i> hud.
+</I>&gt;&gt;&gt;<i> Maby Neil Canham can check if its also the root prim on the screen.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 2012-05-03 03:17, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I have heard of these problems occasionally but unfortunately I'm not
+</I>&gt;&gt;&gt;&gt;<i> sure of the cause or any steps to reliably reproduce them.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 02/05/12 18:10, R.Gunther wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Thats not a SL3 p[roblem. i see the same with singularity 1.6.0(3)
+</I>&gt;&gt;&gt;&gt;&gt;<i> some parts of my hud are sometimes invisible.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> On 2012-05-02 15:32, Neil Canham wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Hi
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Just wondering if anyone else has seen this - I'm finding that using
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> SL V3.3.0 against OpenSim 0.7.3 HUD textures
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> sometimes do not appear or appear transparent when they are not. It
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> isn't that they don't load - they are loaded -
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> clicking on the HUD or resizing the window usually makes them
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> instantly appear, so it appears as if the viewer doesn't
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> realise it needs to render them. I don't see this using an Imprudence
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> 1.3 or 1.4 based viewer.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Neil Canham
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> vComm Solutions
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> ===================================
+</I>&gt;<i> <A HREF="http://simhost.com">http://simhost.com</A>
+</I>&gt;<i> <A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+</I>&gt;<i> <A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120504/2fc97ff9/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120504/2fc97ff9/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010256.html">[Opensim-users] HUD textures not rendering OpenSim 0.7.3,	SL V3.3.0
+</A></li>
+	<LI>Next message: <A HREF="010258.html">[Opensim-users] HUD textures not rendering OpenSim 0.7.3,	SL V3.3.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10257">[ date ]</a>
+              <a href="thread.html#10257">[ thread ]</a>
+              <a href="subject.html#10257">[ subject ]</a>
+              <a href="author.html#10257">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

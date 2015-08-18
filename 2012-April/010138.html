@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] rendering JPEG2000 secondlife vs. opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20rendering%20JPEG2000%20secondlife%20vs.%20opensim&In-Reply-To=%3C4F8F44D5.7020502%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010127.html">
+   <LINK REL="Next"  HREF="010128.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] rendering JPEG2000 secondlife vs. opensim</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20rendering%20JPEG2000%20secondlife%20vs.%20opensim&In-Reply-To=%3C4F8F44D5.7020502%40googlemail.com%3E"
+       TITLE="[Opensim-users] rendering JPEG2000 secondlife vs. opensim">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Apr 19 00:48:53 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010127.html">[Opensim-users] I cant' reach OpenSimulator.org
+</A></li>
+        <LI>Next message: <A HREF="010128.html">[Opensim-users] Timezone
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10138">[ date ]</a>
+              <a href="thread.html#10138">[ thread ]</a>
+              <a href="subject.html#10138">[ subject ]</a>
+              <a href="author.html#10138">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 18/04/12 01:55, Nicky Perian wrote:
+&gt;<i> While building and testing kokua viewer from the viewer-development code base I have stumbled
+</I>&gt;<i> across a couple issues seemingly related to rendering body parts at log on. Please note that these
+</I>&gt;<i> show up in a release with debug information (RelWithDebInfo) configuration so the llaserts
+</I>&gt;<i> have not been stripped.
+</I>&gt;<i>
+</I>&gt;<i> Taking most recent first, and in reference to a brief chat with JCC at last weeks kokua developers meeting,
+</I>&gt;<i> there is a rendering anomaly which is best displayed by the following images:
+</I>&gt;<i>
+</I>&gt;<i> Note: It is a male avatar without clothes:
+</I>&gt;<i> <A HREF="http://dl.dropbox.com/u/7833186/LazyGuy-BadatChangeSet%2824cdc2fee3d9%29%20.JPG">http://dl.dropbox.com/u/7833186/LazyGuy-BadatChangeSet%2824cdc2fee3d9%29%20.JPG</A>
+</I>&gt;<i> <A HREF="http://dl.dropbox.com/u/7833186/LazyGuy-GoodatChangeSet%28221f63297f33%29.JPG">http://dl.dropbox.com/u/7833186/LazyGuy-GoodatChangeSet%28221f63297f33%29.JPG</A>
+</I>&gt;<i>
+</I>&gt;<i> These where found while determining the changeset that supposedly introduced the changed
+</I>&gt;<i> behavior and it is not present when logged to Secondlife.
+</I>&gt;<i>
+</I>&gt;<i> The quick solution was to backout the changeset and recompile. But, I think that is a band aid
+</I>&gt;<i> that hides a opensim server problem.
+</I>&gt;<i>
+</I>&gt;<i> Earlier I had experienced llassert actions in llface.cpp that where also related to exceeding a size maximum.
+</I>&gt;<i> Again another band aid solution. Comment out the assert and recompile and all seemingly was OK.
+</I>&gt;<i>
+</I>&gt;<i> So, thinking that maybe this is an edge case where the texture for body parts is 0-512 or 513 pixels instead
+</I>&gt;<i> of 512 I decided to attempt to open the body part images located at C:\diva-r16915\bin\assets\Avatar\Newruth
+</I>&gt;<i> using the JPEG2000 plugin with the GIMP. Gimp cannot decode the images even though the test jpeg2000
+</I>&gt;<i> images delivered with the plugin opened fine.
+</I>
+As far as I know, those images are completely unused - they date back to something Adam was doing in 2007 but never 
+completed afaik and should probably be removed.
+
+In the most recent releases of OpenSimulator, a new ruth has bodyparts/clothing set up by code in 
+UserAccountService.CreateDefaultApperanceEntries() (assuming it's not left to some third party system to create these 
+entries).  These reference default assets that come from bin/assets/BodyPartsAssetSet and ClothingAssetSet.  These are 
+just data entries rather than textures - I'm assuming that when this data is sent to the viewer it bakes the texture as 
+usual.
+
+So I'm rather surprised to see this problem - all we're doing is sending the upload JPEG2000 bakes back again to the 
+viewer on request.
+
+fwiw, my official viewer 3.3.0 (251182) doesn't have this problem with OpenSimulator, but I assume that's before the 
+patchset in question.
+
+&gt;<i>
+</I>&gt;<i> I do not have photoshop.
+</I>&gt;<i>
+</I>&gt;<i> Could someone with knowledge of the images in the server check their validity?
+</I>&gt;<i>
+</I>&gt;<i> Concerning the most recent anomaly, I sent via email the information to the dev that authored the patch but, have not
+</I>&gt;<i> heard back.
+</I>&gt;<i>
+</I>&gt;<i> Since was an attempt at more rigor in the viewer pipeline and since it doesn't affect Secondlife servers I don't see
+</I>&gt;<i> them moving
+</I>&gt;<i> to resolve it.
+</I>&gt;<i>
+</I>&gt;<i> Thoughts....
+</I>&gt;<i>
+</I>&gt;<i> Nicky
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010127.html">[Opensim-users] I cant' reach OpenSimulator.org
+</A></li>
+	<LI>Next message: <A HREF="010128.html">[Opensim-users] Timezone
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10138">[ date ]</a>
+              <a href="thread.html#10138">[ thread ]</a>
+              <a href="subject.html#10138">[ subject ]</a>
+              <a href="author.html#10138">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

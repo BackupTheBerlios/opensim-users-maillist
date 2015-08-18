@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Bulk Import Textures for Global Use
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Bulk%20Import%20Textures%20for%20Global%20Use&In-Reply-To=%3C4B77B0C6.4010805%40atomicit.com.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003792.html">
+   <LINK REL="Next"  HREF="003798.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Bulk Import Textures for Global Use</H1>
+    <B>Roger BUCK</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Bulk%20Import%20Textures%20for%20Global%20Use&In-Reply-To=%3C4B77B0C6.4010805%40atomicit.com.au%3E"
+       TITLE="[Opensim-users] Bulk Import Textures for Global Use">rbuck at atomicit.com.au
+       </A><BR>
+    <I>Sun Feb 14 09:14:00 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003792.html">[Opensim-users] Bulk Import Textures for Global Use
+</A></li>
+        <LI>Next message: <A HREF="003798.html">[Opensim-users] Bulk Import Textures for Global Use
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3797">[ date ]</a>
+              <a href="thread.html#3797">[ thread ]</a>
+              <a href="subject.html#3797">[ subject ]</a>
+              <a href="author.html#3797">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Karen Palen wrote:
+ &gt; Yes, Diva actually has a README that details this.
+ &gt; Look in RELEASENOTES.txt
+ &gt;  To summarize Diva's instructions:
+ &gt;  You must enable the Library module.
+
+Thanks for pointing to the RELEASENOTES.txt - too often overlooked :)
+
+Unfortunately the problem seems a bit more complicated:
+
+In my tests, new 'top' level library items do not appear in viewer 
+inventory when loaded via the diva module - the debug messages say that 
+they are loaded into 'top' but they do not appear in viewer - here is 
+debug of load:
+[--snip--]
+18:22:53 - [LIBRARY MODULE]: Loading library archive Library/MyTexture 
+Library (desat).iar (MyTexture Library (desat))...
+18:22:53 - [LIBRARY MODULE]: Got content for folder OpenSim Library 
+(diva distro)
+18:22:53 - [INVENTORY ARCHIVER]: Inventory path  MyTexture Library does 
+not exist
+18:22:53 - [LIBRARY MODULE]: Didn't find  MyTexture Library in library. 
+Placing archive on the top level
+18:22:54 - [INVENTORY ARCHIVER]: Loaded 50 assets...
+18:22:55 - [INVENTORY ARCHIVER]: Loaded 100 assets...
+18:22:55 - [INVENTORY ARCHIVER]: Successfully loaded 102 assets with 0 
+failures
+18:22:55 - [INVENTORY ARCHIVER]: Successfully loaded 102 items
+[--snip--]
+
+Also, if the library file is re-named to match a valid existing 
+inventory folder, then some library items appear in _some_ viewers but 
+not others. For example all may appear in SL viewer but  do not appear 
+in Meerkat for example even when the debug messages appear to be correct:
+[-- snip --]
+18:22:53 - [LIBRARY MODULE]: Loading library archive Library/MyTexture 
+Library (desat).iar (MyTexture Library (desat))...
+18:22:53 - [LIBRARY MODULE]: Got content for folder OpenSim Library 
+(diva distro)
+18:22:53 - [INVENTORY ARCHIVER]: Inventory path  MyTexture Library does 
+not exist
+18:22:53 - [LIBRARY MODULE]: Didn't find  MyTexture Library in library. 
+Placing archive on the top level
+18:22:54 - [INVENTORY ARCHIVER]: Loaded 50 assets...
+18:22:55 - [INVENTORY ARCHIVER]: Loaded 100 assets...
+18:22:55 - [INVENTORY ARCHIVER]: Successfully loaded 102 assets with 0 
+failures
+18:22:55 - [INVENTORY ARCHIVER]: Successfully loaded 102 items
+[--snip--]
+
+The library items do seem to apper in _all_ viewers when loaded manually 
+for individual users
+
+Here is partial listin of contents of Library folder:
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rb at server</A>:~/opensim/diva-r11766/bin/Library$ ls -l
+-rw-r--r-- 1 rb rb  1458140 Dec 25 03:52 Clothing Library (small).iar
+-rw-r--r-- 1 rb rb  7823300 Feb  9 13:22 MyTexture Library (desat).iar
+-rw-r--r-- 1 rb rb 35795952 Jan 19 17:30 Objects Library (large).iar
+-rw-r--r-- 1 rb rb  7823300 Feb  9 13:22 Texture Library (desat).iar
+-rw-r--r-- 1 rb rb  1967632 Feb  9 13:25 Texture Library (dreams).iar
+-rw-r--r-- 1 rb rb  3893518 Feb  9 13:27 Texture Library (i).iar
+-rw-r--r-- 1 rb rb  4926587 Feb  9 13:27 Texture Library (ii).iar
+-rw-r--r-- 1 rb rb  2464933 Feb  9 13:27 Texture Library (iii).iar
+[--snip--]
+
+All the 'Texture Library *.iar' files were generated locally from Torley 
+Textures.
+
+It also appears that the auto-load works only in diva distro (not in 
+OpenSim distro yet?)
+
+So, in my tests, I am still not able to to reliably load additional 
+library items/collections so that they are globally available to all users.
+
+I am probably missing something simle - and happy to do some additional 
+debugging in case anyone has suggestions?
+
+R.
+
+Karen Palen wrote:
+&gt;<i> Then the .iar files are simply added to the /bin/Library folder, in my case:
+</I>&gt;<i> 
+</I>&gt;<i> /home/howe/opensim/diva-r11766/bin/Library
+</I>&gt;<i> 
+</I>&gt;<i> and it looks like this:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">howe at howe</A>:~/opensim/diva-r11766/bin/Library$ ls -l
+</I>&gt;<i> total 61676
+</I>&gt;<i> -rw-r--r-- 1 howe howe 23640479 2010-01-17 16:37 Clothing Library (Karen).iar
+</I>&gt;<i> -rw-r--r-- 1 howe howe  1458140 2009-12-24 09:52 Clothing Library (small).iar
+</I>&gt;<i> -rw-r--r-- 1 howe howe 35795952 2009-12-23 21:55 Objects Library (large).iar
+</I>&gt;<i> -rw-r--r-- 1 howe howe  2178791 2009-12-24 09:52 Objects Library (small).iar
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">howe at howe</A>:~/opensim/diva-r11766/bin/Library$ 
+</I>&gt;<i> 
+</I>&gt;<i> The (Karen) library is my creation, the other three are supplied by Diva.
+</I>&gt;<i> 
+</I>&gt;<i> Karen
+</I>&gt;<i> --- On Fri, 2/12/10, Roger BUCK &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rbuck at atomicit.com.au</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> From: Roger BUCK &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rbuck at atomicit.com.au</A>&gt;
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] Bulk Import Textures for Global Use
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Date: Friday, February 12, 2010, 8:55 PM
+</I>&gt;&gt;<i> Karen Palen wrote:
+</I>&gt;&gt;&gt;<i> Diva has set up her distro to accept a simple IAR file
+</I>&gt;&gt;<i> in the bin directory.
+</I>&gt;&gt;<i>  &gt; It automatically loads every time the sim is booted.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When creating additional .iar files copied to./bin/Library,
+</I>&gt;&gt;<i> then they only seem to appear when loaded manually from 
+</I>&gt;&gt;<i> the region console using something like
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> load iar &lt;user name&gt; &lt;path&gt; &lt;password&gt;
+</I>&gt;&gt;<i> &lt;filename.iar&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any hints on how additional *.iar archives can be loaded
+</I>&gt;&gt;<i> automatically?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> R.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003792.html">[Opensim-users] Bulk Import Textures for Global Use
+</A></li>
+	<LI>Next message: <A HREF="003798.html">[Opensim-users] Bulk Import Textures for Global Use
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3797">[ date ]</a>
+              <a href="thread.html#3797">[ thread ]</a>
+              <a href="subject.html#3797">[ subject ]</a>
+              <a href="author.html#3797">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

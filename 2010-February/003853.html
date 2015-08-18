@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Odd problem with cross server's
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Odd%20problem%20with%20cross%20server%27s&In-Reply-To=%3C1266379657005-4584218.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003852.html">
+   <LINK REL="Next"  HREF="003854.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Odd problem with cross server's</H1>
+    <B>Master_Mirage</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Odd%20problem%20with%20cross%20server%27s&In-Reply-To=%3C1266379657005-4584218.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Odd problem with cross server's">mirage123 at verizon.net
+       </A><BR>
+    <I>Wed Feb 17 05:07:37 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003852.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+        <LI>Next message: <A HREF="003854.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3853">[ date ]</a>
+              <a href="thread.html#3853">[ thread ]</a>
+              <a href="subject.html#3853">[ subject ]</a>
+              <a href="author.html#3853">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Went thru your list and still same situation. Went as far as turning off all
+ref to XMLRPC in the ini's and dident change anything enabled or not. Also
+re-checked the configs for each service as you suggested and also dident
+seem to matter. Though none of the settings have ever needed changed b4 as
+thay allways worked as thay are. one thing i did notice was when an avie
+logs in (one i know has a message waiting) the console shows it looked for
+it for that user. Never gets it unless i log it into a server that the
+orginal messages was sent. Search,Offline Im's, and login notifcations are
+the 3 i see doing this. Search will only show things on the server the avie
+is in not grid wide like it use to. All 3 problems begain at the same time.
+Groups on the other hand works fine like it allways has same with currency.
+
+
+Master_Mirage wrote:
+&gt;<i> 
+</I>&gt;<i> Ok, a bit more info. Each server hosts several regions each and all
+</I>&gt;<i> servers are LAN connected and part of the same domain. We do not use
+</I>&gt;<i> hypergrid or allow regions tobe attached to our common services.
+</I>&gt;<i> Each server uses the same services and all of the addon services work fine
+</I>&gt;<i> on each.
+</I>&gt;<i> XMLRPC services are uncommented for all the servers and have been the
+</I>&gt;<i> whole time.
+</I>&gt;<i> InterRegion everything is peachy, inter server isant.
+</I>&gt;<i> But now im woundeing if XMLRPC Proxy isant aware somehow that the other
+</I>&gt;<i> servers exist, mabey its seeing just one and not all of them?
+</I>&gt;<i> Anyway as all the services work fine on each server and each region on a
+</I>&gt;<i> given server too, kinda takes some of the what ifs outta it. Thay all
+</I>&gt;<i> point to the same front end and php's. If thay dident then it would show
+</I>&gt;<i> up when that server is using them.
+</I>&gt;<i> There is the posabulty of XMLRPC Proxy doing something naughty too. Ill
+</I>&gt;<i> have a closer look at exacly what its doing or not doing, tnx for the
+</I>&gt;<i> feedback 
+</I>&gt;<i> =)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> John Mieske wrote:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I ran into this with a Grid that didn't have the proper OpenSim ini
+</I>&gt;&gt;<i> configured with the XMLRPC.PHP file. The database stores the info your
+</I>&gt;&gt;<i> talking about. The XMLRPC Module may not be firing correctly on the other
+</I>&gt;&gt;<i> regions. The problem we had was to double check the bottom of the ini
+</I>&gt;&gt;<i> files
+</I>&gt;&gt;<i> to make sure the xmlrpc modules are uncommented and then to make sure
+</I>&gt;&gt;<i> that
+</I>&gt;&gt;<i> the path in the messaging section is correctly set to point to the
+</I>&gt;&gt;<i> offline.php file. All of this uses the Database.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Remember, ALL the regions who use the ini needs to point to the MAIN
+</I>&gt;&gt;<i> Region's Server. HyperGrid technology can cause an issue as well.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Also inside the config.php file for the Groups has one item that if
+</I>&gt;&gt;<i> commented out will keep everyone out that is not going through your
+</I>&gt;&gt;<i> domain :
+</I>&gt;&gt;<i> // Specify the following to hard-code / lockdown the User Service used to
+</I>&gt;&gt;<i> authenticate
+</I>&gt;&gt;<i> // user sessions.  Example: <A HREF="http://osgrid.org:8002">http://osgrid.org:8002</A>
+</I>&gt;&gt;<i> // Note:  This causes the User Service specified with requests to be
+</I>&gt;&gt;<i> ignored, and
+</I>&gt;&gt;<i> // prevents the service from being used cross-grid or by hypergridded
+</I>&gt;&gt;<i> users.
+</I>&gt;&gt;<i> $overrideAgentUserService = '<A HREF="http://yourserver:8002">http://yourserver:8002</A>';
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Make sure all who have tied in a region has used the SAME exact server
+</I>&gt;&gt;<i> and
+</I>&gt;&gt;<i> PHP. If you host it, then they need to USE yours. The only thing that you
+</I>&gt;&gt;<i> do
+</I>&gt;&gt;<i> not share is your MySQL Assets. But all other settings go through the
+</I>&gt;&gt;<i> main
+</I>&gt;&gt;<i> Region Grid Server. ( OpenSim.xxx.exe or whatever )
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I repeat, what your INI files have for all settings the others have as
+</I>&gt;&gt;<i> well
+</I>&gt;&gt;<i> ACCEPT the Database Strings. Each region should have their own MySQL
+</I>&gt;&gt;<i> setup.
+</I>&gt;&gt;<i> Hope this helps.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> John
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> John Mieske / Winword Exonar
+</I>&gt;&gt;<i> <A HREF="http://johnmieske.org">http://johnmieske.org</A>
+</I>&gt;&gt;<i> Space Grid Station
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+View this message in context: <A HREF="http://n2.nabble.com/Odd-problem-with-cross-server-s-tp4583453p4584218.html">http://n2.nabble.com/Odd-problem-with-cross-server-s-tp4583453p4584218.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003852.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+	<LI>Next message: <A HREF="003854.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3853">[ date ]</a>
+              <a href="thread.html#3853">[ thread ]</a>
+              <a href="subject.html#3853">[ subject ]</a>
+              <a href="author.html#3853">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

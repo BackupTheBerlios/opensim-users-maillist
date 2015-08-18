@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 4096 Jump Issue and new OpenSim branches of TPVs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%204096%20Jump%20Issue%20and%20new%20OpenSim%20branches%20of%20TPVs&In-Reply-To=%3C51802BA1.6040502%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012144.html">
+   <LINK REL="Next"  HREF="012139.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 4096 Jump Issue and new OpenSim branches of TPVs</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%204096%20Jump%20Issue%20and%20new%20OpenSim%20branches%20of%20TPVs&In-Reply-To=%3C51802BA1.6040502%40googlemail.com%3E"
+       TITLE="[Opensim-users] 4096 Jump Issue and new OpenSim branches of TPVs">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Apr 30 22:37:53 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012144.html">[Opensim-users] 4096 Jump Issue and new OpenSim branches of TPVs
+</A></li>
+        <LI>Next message: <A HREF="012139.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12152">[ date ]</a>
+              <a href="thread.html#12152">[ thread ]</a>
+              <a href="subject.html#12152">[ subject ]</a>
+              <a href="author.html#12152">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 29/04/13 22:54, Dahlia Trimble wrote:
+&gt;<i> I wasn't looking for people to blame, but now that you mention it..... *evil grin*
+</I>&gt;<i>
+</I>&gt;<i> I am a little concerned that a bit of a catch-22 situation has come about with the current solution.  Viewer developers
+</I>&gt;<i> are unable to test in existing grids due to the default setting, and nobody will want to change the setting as it might
+</I>&gt;<i> disrupt the user experience. Any viewer testers will need to overcome the hurdle of learning that the setting exists and
+</I>&gt;<i> setting up a test grid. In the mean time users of alternative viewers are left out in the cold.
+</I>&gt;<i>
+</I>&gt;<i>   What would you consider &quot;significant&quot;? Personally I'd consider Radegast usage significant and it is not based on LL
+</I>&gt;<i> code. While it's based on libomv and I have had success teleporting beyond 4096 with other libomv based clients, I've
+</I>&gt;<i> not been able to test it in Radegast to date due to the existing default.
+</I>&gt;<i>
+</I>&gt;<i> Perhaps a protocol extension might be an alternative? Some way that a viewer could signal the simulator that it's
+</I>&gt;<i> capable of distant teleports and the sim could bypass the restriction for such viewers?
+</I>
+That would be good, though I'm not sure there's any existing mechanism for a viewer to signal the simulator as to what 
+features it supports.  Possibly one could do something along the same line as the SimulatorFeatures cap and make an 
+uploaded set of key:value pairs available in the AgentData.  This would be a better long term solution than adding 
+viewer names to a configured list.
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Apr 29, 2013 at 2:36 PM, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     So that Dahlia knows who to blame, I was the one who created this check.  I was very tired of accidentally
+</I>&gt;<i>     teleporting to very remote regions and screwing up my session and I don't think it's a good user experience.
+</I>&gt;<i>
+</I>&gt;<i>     As other people have said, this restriction is configurable.  One could also have a regular expression whitelist to
+</I>&gt;<i>     let selected viewers to attempt the teleport.
+</I>&gt;<i>
+</I>&gt;<i>     I don't favour changing the default until there are a significant proportion of viewers in use that could handle
+</I>&gt;<i>     4096+ teleports.  As we've seen, we're not even sure what the problem is in the LL viewer codebase and TPVs.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     On 29/04/13 09:38, Ai Austin wrote:
+</I>&gt;<i>
+</I>&gt;<i>         Thanks Dahlia. The explicit limit was added by Diva to try to make lie easier for users/avatars getting stuck in
+</I>&gt;<i>         limbo, but can be turned on and off with an OpenSim.ini parameter, default being that it is on. So it can
+</I>&gt;<i>         clearly be removed. Now there is a distinct branch for some viewers like Firestorm, and that there are already
+</I>&gt;<i>         improvements in Firestorm 4.4.0(OS) to improve the OpenSim experience, some critical issues like zthe rally
+</I>&gt;<i>         panful and awkward to explain to new users 4096 jump issues just might now be on te cards to be fixed.
+</I>&gt;<i>
+</I>&gt;<i>         I am sure if this were technically possible in commonly used LL viewers with an Openim specific branch then the
+</I>&gt;<i>         OS server side default setting for the 4096 jump restriction could simply be set as OFF by default rather than
+</I>&gt;<i>         ON by default?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         On 28 Apr 2013, at 20:59, Dahlia wrote:
+</I>&gt;<i>
+</I>&gt;<i>             There was a time when libomv based viewers could teleport beyond 4096 and
+</I>&gt;<i>             still function correctly, however  since then someone added some code to
+</I>&gt;<i>             OpenSimulator to prevent *any* viewer from teleporting beyond 4096. While
+</I>&gt;<i>             this effectively prevented the viewing failures experienced with LL-based
+</I>&gt;<i>             viewers, it also prevented anyone from being able to fix the problem from
+</I>&gt;<i>             the viewer side. Given that libomv-based clients did not have the problem
+</I>&gt;<i>             suggests that it's likely entirely withing the LL codebase.
+</I>&gt;<i>
+</I>&gt;<i>         _________________________________________________
+</I>&gt;<i>         Opensim-users mailing list
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     Justin Clark-Casey (justincc)
+</I>&gt;<i>     OSVW Consulting
+</I>&gt;<i>     <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i>     <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i>     _________________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012144.html">[Opensim-users] 4096 Jump Issue and new OpenSim branches of TPVs
+</A></li>
+	<LI>Next message: <A HREF="012139.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12152">[ date ]</a>
+              <a href="thread.html#12152">[ thread ]</a>
+              <a href="subject.html#12152">[ subject ]</a>
+              <a href="author.html#12152">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

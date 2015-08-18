@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] trying to set up freeswitch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAEtfgb7vfWVHi5VSZMgjobnCgAAAEAAAAMx3jYvEHgFHqSeX9Po5ceABAAAAAA%3D%3D%40yahoo.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006172.html">
+   <LINK REL="Next"  HREF="006169.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] trying to set up freeswitch</H1>
+    <B>Olli Aro</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAEtfgb7vfWVHi5VSZMgjobnCgAAAEAAAAMx3jYvEHgFHqSeX9Po5ceABAAAAAA%3D%3D%40yahoo.co.uk%3E"
+       TITLE="[Opensim-users] trying to set up freeswitch">olli_aro at yahoo.co.uk
+       </A><BR>
+    <I>Wed Nov 17 19:21:48 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006172.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+        <LI>Next message: <A HREF="006169.html">[Opensim-users] Opensim-users Digest, Vol 39, Issue 31
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6173">[ date ]</a>
+              <a href="thread.html#6173">[ thread ]</a>
+              <a href="subject.html#6173">[ subject ]</a>
+              <a href="author.html#6173">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Gregor,
+
+I assume your freeswitch configuration in OpenSim.ini also refers to IP
+address 99.99.99.99?
+
+You say that is a public IP address. Is your server directly on the internet
+or behind a NAT. 
+
+If you behind a NAT you possibly cannot use the public IP address for local
+communications. You could test this by:
+
+telnet 99.99.99.99 9000
+
+and then see if you get the same response as when you do:
+
+telnet localhost 9000
+
+Regards,
+
+Olli
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Gregor Mendle
+Sent: 17 November 2010 17:51
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] trying to set up freeswitch
+
+Thank you all very much for all your posts,
+
+For testing, I am running everything in my home computer, a linux box
+(ubuntu 10.4)
+
+I followed the instructions by Ai, changed all references to my public IP to
+the numbers instead of the public name of my computer. I started FreeSwitch
+first and ignored the
+
+[ERR] mod_xml_curl.c:304 Received HTTP error 0 trying to fetch........
+as suggested by Venkatesh
+
+then started robust and then opensim.
+
+The sim console show now messages suggesting that the freeswitch module is
+working. When an avatar enter the region the following FreeSwitch messages
+appear on the sim region console:
+
+18:25:30 - [FreeSwitchVoice]: OnRegisterCaps: agentID
+cde977b3-43c6-45ea-9d32-ff88702474a9 caps
+OpenSim.Framework.Capabilities.Caps
+
+........................
+
+
+18:25:34 - [FreeSwitchVoice]:[PROVISIONVOICE]: request: &lt;llsd&gt;&lt;undef
+/&gt;&lt;/llsd&gt;
+18:25:34 - [FreeSwitchVoice]:[PROVISIONVOICE]: avatar &quot;R2 D2&quot;:
+&lt;llsd&gt;&lt;map&gt;&lt;key&gt;username&lt;/key&gt;&lt;string&gt;xzel3s0PGReqdMv-IcCR0qQ==&lt;/string&gt;&lt;key
+&gt;<i>password&lt;/key&gt;&lt;string&gt;1234&lt;/string&gt;&lt;key&gt;voice_sip_uri_hostname&lt;/key&gt;&lt;string
+</I>&gt;<i>99.99.99.99&lt;/string&gt;&lt;key&gt;voice_account_server_name&lt;/key&gt;&lt;string&gt;<A HREF="http://99.9">http://99.9</A>
+</I>9.99.99:9000/api/&lt;/string&gt;&lt;/map&gt;&lt;/llsd&gt;
+18:25:34 - [FreeSwitchVoice]: FreeSwitchSLVoiceGetPreloginHTTPHandler called
+18:25:34 - [FreeSwitchVoice]: FreeSwitchSLVoiceGetPreloginHTTPHandler
+return &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+18:25:34 - [FreeSwitchVoice]: FreeSwitchSLVoiceSigninHTTPHandler called
+18:25:34 - [FreeSwitchVoice]: AUTH, URI: /api/viv_signin.php,
+Content-Type:application/x-www-form-urlencoded,
+Bodypwd=1234&amp;userid=xzel3s0PGReqdMv%2DIcCR0qQ%3D%3D
+18:25:34 - [FREESWITCH]: &lt;?xml version=&quot;1.0&quot; encoding=&quot;iso-8859-1&quot;
+?&gt;&lt;response xmlns=&quot;<A HREF="http://www.vivox.com">http://www.vivox.com</A>&quot;
+xmlns:xsi=&quot;<A HREF="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</A>&quot;
+xsi:schemaLocation= &quot;/xsd/buddy_list.xsd&quot;&gt;&lt;level0&gt;
+
+My public IP address, acccesible from the Internet, appears in the places
+when i put 99.99.99.99
+
+In the viewer (imprudence), in World-&gt;Region/Estate-&gt; Allow voice Chat is
+checked
+
+In the About Land-&gt;Media-&gt; enable voice is also checked
+
+but voice is not working, the talk button is disabled and in
+edit-&gt;preferences-&gt;Voice chat-&gt;Device Settings a message telling:
+
+&quot;Please wait&quot; appears next to the slider at the bottom of the dialog.
+
+There is no activity in the FreeSwitch console. I don't know it this is the
+expected.
+
+
+But as suggested by Teravus, i will don't give up!
+
+
+Regards and thanks again,
+
+Gregor
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006172.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+	<LI>Next message: <A HREF="006169.html">[Opensim-users] Opensim-users Digest, Vol 39, Issue 31
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6173">[ date ]</a>
+              <a href="thread.html#6173">[ thread ]</a>
+              <a href="subject.html#6173">[ subject ]</a>
+              <a href="author.html#6173">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

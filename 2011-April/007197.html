@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Room management application
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Room%20management%20application&In-Reply-To=%3C4DBB50DB.8030903%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007195.html">
+   <LINK REL="Next"  HREF="007199.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Room management application</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Room%20management%20application&In-Reply-To=%3C4DBB50DB.8030903%40googlemail.com%3E"
+       TITLE="[Opensim-users] Room management application">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Apr 30 01:59:23 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007195.html">[Opensim-users] Room management application
+</A></li>
+        <LI>Next message: <A HREF="007199.html">[Opensim-users] Room management application
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7197">[ date ]</a>
+              <a href="thread.html#7197">[ thread ]</a>
+              <a href="subject.html#7197">[ subject ]</a>
+              <a href="author.html#7197">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 29/04/11 08:34, Karl Haas wrote:
+&gt;<i> Dear OpenSim users,
+</I>&gt;<i>
+</I>&gt;<i> I'm an Austrian student and I'm writing my master's thesis about flexible learning environments in virtual worlds. The
+</I>&gt;<i> practical part of the work will be a web-based room configuration and reservation tool. The configured rooms (walls,
+</I>&gt;<i> chairs, tables, whiteboards, ...) should be generated automatically by the application within an OpenSim region.
+</I>&gt;<i>
+</I>&gt;<i> I just started with OpenSim and I have read about Application Plugins, Region Modules (which i could use to create and
+</I>&gt;<i> manage the objects) and the REST features. I have some questions concerning the realisation in OpenSim:
+</I>&gt;<i>
+</I>&gt;<i>     * What's are possible ways to communicate with an external service (e.g. the room manager)?
+</I>
+Hi Karl.  There are many ways, including communication out of scripts (via llHTTPRequest) and direct communication via 
+region modules.
+
+&gt;<i>     * How can objects (chairs, tables, whiteboards, ...) be crated by scripting?
+</I>
+By scripting, this can be done via llRezObject().  There are many examples of this on the web, I'm sure.  Things can 
+also be created directly from region modules though this is currently a little tricky.  I don't know of any good example 
+public code but the regression test code might be worth looking at.
+
+&gt;<i>     * How can the content or the state of an object (e.g. whiteboards) be saved externally?
+</I>
+If you're able to use Viewer 2 (though unfortunately there are some restrictions with this at present with OpenSim) then 
+the easiest way may be to use media on a prim to display whiteboard web pages from some external application that 
+synchronizes state between people looking at different webpages for the same whiteboard.
+
+Alternatively, I think that the Immersive Education folks (<A HREF="http://immersiveeducation.org/">http://immersiveeducation.org/</A>) have a tool that enables a 
+whiteboard with older Second Life viewers, though I can't remember what the exact mechanism is.
+
+&gt;<i>     * How can I save the state of an object immediately after it has been changed (e.g. whiteboard content modified)?
+</I>
+As before, by far the easier method is to use an existing synchronized whiteboard app if possible.
+
+&gt;<i>     * In order to create a RESTful API, would it be a suitable approach to extend the class RestPlugin?
+</I>
+The RestPlugin has not been maintained for a long time, unfortunately, and is almost completely non-functional now, 
+afaik.  One would have to create ones own web services using the HttpServer facilities available in OpenSim.  If you 
+don't know the code, this probably isn't particularly simple though there might be public example code for this in the 
+coming months.  On a basic level, one could also look through the code that uses HttpServer in OpenSim, though none of 
+that implements much of a REST interface afaik.
+
+&gt;<i>     * Would it be an appropriate approach to write a region module, which creates and manages the rooms and the objects
+</I>&gt;<i>       within the rooms?
+</I>
+Personally, I would recommend this approach if you're familiar with C# and don't mind spending quite a lot of time 
+looking through OpenSim code (and asking questions).  The advantage over scripts is that there are no delays or any need 
+to perform synchronization between operations that occur on different script engine threads.  Also, one gets to use all 
+the power of C# and a good IDE.  One can implement sophisticated applications this way without using scripts at all, or 
+one can use a hybrid script + region module approach.
+
+The disadvantage is that the OpenSim internal 'APIs' are ad-hoc and often undocumented and little good example code yet 
+exists of writing these kinds of modules.
+
+The advantage of scripts is that one can port them to other hosts without requiring server access.  And if one sticks to 
+LL functions then one can port them to Linden Lab's grid (though there are some gotchas due to subtle differences 
+between the XEngine script engine, the parser for LSL on OpenSim and the Linden Labs implementation of these things). 
+One can also take the approach of offloading as much logic to an external application as possible and using the 
+environment as just a view layer.  I suspect this is the approach that you're considering from your earlier questions.
+
+&gt;<i>
+</I>
+&gt;<i> Also links to useful information about the related topics would help me a lot.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for any hint in advance!
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> Karl Haas
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007195.html">[Opensim-users] Room management application
+</A></li>
+	<LI>Next message: <A HREF="007199.html">[Opensim-users] Room management application
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7197">[ date ]</a>
+              <a href="thread.html#7197">[ thread ]</a>
+              <a href="subject.html#7197">[ subject ]</a>
+              <a href="author.html#7197">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

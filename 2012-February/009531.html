@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Is there a way to reset region or clear all the	prims?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Is%20there%20a%20way%20to%20reset%20region%20or%20clear%20all%20the%0A%09prims%3F&In-Reply-To=%3CCAOyqe5zQSFn0wghj-tLmeDOEKMev0rdTq4HcnQdzt4eos8kLvw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009517.html">
+   <LINK REL="Next"  HREF="009503.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Is there a way to reset region or clear all the	prims?</H1>
+    <B>Han Xu</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Is%20there%20a%20way%20to%20reset%20region%20or%20clear%20all%20the%0A%09prims%3F&In-Reply-To=%3CCAOyqe5zQSFn0wghj-tLmeDOEKMev0rdTq4HcnQdzt4eos8kLvw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Is there a way to reset region or clear all the	prims?">xuhan15 at googlemail.com
+       </A><BR>
+    <I>Wed Feb 29 10:45:13 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009517.html">[Opensim-users] Is there a way to reset region or clear all the prims?
+</A></li>
+        <LI>Next message: <A HREF="009503.html">[Opensim-users] particle-cloud avatar and gray terrain on start-up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9531">[ date ]</a>
+              <a href="thread.html#9531">[ thread ]</a>
+              <a href="subject.html#9531">[ subject ]</a>
+              <a href="author.html#9531">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks everyone!
+
+I find out save/load oar is a good solution. Now I use it for backup too.
+Life becomes easier now! Thanks for all your helps!
+
+Best,
+Han
+
+On Wed, Feb 29, 2012 at 12:15 AM, Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karenpalensl at gmail.com</A>&gt;wrote:
+
+&gt;<i> **
+</I>&gt;<i> Han,
+</I>&gt;<i>
+</I>&gt;<i> Do you mean that you want to clear the objects, etc. from the database or
+</I>&gt;<i> just from the region instance?
+</I>&gt;<i>
+</I>&gt;<i> Others have described various methods to remove items from a region in
+</I>&gt;<i> this thread, but the removing objects from the database has more subtle
+</I>&gt;<i> issues.
+</I>&gt;<i>
+</I>&gt;<i> One of the &quot;todo's&quot; for Opensim is a way to clean/prune &quot;orphans&quot; (unused
+</I>&gt;<i> items) from the database - there is simply no mechanism to do that directly
+</I>&gt;<i> yet. I would happily write an SQL macro to do this pruning, but it is far
+</I>&gt;<i> beyond my SQL skill level!
+</I>&gt;<i>
+</I>&gt;<i> The way the database is designed is to store the largest part of an
+</I>&gt;<i> object's description once then refer to that via GUID indexes. As a result
+</I>&gt;<i> 10 (or 10,000) copies of an object takes only minimal extra space in the
+</I>&gt;<i> database. A few minutes exploring your database with SQL admin tools should
+</I>&gt;<i> show you how this all works.
+</I>&gt;<i>
+</I>&gt;<i> About the only way to &quot;clean&quot; the database at present is to save every
+</I>&gt;<i> region and every avatar's inventory to IAR/OAR files, delete the database
+</I>&gt;<i> and restore the information from the IAR/OR files.
+</I>&gt;<i>
+</I>&gt;<i> This is not a huge problem for most OpenSim grids as yet since most grids
+</I>&gt;<i> are fairly small and in addition the database contents must be reloaded
+</I>&gt;<i> whenever there is a major upgrade to the software (e.g. 0.6.9-&gt;0.7.0)
+</I>&gt;<i>
+</I>&gt;<i> The only time this duplication of objects does become an issue is if you
+</I>&gt;<i> frequently use a viewer based restore (Imprudence save/restore or the
+</I>&gt;<i> like). The viewers do NOT check to see if the object/inventory already
+</I>&gt;<i> exists, but simply creates a entirely new entry in the database for each
+</I>&gt;<i> item. Restoring a large region or inventory several times is often
+</I>&gt;<i> necessary due to errors, but all of the earlier bad and partial restores
+</I>&gt;<i> are permanently saved in the database. With an experimental region this can
+</I>&gt;<i> cause the database to get huge even with only a dozen or so objects
+</I>&gt;<i> actually being used!
+</I>&gt;<i>
+</I>&gt;<i> Second Inventory does check for objects which already exist in the
+</I>&gt;<i> database and this has been about 80-90% effective in my experience.
+</I>&gt;<i>
+</I>&gt;<i> The only truly &quot;foolproof&quot; method to save and restore items in the
+</I>&gt;<i> database is the IAR/OAR files which use a completely different method to
+</I>&gt;<i> save/restore the database items.
+</I>&gt;<i>
+</I>&gt;<i> Conclusion: When possible always use the IAR/OAR files and plan to reload
+</I>&gt;<i> your database periodically.
+</I>&gt;<i>
+</I>&gt;<i> I hope this helps
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 02/26/2012 09:52 AM, Han Xu wrote:
+</I>&gt;<i>
+</I>&gt;<i> hi all,
+</I>&gt;<i>
+</I>&gt;<i> after playing the region for some time, there are a lot of experimental
+</I>&gt;<i> stuff in the region. is there a way to clear all those prims? or just reset
+</I>&gt;<i> the region to its initial status?
+</I>&gt;<i>
+</I>&gt;<i> thanks!
+</I>&gt;<i> han
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120229/19c10179/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120229/19c10179/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009517.html">[Opensim-users] Is there a way to reset region or clear all the prims?
+</A></li>
+	<LI>Next message: <A HREF="009503.html">[Opensim-users] particle-cloud avatar and gray terrain on start-up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9531">[ date ]</a>
+              <a href="thread.html#9531">[ thread ]</a>
+              <a href="subject.html#9531">[ subject ]</a>
+              <a href="author.html#9531">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

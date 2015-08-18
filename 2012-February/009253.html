@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] saving data in OpenSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20saving%20data%20in%20OpenSim&In-Reply-To=%3C4F288E91.4050404%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009263.html">
+   <LINK REL="Next"  HREF="009260.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] saving data in OpenSim</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20saving%20data%20in%20OpenSim&In-Reply-To=%3C4F288E91.4050404%40googlemail.com%3E"
+       TITLE="[Opensim-users] saving data in OpenSim">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Feb  1 02:00:01 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009263.html">[Opensim-users] Unknown User
+</A></li>
+        <LI>Next message: <A HREF="009260.html">[Opensim-users] creating bots at negative elevation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9253">[ date ]</a>
+              <a href="thread.html#9253">[ thread ]</a>
+              <a href="subject.html#9253">[ subject ]</a>
+              <a href="author.html#9253">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Juan.  I'm not precisely sure what you mean here - are you using llHTTPRequest() [1] to read directly from a file 
+rather than from a server?  If not, then I would have thought that PUT with llHTTPRequest() would work fine back to that 
+same server.  Not that I've ever tried this in OpenSimulator myself.
+
+If you want direct db integration then this is more difficult.  One way is to write a region module [2] that will 
+perform the DB operations and communicate with scripts via something like the OpenSim specific mod*() [3] commands if 
+necessary.  Another alternative is to start writing 'C# scripts' [4] if you're comfortable that you can fully lock down 
+the region against anybody else creating them.
+
+[1] <A HREF="http://wiki.secondlife.com/wiki/LlHTTPRequest">http://wiki.secondlife.com/wiki/LlHTTPRequest</A>
+[2] <A HREF="http://opensimulator.org/wiki/IRegionModule">http://opensimulator.org/wiki/IRegionModule</A>
+[3] <A HREF="http://justincc.org/blog/2010/07/16/passing-data-between-a-script-and-a-region-module-with-modsendcommand/">http://justincc.org/blog/2010/07/16/passing-data-between-a-script-and-a-region-module-with-modsendcommand/</A>
+[4] <A HREF="http://justincc.org/blog/2008/11/21/c-scripting-in-opensim/">http://justincc.org/blog/2008/11/21/c-scripting-in-opensim/</A>
+
+On 31/01/12 20:39, Juan Mateu wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i>    I'm testing the communication between objects and also reading and
+</I>&gt;<i> writing data files in OpenSim.
+</I>&gt;<i>
+</I>&gt;<i> I'm doing tests using llHTTPRequest, with which I make an object read
+</I>&gt;<i> from a text file, but still can not save data from an object to dump
+</I>&gt;<i> them in a file.
+</I>&gt;<i>
+</I>&gt;<i> I'm looking at documentation and a possible solution is to use the PUT
+</I>&gt;<i> methodllHTTPRequest, but so far I have not seen a clear example that I
+</I>&gt;<i> use.
+</I>&gt;<i>
+</I>&gt;<i> My idea is to dump the contents of variables or parameters of an
+</I>&gt;<i> object in a file in either txt or xml, but really the next step is to
+</I>&gt;<i> read and write from a database. For example, I would like an object in
+</I>&gt;<i> OpenSim read data from a real temperature sensor.
+</I>&gt;<i>
+</I>&gt;<i> Someone can advise me?
+</I>&gt;<i>
+</I>&gt;<i> Best regards.
+</I>&gt;<i>
+</I>&gt;<i> Juan Mateu.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009263.html">[Opensim-users] Unknown User
+</A></li>
+	<LI>Next message: <A HREF="009260.html">[Opensim-users] creating bots at negative elevation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9253">[ date ]</a>
+              <a href="thread.html#9253">[ thread ]</a>
+              <a href="subject.html#9253">[ subject ]</a>
+              <a href="author.html#9253">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

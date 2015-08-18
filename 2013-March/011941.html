@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] collision detection for attachments
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3CCADyQTWpKVONFgH5oqNCqf2qDD2X%3DovMynhc5pFxWX9yXkR%2BATg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011938.html">
+   <LINK REL="Next"  HREF="011943.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] collision detection for attachments</H1>
+    <B>dz</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3CCADyQTWpKVONFgH5oqNCqf2qDD2X%3DovMynhc5pFxWX9yXkR%2BATg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] collision detection for attachments">dz at bitzend.net
+       </A><BR>
+    <I>Sat Mar 23 04:36:34 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011938.html">[Opensim-users] collision detection for attachments
+</A></li>
+        <LI>Next message: <A HREF="011943.html">[Opensim-users] collision detection for attachments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11941">[ date ]</a>
+              <a href="thread.html#11941">[ thread ]</a>
+              <a href="subject.html#11941">[ subject ]</a>
+              <a href="author.html#11941">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I don't know if this solution fits your needs or not.
+
+When I generate NPC's that need to react with an animation, I've found it
+much more reliable to have the collision object broadcast a negative
+channel message that the attachment listens for.  I use a hash of the NPC
+UUID to determine the broadcast channel,  and  the same Hash to open the
+listen channel in the attachment code.   Since I equip all my NPC's with an
+AO, I have simply added a section of code to trigger the &quot;reaction&quot;
+specified by the object that detected the collision.   I have added an
+additional listen channel I have designated as a group channel.  I plan to
+use the same strategy ( a hash of the group UUID ) to allow me to send
+control message to subsets of the NPC population.
+
+As far as the avatar capsule collison shape goes..   I have been unable to
+get any consistent results with detectors at ground/foot level.  Not only
+is the capsule smallest there, but when NPC's get off track and bounce off
+walls or other NPC's, they seem to &quot;gain altitude&quot;.   I find that they
+often loose contact with the ground and stop triggering lower detectors
+completely.  In high traffic areas  I try to keep all of the avatar
+detectors in a 1 meter range centered around the waist of an &quot;average&quot;
+avatar height.  Not only is this where the capsule is normally widest,  but
+it is high enough to &quot;grab&quot; the floating NPC's and trigger an
+new-direction/animation  that gets them back to the ground.
+
+
+D
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130322/67f7a510/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130322/67f7a510/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011938.html">[Opensim-users] collision detection for attachments
+</A></li>
+	<LI>Next message: <A HREF="011943.html">[Opensim-users] collision detection for attachments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11941">[ date ]</a>
+              <a href="thread.html#11941">[ thread ]</a>
+              <a href="subject.html#11941">[ subject ]</a>
+              <a href="author.html#11941">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Adding Scripts to Objects on Rez in 7.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Adding%20Scripts%20to%20Objects%20on%20Rez%20in%207.1&In-Reply-To=%3C4E374851.5080905%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007794.html">
+   <LINK REL="Next"  HREF="007799.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Adding Scripts to Objects on Rez in 7.1</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Adding%20Scripts%20to%20Objects%20on%20Rez%20in%207.1&In-Reply-To=%3C4E374851.5080905%40googlemail.com%3E"
+       TITLE="[Opensim-users] Adding Scripts to Objects on Rez in 7.1">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Aug  2 02:44:01 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007794.html">[Opensim-users] Adding Scripts to Objects on Rez in 7.1
+</A></li>
+        <LI>Next message: <A HREF="007799.html">[Opensim-users] toward a more simple first time log in
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7798">[ date ]</a>
+              <a href="thread.html#7798">[ thread ]</a>
+              <a href="subject.html#7798">[ subject ]</a>
+              <a href="author.html#7798">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 01/08/11 17:56, Chris Stevens wrote:
+&gt;<i> Query on adding scripts to prims on rez: I've managed to create a prim which contains an inventory item by using the
+</I>&gt;<i> most up to date versions of this:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://forge.opensimulator.org/gf/project/extsim/scmsvn/?action=browse&amp;path=%2Ftrunk%2FExtSimPlugin%2FModules%2FExtSim.cs&amp;view=markup">http://forge.opensimulator.org/gf/project/extsim/scmsvn/?action=browse&amp;path=%2Ftrunk%2FExtSimPlugin%2FModules%2FExtSim.cs&amp;view=markup</A>
+</I>&gt;<i> &lt;<A HREF="http://forge.opensimulator.org/gf/project/extsim/scmsvn/?action=browse&amp;path=%2Ftrunk%2FExtSimPlugin%2FModules%2FExtSim.cs&amp;view=markup">http://forge.opensimulator.org/gf/project/extsim/scmsvn/?action=browse&amp;path=%2Ftrunk%2FExtSimPlugin%2FModules%2FExtSim.cs&amp;view=markup</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> (Had to redefine a few methods that were incorrect), but i'm stuck at trying to find the definitions for
+</I>&gt;<i> InventoryItemBase.InvType
+</I>&gt;<i>
+</I>&gt;<i> Apparently TaskInventoryItem.InvType = 10; was scripts... but for InventoryBaseItem.InvType it's a texture, and I can't
+</I>&gt;<i> find anywhere in the opensim docs the value list for InventoryItemBase.InvType or any Enum for it.
+</I>&gt;<i>
+</I>&gt;<i> Anyone know the integer keys for this parameter? Or have an up-to-date method for adding Scripts to newly rezzed Prims?
+</I>
+Are you setting both inventory and asset types?  It's 10 for both in scripts.  It's 0 for textures in both, which is why 
+I'm thinking this.
+
+You can find this in the libopenmetaverse code (<A HREF="http://lib.openmetaverse.org">http://lib.openmetaverse.org</A>).  It's in OpenMetaverseTypes/Enums.cs.
+
+As you've found out, the Extsim code is old and unmaintained - and tbh I've never looked at it much.  There's code which 
+I'm hoping to see released soon-ish that demonstrates doing a lot of things from within region modules.  Unfortunately, 
+adding scripts isn't one of them.
+
+And there's no regression test code that does this yet either.
+
+Your best bet might be to look at methods such as RezScript() in Scene.Inventory.cs.  A lot of these methods requires a 
+client object since they were written originally to serve that purpose.  At some point the 'API' needs to be improved so 
+that region modules can do these operations.  However, with some hacking and code copying you should be able to get it 
+to work as is (of course, patches welcome!).
+
+&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Chris.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Chris Stevens
+</I>&gt;<i> Lead Programmer
+</I>&gt;<i> Daden Limited
+</I>&gt;<i>
+</I>&gt;<i> t: +44 (0)121 250 5678
+</I>&gt;<i> e: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;
+</I>&gt;<i> w: www.daden.co.uk &lt;<A HREF="http://www.daden.co.uk">http://www.daden.co.uk</A>&gt;
+</I>&gt;<i> skype: christopher.michael.stevens
+</I>&gt;<i> sl: <A HREF="http://www.slurl.com/secondlife/daden%20prime/160/184/26">http://www.slurl.com/secondlife/daden%20prime/160/184/26</A>
+</I>&gt;<i> sl IM: Chris Taselian
+</I>&gt;<i>
+</I>&gt;<i> Daden specialise in immersive learning &amp; training systems, built environment visualisations, and creating interactive
+</I>&gt;<i> virtual personalities (chatbots).
+</I>&gt;<i>
+</I>&gt;<i> Daden are a Linden Lab Gold Solution Provider for Second Life.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007794.html">[Opensim-users] Adding Scripts to Objects on Rez in 7.1
+</A></li>
+	<LI>Next message: <A HREF="007799.html">[Opensim-users] toward a more simple first time log in
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7798">[ date ]</a>
+              <a href="thread.html#7798">[ thread ]</a>
+              <a href="subject.html#7798">[ subject ]</a>
+              <a href="author.html#7798">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

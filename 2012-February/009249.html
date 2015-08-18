@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Grid Mode limits for avatars?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Grid%20Mode%20limits%20for%20avatars%3F&In-Reply-To=%3C4F288AD4.3070905%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009262.html">
+   <LINK REL="Next"  HREF="009250.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Grid Mode limits for avatars?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Grid%20Mode%20limits%20for%20avatars%3F&In-Reply-To=%3C4F288AD4.3070905%40googlemail.com%3E"
+       TITLE="[Opensim-users] Grid Mode limits for avatars?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Feb  1 01:44:04 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009262.html">[Opensim-users] creating bots at negative elevation
+</A></li>
+        <LI>Next message: <A HREF="009250.html">[Opensim-users] Unknown User
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9249">[ date ]</a>
+              <a href="thread.html#9249">[ thread ]</a>
+              <a href="subject.html#9249">[ subject ]</a>
+              <a href="author.html#9249">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There is some rough performance information at [1].
+
+10 avatars per region is probably about right - the biggest bottleneck at the moment is physics performance, I would 
+say.  One thing to be aware of is that OpenSim 0.7.2 has an ODE crashing bug which can occur on simulators with more 
+than one region.  This was addressed very recently, so you may want to wait until OpenSimulator 0.7.3 comes out. 
+Hopefully this will happen late in Feb.
+
+There is a performance test executable that comes with OpenSim called pCampBot [2].  This will log an arbitrary number 
+of libomv clients on to a simulator and can perform actions such as bouncing, running and teleporting between regions. 
+However, libomv generates a large amount of spew on the console (though this is probably opensim's fault).  Also, I find 
+it difficult to get 20 clients to log in and stay logged in at once when running the teleport test.  This is very likely 
+due to the intensive nature of this test (20 avatars constantly teleporting between simulators) but it's something that 
+probably needs to be addressed.  Hopefully this wouldn't be so much of a problem in normal conditions.
+
+pCampbot is only working in current master code.  In OpenSim 0.7.2 and quite a few releases before it is probably broken 
+and even if not behaves differently.
+
+[1] <A HREF="http://opensimulator.org/wiki/Performance">http://opensimulator.org/wiki/Performance</A>
+[2] <A HREF="http://opensimulator.org/wiki/PCampBot">http://opensimulator.org/wiki/PCampBot</A>
+
+On 31/01/12 20:58, Peter Blair wrote:
+&gt;<i> Hi Opensimmers and Justin Clark-Casey,
+</I>&gt;<i>
+</I>&gt;<i> My name is Peter Blair and I've emailed in the past about some of the
+</I>&gt;<i> limits of standalone regions. In the past tests we've identified about
+</I>&gt;<i> 18-20 avs as the limit of a standalone server running 4 regions in
+</I>&gt;<i> OpenSim 0.7.2.rc2 on a Intel Core i7 @ 2.8 GHz, 12 GB RAM, and a 526
+</I>&gt;<i> GB hard drive. These avs were all on the same region.
+</I>&gt;<i>
+</I>&gt;<i> We've since changed our server to grid mode Opensim 0.7.2.release.
+</I>&gt;<i> Robust.exe runs on one box with three regions (Intel i7 2600K 16 gig
+</I>&gt;<i> RAM) and another box is running an additional two regions (Intel Core
+</I>&gt;<i> i7 @ 2.8 GHz, 12 GB RAM). I'm hoping to get 45 avatars into this grid
+</I>&gt;<i> mode across the five regions. Accordingly, each of the five regions
+</I>&gt;<i> would be housing about 10 avatars.
+</I>&gt;<i>
+</I>&gt;<i> I'm trying to do some preliminary load testing with users but wanted
+</I>&gt;<i> to ask if anyone has had experience getting this many avs into their
+</I>&gt;<i> sims, grid or stand alone and what their specs were. Also if I don't
+</I>&gt;<i> have the needed users to test the sim what other strategies have
+</I>&gt;<i> other's used to do load testing? I'm assuming one bottle neck that
+</I>&gt;<i> we've encountered is with the avs requesting textures and such from
+</I>&gt;<i> the server. Is that the case?
+</I>&gt;<i>
+</I>&gt;<i> As always, thanks for your help.
+</I>&gt;<i>
+</I>&gt;<i> Peter
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009262.html">[Opensim-users] creating bots at negative elevation
+</A></li>
+	<LI>Next message: <A HREF="009250.html">[Opensim-users] Unknown User
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9249">[ date ]</a>
+              <a href="thread.html#9249">[ thread ]</a>
+              <a href="subject.html#9249">[ subject ]</a>
+              <a href="author.html#9249">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

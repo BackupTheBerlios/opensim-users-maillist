@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Got profiles working
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Got%20profiles%20working&In-Reply-To=%3C20130122161032.17051cbteed4urt4%4074.50.85.33%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011636.html">
+   <LINK REL="Next"  HREF="011638.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Got profiles working</H1>
+    <B>emperor at secondgalaxy.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Got%20profiles%20working&In-Reply-To=%3C20130122161032.17051cbteed4urt4%4074.50.85.33%3E"
+       TITLE="[Opensim-users] Got profiles working">emperor at secondgalaxy.com
+       </A><BR>
+    <I>Tue Jan 22 22:10:32 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011636.html">[Opensim-users] separate hypergrid robust instance
+</A></li>
+        <LI>Next message: <A HREF="011638.html">[Opensim-users] Got profiles working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11637">[ date ]</a>
+              <a href="thread.html#11637">[ thread ]</a>
+              <a href="subject.html#11637">[ subject ]</a>
+              <a href="author.html#11637">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay so after a lot of annoying bugs and frustration, I finally got  
+search, profiles, and offline messaging working.  Thanks to Guy for  
+giving me that last push I needed to revisit it.
+
+For those who are having trouble with the profiles, search, and  
+offline messaging and are running on windows I recommend the following  
+steps as it worked for me.
+
+1. Install IIS (you can either install the IIS 7.5 express from  
+Microsoft or activate IIS 6.0 through your control panel by going to  
+the control panel and under programs turn on or off new features.  In  
+the features manager check the boxes for IIS and click ok.)
+
+2. Through the web installer from Microsoft you'll want to install php  
+5.3.19 (sorry I am not to sure yet why profiles, search, and offline  
+messaging hates php 5.4.x.  I'll try and play around with this when I  
+get some time and through the list of projects I have waiting for me  
+to implement.)
+
+3. Go to your IIS Manager by clicking on start and typing in IIS  
+Manager to find the manager.
+
+4. In the IIS manager you might need to scroll down to find the php  
+manager.  Open the manager.
+
+5. In the php manager you might get an incompatibility highlighted in  
+yellow.  No need to panic this is normal.  Click the recommended link  
+next to this message and it will go away.
+
+6. Click the php.ini link and edit the php.ini file and turn on  
+asp_tags and short_open_tags.  Then click save.
+
+7. Click the phpinfo link to verify that you have configured  
+everything correctly.  No need to worry about the php_curl or  
+php_xmlrpc as these are on by default. (they were for me).
+
+8. Minimize your IIS manager now.
+
+9. Copy the web root folders for search and profiles to your IIS  
+wwwroot folder.  You can find this directory in C:\inetpub\wwwroot\
+
+10. In my case I named the search, profile, and offline messaging  
+directory folders search, profiles, and messaging.  I also changed the  
+xmlrpc groups web root directory to groups.
+
+11. Make sure to configure your database info and your ini files  
+accordingly in your opensim server.
+
+12. Restart or launch your opensim instance.
+
+13. Log in using your viewer of choice and test.  Everything should  
+work quite well.
+
+I am sorry to see these modules not working well with the current php  
+versions in wamp and xampp servers.  Someone will need to revisit that  
+and figure out how to actually make these compatible with any  
+php-xmlrpc version.
+
+Thanks to Guy who gave me that bit of encouragement I needed and to  
+Fleep/ Chris for posting his steps on his wiki.  Once I saw on Fleep's  
+wiki that he had it working with IIS it got me thinking there might be  
+a problem on windows with wamp and xampp server php-xmlrpc instances.
+
+My next project is the economy modules for our grid and then  
+addressing the issue relating to bigger region sizes.  Now that the  
+developers of Firestorm are implementing the var regions, it is time I  
+think to re address this.  I will let everyone know how this project  
+turns out once I get to it in a day or two.  Currency comes first.
+
+Emperor
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011636.html">[Opensim-users] separate hypergrid robust instance
+</A></li>
+	<LI>Next message: <A HREF="011638.html">[Opensim-users] Got profiles working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11637">[ date ]</a>
+              <a href="thread.html#11637">[ thread ]</a>
+              <a href="subject.html#11637">[ subject ]</a>
+              <a href="author.html#11637">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

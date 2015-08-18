@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Approach%20to%20get%20fresh%20content%20for%20an%20OpenSim%0A%20Grid%20on%20New%20Servers&In-Reply-To=%3CCAAQTD4X%2BS8xY4GaTmkZN1yCZdtOET3fDtt0T9E1qYQPeu8NYqw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012038.html">
+   <LINK REL="Next"  HREF="012047.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers</H1>
+    <B>Dahlia Trimble</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Approach%20to%20get%20fresh%20content%20for%20an%20OpenSim%0A%20Grid%20on%20New%20Servers&In-Reply-To=%3CCAAQTD4X%2BS8xY4GaTmkZN1yCZdtOET3fDtt0T9E1qYQPeu8NYqw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers">dahliatrimble at gmail.com
+       </A><BR>
+    <I>Sat Apr 13 09:56:48 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012038.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+        <LI>Next message: <A HREF="012047.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12041">[ date ]</a>
+              <a href="thread.html#12041">[ thread ]</a>
+              <a href="subject.html#12041">[ subject ]</a>
+              <a href="author.html#12041">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You might want to also regex-search all notecard text for embedded UUIDs
+that match any assets.
+
+
+On Fri, Apr 12, 2013 at 6:34 PM, Melanie &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">melanie at t-data.com</A>&gt; wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> this requires a sweep and mark approach.
+</I>&gt;<i>
+</I>&gt;<i> Create a table that parallels your asset table. It should contain
+</I>&gt;<i> the asset ID and a date field which would default to the asset's
+</I>&gt;<i> creation date.
+</I>&gt;<i>
+</I>&gt;<i> Next you need to iterate over all rezzed objects in all sims and
+</I>&gt;<i> collect the UUID of any used textures and the UUIDs of all inventory
+</I>&gt;<i> items. Keep those that refer to objects separately, as well as those
+</I>&gt;<i> that refer to scripts and wearables. Also make a list of all
+</I>&gt;<i> notecards. Don't forget to include ground textures and parcel
+</I>&gt;<i> textures. Mark all textures and wearables with the current date.
+</I>&gt;<i>
+</I>&gt;<i> Then, similarly iterate all user inventories. Mark all UUIDs of
+</I>&gt;<i> simple objects like wearables and textures, then add the UUIDs of
+</I>&gt;<i> the objects, wearables, notecards and scripts to the UUID lists
+</I>&gt;<i> created in the first step. Mark all &quot;simple&quot; (non-object) assets
+</I>&gt;<i> with the current date.
+</I>&gt;<i>
+</I>&gt;<i> Next, iterate all notecards. Extract all attached (embedded) objects
+</I>&gt;<i> and add the wearables and objects and other notecards to the lists
+</I>&gt;<i> above. Mark all simple assets found. Repeat until no more notecards
+</I>&gt;<i> are left.
+</I>&gt;<i>
+</I>&gt;<i> Finally, iterate all object assets, retrieving and parsing them to
+</I>&gt;<i> glean the same info as you obtained from the sim. Mark textures and
+</I>&gt;<i> wearables and also add wearables, objects and scripts to the above
+</I>&gt;<i> lists. Mark all object assets with the current date.
+</I>&gt;<i>
+</I>&gt;<i> Repeat until no more objects are left in the object list.
+</I>&gt;<i>
+</I>&gt;<i> If notecards were collected, go back to iterating the notecards.
+</I>&gt;<i>
+</I>&gt;<i> Last, iterate wearables (extract texture ids and mark them) and
+</I>&gt;<i> scripts (regex-match UUID-like things and if they are a known asset,
+</I>&gt;<i> mark them).
+</I>&gt;<i>
+</I>&gt;<i> Depending on the grid size, this should leave you anywhere from a
+</I>&gt;<i> few days to a few months on. Assuming the sweep &amp; mark took less
+</I>&gt;<i> than 6 months, all UUID in the secondary table that have a date
+</I>&gt;<i> stamp OLDER than 6 months are unreferenced and the assets they name
+</I>&gt;<i> can be deleted.
+</I>&gt;<i>
+</I>&gt;<i> Since old assets are static, limiting future scans to only look at
+</I>&gt;<i> things changed after the last scan was done will allow you to keep
+</I>&gt;<i> this dated list and use it for further purging, dramatically
+</I>&gt;<i> shortening the next sweeping run.
+</I>&gt;<i>
+</I>&gt;<i> A lot of this code is present in the flotsam cache and the
+</I>&gt;<i> archivers. It's a matter of putting it together properly and filling
+</I>&gt;<i> in a few tricky spots.
+</I>&gt;<i>
+</I>&gt;<i> Melanie
+</I>&gt;<i>
+</I>&gt;<i> On 13/04/2013 02:40, Jeff Kelley wrote:
+</I>&gt;<i> &gt; At 4:20 PM -0500 4/12/13, Chris wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;  As far as I can tell it does also pick up assets recursively although
+</I>&gt;<i> how
+</I>&gt;<i> &gt;&gt;  deeply nested I am unsure of; I have not tested more than a few
+</I>&gt;<i> objects deep.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Well, there is no recursivity, strictly speaking. &quot;Nested&quot; is more
+</I>&gt;<i> &gt; accurate. An object in itself is stramlined in the XML (not a
+</I>&gt;<i> &gt; reference pointing to self). Recursivity is achieved in-world  with
+</I>&gt;<i> &gt; the &quot;rez and give a copy of self&quot; trick.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'm searching a way to clean the database more deeply than with SQL
+</I>&gt;<i> queries.
+</I>&gt;<i> &gt; That implies parsing SceneObjectGroups, as well as the binary UUIDs
+</I>&gt;<i> &gt; in primShapes:Texture. Not a simple task.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -- Jeff
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130413/d2020063/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130413/d2020063/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012038.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+	<LI>Next message: <A HREF="012047.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12041">[ date ]</a>
+              <a href="thread.html#12041">[ thread ]</a>
+              <a href="subject.html#12041">[ subject ]</a>
+              <a href="author.html#12041">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

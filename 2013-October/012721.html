@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] collision detection for attachments
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3C1381956612053-7580512.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012719.html">
+   <LINK REL="Next"  HREF="012723.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] collision detection for attachments</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3C1381956612053-7580512.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] collision detection for attachments">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Wed Oct 16 22:50:12 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012719.html">[Opensim-users] Call for Issue Editor - Assembled
+</A></li>
+        <LI>Next message: <A HREF="012723.html">[Opensim-users] RemoteAdmin Create Region Workaround?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12721">[ date ]</a>
+              <a href="thread.html#12721">[ thread ]</a>
+              <a href="subject.html#12721">[ subject ]</a>
+              <a href="author.html#12721">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bumping this thread again... :)
+
+I've been actively tracking this down since I desperately need the same
+functionality as provided by SL (see
+<A HREF="http://opensimulator.org/mantis/view.php?id=6707">http://opensimulator.org/mantis/view.php?id=6707</A>)
+
+I managed to at least get attachments detect collisions with other avatars
+and physics-enabled prims. The trick is to change
+Region.Framework.Scenes.SceneObjectPart.UpdatePrimFlags() to force
+attachments with scripts setting llVolumeDetect() to be subscribed to
+collision events. This works reasonably well under BulletSim (I agree with
+the comments on this thread, BulletSim seems to be advancing fast to become
+a replacement of the &quot;default&quot; ODE. I still have some issues with excessive
+CPU consumption under certain circumstances which have been quite hard to
+track down to my configuration), not so well under ODE (but at least _some_
+collision events are being sent).
+
+This doesn't mean it works _always_; in fact, my current issue is to figure
+out why it only works _some_ of the time, and the physics engine needs
+llVolumeDetect() to be &quot;refreshed&quot; continuously, or the attachment will not
+receive collision events.
+
+However, I'm still stumped at figuring out how to receive collision events
+with non-physical objects, just like SL does. But the work is under way to
+figure this out...
+
+
+
+-----
+--
+&quot;I'm not building a game. I'm building a new country.&quot;
+  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+--
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/collision-detection-for-attachments-tp7579692p7580512.html">http://opensim-users.2152040.n2.nabble.com/collision-detection-for-attachments-tp7579692p7580512.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012719.html">[Opensim-users] Call for Issue Editor - Assembled
+</A></li>
+	<LI>Next message: <A HREF="012723.html">[Opensim-users] RemoteAdmin Create Region Workaround?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12721">[ date ]</a>
+              <a href="thread.html#12721">[ thread ]</a>
+              <a href="subject.html#12721">[ subject ]</a>
+              <a href="author.html#12721">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

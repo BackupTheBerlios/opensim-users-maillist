@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim-users Digest, Vol 38, Issue 24
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Digest%2C%20Vol%2038%2C%20Issue%2024&In-Reply-To=%3CAANLkTimkyV%2BbQ6LCmC5Jn9dBUFwp_JUTwMCuhjJmzvSa%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005771.html">
+   <LINK REL="Next"  HREF="005782.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim-users Digest, Vol 38, Issue 24</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Digest%2C%20Vol%2038%2C%20Issue%2024&In-Reply-To=%3CAANLkTimkyV%2BbQ6LCmC5Jn9dBUFwp_JUTwMCuhjJmzvSa%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Opensim-users Digest, Vol 38, Issue 24">teravus at gmail.com
+       </A><BR>
+    <I>Thu Oct 14 15:52:01 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005771.html">[Opensim-users] Opensim-users Digest, Vol 38, Issue 24
+</A></li>
+        <LI>Next message: <A HREF="005782.html">[Opensim-users] Opensim-users Digest, Vol 38, Issue 24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5772">[ date ]</a>
+              <a href="thread.html#5772">[ thread ]</a>
+              <a href="subject.html#5772">[ subject ]</a>
+              <a href="author.html#5772">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there Mr Villano
+
+Mac OSX does work with Mono/OpenSimulator.   Intel Macs work better then
+PowerPC macs.   There's an incompatibility in the SQLite data storage
+mechanism as a result of version differences in the crypto library used when
+the native part of sqlite was compiled.
+
+There are other Data storage plugins, such as MySQL, MSSQL, etc).   Even so,
+in an attempt to mitigate the problem, I packaged-in a completely managed
+implementation of the SQLite library called csharp-sqlite and custom wrote a
+set of ADO.NET bindings for it.  The csharp-sqlite plugin is experimental
+but it should enable you to use the SQLite data storage plugin.
+
+Details on how to enable the csharp-sqlite managed implementation of Sqlite
+follow:
+
+-------------------------------------
+Hey there
+
+Since I have not had much response to my CSharpSqlite query in June, I
+went ahead and committed the CSharpSqlite binary as well as my custom
+ADO.NET &lt;<A HREF="http://ado.net/">http://ado.net/</A>&gt; wrapper for CSharpSqlite.   The source for them is
+OpenSimLibs/trunk/managed.
+
+Commit Hash: acd5bbdb71682131be386b7a5ce190
+4622b0ee70
+ViewGit:
+<A HREF="http://opensimulator.org/viewgit/?a=commit&amp;p=opensim&amp;h=acd5bbdb71682131be386b7a5ce1904622b0ee70">http://opensimulator.org/viewgit/?a=commit&amp;p=opensim&amp;h=acd5bbdb71682131be386b7a5ce1904622b0ee70</A>
+
+For those of you who do not know what CSharpSqlite is, I suggest you
+read: <A HREF="http://code.google.com/p/csharp-sqlite/">http://code.google.com/p/csharp-sqlite/</A>
+Summary:   It's an independent implementation of the SQLite library
+written in C#.   There are no native libraries associated with it.
+This has the advantage of having it work, out of the box in most
+configurations.  (32bit/64bit/Win/Linux/Mac/more?).
+Benchmarks: <A HREF="http://code.google.com/p/csharp-sqlite/wiki/Benchmarks">http://code.google.com/p/csharp-sqlite/wiki/Benchmarks</A>
+
+A couple of things that I've learned about it during the process of
+getting it to work.
+
+1. The SQLite database files that CSharpSqlite makes are not byte per
+byte compatible.   Mono.Data.Sqlite and other native SQLite tools can
+read databases created with CSharpSqlite but CSharpSqlite asserts on
+databases created with Mono.Data.Sqlite
+
+2. When running under CSharpSqlite, OpenSimulator will crash on the
+first load.    Subsequent attempts to load OpenSimulator and it'll be
+fine.
+
+The ADO.NET &lt;<A HREF="http://ado.net/">http://ado.net/</A>&gt; wrapper that I wrote for CSharpSqlite is code
+compatible
+with Mono.Data.Sqlite. That means that either can be used simply by
+changing the using statement at the top of each of the SQLite*.cs
+files  The same code that works for Mono.Data.Sqlite will also work on
+CSharpSqlite because the inner namespaces are exactly the same.
+
+To save on code maintenance, I implemented CSharpSqlite as the
+compilation conditional CSharpSqlite in the OpenSim.Data.Sqlite
+project.
+
+#if CSharpSqlite
+   using Community.CsharpSqlite.Sqlite;
+#else
+   using Mono.Data.Sqlite;
+#endif
+
+CSharpSqlite is easy to define in Microsoft Visual Studio but it's
+slightly tougher for just plain Mono.
+
+In Visual Studio, you right click the OpenSim.Data.Sqlite project in
+the Solution Explorer.  Click Properties from the context menu.  Then
+go to the Build Tab.  You'll see a box labeled 'Condition compilation
+symbols' that's empty.   Simply enter CSharpSqlite into that box, save
+the project and compile.
+
+Apparently in Mono you use the -d:CSharpSqlite parameter when you
+compile OpenSim.Data.Sqlite.     MonoDevelop may make this process
+easier but I have no basis to work from.
+
+Hopefully this helps people deal with issues relating to the use of SQLite
+
+Regards
+
+Teravus
+-------------------------------
+
+Have a great day!
+
+Teravus
+
+
+On Thu, Oct 14, 2010 at 9:36 AM, Villano, Paul Mr CIV USA TRADOC &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">paul.villano at us.army.mil</A>&gt; wrote:
+
+&gt;<i> Good news.  But is that Mac OSX or on Windows on the Mac using Bootcamp?
+</I>&gt;<i>
+</I>&gt;<i> ----- Original Message -----
+</I>&gt;<i> From: lamont cranston &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">l.cranston at gmail.com</A>&gt;
+</I>&gt;<i> Date: Thursday, October 14, 2010 8:46
+</I>&gt;<i> Subject: Re: [Opensim-users] Opensim-users Digest, Vol 38, Issue 24
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; According to <A HREF="http://opensimulator.org/wiki/Build_Instructions">http://opensimulator.org/wiki/Build_Instructions</A>
+</I>&gt;<i> &gt; OpenSim is now working on PowerPC Macs! Thanks to Dr. Scofield and
+</I>&gt;<i> &gt; those who
+</I>&gt;<i> &gt; helped him. Current nightly builds for PowerPC are not working,
+</I>&gt;<i> &gt; not sure
+</I>&gt;<i> &gt; about Intel so use the 0.5 Build. OpenSim works on Intel Macs. I'm
+</I>&gt;<i> &gt; testingon PowerBook G4. Tested these step on 10.5, but not 10.4
+</I>&gt;<i> &gt; but should work
+</I>&gt;<i> &gt; (Works on iMac G5 with OS 10.4.11, including expanding to local
+</I>&gt;<i> &gt; grid mode.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Thu, Oct 14, 2010 at 6:51 AM, Villano, Paul Mr CIV USA TRADOC &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">paul.villano at us.army.mil</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt; I guess I had ass-umed that OS would work on a Mac, especially since
+</I>&gt;<i> Mac is
+</I>&gt;<i> &gt; &gt; kin to Linux.  But apparently not?
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; ----- Original Message -----
+</I>&gt;<i> &gt; &gt; From: lamont cranston &lt;
+</I>&gt;<i> &gt; &gt; Date: Wednesday, October 13, 2010 21:36
+</I>&gt;<i> &gt; &gt; Subject: Re: [Opensim-users] Opensim-users Digest, Vol 38, Issue 24
+</I>&gt;<i> &gt; &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="http://drupal.org/node/263">http://drupal.org/node/263</A>
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; but really, Windows???
+</I>&gt;<i> &gt; &gt; &gt; Why not a real OS?
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; On Wed, Oct 13, 2010 at 9:26 PM, Andrew &lt;&gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;  will drupal work in windows?
+</I>&gt;<i> &gt; &gt; &gt; &gt; i have php5 installed
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; On 13/10/2010 4:05 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.dewrote</A>:
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; Message: 6
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; Date: Wed, 13 Oct 2010 18:44:33 +0200
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; From: ssm2017&lt;&gt; &gt; &gt;&gt; To:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;To%<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">3Aopensim-users at lists.berlios.de</A>&gt;&lt;&lt;&gt;
+</I>&gt;<i> &gt; &gt;&gt; Subject: Re: [Opensim-users] Offline IM to email module
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; Message-ID:
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;        &lt;&gt; &gt; &gt;&gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; Content-Type: text/plain; charset=ISO-8859-1
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; hello
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; as said in irc , you need to have the &quot;osprofile&quot; module to store
+</I>&gt;<i> the
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; user preference in the database first (the user can select in
+</I>&gt;<i> viewer
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; preferences if the message can be emailed)
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; then you need to tell in your opensim.ini the offline message url
+</I>&gt;<i> (use
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; the same url for mute messages) (see
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; <A HREF="http://opensimulator.org/wiki/Offline_Messaging">http://opensimulator.org/wiki/Offline_Messaging</A>)
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; then, the sim will send an xml document to the url script you
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; mentionned (your script can be php, ruby, pyhthon etc...)
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; the message sent is like that :
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; &lt;&gt; xmlns:xsi=&quot;<A HREF="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</A>&quot;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; xmlns:xsd=&quot;<A HREF="http://www.w3.org/2001/XMLSchema">http://www.w3.org/2001/XMLSchema</A>&quot;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt;   &lt;&gt; &gt; &gt;&gt; &lt;&gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; so you can use &quot;simlexml&quot; or something else to parse the message
+</I>&gt;<i> first
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; and then send the email or not
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; note : the&lt;&gt; &gt; &gt;&gt; so you should filter it:)
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; here is the code i have made to use it with drupal :
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> <A HREF="http://github.com/ssm2017/d4os/blob/master/io/d4os_io_services/d4os_io_services_offline_message/d4os_io_services_offline_message.module">http://github.com/ssm2017/d4os/blob/master/io/d4os_io_services/d4os_io_services_offline_message/d4os_io_services_offline_message.module</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; but you can also take inspiration from other projects like wiredux
+</I>&gt;<i> :
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> <A HREF="http://forge.opensimulator.org/gf/project/opensimwi/scmsvn/?action=browse&amp;path=%2Ftrunk%2Foffline.php&amp;revision=84&amp;view=markup">http://forge.opensimulator.org/gf/project/opensimwi/scmsvn/?action=browse&amp;path=%2Ftrunk%2Foffline.php&amp;revision=84&amp;view=markup</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt; 2010/10/13 Jor3l Boa&lt;&gt; &gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt; &gt;  Hey Andrew, The offline msg module is PHP, so look when the
+</I>&gt;<i> &gt; &gt; message is
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt; &gt;  stored in the DB and send an email to that user, If you have
+</I>&gt;<i> the
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt; module
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt; &gt;  working with 0.7 mail me and we can work this
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt; &gt;  2010/10/13 Andrew&lt;&gt; &gt; &gt;&gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  ?hi there,
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  i think i have ask before i cant remember, anyway.
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  i have been looking everywhere that do offline im to email.
+</I>&gt;<i> but
+</I>&gt;<i> &gt; &gt; i
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; cannot
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  find and been asking Meta7 to provide that module, i cant
+</I>&gt;<i> get
+</I>&gt;<i> &gt; &gt; them
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; to give.
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  so can anyone can make one or give me instruction how to
+</I>&gt;<i> make
+</I>&gt;<i> &gt; &gt; one.
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; I'm not
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  very good programmer yet but still learning.
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  i am surprise no one has made one expect throu private grid
+</I>&gt;<i> like
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; Meta7,
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  InWorldz, maybe OpenLife.
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  thank
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt; &gt;&gt;  Andsim
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; &gt; &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; --
+</I>&gt;<i> &gt; &gt; &gt; (\__/)
+</I>&gt;<i> &gt; &gt; &gt; (='.'=)
+</I>&gt;<i> &gt; &gt; &gt; (&quot;)_(&quot;)
+</I>&gt;<i> &gt; &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; (\__/)
+</I>&gt;<i> &gt; (='.'=)
+</I>&gt;<i> &gt; (&quot;)_(&quot;)
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101014/aa169761/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101014/aa169761/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005771.html">[Opensim-users] Opensim-users Digest, Vol 38, Issue 24
+</A></li>
+	<LI>Next message: <A HREF="005782.html">[Opensim-users] Opensim-users Digest, Vol 38, Issue 24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5772">[ date ]</a>
+              <a href="thread.html#5772">[ thread ]</a>
+              <a href="subject.html#5772">[ subject ]</a>
+              <a href="author.html#5772">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

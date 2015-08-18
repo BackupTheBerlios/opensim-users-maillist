@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 7.1 Diva Mesh Upload error?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%207.1%20Diva%20Mesh%20Upload%20error%3F&In-Reply-To=%3CBANLkTikhis1bH1qrsWkdSDmLTxtXZ-tV5w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007333.html">
+   <LINK REL="Next"  HREF="007378.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 7.1 Diva Mesh Upload error?</H1>
+    <B>Caia Naxos</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%207.1%20Diva%20Mesh%20Upload%20error%3F&In-Reply-To=%3CBANLkTikhis1bH1qrsWkdSDmLTxtXZ-tV5w%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] 7.1 Diva Mesh Upload error?">caia.naxos at gmail.com
+       </A><BR>
+    <I>Mon May 16 15:31:18 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007333.html">[Opensim-users] 7.1 Diva Mesh Upload error?
+</A></li>
+        <LI>Next message: <A HREF="007378.html">[Opensim-users] 7.1 Diva Mesh Upload error?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7351">[ date ]</a>
+              <a href="thread.html#7351">[ thread ]</a>
+              <a href="subject.html#7351">[ subject ]</a>
+              <a href="author.html#7351">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Been continuing to look at this. Noticed it's not really a mesh upload error
+- it happens at login. Error again is this:
+
+[LLCLIENTVIEW]: Caught exception while processing OpenMetaverse.Packe
+ts.UpdateInventoryItemPacket for xxxxxx xxxxxxxxx,
+[MYSQL GENERIC TABLE HANDLER]: Trying to store field creatorID for
+OpenSim.Data.XInventoryItem which is unexpectedly null at
+OpenSim.Data.MySQL.MySQLGenericTableHandler`1.Store(T row)
+
+Looked at the database and saw a number of rows with null creatorID.  Tried
+replacing nulls with zeros, then logged in again, and the console did not
+complain anymore.
+
+I don't know that this is a good solution.  Any suggestions?
+
+On Sat, May 14, 2011 at 9:53 AM, Caia Naxos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">caia.naxos at gmail.com</A>&gt; wrote:
+
+&gt;<i> After upgrading from 7.0.2 to 7.1, we left our Diva installation running a
+</I>&gt;<i> few hours and on checking it this morning it had crashed. We restarted
+</I>&gt;<i> OpenSim and tried to replicate the crash.
+</I>&gt;<i>
+</I>&gt;<i> Thinking it had something to do with uploading mesh, we looked and found
+</I>&gt;<i> some extra prims lying about according to the mini-map, but even after
+</I>&gt;<i> returning all, there were still 3 or 4 objects obstinately remaining.  We're
+</I>&gt;<i> thinking those might have been from vehicle scripts we'd tested that had
+</I>&gt;<i> gone off the sim's edge.
+</I>&gt;<i>
+</I>&gt;<i> When we used the Phoenix viewer, we got the following error in red on the
+</I>&gt;<i> console:
+</I>&gt;<i>
+</I>&gt;<i> [LLCLIENTVIEW]: Caught exception while processing OpenMetaverse.Packe
+</I>&gt;<i> ts.UpdateInventoryItemPacket for xxxxxx xxxxxxxxx,
+</I>&gt;<i> [MYSQL GENERIC TABLE HANDLER]: Trying to store field creatorID for
+</I>&gt;<i> OpenSim.Data.XInventoryItem which is unexpectedly null at
+</I>&gt;<i> OpenSim.Data.MySQL.MySQLGenericTableHandler`1.Store(T row)
+</I>&gt;<i>
+</I>&gt;<i> It didn't crash the sim, but we thought it strange to be complaining about
+</I>&gt;<i> a null creatorID.  We got the same error using Kirsten's viewer; and while
+</I>&gt;<i> this time the error didn't come up in red, it still appeared on the console
+</I>&gt;<i> and did not seem to cause a crash.
+</I>&gt;<i>
+</I>&gt;<i> Another interesting note - when uploading mesh using Kirsten's Viewer, the
+</I>&gt;<i> object comes in at the sim's edge at zero altitude (z=0).  The SL Mesh
+</I>&gt;<i> Project Viewer does this as well. It doesn't upload into inventory; it
+</I>&gt;<i> rezzes inworld.  Do we need to have a completely empty region with no water,
+</I>&gt;<i> for bringing in mesh?
+</I>&gt;<i>
+</I>&gt;<i> So. how do we address this null creatorID problem?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Caia
+</I>&gt;<i>
+</I>
+
+
+-- 
+Caia
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110516/4552625a/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110516/4552625a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007333.html">[Opensim-users] 7.1 Diva Mesh Upload error?
+</A></li>
+	<LI>Next message: <A HREF="007378.html">[Opensim-users] 7.1 Diva Mesh Upload error?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7351">[ date ]</a>
+              <a href="thread.html#7351">[ thread ]</a>
+              <a href="subject.html#7351">[ subject ]</a>
+              <a href="author.html#7351">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

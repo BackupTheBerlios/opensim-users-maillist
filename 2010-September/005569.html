@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Error converting from StandAlone to Grid mode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Error%20converting%20from%20StandAlone%20to%20Grid%20mode&In-Reply-To=%3C4C980579.8030804%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005559.html">
+   <LINK REL="Next"  HREF="005560.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Error converting from StandAlone to Grid mode</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Error%20converting%20from%20StandAlone%20to%20Grid%20mode&In-Reply-To=%3C4C980579.8030804%40googlemail.com%3E"
+       TITLE="[Opensim-users] Error converting from StandAlone to Grid mode">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Sep 21 03:08:09 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005559.html">[Opensim-users] MapTile/WorldMap save time
+</A></li>
+        <LI>Next message: <A HREF="005560.html">[Opensim-users] Confusion regarding initial OpenSimulator	configuration.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5569">[ date ]</a>
+              <a href="thread.html#5569">[ thread ]</a>
+              <a href="subject.html#5569">[ subject ]</a>
+              <a href="author.html#5569">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 18/09/10 22:40, Aaron wrote:
+&gt;<i> Hello everyone.
+</I>&gt;<i>
+</I>&gt;<i> My apologies for such a lengthy email. I've been working with the folks
+</I>&gt;<i> in the IRC channel but we can't seem to figure out what is going on.
+</I>&gt;<i> I've had a working configuration in StandAlone mode on my external
+</I>&gt;<i> (hosted in a data center) server. Our developer wants to mimic the
+</I>&gt;<i> production server as close as possible which is in Grid mode. Therefore,
+</I>&gt;<i> I followed the instructions on the wiki (configuration section) for
+</I>&gt;<i> Grid-mode. This is all on opensim 0.7.0.2.
+</I>&gt;<i>
+</I>&gt;<i> Here is the issue. When using Hippo Viewer (or any other) I cannot log
+</I>&gt;<i> in. Well, that's not necessarily true. I can log in, but I can't
+</I>&gt;<i> authenticate to the region. I am running the two processes Robust.exe
+</I>&gt;<i> and OpenSim.exe on this server. When logging in I receive the following
+</I>&gt;<i> error on the console (and log) for Robust:
+</I>&gt;<i>
+</I>&gt;<i> [GRID USER SERVICE]: User f6dedbac-4695-4be8-ad75-50dcf3f657d7 is online
+</I>&gt;<i> [LLOGIN SERVICE]: FindDestination for start location last
+</I>&gt;<i> [GRID SERVICE]: Fallback returned 0 regions
+</I>&gt;<i> [PRESENCE SERVICE]: Session bef9d87e-becd-4e4d-8435-6184d1cae69d logout
+</I>&gt;<i> [LLOGIN SERVICE]: Login failed, reason: cannot contact remote region
+</I>&gt;<i>
+</I>&gt;<i> The error Hippo View spits out is:
+</I>&gt;<i> Login failed. Error connecting to grid. Unable to authorize your session
+</I>&gt;<i> into the region.
+</I>&gt;<i>
+</I>&gt;<i> I've tested this configuration with a new database (mysql) and it still
+</I>&gt;<i> throws the same errors. I have also tried setting the &quot;Start location&quot;
+</I>&gt;<i> in Hippo Viewer to Home, last location and just typing in the Region's
+</I>&gt;<i> name. All result in the same error.
+</I>&gt;<i>
+</I>&gt;<i> On the remote server I have IPTables turned off. On the firewall in
+</I>&gt;<i> front of that server I have ALL UDP ports open and forwarding to the
+</I>&gt;<i> server and TCP ports 9000, 9001, 8002, 8003 also forwarding to the
+</I>&gt;<i> server.
+</I>&gt;<i>
+</I>&gt;<i> Below are snippets of the pertinent parts of my ini files. If other
+</I>&gt;<i> sections are necessary, I would be happy to post here or pastebin. I'm
+</I>&gt;<i> pretty much at a loss here as to what I'm doing wrong. Any help would be
+</I>&gt;<i> greatly appreciated!
+</I>
+When you start up your simulator, what does the ROBUST log say when the region registers?  What does the simulator log 
+say at the same time?
+
+Are you running both simulator and robust instance on the same machine?
+
+You say you cannot login with Hippo.  I presume the same is true of other viewers?
+
+&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Aaron
+</I>&gt;<i>
+</I>&gt;<i> ### Regions.ini ###
+</I>&gt;<i>
+</I>&gt;<i>          [REGION_NAME1]
+</I>&gt;<i>          RegionUUID = 94142350-72bd-4741-aa08-a1da63418663
+</I>&gt;<i>          Location = 1000,1000
+</I>&gt;<i>          InternalAddress = 0.0.0.0
+</I>&gt;<i>          InternalPort = 9000
+</I>&gt;<i>          AllowAlternatePorts = False
+</I>&gt;<i>          ExternalHostName = [EXTERNAL_IP]
+</I>&gt;<i>
+</I>&gt;<i>          [REGION_NAME2]
+</I>&gt;<i>          RegionUUID = 4b17f84d-2c12-497a-9344-7beef0cd66d2
+</I>&gt;<i>          Location = 1000,1001
+</I>&gt;<i>          InternalAddress = 0.0.0.0
+</I>&gt;<i>          InternalPort = 9001
+</I>&gt;<i>          AllowAlternatePorts = False
+</I>&gt;<i>          ExternalHostName = [EXTERNAL_IP]
+</I>&gt;<i>
+</I>&gt;<i> ### Robust.ini ###
+</I>&gt;<i>
+</I>&gt;<i> [Startup]
+</I>&gt;<i> ServiceConnectors =
+</I>&gt;<i> &quot;8003/OpenSim.Server.Handlers.dll:AssetServiceConnector,8003/OpenSim.Server.Handlers.dll:XInventoryInConnector,8002/OpenSim.Server.Handlers.dll:FreeswitchServerConnector,8003/OpenSim.Server.Handlers.dll:GridServiceConnector,8002/OpenSim.Server.Handlers.dll:GridInfoServerInConnector,8003/OpenSim.Server.Handlers.dll:AuthenticationServiceConnector,8002/OpenSim.Server.Handlers.dll:OpenIdServerConnector,8003/OpenSim.Server.Handlers.dll:AvatarServiceConnector,8002/OpenSim.Server.Handlers.dll:LLLoginServiceInConnector,8003/OpenSim.Server.Handlers.dll:PresenceServiceConnector,8003/OpenSim.Server.Handlers.dll:UserAccountServiceConnector,8003/OpenSim.Server.Handlers.dll:GridUserServiceConnector,8003/OpenSim.Server.Handlers.dll:FriendsServiceConnector&quot;
+</I>&gt;<i>
+</I>&gt;<i> ; * This is common for all services, it's the network setup for the
+</I>&gt;<i> entire
+</I>&gt;<i> ; * server instance, if none if specified above
+</I>&gt;<i> ; *
+</I>&gt;<i> [Network]
+</I>&gt;<i>      port = 8003
+</I>&gt;<i> ...
+</I>&gt;<i> ...
+</I>&gt;<i> ...
+</I>&gt;<i> [DatabaseService]
+</I>&gt;<i>      StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i>      ConnectionString = &quot;Data Source=localhost;Database=[DATABASE];User
+</I>&gt;<i> ID=[USER];Password=[SUPER_SECRET];&quot;
+</I>&gt;<i>
+</I>&gt;<i> [Everything else is all set as the file came in the download]
+</I>&gt;<i>
+</I>&gt;<i> ### OpenSim.ini ###
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>      ; ## PRIM STORAGE
+</I>&gt;<i>      ; ##
+</I>&gt;<i>
+</I>&gt;<i>      ;storage_plugin = &quot;OpenSim.Data.SQLite.dll&quot;
+</I>&gt;<i>      ;storage_plugin = &quot;OpenSim.Data.SQLiteLegacy.dll&quot;
+</I>&gt;<i>      ;storage_connection_string=&quot;URI=file:OpenSim.db,version=3&quot;;
+</I>&gt;<i>
+</I>&gt;<i>       storage_plugin=&quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;<i>       storage_connection_string=&quot;Data
+</I>&gt;<i> Source=localhost;Database=[DATABASE];User
+</I>&gt;<i> ID=[USER];Password=[SUPER_SECRET];&quot;
+</I>&gt;<i>
+</I>&gt;<i> ...
+</I>&gt;<i> ...
+</I>&gt;<i> ...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> [GridService]
+</I>&gt;<i>      ;; default standalone, overridable in StandaloneCommon.ini
+</I>&gt;<i>      StorageProvider = &quot;OpenSim.Data.Null.dll:NullRegionData&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+</I>&gt;<i>      ;; The following is the configuration section for the new style
+</I>&gt;<i> services
+</I>&gt;<i>
+</I>&gt;<i>    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+</I>&gt;<i> [Architecture]
+</I>&gt;<i>      ; Choose exactly one and only one of the architectures below.
+</I>&gt;<i>
+</I>&gt;<i>      ;Include-Standalone    = &quot;config-include/Standalone.ini&quot;
+</I>&gt;<i>      ;Include-HGStandalone = &quot;config-include/StandaloneHypergrid.ini&quot;
+</I>&gt;<i>      Include-Grid         = &quot;config-include/Grid.ini&quot;
+</I>&gt;<i>      ;Include-HGGrid       = &quot;config-include/GridHypergrid.ini&quot;
+</I>&gt;<i>      ;Include-SimianGrid   = &quot;config-include/SimianGrid.ini&quot;
+</I>&gt;<i>
+</I>&gt;<i> [Everything else is all set as the file came in the download]
+</I>&gt;<i>
+</I>&gt;<i> ### GridCommon.ini ###
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>          [AssetService]
+</I>&gt;<i>
+</I>&gt;<i>              DefaultAssetLoader =
+</I>&gt;<i>          &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+</I>&gt;<i>              AssetLoaderArgs = &quot;assets/AssetSets.xml&quot;
+</I>&gt;<i>
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide asset server
+</I>&gt;<i>              ;
+</I>&gt;<i>              AssetServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>
+</I>&gt;<i>          [InventoryService]
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide inventory server
+</I>&gt;<i>              ;
+</I>&gt;<i>              InventoryServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>
+</I>&gt;<i>          [GridService]
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide grid server
+</I>&gt;<i>              ;
+</I>&gt;<i>              GridServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>              ;AllowHypergridMapSearch = true
+</I>&gt;<i>
+</I>&gt;<i>          [AvatarService]
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide grid server
+</I>&gt;<i>              ;
+</I>&gt;<i>              AvatarServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>
+</I>&gt;<i>          [PresenceService]
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide presence server
+</I>&gt;<i>              ;
+</I>&gt;<i>              PresenceServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>
+</I>&gt;<i>          [UserAccountService]
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide user accounts server
+</I>&gt;<i>              ;
+</I>&gt;<i>              UserAccountServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>
+</I>&gt;<i>          [GridUserService]
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide user accounts server
+</I>&gt;<i>              ;
+</I>&gt;<i>              GridUserServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>
+</I>&gt;<i>          [AuthenticationService]
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide authentication server
+</I>&gt;<i>              ;
+</I>&gt;<i>              AuthenticationServerURI =
+</I>&gt;<i>          &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>
+</I>&gt;<i>          [FriendsService]
+</I>&gt;<i>              ;
+</I>&gt;<i>              ; change this to your grid-wide friends server
+</I>&gt;<i>              ;
+</I>&gt;<i>              FriendsServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+</I>&gt;<i>
+</I>&gt;<i>          [Modules]
+</I>&gt;<i>              ;; Choose 0 or 1 cache modules, and the corresponding config
+</I>&gt;<i>          file, if it exists.
+</I>&gt;<i>              ;; Copy the config .example file into your own .ini file and
+</I>&gt;<i>          change configs there
+</I>&gt;<i>
+</I>&gt;<i>              AssetCaching = &quot;FlotsamAssetCache&quot;
+</I>&gt;<i>              Include-FlotsamCache = &quot;config-include/FlotsamCache.ini&quot;
+</I>&gt;<i>
+</I>&gt;<i>              ;AssetCaching = &quot;CenomeMemoryAssetCache&quot;
+</I>&gt;<i>              ;Include-CenomeCache = &quot;config-include/CenomeCache.ini&quot;
+</I>&gt;<i>
+</I>&gt;<i>              ;AssetCaching = &quot;GlynnTuckerAssetCache&quot;
+</I>&gt;<i>
+</I>&gt;<i>              ;; Optionally, the port for the LLProxyLoginModule module
+</I>&gt;<i>          can be changed
+</I>&gt;<i>
+</I>&gt;<i>              ;Setup_LLProxyLoginModule = &quot;9090/&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005559.html">[Opensim-users] MapTile/WorldMap save time
+</A></li>
+	<LI>Next message: <A HREF="005560.html">[Opensim-users] Confusion regarding initial OpenSimulator	configuration.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5569">[ date ]</a>
+              <a href="thread.html#5569">[ thread ]</a>
+              <a href="subject.html#5569">[ subject ]</a>
+              <a href="author.html#5569">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] User Key of a NPC; something changed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20User%20Key%20of%20a%20NPC%3B%20something%20changed&In-Reply-To=%3C03A5E8499A064FDAA228278CB0A5E834%40Deimos%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008097.html">
+   <LINK REL="Next"  HREF="008103.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] User Key of a NPC; something changed</H1>
+    <B>Garmin Kawaguichi</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20User%20Key%20of%20a%20NPC%3B%20something%20changed&In-Reply-To=%3C03A5E8499A064FDAA228278CB0A5E834%40Deimos%3E"
+       TITLE="[Opensim-users] User Key of a NPC; something changed">garmin.kawaguichi at magalaxie.com
+       </A><BR>
+    <I>Thu Sep  8 18:02:45 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008097.html">[Opensim-users] New thread to launch osTeleportxxxx and ScriptSleep
+</A></li>
+        <LI>Next message: <A HREF="008103.html">[Opensim-users] User Key of a NPC; something changed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8098">[ date ]</a>
+              <a href="thread.html#8098">[ thread ]</a>
+              <a href="subject.html#8098">[ subject ]</a>
+              <a href="author.html#8098">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There is something changed about the user key transmitted to an attachment 
+when it concerns a NPC.
+The change is between ca9a054  2011/08/31 and 5521929  2011/09/07
+
+Before in a script in an attachment, llGetOwner() returned the key of the 
+NPC.
+Now llGetOwner() returns the key of the creator of the attachment and of the 
+script inside.
+_____________________________
+
+This is the test:
+- I'm connected as Garmin Kawaguichi and I have the key 
+e0f01712-6779-4474-9b55-d5073daf28c6.
+- This is the first instruction of the script inside the attachment:
+llSay(0, &quot;I'm &quot; + llKey2Name(llGetOwner()) + &quot; and I have the key &quot; + 
+(string)llGetOwner());
+The model with the attachment is saved with osOwnerSaveAppearance as 
+NPCTest.
+- The NPC is created with kNpc = osNpcCreate(sAvName, &quot;Clone&quot; + (string)i, 
+&lt;fX, fY, vPos.z + 2.5&gt;, sAvName);
+
+- With OpenSim 16638/ca9a054  2011/08/31
+I'm NpcTest Clone1 and I have the key 615542f0-69ec-4810-8da2-24128db35702
+
+- With OpenSim 16675/5521929  2011/09/07
+I'm Garmin Kawaguichi and I have the key 
+e0f01712-6779-4474-9b55-d5073daf28c6
+_____________________________
+
+Is it a bug and then ===&gt;&gt; Mantis or this is wanted by the development ?
+
+Is there another way to know the NPC key (from an attachment) because 
+without this key it is difficult to give autonomy to the NPC by script. For 
+example when I want to give animation to the NPC, it's my avatar that is 
+animated :)
+
+GCI 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008097.html">[Opensim-users] New thread to launch osTeleportxxxx and ScriptSleep
+</A></li>
+	<LI>Next message: <A HREF="008103.html">[Opensim-users] User Key of a NPC; something changed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8098">[ date ]</a>
+              <a href="thread.html#8098">[ thread ]</a>
+              <a href="subject.html#8098">[ subject ]</a>
+              <a href="author.html#8098">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

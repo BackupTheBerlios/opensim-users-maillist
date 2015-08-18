@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.7.4 teleport failures
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.7.4%20teleport%20failures&In-Reply-To=%3CCADCqwr2f8H7FUO4%2B%2BdphU7smbQNReD1Mfp3N9PXn4miMPKHH3A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012176.html">
+   <LINK REL="Next"  HREF="012167.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.7.4 teleport failures</H1>
+    <B>Rick Anderson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.7.4%20teleport%20failures&In-Reply-To=%3CCADCqwr2f8H7FUO4%2B%2BdphU7smbQNReD1Mfp3N9PXn4miMPKHH3A%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] OpenSim 0.7.4 teleport failures">rianders at docs.rutgers.edu
+       </A><BR>
+    <I>Wed May  1 16:44:18 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012176.html">[Opensim-users] osNPCSit behavior ... a comment/question
+</A></li>
+        <LI>Next message: <A HREF="012167.html">[Opensim-users] OpenSim 0.7.4 teleport failures
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12165">[ date ]</a>
+              <a href="thread.html#12165">[ thread ]</a>
+              <a href="subject.html#12165">[ subject ]</a>
+              <a href="author.html#12165">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm running ROBUST + Diva Wifi version of OpenSim 0.7.4 Post_Fixes
+a8d8ea7. I'm getting weird map teleport failures using the map in Firestorm
+4.3.1. Then my avatar get's logged out. Any ideas?
+ Thanks, --Rick
+
+====Portal  Region====
+4:27:32 - [WEB UTIL]: &lt;452&gt; osd request for
+<A HREF="http://107.22.63.15:9000/agent/ac397397-e69b-42b4-ac65-767951d8aacf/,">http://107.22.63.15:9000/agent/ac397397-e69b-42b4-ac65-767951d8aacf/,</A>
+method POST FAILED: The request timed out
+14:27:32 - [REMOTE SIMULATION CONNECTOR]: Remote simulator Portal did not
+accept compressed transfer, suggest updating it.
+14:27:32 - [ENTITY TRANSFER MODULE]: Region Portal did not accept Rick
+Anderson ac397397-e69b-42b4-ac65-767951d8aacf: Failed to verify user
+presence in the grid for Rick Anderson, access denied to region Portal.
+====
+
+The Regions start responding with
+
+====General1 Region====
+2013-05-01 14:36:22,268 WARN  - OpenSim.Region.Framework.Scenes.Scene
+[SCENE]: Existing root scene presence detected for Rick Anderson
+ac397397-e69b-42b4-ac65-767951d8aacf in Portal when connecting.  Removing
+existing presence.
+2013-05-01 14:36:22,274 DEBUG -
+OpenSim.Region.ClientStack.LindenUDP.LLClientView [CLIENT]: Close has been
+called for Rick Anderson attached to scene Portal
+2013-05-01 14:36:22,278 ERROR -
+OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP SERVER]:
+HandleRequest() threw Object reference not set to an instance of an object
+System.NullReferenceException: Object reference not set to an instance of
+an object
+  at
+OpenSim.Region.CoreModules.ServiceConnectorsOut.Presence.PresenceDetector.OnConnectionClose
+(IClientAPI client) [0x00000] in &lt;filename unknown&gt;:0
+  at (wrapper delegate-invoke) &lt;Module&gt;:invoke_void__this___IClientAPI
+(OpenSim.Framework.IClientAPI)
+  at (wrapper delegate-invoke) &lt;Module&gt;:invoke_void__this___IClientAPI
+(OpenSim.Framework.IClientAPI)
+  at (wrapper delegate-invoke) &lt;Module&gt;:invoke_void__this___IClientAPI
+(OpenSim.Framework.IClientAPI)
+  at OpenSim.Region.ClientStack.LindenUDP.LLClientView.CloseWithoutChecks
+() [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Region.ClientStack.LindenUDP.LLClientView.Close (Boolean
+force) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Region.Framework.Scenes.Scene.NewUserConnection
+(OpenSim.Framework.AgentCircuitData agent, UInt32 teleportFlags,
+System.String&amp; reason, Boolean requirePresenceLookup) [0x00000] in
+&lt;filename unknown&gt;:0
+  at OpenSim.Region.Framework.Scenes.Scene.NewUserConnection
+(OpenSim.Framework.AgentCircuitData agent, UInt32 teleportFlags,
+System.String&amp; reason) [0x00000] in &lt;filename unknown&gt;:0
+  at
+OpenSim.Region.CoreModules.ServiceConnectorsOut.Simulation.LocalSimulationConnectorModule.CreateAgent
+(OpenSim.Services.Interfaces.GridRegion destination,
+OpenSim.Framework.AgentCircuitData aCircuit, UInt32 teleportFlags,
+System.String&amp; reason) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Server.Handlers.Simulation.AgentPostHandler.CreateAgent
+(OpenSim.Services.Interfaces.GridRegion destination,
+OpenSim.Framework.AgentCircuitData aCircuit, UInt32 teleportFlags,
+System.String&amp; reason) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Server.Handlers.Simulation.AgentPostHandler.DoAgentPost
+(System.Collections.Hashtable request, System.Collections.Hashtable
+responsedata, UUID id) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Server.Handlers.Simulation.AgentPostHandler.Handle
+(System.String path, System.IO.Stream request, IOSHttpRequest httpRequest,
+IOSHttpResponse httpResponse) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Framework.Servers.HttpServer.BaseHttpServer.HandleRequest
+(OpenSim.Framework.Servers.HttpServer.OSHttpRequest request,
+OpenSim.Framework.Servers.HttpServer.OSHttpResponse response) [0x00000] in
+&lt;filename unknown&gt;:0
+2013-05-01 14:36:22,302 DEBUG -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+[ENTITY TRANSFER MODULE]: Informing Rick Anderson
+ac397397-e69b-42b4-ac65-767951d8aacf about neighbour Gridiron
+184.73.129.133:9103 at (10999,10997)
+2013-05-01 14:36:22,329 WARN  -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+[ENTITY TRANSFER MODULE]: Region Gridiron did not accept Rick Anderson
+ac397397-e69b-42b4-ac65-767951d8aacf: Failed to verify user presence in the
+grid for Rick Anderson, access denied to region Gridiron.
+====
+
+-- 
+Rick Anderson
+Director of Virtual Worlds
+Division of Continuing Studies (DoCS)
+Rutgers University
+(732) 586-3265
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130501/61111609/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130501/61111609/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012176.html">[Opensim-users] osNPCSit behavior ... a comment/question
+</A></li>
+	<LI>Next message: <A HREF="012167.html">[Opensim-users] OpenSim 0.7.4 teleport failures
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12165">[ date ]</a>
+              <a href="thread.html#12165">[ thread ]</a>
+              <a href="subject.html#12165">[ subject ]</a>
+              <a href="author.html#12165">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

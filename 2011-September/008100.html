@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] async_call_method Exception thrown when attempting to load an IAR; OS 0.7.2 Dev (r/16668)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20async_call_method%20Exception%20thrown%20when%0A%20attempting%20to%20load%20an%20IAR%3B%20OS%200.7.2%20Dev%20%28r/16668%29&In-Reply-To=%3C4E691103.1000008%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008095.html">
+   <LINK REL="Next"  HREF="008102.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] async_call_method Exception thrown when attempting to load an IAR; OS 0.7.2 Dev (r/16668)</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20async_call_method%20Exception%20thrown%20when%0A%20attempting%20to%20load%20an%20IAR%3B%20OS%200.7.2%20Dev%20%28r/16668%29&In-Reply-To=%3C4E691103.1000008%40googlemail.com%3E"
+       TITLE="[Opensim-users] async_call_method Exception thrown when attempting to load an IAR; OS 0.7.2 Dev (r/16668)">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Sep  8 21:01:23 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008095.html">[Opensim-users] async_call_method Exception thrown when attempting to load an IAR; OS 0.7.2 Dev (r/16668)
+</A></li>
+        <LI>Next message: <A HREF="008102.html">[Opensim-users] async_call_method Exception thrown when attempting to load an IAR; OS 0.7.2 Dev (r/16668)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8100">[ date ]</a>
+              <a href="thread.html#8100">[ thread ]</a>
+              <a href="subject.html#8100">[ subject ]</a>
+              <a href="author.html#8100">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It would be helpful if you could file a mantis for this with all the details.  It might be causing some kind of issue 
+and should be fixed anyway.  However, since it's probably been around for quite a while without causing extremely 
+serious problems, it probably won't receive attention for a while.
+
+On 08/09/11 02:02, Chris wrote:
+&gt;<i> Ahh I see... There was no other log info (at least no other unusual info) before the exception occurs unfortunately.
+</I>&gt;<i> Just the standard IAR loading procedural stuff then the exception(s) immediately after it is done.
+</I>&gt;<i>
+</I>&gt;<i> Is it anything I should be concerned with as far as possible data corruption or IAR assets/inventory objects not being
+</I>&gt;<i> loaded fully or anything?
+</I>&gt;<i>
+</I>&gt;<i> Thanks =)
+</I>&gt;<i>
+</I>&gt;<i> On 9/7/2011 4:52 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> An async_call_method thread is sometimes running through an enumeration while another thread changes the collection,
+</I>&gt;&gt;<i> which results in this error. It's some kind of race condition since this doesn't occur consistently.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This is a different problem from that seen in Mantis 5669.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It's very unfortunate that there's no other log information here (I'm assuming that you're not missing anything out),
+</I>&gt;&gt;<i> since there's no indication as to where in the code this is occurring. Finding it might mean a forensic analysis of
+</I>&gt;&gt;<i> the code called by IAR loading, and even then it could be triggered by other processes occurring in parallel.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The changes are this has been occurring some time and has only recently been revealed by logging exceptions that come
+</I>&gt;&gt;<i> to the top of async_call_method threads. We may have to comment this logging out temporarily for the release.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 07/09/11 12:12, Chris wrote:
+</I>&gt;&gt;&gt;<i> Hi all. On latest master (r/16668) I've been getting some weird exceptions after attempting to load
+</I>&gt;&gt;&gt;<i> an IAR. Some times I'll get multiple errors, sometimes only a few or one, or sometimes the exception
+</I>&gt;&gt;&gt;<i> is not thrown. Doesn't seem to matter which avatar I attempt to load to or how big the IAR is. What
+</I>&gt;&gt;&gt;<i> could be causing this?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Error:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 06:07:25 - [UTIL]: Continuing after async_call_method thread terminated with exc
+</I>&gt;&gt;&gt;<i> eption Collection was modified; enumeration operation may not execute. at Syst
+</I>&gt;&gt;&gt;<i> em.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+</I>&gt;&gt;&gt;<i> 06:07:25 - [UTIL]: Continuing after async_call_method thread terminated with exc
+</I>&gt;&gt;&gt;<i> eption Collection was modified; enumeration operation may not execute. at Syst
+</I>&gt;&gt;&gt;<i> em.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+</I>&gt;&gt;&gt;<i> 06:07:25 - [UTIL]: Continuing after async_call_method thread terminated with exc
+</I>&gt;&gt;&gt;<i> eption Collection was modified; enumeration operation may not execute. at Syst
+</I>&gt;&gt;&gt;<i> em.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+</I>&gt;&gt;&gt;<i> 06:07:25 - [UTIL]: Continuing after async_call_method thread terminated with exc
+</I>&gt;&gt;&gt;<i> eption Collection was modified; enumeration operation may not execute. at Syst
+</I>&gt;&gt;&gt;<i> em.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+</I>&gt;&gt;&gt;<i> 06:07:25 - [UTIL]: Continuing after async_call_method thread terminated with exc
+</I>&gt;&gt;&gt;<i> eption Collection was modified; enumeration operation may not execute. at Syst
+</I>&gt;&gt;&gt;<i> em.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+</I>&gt;&gt;&gt;<i> 06:07:25 - [UTIL]: Continuing after async_call_method thread terminated with exc
+</I>&gt;&gt;&gt;<i> eption Collection was modified; enumeration operation may not execute. at Syst
+</I>&gt;&gt;&gt;<i> em.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+</I>&gt;&gt;&gt;<i> 06:07:25 - [UTIL]: Continuing after async_call_method thread terminated with exc
+</I>&gt;&gt;&gt;<i> eption Collection was modified; enumeration operation may not execute. at Syst
+</I>&gt;&gt;&gt;<i> em.ThrowHelper.ThrowInvalidOperationException(ExceptionResource resource)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008095.html">[Opensim-users] async_call_method Exception thrown when attempting to load an IAR; OS 0.7.2 Dev (r/16668)
+</A></li>
+	<LI>Next message: <A HREF="008102.html">[Opensim-users] async_call_method Exception thrown when attempting to load an IAR; OS 0.7.2 Dev (r/16668)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8100">[ date ]</a>
+              <a href="thread.html#8100">[ thread ]</a>
+              <a href="subject.html#8100">[ subject ]</a>
+              <a href="author.html#8100">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

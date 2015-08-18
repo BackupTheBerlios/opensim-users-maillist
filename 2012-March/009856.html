@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Fucntion to read a landmark
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Fucntion%20to%20read%20a%20landmark&In-Reply-To=%3CD3AC056B-CEA3-40A2-90CE-741EA04BAB21%40spekuloos.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009854.html">
+   <LINK REL="Next"  HREF="009780.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Fucntion to read a landmark</H1>
+    <B>Gudule Lapointe</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Fucntion%20to%20read%20a%20landmark&In-Reply-To=%3CD3AC056B-CEA3-40A2-90CE-741EA04BAB21%40spekuloos.be%3E"
+       TITLE="[Opensim-users] Fucntion to read a landmark">gudule at spekuloos.be
+       </A><BR>
+    <I>Sat Mar 17 02:41:45 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009854.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+        <LI>Next message: <A HREF="009780.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9856">[ date ]</a>
+              <a href="thread.html#9856">[ thread ]</a>
+              <a href="subject.html#9856">[ subject ]</a>
+              <a href="author.html#9856">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thank you for the feedback.
+
+After research, and lot of useful information from Diva, it appears that:
+
+1&#176;	<A HREF="http://speculoos.net:8002/">http://speculoos.net:8002/</A> Agora
+	is the canonical form (official, and all other schemes are converted to this one, inside opensim, before being processed)
+	
+	So it should work in map search as is. It works for me. And it works also as is in osTeleport functions.
+	I noticed that removing the space produces errors. But this could be viewer-dependant.
+	
+	Actually, the space can not be removed when using this form (host + : + port + /):
+	as I understood, using a &quot;root-level&quot; url is not a specification. Though I don't know such cases, the gatekeeper uri could -- technically -- be something like <A HREF="http://domain:port/gatekeeper.php?scope=123&amp;pref=abc.">http://domain:port/gatekeeper.php?scope=123&amp;pref=abc.</A> Something is needed between the url and the parameter. And it happens to be a space.
+
+	And, as official standard, every viewer **should** handle this form, with space
+	(note that in canonical form, spaces in region name are replaced with an underscore, as you see in OpenSim.ini)
+
+2&#176;	<A HREF="secondlife://http%3A%2F%2Fspeculoos.net%3A8002%2F%20Agora/128/128/">secondlife://http%3A%2F%2Fspeculoos.net%3A8002%2F%20Agora/128/128/</A>
+	(yes, it's ugly!)
+	this is the &quot;official form&quot; to obtain a link in that and on the web is the url-encoded canonical form, with <A HREF="secondlife://">secondlife://</A> prefixed and /X/Y/ or /X/Y/Z/ suffixed.
+	
+3&#176;	<A HREF="secondlife://speculoos.net:8002:Agora/">secondlife://speculoos.net:8002:Agora/</A> or <A HREF="secondlife://speculoos.net:8002:Agora/X/Y/Z/">secondlife://speculoos.net:8002:Agora/X/Y/Z/</A>
+	is a simplified, and also working form, working in chat and on the web.
+	(by far my favorite)
+
+4&#176;	speculoos.net:8002:Agora
+	is &quot;nothing&quot; but the stripped previous form, but it works (for me) with map search and osTeleport functions.
+
+5&#176;	There are issues with Viewer 3, which does not handle any of these forms for HG url. Tweaks do exists, but it's out of scope to include it in function, can be made from the script.
+
+My own feeling would be to implement only the last one, as it's enough for map search, teleport functions and web links.
+However, 
+	- If a function exists to output an url, being able to handle the canonical form is not an option, even it it's not web-compliant.
+	- URL/URI standards include the handler (<A HREF="http://">http://</A> or <A HREF="secondlife://">secondlife://</A>). So if a function requests an URL, it should include the correct url handler.
+
+So, I eventually made 3 output formats for addresses:
+	LANDMARK_URL	(<A HREF="secondlife://speculoos.net:8002:Agora/">secondlife://speculoos.net:8002:Agora/</A>)
+	LANDMARK_ADDRESS	(speculoos.net:8002:Agora)
+	LANDMARK_MAPSEARCH	(<A HREF="http://speculoos.net:8002/">http://speculoos.net:8002/</A> Agora)
+	(which I should probably rename &quot;LANDMARK_CANONICAL&quot;)
+
+	
+--
+<A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+<A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+Speculoos, the belgian cookie-flavored metaverse
+
+Le 17 mars 2012 &#224; 00:03, Jeff Kelley a &#233;crit :
+
+&gt;<i> At 6:35 PM +0100 3/13/12, Gudule Lapointe wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Now, it's time to choose the format of the URL ;-)
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 	speculoos.net:8002:Agora
+</I>&gt;&gt;<i> 	<A HREF="http://speculoos.net:8002/">http://speculoos.net:8002/</A> Agora
+</I>&gt;&gt;<i> 	<A HREF="secondlife://speculoos.net:8002:Agora/">secondlife://speculoos.net:8002:Agora/</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Form 3 is nice for sharing since it is active (clickable) in almost any
+</I>&gt;<i> text engine: web, mail, instant mesages, even plain text files. We should
+</I>&gt;<i> avoid form 2 for this purpose since it will fire the web browser, which is
+</I>&gt;<i> not exactly useful. Form 1 needs an extra copy/paste.
+</I>&gt;<i> 
+</I>&gt;<i> I use form 1 for LSL (mapDestination, teleportAgent). I strip regionname
+</I>&gt;<i> (matching .*:.*) and prefix with <A HREF="http://">http://</A> to do a HTTP GET request before
+</I>&gt;<i> jumping. And I would LOVE to get automatically the grid coordinates from
+</I>&gt;<i> the grid server.
+</I>&gt;<i> 
+</I>&gt;<i> BTW, typing <A HREF="http://speculoos.net:8002/">http://speculoos.net:8002/</A> Agora (space included) in the map
+</I>&gt;<i> will not link to Agora but with your default region.
+</I>&gt;<i> <A HREF="http://speculoos.net:8002/Agora">http://speculoos.net:8002/Agora</A> will. I see distinct maptiles (but
+</I>&gt;<i> &quot;destination refused&quot;).
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120317/e3ec9f95/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120317/e3ec9f95/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009854.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+	<LI>Next message: <A HREF="009780.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9856">[ date ]</a>
+              <a href="thread.html#9856">[ thread ]</a>
+              <a href="subject.html#9856">[ subject ]</a>
+              <a href="author.html#9856">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] How to get scripts to run in Diva
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20get%20scripts%20to%20run%20in%20Diva&In-Reply-To=%3CBANLkTinJB92Unsf4%2BKr4YN06JrRUkhMBvg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007357.html">
+   <LINK REL="Next"  HREF="007361.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] How to get scripts to run in Diva</H1>
+    <B>Kay McLennan</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20get%20scripts%20to%20run%20in%20Diva&In-Reply-To=%3CBANLkTinJB92Unsf4%2BKr4YN06JrRUkhMBvg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] How to get scripts to run in Diva">mclennan.kay at gmail.com
+       </A><BR>
+    <I>Mon May 16 23:55:18 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007357.html">[Opensim-users] How to get scripts to run in Diva
+</A></li>
+        <LI>Next message: <A HREF="007361.html">[Opensim-users] How to get scripts to run in Diva
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7358">[ date ]</a>
+              <a href="thread.html#7358">[ thread ]</a>
+              <a href="subject.html#7358">[ subject ]</a>
+              <a href="author.html#7358">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>[Not exactly a response to your scripting question but...] I finally found a
+teleport script in the OS that works in the OS (see below).  More
+specifically, I found the full perm teleport script (by Rupudiator quann) in
+a full perm Pulpit Telelporter (by Garry Beaumont) in the Steam Shop @
+Freebie Slumcity (The Neverhood 108, 105, 22).  Also, FYI, The Neverhood and
+the surrounding sims are terrific builds as well as fun to tour (to hunt for
+freebies).
+
+Best,
+Kay
+
+//
+//&quot;Teleport Script NEW&quot; by Rupudiator quann
+key lastAVkey = NULL_KEY;
+string fltText = &quot;Next Floor&quot;;
+vector dest = &lt;109.000,115.000,42.625&gt;; // X Y Z coordinates
+init()
+{
+        llSetSitText(&quot;Teleport&quot;);
+        llSetText(fltText, &lt;1,1,1&gt;, 1);
+        llSitTarget(dest-llGetPos(), &lt;0,0,0,1&gt;);
+}
+default
+{
+    state_entry()
+    {
+                init();
+    }
+    touch_start(integer i)
+    {
+        init();
+    }
+    changed(integer change)
+    {
+        key currentAVkey = llAvatarOnSitTarget();
+        if (currentAVkey != NULL_KEY &amp;&amp; lastAVkey == NULL_KEY)
+        {
+            lastAVkey = currentAVkey;
+            if (!(llGetPermissions() &amp; PERMISSION_TRIGGER_ANIMATION))
+
+llRequestPermissions(currentAVkey,PERMISSION_TRIGGER_ANIMATION);
+            llSleep(0.5);
+            llUnSit(currentAVkey);
+            llStopAnimation(&quot;sit&quot;);
+            llResetScript();
+        }
+    }
+}
+
+
+
+On Mon, May 16, 2011 at 4:32 PM, Sean McNamara &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">smcnam at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> On Mon, May 16, 2011 at 5:13 PM, missyfitz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">7minarets at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Is there anything specific that needs to be done to get scripts to run in
+</I>&gt;<i> &gt; OSdiva? As a test I'm trying a very basic texture animation script which
+</I>&gt;<i> I
+</I>&gt;<i> &gt; basically copy/pasted from my inventory in SL, and it doesn't do
+</I>&gt;<i> anything..
+</I>&gt;<i> &gt; It says it saves/compiles the script, but the script doesn't actually
+</I>&gt;<i> &gt; animate the texture. Other basic test scripts, like a prim rotation
+</I>&gt;<i> script,
+</I>&gt;<i> &gt; also don't work. Here is the script I'm working with:
+</I>&gt;<i>
+</I>&gt;<i> I don't know anything about the specifics of Diva's distro, but have
+</I>&gt;<i> you tried the most trivial script possible? Rotating a prim and
+</I>&gt;<i> texture animations are hardly what I'd call as &quot;basic&quot; :)
+</I>&gt;<i>
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     state_entry()
+</I>&gt;<i>     {
+</I>&gt;<i>           llSay(0, &quot;Hello World!&quot;);
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> If the above *does* work, then it seems that you've found some
+</I>&gt;<i> unsupported or misbehaving script functions in the version of XEngine
+</I>&gt;<i> shipped in diva.
+</I>&gt;<i>
+</I>&gt;<i> If the above *doesn't* work, you probably have a misconfiguration,
+</I>&gt;<i> maybe Diva can help you. But I'm sure it would be helpful for you to
+</I>&gt;<i> post your OpenSim.exe console log regardless.
+</I>&gt;<i>
+</I>&gt;<i> HTH,
+</I>&gt;<i>
+</I>&gt;<i> Sean
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; default
+</I>&gt;<i> &gt; {
+</I>&gt;<i> &gt;    state_entry()
+</I>&gt;<i> &gt;    {
+</I>&gt;<i> &gt;        llSetTextureAnim(ANIM_ON | SMOOTH | LOOP, ALL_SIDES,0,0,0.0,
+</I>&gt;<i> &gt; 1,-0.3);
+</I>&gt;<i> &gt;    }
+</I>&gt;<i> &gt; }
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Should be just a simple, straightforward texture anim... XEngine is
+</I>&gt;<i> enabled
+</I>&gt;<i> &gt; in opensim.ini:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; DefaultScriptEngine = &quot;XEngine&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Any reason why it wouldn't work?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; View this message in context:
+</I>&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/How-to-get-scripts-to-run-in-Diva-tp6370458p6370458.html">http://opensim-users.2152040.n2.nabble.com/How-to-get-scripts-to-run-in-Diva-tp6370458p6370458.html</A>
+</I>&gt;<i> &gt; Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110516/a7964ae7/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110516/a7964ae7/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007357.html">[Opensim-users] How to get scripts to run in Diva
+</A></li>
+	<LI>Next message: <A HREF="007361.html">[Opensim-users] How to get scripts to run in Diva
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7358">[ date ]</a>
+              <a href="thread.html#7358">[ thread ]</a>
+              <a href="subject.html#7358">[ subject ]</a>
+              <a href="author.html#7358">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

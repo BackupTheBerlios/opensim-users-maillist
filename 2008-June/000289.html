@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Loading regions configuration	from	a	webserver...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20regions%20configuration%0A%09from%09a%09webserver...&In-Reply-To=%3C4844360A.5030404%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000287.html">
+   <LINK REL="Next"  HREF="000288.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Loading regions configuration	from	a	webserver...</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20regions%20configuration%0A%09from%09a%09webserver...&In-Reply-To=%3C4844360A.5030404%40googlemail.com%3E"
+       TITLE="[Opensim-users] Loading regions configuration	from	a	webserver...">jjustincc at googlemail.com
+       </A><BR>
+    <I>Mon Jun  2 20:03:54 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000287.html">[Opensim-users] Loading regions configuration from	a	webserver...
+</A></li>
+        <LI>Next message: <A HREF="000288.html">[Opensim-users] Loading regions configuration	from	a	webserver...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#289">[ date ]</a>
+              <a href="thread.html#289">[ thread ]</a>
+              <a href="subject.html#289">[ subject ]</a>
+              <a href="author.html#289">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for posting the results of your experimentation Olish.
+
+Don't worry about the mantis - I'll pop the information in within 
+OpenSim.ini.example.  What would be really helpful is if you could 
+document this on the opensimulator wiki somewhere.
+
+Just as a small clarification, the default region_info_source will be 
+'filesystem' to preserve the current behaviour.  This is also the value 
+used if no region_info_source is present at all.
+
+
+Olish Newman wrote:
+&gt;<i> Hello !
+</I>&gt;<i> 
+</I>&gt;<i> I experimented the region web loader. To resume, here is how it works :
+</I>&gt;<i> 
+</I>&gt;<i> We have to set this 2 switches in OpenSim.ini as Justin said :
+</I>&gt;<i> 
+</I>&gt;<i> *region_info_source = &quot;web&quot;
+</I>&gt;<i> regionload_webserver_url = &quot;<A HREF="http://mywebsite/regions.php">http://mywebsite/regions.php</A>&quot;*/
+</I>&gt;<i> 
+</I>&gt;<i> /And the file format must be as described below :
+</I>&gt;<i> (an XML &lt;Region&gt; node containing as much &lt;Root&gt; nodes as you have regions
+</I>&gt;<i> in the simulator : &lt;Root&gt; nodes are similar to default.xml region files)
+</I>&gt;<i> 
+</I>&gt;<i> *&lt;Regions&gt;
+</I>&gt;<i> *
+</I>&gt;<i> 
+</I>&gt;<i>     *&lt;Root&gt;*
+</I>&gt;<i>     *&lt;Config sim_UUID=&quot;b19966b7-6264-4e1f-ade8-b4ebca894e74&quot;
+</I>&gt;<i>     sim_name=&quot;My Island 1&quot; *
+</I>&gt;<i>     *sim_location_x=&quot;1001&quot; sim_location_y=&quot;1000&quot;
+</I>&gt;<i>     internal_ip_address=&quot;0.0.0.0&quot; *
+</I>&gt;<i>     *internal_ip_port=&quot;9000&quot; allow_alternate_ports=&quot;false&quot; *
+</I>&gt;<i>     *external_host_name=&quot;127.0.0.1&quot;
+</I>&gt;<i>     master_avatar_uuid=&quot;00000000-0000-0000-0000-*
+</I>&gt;<i>     *000000000000&quot;
+</I>&gt;<i>     estate_covanant_uuid=&quot;4a439117-d3f1-417f-9d8c-7c466c298f7e&quot; *
+</I>&gt;<i>     *master_avatar_first=&quot;Test&quot; master_avatar_last=&quot;User&quot;
+</I>&gt;<i>     master_avatar_pass=&quot;Password&quot; /&gt;*
+</I>&gt;<i>     *&lt;/Root&gt;
+</I>&gt;<i> 
+</I>&gt;<i>     **&lt;Root&gt;*
+</I>&gt;<i>     *&lt;Config sim_UUID=&quot;b19966b7-6264-4e1f-ade8-b4eb7a894ee4&quot;
+</I>&gt;<i>     sim_name=&quot;My Island 2&quot; *
+</I>&gt;<i>     *sim_location_x=&quot;1000&quot; sim_location_y=&quot;1000&quot;
+</I>&gt;<i>     internal_ip_address=&quot;0.0.0.0&quot; *
+</I>&gt;<i>     *internal_ip_port=&quot;9001&quot; allow_alternate_ports=&quot;false&quot; *
+</I>&gt;<i>     *external_host_name=&quot;127.0.0.1&quot;
+</I>&gt;<i>     master_avatar_uuid=&quot;00000000-0000-0000-0000-*
+</I>&gt;<i>     *000000000000&quot;
+</I>&gt;<i>     estate_covanant_uuid=&quot;4a439117-d3f1-417f-9d8c-7c466c298f7e&quot; *
+</I>&gt;<i>     *master_avatar_first=&quot;Test&quot; master_avatar_last=&quot;User&quot;
+</I>&gt;<i>     master_avatar_pass=&quot;Password&quot; /&gt;*
+</I>&gt;<i>     *&lt;/Root&gt;*
+</I>&gt;<i> 
+</I>&gt;<i> *&lt;/Regions&gt;
+</I>&gt;<i> *
+</I>&gt;<i> Imagine you want to manage your regions through a web interface, this allows you to tell
+</I>&gt;<i> your simulators which region to run.
+</I>&gt;<i> 
+</I>&gt;<i> I can file a mantis to ask to add these switches if it could be useful to add them.
+</I>&gt;<i> Many thanks for your help !
+</I>&gt;<i> 
+</I>&gt;<i> Kind regards,
+</I>&gt;<i> Olish Newman.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Olish Newman a &#233;crit :
+</I>&gt;&gt;<i> Justin Clark-Casey a &#233;crit :
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i> Olish Newman wrote:
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i> Hello !
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I'm not sure, but is it possible to load a region config file 
+</I>&gt;&gt;&gt;&gt;<i> (/Regions/default.xml) from a webserver. Does one of the command line 
+</I>&gt;&gt;&gt;&gt;<i> option for the opensim.exe is used for this ?
+</I>&gt;&gt;&gt;&gt;<i> -config or -configfile or another ?
+</I>&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;<i> Curiously, there is a mechanism for this but I've never seen it used. 
+</I>&gt;&gt;&gt;<i> The code is contained in the OpenSim.Framework.RegionLoader.Web 
+</I>&gt;&gt;&gt;<i> namespace.  To make OpenSim use this rather than the usual file loader 
+</I>&gt;&gt;&gt;<i> it looks like one would need to set something like
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> region_info_source = &quot;web&quot;
+</I>&gt;&gt;&gt;<i> region_webserver_url = &quot;<A HREF="http://site/your-region-file.xml">http://site/your-region-file.xml</A>&quot;;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> in OpenSim.ini (neither of these switches appear in OpenSim.ini.example)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The xml file itself would contain all the usual region xml, but that 
+</I>&gt;&gt;&gt;<i> would be wrapped up in a &lt;Regions&gt; tag (rather than the &lt;Root&gt; tag, I 
+</I>&gt;&gt;&gt;<i> suspect).  However, I'm purely guessing from just reading the code.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'm not sure how much this is supported or whether it even works 
+</I>&gt;&gt;&gt;<i> currently.  I'm interested Olish, could you explain further how this 
+</I>&gt;&gt;&gt;<i> would make things easier to manage?
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;<i> Thanks for the informations Justin :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In fact, using a webserver to tell simulators which regions to run can
+</I>&gt;&gt;<i> be very useful because a webserver with PHP can dynamically tell each
+</I>&gt;&gt;<i> simulator which region to run or not, and on which server.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As an example, I can have many servers hosting simulators. If I want to
+</I>&gt;&gt;<i> host a simulator on another server, or if I want a region to be hosted
+</I>&gt;&gt;<i> on another simulator, I can just tell on which server I want them to be
+</I>&gt;&gt;<i> hosted, and an automation script made with PHP + Cron (PHP because it is
+</I>&gt;&gt;<i> multiplatform) can make an opensim instance to be installed, then
+</I>&gt;&gt;<i> configured, then started with its region file pointing to a 
+</I>&gt;&gt;<i> PHP file that would return the region config file according to which regions
+</I>&gt;&gt;<i> I want to run on this simulator...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I hope I am clear enough on my explanations :s
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There are surely many applications possible using such methods...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This week, I will start to develop some PHP application melting Cron,
+</I>&gt;&gt;<i> RemoteAdmin, and region files hosted on a webserver to make an exapmple
+</I>&gt;&gt;<i> and show the result. ;)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Kind regards,
+</I>&gt;&gt;<i> Olish.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i> Also, is anybody currently using this facility?  Would this be a 
+</I>&gt;&gt;&gt;<i> generally useful facility for other people too?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i> As an example, a region config file is hosted on a local webserver at 
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://localhost/myfile.xml">http://localhost/myfile.xml</A> and this file could be :
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> &lt;Root&gt;
+</I>&gt;&gt;&gt;&gt;<i>   &lt;Config sim_UUID=&quot;b19966b7-6264-4e1f-ade8-b4ebca894ee4&quot; sim_name=&quot;My 
+</I>&gt;&gt;&gt;&gt;<i> Island&quot; sim_location_x=&quot;1000&quot; sim_location_y=&quot;1000&quot; 
+</I>&gt;&gt;&gt;&gt;<i> internal_ip_address=&quot;0.0.0.0&quot; internal_ip_port=&quot;9000&quot; 
+</I>&gt;&gt;&gt;&gt;<i> allow_alternate_ports=&quot;false&quot; external_host_name=&quot;127.0.0.1&quot; 
+</I>&gt;&gt;&gt;&gt;<i> master_avatar_uuid=&quot;00000000-0000-0000-0000-000000000000&quot; 
+</I>&gt;&gt;&gt;&gt;<i> estate_covanant_uuid=&quot;4a439117-d3f1-417f-9d8c-7c466c298f7e&quot; 
+</I>&gt;&gt;&gt;&gt;<i> master_avatar_first=&quot;Test&quot; master_avatar_last=&quot;User&quot; 
+</I>&gt;&gt;&gt;&gt;<i> master_avatar_pass=&quot;Password&quot; /&gt;
+</I>&gt;&gt;&gt;&gt;<i> &lt;/Root&gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> This way it would be easier to manage.
+</I>&gt;&gt;&gt;&gt;<i> Any help is much appreciated. Thanks in advance. :)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Kind regards,
+</I>&gt;&gt;&gt;&gt;<i> Olish.
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000287.html">[Opensim-users] Loading regions configuration from	a	webserver...
+</A></li>
+	<LI>Next message: <A HREF="000288.html">[Opensim-users] Loading regions configuration	from	a	webserver...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#289">[ date ]</a>
+              <a href="thread.html#289">[ thread ]</a>
+              <a href="subject.html#289">[ subject ]</a>
+              <a href="author.html#289">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

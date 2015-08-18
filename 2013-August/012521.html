@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] exporting prims as mesh using Singularity 1.8.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20exporting%20prims%20as%20mesh%20using%20Singularity%201.8.1&In-Reply-To=%3C520CE843.3030605%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012520.html">
+   <LINK REL="Next"  HREF="012522.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] exporting prims as mesh using Singularity 1.8.1</H1>
+    <B>Chris M</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20exporting%20prims%20as%20mesh%20using%20Singularity%201.8.1&In-Reply-To=%3C520CE843.3030605%40gmail.com%3E"
+       TITLE="[Opensim-users] exporting prims as mesh using Singularity 1.8.1">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Thu Aug 15 16:40:03 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012520.html">[Opensim-users] exporting prims as mesh using Singularity 1.8.1
+</A></li>
+        <LI>Next message: <A HREF="012522.html">[Opensim-users] exporting prims as mesh using Singularity 1.8.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12521">[ date ]</a>
+              <a href="thread.html#12521">[ thread ]</a>
+              <a href="subject.html#12521">[ subject ]</a>
+              <a href="author.html#12521">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The mesh exporter can theoretically increase land impact because it 
+translates each face into a separate object. If you upload it as-is with 
+out any prep work done to the resulting .obj file you can end up with a 
+high land impact. For example, a cube has 6 faces on it. Mesh exporter 
+would translate each face to a separate object. If uploaded with out any 
+modification to it, you would now have an object with a land impact of 6 
+because those objects weren't joined together in say... Blender (or your 
+3D editor of choice); If you unlinked the object you would find that you 
+can edit and move each side of the cube as if it were it's own prim. You 
+would have to import the object to your editor, apply a material to each 
+side of the cube (to preserve the fact that each side is a face. If you 
+simply just joined all the sides with no materials then you would end up 
+with a cube that has only 1 face) and then join all those sides together 
+into one object. Then when you export that to .dae and upload it, you 
+now have a cube that only takes 1 land impact, still has 6 faces, and is 
+all one object (that is, you can't edit each side and move them around 
+individually).
+
+It's ultimately up to the person exporting mesh to do that work or not, 
+but with a little patience, the resulting export can be worked to have 
+the same land impact as the original.
+
+There's plenty of reasons why someone would want to do this. For 
+example, I had an old attachment I created a while back that was roughly 
+30 prims. By converting it to mesh, I was able to edit and join lots of 
+pieces together (using up to 8 materials per object) into a single 
+object. The result? 3 prim count and an attachment that is worlds easier 
+to size to your avatar. It was also able to be rigged with some pretty 
+decent results.
+
+On 8/15/2013 6:59 AM, R.Gunther wrote:
+&gt;<i> I heared that the mesh exporter would increase Land Impatc.
+</I>&gt;<i> Still not sure why you want to export mesh, you can upload fresh one 
+</I>&gt;<i> from your hdd to. Or use oar / iar.
+</I>&gt;<i>
+</I>&gt;<i> On 2013-08-15 13:45, John Lester wrote:
+</I>&gt;&gt;<i> Hi folks,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I just discovered Singularity's new ability to export any prim-based 
+</I>&gt;&gt;<i> object as a mesh model (save as .obj or .dae).  Wow...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Has anyone else been playing around with this feature?  Is there 
+</I>&gt;&gt;<i> documentation somewhere I can check out?  Are they planning to add 
+</I>&gt;&gt;<i> the ability to include texture mapping in the future?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm really blown away by this feature.  Great work, Singularity 
+</I>&gt;&gt;<i> developers!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Pathfinder
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://about.me/pathfinder">http://about.me/pathfinder</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;If you want to build a ship, don't drum up the men to gather wood, 
+</I>&gt;&gt;<i> divide the work and give orders. Instead, teach them to yearn for the 
+</I>&gt;&gt;<i> vast and endless sea.&quot;  -Antoine de Saint-Exup&#233;ry
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130815/73ccbf18/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130815/73ccbf18/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012520.html">[Opensim-users] exporting prims as mesh using Singularity 1.8.1
+</A></li>
+	<LI>Next message: <A HREF="012522.html">[Opensim-users] exporting prims as mesh using Singularity 1.8.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12521">[ date ]</a>
+              <a href="thread.html#12521">[ thread ]</a>
+              <a href="subject.html#12521">[ subject ]</a>
+              <a href="author.html#12521">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

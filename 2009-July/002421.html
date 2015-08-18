@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Crash on static hypergrid link-region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20static%20hypergrid%20link-region&In-Reply-To=%3C895ed8560907270309r51274b0fsb2500ff2ecdf2d4a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002420.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Crash on static hypergrid link-region</H1>
+    <B>Zonja Capalini</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20static%20hypergrid%20link-region&In-Reply-To=%3C895ed8560907270309r51274b0fsb2500ff2ecdf2d4a%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Crash on static hypergrid link-region">zonja.capalini at gmail.com
+       </A><BR>
+    <I>Mon Jul 27 12:09:34 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002420.html">[Opensim-users] Multiregion Terraforming
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2421">[ date ]</a>
+              <a href="thread.html#2421">[ thread ]</a>
+              <a href="subject.html#2421">[ subject ]</a>
+              <a href="author.html#2421">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I'm running two opensim instances at condensationland.com.
+
+* condensationland.com:9000 is my Condensation Land grid, running standalone
+v. 0.6.4.9561, MySQL backend, 10+ regions at ports &lt; 10000.
+
+* condensationland.com:20000 is my OSGrid gateway region, running in grid
+mode v. osgrid.opensim.v0.6.6.10051, default sqllite backend, one region at
+port 20300, regions.ini follows:
+
+------- Start regions.ini ----
+[Condensation Gateway]
+RegionUUID = 14992827-25a1-414e-b6bd-481365915a68
+Location = 7789,7789
+InternalAddress = 127.0.0.1
+InternalPort = 20300
+AllowAlternatePorts = False
+ExternalHostName = 87.216.55.54
+MasterAvatarFirstName = Zonja
+MasterAvatarLastName = Capalini
+MasterAvatarSandboxPassword = ******
+----- End regions.ini -------
+
+I'm linking condensationland.com:9000 from the OSGrid instance at :20000 to
+be able to hypergrid-tp to my grid. That works.
+
+Now when I try to
+
+  link-region 3789 3792 condensationland.com 20000 Condensation OSgrid
+
+from my grid in the :9000 instance, I get an exception and the :20000
+instance crashes.
+
+Log follows:
+
+-------Start opensim.log ------------
+2009-07-27 12:02:28,609 DEBUG -
+OpenSim.Region.Communications.Hypergrid.HGGridServices [HGrid]: Hyperlink
+request
+2009-07-27 12:02:28,625 DEBUG -
+OpenSim.Region.CoreModules.World.WorldMap.WorldMapModule [WORLD MAP]:
+Sending map image jpeg
+*2009-07-27 12:02:28,640 ERROR - OpenMetaverse Decoded image with unhandled
+number of components: 0*
+2009-07-27 12:02:28,656 ERROR - OpenSim.Application [APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.NullReferenceException: Referencia a objeto no establecida
+como instancia de un objeto.
+   en
+OpenSim.Region.CoreModules.World.WorldMap.WorldMapModule.OnHTTPGetMapImage(Hashtable
+keysvals) en D:\OSGRID\OSGRID
+RELEASES\osgrid.release.10051\OpenSim\Region\CoreModules\World\WorldMap\WorldMapModule.cs:l&#237;nea
+810
+   en
+OpenSim.Framework.Servers.HttpServer.BaseHttpServer.HandleContentVerbs(OSHttpRequest
+request, OSHttpResponse response) en D:\OSGRID\OSGRID
+RELEASES\osgrid.release.10051\OpenSim\Framework\Servers\HttpServer\BaseHttpServer.cs:l&#237;nea
+1134
+   en
+OpenSim.Framework.Servers.HttpServer.BaseHttpServer.HandleHTTPRequest(OSHttpRequest
+request, OSHttpResponse response) en D:\OSGRID\OSGRID
+RELEASES\osgrid.release.10051\OpenSim\Framework\Servers\HttpServer\BaseHttpServer.cs:l&#237;nea
+1059
+   en
+OpenSim.Framework.Servers.HttpServer.BaseHttpServer.HandleRequest(OSHttpRequest
+request, OSHttpResponse response) en D:\OSGRID\OSGRID
+RELEASES\osgrid.release.10051\OpenSim\Framework\Servers\HttpServer\BaseHttpServer.cs:l&#237;nea
+429
+   en
+OpenSim.Framework.Servers.HttpServer.BaseHttpServer.OnHandleRequestIOThread(IHttpClientContext
+context, IHttpRequest request) en D:\OSGRID\OSGRID
+RELEASES\osgrid.release.10051\OpenSim\Framework\Servers\HttpServer\BaseHttpServer.cs:l&#237;nea
+237
+   en HttpServer.HttpClientContextImp.OnRequestCompleted(IHttpRequest
+request)
+   en HttpServer.HttpRequestParser.ParseMessage(Byte[] buffer, Int32 offset,
+Int32 size)
+   en HttpServer.HttpClientContextImp.OnReceive(IAsyncResult ar)
+   en System.Net.LazyAsyncResult.Complete(IntPtr userToken)
+   en System.Net.ContextAwareResult.CompleteCallback(Object state)
+   en System.Threading.ExecutionContext.Run(ExecutionContext
+executionContext, ContextCallback callback, Object state)
+   en System.Net.ContextAwareResult.Complete(IntPtr userToken)
+   en System.Net.LazyAsyncResult.ProtectedInvokeCallback(Object result,
+IntPtr userToken)
+   en
+System.Net.Sockets.BaseOverlappedAsyncResult.CompletionPortCallback(UInt32
+errorCode, UInt32 numBytes, NativeOverlapped* nativeOverlapped)
+   en
+System.Threading._IOCompletionCallback.PerformIOCompletionCallback(UInt32
+errorCode, UInt32 numBytes, NativeOverlapped* pOVERLAP)
+
+Application is terminating: True
+--------- End opensim.log --------------
+
+Then if I restart the :20000 instance, it relinks to :9000, and the :9000
+instance still remembers the link to :20000, so that all works fine, except
+that the :9000 instance hasn't got a proper thumb for the linked :20000
+region and displays a blank tile in the map.
+
+Any help would be greatly appreciated.
+
+TIA,
+
+  /Zonja
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090727/bc6fadb5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090727/bc6fadb5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002420.html">[Opensim-users] Multiregion Terraforming
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2421">[ date ]</a>
+              <a href="thread.html#2421">[ thread ]</a>
+              <a href="subject.html#2421">[ subject ]</a>
+              <a href="author.html#2421">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

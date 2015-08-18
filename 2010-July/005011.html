@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Upgrade problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Upgrade%20problem&In-Reply-To=%3CAANLkTi%3D3xGC_4nWoY78Vu8Z65j7h%2BiDccPB46-GYR%2Bno%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005010.html">
+   <LINK REL="Next"  HREF="005027.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Upgrade problem</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Upgrade%20problem&In-Reply-To=%3CAANLkTi%3D3xGC_4nWoY78Vu8Z65j7h%2BiDccPB46-GYR%2Bno%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Upgrade problem">cliveg at gmail.com
+       </A><BR>
+    <I>Mon Jul 26 21:59:11 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005010.html">[Opensim-users] Upgrade problem
+</A></li>
+        <LI>Next message: <A HREF="005027.html">[Opensim-users] Upgrade problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5011">[ date ]</a>
+              <a href="thread.html#5011">[ thread ]</a>
+              <a href="subject.html#5011">[ subject ]</a>
+              <a href="author.html#5011">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Problem solved :)
+
+I had to add some extra lines to config-include/StandaloneCommon.ini
+copied from version 0.6.9
+
+Hope this helps anyone else stuck at this point ;)
+
+Clive
+
+
+    ;; Next, we can specify properties of regions, including default
+and fallback regions
+    ;; The syntax is: Region_&lt;RegioName&gt; = &quot;&lt;flags&gt;&quot;
+    ;; where &lt;flags&gt; can be DefaultRegion, FallbackRegion,
+NoDirectLogin, Persistent, LockedOut
+    ;; For example:
+    Region_Welcome_Area = &quot;DefaultRegion, FallbackRegion&quot;
+
+[LibraryModule]
+    ; Set this if you want to change the name of the OpenSim Library
+    ;LibraryName = &quot;My World's Library&quot;
+
+[LoginService]
+    WelcomeMessage = &quot;Welcome, Avatar!&quot;
+
+    HomeURI = &quot;<A HREF="http://195.194.82.20:9000">http://195.194.82.20:9000</A>&quot;
+    GatekeeperURI = &quot;<A HREF="http://195.194.82.20:9000">http://195.194.82.20:9000</A>&quot;
+    InventoryServerURI = &quot;<A HREF="http://195.194.82.20:9000">http://195.194.82.20:9000</A>&quot;
+    AssetServerURI = &quot;<A HREF="http://195.194.82.20:9000">http://195.194.82.20:9000</A>&quot;
+
+[GatekeeperService]
+    ExternalName = &quot;<A HREF="http://195.194.82.20:9000">http://195.194.82.20:9000</A>&quot;
+
+        ; Does this grid allow incoming links to any region in it?
+        ; If false, HG TPs happen only to the  Default regions
+specified in [GridService] section
+        AllowTeleportsToAnyRegion = true
+
+[LibraryModule]
+    ; Set this if you want to change the name of the OpenSim Library
+    ;LibraryName = &quot;My World's Library&quot;
+
+
+
+
+On Mon, Jul 26, 2010 at 8:37 PM, Clive Gould &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cliveg at gmail.com</A>&gt; wrote:
+&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> I'm trying to upgrade from OpenSim 0.6.9 to 0.7 standalone with 4
+</I>&gt;<i> regions using mono under Linux
+</I>&gt;<i>
+</I>&gt;<i> Opensim 0.7 starts fine, but when I try to login as Estate Manager I
+</I>&gt;<i> get the following console error message:
+</I>&gt;<i>
+</I>&gt;<i> 20:27:21 - [REGION]: Enabling logins for Rookery_SE
+</I>&gt;<i> 20:27:21 - [GRID SERVICE]: region Rookery_SE has 3 neighours
+</I>&gt;<i> 20:27:21 - [INTERGRID]: Informing 3 neighbours that this region is up
+</I>&gt;<i> 20:27:21 - [NEIGHBOUR CONNECTOR]: HelloNeighbour from Rookery_SE, to
+</I>&gt;<i> 1100611139660032.
+</I>&gt;<i> 20:27:21 - [NEIGHBOUR CONNECTOR]: HelloNeighbour from Rookery_SE, to
+</I>&gt;<i> 1099511628032256.
+</I>&gt;<i> 20:27:21 - [SCENE]: (on region Rookery_NE): Region Rookery_SE up in
+</I>&gt;<i> coords 1001-1000
+</I>&gt;<i> 20:27:21 - [SCENE]: (on region Rookery_NW): Region Rookery_SE up in
+</I>&gt;<i> coords 1001-1000
+</I>&gt;<i> 20:27:21 - [REGION CACHE]: (on region Rookery_NE) Region Rookery_SE is
+</I>&gt;<i> up @ 256256-256000
+</I>&gt;<i> 20:27:21 - [REGION CACHE]: (on region Rookery_NW) Region Rookery_SE is
+</I>&gt;<i> up @ 256256-256000
+</I>&gt;<i> 20:27:21 - [INTERGRID]: Successfully informed neighbour 1001-1001 that I'm here
+</I>&gt;<i> 20:27:21 - [INTERGRID]: Successfully informed neighbour 1000-1001 that I'm here
+</I>&gt;<i> 20:27:21 - [NEIGHBOUR CONNECTOR]: HelloNeighbour from Rookery_SE, to
+</I>&gt;<i> 1099511628032000.
+</I>&gt;<i> 20:27:21 - [REGION CACHE]: (on region Rookery_SE) Region Rookery_NW is
+</I>&gt;<i> up @ 256000-256256
+</I>&gt;<i> 20:27:21 - [SCENE]: (on region Rookery_SW): Region Rookery_SE up in
+</I>&gt;<i> coords 1001-1000
+</I>&gt;<i> 20:27:21 - [REGION CACHE]: (on region Rookery_SW) Region Rookery_SE is
+</I>&gt;<i> up @ 256256-256000
+</I>&gt;<i> 20:27:21 - [INTERGRID]: Successfully informed neighbour 1000-1000 that I'm here
+</I>&gt;<i> 20:27:21 - [REGION CACHE]: (on region Rookery_SE) Region Rookery_SW is
+</I>&gt;<i> up @ 256000-256000
+</I>&gt;<i> 20:27:21 - [REGION CACHE]: (on region Rookery_SE) Region Rookery_NE is
+</I>&gt;<i> up @ 256256-256256
+</I>&gt;<i> 20:27:43 - [LLOGIN SERVICE]: Login request for Estate Manager from
+</I>&gt;<i> 195.69.92.72 with user agent Imprudence 1.2.2 &#160;/ Second Life 1.22.11.0
+</I>&gt;<i> starting in last
+</I>&gt;<i> 20:27:43 - [PASS AUTH]: got eeb643ffaacda32bce030f7b9a20453a; hashed =
+</I>&gt;<i> df46efe7cf5e2afc9ce36fd29ea7bf7d; stored =
+</I>&gt;<i> df46efe7cf5e2afc9ce36fd29ea7bf7d
+</I>&gt;<i> 20:27:43 - [LLOGIN SERVICE]: 0 active gestures
+</I>&gt;<i> 20:27:43 - [PRESENCE SERVICE]: LoginAgent
+</I>&gt;<i> ce6933c6-709f-4791-97c5-0ab46aaa855c with session
+</I>&gt;<i> c42af44b-2335-4d16-b59e-41737b2431ca and ssession
+</I>&gt;<i> 63a10f84-0994-4088-b25f-d9b8d4578fe5
+</I>&gt;<i> 20:27:43 - [GRID USER SERVICE]: User
+</I>&gt;<i> ce6933c6-709f-4791-97c5-0ab46aaa855c is online
+</I>&gt;<i> 20:27:43 - [LLOGIN SERVICE]: FindDestination for start location last
+</I>&gt;<i> 20:27:43 - [GRID SERVICE]: GetDefaultRegions returning 0 regions
+</I>&gt;<i> 20:27:43 - [LLOGIN SERVICE]: Last Region Not Found Attempting to find
+</I>&gt;<i> random region
+</I>&gt;<i> 20:27:43 - [GRID SERVICE]: GetRegionsByName
+</I>&gt;<i> 20:27:43 - [GRID SERVICE]: Found 4 regions
+</I>&gt;<i> 20:27:43 - [LLLogin SERVICE]: Unable to parse GatekeeperURL
+</I>&gt;<i> 20:27:43 - [LLOGIN SERVICE]: Launching agent at Rookery_NE
+</I>&gt;<i> 20:27:43 - [USER AGENT SERVICE]: Request to login user Estate Manager to grid :0
+</I>&gt;<i> 20:27:43 - [USER AGENT SERVICE]: Unable to login user Estate Manager
+</I>&gt;<i> to grid :0, reason: cannot contact remote region
+</I>&gt;<i> 20:27:43 - [GRID SERVICE]: Fallback returned 0 regions
+</I>&gt;<i> 20:27:43 - [PRESENCE SERVICE]: Session
+</I>&gt;<i> c42af44b-2335-4d16-b59e-41737b2431ca logout
+</I>&gt;<i> 20:27:43 - [LLOGIN SERVICE]: Login failed, reason: cannot contact remote region
+</I>&gt;<i>
+</I>&gt;<i> Any idea where I am going wrong please?
+</I>&gt;<i>
+</I>&gt;<i> Thanks everyone
+</I>&gt;<i>
+</I>&gt;<i> Clive
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005010.html">[Opensim-users] Upgrade problem
+</A></li>
+	<LI>Next message: <A HREF="005027.html">[Opensim-users] Upgrade problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5011">[ date ]</a>
+              <a href="thread.html#5011">[ thread ]</a>
+              <a href="subject.html#5011">[ subject ]</a>
+              <a href="author.html#5011">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

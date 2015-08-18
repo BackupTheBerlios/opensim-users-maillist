@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Difficulty build SVN 9480
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Difficulty%20build%20SVN%209480&In-Reply-To=%3CF29A8A02-6409-4BDA-AE42-8E3C95005592%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002155.html">
+   <LINK REL="Next"  HREF="002162.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Difficulty build SVN 9480</H1>
+    <B>Brent Seidel</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Difficulty%20build%20SVN%209480&In-Reply-To=%3CF29A8A02-6409-4BDA-AE42-8E3C95005592%40mac.com%3E"
+       TITLE="[Opensim-users] Difficulty build SVN 9480">brentseidel at mac.com
+       </A><BR>
+    <I>Wed May 20 00:52:50 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002155.html">[Opensim-users] Script Sharing
+</A></li>
+        <LI>Next message: <A HREF="002162.html">[Opensim-users] Difficulty build SVN 9480
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2158">[ date ]</a>
+              <a href="thread.html#2158">[ thread ]</a>
+              <a href="subject.html#2158">[ subject ]</a>
+              <a href="author.html#2158">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am able to build SVN 9479, but when I try to build SVN 9480, I get  
+the following results from nant:
+----------
+NAnt 0.86 (Build 0.86.2898.0; beta1; 12/8/2007)
+Copyright (C) 2001-2007 Gerry Shaw
+<A HREF="http://nant.sourceforge.net">http://nant.sourceforge.net</A>
+
+Buildfile: <A HREF="file:///home/OpenSim/svn/opensim-0.6.4.9561/OpenSim.build">file:///home/OpenSim/svn/opensim-0.6.4.9561/OpenSim.build</A>
+Target framework: Mono 2.0 Profile
+Target(s) specified: build
+
+      [echo] Using 'mono-2.0' Framework
+
+init:
+
+
+Debug:
+
+      [echo] Platform unix
+
+build:
+
+      [nant] /home/OpenSim/svn/opensim-0.6.4.9561/OpenSim/Framework/ 
+Servers/HttpServer/OpenSim.Framework.Servers.HttpServer.dll.build build
+             Buildfile: <A HREF="file:///home/OpenSim/svn/opensim-0.6.4.9561/">file:///home/OpenSim/svn/opensim-0.6.4.9561/</A> 
+OpenSim/Framework/Servers/HttpServer/ 
+OpenSim.Framework.Servers.HttpServer.dll.build
+             Target framework: Mono 2.0 Profile
+             Target(s) specified: build
+
+
+             build:
+
+                  [echo] Build Directory is /home/OpenSim/svn/ 
+opensim-0.6.4.9561/OpenSim/Framework/Servers/HttpServer/bin/Debug
+                   [csc] Compiling 24 files to '/home/OpenSim/svn/ 
+opensim-0.6.4.9561/OpenSim/Framework/Servers/HttpServer/bin/Debug/ 
+OpenSim.Framework.Servers.HttpServer.dll'.
+                   [csc] /home/OpenSim/svn/opensim-0.6.4.9561/OpenSim/ 
+Framework/Servers/HttpServer/AsynchronousRestObjectRequester.cs 
+(95,41): error CS0246: The type or namespace name `TResponse' could  
+not be found. Are you missing a using directive or an assembly  
+reference?
+                   [csc] /home/OpenSim/svn/opensim-0.6.4.9561/OpenSim/ 
+Framework/Servers/HttpServer/AsynchronousRestObjectRequester.cs 
+(115,21): error CS0029: Cannot implicitly convert type `TResponse' to  
+`TResponse'
+                   [csc] /home/OpenSim/svn/opensim-0.6.4.9561/OpenSim/ 
+Framework/Servers/HttpServer/AsynchronousRestObjectRequester.cs 
+(115,21): The generic parameter `TResponse' of  
+`OpenSim.Framework.Servers.HttpServer.AsynchronousRestObjectRequester.&lt;&gt; 
+c__CompilerGenerated0&lt;TRequest,TResponse&gt;' cannot be converted to the  
+generic parameter `TResponse' of  
+`OpenSim.Framework.Servers.HttpServer.AsynchronousRestObjectRequester.Ma 
+keRequest&lt;TRequest,TResponse&gt;(string, string, TRequest,  
+System.Action&lt;TResponse&gt;)' (in the previous error)
+                   [csc] Compilation failed: 2 error(s), 0 warnings
+
+             BUILD FAILED - 0 non-fatal error(s), 3 warning(s)
+
+             /home/OpenSim/svn/opensim-0.6.4.9561/OpenSim/Framework/ 
+Servers/HttpServer/OpenSim.Framework.Servers.HttpServer.dll.build(14,6):
+             External Program Failed: /usr/lib/mono/2.0/gmcs.exe  
+(return code was 1)
+
+             Total time: 0.8 seconds.
+
+
+BUILD FAILED
+
+Nested build failed.  Refer to build log for exact reason.
+
+Total time: 0.8 seconds.
+----------
+I used the same process for each version - checkout into a new  
+director, runprebuild, and nant.
+
+I'm using mono 2.4 on CentOS 5.2.
+
+If anyone can give me some pointers, I'd appreciate it.
+
+thanks,
+brent
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002155.html">[Opensim-users] Script Sharing
+</A></li>
+	<LI>Next message: <A HREF="002162.html">[Opensim-users] Difficulty build SVN 9480
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2158">[ date ]</a>
+              <a href="thread.html#2158">[ thread ]</a>
+              <a href="subject.html#2158">[ subject ]</a>
+              <a href="author.html#2158">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

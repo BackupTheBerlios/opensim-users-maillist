@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Still trying to set up groups - progress and	problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Still%20trying%20to%20set%20up%20groups%20-%20progress%20and%0A%09problems&In-Reply-To=%3CCAPk7T4BrKYj9GJeYx83CsJrhSvTiv5skb5dp7TgCwur-ONV1CA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008446.html">
+   <LINK REL="Next"  HREF="008449.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Still trying to set up groups - progress and	problems</H1>
+    <B>Sarge Misfit</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Still%20trying%20to%20set%20up%20groups%20-%20progress%20and%0A%09problems&In-Reply-To=%3CCAPk7T4BrKYj9GJeYx83CsJrhSvTiv5skb5dp7TgCwur-ONV1CA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Still trying to set up groups - progress and	problems">fubat.enterprises at gmail.com
+       </A><BR>
+    <I>Wed Oct 26 02:24:58 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008446.html">[Opensim-users] Still trying to set up groups - progress and problems
+</A></li>
+        <LI>Next message: <A HREF="008449.html">[Opensim-users] Avatar is cloud
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8447">[ date ]</a>
+              <a href="thread.html#8447">[ thread ]</a>
+              <a href="subject.html#8447">[ subject ]</a>
+              <a href="author.html#8447">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>*looks over shoulders and mutters to himself*
+
+I have soooo got to learn that stuff ...
+
+On 10/25/11, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+&gt;<i> As a quick sanity check you could just try pointing your browser at the php.
+</I>&gt;<i>  If this part is working you should see
+</I>&gt;<i>
+</I>&gt;<i> &lt;methodResponse&gt;
+</I>&gt;<i> 	&lt;fault&gt;
+</I>&gt;<i> 		&lt;value&gt;
+</I>&gt;<i> 			&lt;struct&gt;
+</I>&gt;<i> 				&lt;member&gt;
+</I>&gt;<i> 					&lt;name&gt;faultCode&lt;/name&gt;
+</I>&gt;<i> 					&lt;value&gt;&lt;int&gt;105&lt;/int&gt;&lt;/value&gt;
+</I>&gt;<i> 				&lt;/member&gt;
+</I>&gt;<i> 				&lt;member&gt;
+</I>&gt;<i> 					&lt;name&gt;faultString&lt;/name&gt;
+</I>&gt;<i> 					&lt;value&gt;&lt;string&gt;XML error: Invalid document end at line 1, column
+</I>&gt;<i> 1&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> 				&lt;/member&gt;
+</I>&gt;<i> 			&lt;/struct&gt;
+</I>&gt;<i> 		&lt;/value&gt;
+</I>&gt;<i> 	&lt;/fault&gt;
+</I>&gt;<i> &lt;/methodResponse&gt;
+</I>&gt;<i>
+</I>&gt;<i> Other than that, I'm afraid the next step is to insert a
+</I>&gt;<i> Console.WriteLine(inputXml) at about line 1159 in
+</I>&gt;<i> XmlRpcGroupsServiceConnectorModule.Send(String url):XmlRpcRespone to see
+</I>&gt;<i> what you're actually getting back.
+</I>&gt;<i>
+</I>&gt;<i> On 25/10/11 16:10, Kurt Reisler wrote:
+</I>&gt;&gt;<i> Thanks to Justin's changes, I was able to get the MySQL (5.5.16) database
+</I>&gt;&gt;<i> tables created. I have PHP installed with IIS
+</I>&gt;&gt;<i> on a Windows 2008 server (tested with a helloworld.php script). Running
+</I>&gt;&gt;<i> OpenSim 0.7.2 with the OpenSim.ini module
+</I>&gt;&gt;<i> modified to include the following:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Groups]
+</I>&gt;&gt;<i>     ;# {Enabled} {} {Enable groups?} {true false} false
+</I>&gt;&gt;<i>     ;; Enables the groups module
+</I>&gt;&gt;<i>     Enabled = true
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;# {Module} {Enabled:true} {Groups module to use? (Use GroupsModule to
+</I>&gt;&gt;<i> use Flotsam/Simian)} {} Default
+</I>&gt;&gt;<i>     ;; This is the current groups stub in
+</I>&gt;&gt;<i> Region.CoreModules.Avatar.Groups.
+</I>&gt;&gt;<i>     ;; All the other settings below only really apply to the
+</I>&gt;&gt;<i> Flotsam/SimianGrid
+</I>&gt;&gt;<i>     ;; GroupsModule.
+</I>&gt;&gt;<i>     ;; This module can use a PHP XmlRpc server from the Flotsam project at
+</I>&gt;&gt;<i>     ;; <A HREF="http://code.google.com/p/flotsam/">http://code.google.com/p/flotsam/</A>
+</I>&gt;&gt;<i>     ;; or from the SimianGrid project at
+</I>&gt;&gt;<i> <A HREF="http://code.google.com/p/openmetaverse">http://code.google.com/p/openmetaverse</A>
+</I>&gt;&gt;<i>     Module = GroupsModule
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;# {MessagingEnabled} {Module:GroupsModule} {Is groups messaging
+</I>&gt;&gt;<i> enabled?} {true false} true
+</I>&gt;&gt;<i>     MessagingEnabled = true
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;# {MessagingModule} {MessagingEnabled:true} {Module to use for groups
+</I>&gt;&gt;<i> messaging} {GroupsMessagingModule}
+</I>&gt;&gt;<i>     GroupsMessagingModule
+</I>&gt;&gt;<i>     MessagingModule = GroupsMessagingModule
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;# {ServicesConnectorModule} {Module:GroupsModule} {Service connector
+</I>&gt;&gt;<i> to use for groups}
+</I>&gt;&gt;<i>     {XmlRpcGroupsServicesConnector SimianGroupsServicesConnector}
+</I>&gt;&gt;<i> XmlRpcGroupsServicesConnector
+</I>&gt;&gt;<i>     ;; Service connectors to the Groups Service as used in the
+</I>&gt;&gt;<i> GroupsModule. Select one depending on
+</I>&gt;&gt;<i>     ;; whether you're using a Flotsam XmlRpc backend or a SimianGrid
+</I>&gt;&gt;<i> backend
+</I>&gt;&gt;<i>     ServicesConnectorModule = XmlRpcGroupsServicesConnector
+</I>&gt;&gt;<i>     XmlRpcServiceURL = <A HREF="http://mosgrid.mitre.org/groups/xmlrpc.php">http://mosgrid.mitre.org/groups/xmlrpc.php</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;# {GroupsServerURI} {Module:GroupsModule} {Groups Server URI} {}
+</I>&gt;&gt;<i>     ;; URI for the groups services
+</I>&gt;&gt;<i>     ;; e.g. <A HREF="http://yourxmlrpcserver.com/xmlrpc.php">http://yourxmlrpcserver.com/xmlrpc.php</A> for Flotsam XmlRpc
+</I>&gt;&gt;<i>     ;; or <A HREF="http://mygridserver.com:82/Grid/">http://mygridserver.com:82/Grid/</A> for SimianGrid
+</I>&gt;&gt;<i>     GroupsServerURI = <A HREF="http://mosgrid.mitre.org/groups/xmlrpc.php">http://mosgrid.mitre.org/groups/xmlrpc.php</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;# {NoticesEnabled} {Module:GroupsModule} {Enable group notices?}
+</I>&gt;&gt;<i> {true false} true
+</I>&gt;&gt;<i>     ;; Enable Group Notices
+</I>&gt;&gt;<i>     NoticesEnabled = true
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;; This makes the Groups modules very chatty on the console.
+</I>&gt;&gt;<i>     DebugEnabled = true
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ;; XmlRpc Security settings. These must match those set on your
+</I>&gt;&gt;<i> backend
+</I>&gt;&gt;<i>     ;; groups service if the service is using these keys
+</I>&gt;&gt;<i>     XmlRpcServiceReadKey = 1234
+</I>&gt;&gt;<i>     XmlRpcServiceWriteKey = 1234
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     ; Disables HTTP Keep-Alive for XmlRpcGroupsServicesConnector HTTP
+</I>&gt;&gt;<i> Requests,
+</I>&gt;&gt;<i>     ; this is a work around fora problem discovered on some Windows based
+</I>&gt;&gt;<i> region servers.
+</I>&gt;&gt;<i>     ; Only disable keep alive if you see a large number (dozens) of the
+</I>&gt;&gt;<i> following Exceptions:
+</I>&gt;&gt;<i>     ; System.Net.WebException: The request was aborted: The request was
+</I>&gt;&gt;<i> canceled.
+</I>&gt;&gt;<i>     ;
+</I>&gt;&gt;<i>     ; XmlRpcDisableKeepAlive = false
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When I attempt to create a new group, I get the following error every time
+</I>&gt;&gt;<i> the XMLRPC-GROUPS-CONNECTOR is called.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     10:31:09 - [GROUPS]: CreateGroup called
+</I>&gt;&gt;<i>     10:31:09 - [XMLRPC-GROUPS-CONNECTOR]: An error has occured while
+</I>&gt;&gt;<i> attempting to a
+</I>&gt;&gt;<i>     ccess the XmlRpcGroups server method groups.getGroup at
+</I>&gt;&gt;<i> <A HREF="http://mosgrid.mitre.org/groups/xmlrpc.php">http://mosgrid.mitre.org/groups/xmlrpc.php</A>
+</I>&gt;&gt;<i>     10:31:09 - [XMLRPC-GROUPS-CONNECTOR]: Data at the root level is
+</I>&gt;&gt;<i> invalid. Line 1, position 1.
+</I>&gt;&gt;<i>     at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The config.php file is correctly set up to point to the correct database,
+</I>&gt;&gt;<i> with the right login and password.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any suggestions?
+</I>&gt;&gt;<i> Thanks in advance
+</I>&gt;&gt;<i> Kurt
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008446.html">[Opensim-users] Still trying to set up groups - progress and problems
+</A></li>
+	<LI>Next message: <A HREF="008449.html">[Opensim-users] Avatar is cloud
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8447">[ date ]</a>
+              <a href="thread.html#8447">[ thread ]</a>
+              <a href="subject.html#8447">[ subject ]</a>
+              <a href="author.html#8447">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

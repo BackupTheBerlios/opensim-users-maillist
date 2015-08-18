@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] object persistence
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20object%20persistence&In-Reply-To=%3Caf5e8e660811030429s68fd2033oe66ac2009ab06bb9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000545.html">
+   <LINK REL="Next"  HREF="000547.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] object persistence</H1>
+    <B>Lc</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20object%20persistence&In-Reply-To=%3Caf5e8e660811030429s68fd2033oe66ac2009ab06bb9%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] object persistence">lcc1967 at gmail.com
+       </A><BR>
+    <I>Mon Nov  3 13:29:50 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000545.html">[Opensim-users] object persistence
+</A></li>
+        <LI>Next message: <A HREF="000547.html">[Opensim-users] object persistence
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#546">[ date ]</a>
+              <a href="thread.html#546">[ thread ]</a>
+              <a href="subject.html#546">[ subject ]</a>
+              <a href="author.html#546">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>just a question: what is your database engine (mysql,sqlite...) ?
+A wrong db settings could lead to unexpected results particularly with
+mysql.
+
+lc
+
+On Mon, Nov 3, 2008 at 12:58 PM, Shree Kumar &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">shreekumar at hp.com</A>&gt; wrote:
+
+&gt;<i>  Frisby, Adam wrote:
+</I>&gt;<i>
+</I>&gt;<i> Physical object persistence is a little tricky - if we did a DB update for every physical prim movement, then obviously the sim would choke (and it used to before that change was made). Perhaps the middle ground is intermediary saves of high volume objects (ie every 30 secs).
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  I've seen issues similar to what Paul reports below. Typically, I've
+</I>&gt;<i> associated this with a server crash during execution of the &quot;shutdown&quot;
+</I>&gt;<i> command.
+</I>&gt;<i>
+</I>&gt;<i> Would it suffice to persist these objects just once before server shutdown
+</I>&gt;<i> ?
+</I>&gt;<i>
+</I>&gt;<i> -- Shree
+</I>&gt;<i>
+</I>&gt;<i> Adam
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:opensim-users &lt;opensim-users&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">-bounces at lists.berlios.de</A>] On Behalf Of Paul Fishwick
+</I>&gt;<i> Sent: Sunday, 2 November 2008 7:29 PM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: [Opensim-users] object persistence
+</I>&gt;<i>
+</I>&gt;<i> In either StandAlone or Grid mode, I am having problems
+</I>&gt;<i> with the persistence of the following:
+</I>&gt;<i>
+</I>&gt;<i>  (1) some objects that are set to &quot;Physical&quot; (via the object properties
+</I>&gt;<i>        tab). In Grid Mode, they sometimes disappear after the UGAIM
+</I>&gt;<i>       and OpenSim servers are shutdown and then restarted. I go back
+</I>&gt;<i>       in-world, and these objects set to &quot;Physical&quot; are gone.
+</I>&gt;<i>
+</I>&gt;<i>  (2) some object attributes: for example if an object is set to
+</I>&gt;<i> &quot;Phantom&quot;,
+</I>&gt;<i>        the object persists after the servers restart but the attribute
+</I>&gt;<i> setting
+</I>&gt;<i>        of &quot;Phantom&quot; is not saved.
+</I>&gt;<i>
+</I>&gt;<i>  (3) avatar shape and clothing (changed by using the Inventory-Create
+</I>&gt;<i> Shape,
+</I>&gt;<i>       etc)  - it is not saved from one server startup  to the next.
+</I>&gt;<i>
+</I>&gt;<i> has anyone else experienced this? I would have thought that all object
+</I>&gt;<i> and
+</I>&gt;<i> avatar properties would have been saved in the mySQL database.
+</I>&gt;<i>
+</I>&gt;<i> -paul
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Paul Fishwick, PhD
+</I>&gt;<i> Professor and Director, Digital Arts and Sciences Programs
+</I>&gt;<i> University of Florida
+</I>&gt;<i> Computer &amp; Information Science and Eng. Dept.
+</I>&gt;<i> Bldg. CSE, Room 301
+</I>&gt;<i> P.O. Box 116120
+</I>&gt;<i> Gainesville, FL 32611
+</I>&gt;<i> Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;<i> Phone: (352) 392-1414
+</I>&gt;<i> Fax: (352) 392-1220
+</I>&gt;<i> Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A> &lt;<A HREF="http://www.cise.ufl.edu/%7Efishwick">http://www.cise.ufl.edu/%7Efishwick</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i>  _______________________________________________
+</I>&gt;<i> Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i> .
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20081103/84ec096c/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20081103/84ec096c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000545.html">[Opensim-users] object persistence
+</A></li>
+	<LI>Next message: <A HREF="000547.html">[Opensim-users] object persistence
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#546">[ date ]</a>
+              <a href="thread.html#546">[ thread ]</a>
+              <a href="subject.html#546">[ subject ]</a>
+              <a href="author.html#546">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

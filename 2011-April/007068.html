@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] A Script Question
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20Script%20Question&In-Reply-To=%3CBANLkTimhJBdyTEjayXU9i1Ku6%3DNZgtqF1Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007067.html">
+   <LINK REL="Next"  HREF="007069.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] A Script Question</H1>
+    <B>Henry Wills</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20Script%20Question&In-Reply-To=%3CBANLkTimhJBdyTEjayXU9i1Ku6%3DNZgtqF1Q%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] A Script Question">fubat.enterprises at gmail.com
+       </A><BR>
+    <I>Fri Apr 15 01:40:25 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007067.html">[Opensim-users] A Script Question
+</A></li>
+        <LI>Next message: <A HREF="007069.html">[Opensim-users] A Script Question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7068">[ date ]</a>
+              <a href="thread.html#7068">[ thread ]</a>
+              <a href="subject.html#7068">[ subject ]</a>
+              <a href="author.html#7068">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks, Vanish, James, but I'm not sure I understand what all that means.
+
+First, about threat level, going into the opensim.ini, I have
+OSFunctionThreatLevel = VeryLow
+
+Yet, in the DivaPreferences.ini file I have
+[XEngine]
+    AllowMODFunctions = true
+    AllowOSFunctions = true
+    OSFunctionThreatLevel = Moderate
+
+Could this be a conflict error due to the different threat level settings?
+One example is a pretty simple point-to-point TP script, which has no
+osFunctions in it, just the usual lsl functions. In fact, here's the whole
+of the script ...
+
+*// Script Name: Teleport.lsl
+// Author: Encog Dod
+//Teleport
+
+// Downloaded from : <A HREF="http://www.free-lsl-scripts.com/freescripts.plx?ID=150">http://www.free-lsl-scripts.com/freescripts.plx?ID=150</A>
+
+// This program is free software; you can redistribute it and/or modify it.
+// License information must be included in any script you give out or use.
+// This script is licensed under the Creative Commons Attribution-Share
+Alike 3.0 License
+// from <A HREF="http://creativecommons.org/licenses/by-sa/3.0">http://creativecommons.org/licenses/by-sa/3.0</A> unless licenses are
+// included in the script or comments by the original author,in which case
+// the authors license must be followed.
+
+// Please leave any authors credits intact in any script you use or publish.
+////////////////////////////////////////////////////////////////////
+// From the book:
+//
+// Scripting Recipes for Second Life
+// by Jeff Heaton (Encog Dod in SL)
+// ISBN: 160439000X
+// Copyright 2007 by Heaton Research, Inc.
+//
+// This script may be freely copied and modified so long as this header
+// remains unmodified.
+//
+// For more information about this book visit the following web site:
+//
+// <A HREF="http://www.heatonresearch.com/articles/series/22/">http://www.heatonresearch.com/articles/series/22/</A>
+
+vector target=&lt;190, 197, 64&gt;;
+
+vector offset;
+
+default
+{
+    moving_end()
+    {
+        offset = (target- llGetPos()) * (ZERO_ROTATION / llGetRot());
+        llSitTarget(offset, ZERO_ROTATION);
+    }
+
+    state_entry()
+    {
+        llSetText(&quot;Teleport pad&quot;,&lt;0,0,0&gt;,1.0);
+        offset = (target- llGetPos()) * (ZERO_ROTATION / llGetRot());
+        llSetSitText(&quot;Teleport&quot;);
+        llSitTarget(offset, ZERO_ROTATION);
+    }
+
+    changed(integer change)
+    {
+        if (change &amp; CHANGED_LINK)
+        {
+            llSleep(0.5);
+            if (llAvatarOnSitTarget() != NULL_KEY)
+            {
+                llUnSit(llAvatarOnSitTarget());
+            }
+        }
+    }
+
+    touch_start(integer i)
+    {
+        llSay(0, &quot;Please right-click and select Teleport&quot;);
+    }
+}
+*
+This one generates the error message every time I rez it. By the way, it
+also has a 5 to 8 second delay before the the UnSit occurs.
+
+However, I've just experimented by inserting a simple // as the very first
+line and then rezzed the script into a new prim. (Hope that doesn't violate
+the 'don't change the header' portion of the license) No error message. I'm
+going to mess around with that on some other scripts, like a jetpack one I
+am dying to get working properly.
+
+
+
+
+On Thu, Apr 14, 2011 at 3:56 PM, James Hughes &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jamesh at bluewallgroup.com</A>&gt;wrote:
+
+&gt;<i>  On 04/14/2011 06:18 PM, Henry Wills wrote:
+</I>&gt;<i>
+</I>&gt;<i> So, I've got a bunch of OSGrid scripts and my stand-alone is using the
+</I>&gt;<i> default Xengine. With a number of the scripts I get the following error
+</I>&gt;<i> message
+</I>&gt;<i>
+</I>&gt;<i> &quot;*Selected engine unavailable. Running script on XEngine*&quot;.
+</I>&gt;<i>
+</I>&gt;<i> To me, this says that there is at least one other script engine available.
+</I>&gt;<i> Is that so? If it is, how do I get it and install it? Currently, with
+</I>&gt;<i> scripts that generate that error, I have been recompiling (using LSL, just
+</I>&gt;<i> in case), set the script to running and it works fine. Its just a pain in
+</I>&gt;<i> the ass having to go through the extra steps.
+</I>&gt;<i>
+</I>&gt;<i> Come to think of it, what about other Physics Engines, like nVidia PhysX,
+</I>&gt;<i> which I happen to have installed on my system. Can anyone provide links to
+</I>&gt;<i> get a different engine and installation instructions?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i>  Look at the first line in the script. It probably has //My Script, or
+</I>&gt;<i> something similar. Make sure the first line of the script is blank or just
+</I>&gt;<i> // to be safe. The script mechanism of OpenSim is designed to support
+</I>&gt;<i> several scripting engines simultaneously. And, the way to tell OpenSim which
+</I>&gt;<i> engine to use to execute the  script is with the first line. //C# would run
+</I>&gt;<i> it with the C# engine (if you have it enabled).
+</I>&gt;<i>
+</I>&gt;<i> See: <A HREF="http://justincc.org/blog/2008/11/21/c-scripting-in-opensim/">http://justincc.org/blog/2008/11/21/c-scripting-in-opensim/</A> for an
+</I>&gt;<i> example of that.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110414/1e26a208/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110414/1e26a208/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007067.html">[Opensim-users] A Script Question
+</A></li>
+	<LI>Next message: <A HREF="007069.html">[Opensim-users] A Script Question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7068">[ date ]</a>
+              <a href="thread.html#7068">[ thread ]</a>
+              <a href="subject.html#7068">[ subject ]</a>
+              <a href="author.html#7068">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

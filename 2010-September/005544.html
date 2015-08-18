@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NPC module?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20module%3F&In-Reply-To=%3C4C93B825.60006%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005552.html">
+   <LINK REL="Next"  HREF="005546.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NPC module?</H1>
+    <B>diva at metaverseink.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20module%3F&In-Reply-To=%3C4C93B825.60006%40metaverseink.com%3E"
+       TITLE="[Opensim-users] NPC module?">diva at metaverseink.com
+       </A><BR>
+    <I>Fri Sep 17 20:49:09 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005552.html">[Opensim-users] NPC module?
+</A></li>
+        <LI>Next message: <A HREF="005546.html">[Opensim-users] NPC module?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5544">[ date ]</a>
+              <a href="thread.html#5544">[ thread ]</a>
+              <a href="subject.html#5544">[ subject ]</a>
+              <a href="author.html#5544">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It seems to me that the way that this particular module sets itself up 
+is a bit unorthodox. Most modules in OpenSim check a config flag under 
+the [Modules] section to see if they are supposed to be enabled or not, 
+and then, if they need specific additional configuration, they should 
+have their own [MyName] section in the config file.
+
+I have no idea why on earth the NPC module is hooking up to XEngine -- 
+that's just... wrong. Especially now that we have a general-purpose 
+mechanism to connect scripts to modules.
+
+So start by fixing that! :-)
+
+Juliana Dutra wrote:
+&gt;<i> On Opensim.ini add to xengine section
+</I>&gt;<i> 
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> AllowOSFunctions = true
+</I>&gt;<i> Allow_osNpcCreate = UUID (your uuid)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> *From:* Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Sent:* Thu, September 16, 2010 5:47:57 PM
+</I>&gt;<i> *Subject:* Re: [Opensim-users] NPC module?
+</I>&gt;<i> 
+</I>&gt;<i> On 16/09/10 23:23, bodzette Coignet wrote:
+</I>&gt;<i>  &gt; Hi Justin:
+</I>&gt;<i>  &gt; On your blog you have a post &quot;passing data between a script and a region
+</I>&gt;<i>  &gt; module with modSendCommand()&quot;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; Is that more or less how I would go about testing whether I can invoke
+</I>&gt;<i>  &gt; this code?
+</I>&gt;<i> 
+</I>&gt;<i> No, you would invoke the npc via normal script commands with an os 
+</I>&gt;<i> prefix, e.g.
+</I>&gt;<i> 
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     touch_start(integer total_number)
+</I>&gt;<i>     {
+</I>&gt;<i>         key cloneKey = osNpcCreate(&quot;Scary&quot;, &quot;Clone&quot;, &lt;134, 194, 43&gt;, 
+</I>&gt;<i> llDetectedKey(0));
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i> 
+</I>&gt;<i> There's no real documentation of these apart from the code (in 
+</I>&gt;<i> OSSL_Api.cs &lt;<A HREF="http://OSSL_Api.cs">http://OSSL_Api.cs</A>&gt;).  However, they are the last four in 
+</I>&gt;<i> the list at
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://www.scengine.org/index.php?option=com_content&amp;view=article&amp;id=10:opensim-api-functions&amp;catid=6:os-api-functions&amp;Itemid=14">http://www.scengine.org/index.php?option=com_content&amp;view=article&amp;id=10:opensim-api-functions&amp;catid=6:os-api-functions&amp;Itemid=14</A> 
+</I>&gt;<i> &lt;<A HREF="http://www.scengine.org/index.php?option=com_content&amp;view=article&amp;id=10:opensim-api-functions&amp;catid=6:os-api-functions&amp;Itemid=14">http://www.scengine.org/index.php?option=com_content&amp;view=article&amp;id=10:opensim-api-functions&amp;catid=6:os-api-functions&amp;Itemid=14</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i> It also looks like someone else already tried them without success.  
+</I>&gt;<i> Which leads me to suspect that they no longer work.
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://www.osgrid.org/forums/viewtopic.php?f=5&amp;t=2699">http://www.osgrid.org/forums/viewtopic.php?f=5&amp;t=2699</A> 
+</I>&gt;<i> &lt;<A HREF="http://www.osgrid.org/forums/viewtopic.php?f=5&amp;t=2699">http://www.osgrid.org/forums/viewtopic.php?f=5&amp;t=2699</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i> Remember, you will need to enable OSSL functions at a High threat 
+</I>&gt;<i> level.  Information on how to do this should be
+</I>&gt;<i> available via Google.
+</I>&gt;<i> 
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; On Thu, Sep 16, 2010 at 3:36 PM, Justin Clark-Casey
+</I>&gt;<i>  &gt; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt;&gt; wrote:
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;    On 16/09/10 22:27, bodzette Coignet wrote:
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;        No, I'm talking about the NPC module that's in the opensim
+</I>&gt;<i>  &gt;        source code
+</I>&gt;<i>  &gt;        found at the following location in the source tree:
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;        OpenSim\Region\OptionalModules\World\NPC
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;        Does *nobody* know who the original dev is that did this work?
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;    That module has been there for ages.  You should be able to find out
+</I>&gt;<i>  &gt;    who created it by looking in the git logs.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;      &gt;From a quick code inspection, it looks like the CreateNPC method
+</I>&gt;<i>  &gt;    needs to be triggered to get anything to happen.  This is hooked up
+</I>&gt;<i>  &gt;    to the osNpcCreate() command (in the OSSL_Api.cs file).  You could
+</I>&gt;<i>  &gt;    try invoking this command via an in-world script - it looks like
+</I>&gt;<i>  &gt;    you'll need the uuid of an existing avatar to get going.  There are
+</I>&gt;<i>  &gt;    some other os commands there which appear to the NPC module (say,
+</I>&gt;<i>  &gt;    move, remove).
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;    It's also very possible that this module doesn't work any more - I
+</I>&gt;<i>  &gt;    haven't heard of anybody trying to use it for a long time.  The only
+</I>&gt;<i>  &gt;    way to find out is to try it.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;    --
+</I>&gt;<i>  &gt;    Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i>    <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;&gt;<i>    <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;    _______________________________________________
+</I>&gt;<i>  &gt;    Opensim-users mailing list
+</I>&gt;<i>  &gt;    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt; 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;<i>  &gt;    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; _______________________________________________
+</I>&gt;<i>  &gt; Opensim-users mailing list
+</I>&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005552.html">[Opensim-users] NPC module?
+</A></li>
+	<LI>Next message: <A HREF="005546.html">[Opensim-users] NPC module?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5544">[ date ]</a>
+              <a href="thread.html#5544">[ thread ]</a>
+              <a href="subject.html#5544">[ subject ]</a>
+              <a href="author.html#5544">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

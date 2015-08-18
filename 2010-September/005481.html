@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] upgrading to latest release (migration issue)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20upgrading%20to%20latest%20release%20%28migration%20issue%29&In-Reply-To=%3C4C8903F6.2080704%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005480.html">
+   <LINK REL="Next"  HREF="005482.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] upgrading to latest release (migration issue)</H1>
+    <B>diva at metaverseink.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20upgrading%20to%20latest%20release%20%28migration%20issue%29&In-Reply-To=%3C4C8903F6.2080704%40metaverseink.com%3E"
+       TITLE="[Opensim-users] upgrading to latest release (migration issue)">diva at metaverseink.com
+       </A><BR>
+    <I>Thu Sep  9 17:57:42 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005480.html">[Opensim-users] upgrading to latest release (migration issue)
+</A></li>
+        <LI>Next message: <A HREF="005482.html">[Opensim-users] upgrading to latest release (migration issue)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5481">[ date ]</a>
+              <a href="thread.html#5481">[ thread ]</a>
+              <a href="subject.html#5481">[ subject ]</a>
+              <a href="author.html#5481">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes.
+The MySql driver that is currently in the master branch is... a 
+challenge. We have it there because it's the newest one and supposedly 
+will allow for some future stored procedure optimizations. But it 
+doesn't work well for normal schema updates. It's a pain in the neck.
+
+OpenSim official tagged releases will not have this driver, they will 
+have the older one, until someone figures out what's wrong with this 
+newer one. But the master branch has it, because it's the branch that is 
+trying to push things forward.
+
+Bottom line: if you're using developer's code (master head) you're in 
+for a bumpy ride with this driver. You basically need to do all the 
+migrations manually. :-/
+
+
+Paul Fishwick wrote:
+&gt;<i> 
+</I>&gt;<i> System: Ubuntu 10.04 (64 bit). Mono version 2.4.4
+</I>&gt;<i> 
+</I>&gt;<i> Has any one encountered this problem when taking a 0.6.9 MySQL database
+</I>&gt;<i> and trying to run 0.7.1 ? I seem to recall some discussion about increasing
+</I>&gt;<i> the timeout for MySQL, but not sure whether that is the problem. Running
+</I>&gt;<i> mono OpenSim.exe causes a problem (below) and then hangs at:
+</I>&gt;<i> 
+</I>&gt;<i> [SMTP]: module disabled in configuration
+</I>&gt;<i> ....shell hangs....
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ..................trace of where errors begin................
+</I>&gt;<i> 
+</I>&gt;<i> 11:01:55 - [MIGRATIONS]: Upgrading AssetStore to latest revision 8.
+</I>&gt;<i> 11:01:55 - [MIGRATIONS]: NOTE - this may take a while, don't interrupt 
+</I>&gt;<i> this process!
+</I>&gt;<i> 11:01:55 - [MIGRATIONS]: Cmd was Duplicate column name 'asset_flags' in 
+</I>&gt;<i> SQL: ALTER TABLE assets ADD COLUMN asset_flags INTEGER NOT NULL DEFAULT 0;
+</I>&gt;<i> 11:01:55 - [MIGRATIONS]: An error has occurred in the migration. This 
+</I>&gt;<i> may mean you could see errors trying to run OpenSim. If you see database 
+</I>&gt;<i> related errors, you will need to fix the issue manually. Continuing.
+</I>&gt;<i> 11:01:55 - [MIGRATIONS]: Updating AssetStore to version 7
+</I>&gt;<i> 11:02:37 - [MIGRATIONS]: Cmd was Timeout expired.  The timeout period 
+</I>&gt;<i> elapsed prior to completion of the operation or the server is not 
+</I>&gt;<i> responding. in SQL: ALTER TABLE assets ADD COLUMN CreatorID varchar(128) 
+</I>&gt;<i> NOT NULL DEFAULT '';
+</I>&gt;<i> 11:02:37 - [MIGRATIONS]: An error has occurred in the migration. This 
+</I>&gt;<i> may mean you could see errors trying to run OpenSim. If you see database 
+</I>&gt;<i> related errors, you will need to fix the issue manually. Continuing.
+</I>&gt;<i> 11:02:37 - Error loading plugin from OpenSim.Services.AssetService.dll, 
+</I>&gt;<i> exception System.Exception: Connection must be valid and open. in SQL: 
+</I>&gt;<i> ROLLBACK;
+</I>&gt;<i>   at OpenSim.Data.Migration.ExecuteScript 
+</I>&gt;<i> (System.Data.Common.DbConnection conn, System.String[] script) [0x00000]
+</I>&gt;<i>   at OpenSim.Data.Migration.ExecuteScript 
+</I>&gt;<i> (System.Data.Common.DbConnection conn, System.String sql) [0x00000]
+</I>&gt;<i>   at OpenSim.Data.Migration.ExecuteScript (System.String sql) [0x00000]
+</I>&gt;<i>   at OpenSim.Data.Migration.Update () [0x00000]
+</I>&gt;<i>   at OpenSim.Data.MySQL.MySQLAssetData.Initialise (System.String 
+</I>&gt;<i> connect) [0x00000]
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005480.html">[Opensim-users] upgrading to latest release (migration issue)
+</A></li>
+	<LI>Next message: <A HREF="005482.html">[Opensim-users] upgrading to latest release (migration issue)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5481">[ date ]</a>
+              <a href="thread.html#5481">[ thread ]</a>
+              <a href="subject.html#5481">[ subject ]</a>
+              <a href="author.html#5481">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

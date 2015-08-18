@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSimulator 0.7.5-rc2 now available
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSimulator%200.7.5-rc2%20now%20available&In-Reply-To=%3C510332AA.3000807%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011662.html">
+   <LINK REL="Next"  HREF="011666.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSimulator 0.7.5-rc2 now available</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSimulator%200.7.5-rc2%20now%20available&In-Reply-To=%3C510332AA.3000807%40googlemail.com%3E"
+       TITLE="[Opensim-users] OpenSimulator 0.7.5-rc2 now available">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Jan 26 02:34:34 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011662.html">[Opensim-users] Question about terrain textures
+</A></li>
+        <LI>Next message: <A HREF="011666.html">[Opensim-users] Sending attachments in group notices using flotsam xmlrpc groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11664">[ date ]</a>
+              <a href="thread.html#11664">[ thread ]</a>
+              <a href="subject.html#11664">[ subject ]</a>
+              <a href="author.html#11664">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi folks,
+
+OpenSimulator 0.7.5-rc2 [1], the second release candidate for the next version of OpenSimulator, is now available [2].
+
+Compared to rc1, the changes are pretty minor - many are tweaks to debug console commands and additional debug commands.
+
+Probably the chief change is a fix for a recent functionality regression where client AOs, such as that implemented by Firestorm, stopped working as they previously had been with OpenSimulator (commit af5a3f2).
+
+Unless there are any showstopping regressions, I expect that this release candidate will likely be very close, if not functionally identical, to what is ultimately released as OpenSimulator 0.7.5.
+
+The one line git summary of each commit since 0.7.5-rc1 is shown below.
+
+8f32e16 minor: Fix full scene part console report to show proper Light* names rather than all wrongly FlexiDrag
+c42e2c6 minor: Call down to base OpenSimTestCase.SetUp() in NPCModuleTests to disable any enabled logging from previous tests
+6bd57f2 Bump version up to 0.7.5-rc2
+af5a3f2 Restore previous client AO behaviour by not allowing them to remove the default animation but continue to allow scripts to do so.
+0ba01ce Check the existing ScenePresence.ParentPart to make sure we're not trying to sit on a prim we're already sat upon, rather than looking up the part from scratch.
+70e1dd5 New constants for llGetObjectDetails
+c42bff5 Fix use of scene debug commands when region is set to root or a specific region where there is more than one region on the simulator.
+10b3c6b Add &quot;debug set set animations true|false&quot; region console command.
+8ecf6ed Add utility function to clamp a vector to a maximum magnitude.
+0945044 Changed a couple of debug messages at the request of osgrid.
+e2823bf move resit fix to ScenePresence.cs and allow for requesting sit on objects other than the object currently sat on
+795009c Print full stacktrace from plugin loading failure to help determine what went wrong, rather than a possibly unhelpful simple exception message.
+cc8fbf7 Fix exception reporting in SceneObjectPart so it logs what the exception is rather than just saying it happened.
+af27180 add some sanity checking to HandleAgentRequestSit handler
+c182157 Fix a regression in the last few scene commands changes where setting these via the viewer estate dialog stopped working.
+1cda887 Add &quot;debug scene get&quot; console command to list current scene options
+0ba0ac4 Move scene debug commands into separate module.  Command changes from &quot;debug scene &lt;key&gt; &lt;value&gt;&quot; to &quot;debug scene set &lt;key&gt; &lt;value&gt;&quot; to accomodate future settings
+ce8b30d minor: Capitalize GroupsModule command category
+d4c4cb3 minor: add missing newline to &quot;debug scene&quot; console command
+ac43006 Remove unimplemented &quot;debug teleport&quot; console command
+069e2d6 Add &quot;debug scene pbackup true|false&quot; console command.  This enables or disable periodic scene backup.  For debug purposes.
+30eded2 revert accidental change to MemoryWatchdog stat calculation in previous b1b4687
+2563553 Add &quot;show script timers&quot; command to show script timers.  For debug purposes.
+9ddddde Add &quot;show sensors&quot; command to show script sensor information for debug purposes.
+99a5ea9 minor: Remove unnecessary commented out code from last commit c28a2f05 and fix up code comment
+880b236 minor: make spacing consistent in console help output
+f47f3dd minor: Fix command match of &quot;debug script&quot; command to &quot;debug scripts&quot; to match other scripts commands (and it's own short help text)
+8ee078c minor: Allow &quot;script *&quot; console commands to take multiple script item ids
+17d54a7 Add the new UpdateAgentInformation cap to make maturity on more recent viewers work.
+
+[1] <A HREF="http://opensimulator.org/wiki/0.7.5_Release">http://opensimulator.org/wiki/0.7.5_Release</A>
+[2] <A HREF="http://opensimulator.org/wiki/Download">http://opensimulator.org/wiki/Download</A>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011662.html">[Opensim-users] Question about terrain textures
+</A></li>
+	<LI>Next message: <A HREF="011666.html">[Opensim-users] Sending attachments in group notices using flotsam xmlrpc groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11664">[ date ]</a>
+              <a href="thread.html#11664">[ thread ]</a>
+              <a href="subject.html#11664">[ subject ]</a>
+              <a href="author.html#11664">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

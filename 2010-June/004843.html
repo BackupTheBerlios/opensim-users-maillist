@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Hypergrid 1.5 jumps over 6K reproducible
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hypergrid%201.5%20jumps%20over%206K%20reproducible&In-Reply-To=%3C4C2B0C95.8070506%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004842.html">
+   <LINK REL="Next"  HREF="004844.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Hypergrid 1.5 jumps over 6K reproducible</H1>
+    <B>Diva Canto</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hypergrid%201.5%20jumps%20over%206K%20reproducible&In-Reply-To=%3C4C2B0C95.8070506%40metaverseink.com%3E"
+       TITLE="[Opensim-users] Hypergrid 1.5 jumps over 6K reproducible">diva at metaverseink.com
+       </A><BR>
+    <I>Wed Jun 30 11:21:25 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004842.html">[Opensim-users] Hypergrid 1.5 jumps over 6K reproducible
+</A></li>
+        <LI>Next message: <A HREF="004844.html">[Opensim-users] Hypergrid 1.5 jumps over 6K reproducible
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4843">[ date ]</a>
+              <a href="thread.html#4843">[ thread ]</a>
+              <a href="subject.html#4843">[ subject ]</a>
+              <a href="author.html#4843">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Clarification:
+
+The 4096-limit bug has nothing to do with the Hypergrid. You bump into 
+this same limitation by having two regions on the same grid that are 
+separated by more than 4096 map cells in either axis. So, for testing if 
+viewers have fixed this or not, simply have two regions, one at 
+1000,1000 and the other at, say 7000,7000. If you can TP between the 2, 
+and things look normal upon arrival, then the bug is fixed in that 
+viewer. Let me know when that happens.
+
+The reason why this bug got highlighted in HG TPs is that in the HG 
+people don't have any control over the absolute coordinates where other 
+grids place the regions; specifically, OSGrid is placed around 10,000 
+whereas standalones, by default, are placed around 1000.(Whereas within 
+one grid operators usually place the regions very close, and those long 
+jumps simply don't exist.) In order to avoid a series of issue reports 
+of the kind &quot;TPs not working in HG -- nothing rezzes upon arrival&quot;, I 
+added that check to prevent those long jumps in HG TPs.
+
+As soon as someone confirms that viewers have fixed this, I will remove 
+the check in HG TPs.
+
+On 6/30/2010 12:25 AM, Jeroen van Veen wrote:
+&gt;<i> That's good news. How about teleporting locally to really large 100K+ regions?
+</I>&gt;<i> This always returns &quot;Region doesn't exist anymore'. It works normally when
+</I>&gt;<i> logging in to the region.
+</I>&gt;<i>
+</I>&gt;<i> kind regards,
+</I>&gt;<i>
+</I>&gt;<i> Jeroen
+</I>&gt;<i>
+</I>&gt;<i> On Wednesday 30 June 2010 07:49:15 Dolma Dollinger wrote:
+</I>&gt;<i>    
+</I>&gt;&gt;<i> Well I solved one problem but got another.
+</I>&gt;&gt;<i> The Imprudence Developers withdrew the patch
+</I>&gt;&gt;<i> <A HREF="https://jira.secondlife.com/browse/SVC-2941">https://jira.secondlife.com/browse/SVC-2941</A> in Imprudence 1.3.0,
+</I>&gt;&gt;<i> because that solves a problem with prims only partly rezzing an a
+</I>&gt;&gt;<i> Hypergrid jump (<A HREF="http://redmine.imprudenceviewer.org/issues/239">http://redmine.imprudenceviewer.org/issues/239</A>)
+</I>&gt;&gt;<i> Imprudence 1.2.2 still had the patch.
+</I>&gt;&gt;<i> So I used imprudence 1.2.2. And that worked! I teleported back over 6K
+</I>&gt;&gt;<i> to my home grid, arrived at a normal spot with normal camera
+</I>&gt;&gt;<i> orientation.
+</I>&gt;&gt;<i> Only on every Hypergrid Teleport I had the partly rezzing problem.
+</I>&gt;&gt;<i> So it seems to me we can be close to a working long range Hypergrid
+</I>&gt;&gt;<i> Teleport
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Jun 29, 2010 at 4:55 PM, Bob Wellman&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bob.wellman at hotmail.co.uk</A>&gt;
+</I>&gt;&gt;<i>      
+</I>&gt;<i> wrote:
+</I>&gt;<i>    
+</I>&gt;&gt;&gt;<i> Diva
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> What we seem to have, with this 4096 jump issue, is an impasse. Some
+</I>&gt;&gt;&gt;<i> viewers actually put possible a fix into thier code for this some time
+</I>&gt;&gt;&gt;<i> ago, but were unable to test it because of the server side constraint.
+</I>&gt;&gt;&gt;<i> The server constraint wont be removed until at least one viewer has it
+</I>&gt;&gt;&gt;<i> working. So no testing/progress is possible.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Could I suggest that an opensim.ini setting be added so this constraint
+</I>&gt;&gt;&gt;<i> can be varied for viewer testing purposes. Something like below would
+</I>&gt;&gt;&gt;<i> seem good to me.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> JumpDistanceLimit = 4096
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> This would allow most grid operators to keep their grids safe, whilst
+</I>&gt;&gt;&gt;<i> also allowing others to test viewer jump distance fixes.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> PS. Its hard to find 2 regions that far apart in SL (easy in OS) so
+</I>&gt;&gt;&gt;<i> testing must happen in OS I think.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>        
+</I>&gt;&gt;&gt;&gt;<i> Date: Tue, 29 Jun 2010 04:45:31 -0700
+</I>&gt;&gt;&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+</I>&gt;&gt;&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> Subject: Re: [Opensim-users] Hypergrid 1.5 jumps over 6K reproducible
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Dolma,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> What you are describing is exactly the situation of the 4096 bug. We
+</I>&gt;&gt;&gt;&gt;<i> could always teleport; things just don't rez and the viewer generally
+</I>&gt;&gt;&gt;&gt;<i> seems confused. It looks like it hasn't been fixed in that viewer.
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://jira.secondlife.com/browse/SVC-2941">https://jira.secondlife.com/browse/SVC-2941</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I'm leaving the constraint in the code until at least one viewer fixes
+</I>&gt;&gt;&gt;&gt;<i> this.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Crista
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 6/28/2010 8:48 PM, Dolma Dollinger wrote:
+</I>&gt;&gt;&gt;&gt;<i>          
+</I>&gt;&gt;&gt;&gt;&gt;<i> I cant hyperjump directly to Openvue directly (from 7000,7000 to
+</I>&gt;&gt;&gt;&gt;&gt;<i> 1000,1000)
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> In Hypergridlinker.cs there is a snippet of code that checks for it
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> if (!Check4096(handle, out x, out y))
+</I>&gt;&gt;&gt;&gt;&gt;<i> {
+</I>&gt;&gt;&gt;&gt;&gt;<i> RemoveHyperlinkRegion(regInfo.RegionID);
+</I>&gt;&gt;&gt;&gt;&gt;<i> reason = &quot;Region is too far (&quot; + x + &quot;, &quot; + y + &quot;)&quot;;
+</I>&gt;&gt;&gt;&gt;&gt;<i> m_log.Info(&quot;[HYPERGRID LINKER]: Unable to link, region
+</I>&gt;&gt;&gt;&gt;&gt;<i> is too far (&quot; + x + &quot;, &quot; + y + &quot;)&quot;);
+</I>&gt;&gt;&gt;&gt;&gt;<i> return false;
+</I>&gt;&gt;&gt;&gt;&gt;<i> }
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> However I can hyperjump to dev.germangrid.de:8002 (at 4000,4000) and
+</I>&gt;&gt;&gt;&gt;&gt;<i> then to virtual.aiai.ed.ac.uk:8002:openvue
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Then I can teleport home.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I arrive with my camera fixed and centered at (0,0,0), My avatar isnt
+</I>&gt;&gt;&gt;&gt;&gt;<i> displayed, but I can move it around and even teleport within my grid.
+</I>&gt;&gt;&gt;&gt;&gt;<i> the sim I teleported too isnt displayed, but all other sims in my
+</I>&gt;&gt;&gt;&gt;&gt;<i> metagrid are.
+</I>&gt;&gt;&gt;&gt;&gt;<i> No prims rezz however.
+</I>&gt;&gt;&gt;&gt;&gt;<i> Seems the client missed some messages to build up the scene
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>            
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>          
+</I>&gt;&gt;&gt;<i> ________________________________
+</I>&gt;&gt;&gt;<i> Get a new e-mail account with Hotmail - Free. Sign-up now.
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>        
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>      
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>    
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004842.html">[Opensim-users] Hypergrid 1.5 jumps over 6K reproducible
+</A></li>
+	<LI>Next message: <A HREF="004844.html">[Opensim-users] Hypergrid 1.5 jumps over 6K reproducible
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4843">[ date ]</a>
+              <a href="thread.html#4843">[ thread ]</a>
+              <a href="subject.html#4843">[ subject ]</a>
+              <a href="author.html#4843">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

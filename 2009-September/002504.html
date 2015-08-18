@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Help interpreting OpenSim crash console output
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%20interpreting%20OpenSim%20crash%20console%20output&In-Reply-To=%3C4A9FCA71.8050309%40cs.cmu.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002503.html">
+   <LINK REL="Next"  HREF="002505.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Help interpreting OpenSim crash console output</H1>
+    <B>Eric Riebling</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%20interpreting%20OpenSim%20crash%20console%20output&In-Reply-To=%3C4A9FCA71.8050309%40cs.cmu.edu%3E"
+       TITLE="[Opensim-users] Help interpreting OpenSim crash console output">er1k at cs.cmu.edu
+       </A><BR>
+    <I>Thu Sep  3 15:53:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002503.html">[Opensim-users] Opensim-users Digest, Vol 25, Issue 2
+</A></li>
+        <LI>Next message: <A HREF="002505.html">[Opensim-users] (no subject)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2504">[ date ]</a>
+              <a href="thread.html#2504">[ thread ]</a>
+              <a href="subject.html#2504">[ subject ]</a>
+              <a href="author.html#2504">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey, I've got an instance of OpenSim running on Ubuntu 9.04
+with MONO 2.0.1 (the default), ODE physics, and 
+MONO_THREADS_PER_CPU set to 50.  I experienced a crash right
+after someone sent an IM in-world, with this console report.
+(The last 2 lines keep repeating [&quot;New Thread...&quot;])
+
+I'm just seeking help interpreting the output, if it's possible
+to determine what might have gone wrong.  (Or an easy fix like
+using a different MONO or threads per cpu setting)
+
+Region (root) # Stacktrace:
+
+  at (wrapper managed-to-native) Ode.NET.d.WorldQuickStep (intptr,single) &lt;0x00004&gt;
+  at (wrapper managed-to-native) Ode.NET.d.WorldQuickStep (intptr,single) &lt;0xffffffff&gt;
+  at OpenSim.Region.Physics.OdePlugin.OdeScene.Simulate (single) &lt;0x01500&gt;
+  at OpenSim.Region.Framework.Scenes.SceneGraph.UpdatePhysics (double) &lt;0x00036&gt;
+  at OpenSim.Region.Framework.Scenes.Scene.Update () &lt;0x00456&gt;
+  at OpenSim.Region.Framework.Scenes.Scene.Heartbeat (object) &lt;0x0000b&gt;
+  at (wrapper runtime-invoke) System.Object.runtime_invoke_void__this___object (object,intptr,intptr,intptr) &lt;0xffffffff&gt;
+
+Native stacktrace:
+
+	mono [0x806d944]
+	mono [0x808616b]
+	[0xb7f02410]
+	./libode.so(_Z14dxQuickStepperP7dxWorldPKP6dxBodyiPKP7dxJointif+0x127c) [0xb5972f7c]
+	./libode.so(_Z16dxProcessIslandsP7dxWorldfPFvS0_PKP6dxBodyiPKP7dxJointifE+0x1bf) [0xb597c70f]
+	./libode.so(dWorldQuickStep+0x2e) [0xb596ea2e]
+	[0xb33427ba]
+	[0xb333f989]
+	[0xb333e45f]
+	[0xb333d457]
+	[0xb6413f7c]
+	[0xb640ee6e]
+	mono(mono_runtime_delegate_invoke+0x34) [0x80b8974]
+	mono [0x80f76bf]
+	mono [0x81653b6]
+	mono [0x8183355]
+	/lib/tls/i686/cmov/libpthread.so.0 [0xb7e114ff]
+	/lib/tls/i686/cmov/libc.so.6(clone+0x5e) [0xb7d6649e]
+
+Debug info from gdb:
+
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+(no debugging symbols found)
+[Thread debugging using libthread_db enabled]
+[New Thread 0xb7c4e6e0 (LWP 26391)]
+[New Thread 0xb1ee7b90 (LWP 31133)]
+...
+
+
+-- 
+Eric Riebling  GHC 6713,  LTI,   SCS,  CMU
+412.268.9872   <A HREF="http://www.cs.cmu.edu/~er1k">http://www.cs.cmu.edu/~er1k</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002503.html">[Opensim-users] Opensim-users Digest, Vol 25, Issue 2
+</A></li>
+	<LI>Next message: <A HREF="002505.html">[Opensim-users] (no subject)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2504">[ date ]</a>
+              <a href="thread.html#2504">[ thread ]</a>
+              <a href="subject.html#2504">[ subject ]</a>
+              <a href="author.html#2504">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

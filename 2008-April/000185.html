@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] bad prim, bad!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20bad%20prim%2C%20bad%21&In-Reply-To=%3C47F38BE9.9020603%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000183.html">
+   <LINK REL="Next"  HREF="000184.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] bad prim, bad!</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20bad%20prim%2C%20bad%21&In-Reply-To=%3C47F38BE9.9020603%40googlemail.com%3E"
+       TITLE="[Opensim-users] bad prim, bad!">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Apr  2 15:36:41 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000183.html">[Opensim-users] bad prim, bad!
+</A></li>
+        <LI>Next message: <A HREF="000184.html">[Opensim-users] OpenSim start up errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#185">[ date ]</a>
+              <a href="thread.html#185">[ thread ]</a>
+              <a href="subject.html#185">[ subject ]</a>
+              <a href="author.html#185">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Steve Salter wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i>   Brand new OpenSim user here, please excuse my vast ignorance! :) I'm 
+</I>&gt;<i> not very conversant with SecondLife either so that doubles my lack of 
+</I>&gt;<i> knowledge.
+</I>No problem - all I personally ask for is intelligent conversation :-)
+&gt;<i>
+</I>&gt;<i> I managed to create and load a terrain, create a new body and clothes, 
+</I>&gt;<i> and so on. Whee! I can FLY. :)
+</I>&gt;<i>
+</I>&gt;<i> This morning I tried adding a primitive, a cube. OpenSim crashed. When 
+</I>&gt;<i> I try to start it again this is what I get.
+</I>&gt;<i>
+</I>&gt;<i> ......
+</I>&gt;<i> 08:46:51 - [PARCEL]: Found master avatar 
+</I>&gt;<i> [d798683c-fe5d-42ed-b6a3-8229cfb7405f]
+</I>&gt;<i> 08:46:51 - [SCENE]: Loading objects from datastore
+</I>&gt;<i> 08:46:51 - [DATASTORE]: Loaded 1 prims for region: 
+</I>&gt;<i> 0a915de4-96b2-4229-9758-f66a9
+</I>&gt;<i> 1ad051c
+</I>&gt;<i> [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.NullReferenceException: Object reference not set to 
+</I>&gt;<i> an instanc
+</I>&gt;<i> e of an object.
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.Environment.Scenes.SceneObjectPart.ApplyPhysics(UInt32 root
+</I>&gt;<i> ObjectFlags, Boolean m_physicalPrim)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.Environment.Scenes.SceneObjectGroup.ApplyPhysics(Boolean m_
+</I>&gt;<i> physicalPrim)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.Environment.Scenes.Scene.LoadPrimsFromStorage(Boolean m_per
+</I>&gt;<i> missions, LLUUID regionID)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.ClientStack.RegionApplicationBase.SetupScene(RegionInfo reg
+</I>&gt;<i> ionInfo, Int32 proxyOffset, UDPServer&amp; udpServer, Boolean m_permissions)
+</I>&gt;<i>    at OpenSim.OpenSimMain.CreateRegion(RegionInfo regionInfo, Boolean 
+</I>&gt;<i> portadd_fl
+</I>&gt;<i> ag)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.Initialise(OpenSi
+</I>&gt;<i> mMain openSim)
+</I>&gt;<i>    at OpenSim.OpenSimMain.StartUp()
+</I>&gt;<i>    at OpenSim.Application.Main(String[] args)
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>&gt;<i> How do I fix this? Is there a sqllite &quot;db&quot; file I can edit to remove 
+</I>&gt;<i> the prim, if it was inserted improperly into a table?  Do I need to 
+</I>&gt;<i> rebuild from the SVN and start over?
+</I>&gt;<i>
+</I>Does sound like some kind of corruption.  The short term solution is to 
+simply delete the OpenSim.db table which is where OpenSim stores all its 
+region data.  OpenSim will automatically recreate it on startup.
+
+If it happens again, please could you capture the original exception 
+when you tried to store the prim and Mantis 
+(<A HREF="http://opensimulator.org/mantis">http://opensimulator.org/mantis</A>) it?  This will help us track down what 
+the issue is.
+&gt;<i> By the way, is this the proper list to address such questions to?  I 
+</I>&gt;<i> generally try to resolve things myself until I run totally out of 
+</I>&gt;<i> options and ideas.
+</I>I think this list is fine, though for failure cases such as this you 
+might want to go to opensim-dev (or alternatively, post a bug on Mantis).
+
+--
+justincc
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000183.html">[Opensim-users] bad prim, bad!
+</A></li>
+	<LI>Next message: <A HREF="000184.html">[Opensim-users] OpenSim start up errors
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#185">[ date ]</a>
+              <a href="thread.html#185">[ thread ]</a>
+              <a href="subject.html#185">[ subject ]</a>
+              <a href="author.html#185">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,253 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [Opensim-dev] some scalability tests...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20some%20scalability%20tests...&In-Reply-To=%3C7e8b2c181001262358r28764697h8a31ac6b67cae2d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003601.html">
+   <LINK REL="Next"  HREF="003595.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [Opensim-dev] some scalability tests...</H1>
+    <B>Mic Bowman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20some%20scalability%20tests...&In-Reply-To=%3C7e8b2c181001262358r28764697h8a31ac6b67cae2d%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] [Opensim-dev] some scalability tests...">cmickeyb at gmail.com
+       </A><BR>
+    <I>Wed Jan 27 08:58:02 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003601.html">[Opensim-users] Very Unofficial OpenSim London Meetup - Meetups in	General
+</A></li>
+        <LI>Next message: <A HREF="003595.html">[Opensim-users] [Opensim-dev] some scalability tests...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3594">[ date ]</a>
+              <a href="thread.html#3594">[ thread ]</a>
+              <a href="subject.html#3594">[ subject ]</a>
+              <a href="author.html#3594">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>final entry on this...
+
+we seem to have found a combination of settings, execution environment, and
+changes to opensim that give us a reasonably stable experience (there is
+nothing &quot;normal&quot; about feeding the viewer 100 regions to render so keep it
+all in perspective, its most likely going to break if you hang out there
+long enough :-)...
+
+* we got rid of the megaregions. we wanted a &quot;many&quot; region view that we get
+with megaregons, but we didn't need the multi-region physics. we also found
+that megaregions next to megaregions have some very painful effects on
+border crossings especially going west &amp; south. and big megaregions are
+worse (as far as i could tell, the viewer thinks it doesn't have connections
+outside its 10x10 range and the sim thinks the viewer already has the
+connection and then weird stuff happens when the region actually comes in
+view). instead of the megaregions we hacked opensim to give out all of the
+regions within 5 coordinates of the current region (which seems to be the
+max the viewer can handle). that works out to about 100 regions that are
+visible. the change we made for the test isn't particularly useful in
+general, but i think we can try to get the viewers far clip distance to set
+the number of regions to send back.
+
+* 64 bit was causing all kinds of problems with the jpeg decoder (no
+surprise). given that the only jpeg being decoded was the map image, there
+might be something in the way the map is created that causes the problems.
+Regardless... given that every time you opened the map view in the viewer,
+the region would grab you and not let go (no further TPs, no border
+crossings, etc) it seemed like we needed a different solution. so now we're
+running 16 simulators, each 8x8 for a 64 regions per simulator and we're
+using the 32 bit launcher to force it to stay in 32 bit mode.
+
+* another thing that caused problems at times was the number of mysql
+connections. increasing the number of simulators increases the number of
+connections. db contention was causing some bad problems on startup... we
+haven't dug into the root cause. instead, we've changed to use an
+alternative mysql connection management solution that uses mysql connection
+pooling. that seemed to get us past the initial problems (yeah... you can
+always up the mysql connections... but more efficient use of the connections
+seems like a good idea). john's working on a patch against the current
+opensim master for that code.
+
+at any rate... it works. and for proof here's a picture of yellowstone
+national park from the top of one of the mountains on the eastern side of
+the park:
+<A HREF="http://www.sciencesim.com/wiki/lib/exe/fetch.php/yellowstone.png">http://www.sciencesim.com/wiki/lib/exe/fetch.php/yellowstone.png</A>
+
+(or come see it on the scisim grid.., search for the &quot;geography&quot; regions on
+the map)
+
+--mic
+
+
+
+
+On Fri, Jan 22, 2010 at 6:01 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+
+&gt;<i> +100! Really great that Intel is pushing the performance limits...
+</I>&gt;<i>
+</I>&gt;<i> Diva
+</I>&gt;<i> (coming home from an event in the university that had lots of local
+</I>&gt;<i> industry, including gaming industry, even more convinced that the key
+</I>&gt;<i> piece that is missing in all of it, for the longest time, is... an open
+</I>&gt;<i> source MMO platform that *everyone* can explore with)
+</I>&gt;<i>
+</I>&gt;<i> Kyle wrote:
+</I>&gt;<i> &gt; Fantastic work Intel!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; *From:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev-bounces at lists.berlios.de</A>
+</I>&gt;<i> &gt; [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev-bounces at lists.berlios.de</A>] *On Behalf Of *Mic Bowman
+</I>&gt;<i> &gt; *Sent:* Friday, January 22, 2010 7:19 PM
+</I>&gt;<i> &gt; *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev at lists.berlios.de</A>; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">scisim-discuss at googlegroups.com</A>
+</I>&gt;<i> &gt; *Subject:* Re: [Opensim-dev] some scalability tests...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Grid mode. Connected to SciSim. Thanks to some help from Brian, we put
+</I>&gt;<i> &gt; the Yellowstone National Park terrain on it today. I think Brian said it
+</I>&gt;<i> &gt; works out to about a 1:10 scale. With the far view distance its pretty
+</I>&gt;<i> &gt; impressive (terrain textures are borked). The performance is terrible,
+</I>&gt;<i> &gt; but good enough to look around some. Even a completely empty region
+</I>&gt;<i> &gt; consumes resources and 1000 of them consume a LOT of resources. If you
+</I>&gt;<i> &gt; come over to sciencesim, look for &quot;geography11 00&quot;. I'll probably be
+</I>&gt;<i> &gt; restarting the regions to get the map tiles updated &amp; i'm not making any
+</I>&gt;<i> &gt; promises to keep it up very long. But it does make for a very neat
+</I>&gt;<i> &gt; demonstration and its been a very useful experiment.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --mic
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Fri, Jan 22, 2010 at 3:27 AM, Impalah Shenzhou &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A>
+</I>&gt;<i> &gt; &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Just a stupid silly question: standalone or grid mode? If grid: where
+</I>&gt;<i> &gt; were the ugaim servers? Same machine?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; And a comment: 1024 regions? 8 hours for booting? Weird!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 2010/1/22 Mic Bowman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cmickeyb at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cmickeyb at gmail.com</A>&gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; this is just fyi... and a very positive comment about how far opensim
+</I>&gt;<i> &gt; has come in recent months!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; as part of sizing the hw requirements for a mirror world project we're
+</I>&gt;<i> &gt; exploring... we wanted to do some scalability tests on the capacity of
+</I>&gt;<i> &gt; individual simulators in terms of the total number of regions. we wanted
+</I>&gt;<i> &gt; baseline numbers that focus on just the most simple region
+</I>&gt;<i> &gt; configuration: a completely empty region with default terrain. that
+</I>&gt;<i> &gt; is... this is JUST simulator overhead.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; all tests are done on one of our blades... dual proc, quad core with 16G
+</I>&gt;<i> &gt; ram running 64bit ubuntu. mono 2.6. and the tests are hosting 1024
+</I>&gt;<i> &gt; regions in a 32x32 grid. the simulator configuration was our standard
+</I>&gt;<i> &gt; sciencesim config (XEngine, ODE, groups, wind, sun, etc).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; the first configuration ran all 1024 regions in *one* simulator. i
+</I>&gt;<i> &gt; honestly figured this would crash quickly. it didn't. we managed to get
+</I>&gt;<i> &gt; all 1024 regions created and running well enough to walk around. it did
+</I>&gt;<i> &gt; take almost 8 hours to start. the first couple regions were created in
+</I>&gt;<i> &gt; 1-2 seconds each. by the end, it was taking 4-5 minutes per region.
+</I>&gt;<i> &gt; clearly there is something quadratic in there (stop using linear lists,
+</I>&gt;<i> &gt; they are evil! :-). but it could have been the mono garbage collector.
+</I>&gt;<i> &gt; who knows... not sure its worth too much investigation because i can't
+</I>&gt;<i> &gt; imagine ever running a config like this for real. the simulator did
+</I>&gt;<i> &gt; crash when we opened the map in the viewer. the crash was caused because
+</I>&gt;<i> &gt; we ran out of sockets. while it was running, the simulator used just
+</I>&gt;<i> &gt; over 10G of ram and was running at about 700% CPU utilization (kind of
+</I>&gt;<i> &gt; scary to see load averages in the 900 range!).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; the second configuration ran 16 simulators each with 64 regions. startup
+</I>&gt;<i> &gt; took about 30 minutes (each of the 16 simulators avoided the quadratic
+</I>&gt;<i> &gt; &quot;knee&quot; we hit with the one big simulator). consumed about 11G of memory
+</I>&gt;<i> &gt; and was again consuming essentially all cycles on the machine
+</I>&gt;<i> &gt; (completely idle regions aren't very idle). all 16 simulators died just
+</I>&gt;<i> &gt; after startup with a &quot;too many open files&quot; error. not sure what caused
+</I>&gt;<i> &gt; it, but all of them died loading the same terrain dll as part of some
+</I>&gt;<i> &gt; wildcard function looking for dlls. that one is an interesting bug.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; the final configuration and the one we're shooting for in the short term
+</I>&gt;<i> &gt; runs 16 simulators, each with an 8x8 megaregion. again startup was
+</I>&gt;<i> &gt; around 40 minutes. we might be able to cut that time down by starting
+</I>&gt;<i> &gt; all 16 simulators simultaneously rather than 4 at a time. i really just
+</I>&gt;<i> &gt; wanted to make sure that some of the spikes we see in startup didn't
+</I>&gt;<i> &gt; cause failures (some race condition causes all threads to consume
+</I>&gt;<i> &gt; maximum processor cycles randomly on startup right now). and, well... it
+</I>&gt;<i> &gt; just worked. i figured the viewer would die horribly (it can't handle
+</I>&gt;<i> &gt; 250K &quot;real&quot; prims very well) but it survived just fine. turn off far
+</I>&gt;<i> &gt; clip with 8x8 megaregions providing neighbors and you are &quot;capable&quot; of
+</I>&gt;<i> &gt; contacting simulators in a 24x24 region range!. the view is pretty cool
+</I>&gt;<i> &gt; though it seems to not go beyond 12x12. :-) there are a bunch of
+</I>&gt;<i> &gt; problems (like you can't see the terrain in the region you're standing
+</I>&gt;<i> &gt; in)... but there are a LOT of little humps of terrain in view. oh... and
+</I>&gt;<i> &gt; it takes a lot of patience to get everything loaded.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; so... the conclusion... this opensim thing is pretty amazing! good work
+</I>&gt;<i> &gt; everyone.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --mic
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-dev mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>&gt;
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-dev mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>&gt;
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; No virus found in this incoming message.
+</I>&gt;<i> &gt; Checked by AVG - www.avg.com
+</I>&gt;<i> &gt; Version: 9.0.730 / Virus Database: 271.1.1/2638 - Release Date: 01/22/10
+</I>&gt;<i> &gt; 14:33:00
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ------------------------------------------------------------------------
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-dev mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-dev mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100126/4706f858/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100126/4706f858/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003601.html">[Opensim-users] Very Unofficial OpenSim London Meetup - Meetups in	General
+</A></li>
+	<LI>Next message: <A HREF="003595.html">[Opensim-users] [Opensim-dev] some scalability tests...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3594">[ date ]</a>
+              <a href="thread.html#3594">[ thread ]</a>
+              <a href="subject.html#3594">[ subject ]</a>
+              <a href="author.html#3594">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

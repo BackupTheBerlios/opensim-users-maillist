@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MySQL query and number of agents online
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20query%20and%20number%20of%20agents%20online&In-Reply-To=%3C803E32EF-41FC-4BB9-B0DD-61CFFAFDBCBC%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009630.html">
+   <LINK REL="Next"  HREF="009632.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MySQL query and number of agents online</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20query%20and%20number%20of%20agents%20online&In-Reply-To=%3C803E32EF-41FC-4BB9-B0DD-61CFFAFDBCBC%40gmail.com%3E"
+       TITLE="[Opensim-users] MySQL query and number of agents online">cliveg at gmail.com
+       </A><BR>
+    <I>Sat Mar  3 15:41:49 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009630.html">[Opensim-users] MySQL query and number of agents online
+</A></li>
+        <LI>Next message: <A HREF="009632.html">[Opensim-users] MySQL query and number of agents online
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9631">[ date ]</a>
+              <a href="thread.html#9631">[ thread ]</a>
+              <a href="subject.html#9631">[ subject ]</a>
+              <a href="author.html#9631">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've created a simple Linux bash shell script that generated a Web page containing some basic simulator/server statistics
+
+This was purely to keep an eye on the simulator/server to make sure it was still running ;)
+
+Let me know if you have comand line access to a Linux server and would like a copy of the script
+
+
+Sent from my iPhone
+
+On 3 Mar 2012, at 14:15, InuYasha Meiji &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt; wrote:
+
+&gt;<i> Wow, that sound great.  But, I am a bit of a dummy to php and that sort of thing.  Is there a way to take this info and add a small window to a web page on my apache server to show how many people are currently online or maybe even who??
+</I>&gt;<i> 
+</I>&gt;<i> I am not a php programmer and not sure how to use php to query my database the way you describe.  I am tring to keep my grid using the root and what is available from opensimulator.org and its modules, without going to Diva or simian, but would like a nice web stats display on my web site.  Anything like this would be great help.
+</I>&gt;<i> 
+</I>&gt;<i> Thanks all of you for your time, I wish I could show more how much I appreciate all you have been doing with this project.
+</I>&gt;<i> InuYasha.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On 3/3/2012 6:08 AM, Clive Gould wrote:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> After a number of postings to the OpenSim forums (thanks especially to
+</I>&gt;&gt;<i> Diva and Justin) the fix was to get the standalone simulator to create
+</I>&gt;&gt;<i> and use a presence table, which could be queried.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> This was achieved by adding the following three lines to
+</I>&gt;&gt;<i> StandaloneCommon.ini and restarting the simulator:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> [PresenceService]
+</I>&gt;&gt;<i> StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;&gt;<i> ConnectionString = &quot;Data Source=localhost;Database=opensim;User
+</I>&gt;&gt;<i> ID=xxxx;password=yyyy;&quot;
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> The following SQL query then successfully returned the names of users
+</I>&gt;&gt;<i> currently online:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> select a.firstname, a.lastname from opensim.UserAccounts a,
+</I>&gt;&gt;<i> opensim.Presence b where a.principalid = b.userid
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> ________________________________________________________________
+</I>&gt;<i> Opensim User: Standalone Grid on Version 0.7.2 with 56 Regions
+</I>&gt;<i> on Windows 7, 64-bit. Phenom 9500 2.2 ghz Quad Core, Terabyte Hard 
+</I>&gt;<i> Drive, 8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+</I>&gt;<i> and MySQL 5.1.41-community edition.  Groups, Profiles, Voice and 
+</I>&gt;<i> Offline Mesages all working.
+</I>&gt;<i> ________________________________________________________________
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120303/77368288/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120303/77368288/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009630.html">[Opensim-users] MySQL query and number of agents online
+</A></li>
+	<LI>Next message: <A HREF="009632.html">[Opensim-users] MySQL query and number of agents online
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9631">[ date ]</a>
+              <a href="thread.html#9631">[ thread ]</a>
+              <a href="subject.html#9631">[ subject ]</a>
+              <a href="author.html#9631">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

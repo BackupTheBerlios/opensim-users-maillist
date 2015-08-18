@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NAT &amp; Corporate Firewall
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3CBANLkTi%3DF1pTK1aOcNgSK1L38rR0%3D%3D5zZRg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006980.html">
+   <LINK REL="Next"  HREF="006941.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NAT &amp; Corporate Firewall</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3CBANLkTi%3DF1pTK1aOcNgSK1L38rR0%3D%3D5zZRg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] NAT &amp; Corporate Firewall">fleep513 at gmail.com
+       </A><BR>
+    <I>Fri Apr  1 15:44:38 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006980.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+        <LI>Next message: <A HREF="006941.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6940">[ date ]</a>
+              <a href="thread.html#6940">[ thread ]</a>
+              <a href="subject.html#6940">[ subject ]</a>
+              <a href="author.html#6940">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry I haven't replied in a few days, had an inconvenient office move in
+the middle of all this.
+
+Justin wrote:
+
+*Confusingly, the 'internal port' is used for both the internal UDP listener
+and is passed to the client as the external connection port.*
+*
+*
+It sounds like this might be part of the problem with our campus set up.  I
+couldn't figure out where the client was even getting the 10.23.23.x
+internal address to send packets to, but it appears that if I leave the
+default InternalAddress = 0.0.0.0 in the region.ini file, then somehow that
+is passed to the off-campus client as the internal IP, which of course
+doesn't work.
+
+Will consult with the NOC again with this latest information and many thanks
+to all for helping shed light on this.
+
+Sincerely,
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL: Fleep Tuque)
+Project Manager, UC Second Life
+Second Life Ambassador, Ohio Learning Network
+UCit Instructional &amp; Research Computing
+University of Cincinnati
+406E Zimmer Hall
+PO Box 210088
+Cincinnati, OH 45221-0088
+(513)556-3018
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+
+UC Second Life:   <A HREF="http://homepages.uc.edu/secondlife">http://homepages.uc.edu/secondlife</A>
+OLN Second Life: <A HREF="http://www.oln.org/emerging_technologies/emtech.php">http://www.oln.org/emerging_technologies/emtech.php</A>
+
+
+
+On Thu, Mar 31, 2011 at 7:43 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> From my understanding of the code, using 0.0.0.0 will make the UDP listen
+</I>&gt;<i> to the 'most appropriate' IP address as assigned to the server's NICs (see
+</I>&gt;<i> <A HREF="http://msdn.microsoft.com/en-us/library/system.net.sockets.socket.bind.aspx,">http://msdn.microsoft.com/en-us/library/system.net.sockets.socket.bind.aspx,</A>
+</I>&gt;<i> IPAddress.Any = 0.0.0.0).
+</I>&gt;<i>
+</I>&gt;<i> On a machine with just one NIC this should be fine.  But on a machine with
+</I>&gt;<i> two NICs I'm guessing you would really want to explicitly state the right
+</I>&gt;<i> address.
+</I>&gt;<i>
+</I>&gt;<i> The internal address is used to bind the UDP listener.  However, the client
+</I>&gt;<i> is told to connect to the external host name (if this or the port is
+</I>&gt;<i> incorrect then the client connection will timeout on the 'connecting to
+</I>&gt;<i> region' bit).
+</I>&gt;<i>
+</I>&gt;<i> Confusingly, the 'internal port' is used for both the internal UDP listener
+</I>&gt;<i> and is passed to the client as the external connection port.
+</I>&gt;<i>
+</I>&gt;<i> Some people on Stack Overflow think that IPAddress.Any means listen on all
+</I>&gt;<i> NICs (
+</I>&gt;<i> <A HREF="http://stackoverflow.com/questions/1777629/how-to-listen-on-multiple-ip-addresses">http://stackoverflow.com/questions/1777629/how-to-listen-on-multiple-ip-addresses</A>).
+</I>&gt;<i>  But my reading of the MS SDK reference above means that it only binds to
+</I>&gt;<i> one.  Anybody able to comment on this?
+</I>&gt;<i>
+</I>&gt;<i> And does anybody actually use a non 0.0.0.0 internal address and in what
+</I>&gt;<i> context?  I'd really like to clear up my understanding of this so that we
+</I>&gt;<i> can improve the instructions.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 30/03/11 17:28, Adelle Fitzgerald wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> As I understand it, that is used for binding opensim to a specific IP
+</I>&gt;&gt;<i> address, where the opensim server may have more than one IP address on a
+</I>&gt;&gt;<i> network interface or multiple network interfaces.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 0.0.0.0 = listen on all available IP addresses, or specify (bind) to a
+</I>&gt;&gt;<i> specific IP address.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Edmund
+</I>&gt;&gt;<i> Edgar
+</I>&gt;&gt;<i> Sent: 30 March 2011 17:16
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] NAT&amp;  Corporate Firewall
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This probably won't help Fleep, but does anyone know what this
+</I>&gt;&gt;<i> broken-Englished sentence on the wiki is supposed to say?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # Internal IP address - This should always be 0.0.0.0 (0.0.0.0 means
+</I>&gt;&gt;<i> &quot;listen for connections on any interface&quot;, basically a wildcard) if
+</I>&gt;&gt;<i> you want to access this server from the internet or another server on
+</I>&gt;&gt;<i> your internal network, this should be the IP address assigned to the
+</I>&gt;&gt;<i> OpenSim Server.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/wiki/Configuration">http://opensimulator.org/wiki/Configuration</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110401/41e4ed74/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110401/41e4ed74/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006980.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+	<LI>Next message: <A HREF="006941.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6940">[ date ]</a>
+              <a href="thread.html#6940">[ thread ]</a>
+              <a href="subject.html#6940">[ subject ]</a>
+              <a href="author.html#6940">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

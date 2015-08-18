@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Exception rethrown at [0]:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Exception%20rethrown%20at%20%5B0%5D%3A&In-Reply-To=%3C6AE63A1D-9F2B-4E5C-95BE-A19CCA223DD2%40gwynethllewelyn.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010732.html">
+   <LINK REL="Next"  HREF="010744.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Exception rethrown at [0]:</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Exception%20rethrown%20at%20%5B0%5D%3A&In-Reply-To=%3C6AE63A1D-9F2B-4E5C-95BE-A19CCA223DD2%40gwynethllewelyn.net%3E"
+       TITLE="[Opensim-users] Exception rethrown at [0]:">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Mon Aug 13 16:02:33 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010732.html">[Opensim-users] Exception rethrown at [0]:
+</A></li>
+        <LI>Next message: <A HREF="010744.html">[Opensim-users] List of banned viewers for config files?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10737">[ date ]</a>
+              <a href="thread.html#10737">[ thread ]</a>
+              <a href="subject.html#10737">[ subject ]</a>
+              <a href="author.html#10737">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hiya :)
+
+Well, two things. When starting, OpenSim *usually* tells you what scripts it is loading. If not, can try to open OpenSim.ini and change
+
+	DeleteScriptsOnStartup = true
+
+This should load the script and recompile it. This may make a difference: you *might* have the script compiled for a previous version of OpenSim, or the compiled version might be corrupted, so this should get it working again.
+
+If not, at least the logs *should* give you the script's name.
+
+if not, you might put the logging into a more chatty mode. This is done on OpenSim.exe.config and looking for:
+
+	&lt;level value=&quot;DEBUG&quot; /&gt;
+
+or whatever your level is set to, and set it to ALL for example (see <A HREF="http://opensimulator.org/wiki/Logging">http://opensimulator.org/wiki/Logging</A> for a list of possible options), and restart OpenSim. Note that some versions of OpenSim have different logging levels for scripts (usually just INFO) and for the remaining things (normally DEBUG); you can try to set both to ALL to see if it helps you locate the faulty script.
+
+With DEBUG level for scripts I get entries like this, every time a script is launched after OpenSim is reset, I get an entry like this:
+
+OpenSim.BetaTech.log.2012-08-03:2012-08-03 15:33:14,214 DEBUG - OpenSim.Region.ScriptEngine.XEngine.XEngine [XEngine] Loaded script HyperGate v0.7.3 (TheHyperGates.com).monitor, item UUID 32add6b2-3897-45bc-8580-395f05da7222, prim UUID 18d185d4-fe4a-44fb-91e2-3f3fbdd76816 @ &lt;148.5385, 231.8452, 32.0867&gt;.Beta Technologies
+
+This identifies the script name: &quot;HyperGate v0.7.3 (TheHyperGates.com)&quot; in my case, and also tells me which prim is loading it.
+
+If you're good at doing MySQL queries, you could theoretically figure out the prim's name, launch OpenSim with scripts turned off, locate that prim, delete the contents, then turn scripts on again, and relaunch &#8212; your problem should have been gone :)
+
+Oh, last but not least. You MIGHT have os* functions turned off in scripts. I'm not sure if this will give an error when scripts try to use those functions. Since you're not aware of the script, I wonder where you got it from, or who knows what it's actually doing; not all os* functions are &quot;safe&quot;.
+
+You could try to check on OpenSim.ini for:
+
+[XEngine]
+...
+	AllowOSFunctions = true
+
+but set the threat level to
+
+	OSFunctionThreatLevel = VeryLow
+
+or even
+
+	OSFunctionThreatLevel = None
+
+osSetDynamicTextureURL() has a threat level of VeryLow, so setting &quot;None&quot; should prevent it from being loaded anyway.
+
+Good luck tracking this down!
+
+	- Gwyn
+
+
+On 13/08/2012, at 11:43, oztrout63 wrote:
+
+&gt;<i> If i get it back ... 
+</I>&gt;<i> How would i delete that script ... ?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Mon, 2012-08-13 at 11:06 +0100, Gwyneth Llewelyn wrote:
+</I>&gt;&gt;<i> Hi Oz,
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> That seems to be coming from a script &#8212; the error is being thrown by the function osSetDynamicTextureURL(), I believe.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> If you delete that script, does the error go away?
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 	- Gwyn
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> On 13/08/2012, at 04:51, oztrout63 wrote:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> &gt; Hello Everyone ...
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> &gt; I would like to thank you all for the great work everyone is doing ...
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> &gt; My problem is that i keep get this message in my consol here ...
+</I>&gt;&gt;<i> &gt; And it just keeps repeating ...
+</I>&gt;&gt;<i> &gt; Im running 7.3.1 opensimulater ...
+</I>&gt;&gt;<i> &gt; Any have any ideas ...
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> &gt; Thank you ...
+</I>&gt;&gt;<i> &gt; Reguards ...
+</I>&gt;&gt;<i> &gt; Oztrout
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> &gt; Exception rethrown at [0]: 
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> &gt;   at (wrapper xdomain-invoke) OpenSim.Region.ScriptEngine.Shared.Api.OSSL_Api:osSetDynamicTextureURL (string,string,string,string,int)
+</I>&gt;&gt;<i> &gt;   at OpenSim.Region.ScriptEngine.Shared.ScriptBase.ScriptBaseClass.osSetDynamicTextureURL (System.String dynamicID, System.String contentType, System.String url, System.String extraParams, Int32 timer) [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;&gt;<i> &gt;   at SecondLife.Script.ShowEvent (LSLInteger row) [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;&gt;<i> &gt;   at SecondLife.Script.default_event_http_response (LSLString id, LSLInteger status, OpenSim.Region.ScriptEngine.Shared.list meta, LSLString body) [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;&gt;<i> &gt;   at (wrapper managed-to-native) System.Reflection.MonoMethod:InternalInvoke (object,object[],System.Exception&amp;)
+</I>&gt;&gt;<i> &gt;   at System.Reflection.MonoMethod.Invoke (System.Object obj, BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;&gt;<i> &gt;   --- End of inner exception stack trace ---
+</I>&gt;&gt;<i> &gt;   at (wrapper xdomain-invoke) OpenSim.Region.ScriptEngine.Shared.ScriptBase.ScriptBaseClass:ExecuteEvent (string,string,object[])
+</I>&gt;&gt;<i> &gt;   at OpenSim.Region.ScriptEngine.Shared.Instance.ScriptInstance.EventProcessor () [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> &gt; 
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;<i> 
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 4917 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120813/85ba1c1e/attachment.bin">https://lists.berlios.de/pipermail/opensim-users/attachments/20120813/85ba1c1e/attachment.bin</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010732.html">[Opensim-users] Exception rethrown at [0]:
+</A></li>
+	<LI>Next message: <A HREF="010744.html">[Opensim-users] List of banned viewers for config files?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10737">[ date ]</a>
+              <a href="thread.html#10737">[ thread ]</a>
+              <a href="subject.html#10737">[ subject ]</a>
+              <a href="author.html#10737">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

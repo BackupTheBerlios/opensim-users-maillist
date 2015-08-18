@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 'Access to the path &quot;/&quot; is denied' errors when trying to run OpenSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%27Access%20to%20the%20path%20%22/%22%20is%20denied%27%20errors%20when%0A%20trying%20to%20run%20OpenSim&In-Reply-To=%3C1385230173944-7580689.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012912.html">
+   <LINK REL="Next"  HREF="012870.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 'Access to the path &quot;/&quot; is denied' errors when trying to run OpenSim</H1>
+    <B>EGBainbridge/Apollo Manga</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%27Access%20to%20the%20path%20%22/%22%20is%20denied%27%20errors%20when%0A%20trying%20to%20run%20OpenSim&In-Reply-To=%3C1385230173944-7580689.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] 'Access to the path &quot;/&quot; is denied' errors when trying to run OpenSim">tamrider at frodo.tv
+       </A><BR>
+    <I>Sat Nov 23 19:09:34 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012912.html">[Opensim-users] Setup for Use Profiles
+</A></li>
+        <LI>Next message: <A HREF="012870.html">[Opensim-users] 'Access to the path &quot;/&quot; is denied' errors when trying to run OpenSim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12869">[ date ]</a>
+              <a href="thread.html#12869">[ thread ]</a>
+              <a href="subject.html#12869">[ subject ]</a>
+              <a href="author.html#12869">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm trying to install OpenSim 0.7.6 on a client computer.  It's my fourth
+OpenSim installation but the first time I've had problems like this.
+
+When I download the binary and try running &quot;mono OpenSim.exe&quot;, I keep
+getting the error  'Access to the path &quot;/&quot; is denied.'   I've also tried
+OpenSim 0.7.5 and get the same error.  It appears to be either in or
+immediately after reading OpenSimDefaults.ini.  
+
+I've also tried building from 0.7.6 source and I get the same 'Access to the
+path &quot;/&quot; is denied.' in xbuild.sh.  
+
+I'm using Mono 3.2.3 and Centos Linux 2.6.18-238.12.1.el5 (Red Hat
+4.1.2-50).  I don't have direct access to the computer - I'm working through
+cpanel and putty.
+
+If anyone has a clue to what I'm overlooking or doing wrong, I'll appreciate
+any suggestions.
+
+Here is the output I get when I run &quot;mono OpenSim.exe&quot;:
+
+10:00:55 - [OPENSIM MAIN]: configured log4net using default
+OpenSim.exe.config
+10:00:55 - [OPENSIM MAIN]: System Locale is
+10:00:55 - [OPENSIM MAIN]: Environment variable MONO_THREADS_PER_CPU is
+unset
+10:00:55 - [OPENSIM MAIN]: Runtime gave us 8 min worker threads and 16 min
+IOCP threads
+10:00:55 - [OPENSIM MAIN]: Runtime gave us 800 max worker threads and 32 max
+IOCP threads
+10:00:55 - [OPENSIM MAIN]: Bumping up max IOCP threads to 1000
+10:00:55 - [OPENSIM MAIN]: Threadpool set to 800 max worker threads and 1000
+max IOCP threads
+10:00:55 - [OPENSIM MAIN]: Environment is supported by OpenSimulator.
+10:00:55 - [CONFIG]: Reading configuration settings
+10:00:55 - [CONFIG]: Reading configuration file
+/home/halflife/opensim/opensim-0.7.6/bin/OpenSimDefaults.ini
+10:00:55 - [APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.UnauthorizedAccessException: Access to the path &quot;/&quot; is
+denied.
+  at System.IO.Directory.GetFileSystemEntries (System.String path,
+System.String searchPattern, FileAttributes mask, FileAttributes attrs)
+[0x00000] in &lt;filename unknown&gt;:0
+  at System.IO.Directory.GetDirectories (System.String path, System.String
+searchPattern) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Framework.Util.Glob (System.String path) [0x00000] in &lt;filename
+unknown&gt;:0
+  at OpenSim.ConfigurationLoader.AddIncludes
+(System.Collections.Generic.List`1 sources) [0x00000] in &lt;filename
+unknown&gt;:0
+  at OpenSim.ConfigurationLoader.LoadConfigSettings (IConfigSource
+argvSource, Nini.Config.EnvConfigSource envConfigSource,
+OpenSim.Framework.ConfigSettings&amp; configSettings,
+OpenSim.Framework.NetworkServersInfo&amp; networkInfo) [0x00000] in &lt;filename
+unknown&gt;:0
+  at OpenSim.OpenSimBase.LoadConfigSettings (IConfigSource configSource)
+[0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.OpenSimBase..ctor (IConfigSource configSource) [0x00000] in
+&lt;filename unknown&gt;:0
+  at OpenSim.OpenSim..ctor (IConfigSource configSource) [0x00000] in
+&lt;filename unknown&gt;:0
+  at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename
+unknown&gt;:0
+
+Application is terminating: True
+[ERROR] FATAL UNHANDLED EXCEPTION: System.UnauthorizedAccessException:
+Access to the path &quot;/&quot; is denied.
+  at System.IO.Directory.GetFileSystemEntries (System.String path,
+System.String searchPattern, FileAttributes mask, FileAttributes attrs)
+[0x00000] in &lt;filename unknown&gt;:0
+  at System.IO.Directory.GetDirectories (System.String path, System.String
+searchPattern) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Framework.Util.Glob (System.String path) [0x00000] in &lt;filename
+unknown&gt;:0
+  at OpenSim.ConfigurationLoader.AddIncludes
+(System.Collections.Generic.List`1 sources) [0x00000] in &lt;filename
+unknown&gt;:0
+  at OpenSim.ConfigurationLoader.LoadConfigSettings (IConfigSource
+argvSource, Nini.Config.EnvConfigSource envConfigSource,
+OpenSim.Framework.ConfigSettings&amp; configSettings,
+OpenSim.Framework.NetworkServersInfo&amp; networkInfo) [0x00000] in &lt;filename
+unknown&gt;:0
+  at OpenSim.OpenSimBase.LoadConfigSettings (IConfigSource configSource)
+[0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.OpenSimBase..ctor (IConfigSource configSource) [0x00000] in
+&lt;filename unknown&gt;:0
+  at OpenSim.OpenSim..ctor (IConfigSource configSource) [0x00000] in
+&lt;filename unknown&gt;:0
+  at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename
+unknown&gt;:0
+
+
+
+
+
+-----
+ Apollo Manga (Erik Gordon Bainbridge) 
+ Writer, instructor, former software engineer 
+ Northern California 
+ ErikBainbridge.com 
+ VirtualMarin.com 
+--
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Access-to-the-path-is-denied-errors-when-trying-to-run-OpenSim-tp7580689.html">http://opensim-users.2152040.n2.nabble.com/Access-to-the-path-is-denied-errors-when-trying-to-run-OpenSim-tp7580689.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012912.html">[Opensim-users] Setup for Use Profiles
+</A></li>
+	<LI>Next message: <A HREF="012870.html">[Opensim-users] 'Access to the path &quot;/&quot; is denied' errors when trying to run OpenSim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12869">[ date ]</a>
+              <a href="thread.html#12869">[ thread ]</a>
+              <a href="subject.html#12869">[ subject ]</a>
+              <a href="author.html#12869">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%20r/17830&In-Reply-To=%3C4F191D4C.8070102%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009101.html">
+   <LINK REL="Next"  HREF="009107.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sensors are not detecting NPC avatars on git r/17830</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%20r/17830&In-Reply-To=%3C4F191D4C.8070102%40cox.net%3E"
+       TITLE="[Opensim-users] Sensors are not detecting NPC avatars on git r/17830">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Fri Jan 20 08:52:44 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009101.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+        <LI>Next message: <A HREF="009107.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9106">[ date ]</a>
+              <a href="thread.html#9106">[ thread ]</a>
+              <a href="subject.html#9106">[ subject ]</a>
+              <a href="author.html#9106">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Now that I know there is an NPC constant I can see where this would be 
+an advantage :) I had previously thought that NPC detection was just 
+completely disabled. I was able to get the sensor to detect both AGENT 
+and NPC by means of a bitwise OR ( llSensor(&quot;&quot;, NULL_KEY, AGENT | NPC, 
+scan_radius, PI); ) which is exactly what I was looking for.
+
+In my scripts that utilize sensors I always either tell the script to 
+hard limit at the 12 (if using a simple menu system to show the output) 
+closest avatars / whatever other type I've picked, so as not to  or I 
+will utilize a more advanced menu that is capable of handling more than 
+12 buttons at a time. Since the sensor limit is 16, would it be wise for 
+me to have the script stop sensing at the 16th avatar... or would it 
+even make much of a difference (at least &quot;under the hood&quot;)? I did manage 
+to successfully get the sensor to detect with 30 NPC's close by using 
+the advanced menu script and with the hard limit 12 in my script and I 
+didn't see any apparent issues with the script or otherwise.
+
+Just my 2 cents but, as far as actually detecting if an avatar is an 
+NPC, instead of having llGetOwnerKey() return 
+00000000-0000-0000-0000-000000000000 (I'm assuming that is essentially 
+what UUID.Zero is in the server code) would it be possible to do a 
+simple check routine against the UUID's in the useraccounts table? If 
+the ID does not exist then it must be an NPC; if it does exist then it's 
+an AGENT? Not sure how efficient this would be though if the 
+useraccounts table is rather large... Or perhaps put a flag (transparent 
+to the viewer) on each NPC created and have the code check for this flag 
+each time it needs to deal with a targeted NPC; if the flag is there 
+then it's an NPC, and vice versa. Reason I ask is, it's not so much as 
+the sensor having issues dealing with an avatar that has 
+00000000-0000-0000-0000-000000000000 for a UUID, but the rest of the 
+code actually having to deal with that number for an avatar's key. Like 
+a poseball script for example, most of them are coded to assume that no 
+one is sitting on it if the avatar key is NULL_KEY, therefore I would 
+think that it would really confuse the script if the NPC was directed to 
+sit on the poseball and its key is 00000000-0000-0000-0000-000000000000 
+. This is just a simple example but I have ran into problems with more 
+complex scripts that utilize a list of owners in order to determine if 
+an avatar is able to have access to its functions and the avatar being 
+NULL_KEY.
+
+I think having a OS_NPC_SHOW_AS_AGENT (or perhaps maybe OS_NPC_AS_AGENT 
+just to keep things short and sweet? :) ) option to the npc create 
+command would be a good idea and a handy option to keep compatibility 
+with older sensor scripts (especially ones that are no mod and can't be 
+changed to include the NPC type) if it would allow the NPC's actual UUID 
+to be seen by script(s)?
+
+
+On 1/19/2012 5:57 PM, Justin Clark-Casey wrote:
+&gt;<i> This is indeed correct.  It means that sensors using the LSL AGENT 
+</I>&gt;<i> type will not detect NPCs.  To detect an NPC you must specify the 
+</I>&gt;<i> currently OpenSim-only NPC constant.  This has been true since 7518b07 
+</I>&gt;<i> (Fri Jan 6 22:35:06 2012).
+</I>&gt;<i>
+</I>&gt;<i> One reason for doing this is because the sensor limit is 16 and one 
+</I>&gt;<i> doesn't want the return to be overwhelmed by NPCs. It means that 
+</I>&gt;<i> sensor using scripts not designed with NPCs in mind (both in the past 
+</I>&gt;<i> and the future) won't work with NPCs without alteration.  It strikes 
+</I>&gt;<i> me that sometimes this is a disadvantage (e.g. a light that should 
+</I>&gt;<i> come on when it detects any presence) but for other items an advantage 
+</I>&gt;<i> (e.g. non-NPC aware radars that wouldn't be designed to pick them up 
+</I>&gt;<i> anyway).
+</I>&gt;<i>
+</I>&gt;<i> So one option is to change the default so that AGENT will pick up 
+</I>&gt;<i> NPCs.  However, this is a problem with the 16 avatar sensor limit.  
+</I>&gt;<i> Even if this is turned up, it might then cause script problems (e.g. 
+</I>&gt;<i> ones designed to work with only 16 avatars).
+</I>&gt;<i>
+</I>&gt;<i> Another slightly messy option is to provide something like an 
+</I>&gt;<i> OS_NPC_SHOW_AS_AGENT option to osNpcCreate() that will show such NPCs 
+</I>&gt;<i> as agents.  I'm favouring this option right now.
+</I>&gt;<i>
+</I>&gt;<i> Either way, what is missing at the moment is a way to actually tell if 
+</I>&gt;<i> a particular agent is an NPC.  One possibility is to make 
+</I>&gt;<i> llGetOwnerKey() return an owned NPC's owner.  For an unowned NPC, this 
+</I>&gt;<i> would need to return UUID.Zero - I'm not sure if there's a problem 
+</I>&gt;<i> disambiguating between an unowned NPC and a situation where no entity 
+</I>&gt;<i> with the ID is found.
+</I>-- 
+OpenSim: 9 Region Standalone on 0.7.3 Dev
+Physics: Open Dynamics Engine
+OS: Windows XP 32 Bit
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 3 GB DDR3
+Database: MySQL 5.1.11
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120120/327dab45/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120120/327dab45/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009101.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+	<LI>Next message: <A HREF="009107.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9106">[ date ]</a>
+              <a href="thread.html#9106">[ thread ]</a>
+              <a href="subject.html#9106">[ subject ]</a>
+              <a href="author.html#9106">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

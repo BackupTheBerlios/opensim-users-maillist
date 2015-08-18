@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [0.7.1] Maptiles not showing in Place Information window
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5B0.7.1%5D%20Maptiles%20not%20showing%20in%20Place%0A%20Information%20window&In-Reply-To=%3C4DC8AA5D.4010101%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007271.html">
+   <LINK REL="Next"  HREF="007256.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [0.7.1] Maptiles not showing in Place Information window</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5B0.7.1%5D%20Maptiles%20not%20showing%20in%20Place%0A%20Information%20window&In-Reply-To=%3C4DC8AA5D.4010101%40googlemail.com%3E"
+       TITLE="[Opensim-users] [0.7.1] Maptiles not showing in Place Information window">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue May 10 05:00:45 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007271.html">[Opensim-users] [0.7.1] Maptiles not showing in Place Information window
+</A></li>
+        <LI>Next message: <A HREF="007256.html">[Opensim-users] OpenSimulator 0.7.1 released
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7274">[ date ]</a>
+              <a href="thread.html#7274">[ thread ]</a>
+              <a href="subject.html#7274">[ subject ]</a>
+              <a href="author.html#7274">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Basic map appears to be okay on 0.7.1, so I'm guessing that this bug manifests when there are actually objects?
+
+In any case, I agree it would be good to do a 0.7.1.1 soon when the obvious bugs have been squished.  I'd be happy to 
+pump that out.
+
+On 09/05/11 21:06, Diva Canto wrote:
+&gt;<i> Unfortunately, it looks like some bugs affecting the map have crept in 0.7.1, as we moved to make the map work for
+</I>&gt;<i> Viewer2. I already fixed them in the branch 0.7.1-dev post-fixes. These bugs might be enough to justify a minor release,
+</I>&gt;<i> 0.7.1.1, in a couple of weeks.
+</I>&gt;<i>
+</I>&gt;<i> ---
+</I>&gt;<i>
+</I>&gt;<i> In the process of fixing these bugs, one important issue has emerged, pointed to by Teravus. When it comes to the map,
+</I>&gt;<i> it looks like the viewers behave strangely for regions whose coordinates are above 4096. Some important things they
+</I>&gt;<i> request below 4096 aren't requested above 4096. Yes, it's the 4096 viewer bug again, this time affecting more than just
+</I>&gt;<i> teleports -- the map itself.
+</I>&gt;<i>
+</I>&gt;<i> Specifically, above 4096, when you open the map you only see the regions -8 to +8 from your current region, even when
+</I>&gt;<i> there are regions beyond that. (This -/+8 value is a hack provided by OpenSim, because by default you would see only the
+</I>&gt;<i> current region and nothing else) This behavior can be seen in OSGrid, for example. If you then click on a tile beyond
+</I>&gt;<i> that -/+ 8 square, you get another -/+ 4 tiles around the one you clicked (again, -/+4 hack provided by OpenSim). In
+</I>&gt;<i> grids below 4096, the map behaves normal, you see all regions around.
+</I>&gt;<i>
+</I>&gt;<i> This worries me, as I think a functional map is a very good thing indeed. OSGrid being in 10000's, it pushes a lot of
+</I>&gt;<i> other worlds towards that number too, which means that none of those worlds above 4096 will have issue-free maps. And I
+</I>&gt;<i> hate to see hacks being introduced in OpenSim just to go around strange viewer limitations. So, I'm bummed with today's
+</I>&gt;<i> discovery.
+</I>&gt;<i>
+</I>&gt;<i> On 5/6/2011 10:18 AM, Jeff Kelley wrote:
+</I>&gt;&gt;<i> In 0.6.9, when clicking on a hypergrid URI, we used to see this for an
+</I>&gt;&gt;<i> on-line sim:
+</I>&gt;&gt;<i> <A HREF="http://www.pescadoo.net/tmp/place_ok.png">http://www.pescadoo.net/tmp/place_ok.png</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> or that for an off-line or moved sim:
+</I>&gt;&gt;<i> <A HREF="http://www.pescadoo.net/tmp/place_bad.png">http://www.pescadoo.net/tmp/place_bad.png</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In 0.7.0.2, we had the swirling logo:
+</I>&gt;&gt;<i> <A HREF="http://vue.ed.ac.uk/openvue/img/openvue-map-hypergrid-256x256-plain-blue.jpg">http://vue.ed.ac.uk/openvue/img/openvue-map-hypergrid-256x256-plain-blue.jpg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Since 0.7.1, I see only the question mark. Examples:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Clicking <A HREF="secondlife://virtual.aiai.ed.ac.uk:8002:Openvue/">secondlife://virtual.aiai.ed.ac.uk:8002:Openvue/</A>
+</I>&gt;&gt;<i> gives <A HREF="http://www.pescadoo.net/tmp/dynamic_link.png">http://www.pescadoo.net/tmp/dynamic_link.png</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Clicking <A HREF="secondlife://virtual.aiai.ed.ac.uk:8002:Vue-9000/">secondlife://virtual.aiai.ed.ac.uk:8002:Vue-9000/</A>
+</I>&gt;&gt;<i> gives <A HREF="http://www.pescadoo.net/tmp/static_link.png">http://www.pescadoo.net/tmp/static_link.png</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Statically linked regions (link-region) display correctly on my map.
+</I>&gt;&gt;<i> Dynamically linked regions appear grey.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Region (root) # show hyperlinks
+</I>&gt;&gt;<i> <A HREF="http://virtual.aiai.ed.ac.uk:8002/">http://virtual.aiai.ed.ac.uk:8002/</A> Openvue 202752,0 (792,0)
+</I>&gt;&gt;<i> <A HREF="http://virtual.aiai.ed.ac.uk:8002/">http://virtual.aiai.ed.ac.uk:8002/</A> Vue-5000 2046976,2048000 (7996,8000)
+</I>&gt;&gt;<i> <A HREF="http://virtual.aiai.ed.ac.uk:8002/">http://virtual.aiai.ed.ac.uk:8002/</A> Vue-9000 2046976,2048256 (7996,8001)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What happens here? New issue or misconfiguration?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Note: Tried to change GenerateMaptiles to true with no result.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007271.html">[Opensim-users] [0.7.1] Maptiles not showing in Place Information window
+</A></li>
+	<LI>Next message: <A HREF="007256.html">[Opensim-users] OpenSimulator 0.7.1 released
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7274">[ date ]</a>
+              <a href="thread.html#7274">[ thread ]</a>
+              <a href="subject.html#7274">[ subject ]</a>
+              <a href="author.html#7274">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

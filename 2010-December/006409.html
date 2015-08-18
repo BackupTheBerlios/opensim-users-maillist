@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] How to move the gatekeeper service to it's own	port?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20move%20the%20gatekeeper%20service%20to%20it%27s%20own%0A%09port%3F&In-Reply-To=%3C201012161811.20899.j.veenvan%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006408.html">
+   <LINK REL="Next"  HREF="006410.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] How to move the gatekeeper service to it's own	port?</H1>
+    <B>Jeroen van Veen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20move%20the%20gatekeeper%20service%20to%20it%27s%20own%0A%09port%3F&In-Reply-To=%3C201012161811.20899.j.veenvan%40gmail.com%3E"
+       TITLE="[Opensim-users] How to move the gatekeeper service to it's own	port?">j.veenvan at gmail.com
+       </A><BR>
+    <I>Thu Dec 16 19:11:20 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006408.html">[Opensim-users] How to move the gatekeeper service to it's own port?
+</A></li>
+        <LI>Next message: <A HREF="006410.html">[Opensim-users] How to move the gatekeeper service to it's own port?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6409">[ date ]</a>
+              <a href="thread.html#6409">[ thread ]</a>
+              <a href="subject.html#6409">[ subject ]</a>
+              <a href="author.html#6409">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thank you for your reply. I don't necessarily need to run it in it's own 
+robust shell. Say i want to run the gatekeeper service on port 8004 within the 
+same robust instace. What i have tried is changing in Robust.HG.ini:
+8002/OpenSim.Server.Handlers.dll:GatekeeperServiceInConnector to
+8004/OpenSim.Server.Handlers.dll:GatekeeperServiceInConnector
+
+[LoginService]
+GatekeeperURI = &quot;<A HREF="http://mygrid.org:8004">http://mygrid.org:8004</A>&quot;
+
+[GatekeeperService]
+ExternalName = &quot;<A HREF="http://mygrid.org::8004">http://mygrid.org::8004</A>&quot;
+
+== Result ==
+robust console =&gt; request to link to region_foo (nothing more)
+client =&gt; Could not teleport. Problem at destionation
+
+Maybe i must run it in its own instance for some reason?
+
+On Thursday, December 16, 2010 04:38:08 pm Dave Coyle wrote:
+&gt;<i> On 12/16/10 12:27 PM, Jeroen van Veen wrote:
+</I>&gt;<i> &gt; I was wondering whether it's possible to seperate the gatekeeper service
+</I>&gt;<i> &gt; from the default port 8002 so it runs on it's own on say...port 8004.
+</I>&gt;<i> &gt; The reason i want to do this, is that i'm hoping to restrict hypergrid
+</I>&gt;<i> &gt; access with iptables.
+</I>&gt;<i> 
+</I>&gt;<i> Yes.  Robust.HG.ini.example shows how to have different services
+</I>&gt;<i> listening on different ports (8002 vs. 8003 in the example).
+</I>&gt;<i> 
+</I>&gt;<i> If you want to run only HG-related services in their own Robust
+</I>&gt;<i> instance, make sure you've also included the UserAgentService alongside
+</I>&gt;<i> GatekeeperService.
+</I>&gt;<i> 
+</I>&gt;<i> -coyled
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006408.html">[Opensim-users] How to move the gatekeeper service to it's own port?
+</A></li>
+	<LI>Next message: <A HREF="006410.html">[Opensim-users] How to move the gatekeeper service to it's own port?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6409">[ date ]</a>
+              <a href="thread.html#6409">[ thread ]</a>
+              <a href="subject.html#6409">[ subject ]</a>
+              <a href="author.html#6409">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

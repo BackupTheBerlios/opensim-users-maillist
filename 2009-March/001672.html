@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] default avatar appearance
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20default%20avatar%20appearance&In-Reply-To=%3C307260.54539.qm%40web23002.mail.ird.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001660.html">
+   <LINK REL="Next"  HREF="001655.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] default avatar appearance</H1>
+    <B>MW</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20default%20avatar%20appearance&In-Reply-To=%3C307260.54539.qm%40web23002.mail.ird.yahoo.com%3E"
+       TITLE="[Opensim-users] default avatar appearance">michaelwri22 at yahoo.co.uk
+       </A><BR>
+    <I>Thu Mar 12 14:12:59 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001660.html">[Opensim-users] default avatar appearance
+</A></li>
+        <LI>Next message: <A HREF="001655.html">[Opensim-users] What are some solutions for oar file sharing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1672">[ date ]</a>
+              <a href="thread.html#1672">[ thread ]</a>
+              <a href="subject.html#1672">[ subject ]</a>
+              <a href="author.html#1672">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Actually with us moving our code to the standard opensim user server, the bigger problem that we had was that the user server was a big monolithic class so hard to add extra things too. Especially if those extras wouldn't be wanted on all grids/setups. 
+
+While we still don't have a real module system yet (thats still a work in progress), I think I could easily add some of our basic appearance creation code. And just leave it disabled by default for now. Then anyone can enable it if they want. 
+
+So if I get time tonight, I will add some basic appearance cloning code to opensim's userserver. Which will accept a http request to clone some clothes/body parts from a existing users inventory to a new avatar's inventory/appearance. So then you can create outfits in world and just set them as the &quot;templates&quot; that new users get given.
+
+--- On Wed, 11/3/09, Mic Bowman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cmickeyb at gmail.com</A>&gt; wrote:
+From: Mic Bowman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cmickeyb at gmail.com</A>&gt;
+Subject: Re: [Opensim-users] default avatar appearance
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Date: Wednesday, 11 March, 2009, 8:38 PM
+
+OpenSimWI directly manipulates the MySQL database to create avatar
+accounts (do we have a create user XMLRPC call on the user server in
+grid mode yet?). I know enough about the MySQL layout to write some
+sql code into opensimwi to create the assets necessary and to populate
+the inventory... but the solution would be *very* brittle (and far
+more work than it's worth).
+
+--mic
+
+
+On Wed, Mar 11, 2009 at 1:31 PM, Stefan Andersson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">stefan at tribalmedia.se</A>&gt;
+wrote:
+&gt;<i> Basically, a couple of proprietary grids offer both these
+</I>functionalitites;
+&gt;<i> it's part of the Tribal Server offering, and recently apparently
+</I>&gt;<i> Reactiongrid has implemented it.
+</I>&gt;<i>
+</I>&gt;<i> Basically,&#160;library assets are read-only, so they need to be copied to the
+</I>&gt;<i> users inventory to be modifiable. Also,&#160;'worn' items need to be
+</I>in the users
+&gt;<i> inventory.
+</I>&gt;<i>
+</I>&gt;<i> We were going to put the Tribal Server components doing this into the open
+</I>&gt;<i> source domain, but it turned out to be too much work to break it out as a
+</I>&gt;<i> separate component.
+</I>&gt;<i>
+</I>&gt;<i> Basically, what you want to do is implement some functionality that on
+</I>&gt;<i> 'create user' (or something like that)&#160;interacts with the
+</I>inventory service
+&gt;<i> and user service to clone and wear a template set of assets. (This can be
+</I>&gt;<i> specified in an number of ways, the most flexible just specifying a whole
+</I>&gt;<i> avatar to 'clone' with inventory and all)
+</I>&gt;<i>
+</I>&gt;<i> Again, sorry we couldn't pry our code apart, but it should be failry
+</I>simple
+&gt;<i> to re-implement, at least partially.
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> Stefan Andersson
+</I>&gt;<i> Tribal Media AB
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Date: Wed, 11 Mar 2009 13:04:36 -0700
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cmickeyb at gmail.com</A>
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: [Opensim-users] default avatar appearance
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Currently (well... the last time I checked forge for a new version was
+</I>&gt;&gt;<i> about a month ago), a new user created through opensimwi is the
+</I>&gt;&gt;<i> default ruth and the appearance &amp; wearables are not modifiable. Is
+</I>&gt;&gt;<i> there an easy way to create a default, modifiable appearance? Or,
+</I>&gt;&gt;<i> better yet, be able to select an appearance when a new account is
+</I>&gt;&gt;<i> created? Do any of the other control services provide this capability?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --mic
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+      
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090312/7d1842a2/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090312/7d1842a2/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001660.html">[Opensim-users] default avatar appearance
+</A></li>
+	<LI>Next message: <A HREF="001655.html">[Opensim-users] What are some solutions for oar file sharing?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1672">[ date ]</a>
+              <a href="thread.html#1672">[ thread ]</a>
+              <a href="subject.html#1672">[ subject ]</a>
+              <a href="author.html#1672">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

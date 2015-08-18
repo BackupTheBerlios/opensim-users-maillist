@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Ubuntu and magic mini-trampolines (crash problem)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Ubuntu%20and%20magic%20mini-trampolines%20%28crash%20problem%29&In-Reply-To=%3C20090428160612.B1899326787%40ws1-8.us4.outblaze.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002068.html">
+   <LINK REL="Next"  HREF="002072.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Ubuntu and magic mini-trampolines (crash problem)</H1>
+    <B>Willem Huisman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Ubuntu%20and%20magic%20mini-trampolines%20%28crash%20problem%29&In-Reply-To=%3C20090428160612.B1899326787%40ws1-8.us4.outblaze.com%3E"
+       TITLE="[Opensim-users] Ubuntu and magic mini-trampolines (crash problem)">willumpjuh at linuxmail.org
+       </A><BR>
+    <I>Tue Apr 28 18:06:12 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002068.html">[Opensim-users] Vivox
+</A></li>
+        <LI>Next message: <A HREF="002072.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2070">[ date ]</a>
+              <a href="thread.html#2070">[ thread ]</a>
+              <a href="subject.html#2070">[ subject ]</a>
+              <a href="author.html#2070">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>F.Y.I.
+
+OpenSim 0.6.4.9332
+Debian Lenny 5.0.1
+Mono JIT compiler version 20090414
+(tarball Mon Apr 27 13:11:24 CEST 2009)
+
+Compiled and installed  Mono from source recently. One thing I noticed
+during  the 'make install', albeit it in a flash on screen, is that there
+were compilation warnings during the use of mini-trampoline.cs ( don't
+remember specific names ) where &quot;.... type was declared but it's value is
+never used&quot;.
+
+The mini-trampoline error/crash while starting opensim always happens
+when
+ the section of scripts starts. Never happens earlier. I mean , the crash
+, in my case
+with XEngine , always occurs at [XEngine] NameScriptLoading . After these
+crashes I
+also noticed shutting down all of UGAIM and restarting them, made the
+crash 'stay away'.
+
+As I type I am starting and shutting down to reproduce the crash. I will
+check Mantis if
+I can add debug info , if any at all.
+
+My efforts till now to backtrace with gdb have been unsuccesful. There
+are no debugging symbols for opensim,
+or better, I do not know how to create/obtain them. Tried to hook gdb to
+the opensim' pid-id, but that stalls the running
+opensim instance completely.
+
+Maybe I should reinstall Mono and catch the warnings of the types of
+mini-trampolines.cs .. :S
+
+  ----- Original Message -----
+  From: &quot;Mic Bowman&quot;
+  To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+  Subject: Re: [Opensim-users] Ubuntu and magic mini-trampolines (crash
+  problem)
+  Date: Tue, 28 Apr 2009 08:16:10 -0700
+
+
+  in general we see crashes, not freezes. the apparent freeze is
+  usually
+  caused by the gdb process that gets started when the crash occurs
+  (kill the gdb process and the simulator crashes &quot;gracefully&quot;).
+
+  given that the problem seems to happen when log4net attempts to get a
+  logger associated with a particular script class, my guess is that
+  one
+  of a couple problems is happening... 1) mono is somehow messing up
+  the
+  class that is passed in (there are nulls in the argument stack that
+  look suspicious), 2) log4net isn't as thread-safe as it claims
+  (though
+  the routine that creates the wrapper object looks fine at first
+  glance), 3) somehow mono is screwing up the assembly binding when
+  log4net creates the wrapper. I've looked at the mono code that is
+  throwing the exception... but it wasn't very helpful without a LOT
+  more investigation.
+
+  at this point, i'm building a custom log4net dll with some additional
+  debugging in it. which, given that this certainly appears to be a
+  timing issue, will almost certainly hide the problem. :-(
+
+  --mic
+
+
+  On Tue, Apr 28, 2009 at 5:04 AM, Dr Scofield
+  wrote:
+  &gt; Mic Bowman wrote:
+  &gt;&gt; we've seen the problem with mono_threads_per_cpu set across a
+  range of
+  &gt;&gt; values (i think we've tried a number of values from 100 to 1000).
+  &gt;&gt; there doesn't appear to be any correlation.
+  &gt;
+  &gt; ok. we had freezes that got cured by increasing
+  MONO_THREADS_PER_CPU, hence
+  &gt; my
+  &gt; asking...
+  &gt;
+  &gt; a real deadlock is nasty... :-( sigh.
+  &gt;
+  &gt;  DrS/dirk
+  &gt;&gt;
+  &gt;&gt; --mic
+  &gt;&gt;
+  &gt;&gt;
+  &gt;&gt; On Mon, Apr 27, 2009 at 10:38 PM, dr scofield
+  &gt;&gt; wrote:
+  &gt;&gt;&gt; Justin Clark-Casey wrote:
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; Mic Bowman wrote:
+  &gt;&gt;&gt;
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; I have the same freeze at times. In my case there's a gdb process
+  &gt;&gt;&gt; running that I can kill off to terminate the simulator.
+  &gt;&gt;&gt;
+  &gt;&gt;&gt;
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; I presume there's no revealing deadlock information in the thread
+  dump
+  &gt;&gt;&gt; (perhaps that's too much to hope for :) ?
+  &gt;&gt;&gt;
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; what is your value of the MONO_THREADS_PER_CPU environment
+  variable?
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; --
+  &gt;&gt;&gt; dr dirk husemann ---- math &amp; computer science ---- ibm zurich
+  research lab
+  &gt;&gt;&gt; RL: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">hud at zurich.ibm.com</A> - +41 44 724 8573 -
+  <A HREF="http://www.zurich.ibm.com/~hud/">http://www.zurich.ibm.com/~hud/</A>
+  &gt;&gt;&gt; SL: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drscofield at xyzzyxyzzy.net</A> ---------------------
+  <A HREF="http://xyzzyxyzzy.net/">http://xyzzyxyzzy.net/</A>
+  &gt;&gt;&gt;
+  &gt;&gt;&gt; _______________________________________________
+  &gt;&gt;&gt; Opensim-users mailing list
+  &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  &gt;&gt;&gt;
+  &gt;&gt;&gt;
+  &gt;&gt; _______________________________________________
+  &gt;&gt; Opensim-users mailing list
+  &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  &gt;&gt;
+  &gt;
+  &gt;
+  &gt; --
+  &gt; dr dirk husemann ---- virtual worlds research ---- ibm zurich
+  research lab
+  &gt; SL: dr scofield ---- <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drscofield at xyzzyxyzzy.net</A> ----
+  <A HREF="http://xyzzyxyzzy.net/">http://xyzzyxyzzy.net/</A>
+  &gt; RL: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">hud at zurich.ibm.com</A> - +41 44 724 8573 -
+  <A HREF="http://www.zurich.ibm.com/~hud/">http://www.zurich.ibm.com/~hud/</A>
+  &gt; _______________________________________________
+  &gt; Opensim-users mailing list
+  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  &gt;
+  _______________________________________________
+  Opensim-users mailing list
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+__________
+WiLLuMPJuH
+
+-- 
+It's News. It's Reviews. It's Interviews. It's Free. What Are You Waiting For?
+www.movieline.com
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090428/fee91739/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090428/fee91739/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002068.html">[Opensim-users] Vivox
+</A></li>
+	<LI>Next message: <A HREF="002072.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2070">[ date ]</a>
+              <a href="thread.html#2070">[ thread ]</a>
+              <a href="subject.html#2070">[ subject ]</a>
+              <a href="author.html#2070">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

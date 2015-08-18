@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MySQL query and number of agents online
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20query%20and%20number%20of%20agents%20online&In-Reply-To=%3CCAFGJoA6vFAvDOCuWrmYcLGbTZEyh1cVSY31JYV3rVoj8MamvXw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009605.html">
+   <LINK REL="Next"  HREF="009597.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MySQL query and number of agents online</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20query%20and%20number%20of%20agents%20online&In-Reply-To=%3CCAFGJoA6vFAvDOCuWrmYcLGbTZEyh1cVSY31JYV3rVoj8MamvXw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] MySQL query and number of agents online">cliveg at gmail.com
+       </A><BR>
+    <I>Fri Mar  2 16:20:47 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009605.html">[Opensim-users] MySQL query and number of agents online
+</A></li>
+        <LI>Next message: <A HREF="009597.html">[Opensim-users] MySQL query and number of agents online
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9596">[ date ]</a>
+              <a href="thread.html#9596">[ thread ]</a>
+              <a href="subject.html#9596">[ subject ]</a>
+              <a href="author.html#9596">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>mysql&gt; use opensim
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql&gt; show tables;
+
++-------------------+
+|<i> Tables_in_opensim |
+</I>+-------------------+
+|<i> Avatars &#160; &#160; &#160; &#160; &#160; |
+</I>|<i> Friends &#160; &#160; &#160; &#160; &#160; |
+</I>|<i> GridUser &#160; &#160; &#160; &#160; &#160;|
+</I>|<i> UserAccounts &#160; &#160; &#160;|
+</I>|<i> assets &#160; &#160; &#160; &#160; &#160; &#160;|
+</I>|<i> auth &#160; &#160; &#160; &#160; &#160; &#160; &#160;|
+</I>|<i> estate_groups &#160; &#160; |
+</I>|<i> estate_managers &#160; |
+</I>|<i> estate_map &#160; &#160; &#160; &#160;|
+</I>|<i> estate_settings &#160; |
+</I>|<i> estate_users &#160; &#160; &#160;|
+</I>|<i> estateban &#160; &#160; &#160; &#160; |
+</I>|<i> inventoryfolders &#160;|
+</I>|<i> inventoryitems &#160; &#160;|
+</I>|<i> land &#160; &#160; &#160; &#160; &#160; &#160; &#160;|
+</I>|<i> landaccesslist &#160; &#160;|
+</I>|<i> migrations &#160; &#160; &#160; &#160;|
+</I>|<i> primitems &#160; &#160; &#160; &#160; |
+</I>|<i> prims &#160; &#160; &#160; &#160; &#160; &#160; |
+</I>|<i> primshapes &#160; &#160; &#160; &#160;|
+</I>|<i> regionban &#160; &#160; &#160; &#160; |
+</I>|<i> regions &#160; &#160; &#160; &#160; &#160; |
+</I>|<i> regionsettings &#160; &#160;|
+</I>|<i> regionwindlight &#160; |
+</I>|<i> spawn_points &#160; &#160; &#160;|
+</I>|<i> terrain &#160; &#160; &#160; &#160; &#160; |
+</I>|<i> tokens &#160; &#160; &#160; &#160; &#160; &#160;|
+</I>+-------------------+
+27 rows in set (0.00 sec)
+
+mysql&gt; select &#160;a.firstname, a.lastname from UserAccounts a, presence b
+where a.principalid = b.userid;
+ERROR 1146 (42S02): Table 'opensim.presence' doesn't exist
+
+Maybe because this is 0.7.3 ??
+
+Thanks
+
+Clive
+
+
+On Fri, Mar 2, 2012 at 3:11 PM, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt; wrote:
+&gt;<i> The same query worked for me, did you name your database something other
+</I>&gt;<i> than opensim?
+</I>&gt;<i>
+</I>&gt;<i> - Chris/Fleep
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;<i> University of Cincinnati
+</I>&gt;<i> 406A Zimmer Hall
+</I>&gt;<i> 315 College Drive
+</I>&gt;<i> PO BOX 210088
+</I>&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;<i> (513) 556-3018
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Mar 2, 2012 at 10:08 AM, Clive Gould &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cliveg at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sorry didn't work for me - am I being dense?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> useraccounts was UserAccounts but...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> mysql&gt; select &#160;a.firstname, a.lastname from UserAccounts a, presence b
+</I>&gt;&gt;<i> where a.principalid = b.userid;
+</I>&gt;&gt;<i> ERROR 1146 (42S02): Table 'opensim.presence' doesn't exist
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Fri, Mar 2, 2012 at 2:05 PM, Steven Salter &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ssalter at indiana.edu</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; This seemed to work for me:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; select &#160;a.firstname, a.lastname from useraccounts a, presence b where
+</I>&gt;&gt;<i> &gt; a.principalid = b.userid
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Steve
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Mar 2, 2012, at 8:40 AM, Clive Gould wrote:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt; Hi
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Any idea what SQL query I need to use to find out how many users are
+</I>&gt;&gt;<i> &gt;&gt; logged in?
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; I've tried the query on the page
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="http://opensimulator.org/wiki/Useful_Queries">http://opensimulator.org/wiki/Useful_Queries</A> and the table
+</I>&gt;&gt;<i> &gt;&gt; opensim.agents no longer exists in the database schema
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; i.e. Count the number of users presently logged in (same issues as
+</I>&gt;&gt;<i> &gt;&gt; listing online users, above):
+</I>&gt;&gt;<i> &gt;&gt; SELECT count(UUID) AS 'Users Online' FROM opensim.agents WHERE
+</I>&gt;&gt;<i> &gt;&gt; agentonline = '1';
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; I've looked at the Online=TRUE in the opensim.GridUser table and this
+</I>&gt;&gt;<i> &gt;&gt; returns 21, whereas the console reports 9 agents online
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Any suggestions most welcome
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Thanks
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Clive
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; P.S I've just freed up some memory on our server and upgraded to 0.7.3
+</I>&gt;&gt;<i> &gt;&gt; and so far nothing has gone wrong
+</I>&gt;&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;&gt;<i> &gt;&gt; Opensim-users mailing list
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009605.html">[Opensim-users] MySQL query and number of agents online
+</A></li>
+	<LI>Next message: <A HREF="009597.html">[Opensim-users] MySQL query and number of agents online
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9596">[ date ]</a>
+              <a href="thread.html#9596">[ thread ]</a>
+              <a href="subject.html#9596">[ subject ]</a>
+              <a href="author.html#9596">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

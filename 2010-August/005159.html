@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] BetaGridLikeMoneyModule - Enabled all the time?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20BetaGridLikeMoneyModule%20-%20Enabled%20all%20the%20time%3F&In-Reply-To=%3CAANLkTi%3DfOS%2B0_ELWWA4%2BuETbOekN3jq6%2B1T1_-WmnAeE%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005158.html">
+   <LINK REL="Next"  HREF="005160.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] BetaGridLikeMoneyModule - Enabled all the time?</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20BetaGridLikeMoneyModule%20-%20Enabled%20all%20the%20time%3F&In-Reply-To=%3CAANLkTi%3DfOS%2B0_ELWWA4%2BuETbOekN3jq6%2B1T1_-WmnAeE%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] BetaGridLikeMoneyModule - Enabled all the time?">teravus at gmail.com
+       </A><BR>
+    <I>Mon Aug  9 20:41:59 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005158.html">[Opensim-users] BetaGridLikeMoneyModule - Enabled all the time?
+</A></li>
+        <LI>Next message: <A HREF="005160.html">[Opensim-users] BetaGridLikeMoneyModule - Enabled all the time?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5159">[ date ]</a>
+              <a href="thread.html#5159">[ thread ]</a>
+              <a href="subject.html#5159">[ subject ]</a>
+              <a href="author.html#5159">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There's also a replacable module structure in place with certain
+modules where you can override one module with another module.  Such
+is the case for the BetaGridLikeMoneyModule you speak of.    This is
+why it says (deferred).
+
+Regards
+
+Teravus
+
+On Mon, Aug 9, 2010 at 2:31 PM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+&gt;<i> This is how region modules work:
+</I>&gt;<i>
+</I>&gt;<i> OpenSim loads up all available dlls under bin that contain region modules,
+</I>&gt;<i> and loads up those region module classes. By convention most of these
+</I>&gt;<i> classes have an Enabled configuration variable that the classes themselves
+</I>&gt;<i> check upon being initialized. If they are not Enabled, they are still loaded
+</I>&gt;<i> up in memory, but they are inactive.
+</I>&gt;<i>
+</I>&gt;<i> That's the case with the MoneyModule and lots of others. The messages you
+</I>&gt;<i> see on the console pertain to the classes themselves being found, loaded and
+</I>&gt;<i> initialized -- and then stumbling on &quot;hey I'm not Enabled, cool, I'm not
+</I>&gt;<i> gonna do any work&quot;.
+</I>&gt;<i>
+</I>&gt;<i> This is a bit unconventional as true module systems go (usually
+</I>&gt;<i> enabled/disabled from the outside, not from the inside, of the modules), but
+</I>&gt;<i> I doubt anyone has the balls to rewrite OpenSim's region module system at
+</I>&gt;<i> this point... it's already gone through 2 versions. (although it wouldn't be
+</I>&gt;<i> horrible)
+</I>&gt;<i>
+</I>&gt;<i> Ai Austin wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am seeing messages in the OpenSim.exe console that that all my regions
+</I>&gt;&gt;<i> as &quot;scenes&quot; are being added to the &quot;BetaGridLikeMoneyModule (deferrred)&quot; and
+</I>&gt;&gt;<i> similarly at shutdown each of the region scenes are removed from
+</I>&gt;&gt;<i> &quot;BetaGridLikeMoneyModule&quot; (no indication of it being deferred at that point.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Should BetaGridLikeMoneyModule always be working like this? &#160;is it a
+</I>&gt;&gt;<i> module that should be able to be completely turned off if its not wanted..?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In my OpenSim.ini in the [Economy] section I have SellEnabled = &quot;false&quot;
+</I>&gt;&gt;<i> I see no over &#160; &#160;enabled = true or false &#160; &#160; &#160;variable in the Economy
+</I>&gt;&gt;<i> section.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Looking back at the OpenSim.exe logs I see that the module loader mentions
+</I>&gt;&gt;<i> the BetaGridLikeMoney module as being &quot;deferred load&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Should I report this on mantis?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005158.html">[Opensim-users] BetaGridLikeMoneyModule - Enabled all the time?
+</A></li>
+	<LI>Next message: <A HREF="005160.html">[Opensim-users] BetaGridLikeMoneyModule - Enabled all the time?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5159">[ date ]</a>
+              <a href="thread.html#5159">[ thread ]</a>
+              <a href="subject.html#5159">[ subject ]</a>
+              <a href="author.html#5159">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

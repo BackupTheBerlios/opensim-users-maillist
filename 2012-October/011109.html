@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Activating voice in opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Activating%20voice%20in%20opensim&In-Reply-To=%3C1350959326359-7578828.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011046.html">
+   <LINK REL="Next"  HREF="011017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Activating voice in opensim</H1>
+    <B>TwistedStickfigure</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Activating%20voice%20in%20opensim&In-Reply-To=%3C1350959326359-7578828.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Activating voice in opensim">frankenputer at aol.com
+       </A><BR>
+    <I>Tue Oct 23 04:28:46 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011046.html">[Opensim-users] Activating voice in opensim
+</A></li>
+        <LI>Next message: <A HREF="011017.html">[Opensim-users] New account inventory is lacking standard set	of folders
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11109">[ date ]</a>
+              <a href="thread.html#11109">[ thread ]</a>
+              <a href="subject.html#11109">[ subject ]</a>
+              <a href="author.html#11109">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi mammoloji, 
+
+I Don&#8217;t use Vivox, and Fleep did a great job of outlining Vivox as I
+understand it. I did set up Freeswitch for a while. But I chose Mumble
+voice.
+
+It was easy to set up for me.
+
+On my Debian Squeeze I simply Apt-get Installed the murmur-server.  That was
+it for installation.
+
+For Opensim I extracted 
+Whisper-20111110-for-OpenSim-0.7.3-dev.4567555
+&lt;<A HREF="https://github.com/downloads/justincc/whisper_server/Whisper-20111205-for-OpenSim-0.7.3-dev.4567555.zip">https://github.com/downloads/justincc/whisper_server/Whisper-20111205-for-OpenSim-0.7.3-dev.4567555.zip</A>&gt;  
+into my Opensim bin directory.
+
+Then in my gridcommon.ini I added
+
+[MurmurVoice]
+; New voice daemon which will do speaker indication,
+; positional voice, and high quality audio codec. Host voice on the
+; same server, or use Glacier2 to proxy the insecure ICE protocol.
+enabled = true
+; Hostname to send the user
+murmur_host = xxx.xxx.xx.xx  ; Your Server IP address
+; Server identifier (normally 1)
+murmur_sid = 1
+; Endpoint to system running mumble (see murmur.ini)
+; Port must be unique for each region server on your box.
+murmur_ice = tcp -h 127.0.0.1 -p 6502 
+
+; Endpoint to this system: callback entry from murmur server
+; (not needed for glacier2)
+murmur_ice_cb= tcp -h 127.0.0.1 -p 6503
+; Parent channel name to use
+channel_name = Your Region Name
+; Enable use of glacier2 (ignore murmur_ice_cb if false)
+glacier = false
+; the following parameters are only used when working with Glacier 2
+; Glacier proxy
+glacier_ice = Glacier2/router:tcp -p 4063 -h &lt;murmur-ip&gt;
+; Glacier session user
+glacier_user = &lt;glacier2-user-name&gt;
+; Glacier session password
+glacier_pass = &lt;glacier2-password&gt;
+
+
+For my Firewall I opened TCP and UDP  64738
+
+And I was done..
+
+Viewers
+Mumble is currently supported by Imprudence 1.3.2  using the Whisper plugin
+and Teapot without any addional changes. Support in Zen is coming soon.
+
+The plugin Teapot and Zen are using was designed for Kokua, but it has not
+yet installed it.
+
+The Whisper voice module does speaker indication, positional audio and lip
+sync, and sounds great from my experience.
+
+Cheers
+Twisted
+
+
+
+-----
+Cheers,
+Twisted
+--
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Activating-voice-in-opensim-tp7578734p7578828.html">http://opensim-users.2152040.n2.nabble.com/Activating-voice-in-opensim-tp7578734p7578828.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011046.html">[Opensim-users] Activating voice in opensim
+</A></li>
+	<LI>Next message: <A HREF="011017.html">[Opensim-users] New account inventory is lacking standard set	of folders
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11109">[ date ]</a>
+              <a href="thread.html#11109">[ thread ]</a>
+              <a href="subject.html#11109">[ subject ]</a>
+              <a href="author.html#11109">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

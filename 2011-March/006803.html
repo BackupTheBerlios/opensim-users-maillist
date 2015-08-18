@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Configuration file is missing	the	[SimulationDataStore] section
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Configuration%20file%20is%0A%20missing%09the%09%5BSimulationDataStore%5D%20section&In-Reply-To=%3C4D7E9D4E.6050507%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006801.html">
+   <LINK REL="Next"  HREF="006802.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Configuration file is missing	the	[SimulationDataStore] section</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Configuration%20file%20is%0A%20missing%09the%09%5BSimulationDataStore%5D%20section&In-Reply-To=%3C4D7E9D4E.6050507%40googlemail.com%3E"
+       TITLE="[Opensim-users] Configuration file is missing	the	[SimulationDataStore] section">jjustincc at googlemail.com
+       </A><BR>
+    <I>Mon Mar 14 23:57:18 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006801.html">[Opensim-users] Configuration file is missing	the	[SimulationDataStore] section
+</A></li>
+        <LI>Next message: <A HREF="006802.html">[Opensim-users] hello
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6803">[ date ]</a>
+              <a href="thread.html#6803">[ thread ]</a>
+              <a href="subject.html#6803">[ subject ]</a>
+              <a href="author.html#6803">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The top of the log files tells you which ini files are being loaded and which it couldn't find.  From below
+
+19:19:24 - [CONFIG]: Reading configuration file /Users/Garrett/opensim/bin/OpenSimDefaults.ini
+19:19:24 - [CONFIG]: Reading configuration file /Users/Garrett/opensim/bin/OpenSim.ini
+
+so no StandaloneCommon.ini was loaded.
+
+Actually, uncommented lines have no ; at all, so maybe that's your problem.  Go and delete all of those from the 
+standalone line.
+
+On 14/03/11 20:09, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">lists at asquare.org</A> wrote:
+&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> I'm getting the same issues as mentioned in this thread, see output below.
+</I>&gt;<i> I've tried uncommenting the
+</I>&gt;<i> config-include/StandaloneCommon.ini in architecture (comments have two ;;
+</I>&gt;<i> and uncommented lines
+</I>&gt;<i> have one ; right?) and I made sure there was a StandaloneCommon.ini (copied
+</I>&gt;<i> from the .example) but it
+</I>&gt;<i> seemed to make no change.
+</I>&gt;<i>
+</I>&gt;<i> I'm following the tutorial here:
+</I>&gt;<i> <A HREF="http://miscellanea.com/osx-opensim-local-sandbox/">http://miscellanea.com/osx-opensim-local-sandbox/</A>
+</I>&gt;<i>
+</I>&gt;<i> and testing with:
+</I>&gt;<i> OSX 10.6.4 Intel
+</I>&gt;<i> Mono JIT compiler version 2.4.3 (tarball Tue Dec  1 15:56:16 MST 2009)
+</I>&gt;<i> OSgrid OpenSimulator 0.7.1.dev.b82b0b1 - [zip] [24.5mb] 03-03-2011 (from
+</I>&gt;<i> here
+</I>&gt;<i> <A HREF="http://www.osgrid.org/index.php/downloads">http://www.osgrid.org/index.php/downloads</A>)
+</I>&gt;<i>
+</I>&gt;<i> Any ideas what's going wrong? Thanks in advance
+</I>&gt;<i> Garrett
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 19:19:24 - [OPENSIM MAIN]: configured log4net using default
+</I>&gt;<i> OpenSim.exe.config
+</I>&gt;<i> 19:19:24 - [OPENSIM MAIN]: Runtime gave us 50 worker threads and 0 IOCP
+</I>&gt;<i> threads
+</I>&gt;<i> 19:19:24 - [OPENSIM MAIN]: Bumping up to 500 worker threads and 1000 IOCP
+</I>&gt;<i> threads
+</I>&gt;<i> 19:19:24 - Performing compatibility checks...
+</I>&gt;<i> 19:19:24 - Environment is compatible.
+</I>&gt;<i> 19:19:24 - [CONFIG]: Reading configuration settings
+</I>&gt;<i> 19:19:24 - [CONFIG]: Reading configuration file
+</I>&gt;<i> /Users/Garrett/opensim/bin/OpenSimDefaults.ini
+</I>&gt;<i> 19:19:24 - [CONFIG]: Reading configuration file
+</I>&gt;<i> /Users/Garrett/opensim/bin/OpenSim.ini
+</I>&gt;<i> 19:19:24 - [LOGGING]: Logging started to file
+</I>&gt;<i> /Users/Garrett/opensim/bin/OpenSim.log
+</I>&gt;<i> 19:19:24 - [OPENSIM MAIN]: Using async_call_method SmartThreadPool
+</I>&gt;<i> 19:19:24 - [STARTUP]: Beginning startup processing
+</I>&gt;<i> 19:19:24 - [STARTUP]: OpenSimulator version: OpenSim 0.7.1 Dev
+</I>&gt;<i> OSgrid 0.7.1 (Dev) b82b0b1:
+</I>&gt;<i> 2011-03-03
+</I>&gt;<i> 19:19:24 - [STARTUP]: Operating system version: Unix 10.4.1.0
+</I>&gt;<i> 19:19:24 -
+</I>&gt;<i> ================================================================
+</I>&gt;<i> ====
+</I>&gt;<i> 19:19:24 - ========================= STARTING OPENSIM
+</I>&gt;<i> =========================
+</I>&gt;<i> 19:19:24 -
+</I>&gt;<i> ================================================================
+</I>&gt;<i> ====
+</I>&gt;<i> 19:19:24 - [OPENSIM MAIN]: Running
+</I>&gt;<i> 19:19:24 - [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.Exception: Configuration file is missing the
+</I>&gt;<i> [SimulationDataStore] section
+</I>&gt;<i>    at OpenSim.OpenSimBase.StartupSpecific () [0x00000]
+</I>&gt;<i>    at OpenSim.OpenSim.StartupSpecific () [0x00000]
+</I>&gt;<i>    at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000]
+</I>&gt;<i>    at OpenSim.Application.Main (System.String[] args) [0x00000]
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --------------------------------------------------------------------
+</I>&gt;<i> mail2web LIVE &#8211; Free email based on Microsoft&#174; Exchange technology -
+</I>&gt;<i> <A HREF="http://link.mail2web.com/LIVE">http://link.mail2web.com/LIVE</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006801.html">[Opensim-users] Configuration file is missing	the	[SimulationDataStore] section
+</A></li>
+	<LI>Next message: <A HREF="006802.html">[Opensim-users] hello
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6803">[ date ]</a>
+              <a href="thread.html#6803">[ thread ]</a>
+              <a href="subject.html#6803">[ subject ]</a>
+              <a href="author.html#6803">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

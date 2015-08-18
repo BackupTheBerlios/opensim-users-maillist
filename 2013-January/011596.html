@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Robust and Hypergrid configuration?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Robust%20and%20Hypergrid%20configuration%3F&In-Reply-To=%3CCAG6z%2BU6LCn78N3uYtzvp8tcoEVSbujUn8qgd7JhASiKo-FSArg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011595.html">
+   <LINK REL="Next"  HREF="011599.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Robust and Hypergrid configuration?</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Robust%20and%20Hypergrid%20configuration%3F&In-Reply-To=%3CCAG6z%2BU6LCn78N3uYtzvp8tcoEVSbujUn8qgd7JhASiKo-FSArg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Robust and Hypergrid configuration?">fleep513 at gmail.com
+       </A><BR>
+    <I>Tue Jan 15 20:15:04 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011595.html">[Opensim-users] Robust and Hypergrid configuration?
+</A></li>
+        <LI>Next message: <A HREF="011599.html">[Opensim-users] Robust and Hypergrid configuration?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11596">[ date ]</a>
+              <a href="thread.html#11596">[ thread ]</a>
+              <a href="subject.html#11596">[ subject ]</a>
+              <a href="author.html#11596">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi John,
+
+To enable HG for the grid server, you actually use Robust.HG.ini *instead* of
+Robust.ini.  So you don't need to copy the example file over to Robust.ini,
+instead you need to make a new Robust.HG.ini file using the example as a
+template, then when you start the ROBUST service, you call the
+Robust.HG.ini file.  On my windows machine, from the command line the
+startup command is:
+
+Robust.exe -inifile=Robust.HG.ini
+
+Hope that helps!
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Tue, Jan 15, 2013 at 12:04 PM, John Sheridan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A>&gt;wrote:
+
+&gt;<i> Ok, this one is driving me batty and I remember having a similar issue
+</I>&gt;<i> years ago but I'll be damned if I can remember what the solution was.  I'm
+</I>&gt;<i> starting off with a new setup running the stock opensim in grid mode.  I
+</I>&gt;<i> /think/ I have the Robust.ini setup as it should be to enable Hypergrid,
+</I>&gt;<i> wherein I copied Robust.HG.ini.Example over to Robust.ini and set all of
+</I>&gt;<i> the 127.0.0.1 addresses to my external address (grid.pseudospace.net).
+</I>&gt;<i> However, whenever I go to create an account, its leaving the HomeURI,
+</I>&gt;<i> GateKeeperURI, etc. fields blank.  So far I'm able to log in and move about
+</I>&gt;<i> the grid internally, but its cut off from the outside world in terms of
+</I>&gt;<i> Hypergrid in that I can't get out and nobody can get in.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 10:54:31 - [SERVER]: AssetServiceConnector loaded successfully
+</I>&gt;<i> R.O.B.U.S.T.# create user Orion Pseudo
+</I>&gt;<i> Password:
+</I>&gt;<i> Email []: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A>
+</I>&gt;<i> User ID [3f6c4e7b-37bb-4ec0-8e28-**ceec2a67eb15]:
+</I>&gt;<i> 10:54:44 - [AUTHENTICATION DB]: Set password for principalID
+</I>&gt;<i> 3f6c4e7b-37bb-4ec0-8e28-**ceec2a67eb15
+</I>&gt;<i> 10:54:44 - [GRID SERVICE]: GetDefaultRegions returning 0 regions
+</I>&gt;<i> 10:54:44 - [USER ACCOUNT SERVICE]: Unable to set home for account Orion
+</I>&gt;<i> Pseudo.
+</I>&gt;<i> 10:54:44 - [USER ACCOUNT SERVICE]: Created user inventory for Orion Pseudo
+</I>&gt;<i> 10:54:44 - [USER ACCOUNT SERVICE]: Creating default appearance items for
+</I>&gt;<i> 3f6c4e7b-37bb-4ec0-8e28-**ceec2a67eb15
+</I>&gt;<i> 10:54:44 - [USER ACCOUNT SERVICE]: Creating default avatar entries for
+</I>&gt;<i> 3f6c4e7b-37bb-4ec0-8e28-**ceec2a67eb15
+</I>&gt;<i> 10:54:44 - [USER ACCOUNT SERVICE]: Account Orion Pseudo
+</I>&gt;<i> 3f6c4e7b-37bb-4ec0-8e28-**ceec2a67eb15 created successfully
+</I>&gt;<i> R.O.B.U.S.T.# show account Orion Pseudo
+</I>&gt;<i> Name:    Orion Pseudo
+</I>&gt;<i> ID:      3f6c4e7b-37bb-4ec0-8e28-**ceec2a67eb15
+</I>&gt;<i> Title:
+</I>&gt;<i> E-mail:  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">john at pseudospace.net</A>
+</I>&gt;<i> Created: 1/15/2013 4:54:44 PM
+</I>&gt;<i> Level:   0
+</I>&gt;<i> Flags:   0
+</I>&gt;<i> HomeURI:
+</I>&gt;<i> GatekeeperURI:
+</I>&gt;<i> InventoryServerURI:
+</I>&gt;<i> AssetServerURI:
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130115/a55898a7/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130115/a55898a7/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011595.html">[Opensim-users] Robust and Hypergrid configuration?
+</A></li>
+	<LI>Next message: <A HREF="011599.html">[Opensim-users] Robust and Hypergrid configuration?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11596">[ date ]</a>
+              <a href="thread.html#11596">[ thread ]</a>
+              <a href="subject.html#11596">[ subject ]</a>
+              <a href="author.html#11596">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Room management application
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Room%20management%20application&In-Reply-To=%3C1304168557.2380.21.camel%40pulkka%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007197.html">
+   <LINK REL="Next"  HREF="007198.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Room management application</H1>
+    <B>Toni Alatalo</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Room%20management%20application&In-Reply-To=%3C1304168557.2380.21.camel%40pulkka%3E"
+       TITLE="[Opensim-users] Room management application">toni at playsign.net
+       </A><BR>
+    <I>Sat Apr 30 15:02:37 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007197.html">[Opensim-users] Room management application
+</A></li>
+        <LI>Next message: <A HREF="007198.html">[Opensim-users] Room management application
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7199">[ date ]</a>
+              <a href="thread.html#7199">[ thread ]</a>
+              <a href="subject.html#7199">[ subject ]</a>
+              <a href="author.html#7199">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, 2011-04-30 at 00:59 +0100, Justin Clark-Casey wrote:
+&gt;<i> also be created directly from region modules though this is currently a little tricky.  I don't know of any good example 
+</I>&gt;<i> public code but the regression test code might be worth looking at.
+</I>
+Well the region module I pointed to is one example -- it is a bit tricky
+indeed, dealing with the SOP/SOGs etc, but not awful.
+
+&gt;<i> Personally, I would recommend this approach if you're familiar with C# and don't mind spending quite a lot of time 
+</I>&gt;<i> looking through OpenSim code (and asking questions).  The advantage over scripts is that there are no delays or any need 
+</I>&gt;<i> to perform synchronization between operations that occur on different script engine threads.  Also, one gets to use all 
+</I>
+I think the biggest advantage of region modules over LSL is that the
+application code can just have all the scene objects (walls of the room
+etc) and all the functionality directly accessible, instead of making
+multiple separated LSL scripts for the different parts and then using
+chat messages for their interplay etc.
+
+Markus managed by reading some example codes and the API docs, iirc
+didn't ask questions nor complain much :)
+
+&gt;<i> the power of C# and a good IDE.  One can implement sophisticated applications this way without using scripts at all, or 
+</I>&gt;<i> one can use a hybrid script + region module approach.
+</I>
+If someone is wondering how the example I pointed to is a .py file, it's
+because .NET is a multilang system so if you prefer something else to C#
+there are alternatives. The API is the same, you're still just calling
+the opensim code c# stuff directly, there are no bindings or anything
+like that. Erno wrote a py regionmodule loader for opensim earlier and
+Markus used it then for his module, the py module loader addon to
+opensim is hosted by Melanie at
+<A HREF="https://github.com/MelanieT/opensim-modules/tree/master/xpython">https://github.com/MelanieT/opensim-modules/tree/master/xpython</A>
+nowadays.
+
+Is nice if you like py, and also has the advantage over current c#
+region module system that getting your modified module to run doesn't
+require restarting Opensim .. can just use a console command to reload
+the py module. The repo has an example module, and we're happy to help
+if someone else wants to use this,
+<A HREF="https://github.com/MelanieT/opensim-modules/blob/master/xpython/bin/samplemodule.py">https://github.com/MelanieT/opensim-modules/blob/master/xpython/bin/samplemodule.py</A>
+
+But C# is also a really nice lang, and indeed the good IDEs for it help
+greatly in diving in the OpenSim code. I've used a C# IDE &amp; py editor
+side by side, IDE to explore the code, get tab-completion etc., and then
+when find the right func, copy-paste it to the py app code, and reload
+changed code to see it live running on Opensim :)
+
+&gt;<i> The advantage of scripts is that one can port them to other hosts without requiring server access.  And if one sticks to 
+</I>&gt;<i> LL functions then one can port them to Linden Lab's grid (though there are some gotchas due to subtle differences 
+</I>&gt;<i> between the XEngine script engine, the parser for LSL on OpenSim and the Linden Labs implementation of these things). 
+</I>
+Yep, region modules are an option only when you have direct server
+access (and I think most practical when devving on a local server).
+
+MRMs by Adam were an interesting effort to get kind a kind of a
+scripting like toolset for region modules -- c# modules but in a safe
+sandbox, with remote editing without access to server, and live reloads
+that didn't require a server restart. I don't know if the old MRM stuff
+is functional still, didn't find docs with quick googling and this blog
+is not answering to me now .. <A HREF="http://www.adamfrisby.com/blog/tag/mrm/">http://www.adamfrisby.com/blog/tag/mrm/</A>
+
+~Toni
+
+&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007197.html">[Opensim-users] Room management application
+</A></li>
+	<LI>Next message: <A HREF="007198.html">[Opensim-users] Room management application
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7199">[ date ]</a>
+              <a href="thread.html#7199">[ thread ]</a>
+              <a href="subject.html#7199">[ subject ]</a>
+              <a href="author.html#7199">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

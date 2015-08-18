@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] whats difference between BulletSimN vs BulletSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20whats%20difference%20between%20BulletSimN%20vs%20BulletSim&In-Reply-To=%3CCAJ%3DJWqy-V38J7MbY%3DFXamNArLeTNf0_K26Lzbd1ugEXgLBUvKw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011881.html">
+   <LINK REL="Next"  HREF="011884.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] whats difference between BulletSimN vs BulletSim</H1>
+    <B>Mister Blue</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20whats%20difference%20between%20BulletSimN%20vs%20BulletSim&In-Reply-To=%3CCAJ%3DJWqy-V38J7MbY%3DFXamNArLeTNf0_K26Lzbd1ugEXgLBUvKw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] whats difference between BulletSimN vs BulletSim">misterblue at misterblue.com
+       </A><BR>
+    <I>Mon Mar 11 06:21:40 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011881.html">[Opensim-users] whats difference between BulletSimN vs BulletSim
+</A></li>
+        <LI>Next message: <A HREF="011884.html">[Opensim-users] Media on a Prim - many video/audio streams leak across plot and even region boundaries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11882">[ date ]</a>
+              <a href="thread.html#11882">[ thread ]</a>
+              <a href="subject.html#11882">[ subject ]</a>
+              <a href="author.html#11882">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The note in OpenSim.ini.example is wrong as BulletSimN has been wrapped
+into the one implementation of BulletSim. I will update the note in the ini
+file.
+
+BulletSim has two parts: C# code that implements virtual world things
+(linksets, phantom objects, ...) using a physics engine and then the actual
+physics engine. For the physics engine, BulletSim has two version of the
+Bullet physics engine available: a C++ version (good for general use and
+high performance) and a C# version (good for debugging and/or use on
+platforms that don't support the Windows or Linux C++ binaries).
+
+Originally the two versions were separate but now they have been wrapped
+together. The selection of the C++ or C# Bullet physics engines is an INI
+file setting. An example of what to set is in OpenSimDefaults.ini in the
+[BulletSim] section.
+
+-- mb
+
+
+On Sun, Mar 10, 2013 at 11:01 AM, Laurent Bechir &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">laurent.bechir at madonie.org</A>
+&gt;<i> wrote:
+</I>
+&gt;<i>
+</I>&gt;<i> <A HREF="http://www.ohloh.net/p/opensimulator/commits?page=931&amp;sort=oldest">http://www.ohloh.net/p/opensimulator/commits?page=931&amp;sort=oldest</A>
+</I>&gt;<i>
+</I>&gt;<i> * Initial commit of BulletSimN (BulletSNPlugin). Purely C# implementation
+</I>&gt;<i> of BulletSim. This is designed to be /as close as possible/ to the
+</I>&gt;<i> BulletSim plugin while still being entirely in the managed space to make
+</I>&gt;<i> keeping it up to date easy as possible (no thinking work). This
+</I>&gt;<i> implementation is /slower/ then the c++ version just because it's fully
+</I>&gt;<i> managed, so it's not appropriate for huge sims, but it will run small ones
+</I>&gt;<i> OK. At the moment, it supports all known features of BulletSim. Think of it
+</I>&gt;<i> like.. POS but everything works. To use this plugin, set the physics plugin
+</I>&gt;<i> to BulletSimN.
+</I>&gt;<i>
+</I>&gt;<i> I understand that it is easier to upgrade, but won't fit large grids, but
+</I>&gt;<i> a developer should explain that better than me :)
+</I>&gt;<i>
+</I>&gt;<i> Le 10 mars 2013 &#224; 16:41, R.Gunther &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A>&gt; a &#233;crit :
+</I>&gt;<i>
+</I>&gt;<i> &gt; i see 2 options in the opensim.ini
+</I>&gt;<i> &gt; BulletSimN and BulletSim
+</I>&gt;<i> &gt; But whats so special about BulletSimN ?
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130310/041d2210/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130310/041d2210/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011881.html">[Opensim-users] whats difference between BulletSimN vs BulletSim
+</A></li>
+	<LI>Next message: <A HREF="011884.html">[Opensim-users] Media on a Prim - many video/audio streams leak across plot and even region boundaries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11882">[ date ]</a>
+              <a href="thread.html#11882">[ thread ]</a>
+              <a href="subject.html#11882">[ subject ]</a>
+              <a href="author.html#11882">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] collision detection for attachments
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3C514D0429.3020502%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011937.html">
+   <LINK REL="Next"  HREF="011941.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] collision detection for attachments</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3C514D0429.3020502%40googlemail.com%3E"
+       TITLE="[Opensim-users] collision detection for attachments">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Mar 23 02:23:53 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011937.html">[Opensim-users] collision detection for attachments
+</A></li>
+        <LI>Next message: <A HREF="011941.html">[Opensim-users] collision detection for attachments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11938">[ date ]</a>
+              <a href="thread.html#11938">[ thread ]</a>
+              <a href="subject.html#11938">[ subject ]</a>
+              <a href="author.html#11938">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yeah, according to [1], attachments should receive collision events when the avatar capsule collides with something, 
+though the attachments themselves do not collide.  Dr Ramesh, might this be good enough for your purposes?  As Dahlia 
+says, doing anything more finer grained is practically impossible at this time (detected collision of an avatar foot, as 
+opposed to a hand, for instance).
+
+It's quite possible that sending avatar collision events to attachments isn't currently implemented in OpenSimulator for 
+either normal users or NPCs.
+
+[1] <A HREF="http://lslwiki.net/lslwiki/wakka.php?wakka=collisions">http://lslwiki.net/lslwiki/wakka.php?wakka=collisions</A>
+
+On 22/03/13 19:55, Dahlia Trimble wrote:
+&gt;<i> On the simulator, an avatar collision shape is a &quot;capsule&quot;, sort of like a vertical cylinder with a hemisphere on each
+</I>&gt;<i> end. The avatar mesh, skeleton, and attachments do not collide on the simulator and as such no events exist which could
+</I>&gt;<i> trigger a script event. I thought the avatar capsule could generate collision events but perhaps this is not the case or
+</I>&gt;<i> it is not implemented in OpenSimulator.
+</I>&gt;<i>
+</I>&gt;<i> Given the current animation system, collisions with attachments and avatar meshes would be difficult to implement as
+</I>&gt;<i> they would need to be detected on the viewer, however, animations are poorly synchronized between viewers and there is a
+</I>&gt;<i> lack of position accuracy for avatar motion. Sending such events to the server and making use of them in scripts would
+</I>&gt;<i> be a difficult task. It's probably possible that the avatar character animation could be simulated on the server but
+</I>&gt;<i> that would be a fairly large level of complexity to add to the simulator and given the synchronization issues with
+</I>&gt;<i> animations, probably would give very inconsistent results compared to what users would see on their viewers.
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Mar 22, 2013 at 11:49 AM, Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     Hello,
+</I>&gt;<i>     I am wondering if this is by design ... I have a  script to detect collision in an attachment in order to start a
+</I>&gt;<i>     specific animation for an NPC, but it appears that collision is not detected when the script is running in the
+</I>&gt;<i>     attachment.
+</I>&gt;<i>     Let me know if this is to be expected. How would you script an NPC that would react diffectly if for e.g. its foot
+</I>&gt;<i>     hits something, or some other body part hits .... Just an attempt to make an NPC that reacts a little more
+</I>&gt;<i>     interestingly when colliding with obstacles.
+</I>&gt;<i>     Thanks
+</I>&gt;<i>     R
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i>     *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate /Research Associate Professor/, Idaho State
+</I>&gt;<i>     University, Pocatello, ID 83209 Tel: 208-240-0040 &lt;tel:208-240-0040&gt;
+</I>&gt;<i>     Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn &lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;, DeepSemaphore LLC
+</I>&gt;<i>     &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile &lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011937.html">[Opensim-users] collision detection for attachments
+</A></li>
+	<LI>Next message: <A HREF="011941.html">[Opensim-users] collision detection for attachments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11938">[ date ]</a>
+              <a href="thread.html#11938">[ thread ]</a>
+              <a href="subject.html#11938">[ subject ]</a>
+              <a href="author.html#11938">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

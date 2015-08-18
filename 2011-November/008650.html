@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [opensim-edu] OpenSim services bundle test
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bopensim-edu%5D%20OpenSim%20services%20bundle%20test&In-Reply-To=%3CCAME74xGHb5M8EPabSTASS-ZeU6%2BvR7Lu6gLEZ98ywTANM%3D4%3Dyw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008629.html">
+   <LINK REL="Next"  HREF="008660.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [opensim-edu] OpenSim services bundle test</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bopensim-edu%5D%20OpenSim%20services%20bundle%20test&In-Reply-To=%3CCAME74xGHb5M8EPabSTASS-ZeU6%2BvR7Lu6gLEZ98ywTANM%3D4%3Dyw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] [opensim-edu] OpenSim services bundle test">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Thu Nov 24 20:53:36 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008629.html">[Opensim-users] [opensim-edu] OpenSim services bundle test
+</A></li>
+        <LI>Next message: <A HREF="008660.html">[Opensim-users] [opensim-edu] OpenSim services bundle test
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8650">[ date ]</a>
+              <a href="thread.html#8650">[ thread ]</a>
+              <a href="subject.html#8650">[ subject ]</a>
+              <a href="author.html#8650">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Mimetic &amp; Fleep,
+
+I've finally given your package a try, after losing nights of sleep
+getting the individual modules a try.
+
+First, I would like to thank you very much for all your work. For
+anyone who wishes to give the external services a try, the fundamental
+thing is the readme file you've assembled together &#8212; because it
+explains *all* necessary steps. The wiki and the individual readme
+files are simply incomplete. There are far more steps which I hadn't
+found described anywhere. Just for that, the package is worth all
+trouble :)
+
+Groups work flawlessly. But as a matter of fact, they always worked.
+
+Offline IMs finally work! I'm not sure if this is supposed to work for
+Group Chat IMs as well. And from the code, I'm assuming that
+IM-to-email is not implemented, but it should be possible to add that
+functionality. How exactly that is supposed to integrate with the
+&quot;main&quot; database (specially because I have all these options on a
+different server, using a different MySQL database...), I'm not sure
+(e.g. making sure that the IM-to-email option on the user preferences,
+when checked, actually sends IMs to email &#8212; which, in my case, are
+done by a _different_ server. I'm not yet sure how to do that!)
+
+Profiles and Search... don't work. When looking at what was happening
+(on two different servers &#8212; one running Mac OS X and the other
+Linux/Cent OS 5.3 &#8212; to make sure that the problem was not related to
+Mono or the spoecific architecture), this is what I got:
+
+[PROFILE]: Unable to connect to Profile Server
+<A HREF="http://btgrid.betatechnologies.info/os_services/profiles/profile.php.">http://btgrid.betatechnologies.info/os_services/profiles/profile.php.</A>
+Method avatar_properties_request, params System.Collections.Hashtable.
+Exception System.Xml.XmlException: Multiple document element was
+detected.  Line 2, position 2.
+  at Mono.Xml2.XmlTextReader.ReadStartTag () [0x00000] in &lt;filename unknown&gt;:0
+  at Mono.Xml2.XmlTextReader.ReadContent () [0x00000] in &lt;filename unknown&gt;:0
+  at Mono.Xml2.XmlTextReader.Read () [0x00000] in &lt;filename unknown&gt;:0
+  at System.Xml.XmlTextReader.Read () [0x00000] in &lt;filename unknown&gt;:0
+  at Nwc.XmlRpc.XmlRpcResponseDeserializer.Deserialize
+(System.IO.TextReader xmlData) [0x00000] in &lt;filename unknown&gt;:0
+  at Nwc.XmlRpc.XmlRpcRequest.Send (System.String url, Int32 timeout)
+[0x00000] in &lt;filename unknown&gt;:0
+  at OpenSimProfile.Modules.OpenProfile.OpenProfileModule.GenericXMLRPCRequest
+(System.Collections.Hashtable ReqParams, System.String method)
+[0x00000] in &lt;filename unknown&gt;:0
+
+Sounds cryptic? Not really &#8212; I found out that my stupid hosting
+provider doesn't have the required XML-RPC library built-in. Ack! (I
+just copied &amp; pasted this here because Google will eventually pick it
+up sooner or later, and hopefully this message will be helpful for
+anyone searching for the same issue. If that's the case, fellow
+Google-user, be content, the modules are working, it's just your PHP
+which hasn't the XML-RPC library built in).
+
+Workaround? In my case, I'm not really allowed to change the PHP
+module, since it's not under my control. Well, I have gone through
+this before, and I'm going to try to adapt the code to use the
+well-known Incutio XML-RPC library, which is used by WordPress (and
+thus about 1/6th of all websites in the world) and thus should be
+reasonably efficient and safe. Sadly, of course, it means rewriting a
+lot of code, since the approach is rather different. But if I get this
+to work I might post a copy of the code somewhere.
+
+Actually, if Mimetic Core is reading this, I would like to ask your
+permission to use your module to include it as part of an upcoming
+WordPress plugin I'm planning to do. After a terrible experience with
+Xoops I vowed never to use it again :-) And while the academic
+community is very fond of Moodle &#8212; and there are already a lot of
+modules working with Moodle doing basically the same thing &#8212; 67
+million sites run WordPress (<A HREF="http://en.wordpress.com/stats/">http://en.wordpress.com/stats/</A>) so I
+believe there might be some interest using it as a backend for
+managing a grid. Note that this is a very-long-time project, to which
+I'm not going to do &quot;in a moment's notice&quot;, since the whole point is
+to allow things like authentication, profiles, and social networking
+tools (like BuddyPress) and forums all be integrated uniformly into a
+single setup. And no, this is not to get into a &quot;CMS war&quot;; and yes,
+I'm aware that the same could be achieved &#8212; possibly more easily &#8212;
+starting with Moodle or even Drupal, both of which already have
+several modules to integrate with OpenSim.
+
+   - Gwyn
+
+&gt;&gt;<i> On Mon, Nov 14, 2011 at 4:00 PM, Core (mimetic.core) &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">core at odosys.net</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'm posting a link to a preliminary version of my OpenSim services 'care
+</I>&gt;&gt;&gt;<i> package'. &#160;To recap, it contains everything needed to (manually) install
+</I>&gt;&gt;&gt;<i> Groups, Profiles, Search and Offline Messages using a single database and is
+</I>&gt;&gt;&gt;<i> assembled from existing modules that seem to work the best under most
+</I>&gt;&gt;&gt;<i> conditions. &#160;It's not 100% complete as far as detailed instructions go
+</I>&gt;&gt;&gt;<i> (which I'm working on) and I still haven't tested it under IIS or on a MAC
+</I>&gt;&gt;&gt;<i> (which I'm also working on), but there's a quickstart guide and all the
+</I>&gt;&gt;&gt;<i> necessary files are included. &#160;All comments, corrections and contributions
+</I>&gt;&gt;&gt;<i> are welcome and desired. &#160;Hopefully someone will find this useful :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The file is named 'Opensim_Services.zip' - there's also a checksum/virus
+</I>&gt;&gt;&gt;<i> scan log for the properly paranoid...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="http://public.odosys.net/files/opensim/os_modules/">http://public.odosys.net/files/opensim/os_modules/</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> - Core/Jason
+</I>&gt;&gt;&gt;<i> - <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">core at odosys.net</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Education mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Education at list.opensim-edu.org</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://list.opensim-edu.org/listinfo.cgi/education-opensim-edu.org">http://list.opensim-edu.org/listinfo.cgi/education-opensim-edu.org</A>
+</I>
+-- 
+&quot;I'm not building a game. I'm building a new country.&quot;
+&#160; -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008629.html">[Opensim-users] [opensim-edu] OpenSim services bundle test
+</A></li>
+	<LI>Next message: <A HREF="008660.html">[Opensim-users] [opensim-edu] OpenSim services bundle test
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8650">[ date ]</a>
+              <a href="thread.html#8650">[ thread ]</a>
+              <a href="subject.html#8650">[ subject ]</a>
+              <a href="author.html#8650">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

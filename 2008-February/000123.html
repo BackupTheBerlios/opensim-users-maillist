@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MySQL Errors Unique to Linux and .net
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20Errors%20Unique%20to%20Linux%20and%20.net&In-Reply-To=%3C47C68E11.5050603%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000122.html">
+   <LINK REL="Next"  HREF="000124.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MySQL Errors Unique to Linux and .net</H1>
+    <B>sered secondlife</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20Errors%20Unique%20to%20Linux%20and%20.net&In-Reply-To=%3C47C68E11.5050603%40gmail.com%3E"
+       TITLE="[Opensim-users] MySQL Errors Unique to Linux and .net">seredsecondlife at gmail.com
+       </A><BR>
+    <I>Thu Feb 28 11:33:53 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000122.html">[Opensim-users] MySQL Errors Unique to Linux and .net
+</A></li>
+        <LI>Next message: <A HREF="000124.html">[Opensim-users] opensim-webinterfacebeta
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#123">[ date ]</a>
+              <a href="thread.html#123">[ thread ]</a>
+              <a href="subject.html#123">[ subject ]</a>
+              <a href="author.html#123">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Agreed, it looks like the default MySQL configuration in 
+bin/mysql_connection.ini for OpenSim has not been adapted for the local 
+system. There are several instructions for OpenSim and MySQL that 
+suggest using the root account, but I agree with Kyle that using a 
+separate, dedicated account is much better.
+
+Cheers,
+Sered
+
+Kyle Hamilton wrote:
+&gt;<i> I must point out that it's not at all recommended to run any service
+</I>&gt;<i> using the root user (it's literally akin to running things
+</I>&gt;<i> authenticated as 'sa' under Oracle).
+</I>&gt;<i>
+</I>&gt;<i> That said, if it works with the root user, then it's not an OpenSim
+</I>&gt;<i> problem, it's a MySQL permission-configuration problem.  (Which, from
+</I>&gt;<i> the original message, is what that error message indicates anyway.)
+</I>&gt;<i>
+</I>&gt;<i> -Kyle H
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Feb 27, 2008 at 2:51 PM, ken yasue &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ken at grid-pion.com</A>&gt; wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I had same problem in OpenSim0.5.0 release in LinuxBox.
+</I>&gt;&gt;<i>  I just changed to connect mysql by root user, and it worked.
+</I>&gt;&gt;<i>  So try connect with root user... If you can :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Ken Yasue
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Terry Ford wrote:
+</I>&gt;&gt;<i>  &gt; Hi all,
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>  &gt; I'm new to the list but look forward to participating often.
+</I>&gt;&gt;<i>  &gt; I have been able to compile/run .5 on my XP machine using mysql and it
+</I>&gt;&gt;<i>  &gt; works well.
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>  &gt; I decided to try to run it from my linux machine using mysql but
+</I>&gt;&gt;<i>  &gt; everytime I try starting the user server or the main opensim.exe file I
+</I>&gt;&gt;<i>  &gt; keep rec'ing the following error:
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>  &gt; Unhandled Exception: MySql.Data.MySqlClient.MySqlException: SELECT
+</I>&gt;&gt;<i>  &gt; command denied to user: '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">username at localhost</A>' for table 'TABLES'
+</I>&gt;&gt;<i>  &gt;   at MySql.Data.MySqlClient.MySqlStream.OpenPacket () [0x00000]
+</I>&gt;&gt;<i>  &gt;   at MySql.Data.MySqlClient.NativeDriver.ReadResult (System.UInt64&amp;
+</I>&gt;&gt;<i>  &gt; affectedRows, System.Int64&amp; lastInsertId) [0x00000]
+</I>&gt;&gt;<i>  &gt;   at MySql.Data.MySqlClient.MySqlDataReader.GetResultSet () [0x00000]
+</I>&gt;&gt;<i>  &gt;   at MySql.Data.MySqlClient.MySqlDataReader.NextResult () [0x00000]
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>  &gt; I've have done some research on my own and have found this to be a linux
+</I>&gt;&gt;<i>  &gt; specific problem when using c#.
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>  &gt; Has anyone figured out a workaround??
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>  &gt; Thanks,
+</I>&gt;&gt;<i>  &gt; -Terry
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>  &gt; _______________________________________________
+</I>&gt;&gt;<i>  &gt; Opensim-users mailing list
+</I>&gt;&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>  &gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  _______________________________________________
+</I>&gt;&gt;<i>  Opensim-users mailing list
+</I>&gt;&gt;<i>  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i>  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000122.html">[Opensim-users] MySQL Errors Unique to Linux and .net
+</A></li>
+	<LI>Next message: <A HREF="000124.html">[Opensim-users] opensim-webinterfacebeta
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#123">[ date ]</a>
+              <a href="thread.html#123">[ thread ]</a>
+              <a href="subject.html#123">[ subject ]</a>
+              <a href="author.html#123">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

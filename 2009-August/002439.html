@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Unable to load or save OAR file.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Unable%20to%20load%20or%20save%20OAR%20file.&In-Reply-To=%3C4A859531.80005%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002438.html">
+   <LINK REL="Next"  HREF="002440.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Unable to load or save OAR file.</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Unable%20to%20load%20or%20save%20OAR%20file.&In-Reply-To=%3C4A859531.80005%40googlemail.com%3E"
+       TITLE="[Opensim-users] Unable to load or save OAR file.">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Aug 14 18:47:45 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002438.html">[Opensim-users] Unable to load or save OAR file.
+</A></li>
+        <LI>Next message: <A HREF="002440.html">[Opensim-users] Unable to load or save OAR file.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2439">[ date ]</a>
+              <a href="thread.html#2439">[ thread ]</a>
+              <a href="subject.html#2439">[ subject ]</a>
+              <a href="author.html#2439">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tom Haines wrote:
+&gt;<i> I am running OpenSim 0.6.6 in grid mode w/ 5 regions on Mono r139915.
+</I>&gt;<i> I suspect this is a zlib error, but when I installed and configured mono 
+</I>&gt;<i> I got the following:
+</I>&gt;<i> checking zlib.h usability... yes
+</I>&gt;<i> checking zlib.h presence... yes
+</I>&gt;<i> checking for zlib.h... yes
+</I>&gt;<i> Using system zlib
+</I>
+This does look like some kind of Mono issue rather than anything to do with OpenSim.
+
+&gt;<i> 
+</I>&gt;<i> Here is the OpenSim log.
+</I>&gt;<i> Region (Oxford) # load oar /tmp/maya3.oar
+</I>&gt;<i> 10:59:26 - [ARCHIVER]: Loading archive to region Oxford from /tmp/maya3.oar
+</I>&gt;<i> 10:59:26 - CreateZStream
+</I>&gt;<i> 
+</I>&gt;<i> Region (Oxford) # save oar /mnt/san1/oars/Oxford.oar
+</I>&gt;<i> 11:08:29 - [ARCHIVER]: Writing archive for region Oxford to 
+</I>&gt;<i> /mnt/san1/oars/Oxford.oar
+</I>&gt;<i> 11:08:29 - Command error: System.EntryPointNotFoundException: CreateZStream
+</I>&gt;<i>   at (wrapper managed-to-native) 
+</I>&gt;<i> System.IO.Compression.DeflateStream:CreateZStream 
+</I>&gt;<i> (System.IO.Compression.CompressionMode,bool,System.IO.Compression.DeflateStream/UnmanagedReadOrWrite)
+</I>&gt;<i>   at System.IO.Compression.DeflateStream..ctor (System.IO.Stream 
+</I>&gt;<i> compressedStream, CompressionMode mode, Boolean leaveOpen, Boolean gzip) 
+</I>&gt;<i> [0x00000] 
+</I>&gt;<i>   at (wrapper remoting-invoke-with-check) 
+</I>&gt;<i> System.IO.Compression.DeflateStream:.ctor 
+</I>&gt;<i> (System.IO.Stream,System.IO.Compression.CompressionMode,bool,bool)
+</I>&gt;<i>   at System.IO.Compression.GZipStream..ctor (System.IO.Stream 
+</I>&gt;<i> compressedStream, CompressionMode mode, Boolean leaveOpen) [0x00000] 
+</I>&gt;<i>   at System.IO.Compression.GZipStream..ctor (System.IO.Stream 
+</I>&gt;<i> compressedStream, CompressionMode mode) [0x00000] 
+</I>&gt;<i>   at (wrapper remoting-invoke-with-check) 
+</I>&gt;<i> System.IO.Compression.GZipStream:.ctor 
+</I>&gt;<i> (System.IO.Stream,System.IO.Compression.CompressionMode)
+</I>&gt;<i>   at 
+</I>&gt;<i> OpenSim.Region.CoreModules.World.Archiver.ArchiveWriteRequestPreparation..ctor 
+</I>&gt;<i> (OpenSim.Region.Framework.Scenes.Scene scene, System.String savePath, 
+</I>&gt;<i> Guid requestId) [0x00000] 
+</I>&gt;<i>   at 
+</I>&gt;<i> OpenSim.Region.CoreModules.World.Archiver.ArchiverModule.ArchiveRegion 
+</I>&gt;<i> (System.String savePath, Guid requestId) [0x00000] 
+</I>&gt;<i>   at 
+</I>&gt;<i> OpenSim.Region.CoreModules.World.Archiver.ArchiverModule.ArchiveRegion 
+</I>&gt;<i> (System.String savePath) [0x00000] 
+</I>&gt;<i>   at 
+</I>&gt;<i> OpenSim.Region.Framework.Scenes.SceneManager.SaveCurrentSceneToArchive 
+</I>&gt;<i> (System.String filename) [0x00000] 
+</I>&gt;<i>   at OpenSim.OpenSim.SaveOar (System.String module, System.String[] 
+</I>&gt;<i> cmdparams) [0x00000] 
+</I>&gt;<i>   at OpenSim.Framework.Console.Commands.Resolve (System.String[] cmd) 
+</I>&gt;<i> [0x00000] 
+</I>&gt;<i>   at OpenSim.Framework.Console.LocalConsole.ReadLine (System.String p, 
+</I>&gt;<i> Boolean isCommand, Boolean e) [0x00000] 
+</I>&gt;<i>   at OpenSim.Framework.Console.CommandConsole.Prompt () [0x00000] 
+</I>&gt;<i>   at OpenSim.Application.Main (System.String[] args) [0x00000]
+</I>&gt;<i> Does this look like a Mono issue?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002438.html">[Opensim-users] Unable to load or save OAR file.
+</A></li>
+	<LI>Next message: <A HREF="002440.html">[Opensim-users] Unable to load or save OAR file.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2439">[ date ]</a>
+              <a href="thread.html#2439">[ thread ]</a>
+              <a href="subject.html#2439">[ subject ]</a>
+              <a href="author.html#2439">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Region crossings crashing the grid.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20crossings%20crashing%20the%20grid.&In-Reply-To=%3C4BDF47D6.7060901%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004474.html">
+   <LINK REL="Next"  HREF="004404.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Region crossings crashing the grid.</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20crossings%20crashing%20the%20grid.&In-Reply-To=%3C4BDF47D6.7060901%40googlemail.com%3E"
+       TITLE="[Opensim-users] Region crossings crashing the grid.">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue May  4 00:01:58 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004474.html">[Opensim-users] OpenSim 0.6.9.rc2 - Can't link objects...
+</A></li>
+        <LI>Next message: <A HREF="004404.html">[Opensim-users] OpenSim crashing why?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4402">[ date ]</a>
+              <a href="thread.html#4402">[ thread ]</a>
+              <a href="subject.html#4402">[ subject ]</a>
+              <a href="author.html#4402">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tom Haines wrote:
+&gt;<i> I have been experiencing crashes of our region server on our grid when 
+</I>&gt;<i> avatars are crossing region borders. The details surrounding this can be 
+</I>&gt;<i> found in mantis here: <A HREF="http://opensimulator.org/mantis/view.php?id=4588">http://opensimulator.org/mantis/view.php?id=4588</A> 
+</I>&gt;<i> (my info is under the &quot;bitoffish&quot; posting). I understand that these 
+</I>&gt;<i> issues take time to resolve, but I'm looking for a way to mitigate this 
+</I>&gt;<i> problem in the meantime.
+</I>&gt;<i> 
+</I>&gt;<i> The exception is being thrown in the CombatModule.AvatarEnteringParcel 
+</I>&gt;<i> method. Is there is a way to disable this module since we don't use 
+</I>&gt;<i> combat across grid?
+</I>&gt;<i> 
+</I>&gt;<i> If not, I'm considering building from source, and commenting out the 
+</I>&gt;<i> code in CombatModule.AvatarEnteringParcel to avoid the exception, or 
+</I>&gt;<i> placing it in a Try/Catch block. I want to avoid this, because I don't 
+</I>&gt;<i> want to run hacked versions of the code. Unfortunately, I don't have the 
+</I>&gt;<i> time to properly debug the issue and submit a fix.
+</I>&gt;<i> 
+</I>&gt;<i> Any thoughts on this issue?
+</I>
+I'm guessing that the avatar reference being sent via the OnAvatarEnteringParcel event to the AvatarEnteringParcel() method in CombatModule is occasionally null for unknown reasons.  This is the only line outside the existing try/catch statement.
+
+I actually moved this statement inside the try/catch for 0.6.9.rc2 which should squash this bug.  This will be foreported to master soon, possibly with logging to work out whether this is a significant problem or not.
+
+You can download 0.6.9.rc2 from <A HREF="http://opensimulator.org/wiki/Download.">http://opensimulator.org/wiki/Download.</A>  This is a fairly stable release candidate as far as OpenSim goes, so it may well become the proper 0.6.9.
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004474.html">[Opensim-users] OpenSim 0.6.9.rc2 - Can't link objects...
+</A></li>
+	<LI>Next message: <A HREF="004404.html">[Opensim-users] OpenSim crashing why?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4402">[ date ]</a>
+              <a href="thread.html#4402">[ thread ]</a>
+              <a href="subject.html#4402">[ subject ]</a>
+              <a href="author.html#4402">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

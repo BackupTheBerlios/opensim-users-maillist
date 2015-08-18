@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Multiple regions using 0.6.7
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multiple%20regions%20using%200.6.7&In-Reply-To=%3C4AD76CE4.10803%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002895.html">
+   <LINK REL="Next"  HREF="002899.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Multiple regions using 0.6.7</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multiple%20regions%20using%200.6.7&In-Reply-To=%3C4AD76CE4.10803%40googlemail.com%3E"
+       TITLE="[Opensim-users] Multiple regions using 0.6.7">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Oct 15 20:41:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002895.html">[Opensim-users] Multiple regions using 0.6.7
+</A></li>
+        <LI>Next message: <A HREF="002899.html">[Opensim-users] Multiple regions using 0.6.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2898">[ date ]</a>
+              <a href="thread.html#2898">[ thread ]</a>
+              <a href="subject.html#2898">[ subject ]</a>
+              <a href="author.html#2898">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jabba Gruppman wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> I'm a bit lost with the changes in 0.6.7 regarding how to set up 
+</I>&gt;<i> multiple regions.
+</I>&gt;<i> Formerly I used to have several xml files in the Regions/ directory and 
+</I>&gt;<i> all was
+</I>&gt;<i> working fine.
+</I>&gt;<i> 
+</I>&gt;<i> After OpenSim.exe was not coming up correctly after installing 0.6.7
+</I>
+You might want to go back and double check.  I still have a trunk OpenSim which 
+is fine using multiple region xml files.  The same should be true of 0.6.7.
+
+&gt;<i> I removed the old xml files from the Regions directory and created one 
+</I>&gt;<i> single
+</I>&gt;<i> region manually using the interactive config of OpenSim.exe
+</I>&gt;<i> I was successful and OpenSim.exe started without problems. After this I 
+</I>&gt;<i> found
+</I>&gt;<i> a Regions.ini file in the Regions directory...
+</I>&gt;<i> 
+</I>&gt;<i> Unfortunately the wiki at <A HREF="http://opensimulator.org/wiki/Configuration">http://opensimulator.org/wiki/Configuration</A> 
+</I>&gt;<i> still tells
+</I>&gt;<i> about the xml configuration which seems to be outdated now.
+</I>
+You're right, this is bad, the doc really needs to be updated here.
+
+I had completely forgotten that the regions default had changed to .ini between 
+0.6.6 and 0.6.7.
+
+&gt;<i> 
+</I>&gt;<i> How is the correct way of setting up multiple regions for one single 
+</I>&gt;<i> OpenSim.exe
+</I>&gt;<i> instance now? Maybe anyone has a good link to an example?
+</I>
+ From reading the code, I think that it should be possible either to
+
+1)  Specify multiple regions in a single ini file (e.g. Regions.ini).  For example
+
+[Big Fat Region]
+RegionUUID = 5ce85740-6460-43d3-ba4c-29207b010072
+Location = 1000,1000
+InternalAddress = 0.0.0.0
+InternalPort = 9000
+AllowAlternatePorts = False
+ExternalHostName = 192.168.1.2
+MasterAvatarFirstName = Justin
+MasterAvatarLastName = Clark-Casey
+MasterAvatarSandboxPassword = yeahokay
+
+[Greek Wedding]
+RegionUUID = 5c445740-6460-43d3-ba4c-444444445555
+Location = 1000,1001
+InternalAddress = 0.0.0.0
+InternalPort = 9001
+AllowAlternatePorts = False
+ExternalHostName = 192.168.1.2
+MasterAvatarFirstName = Justin
+MasterAvatarLastName = Clark-Casey
+MasterAvatarSandboxPassword = yeahokay
+
+or spread them across multiple ini files.  Of course, the old xml files should 
+also work.
+
+I'll try and change the wiki page sometime (making separate 0.6.6 and 0.6.7 
+sections for now, even though that's messy).  Of course, if someone else wants 
+to jump in and do that it would be very much appreciated :)
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.org">http://justincc.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002895.html">[Opensim-users] Multiple regions using 0.6.7
+</A></li>
+	<LI>Next message: <A HREF="002899.html">[Opensim-users] Multiple regions using 0.6.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2898">[ date ]</a>
+              <a href="thread.html#2898">[ thread ]</a>
+              <a href="subject.html#2898">[ subject ]</a>
+              <a href="author.html#2898">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

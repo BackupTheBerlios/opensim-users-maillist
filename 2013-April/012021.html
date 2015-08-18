@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] llGiveInventoryList to an object raises exception
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llGiveInventoryList%20to%20an%20object%20raises%20exception&In-Reply-To=%3Cp06240803cd8c75756ba7%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012058.html">
+   <LINK REL="Next"  HREF="012022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] llGiveInventoryList to an object raises exception</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llGiveInventoryList%20to%20an%20object%20raises%20exception&In-Reply-To=%3Cp06240803cd8c75756ba7%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] llGiveInventoryList to an object raises exception">opensim at pescadoo.net
+       </A><BR>
+    <I>Thu Apr 11 17:31:03 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012058.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+        <LI>Next message: <A HREF="012022.html">[Opensim-users] On Mesh Avatars and skin creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12021">[ date ]</a>
+              <a href="thread.html#12021">[ thread ]</a>
+              <a href="subject.html#12021">[ subject ]</a>
+              <a href="author.html#12021">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>list items = [&quot;item1&quot;, &quot;item2&quot;, &quot;item3&quot;];
+llGiveInventoryList (llGetOwner(), &quot;folder&quot;, items);
+
+Works ok.
+______________________________________________
+
+list items = [&quot;item1&quot;, &quot;item2&quot;, &quot;item3&quot;];
+key objectId = &quot;9a0da4c0-2a4a-47a2-9108-0e24991d207d&quot;; // An object 
+in the same sim
+llGiveInventoryList (objectId, &quot;folder&quot;, items);
+
+Fails with:
+
+[06:25 AM] Brick Textures: 
+System.Reflection.TargetInvocationException: Exception has been 
+thrown by the target of an invocation.
+
+Server stack trace:
+   at System.Reflection.MonoMethod.Invoke (System.Object obj, 
+BindingFlags invokeAttr, System.Reflection.Binder binder, 
+System.Object[] parameters, System.Globalization.CultureInfo culture) 
+[0x00000]
+   at System.Reflection.MethodBase.Invoke (System.Object obj, 
+System.Object[] parameters) [0x00000]
+   at 
+OpenSim.Region.ScriptEngine.Shared.ScriptBase.Executor.ExecuteEvent 
+(System.String state, System.String FunctionName, System.Object[] 
+args) [0x00000]
+
+Exception rethrown at [0]:
+  ---&gt; System.NullReferenceException: Object reference not set to an 
+instance of an object
+
+Server stack trace:
+   at OpenSim.Region.Framework.Scenes.Scene.MoveTaskInventoryItems 
+(UUID destID, System.String category, 
+OpenSim.Region.Framework.Scenes.SceneObjectPart host, 
+System.Collections.Generic.List`1 items) [0x00000]
+   at OpenSim.Region.ScriptEngine.Shared.Api.LSL_Api.llGiveInventoryL
+
+______________________________________________
+
+REPRO:
+
+Rez box A.
+Script A:
+
+default {
+     state_entry() {
+         key id = llGetKey();
+         llOwnerSay((string)id);
+         llRemoveInventory(llGetScriptName()); // Delete self
+     }
+}
+
+Copy UUID.
+
+Rez box B.
+Fill with textures (full-mod).
+Script B:
+
+key target = &quot;__paste_UUID_here__&quot;;
+integer LIST_WHAT = INVENTORY_TEXTURE;
+
+list makeList (integer what) {
+     list result;
+     integer howMany = llGetInventoryNumber (what);
+     integer i; for (i=0; i&lt;howMany; i++)
+         result += [ llGetInventoryName (what, i) ];
+     return result;
+}
+
+default {
+     state_entry() {
+         list items = makeList (LIST_WHAT);
+         llOwnerSay (llDumpList2String (items,&quot;\n&quot;));
+         llGiveInventoryList (target, &quot;textures&quot;, items);
+     }
+}
+
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012058.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+	<LI>Next message: <A HREF="012022.html">[Opensim-users] On Mesh Avatars and skin creation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12021">[ date ]</a>
+              <a href="thread.html#12021">[ thread ]</a>
+              <a href="subject.html#12021">[ subject ]</a>
+              <a href="author.html#12021">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

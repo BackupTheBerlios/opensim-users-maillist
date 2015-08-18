@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] How to get scripts to run in Diva
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20get%20scripts%20to%20run%20in%20Diva&In-Reply-To=%3Cop.vvlgiycjsyrwx0%40vanishs-mac-pro.fritz.box%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007362.html">
+   <LINK REL="Next"  HREF="007360.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] How to get scripts to run in Diva</H1>
+    <B>Vanish Seriath</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20get%20scripts%20to%20run%20in%20Diva&In-Reply-To=%3Cop.vvlgiycjsyrwx0%40vanishs-mac-pro.fritz.box%3E"
+       TITLE="[Opensim-users] How to get scripts to run in Diva">vanish.tomorrow at googlemail.com
+       </A><BR>
+    <I>Mon May 16 23:55:36 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007362.html">[Opensim-users] How to get scripts to run in Diva
+</A></li>
+        <LI>Next message: <A HREF="007360.html">[Opensim-users] How to get scripts to run in Diva
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7359">[ date ]</a>
+              <a href="thread.html#7359">[ thread ]</a>
+              <a href="subject.html#7359">[ subject ]</a>
+              <a href="author.html#7359">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+for a texture rotation, try this:
+
+
+default {
+     state_entry() {
+         llSetTextureAnim(ANIM_ON | SMOOTH | LOOP, ALL_SIDES, 1, 1, 0.0, 1,  
+-0.3);
+     }
+}
+
+In your script, you set frames to 0, which doesn't make too much sense  
+imho, and if I were a script engine, I would refuse to rotate that  
+texture, too.
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> On Mon, May 16, 2011 at 5:13 PM, missyfitz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">7minarets at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Is there anything specific that needs to be done to get scripts to run  
+</I>&gt;&gt;<i> in
+</I>&gt;&gt;<i> OSdiva? As a test I'm trying a very basic texture animation script  
+</I>&gt;&gt;<i> which I
+</I>&gt;&gt;<i> basically copy/pasted from my inventory in SL, and it doesn't do  
+</I>&gt;&gt;<i> anything..
+</I>&gt;&gt;<i> It says it saves/compiles the script, but the script doesn't actually
+</I>&gt;&gt;<i> animate the texture. Other basic test scripts, like a prim rotation  
+</I>&gt;&gt;<i> script,
+</I>&gt;&gt;<i> also don't work. Here is the script I'm working with:
+</I>&gt;<i>
+</I>&gt;<i> I don't know anything about the specifics of Diva's distro, but have
+</I>&gt;<i> you tried the most trivial script possible? Rotating a prim and
+</I>&gt;<i> texture animations are hardly what I'd call as &quot;basic&quot; :)
+</I>&gt;<i>
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>      state_entry()
+</I>&gt;<i>      {
+</I>&gt;<i>            llSay(0, &quot;Hello World!&quot;);
+</I>&gt;<i>      }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> If the above *does* work, then it seems that you've found some
+</I>&gt;<i> unsupported or misbehaving script functions in the version of XEngine
+</I>&gt;<i> shipped in diva.
+</I>&gt;<i>
+</I>&gt;<i> If the above *doesn't* work, you probably have a misconfiguration,
+</I>&gt;<i> maybe Diva can help you. But I'm sure it would be helpful for you to
+</I>&gt;<i> post your OpenSim.exe console log regardless.
+</I>&gt;<i>
+</I>&gt;<i> HTH,
+</I>&gt;<i>
+</I>&gt;<i> Sean
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> default
+</I>&gt;&gt;<i> {
+</I>&gt;&gt;<i>    state_entry()
+</I>&gt;&gt;<i>    {
+</I>&gt;&gt;<i>        llSetTextureAnim(ANIM_ON | SMOOTH | LOOP, ALL_SIDES,0,0,0.0,
+</I>&gt;&gt;<i> 1,-0.3);
+</I>&gt;&gt;<i>    }
+</I>&gt;&gt;<i> }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Should be just a simple, straightforward texture anim... XEngine is  
+</I>&gt;&gt;<i> enabled
+</I>&gt;&gt;<i> in opensim.ini:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> DefaultScriptEngine = &quot;XEngine&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any reason why it wouldn't work?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> View this message in context:  
+</I>&gt;&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/How-to-get-scripts-to-run-in-Diva-tp6370458p6370458.html">http://opensim-users.2152040.n2.nabble.com/How-to-get-scripts-to-run-in-Diva-tp6370458p6370458.html</A>
+</I>&gt;&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+The Twilight&#8217;s Green Illuminate Beam,
+This Great ImBalance, that I&#8217;ve seen,
+That Trees Got Icy Branches and,
+The Good In Bad, That God I&#8217;ve Been.
+
+<A HREF="http://tgib.co.uk/">http://tgib.co.uk/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007362.html">[Opensim-users] How to get scripts to run in Diva
+</A></li>
+	<LI>Next message: <A HREF="007360.html">[Opensim-users] How to get scripts to run in Diva
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7359">[ date ]</a>
+              <a href="thread.html#7359">[ thread ]</a>
+              <a href="subject.html#7359">[ subject ]</a>
+              <a href="author.html#7359">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

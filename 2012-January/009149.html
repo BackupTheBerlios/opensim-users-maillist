@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Phoenix Viewer hangs at	&quot;WaitingforRegionhandshake&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Phoenix%20Viewer%20hangs%20at%0A%09%22WaitingforRegionhandshake%22&In-Reply-To=%3CCAG6z%2BU4SaNzroOS8WODGhvBP%2BGbnNNnzfo5aYQfiUPcWhEqkcA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009146.html">
+   <LINK REL="Next"  HREF="009003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Phoenix Viewer hangs at	&quot;WaitingforRegionhandshake&quot;</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Phoenix%20Viewer%20hangs%20at%0A%09%22WaitingforRegionhandshake%22&In-Reply-To=%3CCAG6z%2BU4SaNzroOS8WODGhvBP%2BGbnNNnzfo5aYQfiUPcWhEqkcA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Phoenix Viewer hangs at	&quot;WaitingforRegionhandshake&quot;">fleep513 at gmail.com
+       </A><BR>
+    <I>Mon Jan 23 01:40:13 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009146.html">[Opensim-users] Phoenix Viewer hangs at	&quot;WaitingforRegionhandshake&quot;
+</A></li>
+        <LI>Next message: <A HREF="009003.html">[Opensim-users] Osgrid changes to LindenCaps - are they implemented in latest opensim?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9149">[ date ]</a>
+              <a href="thread.html#9149">[ thread ]</a>
+              <a href="subject.html#9149">[ subject ]</a>
+              <a href="author.html#9149">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Getting the networking for opensim to work is the single hardest part of
+setting up a system, IMO.  If you get this solved, everything else will be
+simpler ever after.
+
+Somewhere up there I saw a 10.x.x.x address.  I learned through
+excruciating trial and error that Opensim doesn't play nicely on a network
+with 1-to-1 NATing, even if you have the right ports open on the firewall,
+even if you have the right settings in your ini files.  It seems opensim
+resolves the internal IP address of the machine to send the UDP packets no
+matter what IP address you put in the .ini files.  The viewer then receives
+the UDP packets containing that internal IP address and tries to connect,
+but from outside the network the internal address never resolves, of
+course, so you just get stuck at the waiting for region handshake.
+
+The only solution I found on campus where we have 1-to-1 NATing was to put
+the server in the DMZ and have a static external IP address assigned, then
+everything worked swimmingly.  At home on FleepGrid, I also got a static IP
+address assigned from my ISP and voila all my problems were solved.
+
+For reference, this is what an entry looks like from my region.ini file:
+
+[FleepGrid Plaza]
+RegionUUID = a6a2136d-daa1-4f4e-a136-fd26c913ecfa
+Location = 9013,9013
+InternalAddress = 0.0.0.0
+InternalPort = 9000
+AllowAlternatePorts = False
+ExternalHostName = fleepgrid.com
+
+I hope some of that is helpful and 99% of the time when you get stuck at
+the region handshake part, it's a UDP packets problem, so  you may want to
+speak with your networking admin or network tech support if you're stuck.
+
+Best of luck!
+
+- Chris/Fleep
+
+uChris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+
+
+On Sun, Jan 22, 2012 at 1:19 PM, Gary Beck &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gab4gab at gmail.com</A>&gt; wrote:
+
+&gt;<i> **
+</I>&gt;<i> Thanks for that info Nicky.   I wish I'd known that a year ago.
+</I>&gt;<i>
+</I>&gt;<i> Looking in Imprudence.log the first appearance of the region UDP
+</I>&gt;<i> address:port was in a line with this heading:
+</I>&gt;<i>
+</I>&gt;<i> LLCircuit::addCircuitData for
+</I>&gt;<i>
+</I>&gt;<i> The log gives a fairly detailed account of what's going on during a
+</I>&gt;<i> handshake failure.
+</I>&gt;<i>
+</I>&gt;<i> - Gary
+</I>&gt;<i>
+</I>&gt;<i> ----- Original Message -----
+</I>&gt;<i> *From:* Nicky Perian &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nickyperian at yahoo.com</A>&gt;
+</I>&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Sent:* Sunday, January 22, 2012 12:47 PM
+</I>&gt;<i> *Subject:* Re: [Opensim-users] Phoenix Viewer hangs at
+</I>&gt;<i> &quot;WaitingforRegionhandshake&quot;
+</I>&gt;<i>
+</I>&gt;<i>  If not already done, look at the viewer log. It should have some uri
+</I>&gt;<i> info at the message output point.
+</I>&gt;<i>
+</I>&gt;<i>   ------------------------------
+</I>&gt;<i> *From:* Gary Beck &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gab4gab at gmail.com</A>&gt;
+</I>&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Sent:* Sunday, January 22, 2012 10:27 AM
+</I>&gt;<i> *Subject:* Re: [Opensim-users] Phoenix Viewer hangs at &quot;Waiting
+</I>&gt;<i> forRegionhandshake&quot;
+</I>&gt;<i>
+</I>&gt;<i> Kenneth,
+</I>&gt;<i>   If you're logging on to the region that uses port 9000 that's the port
+</I>&gt;<i> that will be used.
+</I>&gt;<i>   Maybe a step by step on the handshake process will give a clue -
+</I>&gt;<i>
+</I>&gt;<i>       Your server passes the IP address of the region paired with the port
+</I>&gt;<i> number to the viewer.
+</I>&gt;<i>       You specify:
+</I>&gt;<i>           ExternalHostName = &quot;
+</I>&gt;<i> ec2-46-51-xxx-xxx.eu-west-1.compute.amazonaws.com&quot;
+</I>&gt;<i>       Your server resolves that to an address and passed that (not the URL
+</I>&gt;<i> string) along to the viewer.
+</I>&gt;<i>       This could cause a problem if at the server the ExternalHostName is
+</I>&gt;<i> resolved to something other than the proper external IP address (such as
+</I>&gt;<i> the local IP address.)
+</I>&gt;<i>       The viewer takes the passes address/port and attempts to converse
+</I>&gt;<i> with the server using it.
+</I>&gt;<i>       Then if too much time passes the viewer will declare a failure.
+</I>&gt;<i>
+</I>&gt;<i> Typically the problem is either wrong address used or port blocked.
+</I>&gt;<i> Because you're confident the port is open now I'd look into the address
+</I>&gt;<i> being passed.  Unfortunately the log messages related to the regions either
+</I>&gt;<i> show you 'resolved local address:port' or 'unresolved URL address:port'
+</I>&gt;<i> which give no clue.  Perhaps someone knows a good tool to track down the
+</I>&gt;<i> actual address passed to the viewer.
+</I>&gt;<i> - Gary
+</I>&gt;<i> ----- Original Message ----- From: &quot;Kenneth&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">stretchgargan at gmail.com</A>&gt;
+</I>&gt;<i> To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Sent: Sunday, January 22, 2012 10:47 AM
+</I>&gt;<i> Subject: Re: [Opensim-users] Phoenix Viewer hangs at &quot;Waiting
+</I>&gt;<i> forRegionhandshake&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; On 08/01/2012 22:38, Gary Beck wrote:
+</I>&gt;<i> &gt;&gt; Kenneth,
+</I>&gt;<i> &gt;&gt;    Your region parameters looks fine.  From what you've included it's
+</I>&gt;<i> clear that you're reaching the TCP port 9000.
+</I>&gt;<i> &gt;&gt;    To complete the handshake process and communicate with the region
+</I>&gt;<i> you also need to open port 9000 for UDP.  The handshake is there to verify
+</I>&gt;<i> that UDP communication is working.
+</I>&gt;<i> &gt;&gt;    Hope that helps.
+</I>&gt;<i> &gt;&gt; - Gary
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I opened UDP 9000 too (at first, I only had TCP 9000 open) on the Amazon
+</I>&gt;<i> firewall. No joy.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I've verified connectivity on TCP and UDP 9000 by using NetCat on both
+</I>&gt;<i> sides.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Does it use any other ports?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; K.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120122/2544f091/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120122/2544f091/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009146.html">[Opensim-users] Phoenix Viewer hangs at	&quot;WaitingforRegionhandshake&quot;
+</A></li>
+	<LI>Next message: <A HREF="009003.html">[Opensim-users] Osgrid changes to LindenCaps - are they implemented in latest opensim?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9149">[ date ]</a>
+              <a href="thread.html#9149">[ thread ]</a>
+              <a href="subject.html#9149">[ subject ]</a>
+              <a href="author.html#9149">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

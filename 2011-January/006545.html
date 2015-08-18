@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim threw an exception
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20threw%20an%20exception&In-Reply-To=%3CAANLkTik7_Uv6%3D%3D0GFgNEdb%3DiHvc81%3DEFr1_GCgZE1NW1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006544.html">
+   <LINK REL="Next"  HREF="006547.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim threw an exception</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20threw%20an%20exception&In-Reply-To=%3CAANLkTik7_Uv6%3D%3D0GFgNEdb%3DiHvc81%3DEFr1_GCgZE1NW1%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] OpenSim threw an exception">teravus at gmail.com
+       </A><BR>
+    <I>Mon Jan 24 19:41:14 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006544.html">[Opensim-users] OpenSim threw an exception
+</A></li>
+        <LI>Next message: <A HREF="006547.html">[Opensim-users] OpenSim threw an exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6545">[ date ]</a>
+              <a href="thread.html#6545">[ thread ]</a>
+              <a href="subject.html#6545">[ subject ]</a>
+              <a href="author.html#6545">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Based on the error message, it seems that the mySQL driver was automagically
+calling read previous to 5.1 and isn't anymore.
+
+
+Forcing the developer to call Read() is more in line with the rest of the
+ADO.NET world.     This is only a 'system' bug if this is on a DataAdapter.
+If that was the case then it would be a bug in Mono's mySQL
+implementation.    If this is occurring on a DataReader, then this is an
+OpenSimulator bug.   If this is a DataReader then OpenSimulator's mySQL
+Connector needs to call Read in order to get access to the first row's data.
+
+Typically, accessing data via ADO.NET using a DataReader looks like,
+
+MySqlDataReader da = cmd.ExecuteReader();
+using (da)
+{
+if (da.HasRows)
+{
+     while (da.Read())
+     {
+          // Work With Data
+     }
+}
+}
+// explicit close option
+// da.Close;
+// da.Dispose;
+
+Note how da.Read() is called once before the first row is accessed and again
+for each row.    Read() returns true if there are more rows.   False if
+there are no more rows
+
+Regards
+
+Teravus
+
+
+
+On Mon, Jan 24, 2011 at 1:14 PM, DutchGlory &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">info at verwijs-pc.nl</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i> it seems  mysql is trying to read a database field that isn't  created...
+</I>&gt;<i> &quot;Invalid attempt to access a field before calling Read()&quot;  try to close
+</I>&gt;<i> opensim and start up again..
+</I>&gt;<i> or check mysql connection strings (i think EstateStore connection string)
+</I>&gt;<i> within your configuration files...
+</I>&gt;<i>
+</I>&gt;<i> if nothing works, switch to opensim git repository...  works great now use
+</I>&gt;<i> it every day... :)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context:
+</I>&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/OpenSim-threw-an-exception-tp5941095p5956073.html">http://opensim-users.2152040.n2.nabble.com/OpenSim-threw-an-exception-tp5941095p5956073.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110124/5b9f1059/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110124/5b9f1059/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006544.html">[Opensim-users] OpenSim threw an exception
+</A></li>
+	<LI>Next message: <A HREF="006547.html">[Opensim-users] OpenSim threw an exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6545">[ date ]</a>
+              <a href="thread.html#6545">[ thread ]</a>
+              <a href="subject.html#6545">[ subject ]</a>
+              <a href="author.html#6545">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

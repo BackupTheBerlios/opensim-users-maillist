@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] step to step install opensim latest version in centos 6.3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20step%20to%20step%20install%20opensim%20latest%20version%20in%0A%20centos%206.3&In-Reply-To=%3Cp06240811cdcb8c1c64d5%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012315.html">
+   <LINK REL="Next"  HREF="012303.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] step to step install opensim latest version in centos 6.3</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20step%20to%20step%20install%20opensim%20latest%20version%20in%0A%20centos%206.3&In-Reply-To=%3Cp06240811cdcb8c1c64d5%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] step to step install opensim latest version in centos 6.3">opensim at pescadoo.net
+       </A><BR>
+    <I>Wed May 29 13:25:14 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012315.html">[Opensim-users] step to step install opensim latest version in centos 6.3
+</A></li>
+        <LI>Next message: <A HREF="012303.html">[Opensim-users] Opensim-users Digest, Vol 69, Issue 37
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12320">[ date ]</a>
+              <a href="thread.html#12320">[ thread ]</a>
+              <a href="subject.html#12320">[ subject ]</a>
+              <a href="author.html#12320">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>At 10:41 PM +0100 5/28/13, Justin Clark-Casey wrote:
+
+&gt;<i>centos seems to be quite difficult to use with OpenSimulator since 
+</I>&gt;<i>it doesn't work very well with mono.
+</I>
+Here is how i could get MONO installed on CentOS 6:
+
+sudo yum install bison gettext glib2 freetype fontconfig libpng 
+libpng-devel libX11 libX11-devel glib2-devel libexif glibc-devel 
+urw-fonts java unzip gcc gcc-c++ automake autoconf libtool make bzip2 
+wget
+
+sudo yum install freetype-devel fontconfig-devel libpng-devel 
+libjpeg-devel libtiff-devel libexif-devel
+
+(Note: some packages may be unnecessary)
+
+There is no package for libgdi*. We have to compile libgdiplus.
+
+wget 
+<A HREF="http://download.mono-project.com/sources/libgdiplus/libgdiplus-2.10.tar.bz2">http://download.mono-project.com/sources/libgdiplus/libgdiplus-2.10.tar.bz2</A>
+wget <A HREF="http://download.mono-project.com/sources/mono/mono-2.4.3.1.tar.bz2">http://download.mono-project.com/sources/mono/mono-2.4.3.1.tar.bz2</A>
+
+(Note: I picked MONO 2.4.3 because i know it works ok with opensim 0.7.5)
+
+tar xjf libgdiplus-2.10.tar.bz2
+tar xvjf mono-2.4.3.1.tar.bz2
+
+cd libgdiplus-2.10
+./configure --prefix=/opt/mono
+make &amp;&amp; make install
+
+cd ../mono-2.4.3.1
+./configure --prefix=/usr/local
+make &amp;&amp; make install
+
+MONO will launch, but the dynamic loader won't find the libraries at run-time.
+
+Check it:
+
+ldconfig -p |grep libgdiplus	-&gt; nothing
+ldconfig -p |grep libMono	-&gt; nothing
+
+Add a file in /etc/ld.so.conf.d
+
+vi /etc/ld.so.conf.d/mono.conf
+/opt/mono/lib
+/usr/local/lib
+
+(I suppose I could build libgdiplus with --prefix=/usr/local at first 
+time, but i followed blindly the instructions. You may also move the 
+libs in a same place)
+
+Run ldconfig. Now:
+
+ldconfig -p |grep libgdiplus
+   libgdiplus.so.0 (libc6,x86-64) =&gt; /opt/mono/lib/libgdiplus.so.0
+   libgdiplus.so (libc6,x86-64) =&gt; /opt/mono/lib/libgdiplus.so
+
+ldconfig -p |grep libMono
+   libMonoSupportW.so (libc6,x86-64) =&gt; /usr/local/lib/libMonoSupportW.so
+   libMonoPosixHelper.so (libc6,x86-64) =&gt; /usr/local/lib/libMonoPosixHelper.so
+
+At this point, i could run opensim.
+
+
+-- Jeff
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012315.html">[Opensim-users] step to step install opensim latest version in centos 6.3
+</A></li>
+	<LI>Next message: <A HREF="012303.html">[Opensim-users] Opensim-users Digest, Vol 69, Issue 37
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12320">[ date ]</a>
+              <a href="thread.html#12320">[ thread ]</a>
+              <a href="subject.html#12320">[ subject ]</a>
+              <a href="author.html#12320">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animations%20seem%20freeze%20framed%20when%20stopping%0A%20them%3F%20OpenSim%20Master&In-Reply-To=%3C510C6921.1010002%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011689.html">
+   <LINK REL="Next"  HREF="011699.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animations%20seem%20freeze%20framed%20when%20stopping%0A%20them%3F%20OpenSim%20Master&In-Reply-To=%3C510C6921.1010002%40googlemail.com%3E"
+       TITLE="[Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Feb  2 02:17:21 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011689.html">[Opensim-users] robust with distant services
+</A></li>
+        <LI>Next message: <A HREF="011699.html">[Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11690">[ date ]</a>
+              <a href="thread.html#11690">[ thread ]</a>
+              <a href="subject.html#11690">[ subject ]</a>
+              <a href="author.html#11690">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Chris.  I tried to reproduce the playing issues issues on 9588328 which should be identical to fd34a75 with respect 
+to animations.
+
+However, I was not able to do so - animations appear to reset correctly when stopped in mid-animate on both LL 1.23.5 
+and LL 3.3.4, for both one's own viewer and for observing avatars.
+
+I think the next step would be to open a mantis so that we can investigate further - some of the animation logic has 
+changed recently.  As usual, if you could upload running scripts to recreate the issue and perhaps the animation itself 
+(if not confidential) then that would be very helpful, as would identifying the exact OpenSimulator commit where the 
+behaviour changed if possible.
+
+Animations are particularly sensitive to things such as animation overrides so it might be worth reviewing whether these 
+are active on either client or server-side (where both approaches work rather differently).
+
+On 31/01/13 04:17, Chris wrote:
+&gt;<i> Hello all,
+</I>&gt;<i>
+</I>&gt;<i> I'm running OpenSim commit fd34a75 (r/21883) and am noticing some oddness with playing and stopping animations. If I
+</I>&gt;<i> play an animation from inventory and then stop it, it will appear that my avatar is frozen in the last frame that was
+</I>&gt;<i> played before stopping instead of returning the avatar to the state that was in before the new animation was played. If
+</I>&gt;<i> I am playing and stopping animations from a script (such as an AO for instance); when the animation is stopped it will
+</I>&gt;<i> appear to keep playing until another animation is played after it. In both cases the weirdness with the stopped
+</I>&gt;<i> animation(s) will persist until some other animation is played whether it be another inventory animation or a default
+</I>&gt;<i> avatar movement animation. It doesn't seem to matter which animation is played from inventory / script.
+</I>&gt;<i>
+</I>&gt;<i> For  a script it can sort of being worked around by doing this:
+</I>&gt;<i>
+</I>&gt;<i> llStartAnimation(&quot;some_anim_name&quot;);
+</I>&gt;<i>
+</I>&gt;<i> ... Later on when it needs to be stopped ...
+</I>&gt;<i>
+</I>&gt;<i> llStopAnimation(&quot;some_anim_name&quot;);
+</I>&gt;<i> llStartAnimation(&quot;stand&quot;);
+</I>&gt;<i> llStopAnimation(&quot;stand&quot;);
+</I>&gt;<i>
+</I>&gt;<i> It gives the appearance that the animation is stopped; but I'm thinking that it's simply just overriding the stuck
+</I>&gt;<i> animation long enough to put a apply a new animation to the avatar to &quot;unstick&quot; it.
+</I>&gt;<i>
+</I>&gt;<i> Its not an issue when the script plays one animation after another but if it's a one time animation that needs to be
+</I>&gt;<i> stopped the results can look really funny.
+</I>&gt;<i>
+</I>&gt;<i> On a side note... I notice that when I attempt to play the same animation again with out first playing a different
+</I>&gt;<i> animation, the current playing animation won't appear to restart like it previously did not too long ago. I noticed this
+</I>&gt;<i> in my synced pose ball script that has a sync command which would simply play the poseball anim again when an avatar sat
+</I>&gt;<i> on it (sends a link message to other linked pose balls to tell them all to play the animation again) in attempt to sync
+</I>&gt;<i> up the animations of multiple avatars sitting on the link set.
+</I>&gt;<i>
+</I>&gt;<i> Previously my sync function looked like this
+</I>&gt;<i>
+</I>&gt;<i> sync()
+</I>&gt;<i> {
+</I>&gt;<i>      llStopAnimation(anim);
+</I>&gt;<i>      llStartAnimation(anim);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> Then had to change it to this once the animation issue started appearing to get it to work again
+</I>&gt;<i>
+</I>&gt;<i> sync()
+</I>&gt;<i> {
+</I>&gt;<i>      llStopAnimation(anim);
+</I>&gt;<i>      llStartAnimation(&quot;stand&quot;);
+</I>&gt;<i>      llStopAnimation(&quot;stand&quot;);
+</I>&gt;<i>      llStartAnimation(anim);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> Is any one else experiencing this?
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011689.html">[Opensim-users] robust with distant services
+</A></li>
+	<LI>Next message: <A HREF="011699.html">[Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11690">[ date ]</a>
+              <a href="thread.html#11690">[ thread ]</a>
+              <a href="subject.html#11690">[ subject ]</a>
+              <a href="author.html#11690">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow handling of POST -
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3C505A6E6C.4050202%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010903.html">
+   <LINK REL="Next"  HREF="010927.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow handling of POST -</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20handling%20of%20POST%20-&In-Reply-To=%3C505A6E6C.4050202%40googlemail.com%3E"
+       TITLE="[Opensim-users] Slow handling of POST -">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Sep 20 03:16:28 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010903.html">[Opensim-users] Slow handling of POST -
+</A></li>
+        <LI>Next message: <A HREF="010927.html">[Opensim-users] Slow handling of POST -
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10925">[ date ]</a>
+              <a href="thread.html#10925">[ thread ]</a>
+              <a href="subject.html#10925">[ subject ]</a>
+              <a href="author.html#10925">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Fetch times of 1068560ms (which is more than 15 minutes!) are pathological - something is wrong.
+
+In the first case I would suspect an issue with the connection to the OSGrid inventory service.  Either it is being 
+overloaded (OSGrid actually runs multiple copies of the ROBUST inventory service and load-balances between them using 
+Nginx, but perhaps the limits are being hit), things are being massive lagged because of lots of requests hitting the 
+.net default connection limit, as Melanie discussed, or you have a network issue.
+
+However, I'm a little surprised that the OSGrid Inventory Service request within FetchInventoryDescendents2 isn't making 
+it's own complaint about a long request.  The log message you're seeing does cover the whole of the CAPs call so I 
+suppose there is some chance there's some other cause, though it is a pretty simple capability.
+
+If you want to see if viewers are doing a lot of inventory fetches, then you can try the command &quot;debug http 3&quot; on the 
+simulator console.  This will show every incoming http request from viewers (and other simulators) and the HTTP URI they 
+are hitting.  Very recent code also has levels 4 and 5 which will log a snippet of the incoming request and the entire 
+request, though you probably don't want to use them for any length of time.
+
+On 14/09/12 11:33, Ai Austin wrote:
+&gt;<i>
+</I>&gt;&gt;<i> From: Melanie &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">melanie at t-data.com</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You're using a viewer that fetches the user inventory in the
+</I>&gt;&gt;<i> background on login. ...
+</I>&gt;&gt;<i> You will need to disable inventory fetch on startup and/or
+</I>&gt;&gt;<i> viewerside AO.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the explanation Melanie... that sounds like it is the type of problem I am seeing on our add on OSGrid
+</I>&gt;<i> regions... but not on our own Openvue grid whcih essentially runs on identical hardware and with identical network setups.
+</I>&gt;<i>
+</I>&gt;<i> I am observing the problem with both LL 3.3.4 and Firestorm/Pheonix 4.2.2...
+</I>&gt;<i>
+</I>&gt;<i> I don't have the viewer provided sAO turned on in Firestorm,  but I just looked at all the settings I can find in LL
+</I>&gt;<i> 3.3.4 and Firestorm 4.2.2 and cannot see one that refers to http fetching via http.  Although I am sure I have seen this
+</I>&gt;<i> in the past on earlier viewers.  Which Preferences tab is it on?
+</I>&gt;<i>
+</I>&gt;&gt;<i> From: James Stallings II &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">james.stallings at gmail.com</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I would recommend (assuming firestorm here) setting both inventory fetch
+</I>&gt;&gt;<i> and texture fetch to http in the settings, and making the following changes
+</I>&gt;&gt;<i> to opensim.ini:
+</I>&gt;&gt;<i> [ClientStack.LindenCaps]
+</I>&gt;&gt;<i>     ...
+</I>&gt;&gt;<i>     Cap_GetTexture = &quot;localhost&quot;
+</I>&gt;&gt;<i>     Cap_GetMesh = &quot;localhost&quot;
+</I>&gt;&gt;<i>     ; This is disabled by default. Change if you see fit. Note that
+</I>&gt;&gt;<i>     ; serving this cap from the simulators may lead to poor performace.
+</I>&gt;&gt;<i>      Cap_FetchInventoryDescendents2 = &quot;localhost&quot;
+</I>&gt;&gt;<i>      Cap_FetchInventory2 = &quot;localhost&quot;
+</I>&gt;<i>
+</I>&gt;<i> Yep, that what I am set to already James.. I just checked. Thanks.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010903.html">[Opensim-users] Slow handling of POST -
+</A></li>
+	<LI>Next message: <A HREF="010927.html">[Opensim-users] Slow handling of POST -
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10925">[ date ]</a>
+              <a href="thread.html#10925">[ thread ]</a>
+              <a href="subject.html#10925">[ subject ]</a>
+              <a href="author.html#10925">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

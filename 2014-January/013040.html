@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Asset records for deleted inventory prims and prim groups
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2014-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Asset%20records%20for%20deleted%20inventory%20prims%20and%0A%20prim%20groups&In-Reply-To=%3Cp06240802ceeb0c8650bc%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013039.html">
+   <LINK REL="Next"  HREF="013041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Asset records for deleted inventory prims and prim groups</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Asset%20records%20for%20deleted%20inventory%20prims%20and%0A%20prim%20groups&In-Reply-To=%3Cp06240802ceeb0c8650bc%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] Asset records for deleted inventory prims and prim groups">opensim at pescadoo.net
+       </A><BR>
+    <I>Thu Jan  2 13:45:00 CET 2014</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013039.html">[Opensim-users] Asset records for deleted inventory prims and prim	groups
+</A></li>
+        <LI>Next message: <A HREF="013041.html">[Opensim-users] Asset records for deleted inventory prims and prim groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13040">[ date ]</a>
+              <a href="thread.html#13040">[ thread ]</a>
+              <a href="subject.html#13040">[ subject ]</a>
+              <a href="author.html#13040">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>At 1:51 AM +0200 1/1/14, George Anastassakis wrote:
+
+&gt;<i>Is it ok to manually delete prim-type records in the assets table if 
+</I>&gt;<i>all associated prims and prim groups in the inventory have been 
+</I>&gt;<i>deleted? (Or, in what I hope is the same question in other words, is 
+</I>&gt;<i>it safe to manually delete prim-type records in the assets table if 
+</I>&gt;<i>those records are not referenced by the inventoryitems table?) If 
+</I>&gt;<i>not, please explain why.
+</I>
+Prim-type records, I assume they are assets type 6 aka serialized 
+objects, may be referenced from inside other objects.
+
+It is easy to check for in-world objects, quering the primitems 
+table. This is the case of &quot;boxed items&quot;.
+
+SELECT id,name FROM assets WHERE assetType=6 AND id IN (SELECT 
+assetID FROM primitems);
+
+It is much more difficult for serialized (in inventory) objects since 
+you should parse each and every object XML to find them.
+
+Additionally, they may be referenced from notecards (although i am not sure).
+
+
+-- Jeff
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013039.html">[Opensim-users] Asset records for deleted inventory prims and prim	groups
+</A></li>
+	<LI>Next message: <A HREF="013041.html">[Opensim-users] Asset records for deleted inventory prims and prim groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13040">[ date ]</a>
+              <a href="thread.html#13040">[ thread ]</a>
+              <a href="subject.html#13040">[ subject ]</a>
+              <a href="author.html#13040">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] A theoretical question ... about communication guarantees between objects in LSL
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20theoretical%20question%20...%20about%20communication%0A%20guarantees%20between%20objects%20in%20LSL&In-Reply-To=%3CCAHi41xKfy_1ejJwMF67vQjHLS0AUKy1%2BvkqBFa7C%3D0uxbc9GmQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011213.html">
+   <LINK REL="Next"  HREF="011215.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] A theoretical question ... about communication guarantees between objects in LSL</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20theoretical%20question%20...%20about%20communication%0A%20guarantees%20between%20objects%20in%20LSL&In-Reply-To=%3CCAHi41xKfy_1ejJwMF67vQjHLS0AUKy1%2BvkqBFa7C%3D0uxbc9GmQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] A theoretical question ... about communication guarantees between objects in LSL">r.ramloll at gmail.com
+       </A><BR>
+    <I>Mon Nov 12 16:05:15 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011213.html">[Opensim-users] A theoretical question ... about communication guarantees between objects in LSL
+</A></li>
+        <LI>Next message: <A HREF="011215.html">[Opensim-users] A theoretical question ... about communication guarantees between objects in LSL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11214">[ date ]</a>
+              <a href="thread.html#11214">[ thread ]</a>
+              <a href="subject.html#11214">[ subject ]</a>
+              <a href="author.html#11214">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I agree Simon, introducing a count is a simple solution. Just thinking
+aloud here, even if the count info is lost, does not matter... if a
+'message send' is executed only if a count info is received, that would
+cover all bases
+
+
+On Mon, Nov 12, 2012 at 9:19 AM, Slavin, Simon &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">s.slavin at lancaster.ac.uk</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> On 12 Nov 2012, at 1:57pm, Dr Ramesh Ramloll wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; I was wondering if I could get some ideas from the technical wonks out
+</I>&gt;<i> there. Here's my problem (not the real one..but I simplified it a bit to
+</I>&gt;<i> keep things brief). Everything implemented in LSL of course. I have two
+</I>&gt;<i> objects A and B, A sends messages to B.  I found that there are no
+</I>&gt;<i> guarantees that B will ALWAYS receive a message sent by A. I would expect
+</I>&gt;<i> the messages to be queued up, but seems that there is a black hole
+</I>&gt;<i> somewhere. Anyway, so, I then need to think about 'Acknowledgement system'
+</I>&gt;<i> that would cause A to resend if B does not receive it (within a set waiting
+</I>&gt;<i> period...). So this means that I need to put A in a sending loop until B
+</I>&gt;<i> sends an acknowledgment back to A.
+</I>&gt;<i> &gt; OR.. I could just send messages from A to B, twice every time... just to
+</I>&gt;<i> reduce changes of a message not received. Should I go for the easy way ...
+</I>&gt;<i> or is there really a bigger advantage for trying to implement guarantees
+</I>&gt;<i> in.  Your thoughts?
+</I>&gt;<i>
+</I>&gt;<i> B keeps a count of how many messages it has received.  It provides a way
+</I>&gt;<i> of asking for its current count.
+</I>&gt;<i>
+</I>&gt;<i> A asks B for its count.  A sends its message and waits a second.  A asks B
+</I>&gt;<i> for its count again.  If the two counts match, the message was not received.
+</I>&gt;<i>
+</I>&gt;<i> Simon.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+*Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+208-240-0040
+Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;,
+LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+, DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+
+profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121112/1aefc6f7/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20121112/1aefc6f7/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011213.html">[Opensim-users] A theoretical question ... about communication guarantees between objects in LSL
+</A></li>
+	<LI>Next message: <A HREF="011215.html">[Opensim-users] A theoretical question ... about communication guarantees between objects in LSL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11214">[ date ]</a>
+              <a href="thread.html#11214">[ thread ]</a>
+              <a href="subject.html#11214">[ subject ]</a>
+              <a href="author.html#11214">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] oar/iar import owner not replaced
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20oar/iar%20import%20owner%20not%20replaced&In-Reply-To=%3C51A68A60.1000206%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012319.html">
+   <LINK REL="Next"  HREF="012327.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] oar/iar import owner not replaced</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20oar/iar%20import%20owner%20not%20replaced&In-Reply-To=%3C51A68A60.1000206%40googlemail.com%3E"
+       TITLE="[Opensim-users] oar/iar import owner not replaced">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu May 30 01:08:16 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012319.html">[Opensim-users] oar/iar import owner not replaced
+</A></li>
+        <LI>Next message: <A HREF="012327.html">[Opensim-users] oar/iar import owner not replaced
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12325">[ date ]</a>
+              <a href="thread.html#12325">[ thread ]</a>
+              <a href="subject.html#12325">[ subject ]</a>
+              <a href="author.html#12325">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 28/05/13 23:45, Rick Anderson wrote:
+&gt;<i> I'll have to work on explaining a little better. I'll put some samples to together.
+</I>&gt;<i>
+</I>&gt;<i> IAR Example:
+</I>&gt;<i> The issues with an IAR was I changed a cube to a torus. That change would not appear until I loaded to IAR to a
+</I>&gt;<i> different server.
+</I>
+This is almost certainly because you're changing it in the serialized object asset that is used for inventory storage.
+
+As assets are immutable, changing the data will have no effect - the simulator will continue to use old asset on reload.
+
+To make this change, you will need to change the asset UUID and the references to that UUID in the inventory item xml.
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --Rick
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, May 28, 2013 at 6:18 PM, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     On 28/05/13 22:49, Rick Anderson wrote:
+</I>&gt;<i>
+</I>&gt;<i>         Justin,
+</I>&gt;<i>
+</I>&gt;<i>         I can set up test cases for each condition to repeat the problem. I can duplicate the following below. I can
+</I>&gt;<i>         also add
+</I>&gt;<i>         the manual object delete command and compare results. Any other cases that would be worth trying?
+</I>&gt;<i>
+</I>&gt;<i>         For IAR getting a duplicate name isn't so much a problem, but not having the object update with the new
+</I>&gt;<i>         properties is
+</I>&gt;<i>         weird. I have deleted the object from my avatars inventory and reimported. Same problem. I went to a new server
+</I>&gt;<i>         and the
+</I>&gt;<i>         import occurred with the update settings.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Anything loaded to inventory via an IAR will be owned (or certainly should!) be owned by you - it's not possible in
+</I>&gt;<i>     SL to have inventory objects that are owned by somebody else.  So I'm a little confused as to what we're talking
+</I>&gt;<i>     about here.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         For OAR I see a message claiming the objects would be deleted. I only changed the owner UUID to match the new
+</I>&gt;<i>         owner on
+</I>&gt;<i>         the new server. Repetitive loads kept the old owner UUID.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Perhaps this is a corner case, though it would still be quite surprising to me as the objects themselves will always
+</I>&gt;<i>     be given random UUIDs on load.
+</I>&gt;<i>
+</I>&gt;<i>     In fact, the old owner UUID should only be there is the new server also has a user with that UUID.  If not, it
+</I>&gt;<i>     should revert to the estate owner.  Could it be that somehow the estate owner also has the old UUID?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         --Rick
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         On Tue, May 28, 2013 at 5:03 PM, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i>         &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.__com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>              Hi Rick.  I'm very surprised to hear that since the default behaviour on OAR load is to wipe the region
+</I>&gt;<i>         before the
+</I>&gt;<i>              load.  There is a --merge option but this isn't the default.
+</I>&gt;<i>
+</I>&gt;<i>              IARs are a different matter - you will get duplicate inventory items if you don't delete the old ones
+</I>&gt;<i>         first.  There
+</I>&gt;<i>              isn't any option to do a replace here.
+</I>&gt;<i>
+</I>&gt;<i>              You can manually wipe a region with the console command
+</I>&gt;<i>
+</I>&gt;<i>              delete object name --regex .*
+</I>&gt;<i>
+</I>&gt;<i>              but this shouldnt' be necessary.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>              On 28/05/13 21:08, Rick Anderson wrote:
+</I>&gt;<i>
+</I>&gt;<i>                  I'm finding if you import an oar or an iar file. Then edit the file the re-import it. The 2nd import fails
+</I>&gt;<i>                  because the
+</I>&gt;<i>                  originals are still in world and not replaced by the new files in the oar/iar.
+</I>&gt;<i>
+</I>&gt;<i>                  Is there flag that will change that?
+</I>&gt;<i>
+</I>&gt;<i>                  Also, I had to delete  the regions with those objects, and the re load the iar/oar for changes to take
+</I>&gt;<i>         effect.
+</I>&gt;<i>
+</I>&gt;<i>                  Is this a bug or there a work around?
+</I>&gt;<i>
+</I>&gt;<i>                  --Rick
+</I>&gt;<i>
+</I>&gt;<i>                  --
+</I>&gt;<i>                  Rick Anderson
+</I>&gt;<i>                  Director of Virtual Worlds
+</I>&gt;<i>                  Division of Continuing Studies (DoCS)
+</I>&gt;<i>                  Rutgers University
+</I>&gt;<i>                  (732) 586-3265
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>                  ___________________________________________________
+</I>&gt;<i>                  Opensim-users mailing list
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt; &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.__berlios.de</A>
+</I>&gt;<i>         &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/____mailman/listinfo/opensim-users">https://lists.berlios.de/____mailman/listinfo/opensim-users</A>
+</I>&gt;<i>         &lt;<A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>         &lt;<A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A>
+</I>&gt;<i>         &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;__&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>              --
+</I>&gt;<i>              Justin Clark-Casey (justincc)
+</I>&gt;<i>              OSVW Consulting
+</I>&gt;<i>         <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i>         <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>              ___________________________________________________
+</I>&gt;<i>              Opensim-users mailing list
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt; &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.__berlios.de</A>
+</I>&gt;<i>         &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/____mailman/listinfo/opensim-users">https://lists.berlios.de/____mailman/listinfo/opensim-users</A>
+</I>&gt;<i>         &lt;<A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>         &lt;<A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A>
+</I>&gt;<i>         &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;__&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         --
+</I>&gt;<i>         Rick Anderson
+</I>&gt;<i>         Director of Virtual Worlds
+</I>&gt;<i>         Division of Continuing Studies (DoCS)
+</I>&gt;<i>         Rutgers University
+</I>&gt;<i>         (732) 586-3265
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         _________________________________________________
+</I>&gt;<i>         Opensim-users mailing list
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     Justin Clark-Casey (justincc)
+</I>&gt;<i>     OSVW Consulting
+</I>&gt;<i>     <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i>     <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>     _________________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Rick Anderson
+</I>&gt;<i> Director of Virtual Worlds
+</I>&gt;<i> Division of Continuing Studies (DoCS)
+</I>&gt;<i> Rutgers University
+</I>&gt;<i> (732) 586-3265
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012319.html">[Opensim-users] oar/iar import owner not replaced
+</A></li>
+	<LI>Next message: <A HREF="012327.html">[Opensim-users] oar/iar import owner not replaced
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12325">[ date ]</a>
+              <a href="thread.html#12325">[ thread ]</a>
+              <a href="subject.html#12325">[ subject ]</a>
+              <a href="author.html#12325">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

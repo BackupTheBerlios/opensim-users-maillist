@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Troubles with OAR and IAR files following HD crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Troubles%20with%20OAR%20and%20IAR%20files%20following%20HD%20crash&In-Reply-To=%3CCAG6z%2BU7vKPpj2Wfa%2Bb6P9VJuDEEDFfk4w2H%3DzSgjE8-4aijVAQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010167.html">
+   <LINK REL="Next"  HREF="010170.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Troubles with OAR and IAR files following HD crash</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Troubles%20with%20OAR%20and%20IAR%20files%20following%20HD%20crash&In-Reply-To=%3CCAG6z%2BU7vKPpj2Wfa%2Bb6P9VJuDEEDFfk4w2H%3DzSgjE8-4aijVAQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Troubles with OAR and IAR files following HD crash">fleep513 at gmail.com
+       </A><BR>
+    <I>Tue Apr 24 15:54:02 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010167.html">[Opensim-users] Sailing script
+</A></li>
+        <LI>Next message: <A HREF="010170.html">[Opensim-users] Troubles with OAR and IAR files following HD	crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10169">[ date ]</a>
+              <a href="thread.html#10169">[ thread ]</a>
+              <a href="subject.html#10169">[ subject ]</a>
+              <a href="author.html#10169">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+Since the FleepGrid hard drive crash a few weeks ago, I've been trying to
+backup content in a variety of ways to make sure I never lose anything
+again, but I keep running into issues making both OAR files and IAR files
+with content that exists on the sim or in my inventory.  When the hard
+drive failed and had to be replaced, I restored the opensim database from a
+mysql dump file, and restored all of the regions with OAR backups.
+
+It seemed to me that everything restored ok, but apparently that isn't the
+case since I can't seem to make good new copies of some of the restored
+items.
+
+For example, I just tried to make an IAR backup of my &quot;product boxes&quot; -
+these are items I've created and packaged up as freebies.  The boxes are
+sitting on a region that I restored from an OAR file.  I go to the region,
+take a copy of the boxes sitting out on the sim, and neatly organize them
+by category in my inventory, then run the command to make an IAR file and I
+see a ton of these error messages on the region console:
+
+08:56:16 - [ASYNC REQUEST]: Request GET
+<A HREF="http://74.83.148.18:8003/assets/5857ed38">http://74.83.148.18:8003/assets/5857ed38</A>
+-0f21-4225-96de-3a0fb7e5a666 failed with status ConnectFailure and message
+Unabl
+e to connect to the remote server
+08:56:16 - [ASYNC REQUEST]: Request GET
+<A HREF="http://74.83.148.18:8003/assets/0d4d6aac">http://74.83.148.18:8003/assets/0d4d6aac</A>
+-9400-4f44-a4d9-311512e29c1b failed with status ConnectFailure and message
+Unabl
+e to connect to the remote server
+08:56:16 - [ASYNC REQUEST]: Request GET
+<A HREF="http://74.83.148.18:8003/assets/53ad28a3">http://74.83.148.18:8003/assets/53ad28a3</A>
+-c0f1-4e4c-ad2c-85ec41110fc2 failed with status ConnectFailure and message
+Unabl
+e to connect to the remote server
+
+On the ROBUST console, at the same time, these errors pop up:
+
+08:56:16 - [BASE HTTP SERVER]: slow GET request for
+/assets/7474c82c-f428-4b76-b
+2dd-10859beeb9d3 from 74.83.148.18:4431 took 3891 ms
+08:56:16 - [BASE HTTP SERVER]: slow GET request for
+/assets/203ccc0c-52eb-40cf-8
+f56-6dfb30f032c3 from 74.83.148.18:4582 took 3078 ms
+08:56:16 - [BASE HTTP SERVER]: slow GET request for
+/assets/6a137fba-7eec-4db8-8
+038-e94250fbc8d3 from 74.83.148.18:3828 took 3906 ms
+
+At the end of the IAR file save process, again on the region console, the
+following appears:
+
+08:56:17 - [ARCHIVER]: Added 1200 assets to archive
+08:56:19 - [ARCHIVER]: Successfully added 1248 assets (1319 assets not
+found but
+ these may be expected invalid references)
+08:56:19 - [INVENTORY ARCHIVER]: Saved archive for Fleep Tuque
+
+Something similar happens when I try to make an OAR file backup of the sim
+where these objects are rezzed, too, and I haven't yet tested with the IAR
+file, but with the OAR file, the items will appear when the OAR is loaded,
+but the object textures are missing from all the contents in the boxes.
+ (i.e. a shirt object will be in the box, but the texture will be blank
+white).
+
+The funny thing is, as far as I can tell the original items restored from
+the OAR backup are all ok.  I have cleared cache in Imprudence and can open
+the boxes and pull out the same shirt and the texture seems fine, but I see
+yet another error on the console that looks like this when I right click &gt;
+open the item and try to copy the contents to my inventory:
+
+09:24:17 - [PRIM INVENTORY]: Move of inventory item
+00000000-0000-0000-0000-0000
+00000000 from prim with local id 2578958302 failed because the inventory
+item co
+uld not be found
+09:24:17 - [PRIM INVENTORY]: Adding item
+11c3f1e6-b1fb-4a9f-a5bd-9eee564e2316 fr
+om FleepGrid - Button Blouse - Disco to folder
+217c52c6-5474-31ef-f3cb-66563b109
+a4d for Fleep Tuque
+09:24:17 - [PRIM INVENTORY]: Adding item
+ed499528-d851-47a7-a74c-7963f9e44667 fr
+om FleepGrid - Button Blouse - Disco to folder
+217c52c6-5474-31ef-f3cb-66563b109
+a4d for Fleep Tuque
+
+So two questions:
+
+1) I don't think I have anything misconfigured (though it's certainly a
+possibility!) so I'm not sure why the region console would be giving an
+error that it can't connect to the remote server when trying to make the
+IAR file, especially since all the processes run on the same server.
+
+2)  I don't understand what's wrong with the restored items rezzed out on
+the sim.  The box is there, the contents are there, the textures all appear
+ok even after clearing cache, but I'm getting errors when trying to copy
+them to my inventory, or saving out OAR or IAR files.  Any ideas what could
+cause that or better yet how to fix it so I don't have to recreate
+everything from scratch?
+
+I can't bear the thought of starting over completely, but if I can't figure
+out which items are .. broken for want of a better word, and which ones are
+ok, then I'm not sure what to do.  I don't want to keep building and
+developing on regions that I can't backup, or working with inventory items
+that might be corrupt somehow.  I'm really not sure what to do.
+
+FleepGrid Opensim Server Info
+
+Version:  0.7.3 Release
+Architecture:  Grid mode w/ multiple opensim processes (~4 regions per
+process), all processes on same server
+HG Enabled:  Yes
+OS:  Windows XP 32-bit
+Dbase:  MySQL 5.1
+Modules:  Diva Wifi for ROBUST, Mimetic Core's Opensim Services bundle,
+Vivox voice
+
+Any advice much appreciated, as always!
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120424/d4d3fd5e/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120424/d4d3fd5e/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010167.html">[Opensim-users] Sailing script
+</A></li>
+	<LI>Next message: <A HREF="010170.html">[Opensim-users] Troubles with OAR and IAR files following HD	crash
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10169">[ date ]</a>
+              <a href="thread.html#10169">[ thread ]</a>
+              <a href="subject.html#10169">[ subject ]</a>
+              <a href="author.html#10169">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

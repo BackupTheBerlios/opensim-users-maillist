@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Attachment weirdness on dev master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Attachment%20weirdness%20on%20dev%20master&In-Reply-To=%3C51493889.50405%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011896.html">
+   <LINK REL="Next"  HREF="011905.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Attachment weirdness on dev master</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Attachment%20weirdness%20on%20dev%20master&In-Reply-To=%3C51493889.50405%40gmail.com%3E"
+       TITLE="[Opensim-users] Attachment weirdness on dev master">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Wed Mar 20 05:18:17 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011896.html">[Opensim-users] Attachment weirdness on dev master
+</A></li>
+        <LI>Next message: <A HREF="011905.html">[Opensim-users] Attachment weirdness on dev master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11897">[ date ]</a>
+              <a href="thread.html#11897">[ thread ]</a>
+              <a href="subject.html#11897">[ subject ]</a>
+              <a href="author.html#11897">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Justin,
+
+As far as I can tell these bugs do not show up until the very recent 
+introduction of the multi attachment code. (I have been testing on 
+commit 3611d33 (r22387) for the past couple hours with several different 
+accounts to verify that they don't show up before the multi attach 
+commits). The only exception to this that I could see was the floating 
+attachments issue on log in where I had to detach and reattach the 
+effected object(s) to fix it; this seems to be at random (It seems to be 
+whatever is attached to left hand most often when I see it; but I have 
+seen cases where other attach points exhibit this behavior). I have also 
+tried the tests on a fresh database install as well with the same 
+results. All my testing is being done in standalone mode, multi regions, 
+ODE Physics, and Windows x64 .NET (Locally, not on OSGrid)
+
+The animations, perms, and region cross issues I also do not see until 
+attempting to use the commits with multi attachments enabled.
+
+I definitely can not say that I know for sure that the multi attachment 
+code is what is causing these issues; but just trying to give a narrowed 
+down area of when I first started noticing them.
+
+As far as teleporting to and from in HG mode, I can't say because I 
+don't have experience (yet) with HG.
+
+I gave commit 8de933 a quick test and was still able to trigger most of 
+the issues previously posted. The invisible attachment on log in issue 
+was the only one that I did not see pop up in my test but I'm not 100% 
+certain that it is gone.
+
+Have also observed the touch event issue with attachments not working 
+until reattach; but this has been the case (for me at least) for a while 
+now.
+
+And not a problem; I'm happy to be able to help out with such an awesome 
+project =) I'll stick with a7a9a8a for now on my main install and 
+continue testing master in a different database.
+
+Thank you
+
+On 3/19/2013 9:34 PM, Justin Clark-Casey wrote:
+&gt;<i> Are these all new bugs, Chris?  Certainly, there seem to be issues for 
+</I>&gt;<i> me with the new code on my local system (using LL 3.3.4 to test), 
+</I>&gt;<i> though Nebadon with Kokua on osgrid didn't seem to have too much 
+</I>&gt;<i> trouble yesterday.
+</I>&gt;<i>
+</I>&gt;<i> Some of the others strike me as more general/existing problems though, 
+</I>&gt;<i> such as animation, region cross and permission issues.
+</I>&gt;<i>
+</I>&gt;<i> I have put some fixes for various issues I've encountered into master 
+</I>&gt;<i> so you may want to retest.  However, there are still some problems.  
+</I>&gt;<i> Two I encounter are that all but one of the attachments on a single 
+</I>&gt;<i> spot report as being on an &quot;Invalid Attachment Point&quot; after teleport 
+</I>&gt;<i> (though they still show up now and appear to be detachable just 
+</I>&gt;<i> fine).  The other is that editing a script in an attachment to have a 
+</I>&gt;<i> touch event does not make that touchable for the viewer until the 
+</I>&gt;<i> attachment is detached and reattached (that might possibly have been 
+</I>&gt;<i> the case before, though I didn't think so).
+</I>&gt;<i>
+</I>&gt;<i> One of these fixes probably requires osgrid services to update first 
+</I>&gt;<i> if you're using that.
+</I>&gt;<i>
+</I>&gt;<i> On a more general note, I don't know what the effect is on crossing 
+</I>&gt;<i> between simulators which don't have multi-attach (e.g. in HG mode).  
+</I>&gt;<i> Having said that, Nebadon on osgrid today didn't seem to have much 
+</I>&gt;<i> trouble with this.
+</I>&gt;<i>
+</I>&gt;<i> So you may want to stick with commit a7a9a8a just for now, though I do 
+</I>&gt;<i> very much value your feedback on the bleeding edge.
+</I>&gt;<i>
+</I>&gt;<i> On 19/03/13 03:12, Chris wrote:
+</I>&gt;&gt;<i> Hi Justin, I tested out commit a7a9a8a and the attachments seem to 
+</I>&gt;&gt;<i> replace properly again and the issues that I
+</I>&gt;&gt;<i> mentioned in my previous post seem to be gone as well. I also tested 
+</I>&gt;&gt;<i> the latest master, commit 397379, and replace
+</I>&gt;&gt;<i> (wear) seems to work properly here as well, although the other weird 
+</I>&gt;&gt;<i> attachment issues are back again.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Among some of the things I've noticed is:
+</I>&gt;&gt;<i> * Some attachments refuse to attach on login and will refuse to 
+</I>&gt;&gt;<i> attach manually via inventory. Relogging sometimes
+</I>&gt;&gt;<i> alleviates the issue as well as teleporting or crossing to another 
+</I>&gt;&gt;<i> region. Sometimes it doesn't.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> * The least recently attached object (if using multiple attachments 
+</I>&gt;&gt;<i> on one point) tends to show up invisible on relog
+</I>&gt;&gt;<i> although in inventory it appears to be attached.  The invisible 
+</I>&gt;&gt;<i> attachments can be detached through the inventory and
+</I>&gt;&gt;<i> usually they can be reattached and they show up. On occasion a relog 
+</I>&gt;&gt;<i> is necessary to continue attaching objects on that
+</I>&gt;&gt;<i> particular spot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> * Attachments tend to show up &quot;floating&quot; in world (usually on login). 
+</I>&gt;&gt;<i> That is, they look as if they've been rezzed in
+</I>&gt;&gt;<i> world and won't move around with your avatar, but the inventory says 
+</I>&gt;&gt;<i> they are actually attached. They can be detached
+</I>&gt;&gt;<i> normally either through inventory or by right clicking the floating 
+</I>&gt;&gt;<i> object and detach.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> * Animations tend to get stuck on region cross when using an AO and 
+</I>&gt;&gt;<i> can only be fixed with a AO reset or reattach.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> * Attachment contents sometimes have their permissions changed upon 
+</I>&gt;&gt;<i> login, teleport, or region cross; even though i have
+</I>&gt;&gt;<i> serverside_object_permissions = false set in OpenSim.ini (I usually 
+</I>&gt;&gt;<i> see this in combination with the stuck animation
+</I>&gt;&gt;<i> issue on region cross. The AO's scripts appear to have their 
+</I>&gt;&gt;<i> permissions changed to no copy/no mod. Upon detach and
+</I>&gt;&gt;<i> reattach the permissions are full perm again)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> * Region crosses / TP's sometimes fail with either an eternal 
+</I>&gt;&gt;<i> walk/run past the sim border or a never ending TP progress
+</I>&gt;&gt;<i> screen. If this happens the only way to fix it is to relog. Upon 
+</I>&gt;&gt;<i> relog I get several strange error messages in the
+</I>&gt;&gt;<i> viewer saying &quot;Could not upload &lt;random UUID here&gt; due to invalid 
+</I>&gt;&gt;<i> login credentials&quot; before I make it in world. Once in
+</I>&gt;&gt;<i> world I'm missing a lot of attachments (just not detached to my 
+</I>&gt;&gt;<i> avatar not missing from inventory) and the adjacent
+</I>&gt;&gt;<i> regions around me look unloaded (looks like there is a huge hole in 
+</I>&gt;&gt;<i> the center of the region). On a second relog, my
+</I>&gt;&gt;<i> attachments are attached again but all the adjacent regions are 
+</I>&gt;&gt;<i> missing even though I can see them on the map. I can't
+</I>&gt;&gt;<i> teleport or cross over to them however. Relogging does not seem to 
+</I>&gt;&gt;<i> fix the issue if it has been triggered. The only way
+</I>&gt;&gt;<i> that I've seen to fix the issue is to restart the OpenSim but I have 
+</I>&gt;&gt;<i> to forcibly terminate it because running quit will
+</I>&gt;&gt;<i> cause the process to hang once it reaches the end of the shutdown 
+</I>&gt;&gt;<i> routine. I also keep receiving &quot;2013-03-18
+</I>&gt;&gt;<i> 21:40:44,843 WARN  - OpenSim.Region.Framework.Scenes.Scene [SCENE]: 
+</I>&gt;&gt;<i> Existing root scene presence detected for Test User
+</I>&gt;&gt;<i> 4462532a-0742-4528-870a-11b63ae40079 in Test Region 2 when 
+</I>&gt;&gt;<i> connecting. Removing existing presence.&quot; when the issue has
+</I>&gt;&gt;<i> been triggered and I attempt to relog or cross/TP to other regions.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> These are the most common issues I've seen and they seem to show up 
+</I>&gt;&gt;<i> regardless of whether the attachment is scripted or
+</I>&gt;&gt;<i> not but it seems like it happens a bit more frequently with scripted 
+</I>&gt;&gt;<i> attachments.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there a way to disable the recent multi attachment code via 
+</I>&gt;&gt;<i> OpenSim.ini to make it revert back to the old attachment
+</I>&gt;&gt;<i> behavior for now until the issues are worked out? Or would it be 
+</I>&gt;&gt;<i> better for me to stick with commit a7a9a8a for now?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 3/18/2013 5:10 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;<i> Apologies Chris, I did indeed introduce a regression with that 
+</I>&gt;&gt;&gt;<i> change.  This should be fixed in git master a7a9a8a.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I actually did have multiple attachments near to completion in a 
+</I>&gt;&gt;&gt;<i> separate multiple-attachments branch of the
+</I>&gt;&gt;&gt;<i> OpenSimulator git repository but just haven't had the time to finish 
+</I>&gt;&gt;&gt;<i> and check it as of yet.  Also, the mainline code
+</I>&gt;&gt;&gt;<i> has moved on a bit so it would need updating.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 17/03/13 10:04, Chris wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hello all, I am running commit 464201 (r/22383) and am running 
+</I>&gt;&gt;&gt;&gt;<i> across some very weird attachment issues. At first glance
+</I>&gt;&gt;&gt;&gt;<i> it seems like multiple attachment points is now working; it seems 
+</I>&gt;&gt;&gt;&gt;<i> to let me attach more than one thing to any one attach
+</I>&gt;&gt;&gt;&gt;<i> spot. But it doesn't really behave like multiple attachments on SL, 
+</I>&gt;&gt;&gt;&gt;<i> such as &quot;Wear&quot; won't replace what ever is on the
+</I>&gt;&gt;&gt;&gt;<i> attach point and more or less acts like &quot;Add&quot;, relogging with 
+</I>&gt;&gt;&gt;&gt;<i> multiple attachments on one point causes one or more of
+</I>&gt;&gt;&gt;&gt;<i> the attachments to appear invisible but inventory still thinks they 
+</I>&gt;&gt;&gt;&gt;<i> are attached, and &quot;floating&quot; attachments
+</I>&gt;&gt;&gt;&gt;<i> (Attachments look like they are rezzed in world and they don't move 
+</I>&gt;&gt;&gt;&gt;<i> with your avatar when your avatar moves, but it is
+</I>&gt;&gt;&gt;&gt;<i> technically attached to your avatar).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I looked back in the commits for the past few weeks to see if there 
+</I>&gt;&gt;&gt;&gt;<i> was any mention of multiple attach points being
+</I>&gt;&gt;&gt;&gt;<i> implemented but I could not find any such commit.  So I tracked 
+</I>&gt;&gt;&gt;&gt;<i> down the issue to first appear in commit ccd6f4
+</I>&gt;&gt;&gt;&gt;<i> (r/22294). I haven't made a mantis because I was unsure if this was 
+</I>&gt;&gt;&gt;&gt;<i> intentional or not.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Is anyone else seeing this?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011896.html">[Opensim-users] Attachment weirdness on dev master
+</A></li>
+	<LI>Next message: <A HREF="011905.html">[Opensim-users] Attachment weirdness on dev master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11897">[ date ]</a>
+              <a href="thread.html#11897">[ thread ]</a>
+              <a href="subject.html#11897">[ subject ]</a>
+              <a href="author.html#11897">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

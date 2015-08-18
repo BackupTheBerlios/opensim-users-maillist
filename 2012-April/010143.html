@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Flotsam asset cache error - process cannot access file because it is being used by another process
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Flotsam%20asset%20cache%20error%20-%20process%20cannot%0A%20access%20file%20because%20it%20is%20being%20used%20by%20another%20process&In-Reply-To=%3CCAG6z%2BU6KD-U6WCOcbw1rtJ9c%2BpQ8XYbGAS170ACtmTTLrsLF%3Dg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010140.html">
+   <LINK REL="Next"  HREF="010197.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Flotsam asset cache error - process cannot access file because it is being used by another process</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Flotsam%20asset%20cache%20error%20-%20process%20cannot%0A%20access%20file%20because%20it%20is%20being%20used%20by%20another%20process&In-Reply-To=%3CCAG6z%2BU6KD-U6WCOcbw1rtJ9c%2BpQ8XYbGAS170ACtmTTLrsLF%3Dg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Flotsam asset cache error - process cannot access file because it is being used by another process">fleep513 at gmail.com
+       </A><BR>
+    <I>Thu Apr 19 15:01:59 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010140.html">[Opensim-users] Flotsam asset cache error - process cannot access file because it is being used by another process
+</A></li>
+        <LI>Next message: <A HREF="010197.html">[Opensim-users] Flotsam asset cache error - process cannot access file because it is being used by another process
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10143">[ date ]</a>
+              <a href="thread.html#10143">[ thread ]</a>
+              <a href="subject.html#10143">[ subject ]</a>
+              <a href="author.html#10143">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am also seeing the EOC warning on FleepGrid, now, not just on the
+University of Cincinnati campus grid system, and that's running on a 32bit
+Windows XP box (also opensim version 0.7.3):
+
+08:34:56 - [ENTITY TRANSFER MODULE]: Starting to inform client about
+neighbour 9
+015, 9013(74.83.148.18:9002)
+Region (root) # [WARNING]: EOC marker not found. Codestream is corrupted.
+[WARNING]: EOC marker not found. Codestream is corrupted.
+[WARNING]: EOC marker not found. Codestream is corrupted.
+[WARNING]: EOC marker not found. Codestream is corrupted.
+08:38:42 - [REMOTE SIMULATION CONNECTOR]: QueryAccess to
+<A HREF="http://fleepgrid.com:90">http://fleepgrid.com:90</A>
+00/agent/593dd3d9-9fb2-4bbe-885b-a8998a02e0fe/a6a2136d-daa1-4f4e-a136-fd26c913ec
+fa/ returned True version SIMULATION/0.1 (SIMULATION/0.1)
+08:38:42 - [ENTITY TRANSFER MODULE]: Crossing agent Ceecee Flores to
+9013-9013 r
+unning version SIMULATION/0.1
+
+I've never filed a report on the Mantis before, so I guess I'll try to
+figure out how to do that.
+
+Thanks,
+
+- Fleep
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Wed, Apr 18, 2012 at 6:59 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> I think the EOC marker problems are usually associated with corrupt jpeg
+</I>&gt;<i> 2000 textures, though I think there may also be a bug on 64-bit that causes
+</I>&gt;<i> issues here.
+</I>&gt;<i>
+</I>&gt;<i> I'm not sure why you're seeing ODE errors.  I would predict that these
+</I>&gt;<i> would not go away when reverting to 0.7.2 but it would be something to at
+</I>&gt;<i> least try.
+</I>&gt;<i>
+</I>&gt;<i> The file sharing issues when loading an OAR may be due to a weakness in
+</I>&gt;<i> the flotsam cache code which allows race conditions when cache writing is
+</I>&gt;<i> launched on its own delegate.  This should not be fatal since at least one
+</I>&gt;<i> thread will have correctly cached the asset.  However, it would be nice to
+</I>&gt;<i> have the failure details in a Mantis.
+</I>&gt;<i>
+</I>&gt;<i> I think you've previously said that you have to have physical prims.
+</I>&gt;<i>  However, if you want to narrow down the problem you could try flipping the
+</I>&gt;<i> physical_prim = false switch in [Startup] in OpenSim.ini and see if that
+</I>&gt;<i> does alleviate the problem.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 18/04/12 20:53, Fleep Tuque wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hmm, I dunno, something else seems to be going on, after the OAR finished
+</I>&gt;&gt;<i> loading, I see:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Region (UCSIM Staff 1) # [WARNING]: EOC marker not found. Codestream is
+</I>&gt;&gt;<i> corrupte
+</I>&gt;&gt;<i> d.
+</I>&gt;&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;&gt;<i> [WARNING]: EOC marker not found. Codestream is corrupted.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This on top of the ODE Scene errors that seem to persist whether physical
+</I>&gt;&gt;<i> prims are enabled or not, and whether I start
+</I>&gt;&gt;<i> the process with opensim.exe or opensim.32bitlaunch.exe..  0.7.3. is
+</I>&gt;&gt;<i> feeling pretty glitchy at the moment.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm thinking of reverting to 0.7.2 at least on the campus grid, it seemed
+</I>&gt;&gt;<i> more stable.  The only thing stopping me is
+</I>&gt;&gt;<i> the thought of having to re-re-fix all those chairs that will have to be
+</I>&gt;&gt;<i> re-re-re-fixed again when we upgrade.  ;)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Chris/Fleep
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;&gt;<i> University of Cincinnati
+</I>&gt;&gt;<i> 406A Zimmer Hall
+</I>&gt;&gt;<i> 315 College Drive
+</I>&gt;&gt;<i> PO BOX 210088
+</I>&gt;&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (513) 556-3018
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Apr 18, 2012 at 3:46 PM, Garmin Kawaguichi &lt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garmin.kawaguichi at magalaxie.</A>**com &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garmin.kawaguichi at magalaxie.com</A>&gt;
+</I>&gt;&gt;<i> &lt;mailto:garmin.kawaguichi@**magalaxie.com&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garmin.kawaguichi at magalaxie.com</A>&gt;&gt;&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    __
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    I found that kind of error when I worked these days on load/save oar;
+</I>&gt;&gt;<i>  Look at Mantis 0005970
+</I>&gt;&gt;<i>    I suppose a (temp?) file created by load oar was not released and an
+</I>&gt;&gt;<i> other process tries to open it.
+</I>&gt;&gt;<i>    If you found where exactly it was first used, try to add
+</I>&gt;&gt;<i>    typeoffile.Dispose();
+</I>&gt;&gt;<i>    GCI
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        ----- Original Message -----
+</I>&gt;&gt;<i>        *From:* Fleep Tuque &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt;
+</I>&gt;&gt;<i>        *Sent:* Wednesday, April 18, 2012 9:31 PM
+</I>&gt;&gt;<i>        *Subject:* [Opensim-users] Flotsam asset cache error - process
+</I>&gt;&gt;<i> cannot access file because it is being used by
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        another process
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        Anyone know why I would be seeing errors like this when trying to
+</I>&gt;&gt;<i> upload an OAR file?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        15:30:25 - [FLOTSAM ASSET CACHE]: Failed to update cache for asset
+</I>&gt;&gt;<i> faecc7e2-60e1
+</I>&gt;&gt;<i>        -e9a9-e974-927ad18e8b51.  Exception The process cannot access the
+</I>&gt;&gt;<i> file 'c:\opens
+</I>&gt;&gt;<i>        im7_0.7.3\bin\assetcache\fae\**faecc7e2-60e1-e9a9-e974-**927ad18e8b51'
+</I>&gt;&gt;<i> *because it is*
+</I>&gt;&gt;<i>        * being used by another process.*    at
+</I>&gt;&gt;<i> System.IO.__Error.WinIOError(**Int32 errorCo
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        de, String maybeFullPath)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    ______________________________**_________________
+</I>&gt;&gt;<i>    Opensim-users mailing list
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.</A>**
+</I>&gt;&gt;<i> berlios.de &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120419/398ece86/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120419/398ece86/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010140.html">[Opensim-users] Flotsam asset cache error - process cannot access file because it is being used by another process
+</A></li>
+	<LI>Next message: <A HREF="010197.html">[Opensim-users] Flotsam asset cache error - process cannot access file because it is being used by another process
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10143">[ date ]</a>
+              <a href="thread.html#10143">[ thread ]</a>
+              <a href="subject.html#10143">[ subject ]</a>
+              <a href="author.html#10143">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

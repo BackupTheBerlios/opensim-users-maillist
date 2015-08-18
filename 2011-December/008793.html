@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Freeswitch voice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Freeswitch%20voice&In-Reply-To=%3CCAK91jKt6SBRqwTA5CsntsT%2BMz9at3bjkXxQnTSd81cO_06MDFg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008792.html">
+   <LINK REL="Next"  HREF="008796.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Freeswitch voice</H1>
+    <B>Joshua Rubeck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Freeswitch%20voice&In-Reply-To=%3CCAK91jKt6SBRqwTA5CsntsT%2BMz9at3bjkXxQnTSd81cO_06MDFg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Freeswitch voice">jrubeck1989 at gmail.com
+       </A><BR>
+    <I>Wed Dec  7 17:31:44 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008792.html">[Opensim-users] New services bundle
+</A></li>
+        <LI>Next message: <A HREF="008796.html">[Opensim-users] Freeswitch voice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8793">[ date ]</a>
+              <a href="thread.html#8793">[ thread ]</a>
+              <a href="subject.html#8793">[ subject ]</a>
+              <a href="author.html#8793">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all, I have been having an issue setting up Freeswitch voice on a CentOS
+5.4 server. Freeswitch installed okay but nothing we try will get voice to
+work. we can turn voice on in the region and parcels but voice will not
+work at all. This is the message we are getting from the services. What we
+have is the Grid Server, the Region server and then the voice server. So
+there are three different servers. Here are the configurations for voice on
+each:
+
+Freeswitch:
+
+*&lt;configuration name=&quot;xml_curl.conf&quot; description=&quot;cURL XML Gateway&quot;&gt;
+&lt;bindings&gt;
+   &lt;binding name=&quot;directory&quot;&gt;
+           &lt;param name=&quot;gateway-url&quot; value=&quot;
+<A HREF="http://62.75.142.162:8004/fsapi/freeswitch-config">http://62.75.142.162:8004/fsapi/freeswitch-config</A>&quot; bindings=&quot;directory&quot;/&gt;
+           &lt;param name=&quot;gateway-credentials&quot; value=&quot;freeswitch:password&quot;/&gt;
+           &lt;param name=&quot;disable-100-continue&quot; value=&quot;true&quot;/&gt;
+   &lt;/binding&gt;
+   &lt;binding name=&quot;dialplan&quot;&gt;
+           &lt;param name=&quot;gateway-url&quot; value=&quot;
+<A HREF="http://62.75.142.162:8004/fsapi/freeswitch-config">http://62.75.142.162:8004/fsapi/freeswitch-config</A>&quot; bindings=&quot;dialplan&quot;/&gt;
+           &lt;param name=&quot;gateway-credentials&quot; value=&quot;freeswitch:password&quot;/&gt;
+           &lt;param name=&quot;disable-100-continue&quot; value=&quot;true&quot;/&gt;
+   &lt;/binding&gt;
+&lt;/bindings&gt;
+&lt;/configuration&gt;*
+
+
+Grid Server(Robust)
+
+*[FreeswitchService]
+    LocalServiceModule =
+&quot;OpenSim.Services.FreeswitchService.dll:FreeswitchService&quot;
+
+    ;; The IP address of your FreeSWITCH server.
+    ;; This address must be reachable by viewers.
+     ServerAddress = 85.25.35.67
+
+    ;; The following configuration parameters are optional
+
+    ;; By default, this is the same as the ServerAddress
+     Realm = 85.25.35.67*
+
+Region Server(OpenSim)
+
+*[FreeSwitchVoice]
+    ;; In order for this to work you need a functioning FreeSWITCH PBX set
+up.
+    ;; Configuration details at
+<A HREF="http://opensimulator.org/wiki/Freeswitch_Module">http://opensimulator.org/wiki/Freeswitch_Module</A>
+     Enabled = true
+     LocalServiceModule =
+OpenSim.Services.Connectors.dll:RemoteFreeswitchConnector
+     FreeswitchServiceURL = <A HREF="http://62.75.142.162:8004/fsapi">http://62.75.142.162:8004/fsapi</A>
+
+    ;; You need to load a local service for a standalone, and a remote
+service
+    ;; for a grid region. Use one of the lines below, as appropriate
+    ;; If you're using Freeswitch on a standalone then you will also need
+to configure the
+
+[FreeswitchService] section in config-include/StandaloneCommon.ini
+    ; LocalServiceModule =
+OpenSim.Services.FreeswitchService.dll:FreeswitchService
+    ; LocalServiceModule =
+OpenSim.Services.Connectors.dll:RemoteFreeswitchConnector
+
+    ;; If using a remote connector, specify the server URL
+     ;FreeswitchServiceURL = <A HREF="http://62.75.142.162:8004/fsapi*">http://62.75.142.162:8004/fsapi*</A>
+
+I have tired almost every configuration i could think of. In the freeswitch
+server I get the following message:
+
+*2011-12-07 17:23:23.865890 [WARNING] sofia_reg.c:2446 Can't find user
+[x6INx5UOcSv6TwarYELAZjA==@85.25.35.67]
+You must define a domain called '85.25.35.67' in your directory and add a
+user with the id=&quot;x6INx5UOcSv6TwarYELAZjA==&quot; attribute
+and you must configure your device to use the proper domain in it's
+authentication credentials.*
+
+
+for the region server i get this information:
+
+*17:23:22 - [FreeSwitchVoice]: FreeSwitchSLVoiceGetPreloginHTTPHandler
+called
+17:23:22 - [AVFACTORY]: Completed texture check for
+e88371e5-439c-4afe-93c1-aad810b0198c
+17:23:22 - [FreeSwitchVoice]: FreeSwitchSLVoiceSigninHTTPHandler called
+17:23:22 - [MUTE LIST]: Got mute list request for crc 0
+17:23:22 - [FreeSwitchVoice]: FreeSwitchSLVoiceBuddyHTTPHandler called
+17:23:23 - [FreeSwitchVoice]: FreeSwitchSLVoiceWatcherHTTPHandler called
+17:23:23 - [FreeSwitchVoice]: FreeSwitchSLVoiceWatcherHTTPHandler called*
+
+
+Still No voice. Any ideas on how to get voice to work. The viewer I am
+using is Imprudence and I know voice works on it. I have it enabled and my
+computers firewall doesnt block it.
+
+
+Thanks!
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111207/205fb74a/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20111207/205fb74a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008792.html">[Opensim-users] New services bundle
+</A></li>
+	<LI>Next message: <A HREF="008796.html">[Opensim-users] Freeswitch voice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8793">[ date ]</a>
+              <a href="thread.html#8793">[ thread ]</a>
+              <a href="subject.html#8793">[ subject ]</a>
+              <a href="author.html#8793">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Problems creating MySQL tables	for	XmlRpcGroupsServer
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problems%20creating%20MySQL%20tables%09for%0A%09XmlRpcGroupsServer&In-Reply-To=%3C4EA1B810.6060407%40mitre.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008411.html">
+   <LINK REL="Next"  HREF="008414.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Problems creating MySQL tables	for	XmlRpcGroupsServer</H1>
+    <B>Kurt Reisler</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problems%20creating%20MySQL%20tables%09for%0A%09XmlRpcGroupsServer&In-Reply-To=%3C4EA1B810.6060407%40mitre.org%3E"
+       TITLE="[Opensim-users] Problems creating MySQL tables	for	XmlRpcGroupsServer">kreisler at mitre.org
+       </A><BR>
+    <I>Fri Oct 21 20:21:04 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008411.html">[Opensim-users] Problems creating MySQL tables	for	XmlRpcGroupsServer
+</A></li>
+        <LI>Next message: <A HREF="008414.html">[Opensim-users] Problems creating MySQL tables for	XmlRpcGroupsServer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8413">[ date ]</a>
+              <a href="thread.html#8413">[ thread ]</a>
+              <a href="subject.html#8413">[ subject ]</a>
+              <a href="author.html#8413">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Unfortunately, that does not solve the problem.
+
+I created the database using the latin1 character set:
+
+    mysql&gt; create database `mosgroups` character set latin1;
+    Query OK, 1 row affected (0.01 sec)
+
+    mysql&gt; use mosgroups;
+    Database changed
+
+When I then attempted to create the table using the original definition, 
+I got the same error:
+
+    mysql&gt; CREATE TABLE `osgroupinvite` (
+         -&gt;   `InviteID` varchar(128) NOT NULL default '',
+         -&gt;   `GroupID` varchar(128) NOT NULL default '',
+         -&gt;   `RoleID` varchar(128) NOT NULL default '',
+         -&gt;   `AgentID` varchar(128) NOT NULL default '',
+         -&gt;   `TMStamp` timestamp(14) NOT NULL,
+         -&gt;   PRIMARY KEY  (`InviteID`),
+         -&gt;   UNIQUE KEY `GroupID` (`GroupID`,`RoleID`,`AgentID`)
+         -&gt; ) ENGINE=MyISAM;
+    ERROR 1064 (42000): You have an error in your SQL syntax; check the
+    manual that corresponds to your MySQL server version for the right
+    syntax to use near '(14) NOT NULL,
+       PRIMARY KEY  (`InviteID`),
+       UNIQUE KEY `GroupID` (`GroupID`,`R' at line 6
+
+If I tried specifying the latin1 character set in the first set of 
+directives, I get the same error, but pointing to a different line:
+
+    mysql&gt; CREATE TABLE `osgroupinvite` CHARACTER SET latin1 (
+         -&gt;   `InviteID` varchar(128) NOT NULL default '',
+         -&gt;   `GroupID` varchar(128) NOT NULL default '',
+         -&gt;   `RoleID` varchar(128) NOT NULL default '',
+         -&gt;   `AgentID` varchar(128) NOT NULL default '',
+         -&gt;   `TMStamp` timestamp(14) NOT NULL,
+         -&gt;   PRIMARY KEY  (`InviteID`),
+         -&gt;   UNIQUE KEY `GroupID` (`GroupID`,`RoleID`,`AgentID`)
+         -&gt; ) ENGINE=MyISAM CHARACTER SET latin1;
+    ERROR 1064 (42000): You have an error in your SQL syntax; check the
+    manual that corresponds to your MySQL server version for the right
+    syntax to use near '`InviteID` varchar(128) NOT NULL default '',
+       `GroupID` varchar(128) NOT NULL d' at line 2
+
+These errors occur even if I do not specify the character set when 
+creating the database.
+
+Any other ideas or suggestions?
+
+Thanks
+Kurt
+
+On 10/21/2011 1:34 AM, Volker Gaessler wrote:
+&gt;<i> Hello Kurt, I had this same problem this week.
+</I>&gt;<i>
+</I>&gt;<i> It is a character set problem. Your database has been created with utf8
+</I>&gt;<i> character set. This charset uses 3 bytes per character. With 128 character
+</I>&gt;<i> keys you get a problem in the combined key consisting in the three IDs
+</I>&gt;<i> because MySQL only supports 1000 bytes max for keys.
+</I>&gt;<i>
+</I>&gt;<i> The solution is to create the database with character set latin1 or each of
+</I>&gt;<i> the groups tables. latin1 uses only 1 byte per character:
+</I>&gt;<i>
+</I>&gt;<i> CREATE DATABASE `opensim` CHARACTER SET latin1;
+</I>&gt;<i>
+</I>&gt;<i> or
+</I>&gt;<i>
+</I>&gt;<i> CREATE TABLE `osgroupinvite` CHARACTER SET latin1 (
+</I>&gt;<i>     :
+</I>&gt;<i> ) ENGINE=MyISAM CHARACTER SET latin1;
+</I>&gt;<i>
+</I>&gt;<i> and so on for each table.
+</I>&gt;<i>
+</I>&gt;<i> Cheers
+</I>&gt;<i>
+</I>&gt;<i> Volker
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Kurt Reisler
+</I>&gt;<i> Sent: Donnerstag, 20. Oktober 2011 17:43
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: [Opensim-users] Problems creating MySQL tables for
+</I>&gt;<i> XmlRpcGroupsServer
+</I>&gt;<i>
+</I>&gt;<i> Using Server version: 5.5.16 MySQL Community Server (GPL) under Windows
+</I>&gt;<i> 2008 server
+</I>&gt;<i>
+</I>&gt;<i> Attempting to build XmlRpcGroupsServer from mcortez-flotsam-963d99e.zip
+</I>&gt;<i> dated 10/18/2010 on my local server.
+</I>&gt;<i>
+</I>&gt;<i> Seems that there have been changes made to MySQL.  Had to change &quot;TYPE&quot;
+</I>&gt;<i> to &quot;ENGINE&quot; in all the other table build command strings.  All of them
+</I>&gt;<i> worked except when trying to create the osgroupinvite table:
+</I>&gt;<i>
+</I>&gt;<i> mysql&gt;  CREATE TABLE `osgroupinvite` (
+</I>&gt;<i>       -&gt;    `InviteID` varchar(128) NOT NULL default '',
+</I>&gt;<i>       -&gt;    `GroupID` varchar(128) NOT NULL default '',
+</I>&gt;<i>       -&gt;    `RoleID` varchar(128) NOT NULL default '',
+</I>&gt;<i>       -&gt;    `AgentID` varchar(128) NOT NULL default '',
+</I>&gt;<i>       -&gt;    `TMStamp` timestamp(14) NOT NULL,
+</I>&gt;<i>       -&gt;    PRIMARY KEY  (`InviteID`),
+</I>&gt;<i>       -&gt;    UNIQUE KEY `GroupID` (`GroupID`,`RoleID`,`AgentID`)
+</I>&gt;<i>       -&gt;  ) ENGINE=MyISAM;
+</I>&gt;<i>
+</I>&gt;<i> Which throws the following error:
+</I>&gt;<i>
+</I>&gt;<i> ERROR 1064 (42000): You have an error in your SQL syntax; check the manual
+</I>&gt;<i> that corresponds to your MySQL server version for the right syntax to use
+</I>&gt;<i> near '(14) NOT NULL,
+</I>&gt;<i>     PRIMARY KEY  (`InviteID`),
+</I>&gt;<i>     UNIQUE KEY `GroupID` (`GroupID`,`R' at line 6
+</I>&gt;<i>
+</I>&gt;<i> I am at a loss here.  Has anyone run into this before and are there any
+</I>&gt;<i> suggestions as to how to get around it? I can not make use of the public
+</I>&gt;<i> server at osflotsam.org for a variety of reasons.
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advance
+</I>&gt;<i> Kurt
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111021/35cd8ad6/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20111021/35cd8ad6/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: kreisler.vcf
+Type: text/x-vcard
+Size: 324 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111021/35cd8ad6/attachment.vcf">https://lists.berlios.de/pipermail/opensim-users/attachments/20111021/35cd8ad6/attachment.vcf</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2630 bytes
+Desc: S/MIME Cryptographic Signature
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111021/35cd8ad6/attachment.bin">https://lists.berlios.de/pipermail/opensim-users/attachments/20111021/35cd8ad6/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008411.html">[Opensim-users] Problems creating MySQL tables	for	XmlRpcGroupsServer
+</A></li>
+	<LI>Next message: <A HREF="008414.html">[Opensim-users] Problems creating MySQL tables for	XmlRpcGroupsServer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8413">[ date ]</a>
+              <a href="thread.html#8413">[ thread ]</a>
+              <a href="subject.html#8413">[ subject ]</a>
+              <a href="author.html#8413">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

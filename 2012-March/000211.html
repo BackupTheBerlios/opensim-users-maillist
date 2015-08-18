@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.1.1331736478.7901.opensim-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000210.html">
+   <LINK REL="Next"  HREF="002360.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.1.1331736478.7901.opensim-users%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 15:47:53 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000210.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="002360.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#211">[ date ]</a>
+              <a href="thread.html#211">[ thread ]</a>
+              <a href="subject.html#211">[ subject ]</a>
+              <a href="author.html#211">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Perhaps I should describe a little bit more about my setup.
+Currently I do not use a dyndns, but relaying only on the hosts file.
+My firewall, that is also translating the address is a checkpoint R6.
+Within the firewall I opened port 9000 for udp and tcp, but I don't =
+think
+the firewall is the problem as I'm logging the dropped packets and do =
+not
+see any of these 800x ports.
+I went through the exchanged packets and looking for my names or IP =
+addresses,
+So far I didn't discover anything special, on the client side I see the =
+external
+IP address only and on the server side the internal one, as expected.
+
+Do you know who is starting that region handshake?
+
+Thanks again
+
+Thomas
+
+-----Urspr=FCngliche Nachricht-----
+Von: ext <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ursula.matova at klintcentral.net</A> =
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ursula.matova at klintcentral.net</A>]=20
+Gesendet: Dienstag, 8. April 2008 09:55
+An: Mekota, Thomas (NSN - DE/Muenich); <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Betreff: Re: [Opensim-users] NAT and standalone opensim
+
+Hi Thomas,
+
+I use that at Home, Standalone OpenSim, behind my &quot;home made&quot; firewall.
+I'm not at home for now. But I'll try to remind my configuration and to =
+give you some informations. ( And I'll check this evening if needed ).
+
+First, I have created a dyndns entry, ( myserver.dyndns.org ) that =
+refers to my public IP ( my Firewall public IP ),
+
+Then, when I setup my Regions XML files : I use &quot;server.dyndns.org&quot; for =
+the external IP address, and your local IP ( the one of your opensim =
+server ) for the internal IP address.
+In OpenSim.ini also update URL for ports 8001, 8002, ... 8004 to =
+&quot;server.dyndns.org&quot;.
+
+Once done,=20
+
+You have to setup Firewall Rules and NAT.
+
+My Firewall is NetBSD using IPF/IPNat.
+
+In my IPNat config file, you have to &quot;RDR&quot; incoming packets from any =
+outside to your local opensim server. Do that for ports 8000 TCP , 8001 =
+TCP , 8002 TCP , .... 8004, 9000 UDP &amp; TCP and for your external network =
+card.
+
+In order to be able to connect to your OpenSim from &quot;Inside&quot;, you also =
+have to add a similar line for your internal network card.
+
+Then, you also have to add some rules for these ports in your firewall =
+rules.
+
+Restart everything and should work.
+
+Sorry, it's not very clear and my english is bad this morning. :)
+
+Let me know if it works.
+
+Regards,
+
+Ursula.
+
+Mekota, Thomas (NSN - DE/Muenich) &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">thomas.mekota at nsn.com</A>&gt; a =E9crit :
+
+&gt;<i> Hello everybody,
+</I>&gt;<i>=20
+</I>&gt;<i> I'm still struggling with my standalone OpenSim and NAT.
+</I>&gt;<i>=20
+</I>&gt;<i> As long as I put the external IP address in the regions file =
+</I>everything works fine and I can access the region.
+&gt;<i>=20
+</I>&gt;<i> As soon as I put in the host name (DNS entries exist) in the region =
+</I>file, the client starts up normally, but
+&gt;<i>=20
+</I>&gt;<i> stops at the 'region handshake' and tells me after the timeout unable =
+</I>to connect &#8230;
+&gt;<i>=20
+</I>&gt;<i> Within Wireshark I can see a lot of packets going back and forth until =
+</I>the region handshake starts.
+&gt;<i>=20
+</I>&gt;<i>=20
+</I>&gt;<i> I feel very stupid right now, but does anybody have an idea where my =
+</I>mistake is?
+&gt;<i>=20
+</I>&gt;<i>=20
+</I>&gt;<i> =20
+</I>&gt;<i>=20
+</I>&gt;<i> =20
+</I>&gt;<i>=20
+</I>&gt;<i> Mit freundlichem Gru=DF / Best regards=20
+</I>&gt;<i>=20
+</I>&gt;<i> Thomas Mekota
+</I>
+___________________________________
+NOCC, <A HREF="http://nocc.sourceforge.net">http://nocc.sourceforge.net</A>
+
+
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000210.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="002360.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#211">[ date ]</a>
+              <a href="thread.html#211">[ thread ]</a>
+              <a href="subject.html#211">[ subject ]</a>
+              <a href="author.html#211">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

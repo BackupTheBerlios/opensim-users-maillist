@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Anyway to verify the database
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Anyway%20to%20verify%20the%20database&In-Reply-To=%3C502F68ED.6010601%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010762.html">
+   <LINK REL="Next"  HREF="010763.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Anyway to verify the database</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Anyway%20to%20verify%20the%20database&In-Reply-To=%3C502F68ED.6010601%40gmail.com%3E"
+       TITLE="[Opensim-users] Anyway to verify the database">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Sat Aug 18 12:05:33 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010762.html">[Opensim-users] Anyway to verify the database
+</A></li>
+        <LI>Next message: <A HREF="010763.html">[Opensim-users] Operating system upgrade for opensim upgrade
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10765">[ date ]</a>
+              <a href="thread.html#10765">[ thread ]</a>
+              <a href="subject.html#10765">[ subject ]</a>
+              <a href="author.html#10765">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Seems I spoke too soon on issue 1. Those pesky intermittent issues never 
+pop up when you're actually looking and testing for them =) But I 
+believe I've come up with at least a partial amount of steps that I 
+think might be contributing to it:
+
+I am running git r/20019 for these steps
+
+1. Rez an object that has multiple links to the ground. (In my case it 
+is usually attachments that I've rezzed from inventory to unlink and 
+make modifications on; although I am unsure if this makes a difference 
+or not)
+
+2. Unlink the object and spend a little while (perhaps 10 or 15 minutes) 
+making modifications such as shift copy of prims, adding scripts, 
+changing prim sizes, textureing, etc.
+
+3. Either delete the finished object or take the it back into inventory.
+
+4. Upon relog the object will reappear (or perhaps random parts of the 
+object if it was deleted and not linked before hand).
+     a. This is also visible to other avatars to after they relog.
+     b. If attempting to take the object again or delete again it will 
+be back again after another relog.
+     c. The object will persist until server restart where it will 
+reappear again, but can finally be gotten rid of for good by means of a 
+delete or take to inventory.
+
+A few things that I have noticed when the issue triggers:
+     * When removing a multiple selection of prims, only the root prim 
+of that selection seems to persist removal, resulting in the appearance 
+of most of the rest of the object still being there upon relog.
+
+     * When examining the MySQL database at the prims table using SELECT 
+count(*) FROM `databasenamehere`.`prims` the prim count goes down by one 
+even though multiple prims may be selected for removal.
+
+     * If the server is restarted the affected objects can be removed 
+and it will be persisted.
+
+Unfortunately it doesn't it trigger consistently applying the above 
+steps and I've not yet found a way to consistently trigger it.
+
+I've created a mantis for this particular issue here: 
+<A HREF="http://opensimulator.org/mantis/view.php?id=6175">http://opensimulator.org/mantis/view.php?id=6175</A>
+
+Good luck with the other two issues though Rick!
+
+On 8/17/2012 9:31 PM, Rick Anderson wrote:
+&gt;<i> I'm hoping to get time to do this:
+</I>&gt;&gt;<i> In theory, one could verify the data in certain ways (e.g. make sure all
+</I>&gt;&gt;<i> prims in the database had a root prim) but I haven't done this myself.
+</I>&gt;&gt;<i>
+</I>&gt;<i> Also, I'm planning to start running Splunk on my log files. Maybe, it
+</I>&gt;<i> can help find some of the issues. Trying to sort through the log ins't
+</I>&gt;<i> fun by hand.
+</I>&gt;<i>
+</I>&gt;<i> -_Rick
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Aug 17, 2012 at 7:07 PM, Justin Clark-Casey
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Issue 1 is odd - it's never something I've seen or reproduced myself though
+</I>&gt;&gt;<i> I do seem to have heard reports.  It's worth trying 0.7.4-rc1 for this
+</I>&gt;&gt;<i> though I don't know of any specific fixes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Issue 2 is not something I would expect to see in OpenSim at all.  If you're
+</I>&gt;&gt;<i> using third party user creation code then I would suggest looking there
+</I>&gt;&gt;<i> first.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For issue 3, there have been some permission fixes in 0.7.4-rc1, though I
+</I>&gt;&gt;<i> would not expect such things to vary via the viewer as the enforcement of
+</I>&gt;&gt;<i> permissions ins enforced purely server-side.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In theory, one could verify the data in certain ways (e.g. make sure all
+</I>&gt;&gt;<i> prims in the database had a root prim) but I haven't done this myself.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 16/08/12 11:38, Rick Anderson wrote:
+</I>&gt;&gt;&gt;<i> Not yet, but I'd be willing to test it.
+</I>&gt;&gt;&gt;<i> --Rick
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Thu, Aug 16, 2012 at 2:23 AM, Chris &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> I'm not sure about issue 2 and 3 but I used to run into issue 1 quite
+</I>&gt;&gt;&gt;&gt;<i> frequently myself; but I have not seen it pop up (yet) since upgrading to
+</I>&gt;&gt;&gt;&gt;<i> the master revision. Have you tried master or 0.7.4 RC1 yet?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Just my thoughts. Hope this helps in your search =)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 8/15/2012 12:30 PM, Rick Anderson wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Hi All,
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I've been running into a set of issues which I'm suspecting is related
+</I>&gt;&gt;&gt;&gt;&gt;<i> to my database.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> 1. Prims deleted by users return on their next log in.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> 2. Avatars that were in active for 10 months log in and get new user
+</I>&gt;&gt;&gt;&gt;&gt;<i> ids and lose their inventory
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> 3. Permissions change when giving items thought this varies by viewer
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Is there any sql or techniques to verify the database?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I'd like to be able to know that it's consistent so that when I hunt
+</I>&gt;&gt;&gt;&gt;&gt;<i> down these issues I know it's not the db.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Thanks,
+</I>&gt;&gt;&gt;&gt;&gt;<i> --Rick
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;<i> OpenSim: 10 Region Standalone on 0.7.4 Dev
+</I>&gt;&gt;&gt;&gt;<i> Physics: Open Dynamics Engine
+</I>&gt;&gt;&gt;&gt;<i> OS: Windows 7 (x64)
+</I>&gt;&gt;&gt;&gt;<i> CPU: AMD Phenom II X4 840 3.2 GHz
+</I>&gt;&gt;&gt;&gt;<i> Memory: 11 GB DDR3
+</I>&gt;&gt;&gt;&gt;<i> Database: MySQL 5.1.63 (x64)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.4 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010762.html">[Opensim-users] Anyway to verify the database
+</A></li>
+	<LI>Next message: <A HREF="010763.html">[Opensim-users] Operating system upgrade for opensim upgrade
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10765">[ date ]</a>
+              <a href="thread.html#10765">[ thread ]</a>
+              <a href="subject.html#10765">[ subject ]</a>
+              <a href="author.html#10765">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

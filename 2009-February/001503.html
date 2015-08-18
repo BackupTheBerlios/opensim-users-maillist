@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Heads Up: Updating Prebuild to Upstream
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Heads%20Up%3A%20Updating%20Prebuild%20to%20Upstream&In-Reply-To=%3CBLU134-W4556E570E12581B02D5CACD5B20%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001501.html">
+   <LINK REL="Next"  HREF="001504.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Heads Up: Updating Prebuild to Upstream</H1>
+    <B>Stefan Andersson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Heads%20Up%3A%20Updating%20Prebuild%20to%20Upstream&In-Reply-To=%3CBLU134-W4556E570E12581B02D5CACD5B20%40phx.gbl%3E"
+       TITLE="[Opensim-users] Heads Up: Updating Prebuild to Upstream">stefan at tribalmedia.se
+       </A><BR>
+    <I>Thu Feb 19 13:54:13 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001501.html">[Opensim-users] Bendy Legs,	script errors and SL buildings disappear.
+</A></li>
+        <LI>Next message: <A HREF="001504.html">[Opensim-users] Walking thru trees &amp; getting Ruthed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1503">[ date ]</a>
+              <a href="thread.html#1503">[ thread ]</a>
+              <a href="subject.html#1503">[ subject ]</a>
+              <a href="author.html#1503">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+First of all, sorry for the cross-post, just felt the 'users' (whatever that means) should be aware of this as well:
+
+ 
+
+I have now updated Prebuild from upstream. Please, try the latest rev out and report to me if I have caused any breakage or regressions. Thank you to Kunnis and JHurliman for back-porting the OpenSim fixes into Prebuild upstream.
+
+ 
+
+This is the commit log entry for the update:
+
+ 
+
+=== PREBUILD UPSTREAMS UPDATE : POTENTIAL BREAKAGE ===
+
+* Applied upstreams changes to allow for auditing and debugging in our various environments.
+* This should, in theory, bring back 'multiple ref dirs'.
+* Temporarily Removed xmlns because prebuild-1.7 schema does not allow for multiple solutions per prebuild node (This will be a moot issue once the Prebuild node is moved out of prebuild.xml)
+* Autotools target: Various minor fixes
+* MonoDevelop Target : No changes.
+* Nant Target: Various minor fixes, support for net-3.5 and mono-2.0/3.5 targets
+* Sharpdevelop targets: No changes.
+* VS Targets: Refactored into using VSGenericTarget, and supports 2.0-3.5
+* XCode Target: No changes.
+
+ 
+
+--- Regressions and outstanding issues ---
+* The Solution is assigned a random Guid - will lead to unnecessary reloads and loss of user settings. [in Visual Studio, that is]
+
+ 
+
+--- New features of Prebuild 2.0.4 ---
+* (Better) support for Web, WinForms and Database Projects and build actions
+* Conditional Framework Version compilation support (1.1, 2.0-3.5)
+* ArrayList -&gt; List&lt;&gt;, ICollection -&gt; IList
+  (this means Prebuild can generate 1.1 solutions, but can't itself be built under 1.1 - how very meta)
+* Added &lt;?include file=&quot;sub_prebuild.xml&quot; ?&gt; preprocessor directive.
+
+Best regards,
+Stefan Andersson
+Tribal Media AB
+
+
+
+ 
+
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">stefan at tribalmedia.se</A>
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev at lists.berlios.de</A>
+Subject: Heads Up: Updating Prebuild to Upstream
+Date: Wed, 18 Feb 2009 22:14:43 +0100
+
+
+
+Dear colleagues,
+ 
+Kunnis and JHurliman has been working to incorporate our Prebuild customizations into the upstream source, and we're now at the point where we can do an upstream update and subsequentially move the Prebuild source out of the trunk and into opensim-libs. (Or should it go on the forge?)
+ 
+Since the code hasn't changed that much, I believe we should simply go ahead and do the switch, and if any cross-environment breakage would happen, work together to solve it.
+
+So please help us troubleshoot Prebuild on your environment.
+
+Best regards,
+Stefan Andersson
+Tribal Media AB
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090219/6a8a356a/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090219/6a8a356a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001501.html">[Opensim-users] Bendy Legs,	script errors and SL buildings disappear.
+</A></li>
+	<LI>Next message: <A HREF="001504.html">[Opensim-users] Walking thru trees &amp; getting Ruthed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1503">[ date ]</a>
+              <a href="thread.html#1503">[ thread ]</a>
+              <a href="subject.html#1503">[ subject ]</a>
+              <a href="author.html#1503">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

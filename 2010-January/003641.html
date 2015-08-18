@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 0.6.8-post-fixes as standalone:	Exception:	System.Exception: No IAssetService available. [RESOLVED]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200.6.8-post-fixes%20as%20standalone%3A%0A%09Exception%3A%09System.Exception%3A%20No%20IAssetService%20available.%20%5BRESOLVED%5D&In-Reply-To=%3CF8D20B05-A5F9-4E8A-98F6-00456F50335D%40newevolution.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003590.html">
+   <LINK REL="Next"  HREF="003585.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 0.6.8-post-fixes as standalone:	Exception:	System.Exception: No IAssetService available. [RESOLVED]</H1>
+    <B>Ryan Tanay</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200.6.8-post-fixes%20as%20standalone%3A%0A%09Exception%3A%09System.Exception%3A%20No%20IAssetService%20available.%20%5BRESOLVED%5D&In-Reply-To=%3CF8D20B05-A5F9-4E8A-98F6-00456F50335D%40newevolution.org%3E"
+       TITLE="[Opensim-users] 0.6.8-post-fixes as standalone:	Exception:	System.Exception: No IAssetService available. [RESOLVED]">ryantanay at newevolution.org
+       </A><BR>
+    <I>Sun Jan 31 01:08:13 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003590.html">[Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.
+</A></li>
+        <LI>Next message: <A HREF="003585.html">[Opensim-users] &quot;Sit&quot; funtion ha stopped working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3641">[ date ]</a>
+              <a href="thread.html#3641">[ thread ]</a>
+              <a href="subject.html#3641">[ subject ]</a>
+              <a href="author.html#3641">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Justin:
+
+Actually I was working on upgrading from a quite old 0.6.3-post-fixes install, which actually seemed to be the problem.
+
+I was following this automated update script which is woefully out of date to determine what files I needed to copy from 0.6.3 to 0.6.8: <A HREF="http://opensimulator.org/wiki/Automating_Tasks#Automate_Updates">http://opensimulator.org/wiki/Automating_Tasks#Automate_Updates</A>
+
+Copying over OpenSim.addin.xml was causing all kinds of issues with the Wind functions (which I had disabled in the 0.6.8's OpenSim.ini to get around) and the IAssetService.
+
+By using the default OpenSim.addin.xml from 0.6.8, copying the info from all my regions' XML fles into the new Regions.ini I was able to get the sim up and running.
+
+As a side note, one REALLY weird glitch I noticed.  A few months ago I had tried to upgrade to 0.6.6 and forgotten to copy over my /Regions directory.  When I started the sim, all my regions were wiped and returned to the default tiny round islands.  I'd stupidly not backed up to an OAR, so started over from what I had in my inventory.
+
+When I started up 0.6.8, all my regions were in the state they were before the wipe.  Made me pretty happy as I was able to save out an OAR before reloading my new OARs with the more recent work.  I recovered some really nice builds I thought I'd lost for good.  No idea why upgrading caused the regions to load &quot;in the past&quot; but hey, I'll take it =)
+
+~Ryan
+
+
+On Jan 25, 2010, at 5:34 PM, Justin Clark-Casey wrote:
+
+&gt;<i> Ryan, I presume you're working from a completely fresh install of OpenSim?  Have you tried the 
+</I>&gt;<i> binary packages at
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Download">http://opensimulator.org/wiki/Download</A>
+</I>&gt;<i> 
+</I>&gt;<i> which should just work out of the box?
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> justincc
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Ryan Tanay wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Jane:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> On the 0.6.8 version it seems they've removed the GRID MODE variable 
+</I>&gt;&gt;<i> from OpenSim.ini entirely.  At the bottom under [Architecture] I have 
+</I>&gt;&gt;<i> only Include-Standalone uncommented, so all seems well there.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Both of the World Map variables were commented out in the default 
+</I>&gt;&gt;<i> OpenSim.ini.example, so I had left them as they were.  However, 
+</I>&gt;&gt;<i> uncommenting them resulted in no change to the crashing behavior on launch.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Any other suggestions?
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> ~Ryan
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> On Jan 24, 2010, at 1:20 AM, Jane Foxclaw wrote:
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> ok few questions this brings up to me is Are you in Standalone mode 
+</I>&gt;&gt;&gt;<i> where it says GRID MODE = FALSE ?  because if this is TRUE and you 
+</I>&gt;&gt;&gt;<i> have not run the other Asset servers, then you would get this error. 
+</I>&gt;&gt;&gt;<i> Also, if you are running this in Grid mode and your not changing at 
+</I>&gt;&gt;&gt;<i> the very bottom of the OpenSim.ini file where it says Include make 
+</I>&gt;&gt;&gt;<i> sure you have included ONLY the Grid.ini file.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Now the texture maps, do you have the TWO uncommented to look like this ?
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i>    ; ##
+</I>&gt;&gt;&gt;<i>    ; ## WORLD MAP
+</I>&gt;&gt;&gt;<i>    ; ##
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i>    WorldMapModule = &quot;WorldMap&quot;
+</I>&gt;&gt;&gt;<i>    MapImageModule = &quot;MapImageModule&quot;
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Hopefully you do.. lol
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Hope that gives some help.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Sonya
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> On Sat, Jan 23, 2010 at 5:48 PM, Ryan Tanay 
+</I>&gt;&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ryantanay at newevolution.org</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ryantanay at newevolution.org</A>&gt;&gt; wrote:
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    I'm getting the following error when trying to launch
+</I>&gt;&gt;&gt;&gt;<i>    0.6.8-post-fixes in standalone mode:
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    17:43:26 - [APPLICATION]:
+</I>&gt;&gt;&gt;&gt;<i>    APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    Exception: System.Exception: No IAssetService available.
+</I>&gt;&gt;&gt;&gt;<i>     at OpenSim.Region.Framework.Scenes.Scene.get_AssetService ()
+</I>&gt;&gt;&gt;&gt;<i>    [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at
+</I>&gt;&gt;&gt;&gt;<i>    OpenSim.Region.CoreModules.World.WorldMap.TexturedMapTileRenderer.fetchTexture
+</I>&gt;&gt;&gt;&gt;<i>    (UUID id) [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at
+</I>&gt;&gt;&gt;&gt;<i>    OpenSim.Region.CoreModules.World.WorldMap.TexturedMapTileRenderer.computeAverageColor
+</I>&gt;&gt;&gt;&gt;<i>    (UUID textureID, Color defaultColor) [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at
+</I>&gt;&gt;&gt;&gt;<i>    OpenSim.Region.CoreModules.World.WorldMap.TexturedMapTileRenderer.TerrainToBitmap
+</I>&gt;&gt;&gt;&gt;<i>    (System.Drawing.Bitmap mapbmp) [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at
+</I>&gt;&gt;&gt;&gt;<i>    OpenSim.Region.CoreModules.World.WorldMap.MapImageModule.WriteJpeg2000Image
+</I>&gt;&gt;&gt;&gt;<i>    (System.String gradientmap) [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at OpenSim.Region.Framework.Scenes.Scene.CreateTerrainTexture
+</I>&gt;&gt;&gt;&gt;<i>    (Boolean temporary) [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+</I>&gt;&gt;&gt;&gt;<i>    regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp;
+</I>&gt;&gt;&gt;&gt;<i>    mscene) [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+</I>&gt;&gt;&gt;&gt;<i>    regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at
+</I>&gt;&gt;&gt;&gt;<i>    OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise
+</I>&gt;&gt;&gt;&gt;<i>    () [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at OpenSim.OpenSimBase.StartupSpecific () [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at OpenSim.OpenSim.StartupSpecific () [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000]
+</I>&gt;&gt;&gt;&gt;<i>     at OpenSim.Application.Main (System.String[] args) [0x00000]
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    Application is terminating: True
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    I'm using the default settings in StandaloneCommmon.ini as follows:
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    [AssetService]
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>       DefaultAssetLoader = &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+</I>&gt;&gt;&gt;&gt;<i>       AssetLoaderArgs = &quot;assets/AssetSets.xml&quot;
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    As far as I can tell, those files and paths are correct.  I've
+</I>&gt;&gt;&gt;&gt;<i>    found this in Mantis, but it doesn't really offer any advice
+</I>&gt;&gt;&gt;&gt;<i>    whatsoever: <A HREF="http://opensimulator.org/mantis/view.php?id=3781">http://opensimulator.org/mantis/view.php?id=3781</A>
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    I'd appreciate any help I can get.  Thanks!
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i>    ~Ryan
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003590.html">[Opensim-users] 0.6.8-post-fixes as standalone: Exception:	System.Exception: No IAssetService available.
+</A></li>
+	<LI>Next message: <A HREF="003585.html">[Opensim-users] &quot;Sit&quot; funtion ha stopped working
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3641">[ date ]</a>
+              <a href="thread.html#3641">[ thread ]</a>
+              <a href="subject.html#3641">[ subject ]</a>
+              <a href="author.html#3641">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

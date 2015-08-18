@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSimulator development code now builds using .NET 4.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSimulator%20development%20code%20now%20builds%20using%0A%20.NET%204.0&In-Reply-To=%3C5282D3DF.8020304%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012834.html">
+   <LINK REL="Next"  HREF="012832.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSimulator development code now builds using .NET 4.0</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSimulator%20development%20code%20now%20builds%20using%0A%20.NET%204.0&In-Reply-To=%3C5282D3DF.8020304%40googlemail.com%3E"
+       TITLE="[Opensim-users] OpenSimulator development code now builds using .NET 4.0">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Nov 13 02:20:31 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012834.html">[Opensim-users] OpenSimulator development code now builds using .NET 4.0
+</A></li>
+        <LI>Next message: <A HREF="012832.html">[Opensim-users] OpenSimulator dev builds using .NET 4.0 - Status of addon modules
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12841">[ date ]</a>
+              <a href="thread.html#12841">[ thread ]</a>
+              <a href="subject.html#12841">[ subject ]</a>
+              <a href="author.html#12841">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Austin.  Yes, there was an error with the updated runprebuild.bat where it worked with Windows Vista and earlier but 
+failed with Windows 7 and later.  I have hopefully now fixed this in commit 0f16612.  This has the side effect for now 
+of making it impossible/hard to run this batch script in cygwin, which I may try to address at a later date for the 1 or 
+2 people using cygwin with OpenSim (temporary workaround is to run this under a Windows command prompt instead).
+
+Regarding the license key, it's not a problem to get, just a bit of bureaucracy - I use VS C# 2010 Express myself.
+
+On 09/11/13 19:20, R.Gunther wrote:
+&gt;<i> Just done test.
+</I>&gt;<i>
+</I>&gt;<i> Downloaded a fresh git version of 0.8dev version fd24147-r/24023
+</I>&gt;<i> running prebuild.bat after completed open the OpenSim.sln
+</I>&gt;<i> choice build solution in visual studio 2012 express.
+</I>&gt;<i> No problem at all, done it on windows 8.1 64bit.
+</I>&gt;<i>
+</I>&gt;<i> On 2013-11-09 16:51, Ai Austin wrote:
+</I>&gt;&gt;<i> Thanks.  I now see that I have loads of .NET frameworks installed some in
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> C:\Windows\Microsoft.NET\Framework
+</I>&gt;&gt;<i> C:\Windows\Microsoft.NET\Framework64
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I see that the runprebuild.bat script now doe snot have the 3.5 .NET Framework fixed path hardwired and it tries to
+</I>&gt;&gt;<i> pick up the currently installed .NET Framework for 4.0 using registry values.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Running the new r/240runprebuild.bat on a Windows 8.1 Pro 64 bit system it gives the error...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSBuild\ToolsVersions\4.0&quot;\MSBuildToolsPath not found.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Note the &quot; &quot; that seem to be misplaced. My attempts to remove the quotes &quot;  ... &quot; round the key had no effect, but
+</I>&gt;&gt;<i> they don't seem to be needed anyway?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That registry key if properly found though would point on my machine to the apparently correct location which does
+</I>&gt;&gt;<i> contain an msbuild.exe executable...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> C:\Windows\Microsoft.NET\Framework64\v4.0.30319\
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I hardwired that in a version of runprebuild.bat and that worked fine as far as the compile stage, which will need the
+</I>&gt;&gt;<i> Visual C# Studio express installed I assume.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So it must be the script handling picking up the key and key value needed for the msbuild.exe path from the registry
+</I>&gt;&gt;<i> that is not quite working right yet?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ---
+</I>&gt;<i> This email is free from viruses and malware because avast! Antivirus protection is active.
+</I>&gt;<i> <A HREF="http://www.avast.com">http://www.avast.com</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012834.html">[Opensim-users] OpenSimulator development code now builds using .NET 4.0
+</A></li>
+	<LI>Next message: <A HREF="012832.html">[Opensim-users] OpenSimulator dev builds using .NET 4.0 - Status of addon modules
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12841">[ date ]</a>
+              <a href="thread.html#12841">[ thread ]</a>
+              <a href="subject.html#12841">[ subject ]</a>
+              <a href="author.html#12841">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

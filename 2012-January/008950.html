@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Crash on collision
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3CCA%2BRcaTS3ajwrAO_Orsxxe_-fNNKAf0Dj_%3D24hj4j%2B%2BBhD0_2sA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008989.html">
+   <LINK REL="Next"  HREF="008943.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Crash on collision</H1>
+    <B>M.E. Verhagen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3CCA%2BRcaTS3ajwrAO_Orsxxe_-fNNKAf0Dj_%3D24hj4j%2B%2BBhD0_2sA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Crash on collision">marceled9 at gmail.com
+       </A><BR>
+    <I>Mon Jan  2 23:14:20 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008989.html">[Opensim-users] Crash on collision
+</A></li>
+        <LI>Next message: <A HREF="008943.html">[Opensim-users] Teleports to other region sometimes fail?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8950">[ date ]</a>
+              <a href="thread.html#8950">[ thread ]</a>
+              <a href="subject.html#8950">[ subject ]</a>
+              <a href="author.html#8950">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The build logs of the fedora libode show it was build with opcode
+<A HREF="http://kojipkgs.fedoraproject.org/packages/ode/0.11.1/6.fc15/data/logs/x86_64/build.log">http://kojipkgs.fedoraproject.org/packages/ode/0.11.1/6.fc15/data/logs/x86_64/build.log</A>
+
+i downloaded the gimpact libode x64 lib from justin
+
+Somehow the collision physics seem to be stable with those two libs.
+(opensim won't start with the gimpact lib and the opensim libode.so)
+
+I think opensim libode.so is somehow causing a memory bug, i wonder should
+the libode.so be there if the gimpctx64 is there ?
+
+
+Op maandag 2 januari 2012 schreef Justin Clark-Casey (
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>) het volgende:
+&gt;<i> Please see [1] and [2] for more information on these ODE crashes.
+</I>&gt;<i>
+</I>&gt;<i> Essentially, we've narrowed it down to a problem using the default ODE
+</I>collider with more than 1 region.  Stress tests with 20 bots constantly
+teleporting around one region (or between two simulators in a grid each
+running 1 region) do not trigger the ODE crash even after many hours.
+&gt;<i>
+</I>&gt;<i> The same stress test with 20 bots teleporting between two regions on the
+</I>same system, even where the regions are 10 map spaces apart, always
+triggers the collider crash sooner or later.  Sometimes this occurs almost
+immediately, sometimes only after an hour or so.
+&gt;<i>
+</I>&gt;<i> Compiling ODE with the older collider (GIMPACT instead of OPCODE) doesn't
+</I>see this crash.
+&gt;<i>
+</I>&gt;<i> My chief suspicion is that there's actually an ODE/collider memory
+</I>freeing bug.  I suspect that it's not very usual to run more than one
+physics 'world' in a program (in OpenSimulator, each region runs its own
+world).  It could also be a problem with OpenSim's P/Invoke interface to
+ODE causing collision objects to be freed at the wrong time, but I'm
+currently discounting that because we don't see the same failure with two
+simulators each with a single region, and ODE scenes at the OpenSim level
+are entirely separate, even though they aren't in the ODE library itself.
+&gt;<i>
+</I>&gt;<i> [1] contains a link in the comments to an ODE Linux 64 bit library I
+</I>compiled using the GIMPACT collider, if you're running that platform and
+want to try it.  This will work on any recent version of OpenSim (probably
+even 0.6.9).
+&gt;<i>
+</I>&gt;<i> Using a linux distro version of ode probably won't fix this problem as I
+</I>expect they will have compiled it using OPCODE.  OpenSimulator only every
+uses the ODE library bundled in its bin directory, unless you start
+symlinking or similar.
+&gt;<i>
+</I>&gt;<i> [1] <A HREF="http://opensimulator.org/mantis/view.php?id=3251">http://opensimulator.org/mantis/view.php?id=3251</A>
+</I>&gt;<i> [2] <A HREF="http://opensimulator.org/mantis/view.php?id=4553">http://opensimulator.org/mantis/view.php?id=4553</A>
+</I>&gt;<i>
+</I>&gt;<i> On 01/01/12 20:23, Klaus-E. Klingner wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hallo,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for the tip. But I am not using any mesh in my sim :(
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Basically I am using the DIVA because of the wifi, but think I will
+</I>switch once the new GUI is done, that was written
+&gt;&gt;<i> about here on the list. Do not have time to write one myself atm.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regards,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Klaus
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 01.01.2012 14:38, M.E. Verhagen wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Happy new year !
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> One other thing what seems to trigger ode crashes seem to faulty
+</I>meshes, you can reconize these from opensim log lines
+&gt;&gt;&gt;<i> like:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 10:49:19 - [MESH]: no recognized physics mesh found in mesh asset
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 11:06:40 - [MESH]: asset data is zero length
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 06:40 - [MESH]: experimental mesh proxy generation for
+</I>defaultMesh/9af57c73-8ef4-42f1-9415-46e8491213cd
+&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Try to find these inworld and delete them. On my box the ode crashes
+</I>were less fequent after deleting those.
+&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The case with the libode is that it does not seem to be compatible with
+</I>some systems luckely most system already have
+&gt;&gt;&gt;<i> a libode in their repo why not use that libode ?
+</I>&gt;&gt;&gt;<i> I am using a git version, not the diva. Could be that some recent
+</I>updates on the odescene also prevent some crashes.
+&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Op zaterdag 31 december 2011 schreef Klaus-E. Klingner (
+</I><A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">klingner at silverday.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">klingner at silverday.de</A>&gt;) het
+&gt;&gt;&gt;<i> volgende:
+</I>&gt;&gt;&gt;<i> &gt; &lt;sigh&gt; I have to correct myself. The world just crashed again with
+</I>exactly the same error :(
+&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Regards,
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Klaus
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; On 31.12.2011 18:19, Klaus-E. Klingner wrote:
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Hallo,
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; thank you for the tip. However it did not fix the problem :/ I still
+</I>got the same crash. However I noticed that the
+&gt;&gt;&gt;<i> ode-file in the physics folder of DIVA is different from the one in the
+</I>original OpenSim 0.72-download. I copied that
+&gt;&gt;&gt;<i> over, started the world and that seems to have done the trick. Now I
+</I>just have to figure out a way to one of the sims
+&gt;&gt;&gt;<i> that suddenly disappeared :/
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Regards and a happy and a happy new year,
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Klaus
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Additional remark:
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; To install the libode on SuSe you have to add the
+</I>OpenSuSE-Gamerepository with
+&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; zypper addrepo
+</I><A HREF="http://download.opensuse.org/repositories/games/openSUSE_11.4/opensuse-games-x86_64">http://download.opensuse.org/repositories/games/openSUSE_11.4/opensuse-games-x86_64</A>
+&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; and then install libode using
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; zypper install libode1
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; On 31.12.2011 16:57, M.E. Verhagen wrote:
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; I had the same sort of ode crashes, i installed ode on my system with
+</I>'yum install ode' and deleted the libode.so
+&gt;&gt;&gt;<i> from the opensim bin dir, after wich i simlinked the lib to make sure
+</I>opensim uses it. I also downloaded
+&gt;&gt;&gt;<i> <A HREF="https://github.com/downloads/justincc/opensim/libode.so-x86_64.so,">https://github.com/downloads/justincc/opensim/libode.so-x86_64.so,</A> and
+</I>the crashes stopped.
+&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; On suse this would something like these commands:
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; yum install libode
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; cd /opt/opensim/diva-r16915/bin
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; wget <A HREF="https://github.com/downloads/justincc/opensim/libode.so-x86_64.so">https://github.com/downloads/justincc/opensim/libode.so-x86_64.so</A>
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; rm libode.so
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; rm libode-x86_64.so
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; mv libode.so-x86_64.so &lt;<A HREF="http://libode.so-x86_64.so">http://libode.so-x86_64.so</A>&gt; libode-x86_64.so
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; ln /usr/lib64/libode.so.1.1.1 libode.so
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; I am not sure if there is a libode.so.1.1.1, it could named
+</I>differently, but just symlink it.
+&gt;&gt;&gt;<i> &gt; In theory the symlink is not needed, but it cannot hurt.
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120102/6e92a377/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120102/6e92a377/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008989.html">[Opensim-users] Crash on collision
+</A></li>
+	<LI>Next message: <A HREF="008943.html">[Opensim-users] Teleports to other region sometimes fail?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8950">[ date ]</a>
+              <a href="thread.html#8950">[ thread ]</a>
+              <a href="subject.html#8950">[ subject ]</a>
+              <a href="author.html#8950">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

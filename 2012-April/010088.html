@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Exporting prims from OpenSim into a popular 3D	format - .OBJ, COLLADA, whatever
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Exporting%20prims%20from%20OpenSim%20into%20a%20popular%203D%0A%09format%20-%20.OBJ%2C%20COLLADA%2C%20whatever&In-Reply-To=%3C67942473-7118-4091-981B-7FD9926C0B7E%40gwynethllewelyn.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010086.html">
+   <LINK REL="Next"  HREF="010085.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Exporting prims from OpenSim into a popular 3D	format - .OBJ, COLLADA, whatever</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Exporting%20prims%20from%20OpenSim%20into%20a%20popular%203D%0A%09format%20-%20.OBJ%2C%20COLLADA%2C%20whatever&In-Reply-To=%3C67942473-7118-4091-981B-7FD9926C0B7E%40gwynethllewelyn.net%3E"
+       TITLE="[Opensim-users] Exporting prims from OpenSim into a popular 3D	format - .OBJ, COLLADA, whatever">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Wed Apr 11 12:35:45 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010086.html">[Opensim-users] Exporting prims from OpenSim into a popular 3D format - .OBJ, COLLADA, whatever
+</A></li>
+        <LI>Next message: <A HREF="010085.html">[Opensim-users] Is this April Fools joke extended?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10088">[ date ]</a>
+              <a href="thread.html#10088">[ thread ]</a>
+              <a href="subject.html#10088">[ subject ]</a>
+              <a href="author.html#10088">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+First let me thank you for your thorough explanations. It's great to see that many have stumbled across the same issue, and found a way around it!
+
+I'll probably give Meshtastic a try &#8212; assuming the script runs under OpenSim's &quot;variant&quot; of LSL, of course &#8212; but I think that it might be a nightmare to use such a system: we have simply too many objects, and not all are linked together. Of course we could link them first and try such a tool next, but I expect it would take weeks to export everything. Nevertheless it's a great starting point.
+
+Toni's suggestion looks like a more feasible solution. I will certainly take a look at the PrimMesher library! It sounds like a good starting point. I completely forgot that on the server side the simulator has to deal with meshes somehow to feed them to ODE &#8212; in my moment of insanity, I thought that OpenSim only knew about the &quot;internal&quot;, LL-inspired prim data structure, but of course it has to do something to that data to allow ODE to use it. How silly of me for thinking otherwise! Thanks so much for the tip, Toni, it's really a good idea. IMHO, it might be best to work from the OAR &#8212; as it is supposed to have the complete scene already &#8212; and not-being-so-humble I actually have some past experience in doing that (granted, it was work I did back in 2008/9 and I'm very, very rusty in C# programming), so this ought to be feasible.
+
+In the mean time, I was made aware of a full OAR-to-DAE (Collada) converter which was developed commercially under contract, specifically to reuse OpenSim data to be imported into an environment using a popular 3D rendering engine Unfortunately I'm not free to discuss this publicly, but I'm trying to get the pricing for the use of that application, which is available commercially. I seriously suspect that it was done using the principles that Toni wrote about. Needless to say, I'd be more than willing to pay for a tool that already works instead of spending weeks developing my own :) (specially because I don't have much time left!) In either case, I'm happy to know that a) something exists which works and b) there is solid theoretical proof that this is possible to be developed.
+
+I've also checked Radegast, and was utterly surprised at the improvements it currently has! Last time I checked, it just barely managed to display static images of selected content. Now it has a 3D viewer which comes close to emulate SL in real time, using its own renderer. The result? I could run it on top of a Windows emulator (Parallels) on Mac OS X, which was amazing. While obviously the results are not pixel-perfect, even avatar attachments work rather well, and it even respects the invisiprim &quot;bug&quot; &#8212; those guys at Radegast are really doing some great work. What caught my attention was a function somewhere inside the Radegast for the PrimWorkshop (!) which saves as .OBJ. I haven't been able to get PrimWorkshop to work (I need some more time with Radegast!) but it definitely looks like an interesting alternative.
+
+Again, many thanks for all the tips.
+
+	- Gwyn
+
+
+On 2012/04/10, at 21:02, Toni Alatalo wrote:
+
+&gt;<i> On Tue, 2012-04-10 at 19:07 +0000, Miller, Peter wrote:
+</I>&gt;&gt;<i> There's the freebie Meshtastic and a commercial version on SL Marketplace whose name escapes me but is somewhat more performant. I suspect that neither would function on the scale you require though.
+</I>&gt;<i> 
+</I>&gt;<i> Opensim itself makes meshes from the primdata as a part of the server
+</I>&gt;<i> side operations. To feed the ODE physics engine with the mesh geom for
+</I>&gt;<i> collisions.
+</I>&gt;<i> 
+</I>&gt;<i> This is made using the open source PrimMesher lib (by Dahlia originally
+</I>&gt;<i> AFAIK).
+</I>&gt;<i> 
+</I>&gt;<i> Saving a mesh to OBJ or Collada is quite simple. Would not be an
+</I>&gt;<i> impossible job at all to implement saving a scene as e.g. OBJ or Collada
+</I>&gt;<i> in Opensim (e.g. a console command). Or writing a standalone converter
+</I>&gt;<i> that can read OAR/IAR and generate the mesh geom accordingly. At least
+</I>&gt;<i> for the basics first. When Lasse wrote primdata -&gt; mesh generating code
+</I>&gt;<i> for the realXtend Naali viewer here, it reportedly took one afternoon to
+</I>&gt;<i> port the C# primmesher code to C++ and make it use the OGRE api to
+</I>&gt;<i> create meshes for display. 
+</I></PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010086.html">[Opensim-users] Exporting prims from OpenSim into a popular 3D format - .OBJ, COLLADA, whatever
+</A></li>
+	<LI>Next message: <A HREF="010085.html">[Opensim-users] Is this April Fools joke extended?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10088">[ date ]</a>
+              <a href="thread.html#10088">[ thread ]</a>
+              <a href="subject.html#10088">[ subject ]</a>
+              <a href="author.html#10088">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

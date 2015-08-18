@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] slow GET request for /CAPS
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20slow%20GET%20request%20for%20/CAPS&In-Reply-To=%3CCALPwqfZYuO5WmJFk15bLzraRMTEBMDu-aqWbEyPH3_FTsf8%3Dww%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009357.html">
+   <LINK REL="Next"  HREF="009342.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] slow GET request for /CAPS</H1>
+    <B>Akira Sonoda</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20slow%20GET%20request%20for%20/CAPS&In-Reply-To=%3CCALPwqfZYuO5WmJFk15bLzraRMTEBMDu-aqWbEyPH3_FTsf8%3Dww%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] slow GET request for /CAPS">akira.sonoda.1 at gmail.com
+       </A><BR>
+    <I>Tue Feb 14 07:49:19 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009357.html">[Opensim-users] slow GET request for /CAPS
+</A></li>
+        <LI>Next message: <A HREF="009342.html">[Opensim-users] Firestorm-Release and adding custom OpenSim servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9360">[ date ]</a>
+              <a href="thread.html#9360">[ thread ]</a>
+              <a href="subject.html#9360">[ subject ]</a>
+              <a href="author.html#9360">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Wow cool !!! Thanks a lot !!! There was already some logging in the
+Caps.cs I just removed the comments. Yes it is a bit spammy for the
+INFO level but the usefullness of the information right now justifies
+the spam hopefully. Maybe later i can switch it back to DEBUG or
+remove it...
+
+But the interesting part starts now ... to correlate the logging data
+to some ( hopefully ) useful information.
+
+
+Am 14. Februar 2012 02:56 schrieb Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;:
+&gt;<i> On 11/02/12 15:36, Akira Sonoda wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What i found out so far: The message is written into the log when a
+</I>&gt;&gt;<i> request exceeds a given threshold. Then a request is considered slow.
+</I>&gt;&gt;<i> Close Encounter is a really nice region to do long time studies,
+</I>&gt;&gt;<i> because the workload is almost the same over years now: Not much
+</I>&gt;&gt;<i> building, Not much scripts but each friday evening a big party with up
+</I>&gt;&gt;<i> to 25 avatars simultaneously on that sim. Here is a graph showing the
+</I>&gt;&gt;<i> increase of slow GET CAPS:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://farm8.staticflickr.com/7194/6855984135_5ac407a5ec_b_d.jpg">http://farm8.staticflickr.com/7194/6855984135_5ac407a5ec_b_d.jpg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As you can see we have a huge increase of slow requests since dcember.
+</I>&gt;&gt;<i> Okie what is the reason for this increase as i mentioned the workload
+</I>&gt;&gt;<i> is the same over 2 years. Upgrade to mono 2.10.6:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://farm8.staticflickr.com/7200/6855984237_62ab033d61_b_d.jpg">http://farm8.staticflickr.com/7200/6855984237_62ab033d61_b_d.jpg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Possible... I installed the update on the 26. November 2011. Coud be,
+</I>&gt;&gt;<i> but it's still no evidence.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> During the party i did some samples and found out that some of the
+</I>&gt;&gt;<i> caps producing slow GET requests were:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> GetTexture
+</I>&gt;&gt;<i> FetchInventoryDescendents2
+</I>&gt;&gt;<i> FetchInventory2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hmm FetchInventory2.... it immediately came to my mind that i did
+</I>&gt;&gt;<i> change the OpenSim.ini to:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [ClientStack.LindenCaps]
+</I>&gt;&gt;<i> &#160; &#160; ;; For the long list of capabilities, see OpenSimDefaults.ini
+</I>&gt;&gt;<i> &#160; &#160; ;; Here are the few ones you may want to change. Possible values
+</I>&gt;&gt;<i> &#160; &#160; ;; are:
+</I>&gt;&gt;<i> &#160; &#160; ;; &#160; &quot;&quot; -- empty, capability disabled
+</I>&gt;&gt;<i> &#160; &#160; ;; &#160; &quot;localhost&quot; -- capability enabled and served by the simulator
+</I>&gt;&gt;<i> &#160; &#160; ;; &#160; &quot;&lt;url&gt;&quot; -- capability enabled and served by some other server
+</I>&gt;&gt;<i> &#160; &#160; ;;
+</I>&gt;&gt;<i> &#160; &#160; ; These are enabled by default to localhost. Change if you see fit.
+</I>&gt;&gt;<i> &#160; &#160; Cap_GetTexture = &quot;localhost&quot;
+</I>&gt;&gt;<i> &#160; &#160; Cap_GetMesh = &quot;localhost&quot;
+</I>&gt;&gt;<i> &#160; &#160; ; This is disabled by default. Change if you see fit. Note that
+</I>&gt;&gt;<i> &#160; &#160; ; serving this cap from the simulators may lead to poor performace.
+</I>&gt;&gt;<i> &#160; &#160; Cap_FetchInventoryDescendents2 = &quot;localhost&quot;
+</I>&gt;&gt;<i> &#160; &#160; Cap_FetchInventory2 = &quot;localhost&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> as suggested in one news post in osgrid.org. Reading the comment &quot;Note
+</I>&gt;&gt;<i> that serving this cap .... poor performance&quot;. Well i made the upgrade
+</I>&gt;&gt;<i> to the newest version only one week ago, but seen the increase of slow
+</I>&gt;&gt;<i> GET requests since december 2011 then this change is most likely not
+</I>&gt;&gt;<i> the root cause of this increase.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Other observations i made:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Mostly people using the Singularity viewer were affected by slow GET
+</I>&gt;&gt;<i> ... CAPS requests. The people using Imprudence had none to just a few
+</I>&gt;&gt;<i> slow requests. But still those were just a few samples i took and
+</I>&gt;&gt;<i> certainly not a serious research.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> in order to correlate the data from the logs i'd need the following
+</I>&gt;&gt;<i> information in the logs:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Authentication (or any other) procedure should log the Avatar Name
+</I>&gt;&gt;<i> (ok), Avatar UUID (ok), Viewer Name (nok), IP (nok)
+</I>&gt;&gt;<i> the IP address is used to correlate the slow GET Request with the Avatar.
+</I>&gt;&gt;<i> Then during the registration of the capability with the http server
+</I>&gt;&gt;<i> the Name and the UUID of the capability should be written into the log
+</I>&gt;&gt;<i> (LogLevel INFO)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This would allow me to find out if there's a pattern like:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Slow CAPS (Name)&lt;-&gt; &#160;user,
+</I>&gt;&gt;<i> Slow CAPS (Name)&lt;-&gt; &#160;viewer,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> it is not important when the information is written to the log but it
+</I>&gt;&gt;<i> is important THAT it will be written into the Log. Preferred Log Level
+</I>&gt;&gt;<i> INFO, because i do not run this sim in DEBUG mode.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I added IP address and viewer name to the new viewer connection logging.
+</I>&gt;<i> &#160;This was already available to the simulator but wasn't being logged.
+</I>&gt;<i>
+</I>&gt;<i> However, adding a log message for each capability registration is too
+</I>&gt;<i> spammy. &#160;I think that a better approach would be to output this on a 'slow'
+</I>&gt;<i> message but this will take non-trivial re-engineering. &#160;I accept that
+</I>&gt;<i> without this knowing the other details may not be helpful.
+</I>&gt;<i>
+</I>&gt;<i> These messages will probably only ever be DEBUG or possibly WARN, they are
+</I>&gt;<i> far too spammy to be INFO. &#160;You can selectively output certain log messages
+</I>&gt;<i> at any level by changing the log4net config in OpenSim.exe.config [1].
+</I>&gt;<i>
+</I>&gt;<i> [1] <A HREF="http://opensimulator.org/wiki/Logging">http://opensimulator.org/wiki/Logging</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Am 11. Februar 2012 03:39 schrieb Justin
+</I>&gt;&gt;<i> Clark-Casey&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> There are a very large number of possible causes (busy simulator, poor
+</I>&gt;&gt;&gt;<i> network links, many http requests) not helped by the fact that the debug
+</I>&gt;&gt;&gt;<i> message doesn't say which cap is responsible.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Unfortunately, this means that I can't suggest any particular course of
+</I>&gt;&gt;&gt;<i> action.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> In future, this information should be linked and spat out for diagnostic
+</I>&gt;&gt;&gt;<i> purposes which will help a bit. &#160;In the mean time, it is possible to
+</I>&gt;&gt;&gt;<i> match
+</I>&gt;&gt;&gt;<i> the CAPS url with the information output by the &quot;region console&quot; command,
+</I>&gt;&gt;&gt;<i> though this will generate a flood of info if there's any more than a
+</I>&gt;&gt;&gt;<i> single
+</I>&gt;&gt;&gt;<i> avatar.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009357.html">[Opensim-users] slow GET request for /CAPS
+</A></li>
+	<LI>Next message: <A HREF="009342.html">[Opensim-users] Firestorm-Release and adding custom OpenSim servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9360">[ date ]</a>
+              <a href="thread.html#9360">[ thread ]</a>
+              <a href="subject.html#9360">[ subject ]</a>
+              <a href="author.html#9360">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

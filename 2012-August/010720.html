@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Updated Services Bundle!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Updated%20Services%20Bundle%21&In-Reply-To=%3CCAME74xEovxZ%2BjvvCGvnYS_HMTOQPTYE_Dvoh%2B6iytmQXG62Nkg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010718.html">
+   <LINK REL="Next"  HREF="010721.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Updated Services Bundle!</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Updated%20Services%20Bundle%21&In-Reply-To=%3CCAME74xEovxZ%2BjvvCGvnYS_HMTOQPTYE_Dvoh%2B6iytmQXG62Nkg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Updated Services Bundle!">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Fri Aug 10 20:51:25 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010718.html">[Opensim-users] Updated Services Bundle!
+</A></li>
+        <LI>Next message: <A HREF="010721.html">[Opensim-users] Updated Services Bundle!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10720">[ date ]</a>
+              <a href="thread.html#10720">[ thread ]</a>
+              <a href="subject.html#10720">[ subject ]</a>
+              <a href="author.html#10720">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>SUCCESS.
+
+So here is what needs to be done...
+
+Start downloading <A HREF="http://opensim.odosys.net/files/">http://opensim.odosys.net/files/</A> &#8212; the 0.7.3 version
+works well under 0.7.4RC1
+
+Change register.php and search.php to get Search to work. All that needs to
+be done is:
+
+At the top, comment out:
+
+//mysql_connect ($DB_HOST, $DB_USER, $DB_PASSWORD);
+//mysql_select_db ($DB_NAME);
+
+and use:
+
+mysql_connect ($dbHost, $dbUser, $dbPassword);
+mysql_select_db ($dbName);
+
+That's it.
+
+Now for the modules. These have been shuffled around from repository to
+repository, but, until the developers change their mind again, they're now
+on GitHub. For some reason, they're spread across 3 different projects.
+
+First, get the OpenSimProfile and OpenSimSearch modules from
+<A HREF="https://github.com/PixelTomsen/opensim-dev-external">https://github.com/PixelTomsen/opensim-dev-external</A> Both work quite well!
+Even with the &quot;strange&quot; and not-entirely-compliant profile.php, this seems
+not to bother the viewer and/or the simulator &#8212; they like what they get.
+
+Extra bonus: now profiles work flawlessly across HyperGrid teleports.
+Woo-hoo! And yes, IMs across HyperGrid also work, and so does teleports,
+and so do friendship requests... Whew... a lot of things started working
+again! Hooray!
+
+The OMEconomy module is here:
+<A HREF="https://github.com/PixelTomsen/omeconomy-module">https://github.com/PixelTomsen/omeconomy-module</A>
+This works well with the VirWox Test server, although I thought I'd be
+seeing my OMC$ shown on the viewer, which doesn't really happen. But &#8212; it
+might be a limitation of the &quot;test&quot; server.
+
+The interesting-looking UserLog module is here:
+<A HREF="https://github.com/PixelTomsen/opensim-userlogmodule">https://github.com/PixelTomsen/opensim-userlogmodule</A>
+I couldn't get it to work (the database is in place, but somehow OpenSim is
+not really caring much about it).
+
+Groups, of course, you get from the Flotsam Cache module, all you need is
+to configure it, and making sure that the os_services bundle is properly
+configured. As said, even though the code is weirdly programmed, it
+actually works quite well.
+
+So that's it. I'm a happy girl. Now I don't have merely a working
+environment as before, but one that even has additional functionality! Not
+bad, only one week to get an upgrade.
+
+And now I can go back to the CPU/memory performance issues &#8212;
+<A HREF="http://opensimulator.org/mantis/view.php?id=6031">http://opensimulator.org/mantis/view.php?id=6031</A> &#8212; which has been keeping
+me busy for months. Well, weeks.
+
+Thanks all for the many tips!
+
+    - Gwyn
+
+On 9 August 2012 20:33, R.Gunther &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A>&gt; wrote:
+
+&gt;<i>  Do you use the latest dll's ? otherwise copy the ones out of the osgrid
+</I>&gt;<i> opensim version.
+</I>&gt;<i> search works fine on osgrid and profiles.  dll where updated a while ago.
+</I>&gt;<i>
+</I>&gt;<i> On 2012-08-09 21:25, Fleep Tuque wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hi Gwyn,
+</I>&gt;<i>
+</I>&gt;<i>  I just upgraded some of the staff regions on our university grid to
+</I>&gt;<i> 0.7.4 RC1, and it appears that from the OS Services Bundle (just copying
+</I>&gt;<i> over from previous version) the offline IM and group services are working,
+</I>&gt;<i> but profiles and search is not.  Well, actually I don;'t think I ever got
+</I>&gt;<i> search to work, but profiles definitely did work before but don't seem to
+</I>&gt;<i> now post upgrade.  Seeing no problems with sending offline IMs and creating
+</I>&gt;<i> groups, adding members to groups, using the new group land settings etc.
+</I>&gt;<i>
+</I>&gt;<i>  Not sure if that helps, and the only thing I can think of that I
+</I>&gt;<i> consistently goof up when upgrading is forgetting to move the .dll files
+</I>&gt;<i> from /bin to /bin when I upgrade.  I finally remembered to add that to my
+</I>&gt;<i> documentation today, what little notes I made are at:
+</I>&gt;<i> <A HREF="http://ucopensim.wikispaces.com/Opensim+0.7.4+RC1">http://ucopensim.wikispaces.com/Opensim+0.7.4+RC1</A>
+</I>&gt;<i>
+</I>&gt;<i>  Would love to hear if anyone else gets profiles or search working with
+</I>&gt;<i> 0.7.4 RC1, I'm never sure what's user error and what isn't with those two
+</I>&gt;<i> services.
+</I>&gt;<i>
+</I>&gt;<i>  Sincerely,
+</I>&gt;<i>
+</I>&gt;<i>  - Fleep
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;<i> University of Cincinnati
+</I>&gt;<i> 406A Zimmer Hall
+</I>&gt;<i> 315 College Drive
+</I>&gt;<i> PO BOX 210088
+</I>&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;<i> (513) 556-3018
+</I>&gt;<i>
+</I>&gt;<i>  <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Aug 8, 2012 at 9:05 AM, Gwyneth Llewelyn &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gwyneth.llewelyn at gwynethllewelyn.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Sorry to bump this thread. I wonder if the OS Services Bundle for OpenSim
+</I>&gt;&gt;<i> works with 0.7.4 RC1. I've definitely managed to compile it in, and OpenSim
+</I>&gt;&gt;<i> definitely lists the modules as having been loaded, but...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  ... somehow, OpenSim 0.7.4 RC1 is ignoring any requests made through
+</I>&gt;&gt;<i> these modules. I don't get any errors, either. It's simply as if OpenSim
+</I>&gt;&gt;<i> thinks, &quot;ok, nice, I have now a few new modules and some nice URLs to
+</I>&gt;&gt;<i> connect to, but I'm simply ignoring everything and use whatever I already
+</I>&gt;&gt;<i> had (which won't work anyway, but who cares)&quot; :-(
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>      - Gwyn
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 4 May 2012 23:00, core &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">core at odosys.net</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> For those still interested, the updated OS Services Bundle for OpenSim
+</I>&gt;&gt;&gt;<i> 0.7.3. is in the new (and sparsely populated) file repository.  Sorry,
+</I>&gt;&gt;&gt;<i> it's a bit late :/
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="http://public.odosys.net/opensim/files/">http://public.odosys.net/opensim/files/</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> - core
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   --
+</I>&gt;&gt;<i> &quot;I'm not building a game. I'm building a new country.&quot;
+</I>&gt;&gt;<i>   -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+&quot;I'm not building a game. I'm building a new country.&quot;
+  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120810/f573a522/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120810/f573a522/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010718.html">[Opensim-users] Updated Services Bundle!
+</A></li>
+	<LI>Next message: <A HREF="010721.html">[Opensim-users] Updated Services Bundle!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10720">[ date ]</a>
+              <a href="thread.html#10720">[ thread ]</a>
+              <a href="subject.html#10720">[ subject ]</a>
+              <a href="author.html#10720">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

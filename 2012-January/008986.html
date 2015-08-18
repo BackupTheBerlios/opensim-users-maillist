@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Crash on collision
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3C4F0768FE.8040309%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008985.html">
+   <LINK REL="Next"  HREF="008989.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Crash on collision</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3C4F0768FE.8040309%40googlemail.com%3E"
+       TITLE="[Opensim-users] Crash on collision">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Jan  6 22:34:54 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008985.html">[Opensim-users] Crash on collision
+</A></li>
+        <LI>Next message: <A HREF="008989.html">[Opensim-users] Crash on collision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8986">[ date ]</a>
+              <a href="thread.html#8986">[ thread ]</a>
+              <a href="subject.html#8986">[ subject ]</a>
+              <a href="author.html#8986">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok, so at least it's not completely insane.  If physical objects aren't important to you then I suggest running with 
+this setting for now until/if git master physics libraries are updated or some other change is made.
+
+Or you may want to see how many &quot;Active objects&quot; are in the script stats (active objects are physical objects) and try 
+removing them if they shouldn't be there.  Unfortunately, you might need to hunt for them.
+
+On 06/01/12 21:18, Klaus-E. Klingner wrote:
+&gt;<i> Hallo Justin,
+</I>&gt;<i>
+</I>&gt;<i> this seems to be working. Without problems.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Klaus
+</I>&gt;<i>
+</I>&gt;<i> On 05.01.2012 00:07, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> What happens if you set physical_prim = false in [Startup] with no avatars? As this prevents prims temporarily being
+</I>&gt;&gt;<i> physical then there will be no colliding active at all and nothing should crash. If it still does then something more
+</I>&gt;&gt;<i> bizarre is going on.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 04/01/12 23:04, Klaus-E. Klingner wrote:
+</I>&gt;&gt;&gt;<i> Done. Without success :( Same result. This time even without an avatar online. It crashed shortly after the world
+</I>&gt;&gt;&gt;<i> started.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Regards
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Klaus
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Von meinem iPad gesendet
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Am 04.01.2012 um 23:20 schrieb &quot;M.E. Verhagen&quot;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">marceled9 at gmail.com</A>&gt;:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I also changed the ulimit settings in the limits.conf file in /etc/security/limits.conf
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Changing the ulimit with the ulimit -s 212144 does not seem to be persistent, it gets setted back.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The values I entered are:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> * hard stack 524288
+</I>&gt;&gt;&gt;&gt;<i> * soft stack 524288
+</I>&gt;&gt;&gt;&gt;<i> * soft nofile 2048
+</I>&gt;&gt;&gt;&gt;<i> * hard nofile 2048
+</I>&gt;&gt;&gt;&gt;<i> * soft memlock 256
+</I>&gt;&gt;&gt;&gt;<i> * hard memlock 256
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The settings get effective after a reboot.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> As a bonus OpenSim uses a thirth less memory !
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> You can try experimenting with these values, you should be carefull though these settings (just like the sysctl -a)
+</I>&gt;&gt;&gt;&gt;<i> can reduce crashes, increase system speed and reduce memory usage, but false settings can also also cause system
+</I>&gt;&gt;&gt;&gt;<i> unresponsiveness and system crashes.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008985.html">[Opensim-users] Crash on collision
+</A></li>
+	<LI>Next message: <A HREF="008989.html">[Opensim-users] Crash on collision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8986">[ date ]</a>
+              <a href="thread.html#8986">[ thread ]</a>
+              <a href="subject.html#8986">[ subject ]</a>
+              <a href="author.html#8986">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

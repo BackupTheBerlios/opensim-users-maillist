@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sit Target difficulties
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sit%20Target%20difficulties&In-Reply-To=%3CCAHi41xJXCsAKi-sGy2EsMLh-EQB0fZz%3DxhVnbBbr5jdeT9uh6w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010409.html">
+   <LINK REL="Next"  HREF="010413.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sit Target difficulties</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sit%20Target%20difficulties&In-Reply-To=%3CCAHi41xJXCsAKi-sGy2EsMLh-EQB0fZz%3DxhVnbBbr5jdeT9uh6w%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Sit Target difficulties">r.ramloll at gmail.com
+       </A><BR>
+    <I>Fri May 25 17:04:52 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010409.html">[Opensim-users] Sit Target difficulties
+</A></li>
+        <LI>Next message: <A HREF="010413.html">[Opensim-users] drawing app on a prim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10410">[ date ]</a>
+              <a href="thread.html#10410">[ thread ]</a>
+              <a href="subject.html#10410">[ subject ]</a>
+              <a href="author.html#10410">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks James, works perfectly. :) Hugs.
+
+On Fri, May 25, 2012 at 10:42 AM, James Hughes &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jamesh at bluewallgroup.com</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> Here are a couple of scripts to help you with the sit position...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Place this script in the object you want to set the sit position for...
+</I>&gt;<i>
+</I>&gt;<i> // Sit target system by Lex Neva. Please distribute willy-nilly.
+</I>&gt;<i>
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>    touch_start(integer total_number)
+</I>&gt;<i>    {
+</I>&gt;<i>        llSensor(&quot;Sit Target Helper&quot;,
+</I>&gt;<i>                NULL_KEY, ACTIVE|PASSIVE, 96, PI);
+</I>&gt;<i>        llSay(0, &quot;Searching for Sit Target Helper...&quot;);
+</I>&gt;<i>    }
+</I>&gt;<i>
+</I>&gt;<i>    no_sensor()
+</I>&gt;<i>    {
+</I>&gt;<i>        llSay(0, &quot;Sit Target Helper not found. No sit target set.&quot;);
+</I>&gt;<i>        llSitTarget(ZERO_VECTOR, ZERO_ROTATION);
+</I>&gt;<i>    }
+</I>&gt;<i>
+</I>&gt;<i>    sensor(integer num)
+</I>&gt;<i>    {
+</I>&gt;<i>        if (num &gt; 1)
+</I>&gt;<i>        {
+</I>&gt;<i>            llSay(0, &quot;Multiple Sit Target Helpers found. Using closest
+</I>&gt;<i> helper.&quot;);
+</I>&gt;<i>        } else {
+</I>&gt;<i>            llSay(0, &quot;Sit Target Helper found. Setting sit target.&quot;);
+</I>&gt;<i>        }
+</I>&gt;<i>
+</I>&gt;<i>        vector helper_pos = llDetectedPos(0);
+</I>&gt;<i>        rotation helper_rot = llDetectedRot(0);
+</I>&gt;<i>
+</I>&gt;<i>        vector my_pos = llGetPos();
+</I>&gt;<i>        rotation my_rot = llGetRot();
+</I>&gt;<i>
+</I>&gt;<i>        // calculate where the avatar actually is
+</I>&gt;<i>        vector avatar_pos = helper_pos + &lt;0,0,1&gt; * helper_rot;
+</I>&gt;<i>        // due to helper's sit target
+</I>&gt;<i>        avatar_pos = avatar_pos - &lt;0,0,0.186&gt; + &lt;0,0,0.4&gt; * helper_rot;
+</I>&gt;<i>     // correct for a bug in llSitTarget(), for helper sit target
+</I>&gt;<i>
+</I>&gt;<i>        vector target_pos = (avatar_pos - my_pos) / my_rot;
+</I>&gt;<i>        target_pos = target_pos + &lt;0,0,0.186&gt;/my_rot - &lt;0,0,0.4&gt;; //
+</I>&gt;<i> correct for the bug again, this time in my sit target
+</I>&gt;<i>        rotation target_rot = helper_rot / my_rot;
+</I>&gt;<i>
+</I>&gt;<i>        llSitTarget(target_pos, target_rot);
+</I>&gt;<i>        llSay(0, &quot;llSitTarget(&quot; + (string)target_pos +
+</I>&gt;<i>                    &quot;, &quot; + (string)target_rot + &quot;);&quot;);
+</I>&gt;<i>    }
+</I>&gt;<i>
+</I>&gt;<i>    changed(integer change)
+</I>&gt;<i>    {
+</I>&gt;<i>        if (llAvatarOnSitTarget() != NULL_KEY)
+</I>&gt;<i>            llRequestPermissions(**llAvatarOnSitTarget(),
+</I>&gt;<i>                PERMISSION_TRIGGER_ANIMATION);
+</I>&gt;<i>    }
+</I>&gt;<i>
+</I>&gt;<i>    run_time_permissions(integer perm) {
+</I>&gt;<i>        string anim = llGetInventoryName(INVENTORY_**ANIMATION, 0);
+</I>&gt;<i>        if (anim != &quot;&quot;)
+</I>&gt;<i>        {
+</I>&gt;<i>            llStopAnimation(&quot;sit&quot;);
+</I>&gt;<i>            llStopAnimation(&quot;sit_generic&quot;)**;
+</I>&gt;<i>            llStopAnimation(&quot;sit_female&quot;);
+</I>&gt;<i>            llStartAnimation(anim);
+</I>&gt;<i>        }
+</I>&gt;<i>    }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Make a &quot;Sit Target Helper&quot;...
+</I>&gt;<i>
+</I>&gt;<i> Create a sphere and shrink it to about 0.25 and set the name of the object
+</I>&gt;<i> to &quot;Sit Target Helper&quot;. Place this script inside it. And if you will be
+</I>&gt;<i> using an animation in your object, then place it inside this &quot;Sit Target
+</I>&gt;<i> Helper&quot; too. It will play the animation while you make the adjustment.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Make the sit position adjustment...
+</I>&gt;<i>
+</I>&gt;<i> You will sit the avatar on this object and move it around until you are at
+</I>&gt;<i> the position you want. When you are satisfied with the adjustment, touch
+</I>&gt;<i> the object that you placed the above script in. It will print the
+</I>&gt;<i> llSitTarget command in chat with the right parameters for your adjustment.
+</I>&gt;<i> Use that llSitTarget in your object and remove the helper script.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>    state_entry()
+</I>&gt;<i>    {
+</I>&gt;<i>        llSitTarget(&lt;0,0,1&gt;, ZERO_ROTATION);
+</I>&gt;<i>    }
+</I>&gt;<i>
+</I>&gt;<i>    changed(integer change)
+</I>&gt;<i>    {
+</I>&gt;<i>        if (llAvatarOnSitTarget() != NULL_KEY)
+</I>&gt;<i>            llRequestPermissions(**llAvatarOnSitTarget(),
+</I>&gt;<i>                                PERMISSION_TRIGGER_ANIMATION);
+</I>&gt;<i>    }
+</I>&gt;<i>
+</I>&gt;<i>    run_time_permissions(integer perm)
+</I>&gt;<i>    {
+</I>&gt;<i>        string anim = llGetInventoryName(INVENTORY_**ANIMATION, 0);
+</I>&gt;<i>        if (anim != &quot;&quot;)
+</I>&gt;<i>        {
+</I>&gt;<i>            llStopAnimation(&quot;sit&quot;);
+</I>&gt;<i>            llStopAnimation(&quot;sit_generic&quot;)**;
+</I>&gt;<i>            llStopAnimation(&quot;sit_female&quot;);
+</I>&gt;<i>            llStartAnimation(anim);
+</I>&gt;<i>        }
+</I>&gt;<i>    }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hope that helps,
+</I>&gt;<i>
+</I>&gt;<i> BlueWall
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 05/25/2012 06:51 AM, Dr Ramesh Ramloll wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt; I did not feel confident about stable solutions regarding how to get an
+</I>&gt;<i> &gt; avie to sit properly on a mesh object after reading
+</I>&gt;<i> &gt; <A HREF="http://opensim-dev.2196679.n2.**nabble.com/Sit-position-**">http://opensim-dev.2196679.n2.**nabble.com/Sit-position-**</A>
+</I>&gt;<i> changes-in-OpenSimulator-**b6df9e9-Sat-5th-Nov-2011-**td7056247.html&lt;<A HREF="http://opensim-dev.2196679.n2.nabble.com/Sit-position-changes-in-OpenSimulator-b6df9e9-Sat-5th-Nov-2011-td7056247.html">http://opensim-dev.2196679.n2.nabble.com/Sit-position-changes-in-OpenSimulator-b6df9e9-Sat-5th-Nov-2011-td7056247.html</A>&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; dated nov 5 2011. I would like to hear from users who are sitting
+</I>&gt;<i> &gt; perfectly fine in their opensim worlds ... how did you do it?
+</I>&gt;<i> &gt; It's a little funny, I have transferred fairly complicated stuff into
+</I>&gt;<i> &gt; opensim that work with some relief, and now I hit the sit target problem,
+</I>&gt;<i> &gt; and I feel a little frustrated.
+</I>&gt;<i> &gt; Any help deeply appreciated.
+</I>&gt;<i> &gt; Regards
+</I>&gt;<i> &gt; Ramesh
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i> &gt; *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate
+</I>&gt;<i> &gt; /Research Associate Professor/, Idaho State University, Pocatello, ID
+</I>&gt;<i> &gt; 83209 Tel: 208-240-0040
+</I>&gt;<i> &gt; Blog &lt;<A HREF="http://deepsemaphore.**posterous.com/&lt;http://deepsemaphore.posterous.com/">http://deepsemaphore.**posterous.com/&lt;http://deepsemaphore.posterous.com/</A>&gt;&gt;,
+</I>&gt;<i> LinkedIn
+</I>&gt;<i> &gt; &lt;<A HREF="http://www.linkedin.com/in/**rameshramloll&lt;http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/**rameshramloll&lt;http://www.linkedin.com/in/rameshramloll</A>&gt;&gt;,
+</I>&gt;<i> DeepSemaphore LLC
+</I>&gt;<i> &gt; &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;**, Google+ profile
+</I>&gt;<i> &gt; &lt;<A HREF="https://plus.google.com/**103652369558830540272/about&lt;https://plus.google.com/103652369558830540272/about">https://plus.google.com/**103652369558830540272/about&lt;https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ______________________________**_________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+*Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+208-240-0040
+Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;,
+LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+, DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+
+profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120525/07cbfda7/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120525/07cbfda7/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010409.html">[Opensim-users] Sit Target difficulties
+</A></li>
+	<LI>Next message: <A HREF="010413.html">[Opensim-users] drawing app on a prim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10410">[ date ]</a>
+              <a href="thread.html#10410">[ thread ]</a>
+              <a href="subject.html#10410">[ subject ]</a>
+              <a href="author.html#10410">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Odd problem with cross server's
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Odd%20problem%20with%20cross%20server%27s&In-Reply-To=%3C704c3e201002162107m17d681c3kb12439cff4fe8cb6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003853.html">
+   <LINK REL="Next"  HREF="003855.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Odd problem with cross server's</H1>
+    <B>John Mieske</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Odd%20problem%20with%20cross%20server%27s&In-Reply-To=%3C704c3e201002162107m17d681c3kb12439cff4fe8cb6%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Odd problem with cross server's">johnmieske at gmail.com
+       </A><BR>
+    <I>Wed Feb 17 06:07:18 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003853.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+        <LI>Next message: <A HREF="003855.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3854">[ date ]</a>
+              <a href="thread.html#3854">[ thread ]</a>
+              <a href="subject.html#3854">[ subject ]</a>
+              <a href="author.html#3854">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>yea no problem.. remember that xmlrpc is the one file that allows the access
+to store groups and offline messages.. its VERY needed and for everything to
+run smoothly you must have all regions talk to it..
+
+John
+
+On Tue, Feb 16, 2010 at 8:14 PM, Master_Mirage &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mirage123 at verizon.net</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> Ok, a bit more info. Each server hosts several regions each and all servers
+</I>&gt;<i> are LAN connected and part of the same domain. We do not use hypergrid or
+</I>&gt;<i> allow regions tobe attached to our common services.
+</I>&gt;<i> Each server uses the same services and all of the addon services work fine
+</I>&gt;<i> on each.
+</I>&gt;<i> XMLRPC services are uncommented for all the servers and have been the whole
+</I>&gt;<i> time.
+</I>&gt;<i> InterRegion everything is peachy, inter server isant.
+</I>&gt;<i> But now im woundeing if XMLRPC Proxy isant aware somehow that the other
+</I>&gt;<i> servers exist, mabey its seeing just one and not all of them?
+</I>&gt;<i> Anyway as all the services work fine on each server and each region on a
+</I>&gt;<i> given server too, kinda takes some of the what ifs outta it. Thay all point
+</I>&gt;<i> to the same front end and php's. If thay dident then it would show up when
+</I>&gt;<i> that server is using them.
+</I>&gt;<i> There is the posabulty of XMLRPC Proxy doing something naughty too. Ill
+</I>&gt;<i> have
+</I>&gt;<i> a closer look at exacly what its doing or not doing, tnx for the feedback
+</I>&gt;<i> =)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> John Mieske wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I ran into this with a Grid that didn't have the proper OpenSim ini
+</I>&gt;<i> &gt; configured with the XMLRPC.PHP file. The database stores the info your
+</I>&gt;<i> &gt; talking about. The XMLRPC Module may not be firing correctly on the other
+</I>&gt;<i> &gt; regions. The problem we had was to double check the bottom of the ini
+</I>&gt;<i> &gt; files
+</I>&gt;<i> &gt; to make sure the xmlrpc modules are uncommented and then to make sure
+</I>&gt;<i> that
+</I>&gt;<i> &gt; the path in the messaging section is correctly set to point to the
+</I>&gt;<i> &gt; offline.php file. All of this uses the Database.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Remember, ALL the regions who use the ini needs to point to the MAIN
+</I>&gt;<i> &gt; Region's Server. HyperGrid technology can cause an issue as well.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Also inside the config.php file for the Groups has one item that if
+</I>&gt;<i> &gt; commented out will keep everyone out that is not going through your
+</I>&gt;<i> domain
+</I>&gt;<i> &gt; :
+</I>&gt;<i> &gt; // Specify the following to hard-code / lockdown the User Service used to
+</I>&gt;<i> &gt; authenticate
+</I>&gt;<i> &gt; // user sessions.  Example: <A HREF="http://osgrid.org:8002">http://osgrid.org:8002</A>
+</I>&gt;<i> &gt; // Note:  This causes the User Service specified with requests to be
+</I>&gt;<i> &gt; ignored, and
+</I>&gt;<i> &gt; // prevents the service from being used cross-grid or by hypergridded
+</I>&gt;<i> &gt; users.
+</I>&gt;<i> &gt; $overrideAgentUserService = '<A HREF="http://yourserver:8002">http://yourserver:8002</A>';
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Make sure all who have tied in a region has used the SAME exact server
+</I>&gt;<i> and
+</I>&gt;<i> &gt; PHP. If you host it, then they need to USE yours. The only thing that you
+</I>&gt;<i> &gt; do
+</I>&gt;<i> &gt; not share is your MySQL Assets. But all other settings go through the
+</I>&gt;<i> main
+</I>&gt;<i> &gt; Region Grid Server. ( OpenSim.xxx.exe or whatever )
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I repeat, what your INI files have for all settings the others have as
+</I>&gt;<i> &gt; well
+</I>&gt;<i> &gt; ACCEPT the Database Strings. Each region should have their own MySQL
+</I>&gt;<i> &gt; setup.
+</I>&gt;<i> &gt; Hope this helps.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; John
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; John Mieske / Winword Exonar
+</I>&gt;<i> &gt; <A HREF="http://johnmieske.org">http://johnmieske.org</A>
+</I>&gt;<i> &gt; Space Grid Station
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context:
+</I>&gt;<i> <A HREF="http://n2.nabble.com/Odd-problem-with-cross-server-s-tp4583453p4583693.html">http://n2.nabble.com/Odd-problem-with-cross-server-s-tp4583453p4583693.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+John Mieske / Winword Exonar
+<A HREF="http://johnmieske.org">http://johnmieske.org</A>
+Space Grid Station
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100217/d27b30cc/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100217/d27b30cc/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003853.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+	<LI>Next message: <A HREF="003855.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3854">[ date ]</a>
+              <a href="thread.html#3854">[ thread ]</a>
+              <a href="subject.html#3854">[ subject ]</a>
+              <a href="author.html#3854">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

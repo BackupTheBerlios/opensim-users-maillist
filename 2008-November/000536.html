@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [Opensim-dev] INFO: Running OpenSim on	NetBSD-Current
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20INFO%3A%20Running%20OpenSim%20on%0A%09NetBSD-Current&In-Reply-To=%3C04E397D2-E6A4-40FC-9961-337750F45EA9%40klintcentral.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000535.html">
+   <LINK REL="Next"  HREF="000537.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [Opensim-dev] INFO: Running OpenSim on	NetBSD-Current</H1>
+    <B>Ursula MATOVA</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20INFO%3A%20Running%20OpenSim%20on%0A%09NetBSD-Current&In-Reply-To=%3C04E397D2-E6A4-40FC-9961-337750F45EA9%40klintcentral.net%3E"
+       TITLE="[Opensim-users] [Opensim-dev] INFO: Running OpenSim on	NetBSD-Current">ursula.matova at klintcentral.net
+       </A><BR>
+    <I>Sun Nov  2 14:02:49 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000535.html">[Opensim-users] INFO: Running OpenSim on NetBSD-Current
+</A></li>
+        <LI>Next message: <A HREF="000537.html">[Opensim-users] [Opensim-dev] INFO: Running OpenSim on	NetBSD-Current
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#536">[ date ]</a>
+              <a href="thread.html#536">[ thread ]</a>
+              <a href="subject.html#536">[ subject ]</a>
+              <a href="author.html#536">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Just for information :
+
+about libopenjpeg, I found informations here : <A HREF="http://jira.openmv.org/browse/LIBOMV-383">http://jira.openmv.org/browse/LIBOMV-383</A>
+
+And I cannot remember if I recompile the libopenjpeg-libsl-2.1.2.0 too  
+( I have made too many tests ) ...
+
+In case this one is needed :
+
+svn co <A HREF="http://opensimulator.org/svn/opensim-libs/trunk">http://opensimulator.org/svn/opensim-libs/trunk</A> opensim-libs
+cd opensim-libs/unmanaged/openjpeg-libsl
+gmake
+
+then copy the libopenjpeg-libsl-2.1.2.0.so to your opendim bin  
+directory.
+
+Regards.
+
+PS: use GMAKE instead of MAKE for all your compilations of  
+libopenjpeg ... it's mandatory.
+
+Le 2 nov. 08 &#224; 13:58, Ursula MATOVA a &#233;crit :
+
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> Just a quick post to share one of my latest experience with OpenSim :)
+</I>&gt;<i>
+</I>&gt;<i> I'm proud to announce that I'm able to run OpenSim ( SVN.7058 ) on
+</I>&gt;<i> NetBSD-Current ( 4.99.73 with a 5.99.01 optimized kernel ).
+</I>&gt;<i>
+</I>&gt;<i> Here are the main steps I have performed :
+</I>&gt;<i>
+</I>&gt;<i> 1/ Update PKGSRC with CVS,
+</I>&gt;<i> 2/ Install the following packages with the &quot;make package&quot; command :
+</I>&gt;<i>
+</I>&gt;<i> devel/automake          --&gt; AutoMake 1.10.1
+</I>&gt;<i> devel/subversion
+</I>&gt;<i> pkgsrc/databases/sqlite3
+</I>&gt;<i> pkgsrc/lang/mono        --&gt; MONO 2.0.1
+</I>&gt;<i> pkgsrc/graphics/libgdiplus
+</I>&gt;<i>
+</I>&gt;<i> 3/ You need to rebuild libode.so and libopenjpeg-dotnet-2.1.3.0.so :
+</I>&gt;<i>
+</I>&gt;<i> 3a/ LIBODE :
+</I>&gt;<i> svn co <A HREF="http://opensimulator.org/svn/opensim-libs/trunk">http://opensimulator.org/svn/opensim-libs/trunk</A> opensim-libs
+</I>&gt;<i> cd opensim-libs/unmanaged/OpenDynamicsEngine/
+</I>&gt;<i> ./configure --with-trimesh=gimpact  --enable-shared --prefix=/usr/pkg
+</I>&gt;<i> make
+</I>&gt;<i> make install
+</I>&gt;<i>
+</I>&gt;<i> Then copy /usr/pkg/lib/libode.so.1.0 to your OpenSim bin directory :
+</I>&gt;<i>
+</I>&gt;<i> cd &lt;Your OpenSim bin directory&gt;
+</I>&gt;<i> cp -p /usr/pkg/lib/libode.so.1.0 libode.so
+</I>&gt;<i>
+</I>&gt;<i> 3b/ LIBOPENJPEG
+</I>&gt;<i> svn co <A HREF="http://openmv.org/svn/libsl/libopenmetaverse/trunk/">http://openmv.org/svn/libsl/libopenmetaverse/trunk/</A> openmv
+</I>&gt;<i> cd openmv/openjpeg-dotnet
+</I>&gt;<i>
+</I>&gt;<i> make the following changes to libopenjpeg/opj_malloc.h file :
+</I>&gt;<i>
+</I>&gt;<i> $ diff -u opj_malloc.h.orig opj_malloc.h
+</I>&gt;<i> --- opj_malloc.h.orig 2008-09-14 09:10:31.000000000 +0000
+</I>&gt;<i> +++ opj_malloc.h 2008-09-14 09:10:40.000000000 +0000
+</I>&gt;<i> @@ -67,7 +67,7 @@
+</I>&gt;<i>   #include &lt;mm_malloc.h&gt;
+</I>&gt;<i>   #define HAVE_MM_MALLOC
+</I>&gt;<i>   #else /* MSVC, Intel C++ */
+</I>&gt;<i> - #include &lt;malloc.h&gt;
+</I>&gt;<i> + #include &lt;stdlib.h&gt;
+</I>&gt;<i>   #ifdef _mm_malloc
+</I>&gt;<i>   #define HAVE_MM_MALLOC
+</I>&gt;<i>   #endif
+</I>&gt;<i> @@ -78,12 +78,13 @@
+</I>&gt;<i>   /* Linux x86_64 and OSX always align allocations to 16 bytes */
+</I>&gt;<i>   #elif !defined(__amd64__) &amp;&amp; !defined(__APPLE__)
+</I>&gt;<i>   #define HAVE_MEMALIGN
+</I>&gt;<i> - #include &lt;malloc.h&gt;
+</I>&gt;<i> + #include &lt;stdlib.h&gt;
+</I>&gt;<i>   #endif
+</I>&gt;<i>  #endif
+</I>&gt;<i>
+</I>&gt;<i>  #define opj_aligned_malloc(size) malloc(size)
+</I>&gt;<i>  #define opj_aligned_free(m) free(m)
+</I>&gt;<i> +#define memalign(A,B) malloc(B)
+</I>&gt;<i>
+</I>&gt;<i>  #ifdef HAVE_MM_MALLOC
+</I>&gt;<i>   #undef opj_aligned_malloc
+</I>&gt;<i>
+</I>&gt;<i> Then run gmake and copy the new libopenjpeg-dotnet-2.1.3.0.so to your
+</I>&gt;<i> OpenSim bin directory ...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> That allow me to run OpenSim on my NetBSD OS ...
+</I>&gt;<i>
+</I>&gt;<i> ==&gt; BUT I'm not yet able to compile OpenSim with Nant under NetBSD ...
+</I>&gt;<i> So I did that step on my linux box .
+</I>&gt;<i>
+</I>&gt;<i> Another strange thing is that the &quot;OpenSim Library / Texture Library&quot;
+</I>&gt;<i> folder appears empty ... Need to check that point, maybe it's due to
+</I>&gt;<i> the fact I haven't cleared my client cache :)
+</I>&gt;<i>
+</I>&gt;<i> Hope this could help somebody
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Ursula Matova
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-dev mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000535.html">[Opensim-users] INFO: Running OpenSim on NetBSD-Current
+</A></li>
+	<LI>Next message: <A HREF="000537.html">[Opensim-users] [Opensim-dev] INFO: Running OpenSim on	NetBSD-Current
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#536">[ date ]</a>
+              <a href="thread.html#536">[ thread ]</a>
+              <a href="subject.html#536">[ subject ]</a>
+              <a href="author.html#536">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

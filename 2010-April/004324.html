@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] opensim on windows 7 64 bit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20opensim%20on%20windows%207%2064%20bit&In-Reply-To=%3CSNT103-DS1143A87903A190BFEAC770E10F0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004310.html">
+   <LINK REL="Next"  HREF="004305.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] opensim on windows 7 64 bit</H1>
+    <B>j_jamesk</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20opensim%20on%20windows%207%2064%20bit&In-Reply-To=%3CSNT103-DS1143A87903A190BFEAC770E10F0%40phx.gbl%3E"
+       TITLE="[Opensim-users] opensim on windows 7 64 bit">j_jamesk at hotmail.com
+       </A><BR>
+    <I>Thu Apr 15 23:57:22 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004310.html">[Opensim-users] opensim on windows 7 64 bit
+</A></li>
+        <LI>Next message: <A HREF="004305.html">[Opensim-users] .exe startup parameter -gridmode=true and/or Opensim.ini gridmode=true
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4324">[ date ]</a>
+              <a href="thread.html#4324">[ thread ]</a>
+              <a href="subject.html#4324">[ subject ]</a>
+              <a href="author.html#4324">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Okay well I've done what you suggested, it runs for the first time setting
+up the region with name, ip, master avatar, then when you shutdown using
+&quot;shutdown&quot; then start it back up again its getting past &quot; Generating
+Maptile&quot; then dies with the following:
+
+22:50:08 - [MAPTILE]: Generating Maptile Step 1: Terrain
+22:50:08 - [MAPTILE]: Generating Maptile Step 1: Done in 46 ms
+22:50:08 - [MAPTILE]: Generating Maptile Step 2: Object Volume Profile
+22:50:08 - [MAPTILE]: Generating Maptile Step 2: Done in 0 ms
+22:50:08 - [MAPTILE]: STORING MAPTILE IMAGE
+OpenSim threw an exception:
+System.Exception: No IAssetService available.
+   at OpenSim.Region.Framework.Scenes.Scene.get_AssetService()
+   at
+OpenSim.Region.CoreModules.World.WorldMap.WorldMapModule.LazySaveGenerated
+Maptile(Byte[] data, Boolean temporary)
+   at OpenSim.Region.Framework.Scenes.Scene.CreateTerrainTexture(Boolean
+tempora
+ry)
+   at OpenSim.OpenSimBase.CreateRegion(RegionInfo regionInfo, Boolean
+portadd_fl
+ag, Boolean do_post_init, IScene&amp; mscene)
+   at OpenSim.OpenSimBase.CreateRegion(RegionInfo regionInfo, Boolean
+portadd_fl
+ag, IScene&amp; scene)
+   at
+OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise()
+   at OpenSim.OpenSimBase.StartupSpecific()
+   at OpenSim.OpenSim.StartupSpecific()
+   at OpenSim.Framework.Servers.BaseOpenSimServer.Startup()
+   at OpenSim.Application.Main(String[] args)
+   at OpenSim._32BitLaunch.Program.Main(String[] args) in
+C:\OpenSim\trunk6\Open
+Sim\Tools\OpenSim.32BitLaunch\Program.cs:line 47
+
+Application will now terminate!
+
+Kind Regards
+
+James
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+Sent: 14 April 2010 18:07
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] opensim on windows 7 64 bit
+
+FYI, I just ran OpenSim on my new 64-bit laptop and I had no problems 
+whatsoever with the 32bit launcher.
+
+Just remember to copy OpenSim.ini.example to OpenSim.ini AND 
+config-include/StandaloneCommon.ini.example to 
+config-include/StandaloneCommon.ini
+
+Then it runs out of the box.
+
+j_jamesk wrote:
+&gt;<i> Ops I found the answer
+</I>&gt;<i>
+</I><A HREF="http://www.adamfrisby.com/blog/2008/08/running-opensim-under-a-64-bit-enviro">http://www.adamfrisby.com/blog/2008/08/running-opensim-under-a-64-bit-enviro</A>
+&gt;<i> nment/
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &quot; SQLite - Whaaa? SQLite is broken on 64-bit environments? Afraid it's
+</I>true.
+&gt;<i> Unfortunately on Windows systems the only solution is to recompile the
+</I>&gt;<i> entire of Mono (including Mono.SQLite.dll) yourself under a 64-bit flag.&quot;
+</I>&gt;<i> 
+</I>&gt;<i> Sorry for the post
+</I>&gt;<i> 
+</I>&gt;<i> James
+</I>&gt;<i> 
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of j_jamesk
+</I>&gt;<i> Sent: 13 April 2010 19:38
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: [Opensim-users] opensim on windows 7 64 bit
+</I>&gt;<i> 
+</I>&gt;<i> Hello Everyone
+</I>&gt;<i> 
+</I>&gt;<i> Has anyone tried doing a clean install of opensim onto a windows 7 64 bit,
+</I>I
+&gt;<i> downloaded a fresh copy of opensim-0.6.8, did not touch any of the
+</I>&gt;<i> configuration and launched &quot;opensim.exe&quot; which died/terminated, them tried
+</I>&gt;<i> running the &quot;OpenSim.32BitLaunch&quot; but died/terminated again.
+</I>&gt;<i> 
+</I>&gt;<i> Now I don't fully understand all of the error messages but it seems that
+</I>&gt;<i> opensim is having an issue with SQLite being the datastore, does anyone
+</I>know
+&gt;<i> of any issues with SQLite not working on windows 7 or 64 bit pc's?
+</I>&gt;<i> 
+</I>&gt;<i> Regards
+</I>&gt;<i> 
+</I>&gt;<i> James
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 2010-04-13 19:24:51,972 INFO  - OpenSim.OpenSim [OPENSIM MAIN]: Running in
+</I>&gt;<i> sandbox mode
+</I>&gt;<i> 2010-04-13 19:24:52,003 INFO  - OpenSim.Region.Framework.StorageManager
+</I>&gt;<i> [DATASTORE]: Attempting to load OpenSim.Data.SQLite.dll
+</I>&gt;<i> 2010-04-13 19:24:52,284 INFO  - OpenSim.Data.SQLite.SQLiteEstateStore
+</I>&gt;<i> [ESTATE DB]: Sqlite - connecting: URI=file:OpenSim.db,version=3
+</I>&gt;<i> 2010-04-13 19:24:52,393 ERROR - OpenSim.Application [APPLICATION]: 
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i> 
+</I>&gt;<i> Exception: System.BadImageFormatException: An attempt was made to load a
+</I>&gt;<i> program with an incorrect format. (Exception from HRESULT: 0x8007000B)
+</I>&gt;<i>    at Mono.Data.SqliteClient.Sqlite.sqlite3_open16(String dbname, IntPtr&amp;
+</I>&gt;<i> handle)
+</I>&gt;<i>    at Mono.Data.SqliteClient.SqliteConnection.Open()
+</I>&gt;<i>    at OpenSim.Data.SQLite.SQLiteEstateStore.Initialise(String
+</I>&gt;<i> connectionString)
+</I>&gt;<i>    at OpenSim.Region.Framework.StorageManager..ctor(String dllName, String
+</I>&gt;<i> connectionstring, String estateconnectionstring)
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateStorageManager()
+</I>&gt;<i>    at OpenSim.Region.ClientStack.RegionApplicationBase.StartupSpecific()
+</I>&gt;<i>    at OpenSim.OpenSimBase.StartupSpecific()
+</I>&gt;<i>    at OpenSim.OpenSim.StartupSpecific()
+</I>&gt;<i>    at OpenSim.Framework.Servers.BaseOpenSimServer.Startup()
+</I>&gt;<i>    at OpenSim.Application.Main(String[] args)
+</I>&gt;<i> 
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004310.html">[Opensim-users] opensim on windows 7 64 bit
+</A></li>
+	<LI>Next message: <A HREF="004305.html">[Opensim-users] .exe startup parameter -gridmode=true and/or Opensim.ini gridmode=true
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4324">[ date ]</a>
+              <a href="thread.html#4324">[ thread ]</a>
+              <a href="subject.html#4324">[ subject ]</a>
+              <a href="author.html#4324">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

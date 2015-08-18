@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Room management application
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Room%20management%20application&In-Reply-To=%3C4DBE5CA2.7070108%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007207.html">
+   <LINK REL="Next"  HREF="007209.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Room management application</H1>
+    <B>Karl Haas</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Room%20management%20application&In-Reply-To=%3C4DBE5CA2.7070108%40gmail.com%3E"
+       TITLE="[Opensim-users] Room management application">haaskarl81 at gmail.com
+       </A><BR>
+    <I>Mon May  2 09:26:26 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007207.html">[Opensim-users] Room management application
+</A></li>
+        <LI>Next message: <A HREF="007209.html">[Opensim-users] Room management application
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7208">[ date ]</a>
+              <a href="thread.html#7208">[ thread ]</a>
+              <a href="subject.html#7208">[ subject ]</a>
+              <a href="author.html#7208">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 05/02/2011 02:15 PM, Toni Alatalo wrote:
+&gt;<i> On May 2, 2011, at 7:32 AM, Karl Haas wrote:
+</I>&gt;&gt;<i> I want to write an external service which manages all rooms of an 
+</I>&gt;&gt;<i> organisation (just a proof of concept). It should be possible to 
+</I>&gt;&gt;<i> connect also other virtual worlds or also a real world room 
+</I>&gt;&gt;<i> management tool. The management service has to be able to send a room 
+</I>&gt;&gt;<i> configuration to the OpenSim region module at a scheduled time (room 
+</I>&gt;&gt;<i> reservation) and the region module has to send the content or 
+</I>&gt;&gt;<i> position of the objects to the management service. It should be 
+</I>&gt;&gt;<i> possible to save the state of the learning session for later 
+</I>&gt;&gt;<i> continuation. Therefore I need a two way communication.
+</I>&gt;<i>
+</I>&gt;<i> I'm not sure how I'd do that two way conn. HTTP of course has been 
+</I>&gt;<i> fashionable for the past &gt;10 years, and it would be possible to just 
+</I>&gt;<i> make either side poll with that. But for realtime 2-way comms 
+</I>&gt;<i> something over a TCP socket that stays open might be better, both 
+</I>&gt;<i> faster and more reliable. That's why web browsers have now gotten 
+</I>&gt;<i> websockets support too -- so that apps like gmail can better get 
+</I>&gt;<i> notifications from servers, instead of doing periodic http polls.
+</I>I don't want to implement a polling mechanism - i think i will implement 
+some kind of socket connection that stays open.
+&gt;<i>
+</I>&gt;<i> If you only need the sim -&gt; manager comms for the saving, and you need 
+</I>&gt;<i> to save the full state of an opensim scene, I'd use that builtin xml 
+</I>&gt;<i> saving to files and then just store/transfer those files. Could send 
+</I>&gt;<i> the file over, e.g. with HTTP post, or with the possible custom TCP 
+</I>&gt;<i> protocol somehow.
+</I>I'm thinking about a solution that allows to continue the session within 
+a different environment. Therefore i just want to store the size, the 
+position and the content of objects. How to recreate the object should 
+be up to the environment (e.g. the region module). I'm not sure which 
+limitations and drawbacks this will cause, but the main goal of the work 
+is to learn more about the available technologies.
+&gt;<i>
+</I>&gt;<i> If there's some project page / plans for your tool, and if it becomes 
+</I>&gt;<i> available as open source later, I'd like to keep posted .. perhaps we 
+</I>&gt;<i> could utilize it, even. The guys have now been porting some of the TOY 
+</I>&gt;<i> tools for Tundra too, there is a public demo server of that up 
+</I>&gt;<i> actually .. if you wanna see how the lobby scene looks like, press 
+</I>&gt;<i> 'try it' in <A HREF="http://www.realxtend.org/">http://www.realxtend.org/</A> (need Tundra 1.0.6 installed, 
+</I>&gt;<i> the download button there points there). The floating round platforms 
+</I>&gt;<i> in that public lobby are same/similar elements which we use for room 
+</I>&gt;<i> configurations in the classroom spaces .. I put a screenshot of that 
+</I>&gt;<i> scene, made for school kids originally, yesterday to 
+</I>&gt;<i> <A HREF="http://wiki.realxtend.org/index.php/Getting_Started_with_Tundra">http://wiki.realxtend.org/index.php/Getting_Started_with_Tundra</A> . That 
+</I>&gt;<i> instance is not running on opensim, but the same scene &amp; tools as we 
+</I>&gt;<i> have for opensim too .. so as you plan to allow usage of the config 
+</I>&gt;<i> tool with any server, should work for Tundra usage as well (it 
+</I>&gt;<i> supports modules, similar to region/app/whatever modules in Opensim, 
+</I>&gt;<i> but no .net currently .. c++, python and javascript is what works now, 
+</I>&gt;<i> can do http or custom tcp or whatever).
+</I>
+Thanks for your input - i don't know yet how much i can implement within 
+my master's thesis and if somebody will continue the project...
+
+&gt;<i>
+</I>&gt;&gt;<i> Karl
+</I>&gt;<i>
+</I>&gt;<i> ~Toni
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Karl Haas
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ~Toni
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110502/4515125c/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110502/4515125c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007207.html">[Opensim-users] Room management application
+</A></li>
+	<LI>Next message: <A HREF="007209.html">[Opensim-users] Room management application
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7208">[ date ]</a>
+              <a href="thread.html#7208">[ thread ]</a>
+              <a href="subject.html#7208">[ subject ]</a>
+              <a href="author.html#7208">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

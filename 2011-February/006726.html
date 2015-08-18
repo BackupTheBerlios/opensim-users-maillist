@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Caught exception when detaching object (OS 0.7.1 Dev)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Caught%20exception%20when%20detaching%20object%20%28OS%0A%200.7.1%20Dev%29&In-Reply-To=%3C4D6AF6F3.4000207%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006723.html">
+   <LINK REL="Next"  HREF="006727.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Caught exception when detaching object (OS 0.7.1 Dev)</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Caught%20exception%20when%20detaching%20object%20%28OS%0A%200.7.1%20Dev%29&In-Reply-To=%3C4D6AF6F3.4000207%40googlemail.com%3E"
+       TITLE="[Opensim-users] Caught exception when detaching object (OS 0.7.1 Dev)">jjustincc at googlemail.com
+       </A><BR>
+    <I>Mon Feb 28 02:14:27 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006723.html">[Opensim-users] Caught exception when detaching object (OS 0.7.1	Dev)
+</A></li>
+        <LI>Next message: <A HREF="006727.html">[Opensim-users] Caught exception when detaching object (OS 0.7.1 Dev)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6726">[ date ]</a>
+              <a href="thread.html#6726">[ thread ]</a>
+              <a href="subject.html#6726">[ subject ]</a>
+              <a href="author.html#6726">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If you look at the stack trace you'll see that both contain the text
+
+at OpenSim.Data.MySQL.MySQLGenericTableHandler`1.Store(T row) in
+c:\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\
+Data\MySQL\MySQLGenericTableHandler.cs:line 224
+
+which suggests that they are both the same error.  This line is probably failing when it finds null in a public 
+XInventoryItem field and promptly tries to dereference it.  That particular situation needs to be handled better.
+
+I think this is a bug and does need to be fixed so please raise a mantis and reply to this thread to tell us what the 
+number is.
+
+On 27/02/11 18:28, Chris wrote:
+&gt;<i> Hi all, I just recently started using OS 0.7.1 Git Master Dev and I've noticed that a lot of my objects in my inventory
+</I>&gt;<i> give me an exception when I attempt to detach them from my avatar. Once the object is attached it is almost impossible
+</I>&gt;<i> to detach the object causing the exception (or it MIGHT detach after multiple tries and multiple re-logs). I have also
+</I>&gt;<i> found that these attachments can not be transferred to any other user; it just causes another (and much longer red spew)
+</I>&gt;<i> exception. As far as I can tell this issue affects only objects that are scripted.
+</I>&gt;<i>
+</I>&gt;<i> I have found that if you rez a copy of the object on the ground, unlink it, relink it, take it back to inventory, and
+</I>&gt;<i> then wear it; it seems to work fine and will transfer to other users fine, but then you have to go through the trouble
+</I>&gt;<i> of repositioning the attachments again that are causing this error.
+</I>&gt;<i>
+</I>&gt;<i> These objects come from an IAR that I saved from OS 0.6.9 Post-Fixes and loaded to OS 0.7.1 Dev (the IAR load went
+</I>&gt;<i> without a hitch, no errors).
+</I>&gt;<i>
+</I>&gt;<i> I know that this is development master and not ready for production use yet but I just wanted to see if anyone else was
+</I>&gt;<i> having this issue as well and maybe file a mantis, if needed, on this before it does get released.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Error when attempting to detach:
+</I>&gt;<i>
+</I>&gt;<i> 11:57:37 - [ATTACHMENTS MODULE]: Detaching from UserID: 245cd45c-a1d6-466c-9e5d-
+</I>&gt;<i> adc9da974a74, ItemID: 59b8206a-6deb-4e22-888b-b92ee7397487
+</I>&gt;<i> 11:57:37 - [ATTACHMENTS MODULE]: Saving attachpoint: 28
+</I>&gt;<i> 11:57:37 - [ATTACHMENTS MODULE]: Updating asset for attachment 170f184b-d9e8-438
+</I>&gt;<i> d-a2f2-90e1bfb29963, attachpoint 28
+</I>&gt;<i> 11:57:37 - [LLCLIENTVIEW]: Caught exception while processing OpenMetaverse.Packe
+</I>&gt;<i> ts.ObjectDetachPacket for mewtwo064 Alito, Object reference not set to an instance o
+</I>&gt;<i> f an object. at OpenSim.Data.MySQL.MySQLGenericTableHandler`1.Store(T row) in
+</I>&gt;<i> c:\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\
+</I>&gt;<i> Data\MySQL\MySQLGenericTableHandler.cs:line 224
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Error when attempting to transfer the object to another user:
+</I>&gt;<i>
+</I>&gt;<i> 11:57:12 - [INVENTORY TRANSFER]: (giving) Inserting item 40498fdc-19bf-4a95-88d0
+</I>&gt;<i> -049ac7779c93 into agent 6bfc8e1b-3d2b-414e-ada8-4db80677832e's inventory
+</I>&gt;<i> 11:57:12 - [LLUDPSERVER]: Client packet handler for 245cd45c-a1d6-466c-9e5d-adc9
+</I>&gt;<i> da974a74 for packet ImprovedInstantMessage threw an exception
+</I>&gt;<i> 11:57:12 - Object reference not set to an instance of an object.System.NullRefer
+</I>&gt;<i> enceException: Object reference not set to an instance of an object.
+</I>&gt;<i> at OpenSim.Data.MySQL.MySQLGenericTableHandler`1.Store(T row) in c:\Documents
+</I>&gt;<i> and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\Data\MySQL\My
+</I>&gt;<i> SQLGenericTableHandler.cs:line 224
+</I>&gt;<i> at OpenSim.Data.MySQL.MySqlItemHandler.Store(XInventoryItem item) in c:\Docum
+</I>&gt;<i> ents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\Data\MySQ
+</I>&gt;<i> L\MySQLXInventoryData.cs:line 174
+</I>&gt;<i> at OpenSim.Data.MySQL.MySQLXInventoryData.StoreItem(XInventoryItem item) in c
+</I>&gt;<i> :\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\Da
+</I>&gt;<i> ta\MySQL\MySQLXInventoryData.cs:line 80
+</I>&gt;<i> at OpenSim.Services.InventoryService.XInventoryService.AddItem(InventoryItemB
+</I>&gt;<i> ase item) in c:\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1
+</I>&gt;<i> Dev\OpenSim\Services\InventoryService\XInventoryService.cs:line 391
+</I>&gt;<i> at OpenSim.Region.CoreModules.ServiceConnectorsOut.Inventory.LocalInventorySe
+</I>&gt;<i> rvicesConnector.AddItem(InventoryItemBase item) in c:\Documents and Settings\Chr
+</I>&gt;<i> is\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\Region\CoreModules\ServiceConn
+</I>&gt;<i> ectorsOut\Inventory\LocalInventoryServiceConnector.cs:line 248
+</I>&gt;<i> at OpenSim.Region.Framework.Scenes.Scene.AddInventoryItem(InventoryItemBase i
+</I>&gt;<i> tem) in c:\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\O
+</I>&gt;<i> penSim\Region\Framework\Scenes\Scene.Inventory.cs:line 130
+</I>&gt;<i> at OpenSim.Region.Framework.Scenes.Scene.GiveInventoryItem(UUID recipient, UU
+</I>&gt;<i> ID senderId, UUID itemId, UUID recipientFolderId) in c:\Documents and Settings\C
+</I>&gt;<i> hris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\Region\Framework\Scenes\Scen
+</I>&gt;<i> e.Inventory.cs:line 587
+</I>&gt;<i> at OpenSim.Region.Framework.Scenes.Scene.GiveInventoryItem(UUID recipient, UU
+</I>&gt;<i> ID senderId, UUID itemId) in c:\Documents and Settings\Chris\Desktop\opensim-tre
+</I>&gt;<i> e-6bd18eb 0.7.1 Dev\OpenSim\Region\Framework\Scenes\Scene.Inventory.cs:line 402
+</I>&gt;<i> at OpenSim.Region.CoreModules.Avatar.Inventory.Transfer.InventoryTransferModu
+</I>&gt;<i> le.OnInstantMessage(IClientAPI client, GridInstantMessage im) in c:\Documents an
+</I>&gt;<i> d Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\Region\CoreModul
+</I>&gt;<i> es\Avatar\Inventory\Transfer\InventoryTransferModule.cs:line 229
+</I>&gt;<i> at OpenSim.Framework.ImprovedInstantMessage.Invoke(IClientAPI remoteclient, G
+</I>&gt;<i> ridInstantMessage im)
+</I>&gt;<i> at OpenSim.Region.ClientStack.LindenUDP.LLClientView.HandlerImprovedInstantMe
+</I>&gt;<i> ssage(IClientAPI sender, Packet Pack) in c:\Documents and Settings\Chris\Desktop
+</I>&gt;<i> \opensim-tree-6bd18eb 0.7.1 Dev\OpenSim\Region\ClientStack\LindenUDP\LLClientVie
+</I>&gt;<i> w.cs:line 5485
+</I>&gt;<i> at OpenSim.Region.ClientStack.LindenUDP.LLClientView.ProcessPacketMethod(Pack
+</I>&gt;<i> et packet) in c:\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1
+</I>&gt;<i> Dev\OpenSim\Region\ClientStack\LindenUDP\LLClientView.cs:line 624
+</I>&gt;<i> at OpenSim.Region.ClientStack.LindenUDP.LLClientView.ProcessInPacket(Packet p
+</I>&gt;<i> acket) in c:\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev
+</I>&gt;<i> \OpenSim\Region\ClientStack\LindenUDP\LLClientView.cs:line 11365
+</I>&gt;<i> at OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.ProcessInPacket(Object st
+</I>&gt;<i> ate) in c:\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 Dev\O
+</I>&gt;<i> penSim\Region\ClientStack\LindenUDP\LLUDPServer.cs:line 1246
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006723.html">[Opensim-users] Caught exception when detaching object (OS 0.7.1	Dev)
+</A></li>
+	<LI>Next message: <A HREF="006727.html">[Opensim-users] Caught exception when detaching object (OS 0.7.1 Dev)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6726">[ date ]</a>
+              <a href="thread.html#6726">[ thread ]</a>
+              <a href="subject.html#6726">[ subject ]</a>
+              <a href="author.html#6726">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

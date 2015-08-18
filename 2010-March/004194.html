@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Async vrs sync?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Async%20vrs%20sync%3F&In-Reply-To=%3C1268238546663-4710399.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004189.html">
+   <LINK REL="Next"  HREF="004195.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Async vrs sync?</H1>
+    <B>Master_Mirage</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Async%20vrs%20sync%3F&In-Reply-To=%3C1268238546663-4710399.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Async vrs sync?">mirage123 at verizon.net
+       </A><BR>
+    <I>Wed Mar 10 17:29:06 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004189.html">[Opensim-users] OpenSim lunch in Zurich, March 16th
+</A></li>
+        <LI>Next message: <A HREF="004195.html">[Opensim-users] Async vrs sync?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4194">[ date ]</a>
+              <a href="thread.html#4194">[ thread ]</a>
+              <a href="subject.html#4194">[ subject ]</a>
+              <a href="author.html#4194">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+ ; Sets the method that OpenSim will use to fire asynchronous
+    ; events. Valid values are UnsafeQueueUserWorkItem,
+    ; QueueUserWorkItem, BeginInvoke, SmartThreadPool, and Thread.
+    ; SmartThreadPool is reported to work well on Mono/Linux, but 
+    ; UnsafeQueueUserWorkItem has been benchmarked with better
+    ; performance on .NET/Windows
+    async_call_method = SmartThreadPool
+    
+    ; There are several operations on large collections (such as
+    ; the current avatar list) that can be run synchronously or
+    ; in parallel. Running in parallel should increase performance
+    ; on a multi-core system, but will make debugging more
+    ; difficult if something deadlocks or times out
+    use_async_when_possible = true
+    
+    ; Max threads to allocate on the FireAndForget thread pool
+    ; when running with the SmartThreadPool option above
+    MaxPoolThreads = 15
+
+Why i have played with this quite a bit (trying this and that). Its never
+been clear to me what all this is ment for. I have seen some settings work
+better than others and arrived at what i listed here for both win and linux
+but i dont really understand it passed that. (more guessing at it than
+anything).
+
+
+
+
+:<i>confused:
+</I>-- 
+View this message in context: <A HREF="http://n2.nabble.com/Async-vrs-sync-tp4710399p4710399.html">http://n2.nabble.com/Async-vrs-sync-tp4710399p4710399.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004189.html">[Opensim-users] OpenSim lunch in Zurich, March 16th
+</A></li>
+	<LI>Next message: <A HREF="004195.html">[Opensim-users] Async vrs sync?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4194">[ date ]</a>
+              <a href="thread.html#4194">[ thread ]</a>
+              <a href="subject.html#4194">[ subject ]</a>
+              <a href="author.html#4194">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

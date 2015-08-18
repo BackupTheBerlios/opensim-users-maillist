@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Heads-Up%20for%20users%20of%20OpenSim%20development%20versions%0A%20from%20Jan%2020%2C%202012%20until%20today&In-Reply-To=%3C4F1E210C.9020605%40bluewallgroup.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009160.html">
+   <LINK REL="Next"  HREF="009181.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today</H1>
+    <B>BlueWall</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Heads-Up%20for%20users%20of%20OpenSim%20development%20versions%0A%20from%20Jan%2020%2C%202012%20until%20today&In-Reply-To=%3C4F1E210C.9020605%40bluewallgroup.com%3E"
+       TITLE="[Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today">jamesh at bluewallgroup.com
+       </A><BR>
+    <I>Tue Jan 24 04:10:04 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009160.html">[Opensim-users] Missing skin and cloth now?
+</A></li>
+        <LI>Next message: <A HREF="009181.html">[Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9178">[ date ]</a>
+              <a href="thread.html#9178">[ thread ]</a>
+              <a href="subject.html#9178">[ subject ]</a>
+              <a href="author.html#9178">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>As some are aware, development to add working telehubs to OpenSim has 
+been progressing the past couple of days. In the beginning, working out 
+the packet dialog with the viewer, several bits of data were needed to 
+send for the telehub info. These were saved in the database and there 
+was a migration to add the fields and an additional table to the 
+database to save these. As work progressed, and more eyes were added to 
+the effort, it was apparent that we needed to refresh the values each 
+time they were used and that saving them was pointless. So, we are 
+modifying the database to only save what is needed. Here is the rub - I 
+was not aware that by policy we do not do backwards migrations for a 
+couple of reasons. So, these previous migrations will need to be handled 
+by hand. It is just a matter of logging into the console of your 
+database and pasting the script that follows.
+
+This affects MySQL only! Works has not been extended to other database 
+engines at this time.
+
+
+revisions affected:
+start: 32d58d6e3e9a0ea1bfa808567d0f64c0652f8a85
+end: c36c916342460751d25350b66ffbd7eb0a401c2b
+
+
+Script ...
+
+BEGIN;
+alter table regionsettings drop column TelehubName;
+alter table regionsettings drop column TelehubEnabled;
+alter table regionsettings drop column TelehubPosX;
+alter table regionsettings drop column TelehubPosY;
+alter table regionsettings drop column TelehubPosZ;
+alter table regionsettings drop column TelehubRotX;
+alter table regionsettings drop column TelehubRotY;
+alter table regionsettings drop column TelehubRotZ;
+alter table regionsettings drop column TelehubRotW;
+
+alter table spawn_points change column PointX Yaw float NOT NULL;
+alter table spawn_points change column PointY Pitch float NOT NULL;
+alter table spawn_points change column PointZ Distance float NOT NULL;
+COMMIT;
+
+your migrations table (of your region store) should look like ...
+
++----------------+---------+
+|<i> name           | version |
+</I>+----------------+---------+
+|<i> migrations     |       1 |
+</I>|<i> UserStore      |       7 |
+</I>|<i> GridStore      |       2 |
+</I>|<i> LogStore       |       1 |
+</I>|<i> InventoryStore |       4 |
+</I>|<i> AssetStore     |       6 |
+</I>|<i> RegionStore    |      39 |
+</I>+----------------+---------+
+
+
+That should be all that is needed to get things on track for future 
+releases. And, as always you can get additional assistance here or in 
+IRC @ #opensim or for development questions #opensim-dev.
+
+
+Thanks for using OpenSimulator!
+BlueWall
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009160.html">[Opensim-users] Missing skin and cloth now?
+</A></li>
+	<LI>Next message: <A HREF="009181.html">[Opensim-users] Heads-Up for users of OpenSim development versions from Jan 20, 2012 until today
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9178">[ date ]</a>
+              <a href="thread.html#9178">[ thread ]</a>
+              <a href="subject.html#9178">[ subject ]</a>
+              <a href="author.html#9178">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

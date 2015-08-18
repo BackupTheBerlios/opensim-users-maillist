@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] IAR Load error - magic # in GZip header not correct
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20IAR%20Load%20error%20-%20magic%20%23%20in%20GZip%20header%20not%20correct&In-Reply-To=%3CCAG6z%2BU77DpA%3DnP9joHMFv%2Br19NTrWM3-7AQQ4qkw%2BiJK7Fpp8A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009859.html">
+   <LINK REL="Next"  HREF="009885.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] IAR Load error - magic # in GZip header not correct</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20IAR%20Load%20error%20-%20magic%20%23%20in%20GZip%20header%20not%20correct&In-Reply-To=%3CCAG6z%2BU77DpA%3DnP9joHMFv%2Br19NTrWM3-7AQQ4qkw%2BiJK7Fpp8A%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] IAR Load error - magic # in GZip header not correct">fleep513 at gmail.com
+       </A><BR>
+    <I>Fri Mar 16 01:38:22 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009859.html">[Opensim-users] Version 7.3.1?
+</A></li>
+        <LI>Next message: <A HREF="009885.html">[Opensim-users] IAR Load error - magic # in GZip header not	correct
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9843">[ date ]</a>
+              <a href="thread.html#9843">[ thread ]</a>
+              <a href="subject.html#9843">[ subject ]</a>
+              <a href="author.html#9843">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+I'd gotten a report about some of the IAR files I have available on my
+FleepGrid Web Shop site not working and when I tested today, I was able to
+reproduce the problem.  Some of the older files seem to be giving an error
+when you attempt to load them on the console.  I THINK the version of
+opensim I was running when I made them was 0.7.0.2, but I'm not entirely
+sure.  I'm trying to load them onto an 0.7.2 system.  The person who
+reported the error also tried to load them to an 0.7.3 system and it
+failed, too.
+
+Here's the full error message:
+
+20:26:41 - Command error: System.IO.InvalidDataException: The magic number
+in GZ
+
+ip header is not correct. Make sure you are passing in a GZip stream.
+
+   at System.IO.Compression.GZipDecoder.ReadGzipHeader()
+
+   at System.IO.Compression.Inflater.Decode()
+
+   at System.IO.Compression.Inflater.Inflate(Byte[] bytes, Int32 offset,
+Int32 l
+
+ength)
+
+   at System.IO.Compression.DeflateStream.Read(Byte[] array, Int32 offset,
+Int32
+
+ count)
+
+   at System.IO.Compression.GZipStream.Read(Byte[] array, Int32 offset,
+Int32 co
+
+unt)
+
+   at System.IO.BinaryReader.ReadBytes(Int32 count)
+
+   at OpenSim.Framework.Serialization.TarArchiveReader.ReadHeader()
+
+   at OpenSim.Framework.Serialization.TarArchiveReader.ReadEntry(String&amp;
+filePat
+
+h, TarEntryType&amp; entryType)
+
+   at
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiveReadR
+
+equest.Execute()
+
+   at
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiverModu
+
+le.DearchiveInventory(String firstName, String lastName, String invPath,
+String
+
+pass, String loadPath, Dictionary`2 options)
+
+   at
+OpenSim.Region.CoreModules.Avatar.Inventory.Archiver.InventoryArchiverModu
+
+le.HandleLoadInvConsoleCommand(String module, String[] cmdparams)
+
+   at OpenSim.Framework.Console.Commands.Resolve(String[] cmd)
+
+   at OpenSim.Framework.Console.LocalConsole.ReadLine(String p, Boolean
+isComman
+
+d, Boolean e)
+
+   at OpenSim.Framework.Console.CommandConsole.Prompt()
+
+   at OpenSim.Application.Main(String[] args)
+
+
+It's going to be a real pain to re-save and re-upload nearly 200 files so
+I'd like to figure out what went wrong so I make sure not to do it again.
+ I searched on Mantis and didn't see this exact error, anyone have any
+ideas?
+
+
+Thanks in advance,
+
+
+- Chris/Fleep
+
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+
+UCIT Instructional &amp; Research Computing
+
+University of Cincinnati
+
+406A Zimmer Hall
+
+315 College Drive
+
+PO BOX 210088
+
+Cincinnati, OH 45221-0088
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+
+(513) 556-3018
+
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120315/77d17202/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120315/77d17202/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009859.html">[Opensim-users] Version 7.3.1?
+</A></li>
+	<LI>Next message: <A HREF="009885.html">[Opensim-users] IAR Load error - magic # in GZip header not	correct
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9843">[ date ]</a>
+              <a href="thread.html#9843">[ thread ]</a>
+              <a href="subject.html#9843">[ subject ]</a>
+              <a href="author.html#9843">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

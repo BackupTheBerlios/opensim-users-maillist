@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim-users Digest, Vol 16, Issue 57
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Digest%2C%20Vol%2016%2C%20Issue%2057&In-Reply-To=%3CEF607DF99BA344B78301B1D0000130F5%40VM04%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000944.html">
+   <LINK REL="Next"  HREF="000921.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim-users Digest, Vol 16, Issue 57</H1>
+    <B>Frank W Sweet</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Digest%2C%20Vol%2016%2C%20Issue%2057&In-Reply-To=%3CEF607DF99BA344B78301B1D0000130F5%40VM04%3E"
+       TITLE="[Opensim-users] Opensim-users Digest, Vol 16, Issue 57">fwsweet at backintyme.com
+       </A><BR>
+    <I>Mon Dec 29 19:53:25 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000944.html">[Opensim-users] Streaming Media Question
+</A></li>
+        <LI>Next message: <A HREF="000921.html">[Opensim-users] Opensim-users Digest, Vol 16, Issue 57
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#920">[ date ]</a>
+              <a href="thread.html#920">[ thread ]</a>
+              <a href="subject.html#920">[ subject ]</a>
+              <a href="author.html#920">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>No, there is something strange about osTeleportAgent when TPing to a 
+purely HyperGrid region. My OS functions are enabled and my threat 
+level is temporarily &quot;Severe.&quot; This is because I am building a 
+HyperGrid teleporter. When the user chooses a HyperGrid region, the 
+device dynamically does a link-region using the osConsoleCommand 
+function (that is why the threat level &quot;severe&quot; is needed). The 
+dynamically issued link-region works fine by itself. And the 
+osTeleportAgent function works if I send the user to an in-sim (not 
+HyperGrid) region. But when the function tries to send the user to a 
+HyperGrid region, a blue dialog box comes up that the region name was 
+&quot;not found.&quot; Of course, manually TP-ing to the target HyperGrid region 
+from the map (where the region name is found) works fine. It just 
+seems to me that, in order to use a _HyperGrid_ region name in the 
+osTeleportAgent function, the name would have to be qualified in some 
+way (with a uri or an ip or some such thing).
+
+Also, in case anyone is interested in the idiosyncracies of HG, I have 
+discovered that if two standalone region servers are running inside 
+the same box and you want to HG-tp between them, the &quot;link-region&quot; 
+command MUST show the target region's real, actual coordinates. 
+Otherwise, the target region's terrain will be invisible (and 
+untouchable) when you arrive.
+
+Frank W Sweet
+Backintyme Publishing
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Sat, 27 Dec 2008 11:00:44 -0500
+From: &quot;Frank W Sweet&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;
+Subject: [Opensim-users] osTeleportAgent with Hypergrid
+To: &quot;Opensim Users List&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">F315BF809630426EB309BCDE3C2F8F0B at VM04</A>&gt;
+Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+
+Does anyone know if in-world script function osTeleportAgent (the
+overload with four arguments--region name being second) is supposed to
+work with hypergrid-linked regions? (Sending the avatar to a
+hypergrid-linked region by name.) I could have sworn that I had it
+working thus a few weeks ago. But I have gone all the way back to 74xx
+and cannot reproduce it. Either it worked once-upon-a-time and is now
+broken or (more likely) my memory is failing and it never worked this
+way at all. Does anyone know?
+
+Frank W Sweet
+Backintyme Publishing
+
+------------------------------
+
+Message: 2
+Date: Sat, 27 Dec 2008 20:03:48 -0500
+From: &quot;BlueWall Slade&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bluewall.slade at gmail.com</A>&gt;
+Subject: Re: [Opensim-users] osTeleportAgent with Hypergrid
+To: &quot;Frank W Sweet&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;,
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Message-ID:
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cfce29900812271703o11265b70td0580488aa567e1 at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+
+It works. Make sure you have os functions enabled and the threat level 
+at
+the appropriate level in OpenSim.ini.
+
+On Sat, Dec 27, 2008 at 11:00 AM, Frank W Sweet 
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;wrote:
+
+&gt;<i> Does anyone know if in-world script function osTeleportAgent (the
+</I>&gt;<i> overload with four arguments--region name being second) is supposed 
+</I>&gt;<i> to
+</I>&gt;<i> work with hypergrid-linked regions? (Sending the avatar to a
+</I>&gt;<i> hypergrid-linked region by name.) I could have sworn that I had it
+</I>&gt;<i> working thus a few weeks ago. But I have gone all the way back to 
+</I>&gt;<i> 74xx
+</I>&gt;<i> and cannot reproduce it. Either it worked once-upon-a-time and is 
+</I>&gt;<i> now
+</I>&gt;<i> broken or (more likely) my memory is failing and it never worked 
+</I>&gt;<i> this
+</I>&gt;<i> way at all. Does anyone know?
+</I>&gt;<i>
+</I>&gt;<i> Frank W Sweet
+</I>&gt;<i> Backintyme Publishing
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000944.html">[Opensim-users] Streaming Media Question
+</A></li>
+	<LI>Next message: <A HREF="000921.html">[Opensim-users] Opensim-users Digest, Vol 16, Issue 57
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#920">[ date ]</a>
+              <a href="thread.html#920">[ thread ]</a>
+              <a href="subject.html#920">[ subject ]</a>
+              <a href="author.html#920">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

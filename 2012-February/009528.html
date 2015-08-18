@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim-users Help: Another OpenSim crash
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Help%3A%20Another%20OpenSim%20crash&In-Reply-To=%3CCAFGJoA5M_jTVgxo9LfpZdBh69AspZKu5r5jhaRWtHPUzE6mkhw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009527.html">
+   <LINK REL="Next"  HREF="009533.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim-users Help: Another OpenSim crash</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim-users%20Help%3A%20Another%20OpenSim%20crash&In-Reply-To=%3CCAFGJoA5M_jTVgxo9LfpZdBh69AspZKu5r5jhaRWtHPUzE6mkhw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Opensim-users Help: Another OpenSim crash">cliveg at gmail.com
+       </A><BR>
+    <I>Wed Feb 29 09:40:51 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009527.html">[Opensim-users] Help: Another OpenSim crash
+</A></li>
+        <LI>Next message: <A HREF="009533.html">[Opensim-users] So there is NO object-object communication	mechanism?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9528">[ date ]</a>
+              <a href="thread.html#9528">[ thread ]</a>
+              <a href="subject.html#9528">[ subject ]</a>
+              <a href="author.html#9528">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry
+
+I've just found the following patch and am recompiling mono
+
+<A HREF="http://opensimulator.org/mantis/view.php?id=5571">http://opensimulator.org/mantis/view.php?id=5571</A>
+
+Will let you know if this solves the issue
+
+Thanks
+
+Clive
+
+
+On Wed, Feb 29, 2012 at 8:20 AM, Clive Gould &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cliveg at gmail.com</A>&gt; wrote:
+&gt;<i> Hi everyone
+</I>&gt;<i>
+</I>&gt;<i> Last week we encountered two errors with our standalone simulator:
+</I>&gt;<i>
+</I>&gt;<i> i) Certain existing users were being prevented from logging in and
+</I>&gt;<i> were receiving the message &quot;Unable to create login request&quot; from
+</I>&gt;<i> within the client. The problem turned out to be down to a bug in
+</I>&gt;<i> MySQL. This was solved by applying a fix within StandaloneCommon.ini
+</I>&gt;<i> which was to append the string Old Guids=true; to the end of BOTH
+</I>&gt;<i> ConnectionString lines.
+</I>&gt;<i>
+</I>&gt;<i> ii) With a lot of objects/scripts rezzed we encountered segmentation
+</I>&gt;<i> errors when shutting down the simulator. The solution was to upgrade
+</I>&gt;<i> the version of mono we were using to 2.10.2
+</I>&gt;<i>
+</I>&gt;<i> Yesterday afternoon &#160;the simulator crashed (which it hasn't done for
+</I>&gt;<i> ages) and the error message in OpenSim.log is appended
+</I>&gt;<i>
+</I>&gt;<i> Could this be anything to do with the upgrade of mono or the changes
+</I>&gt;<i> to StandaloneCommon.ini?
+</I>&gt;<i>
+</I>&gt;<i> Any ideas welcomed please
+</I>&gt;<i>
+</I>&gt;<i> Thanks very much
+</I>&gt;<i>
+</I>&gt;<i> Clive
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2012-02-28 16:13:19,743 INFO &#160;-
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView [CLIENT]: Got a
+</I>&gt;<i> logout request for Estate Manager in Bromley
+</I>&gt;<i> 2012-02-28 16:13:19,753 DEBUG -
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView [CLIENT]: Close has
+</I>&gt;<i> been called for Estate Manager attached to scene Bromley
+</I>&gt;<i> 2012-02-28 16:13:19,754 DEBUG -
+</I>&gt;<i> OpenSim.Services.PresenceService.PresenceService [PRESENCE SERVICE]:
+</I>&gt;<i> Session 04760ca2-7a85-4bb9-98c7-c21c9cd1defd logout
+</I>&gt;<i> 2012-02-28 16:13:19,756 DEBUG -
+</I>&gt;<i> OpenSim.Services.UserAccountService.GridUserService [GRID USER
+</I>&gt;<i> SERVICE]: User 6a4f93c7-8500-40fc-9bfc-19c7e04deb80 is offline
+</I>&gt;<i> 2012-02-28 16:13:19,766 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+</I>&gt;<i> [SCENE]: Removing root agent 6a4f93c7-8500-40fc-9bfc-19c7e04deb80 from
+</I>&gt;<i> region Bromley
+</I>&gt;<i> 2012-02-28 16:13:51,661 ERROR - OpenSim.Application [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.ArgumentOutOfRangeException: Argument is out of range.
+</I>&gt;<i> Parameter name: offset exceeds the size of buffer
+</I>&gt;<i> &#160;at System.Net.Sockets.NetworkStream.BeginRead (System.Byte[] buffer,
+</I>&gt;<i> Int32 offset, Int32 size, System.AsyncCallback callback, System.Object
+</I>&gt;<i> state) [0x00000] in &lt;filename unkno
+</I>&gt;<i> wn&gt;:0
+</I>&gt;<i> &#160;at HttpServer.HttpClientContext.OnReceive (IAsyncResult ar)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009527.html">[Opensim-users] Help: Another OpenSim crash
+</A></li>
+	<LI>Next message: <A HREF="009533.html">[Opensim-users] So there is NO object-object communication	mechanism?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9528">[ date ]</a>
+              <a href="thread.html#9528">[ thread ]</a>
+              <a href="subject.html#9528">[ subject ]</a>
+              <a href="author.html#9528">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

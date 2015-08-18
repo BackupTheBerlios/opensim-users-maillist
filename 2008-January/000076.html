@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Creating Users with PHP
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Creating%20Users%20with%20PHP&In-Reply-To=%3CB6E4FA71-6FC3-471E-BE15-59B6DE360554%40klintcentral.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000075.html">
+   <LINK REL="Next"  HREF="000077.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Creating Users with PHP</H1>
+    <B>Ursula MATOVA</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Creating%20Users%20with%20PHP&In-Reply-To=%3CB6E4FA71-6FC3-471E-BE15-59B6DE360554%40klintcentral.net%3E"
+       TITLE="[Opensim-users] Creating Users with PHP">ursula.matova at klintcentral.net
+       </A><BR>
+    <I>Sun Jan 27 18:19:34 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000075.html">[Opensim-users] Creating Users with PHP
+</A></li>
+        <LI>Next message: <A HREF="000077.html">[Opensim-users] Creating Users with PHP
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#76">[ date ]</a>
+              <a href="thread.html#76">[ thread ]</a>
+              <a href="subject.html#76">[ subject ]</a>
+              <a href="author.html#76">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well,
+
+I've find the answer to my first question : Password generation :
+
+When searching the OpenSim source code, I've found in &quot;UserServer/ 
+Main.cs&quot; :
+
+tempMD5Passwd = Util.Md5Hash(Util.Md5Hash(tempMD5Passwd) + &quot;:&quot; +  
+String.Empty);
+
+So, using the following works :
+
+$user['passwordSalt'] = &quot;&quot;;
+$user['passwordHash'] = md5(md5($password) . &quot;:&quot; .  
+$user['passwordSalt']);
+
+But the question is still open for &quot;webLoginKey&quot; generation ...
+
+Regards,
+
+Ursula.
+
+Le 27 janv. 08 &#224; 18:03, Ursula MATOVA a &#233;crit :
+
+&gt;<i> Hi All,
+</I>&gt;<i>
+</I>&gt;<i> Well, I have started to build a small website to manage my Users on
+</I>&gt;<i> OpenSim, using Apache/PHP/MySQL ...
+</I>&gt;<i>
+</I>&gt;<i> But I have a little problem understanding how the user password is
+</I>&gt;<i> encoded in MySQL database ...
+</I>&gt;<i>
+</I>&gt;<i> If I refer to the share/php/generateUserFunction.php provided file,
+</I>&gt;<i> the formula is :
+</I>&gt;<i>
+</I>&gt;<i> $user['passwordSalt'] = md5(microtime() . mt_rand(0,0xffff));
+</I>&gt;<i> $user['passwordHash'] = md5(md5($password) . &quot;:&quot; .
+</I>&gt;<i> $user['passwordSalt']);
+</I>&gt;<i>
+</I>&gt;<i> But the resulted password doesn't work for me :S
+</I>&gt;<i>
+</I>&gt;<i> When I create the &quot;Test User&quot; user using the Console command : create
+</I>&gt;<i> user, the generated password is something like :
+</I>&gt;<i> 84e78b596fa8e391c49f3c4df7b9c57f
+</I>&gt;<i>
+</I>&gt;<i> So, could somebody explain the method to generate user passwords
+</I>&gt;<i> &quot;outside&quot; the console ?
+</I>&gt;<i>
+</I>&gt;<i> Now we also have the webLoginKey introduced ... What is the methode to
+</I>&gt;<i> generate it ?
+</I>&gt;<i>
+</I>&gt;<i> Many thanks in advance,
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Ursula.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000075.html">[Opensim-users] Creating Users with PHP
+</A></li>
+	<LI>Next message: <A HREF="000077.html">[Opensim-users] Creating Users with PHP
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#76">[ date ]</a>
+              <a href="thread.html#76">[ thread ]</a>
+              <a href="subject.html#76">[ subject ]</a>
+              <a href="author.html#76">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

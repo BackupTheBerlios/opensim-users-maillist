@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 0.6.5.1 Tests - problems with OGS1 USER SERVICES?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200.6.5.1%20Tests%20-%20problems%20with%20OGS1%20USER%20SERVICES%3F&In-Reply-To=%3C4a250794.1ade660a.6f4c.2c1b%40mx.google.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002259.html">
+   <LINK REL="Next"  HREF="002261.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 0.6.5.1 Tests - problems with OGS1 USER SERVICES?</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%200.6.5.1%20Tests%20-%20problems%20with%20OGS1%20USER%20SERVICES%3F&In-Reply-To=%3C4a250794.1ade660a.6f4c.2c1b%40mx.google.com%3E"
+       TITLE="[Opensim-users] 0.6.5.1 Tests - problems with OGS1 USER SERVICES?">ai.ai.austin at googlemail.com
+       </A><BR>
+    <I>Tue Jun  2 13:05:50 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002259.html">[Opensim-users] &quot;Save OAR&quot; stopping since r9700
+</A></li>
+        <LI>Next message: <A HREF="002261.html">[Opensim-users] 0.6.5.1 Tests - problems with OGS1 USER	SERVICES?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2260">[ date ]</a>
+              <a href="thread.html#2260">[ thread ]</a>
+              <a href="subject.html#2260">[ subject ]</a>
+              <a href="author.html#2260">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I decided to take a look at the 0.6.5.1 and take the plunge of doing 
+the build myself (I had used the nightly binaries occasionally up to 
+mid March).  Set up is:
+
+Opensim 0.6.5.1 28-May-2009 from dist.opensimulator.org
+Built with runprebuild.bat and compile.bat
+On Windows Vista SP1
+
+I am having problems with errors reported by [OGS1 USER SERVICES] and 
+I just want to check its nothing silly or well knows already before I 
+delve deeper.
+
+I have a tried a range of ways to bring this up (all in grid mode 
+with UGAIM and regions/opensim.exe on same system) even just using a 
+single region, or starting with a single region and empty data base.
+
+I note an unusual message in the User server and inventory server 
+console windows
+
+User Server
+
+log4net:ERROR XmlHierarchyConfigurator: No appender named 
+[NHibernateFileLog] could be found.
+log4net:ERROR XmlHierarchyConfigurator: Appender named 
+[NHibernateFileLog] not found.
+09:55:42 - Launching UserServer...
+09:55:42 - [STARTUP]: Beginning startup processing
+09:55:42 - [STARTUP]: Version: OpenSimulator Server  0.6.5
+USER SERVER: User Server (this) External URI for authentication keys 
+[<A HREF="http://localhost:8002/">http://localhost:8002/</A>]:
+
+Inventory Server
+
+log4net:ERROR XmlHierarchyConfigurator: No appender named 
+[NHibernateFileLog] could be found.
+log4net:ERROR XmlHierarchyConfigurator: Appender named 
+[NHibernateFileLog] not found.
+09:55:52 - [STARTUP]: Beginning startup processing
+09:55:52 - [STARTUP]: Version: OpenSimulator Server  0.6.5
+INVENTORY: Default Inventory Server URI (this server's external name) 
+[<A HREF="http://127.0.0.1:8004">http://127.0.0.1:8004</A>]:
+
+
+Niote the server's externakl bname as 127.0.0.1 and localhost... 
+whereas I have <A HREF="http://virtual.aiai.ed.ac.uk:8002">http://virtual.aiai.ed.ac.uk:8002</A> and external IP/DNS 
+of virtual.aiai.ed.ac.uk etc which is actually 
+<A HREF="http://129.215.219.138:8002">http://129.215.219.138:8002</A> etc set in my UGAIM XML config files.
+
+
+----
+
+These are the sort of messages I am seeing in Opensim.exe console 
+window just before it crashes every time... any pointers anyone?
+
+On a run with a single region:
+
+09:47:12 - [OGS1 USER SERVICES]: Error when trying to fetch profile 
+data by name from remote user server: System.Net.WebException: Unable 
+to connect to the remote server ---&gt; 
+System.Net.Sockets.SocketException: No connection could be made 
+because the target machine actively refused it 129.215.219.138:8002
+
+
+or on a run with more regions:
+
+2009-06-02 09:05:09,306 ERROR - 
+OpenSim.Region.Communications.OGS1.OGS1UserDataPlugin [OGS1 USER 
+SERVICES]: Error when trying to fetch profile data by name from 
+remote user server: System.Net.WebException: Unable to connect to the 
+remote server ---&gt; System.Net.Sockets.SocketException: No connection 
+could be made because the target machine actively refused it 
+129.215.219.138:8002
+    at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, 
+SocketAddress socketAddress)
+    at System.Net.Sockets.Socket.InternalConnect(EndPoint remoteEP)
+    at System.Net.ServicePoint.ConnectSocketInternal(Boolean 
+connectFailure, Socket s4, Socket s6, Socket&amp; socket, IPAddress&amp; 
+address, ConnectSocketState state, IAsyncResult asyncResult, Int32 
+timeout, Exception&amp; exception)
+    --- End of inner exception stack trace ---
+    at System.Net.HttpWebRequest.GetRequestStream()
+    at Nwc.XmlRpc.XmlRpcRequest.Send(String url, Int32 timeout)
+    at 
+OpenSim.Region.Communications.OGS1.OGS1UserDataPlugin.GetUserProfile(String 
+name) in 
+d:\VW\Opensim\OpenSim\Region\Communications\OGS1\OGS1UserDataPlugin.cs:line 193
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002259.html">[Opensim-users] &quot;Save OAR&quot; stopping since r9700
+</A></li>
+	<LI>Next message: <A HREF="002261.html">[Opensim-users] 0.6.5.1 Tests - problems with OGS1 USER	SERVICES?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2260">[ date ]</a>
+              <a href="thread.html#2260">[ thread ]</a>
+              <a href="subject.html#2260">[ subject ]</a>
+              <a href="author.html#2260">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Simple lsl bug with dramatic effect
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Simple%20lsl%20bug%20with%20dramatic%20effect&In-Reply-To=%3C518ACD95.5000204%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012192.html">
+   <LINK REL="Next"  HREF="012194.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Simple lsl bug with dramatic effect</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Simple%20lsl%20bug%20with%20dramatic%20effect&In-Reply-To=%3C518ACD95.5000204%40googlemail.com%3E"
+       TITLE="[Opensim-users] Simple lsl bug with dramatic effect">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu May  9 00:11:33 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012192.html">[Opensim-users] Simple lsl bug with dramatic effect
+</A></li>
+        <LI>Next message: <A HREF="012194.html">[Opensim-users] Simple lsl bug with dramatic effect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12193">[ date ]</a>
+              <a href="thread.html#12193">[ thread ]</a>
+              <a href="subject.html#12193">[ subject ]</a>
+              <a href="author.html#12193">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I believe integer is a 32-bit signed integer.  Your first example ends up causing integer overflow.
+
+I was curious so I googled [1].  You'll see somewhat curious behavior in the LL grid as well in those situations, though 
+I think the curious behaviour will be different from our curious behaviour.
+
+[1] <A HREF="http://wiki.secondlife.com/wiki/LSL_101/LSL_in_Focus:_Integers#Integer_Overflow">http://wiki.secondlife.com/wiki/LSL_101/LSL_in_Focus:_Integers#Integer_Overflow</A>
+
+On 08/05/13 15:16, Dr Ramesh Ramloll wrote:
+&gt;<i> Hello,
+</I>&gt;<i> I am sharing on this list hoping that some brains could help me figure this one out. I think I have hit a modulus
+</I>&gt;<i> divisor bug. Please let me know what you think. This had a significant impact on my scripts ... the whole thing froze
+</I>&gt;<i> after I made a simple change to a single variable and am wondering if I have hit some constraints that I am not aware
+</I>&gt;<i> of. Basically I am trying to pass parameters to a rezzed child object (see below). I generate values at the parent prim
+</I>&gt;<i> and try to get those values back from the rezzed child. Any thoughts appreciated.
+</I>&gt;<i> Thank you.
+</I>&gt;<i>
+</I>&gt;<i> integer commChannel =54;
+</I>&gt;<i> integer modulus_divisor = 1000000000;
+</I>&gt;<i> integer objectPinIndex = 23;
+</I>&gt;<i> integer rezParameter;
+</I>&gt;<i> integer repro_commChannel;
+</I>&gt;<i> integer repro_objectPinIndex;
+</I>&gt;<i>
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>      state_entry()
+</I>&gt;<i>      {
+</I>&gt;<i>          rezParameter = -1*((commChannel*modulus_divisor)+(objectPinIndex));
+</I>&gt;<i>          repro_commChannel = -1*((integer)rezParameter)/modulus_divisor;
+</I>&gt;<i>          repro_objectPinIndex = -1*((integer)rezParameter)%modulus_divisor;
+</I>&gt;<i>          llOwnerSay(&quot;modulus=&quot;+(string)modulus_divisor);
+</I>&gt;<i>          llOwnerSay(&quot;objectPinIndex=&quot;+(string)objectPinIndex);
+</I>&gt;<i>          llOwnerSay(&quot;commChannel=&quot;+(string)commChannel);
+</I>&gt;<i>          llOwnerSay(&quot;REPRODUCING VALUES&quot;);
+</I>&gt;<i>          llOwnerSay(&quot;repro_objectPinIndex=&quot;+(string)repro_objectPinIndex);
+</I>&gt;<i>          llOwnerSay(&quot;repro_commChannel=&quot;+(string)repro_commChannel);
+</I>&gt;<i>      }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> output follows:
+</I>&gt;<i>
+</I>&gt;<i> modulus=100000000 (eight zeroes)
+</I>&gt;<i> [06:57] Primitive: modulus=100000000
+</I>&gt;<i> [06:57] Primitive: objectPinIndex=23
+</I>&gt;<i> [06:57] Primitive: commChannel=54
+</I>&gt;<i> [06:57] Primitive: REPRODUCING VALUES
+</I>&gt;<i> [06:57] Primitive: repro_objectPinIndex=5032727
+</I>&gt;<i> [06:57] Primitive: repro_commChannel=11
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> now change modulus = 10000000
+</I>&gt;<i>
+</I>&gt;<i> output is:
+</I>&gt;<i>
+</I>&gt;<i> Primitive: modulus=10000000 (seven zeroes)
+</I>&gt;<i> [06:56] Primitive: objectPinIndex=23
+</I>&gt;<i> [06:56] Primitive: commChannel=54
+</I>&gt;<i> [06:56] Primitive: REPRODUCING VALUES
+</I>&gt;<i> [06:56] Primitive: repro_objectPinIndex=23
+</I>&gt;<i> [06:56] Primitive: repro_commChannel=54
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> also, modulus_divisor = 29999999 works
+</I>&gt;<i> modulus_divisor = 39699999 also works; this appears to be the experimental upper bound before modulus_divisor stops working.
+</I>&gt;<i> I did not expect this.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i> *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate /Research Associate Professor/, Idaho State University,
+</I>&gt;<i> Pocatello, ID 83209 Tel: 208-240-0040
+</I>&gt;<i> Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn &lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;, DeepSemaphore LLC
+</I>&gt;<i> &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile &lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012192.html">[Opensim-users] Simple lsl bug with dramatic effect
+</A></li>
+	<LI>Next message: <A HREF="012194.html">[Opensim-users] Simple lsl bug with dramatic effect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12193">[ date ]</a>
+              <a href="thread.html#12193">[ thread ]</a>
+              <a href="subject.html#12193">[ subject ]</a>
+              <a href="author.html#12193">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Animating NPCs without osNpcPlayAnimation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animating%20NPCs%20without%20osNpcPlayAnimation&In-Reply-To=%3CCAHi41x%2BTd1mrgqHgO1_fnSMbSi3UDCxNudko_%3DK4GmEPTWW51g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012344.html">
+   <LINK REL="Next"  HREF="012353.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Animating NPCs without osNpcPlayAnimation</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animating%20NPCs%20without%20osNpcPlayAnimation&In-Reply-To=%3CCAHi41x%2BTd1mrgqHgO1_fnSMbSi3UDCxNudko_%3DK4GmEPTWW51g%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Animating NPCs without osNpcPlayAnimation">r.ramloll at gmail.com
+       </A><BR>
+    <I>Tue Jun  4 20:14:50 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012344.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+        <LI>Next message: <A HREF="012353.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12345">[ date ]</a>
+              <a href="thread.html#12345">[ thread ]</a>
+              <a href="subject.html#12345">[ subject ]</a>
+              <a href="author.html#12345">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello dz,
+since objects need to be rezzed before they can listen and then get
+updated, I am wondering whether your approach based on
+llRemoteLoadScriptPin also allows update of objects contained in prims
+before they are actually rezzed. This will be helpful for my
+particular case partly because I am functioning close to the max.
+number listeners allowed per region. I have no control on that number
+because I am using a hosted opensim solution.
+R
+
+On Tue, Jun 4, 2013 at 1:49 PM, dz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dz at bitzend.net</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> On 4 June 2013 06:19, Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hello
+</I>&gt;<i>
+</I>&gt;&gt;<i>Since my application deals with hundreds of such situations, that
+</I>&gt;&gt;<i> would be hard work in the future ... because as we well know updating
+</I>&gt;&gt;<i> code for complex stuff in opensim is so inefficient because there are
+</I>&gt;&gt;<i> no way to propagate changes for scripts that are used often in
+</I>&gt;&gt;<i> different objects.
+</I>&gt;<i>
+</I>&gt;<i> Propagating scripts to objects is accomplished the same way in OpenSim as it
+</I>&gt;<i> is in Second Life,
+</I>&gt;<i> described in llRemoteLoadScriptPin.  For objects that need regular updates,
+</I>&gt;<i> I just assign a unique
+</I>&gt;<i> Script Pin to each type of object and include a listen on a unique channel
+</I>&gt;<i> in the scripts that need to be updated.
+</I>&gt;<i> Processing the update then is as easy as dropping a master object with all
+</I>&gt;<i> the new inventory items, and an update script.
+</I>&gt;<i> The master object does a regionsay on the assigned channel, and every object
+</I>&gt;<i> that responds gets the inventory updated with the current contents of the
+</I>&gt;<i> master object  including the new scripts.  Once the basic script is in place
+</I>&gt;<i> you can update it to provide lists of region objects, or an update history
+</I>&gt;<i> you can compare to find objects that have gone &quot;off&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Eventually  you will probably discover that it is easier to break the update
+</I>&gt;<i> functions out of the item scripts and use a generic update script in
+</I>&gt;<i> addition to the objects functional script... 2 scripts per object    1 for
+</I>&gt;<i> update comms and the other to be updated...
+</I>&gt;<i>
+</I>&gt;<i> The other use case you need to make exceptions for is attached objects.  You
+</I>&gt;<i> cannot update someones else object with this process while the object is
+</I>&gt;<i> attached.  For HUD devices  one rarely wants to update them all while being
+</I>&gt;<i> worn anyway.   The obvious solution is to have folks enter a location where
+</I>&gt;<i> an updater is , place the attached object in the ground/table   and run an
+</I>&gt;<i> update with commands  &quot;whispered&quot; to limit the effective distance of the
+</I>&gt;<i> broadcast... ( i.e.  only update the objects sitting on the &quot;update&quot; table)
+</I>&gt;<i>
+</I>&gt;<i> This design has been working for me over 2 years now  and I regularly do
+</I>&gt;<i> updates to objects with 10-150 copies in the current region with a very very
+</I>&gt;<i> small error rate.   I also use the update option to re-install and re-start
+</I>&gt;<i> objects that get shut down/confused when regions fail in odd ways...    Its
+</I>&gt;<i> way easier to click an update button than to find and manually script reset
+</I>&gt;<i> dozens or hundreds of items
+</I>&gt;<i>
+</I>&gt;<i> d
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+Rameshsharma Ramloll PhD, CEO CTO DeepSemaphore LLC, Affiliate
+Research Associate Professor, Idaho State University, Pocatello, ID
+83209 Tel: 208-240-0040
+Blog, LinkedIn, DeepSemaphore LLC, Google+ profile
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012344.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+	<LI>Next message: <A HREF="012353.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12345">[ date ]</a>
+              <a href="thread.html#12345">[ thread ]</a>
+              <a href="subject.html#12345">[ subject ]</a>
+              <a href="author.html#12345">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

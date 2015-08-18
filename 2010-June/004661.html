@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Having problems with uploads when running OpenSim	under Windows
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Having%20problems%20with%20uploads%20when%20running%20OpenSim%0A%09under%20Windows&In-Reply-To=%3C4C1000CB.3060607%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004671.html">
+   <LINK REL="Next"  HREF="004665.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Having problems with uploads when running OpenSim	under Windows</H1>
+    <B>Chris Kennedy</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Having%20problems%20with%20uploads%20when%20running%20OpenSim%0A%09under%20Windows&In-Reply-To=%3C4C1000CB.3060607%40cox.net%3E"
+       TITLE="[Opensim-users] Having problems with uploads when running OpenSim	under Windows">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Wed Jun  9 22:59:55 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004671.html">[Opensim-users] Response to client not sent
+</A></li>
+        <LI>Next message: <A HREF="004665.html">[Opensim-users] Freeswitch Ports?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4661">[ date ]</a>
+              <a href="thread.html#4661">[ thread ]</a>
+              <a href="subject.html#4661">[ subject ]</a>
+              <a href="author.html#4661">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Don't mean to revive a 4 month old thread but I have come across a couple findings regarding this issue.
+
+If I run the OpenSim server, MySQL, and the viewer all on the same computer I do not have any trouble with uploads
+and the data persisting to the database.
+
+However, if I run OpenSim and MySQL on one computer (under Windows XP 32-Bit, or Windows 7 32-Bit)
+run the viewer on a different computer, and try to upload textures, sounds, animations, and etc;
+about half of the time it will exhibit the behavior explained below in the original message.
+
+If I upload data to OS and it turns out to be a bad upload (you can tell because it will take anywhere from 5 - 10 seconds to
+complete each upload instead of being almost instant i.e. 1 - 2 seconds) the data will be there until the server is shutdown
+and restarted.
+
+With this in mind, I decided to make an IAR backup of the assets that were &quot;bad&quot; (before restarting the server)
+just to see if the data would actually be included in the backup. Much to my surprise, the assets were actually there
+and presumably if I restored that IAR, it would restore the assets properly to the database.
+
+Just thought I would share these findings with anyone who might be trying to work out a fix for this.
+
+
+Thank you for the awesome work on OpenSim! =)
+
+
+
+--- Original Message ---
+
+I am having trouble with uploading animations, textures, sounds, etc to OpenSim when running it under Windows.
+About a third to half of the time I upload anything to OpenSim, it takes a few seconds longer than usual to upload
+the data (especially noticable when performing a bulk upload of said data). That in itself isn't too worrisome to me,
+but, if I log off OpenSim, shut the server down using the 'quit' command and restart it, and log back into OpenSim,
+the data that I uploaded appears to be gone. The inventory objects referring to the data appears to still be in inventory,
+but the data that it refers to on the asset server seems to be null and void.
+
+For instance, if I uploaded a few (say 10 to 20) textures with the bulk import command, log off, shut down and restart the server, and log back in;
+I can still see that the textures I uploaded are still apparently in my inventory, but if I try to open them to view the textures, all
+it gives me is a blank white texture that is 256x256 in size. Same goes for animations and sounds that don't appear to upload
+correctly; except the animations won't play and the sounds won't play if it was a &quot;bad&quot; upload. I've tried clearing my viewer cache and relogging,
+but the data is still gone.
+
+I can tell it will be a bad upload when using bulk because it takes quite a few seconds longer per file to upload than usual.
+The server output seems to be normal in that it is acknowledging that it is receiving the uploaded data... But the persistance of
+it seems to be gone about a third to half of the time I upload data. I can access the data that was uploaded perfectly fine... as long as I
+do not log off and/or restart the server. Other times the data will persist fine between logging and/or restarting the server (this is characterized
+by the data uploading at a quick and steady pace rather than hesitating between each upload).
+
+I've double checked my MySQL, OpenSim.ini, and also my Cenome Cache settings, every thing seems to be in working order.
+I am using the same settings in the server I run on Linux32 with Mono and uploads do not exhibit this strange behaviour with Linux.
+Have not changed any settings in MySQL except for the Max Packet Size which I changed from 1 MB to 16 MB to allow database
+backup and restore.
+
+Specs for my Windows OS installation:
+OpenSim git revision r12198 (have tried others as well) on .NET Framework
+Windows 7 32-Bit
+2.5 GB Ram
+AMD Athlon Dual Core @ 1.6 Ghz
+MySQL 5.1 for database
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004671.html">[Opensim-users] Response to client not sent
+</A></li>
+	<LI>Next message: <A HREF="004665.html">[Opensim-users] Freeswitch Ports?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4661">[ date ]</a>
+              <a href="thread.html#4661">[ thread ]</a>
+              <a href="subject.html#4661">[ subject ]</a>
+              <a href="author.html#4661">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

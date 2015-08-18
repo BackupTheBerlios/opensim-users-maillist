@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripting: Having fun with C# and UDP
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%20Having%20fun%20with%20C%23%20and%20UDP&In-Reply-To=%3C4DC0A503.104%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007218.html">
+   <LINK REL="Next"  HREF="007214.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripting: Having fun with C# and UDP</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%20Having%20fun%20with%20C%23%20and%20UDP&In-Reply-To=%3C4DC0A503.104%40googlemail.com%3E"
+       TITLE="[Opensim-users] Scripting: Having fun with C# and UDP">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed May  4 02:59:47 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007218.html">[Opensim-users] Scripting: Having fun with C# and UDP
+</A></li>
+        <LI>Next message: <A HREF="007214.html">[Opensim-users] Groups module question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7230">[ date ]</a>
+              <a href="thread.html#7230">[ thread ]</a>
+              <a href="subject.html#7230">[ subject ]</a>
+              <a href="author.html#7230">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Very cool, Jeff.
+
+The issue with using in C# scripts is that, like translated LSL -&gt; C# scripts, they are embedded within some C# preamble 
+in order to compile the script, which one can see at 
+OpenSim/Region/ScriptEngine/Shared/CodeTools/Compiler.cs:CreateCSCompilerScript().
+
+I should think that one could work around this by moving using statements in a C# script into that preamble.
+
+On 03/05/11 00:49, Jeff Kelley wrote:
+&gt;<i> That's a thing I was dreaming for years : Linking a physical, real-world
+</I>&gt;<i> object to an opensim object. You move the object in opensim, the real
+</I>&gt;<i> object moves. You move the real object, the object in opensim moves. All in
+</I>&gt;<i> real-time.
+</I>&gt;<i>
+</I>&gt;<i> Here is a short demo video, in mov and mp4 (H.264) format. If your web
+</I>&gt;<i> browser can't handle either, download the .mp4 version and open it with
+</I>&gt;<i> VLC. I don't Youtube, sorry.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.pescadoo.net/tmp/fun_with_udp.mov">http://www.pescadoo.net/tmp/fun_with_udp.mov</A>	(1Mb)
+</I>&gt;<i> <A HREF="http://www.pescadoo.net/tmp/fun_with_udp.mp4">http://www.pescadoo.net/tmp/fun_with_udp.mp4</A>	(1.9Mb)
+</I>&gt;<i>
+</I>&gt;<i> Right is the familiar Imprudence window. The object with eight yellow bars
+</I>&gt;<i> is a multi-slider, similar to a mixing desk. Each bar can be clicked and
+</I>&gt;<i> dragged to the desired value.
+</I>&gt;<i>
+</I>&gt;<i> Left is a less-familiar window with another application running. The app is
+</I>&gt;<i> Cycling74' Max/MSP, although that could any app that can animate objects
+</I>&gt;<i> (graphical or physical) and read/write network sockets.
+</I>&gt;<i>
+</I>&gt;<i> In this video, i first move the slider in opensim and you see the sliders
+</I>&gt;<i> in the external app moving. Then I move the sliders in the external app,
+</I>&gt;<i> and the sliders in opensim move. No delay. Real-time.
+</I>&gt;<i>
+</I>&gt;<i> But there is more fun. The external app is linked to a physical &quot;control
+</I>&gt;<i> surface&quot;, with motorized sliders. Unfortunately I can't show it in the
+</I>&gt;<i> video, missing a camcorder. I use a Behringer BCF2000. See it here:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.behringer.com/EN/images/lightboxphotos/BCF2000_P0246_Left_XL.jpg">http://www.behringer.com/EN/images/lightboxphotos/BCF2000_P0246_Left_XL.jpg</A>
+</I>&gt;<i>
+</I>&gt;<i> It is attached to my desktop machine (not the simulator host) via USB/MIDI.
+</I>&gt;<i> You could as well control lights with DMX, motors with Arduino, a robotic
+</I>&gt;<i> device, or conversely move an opensim object with a dataglove, or anything
+</I>&gt;<i> you may imagine.
+</I>&gt;<i>
+</I>&gt;<i> How does it work?
+</I>&gt;<i>
+</I>&gt;<i> The opensim object contains two C# script, one for sending and one for
+</I>&gt;<i> receiving UDP messages using System.Net.Sockets (two scripts are needed
+</I>&gt;<i> because the receiver runs a forever loop and events can't interrupt). The
+</I>&gt;<i> simulator host and my desktop machine (both on same LAN) communicate
+</I>&gt;<i> through UDP messages.
+</I>&gt;<i>
+</I>&gt;<i> I omit the prim handling script for brevity. It is pure LSL and there is
+</I>&gt;<i> nothing new here. It reads and writes couples of (track_number, value) via
+</I>&gt;<i> link messages to the C# sender and receiver. Since i am a beginner in C#,
+</I>&gt;<i> there is much room for improvement. I was not able to declare a 'use'
+</I>&gt;<i> clause, so I had to fully qualify each instance and method, making the code
+</I>&gt;<i> quite ugly.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> UDP Sender script
+</I>&gt;<i> -----------------
+</I>&gt;<i>
+</I>&gt;<i> //c#
+</I>&gt;<i>
+</I>&gt;<i> public static void SendUDPPacket (string hostNameOrAddress,
+</I>&gt;<i>                                    int destinationPort, string data) {
+</I>&gt;<i>
+</I>&gt;<i>      // Resolve the host name to an IP Address
+</I>&gt;<i>      System.Net.IPAddress[] ipAddresses
+</I>&gt;<i>          = System.Net.Dns.GetHostAddresses(hostNameOrAddress);
+</I>&gt;<i>
+</I>&gt;<i>      // Use the first IP Address in the list
+</I>&gt;<i>      System.Net.IPAddress destination = ipAddresses[0];
+</I>&gt;<i>      System.Net.IPEndPoint endPoint
+</I>&gt;<i>          = new System.Net.IPEndPoint(destination, destinationPort);
+</I>&gt;<i>
+</I>&gt;<i>      byte[] buffer = System.Text.Encoding.ASCII.GetBytes(data);
+</I>&gt;<i>
+</I>&gt;<i>      // Send the packet
+</I>&gt;<i>      System.Net.Sockets.Socket socket = new System.Net.Sockets.Socket
+</I>&gt;<i>          (System.Net.Sockets.AddressFamily.InterNetwork,
+</I>&gt;<i>           System.Net.Sockets.SocketType.Dgram,
+</I>&gt;<i>           System.Net.Sockets.ProtocolType.Udp);
+</I>&gt;<i>
+</I>&gt;<i>      socket.SendTo(buffer, endPoint);
+</I>&gt;<i>      socket.Close();
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> int SLIDER_IN  = 101;       // Link Messages input
+</I>&gt;<i> int SLIDER_OUT = 102;       // Link Messages output
+</I>&gt;<i>
+</I>&gt;<i> string  remoteAddr = &quot;192.168.0.21&quot;;
+</I>&gt;<i> int     remotePort = 51000;
+</I>&gt;<i>
+</I>&gt;<i> // Receiving a link message from the sliders
+</I>&gt;<i>
+</I>&gt;<i> public void default_event_link_message (
+</I>&gt;<i>      LSL_Types.LSLInteger sender_num,
+</I>&gt;<i>      LSL_Types.LSLInteger num,
+</I>&gt;<i>      LSL_Types.LSLString str,    // Channel number
+</I>&gt;<i>      LSL_Types.LSLString id) {   // Channel value
+</I>&gt;<i>
+</I>&gt;<i>      // Send the message over UDP
+</I>&gt;<i>
+</I>&gt;<i>      if (num == SLIDER_OUT)
+</I>&gt;<i>          SendUDPPacket (remoteAddr, remotePort, str+&quot; &quot;+id);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> UDP Receiver script
+</I>&gt;<i> -------------------
+</I>&gt;<i>
+</I>&gt;<i> //c#
+</I>&gt;<i>
+</I>&gt;<i> public static System.Net.Sockets.Socket BindUDPSocket (int listenPort) {
+</I>&gt;<i>
+</I>&gt;<i>      // Local endpoint
+</I>&gt;<i>      System.Net.IPEndPoint endPoint
+</I>&gt;<i>          = new System.Net.IPEndPoint(System.Net.IPAddress.Any, listenPort);
+</I>&gt;<i>
+</I>&gt;<i>      // Create socket
+</I>&gt;<i>      System.Net.Sockets.Socket socket = new System.Net.Sockets.Socket
+</I>&gt;<i>          (System.Net.Sockets.AddressFamily.InterNetwork,
+</I>&gt;<i>           System.Net.Sockets.SocketType.Dgram,
+</I>&gt;<i>           System.Net.Sockets.ProtocolType.Udp);
+</I>&gt;<i>
+</I>&gt;<i>      // Bind socket
+</I>&gt;<i>      socket.Bind(endPoint);
+</I>&gt;<i>      return socket;
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> int listenPort = 50000;
+</I>&gt;<i>
+</I>&gt;<i> int SLIDER_IN  = 101;       // Link Messages input
+</I>&gt;<i> int SLIDER_OUT = 102;       // Link Messages output
+</I>&gt;<i>
+</I>&gt;<i> public void default_event_state_entry() {
+</I>&gt;<i>      System.Net.Sockets.Socket socket = BindUDPSocket (listenPort);
+</I>&gt;<i>      byte[] buffer = new byte[1024];
+</I>&gt;<i>
+</I>&gt;<i>      // Receiving a message from UDP (loop forever)
+</I>&gt;<i>
+</I>&gt;<i>      while (true) {
+</I>&gt;<i>          socket.Receive(buffer);
+</I>&gt;<i>          string msg = System.Text.ASCIIEncoding.ASCII.GetString(buffer);
+</I>&gt;<i>
+</I>&gt;<i>          // 1st word is Channel number
+</I>&gt;<i>          // 2nd word is Channel value
+</I>&gt;<i>
+</I>&gt;<i>          string[] parse = msg.Split(' ');
+</I>&gt;<i>
+</I>&gt;<i>          // Send the message using LinkMessage
+</I>&gt;<i>
+</I>&gt;<i>          llMessageLinked (LINK_THIS, SLIDER_IN, parse[0], parse[1]);
+</I>&gt;<i>
+</I>&gt;<i>          System.Array.Clear (buffer, 0, 1024);
+</I>&gt;<i>      }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks to Nick Olsen for C# code
+</I>&gt;<i> <A HREF="http://nickstips.wordpress.com/2010/09/03/c-creating-and-sending-udp-packets/">http://nickstips.wordpress.com/2010/09/03/c-creating-and-sending-udp-packets/</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007218.html">[Opensim-users] Scripting: Having fun with C# and UDP
+</A></li>
+	<LI>Next message: <A HREF="007214.html">[Opensim-users] Groups module question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7230">[ date ]</a>
+              <a href="thread.html#7230">[ thread ]</a>
+              <a href="subject.html#7230">[ subject ]</a>
+              <a href="author.html#7230">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

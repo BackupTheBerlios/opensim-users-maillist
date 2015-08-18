@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Difficulty build SVN 9480
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Difficulty%20build%20SVN%209480&In-Reply-To=%3C4078610C-3E9E-4849-9927-25750124D0E5%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002162.html">
+   <LINK REL="Next"  HREF="002164.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Difficulty build SVN 9480</H1>
+    <B>Brent Seidel</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Difficulty%20build%20SVN%209480&In-Reply-To=%3C4078610C-3E9E-4849-9927-25750124D0E5%40mac.com%3E"
+       TITLE="[Opensim-users] Difficulty build SVN 9480">brentseidel at mac.com
+       </A><BR>
+    <I>Thu May 21 06:11:23 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002162.html">[Opensim-users] Difficulty build SVN 9480
+</A></li>
+        <LI>Next message: <A HREF="002164.html">[Opensim-users] Difficulty build SVN 9480
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2163">[ date ]</a>
+              <a href="thread.html#2163">[ thread ]</a>
+              <a href="subject.html#2163">[ subject ]</a>
+              <a href="author.html#2163">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi John,
+
+It turns out that there is a bug in the Mono 1.9.1 libraries.  Mantis  
+#3626 goes on and on about this.  It also turns out that updating the  
+version of Mono may *not* overwrite the buggy library.  What I had to  
+do was configure mono using &quot;./configure -- prefix=/usr&quot; and then  
+build and install it (I'm using mono 2.4).  I was then able to get  
+later versions (currently running 9561) to build.
+
+I did add a note about this to the CentOS specific build  
+instructions.  Perhaps it should be part of the more general  
+instructions.
+
+I hope that this helps.
+
+brent
+
+On 20-May-2009, at 9:02 PM, John Sheridan wrote:
+
+&gt;<i> Actually, I'm getting this same problem with the 0.6.5-rc1 checkout  
+</I>&gt;<i> with
+</I>&gt;<i> Mono 1.9.1 and 2.0.  Yet I've seen other using this release.  Is there
+</I>&gt;<i> some trick to getting this one to build other then the normal
+</I>&gt;<i> instructions from the wiki?
+</I>&gt;<i>
+</I>&gt;<i> Thanks, :)
+</I>&gt;<i>
+</I>&gt;<i>  - John
+</I>&gt;<i> Brent Seidel wrote:
+</I>&gt;&gt;<i> I am able to build SVN 9479, but when I try to build SVN 9480, I get
+</I>&gt;&gt;<i> the following results from nant:
+</I>&gt;&gt;<i> ----------
+</I>&gt;&gt;<i> NAnt 0.86 (Build 0.86.2898.0; beta1; 12/8/2007)
+</I>&gt;&gt;<i> Copyright (C) 2001-2007 Gerry Shaw
+</I>&gt;&gt;<i> <A HREF="http://nant.sourceforge.net">http://nant.sourceforge.net</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Buildfile: <A HREF="file:///home/OpenSim/svn/opensim-0.6.4.9561/OpenSim.build">file:///home/OpenSim/svn/opensim-0.6.4.9561/OpenSim.build</A>
+</I>&gt;&gt;<i> Target framework: Mono 2.0 Profile
+</I>&gt;&gt;<i> Target(s) specified: build
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>       [echo] Using 'mono-2.0' Framework
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> init:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Debug:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>       [echo] Platform unix
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> build:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>       [nant] /home/OpenSim/svn/opensim-0.6.4.9561/OpenSim/Framework/
+</I>&gt;&gt;<i> Servers/HttpServer/OpenSim.Framework.Servers.HttpServer.dll.build  
+</I>&gt;&gt;<i> build
+</I>&gt;&gt;<i>              Buildfile: <A HREF="file:///home/OpenSim/svn/opensim-0.6.4.9561/">file:///home/OpenSim/svn/opensim-0.6.4.9561/</A>
+</I>&gt;&gt;<i> OpenSim/Framework/Servers/HttpServer/
+</I>&gt;&gt;<i> OpenSim.Framework.Servers.HttpServer.dll.build
+</I>&gt;&gt;<i>              Target framework: Mono 2.0 Profile
+</I>&gt;&gt;<i>              Target(s) specified: build
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>              build:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>                   [echo] Build Directory is /home/OpenSim/svn/
+</I>&gt;&gt;<i> opensim-0.6.4.9561/OpenSim/Framework/Servers/HttpServer/bin/Debug
+</I>&gt;&gt;<i>                    [csc] Compiling 24 files to '/home/OpenSim/svn/
+</I>&gt;&gt;<i> opensim-0.6.4.9561/OpenSim/Framework/Servers/HttpServer/bin/Debug/
+</I>&gt;&gt;<i> OpenSim.Framework.Servers.HttpServer.dll'.
+</I>&gt;&gt;<i>                    [csc] /home/OpenSim/svn/opensim-0.6.4.9561/ 
+</I>&gt;&gt;<i> OpenSim/
+</I>&gt;&gt;<i> Framework/Servers/HttpServer/AsynchronousRestObjectRequester.cs
+</I>&gt;&gt;<i> (95,41): error CS0246: The type or namespace name `TResponse' could
+</I>&gt;&gt;<i> not be found. Are you missing a using directive or an assembly
+</I>&gt;&gt;<i> reference?
+</I>&gt;&gt;<i>                    [csc] /home/OpenSim/svn/opensim-0.6.4.9561/ 
+</I>&gt;&gt;<i> OpenSim/
+</I>&gt;&gt;<i> Framework/Servers/HttpServer/AsynchronousRestObjectRequester.cs
+</I>&gt;&gt;<i> (115,21): error CS0029: Cannot implicitly convert type `TResponse' to
+</I>&gt;&gt;<i> `TResponse'
+</I>&gt;&gt;<i>                    [csc] /home/OpenSim/svn/opensim-0.6.4.9561/ 
+</I>&gt;&gt;<i> OpenSim/
+</I>&gt;&gt;<i> Framework/Servers/HttpServer/AsynchronousRestObjectRequester.cs
+</I>&gt;&gt;<i> (115,21): The generic parameter `TResponse' of
+</I>&gt;&gt;<i> `OpenSim.Framework.Servers.HttpServer.AsynchronousRestObjectRequester 
+</I>&gt;&gt;<i> .&lt;&gt;
+</I>&gt;&gt;<i> c__CompilerGenerated0&lt;TRequest,TResponse&gt;' cannot be converted to the
+</I>&gt;&gt;<i> generic parameter `TResponse' of
+</I>&gt;&gt;<i> `OpenSim.Framework.Servers.HttpServer.AsynchronousRestObjectRequester 
+</I>&gt;&gt;<i> .Ma
+</I>&gt;&gt;<i> keRequest&lt;TRequest,TResponse&gt;(string, string, TRequest,
+</I>&gt;&gt;<i> System.Action&lt;TResponse&gt;)' (in the previous error)
+</I>&gt;&gt;<i>                    [csc] Compilation failed: 2 error(s), 0 warnings
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>              BUILD FAILED - 0 non-fatal error(s), 3 warning(s)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>              /home/OpenSim/svn/opensim-0.6.4.9561/OpenSim/Framework/
+</I>&gt;&gt;<i> Servers/HttpServer/OpenSim.Framework.Servers.HttpServer.dll.build 
+</I>&gt;&gt;<i> (14,6):
+</I>&gt;&gt;<i>              External Program Failed: /usr/lib/mono/2.0/gmcs.exe
+</I>&gt;&gt;<i> (return code was 1)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>              Total time: 0.8 seconds.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> BUILD FAILED
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Nested build failed.  Refer to build log for exact reason.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Total time: 0.8 seconds.
+</I>&gt;&gt;<i> ----------
+</I>&gt;&gt;<i> I used the same process for each version - checkout into a new
+</I>&gt;&gt;<i> director, runprebuild, and nant.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm using mono 2.4 on CentOS 5.2.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If anyone can give me some pointers, I'd appreciate it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> thanks,
+</I>&gt;&gt;<i> brent
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002162.html">[Opensim-users] Difficulty build SVN 9480
+</A></li>
+	<LI>Next message: <A HREF="002164.html">[Opensim-users] Difficulty build SVN 9480
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2163">[ date ]</a>
+              <a href="thread.html#2163">[ thread ]</a>
+              <a href="subject.html#2163">[ subject ]</a>
+              <a href="author.html#2163">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

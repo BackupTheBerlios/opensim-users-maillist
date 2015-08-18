@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Changed default av_capsule_tilted to false	inOpenSim master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Changed%20default%20av_capsule_tilted%20to%0A%20false%09inOpenSim%20master&In-Reply-To=%3C4AF9A7E1.1070201%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003079.html">
+   <LINK REL="Next"  HREF="003076.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Changed default av_capsule_tilted to false	inOpenSim master</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Changed%20default%20av_capsule_tilted%20to%0A%20false%09inOpenSim%20master&In-Reply-To=%3C4AF9A7E1.1070201%40googlemail.com%3E"
+       TITLE="[Opensim-users] Changed default av_capsule_tilted to false	inOpenSim master">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Nov 10 18:50:25 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003079.html">[Opensim-users] Changed default av_capsule_tilted to false	inOpenSim master
+</A></li>
+        <LI>Next message: <A HREF="003076.html">[Opensim-users] Change axis point
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3083">[ date ]</a>
+              <a href="thread.html#3083">[ thread ]</a>
+              <a href="subject.html#3083">[ subject ]</a>
+              <a href="author.html#3083">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Zane Legion wrote:
+&gt;<i> Thanks for the explanation nlin. For me (on 0.6.7-post-fixes), tilted=false 
+</I>&gt;<i> solved the bendy knee issue and the feet partially underground issue, 
+</I>&gt;<i> although everyone now seems to float slightly above the ground.
+</I>
+Yes, thanks very much for the insight, Norman.
+
+&gt;<i> 
+</I>&gt;<i> I'll keep a lookout for the other two issues you mention.
+</I>&gt;<i> 
+</I>&gt;<i> Zane
+</I>&gt;<i> --------------------------------------------------
+</I>&gt;<i> From: &quot;nlin&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nlin.message at gmail.com</A>&gt;
+</I>&gt;<i> Sent: Tuesday, November 10, 2009 12:37 PM
+</I>&gt;<i> To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Cc: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev at lists.berlios.de</A>&gt;
+</I>&gt;<i> Subject: Re: [Opensim-users] Changed default av_capsule_tilted to false 
+</I>&gt;<i> inOpenSim master
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2009/11/10, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;:
+</I>&gt;&gt;&gt;<i> There was a bit of discussion last week in the OpenSim dev's office hour 
+</I>&gt;&gt;&gt;<i> and on
+</I>&gt;&gt;&gt;<i> irc that changing av_capsule_tilted = false in OpenSim.ini.example would 
+</I>&gt;&gt;&gt;<i> be a
+</I>&gt;&gt;&gt;<i> good idea in the master branch for avatar related physics for ODE.
+</I>&gt;&gt;<i> The av_capsule_tilted=false should generally be safe. Please let me
+</I>&gt;&gt;<i> mention some general things to watch out for. These shouldn't be a
+</I>&gt;&gt;<i> problem now, but were problems that I encountered and hopefully fixed:
+</I>&gt;&gt;<i> 1) Avatar falling through terrain
+</I>&gt;&gt;<i> 2) Extremely rapid changes of direction and movement could conceivably
+</I>&gt;&gt;<i> cause the avatar capsule to become unstable.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Note that these items are refer to poor behavior in terms of the
+</I>&gt;&gt;<i> physics engine itself (visualized with drawstuff), as opposed to ways
+</I>&gt;&gt;<i> that poor behavior might manifest itself in the viewer (such as
+</I>&gt;&gt;<i> bendy-knees).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regarding 1, terrain collisions, reducing the avatar tilt seems to
+</I>&gt;&gt;<i> increase the tendency of the avatar to fall through the terrain - this
+</I>&gt;&gt;<i> has something to do with the ODE terrain collider, which I wasn't able
+</I>&gt;&gt;<i> to fully debug - anyone wanting to give it a shot, let me know. As a
+</I>&gt;&gt;<i> workaround, currently a small, experimentally-determined tilt is
+</I>&gt;&gt;<i> maintained (even with tilt=false) to prevent falling through the
+</I>&gt;&gt;<i> terrain. This isn't ideal, but seems to work well enough.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regarding 2, rapid changing of avatar direction: The tilt rotates with
+</I>&gt;&gt;<i> the avatar, snapped in 90-degree increments to one of  four directions
+</I>&gt;&gt;<i> (NE,NW,SE,SW), so that the direction of the tilt always is opposite
+</I>&gt;&gt;<i> the direction of movement. In other words, if your avatar is moving
+</I>&gt;&gt;<i> forwards, the avatar is leaning slightly backwards. The reason the
+</I>&gt;&gt;<i> tilt is rotated with the avatar is to reduce/remove
+</I>&gt;&gt;<i> direction-dependent behavior, such as being only able to climb over
+</I>&gt;&gt;<i> prims from a certain direction. The reason the tilt rotation is
+</I>&gt;&gt;<i> snapped to 90-degree increments, instead of smoothly rotating with the
+</I>&gt;&gt;<i> avatar, is to prevent extremely rapid changes in tilt orientation,
+</I>&gt;&gt;<i> which is done by setting ODE motor stops. If you change ODE motor
+</I>&gt;&gt;<i> stops too rapidly, the avatar capsule may &quot;explode&quot; and go flying
+</I>&gt;&gt;<i> several hundred meters into the air. Conceivably, if your avatar
+</I>&gt;&gt;<i> walked directly straddling a line facing northeast and constantly did
+</I>&gt;&gt;<i> a zig-zag motion above and below the NE line, this could cause the
+</I>&gt;&gt;<i> avatar orientation to change rapidly enough to cause avatar
+</I>&gt;&gt;<i> instability. In practice I doubt that this will be an issue. (Still,
+</I>&gt;&gt;<i> would be interesting to write a bot to try to provoke this behavior.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> More generally, however, this dynamically rotating tilt is not ideal.
+</I>&gt;&gt;<i> I think there are 2 avatar physics issues that need further
+</I>&gt;&gt;<i> investigation:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1. Removing the tilt completely instead of just reducing it. Currently
+</I>&gt;&gt;<i> not workable because the terrain collider then allows the avatar
+</I>&gt;&gt;<i> capsule to fall through sometimes. Fixing this would allow complete
+</I>&gt;&gt;<i> consistency (direction-independence) in avatar physics behavior, close
+</I>&gt;&gt;<i> avatar interactions like hugging, and no need for changing the motor
+</I>&gt;&gt;<i> stops while the avatar is moving, reducing risk of explosion.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2. Allowing flexible height of steps that the avatar can step over.
+</I>&gt;&gt;<i> Currently the bottom-most hemisphere of the avatar capsule always
+</I>&gt;&gt;<i> drags against the terrain or any objects it collides with. This has
+</I>&gt;&gt;<i> the limitation that the height of obstacles that can successfully be
+</I>&gt;&gt;<i> stepped over cannot be directly tuned, as it depends indirectly on the
+</I>&gt;&gt;<i> size of the hemisphere and the specifics of collision handling (things
+</I>&gt;&gt;<i> like ERP, CFM, bounce). Ideally we would want to be able to directly
+</I>&gt;&gt;<i> tune the height of &quot;steppable&quot; objects in OpenSim.ini, or perhaps have
+</I>&gt;&gt;<i> this be different per avatar (dependent e.g. on the avatar height).
+</I>&gt;&gt;<i> But it looks like we would probably have to implement a new avatar
+</I>&gt;&gt;<i> physics mechanism to handle this flexibly: something like a floating
+</I>&gt;&gt;<i> capsule, capsule+sphere, or using mesh collisions instead of primitive
+</I>&gt;&gt;<i> capsules.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -nlin
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.org">http://justincc.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003079.html">[Opensim-users] Changed default av_capsule_tilted to false	inOpenSim master
+</A></li>
+	<LI>Next message: <A HREF="003076.html">[Opensim-users] Change axis point
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3083">[ date ]</a>
+              <a href="thread.html#3083">[ thread ]</a>
+              <a href="subject.html#3083">[ subject ]</a>
+              <a href="author.html#3083">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

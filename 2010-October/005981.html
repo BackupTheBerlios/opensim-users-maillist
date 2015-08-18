@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPCs%20DoMoveToPosition%20vs%20DoAutoPilot&In-Reply-To=%3CAANLkTind%3D0dvxHLVWs6cza%3D_RKgkWXCSR-f1shqZ-Bgp%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005969.html">
+   <LINK REL="Next"  HREF="005983.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPCs%20DoMoveToPosition%20vs%20DoAutoPilot&In-Reply-To=%3CAANLkTind%3D0dvxHLVWs6cza%3D_RKgkWXCSR-f1shqZ-Bgp%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot">teravus at gmail.com
+       </A><BR>
+    <I>Thu Oct 28 17:54:48 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005969.html">[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+</A></li>
+        <LI>Next message: <A HREF="005983.html">[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5981">[ date ]</a>
+              <a href="thread.html#5981">[ thread ]</a>
+              <a href="subject.html#5981">[ subject ]</a>
+              <a href="author.html#5981">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You need to pump avatar movement updates for the autopilot code to work.
+
+Even if there are no movement flags, calling ScenePresence.HandleAgentUpdate
+with a proper AgentUpdateArgs will 'move' the avatar a step towards the
+target of the autopilot.
+
+The following code is for an older version of OpenSimulator but it might
+work with a few modifications on the current version.
+(AddRegion is INonSharedRegionModule.AddRegion)
+
+private int m_agentupdatepump = 5;
+private Scene m_scene;
+private List&lt;ScenePresence&gt; m_activeCharactersSP;
+private List&lt;Character&gt; m_activeCharacters;
+
+private Quaternion fourtyFiveDegreeAngle = new
+Quaternion(0,0,-0.70711f,0.70711f);
+
+
+public virtual void AddRegion(Scene scene)
+{
+    m_scene = scene;
+    m_scene.EventManager.OnFrame += EventManager_OnFrame;
+}
+
+ void EventManager_OnFrame()
+{
+     m_frame++;
+
+     if ((m_frame % m_agentupdatepump) == 0)
+     {
+          PumpAgentUpdate();
+     }
+
+     if (m_frame &gt;= (int.MaxValue - 1))
+     {
+          m_frame = 0;
+     }
+ }
+
+void PumpAgentUpdate()
+{
+     lock (m_activeCharacters)
+     {
+         foreach (Character c in m_activeCharacters)
+         {
+              ScenePresence cSP = m_scene.GetScenePresence(c.AgentId);
+              PumpAgentUpdate(c, cSP);
+         }
+     }
+}
+
+void PumpAgentUpdate(Character pC, ScenePresence pSP)
+{
+     AgentUpdateArgs updateargs = new AgentUpdateArgs();
+     updateargs.AgentID = pC.AgentId;
+
+     updateargs.BodyRotation = Vector3.RotationBetween(Vector3.UnitX,
+Vector3.Normalize(pC.m_lastTarget - pSP.AbsolutePosition));
+
+     if (pC.ClientSideOrientation == fourtyFiveDegreeAngle)
+         pC.ClientSideOrientation = Quaternion.Identity;
+
+     updateargs.CameraAtAxis = Vector3.Zero;
+     updateargs.CameraCenter = new Vector3(pSP.AbsolutePosition  - (new
+Vector3(0,0,1) * updateargs.BodyRotation));
+     updateargs.CameraLeftAxis = Vector3.Zero;
+     updateargs.CameraUpAxis = Vector3.Zero;
+     updateargs.ControlFlags = uint.MinValue;//
++(uint)OpenMetaverse.AgentManager.ControlFlags.AGENT_CONTROL_FLY;
+     updateargs.Far = 128f;
+     updateargs.Flags = byte.MinValue;
+     updateargs.HeadRotation = Quaternion.Identity;
+     updateargs.SessionID = pC.SessionId;
+     updateargs.State = byte.MinValue;
+
+     pSP.HandleAgentUpdate(pC,updateargs);
+}
+
+
+Note that the Character class had NPC related stuff in it like 'last
+target'.   We need that information to send a proper BodyRotation in the
+AgentUpdateArgs
+updateargs.BodyRotation = Vector3.RotationBetween(Vector3.UnitX,
+Vector3.Normalize(Character.m_lastTarget - ScenePresence.AbsolutePosition));
+
+Hopefully, I've given you enough code to get started.
+
+
+Teravus
+
+On Wed, Oct 27, 2010 at 4:47 PM, bodzette Coignet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bodzettecoignet at gmail.com</A>
+&gt;<i> wrote:
+</I>
+&gt;<i> After some hair pulling and running into someone with complementary skills
+</I>&gt;<i> I've made some progress:
+</I>&gt;<i> I've managed to get a server side NPC to do the following:
+</I>&gt;<i> Rezz, Say something, Play an Animation and Delete itself.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately at the moment I can't get it to move and am currently
+</I>&gt;<i> investigating why not. Right now my understanding of things is somewhat
+</I>&gt;<i> limited so forgive me if my questions sound stupid to those in the know:
+</I>&gt;<i>
+</I>&gt;<i> A couple questions:
+</I>&gt;<i>
+</I>&gt;<i> Given that the NPC code appears to use a bunch of different autopilot code,
+</I>&gt;<i> I'm guessing that this is specific to NPCs and is not the way regular
+</I>&gt;<i> avatars move. It appears to be broken somehow, because the code is called
+</I>&gt;<i> but the NPC doesn't move. What is the difference between movement for a
+</I>&gt;<i> regular avatar and an NPC? It's my position that there really shouldn't be
+</I>&gt;<i> one, but could someone fill me in?
+</I>&gt;<i>
+</I>&gt;<i> What is the code that moves a standard (i.e. non-NPC avatar) is it
+</I>&gt;<i> Region.Framework.Scenes.ScenePresence.DoMoveToPosition or is it somewhere
+</I>&gt;<i> else?
+</I>&gt;<i>
+</I>&gt;<i> What is a ScenePresence? Is it that portion of a scene corresponding to a
+</I>&gt;<i> single avatar? If so is there any reason why an NPC avatar should exhibit
+</I>&gt;<i> different behavior here than a regular avatar?
+</I>&gt;<i>
+</I>&gt;<i> Can anyone give a program flow of how a regular avatar moves?
+</I>&gt;<i> My guess is it's something like this:
+</I>&gt;<i>  Intecerpt Arrow Key or Movement Control Arrow -&gt;
+</I>&gt;<i> Pass avatar UUID and force and vector to server -&gt;
+</I>&gt;<i> server finds avatar in scene (looping through scene dictionary of avatars
+</I>&gt;<i> till it identifies the right one?) -&gt;
+</I>&gt;<i> server applies force and vector to appropriate avatar in dictionary -&gt;
+</I>&gt;<i> avatar enters, does and completes movement -&gt;
+</I>&gt;<i> server updates entire scene x times per second until avatar movement is
+</I>&gt;<i> completed
+</I>&gt;<i>
+</I>&gt;<i> Anyone verify the flow?
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advance.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101028/e77ee093/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101028/e77ee093/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005969.html">[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+</A></li>
+	<LI>Next message: <A HREF="005983.html">[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5981">[ date ]</a>
+              <a href="thread.html#5981">[ thread ]</a>
+              <a href="subject.html#5981">[ subject ]</a>
+              <a href="author.html#5981">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

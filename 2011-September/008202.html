@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Hypergrid Outbound Probs &amp; HG AddressConfusion
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hypergrid%20Outbound%20Probs%20%26%20HG%20AddressConfusion&In-Reply-To=%3C4e7c3a5d.49c6e30a.303c.ffffd42a%40mx.google.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008224.html">
+   <LINK REL="Next"  HREF="008203.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Hypergrid Outbound Probs &amp; HG AddressConfusion</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hypergrid%20Outbound%20Probs%20%26%20HG%20AddressConfusion&In-Reply-To=%3C4e7c3a5d.49c6e30a.303c.ffffd42a%40mx.google.com%3E"
+       TITLE="[Opensim-users] Hypergrid Outbound Probs &amp; HG AddressConfusion">ai.ai.austin at gmail.com
+       </A><BR>
+    <I>Fri Sep 23 09:50:39 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008224.html">[Opensim-users] Google Earth or Google Map in Opensim
+</A></li>
+        <LI>Next message: <A HREF="008203.html">[Opensim-users] Hypergrid Outbound Probs &amp; HG Address Confusion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8202">[ date ]</a>
+              <a href="thread.html#8202">[ thread ]</a>
+              <a href="subject.html#8202">[ subject ]</a>
+              <a href="author.html#8202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Here is a script we use to show the xloc,yloc of a region  to display 
+it to our visitors...
+
+In &quot;MapGrid &quot;, the grid name computation method is not general, so 
+alter that for your own grid machines.  I just hacked it a bit to 
+paste here, so hope it works fine still in a new grid environment.
+
+// Give information on xloc,yloc of Region/Sim on grid
+// Useful for Hypergrid Travellers who should not try to travel
+// more than 4096,4096 regions/sims in one hop
+// Ai Austin, Vue and OpenVCE.net, 28-Oct-2010
+
+string gridname;
+string gridhgurl;
+string gridtext;
+string simhost;
+string region;
+string xloc;
+string yloc;
+vector textcolour = &lt;0.6,0.6,0.6&gt;;
+float texttrans = 1.0;
+
+GetRegionDetails() {
+     vector sim_coord = llGetRegionCorner();
+     simhost = llGetSimulatorHostname();
+     region = llGetRegionName();
+     xloc = (string)((integer)(sim_coord.x / 256.0));
+     yloc = (string)((integer)(sim_coord.y / 256.0));
+}
+
+MapGrid (string simhost, string region) {
+     if ((simhost == &quot;KILLEGRAY&quot;) || (simhost == &quot;SHUNA&quot;)) gridname = 
+&quot;Openvue&quot;;
+     else if (simhost == &quot;ARRAN&quot;) {
+                 if ((region == &quot;Vue-3200&quot;) || (region == 
+&quot;Vue-6400&quot;)) gridname = &quot;OSGrid&quot;;
+                 else gridname = &quot;Openvue&quot;;
+             }
+         else gridname = &quot;Unknown&quot;;
+
+     if (gridname == &quot;Openvue&quot;) {gridhgurl = 
+&quot;virtual.aiai.ed.ac.uk:8002&quot;; gridtext = gridhgurl;}
+     else if (gridname=&quot;OSGrid&quot;) {gridhgurl = &quot;hg.osgrid.org:80&quot;; 
+gridtext = gridhgurl;}
+     else {gridhgurl = &quot;unknown&quot;; gridtext = &quot;Host &quot;+simhost;}
+
+}
+
+
+default
+{
+     state_entry()
+     {
+         GetRegionDetails();
+         MapGrid(simhost, region);
+         llSetText(gridtext+&quot;\n&quot;+region+&quot; at (&quot;+xloc+&quot;,&quot;+yloc+&quot;)&quot;, 
+textcolour, texttrans);
+     }
+
+     on_rez (integer start_param)
+     {
+         GetRegionDetails();
+         MapGrid(simhost, region);
+         llSetText(gridtext+&quot;\n&quot;+region+&quot; at (&quot;+xloc+&quot;,&quot;+yloc+&quot;)&quot;, 
+textcolour, texttrans);
+     }
+
+     changed(integer change) { // something changed
+         if (change &amp; CHANGED_REGION) { // and it was a region/sim change
+             GetRegionDetails();
+             MapGrid(simhost, region);
+             llSetText(gridtext+&quot;\n&quot;+region+&quot; at 
+(&quot;+xloc+&quot;,&quot;+yloc+&quot;)&quot;, textcolour, texttrans);
+         }
+     }
+
+     touch_start(integer num_detected) {
+         key agentKey = llDetectedKey(0);
+         GetRegionDetails();
+         MapGrid(simhost, region);
+         llSetText(&quot;<A HREF="http://">http://</A>&quot;+gridtext+&quot;\n&quot;+region+&quot; at 
+(&quot;+xloc+&quot;,&quot;+yloc+&quot;)&quot;, textcolour, texttrans);
+         // llSay(0,&quot;<A HREF="http://">http://</A>&quot;+gridtext+&quot; &quot;+region+&quot; at (&quot;+xloc+&quot;,&quot;+yloc+&quot;)&quot;);
+         llInstantMessage(agentKey,&quot;http:&quot;+gridtext+&quot; &quot;+region+&quot; at 
+(&quot;+xloc+&quot;,&quot;+yloc+&quot;)&quot;);
+         if (gridname != &quot;Unknown&quot;)
+            llInstantMessage(agentKey,&quot;To return here in Viewer 1 
+click <A HREF="secondlife://">secondlife://</A>&quot;+gridtext+&quot;:&quot;+region+&quot;/&quot;);
+            // llInstantMessage(agentKey,&quot;To return here Find this in 
+the Map\n&quot;+gridhgurl+&quot;/ \&quot;&quot;+region+&quot;\&quot;&quot;);
+     }
+}
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008224.html">[Opensim-users] Google Earth or Google Map in Opensim
+</A></li>
+	<LI>Next message: <A HREF="008203.html">[Opensim-users] Hypergrid Outbound Probs &amp; HG Address Confusion
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8202">[ date ]</a>
+              <a href="thread.html#8202">[ thread ]</a>
+              <a href="subject.html#8202">[ subject ]</a>
+              <a href="author.html#8202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

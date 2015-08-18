@@ -1,0 +1,1391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.19.1331736500.7901.opensim-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001820.html">
+   <LINK REL="Next"  HREF="001985.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.19.1331736500.7901.opensim-users%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 15:47:53 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001820.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="001985.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1919">[ date ]</a>
+              <a href="thread.html#1919">[ thread ]</a>
+              <a href="subject.html#1919">[ subject ]</a>
+              <a href="author.html#1919">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>'m doing is safe?
+
+Thanks and good karma to you all,
+
+ - John Sheridan / Orion Pseudo
+
+Frisby, Adam wrote:
+
+Honestly, I think there's some disconnects between people here that need to=
+ be addressed.
+
+
+
+There are several different audiences here, and consequently several differ=
+ent reactions. There is the group of users attempting to put OpenSim into p=
+roduction environments - the harsher reactions I have seen tend to fall int=
+o this group. There is home users and hobbyists - the more positive reactio=
+ns are from there.
+
+
+
+To the production users, we do as a team find it unfortunate you were badly=
+ impacted, however as a group a large portion of work on OpenSim comes from=
+ personal developers without sponsorship. As a team, we also make absolutel=
+y no guarantees about trunk releases at all (infact we often make the oppos=
+ite), the best practices we publish on our website very clearly state that =
+production users should stick to a tagged release, and even then you are op=
+erating alpha code.
+
+
+
+While we have generally been blessed with a reasonably well written and mai=
+ntained codebase - trunk is not guaranteed to operate. Had there been an ac=
+cident and the database became corrupted over time due to coding error - th=
+e outrage on this list would not have been as loud, however the impacts wou=
+ld have been significantly worsened.
+
+
+
+Often, developers need to break code and features in order to improve thing=
+s, if we cannot make trunk unstable, then the ability to develop and contin=
+ually improve the codebase is restricted. One recent example was some avata=
+r appearance issues that showed up after the MXP stack - that one I caused =
+by removing code which erroneously assumed an avatar utilized the LLUDP Sta=
+ck.
+
+
+
+The short term result of that change was it broke avatar appearance in cert=
+ain circumstances for a period of about 24 hours, the long term result was =
+we got one step closer to more protocols, more neutrality and abstracted be=
+haviour - all seen as good things to the codebase -- however another exampl=
+e of why we do not recommend anyone utilize trunk for production - it was s=
+till broken for a day, and this is a regular occurance.
+
+
+
+For instance, a patch not too long ago adjusted the asset database format -=
+ while fine on local systems with small asset counts, in a production envir=
+onment (specifically osgrid), it caused the entire database to melt. OSGrid=
+ accepts that risk since they are a testing grid - but to another operator,=
+ you would have applied that same patch just as easily as osgrid did if tod=
+ay's example is the norm.
+
+
+
+Now the first response, I expect will be 'this was deliberate/vandalism' - =
+yes there was an april fools joke in the codebase. However, please consider=
+ the following:
+
+
+
+* The impact was for the most part completely negligible - no permanent cha=
+nges were made, the code deactivates automatically, a patch is available on=
+ mantis (and is no longer in trunk anyway).
+
+* You are running a version of the codebase that is *explicitly marked as '=
+not suitable for production'*.
+
+* You are receiving a product for free under an extremely liberal license o=
+n behalf of the generosity of others.
+
+
+
+That april fools joke was /only ever accessible in the developers and teste=
+rs oriented release/. The intended audience was those two groups - develope=
+rs and testers. Even the release candidate version had the offending code r=
+emoved.
+
+
+
+If you want to put OpenSim into production, fantastic - we like to see it b=
+eing used. However when you then do not follow the advice we post clearly o=
+n the website in multiple places and put trunk into production, then no - t=
+he responsibility for failure rests upon your shoulders - trunk is /not saf=
+e for production/.
+
+
+
+We do recognize the growing corporate demand for OpenSim - it's one of the =
+reason that people such as Stefan have begun a back-patches version (post-f=
+ixes) which incorporates fixes into the last stable version. We spend the t=
+ime maintaining that version because we recognise the need, it's also the r=
+eason we have been as a group moving towards more release-oriented packagin=
+g such as the installers and other easy-to-deploy packages.
+
+
+
+If you are a corporate user putting OpenSim into production, make sure you =
+have the following preparations:
+
+
+
+1. Have a stable revision handy - currently that is 0.6.3-postfixes. Someti=
+mes bugs show up randomly and break things badly. You should always have a =
+backup system when working with OpenSim.
+
+
+
+2. Use our postfix releases normally - sometimes a feature patch is very te=
+mpting to upgrade to, but then ask yourself what the cost might be? If stic=
+k figure avatars are going to cause you to have issues with clients - ask y=
+ourself what random object destruction might cause. It's happened in the pa=
+st on trunk - I have no doubts major unintended bugs will sneak into trunk =
+in future.
+
+
+
+Only upgrade past post-fixes if you keep a very keen eye on SVN commit logs=
+ and are capable of testing hardened revisions.
+
+
+
+3. Keep backups. Too many OpenSim installs do not do this. OAR works well f=
+or content, however a full database backup is recommend (this varies from t=
+ool to tool, know your system.)
+
+
+
+4. Slow and steady is the name of the game. We actually keep several of our=
+ clients on a r6XXX release since we're able to confirm it works for their =
+uses in the majority of cases and doesn't have unknown factors.
+
+
+
+Regards,
+
+
+
+Adam
+
+
+
+
+
+
+
+-----Original Message-----
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at l</A>=
+ists.berlios.de&gt; [mailto:opensim-users-
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>&gt;] On Behalf Of Ter=
+avus Ovares
+
+Sent: Wednesday, 1 April 2009 2:57 PM
+
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&gt;
+
+Subject: Re: [Opensim-users] Fw: Re: [SLED] Linden Lab Sells Second
+
+Life!
+
+
+
+One more reply to this.   Have a look at some positive responses.
+
+
+
+<A HREF="http://osgrid.org/forums/viewtopic.php?f=3D14&amp;t=3D1051&amp;start=3D10">http://osgrid.org/forums/viewtopic.php?f=3D14&amp;t=3D1051&amp;start=3D10</A>
+
+
+
+Sincrerely
+
+
+
+Teravus
+
+
+
+On 4/1/09, Teravus Ovares &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt; wro=
+te:
+
+
+
+Now now, lets be reasonable.     It's one thing to get April fooled..
+
+ it's another to gloat about it.  Generally, I don't think it's a
+
+
+
+good
+
+
+
+idea to gloat.   It is what it is ..    and we learn and continue on.
+
+
+
+Sincerely
+
+
+
+Teravus
+
+
+
+
+
+On 4/1/09, Skidz Tweak &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">skidz.tweak at gmail.com</A>&gt;&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">skidz.tweak at gmail.com</A>=
+&gt;<i> wrote:
+</I>
+
+
+Don't let the door hit you in the butt!
+
+Everyone bitching about this only has theirselves to blame!
+
+If you can't live with that fact, keep making up crap in your head
+
+
+
+saying it
+
+
+
+was someone else fault. That's it... the sweet feel of denial.
+
+
+
+-----Original Message-----
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at l</A>=
+ists.berlios.de&gt;
+
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+
+
+
+Jonathan
+
+
+
+Greenlee
+
+Sent: Wednesday, April 01, 2009 4:07 PM
+
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+
+Subject: Re: [Opensim-users] Fw: Re: [SLED] Linden Lab Sells Second
+
+
+
+Life!
+
+
+
+
+
+I want to make sure you understand why my company is now
+
+
+
+withdrawing our
+
+
+
+good will and support toward OpenSim,
+
+And why we are withdrawing our financial support from several
+
+
+
+OpenSim Grids
+
+
+
+we were supporting with our business.
+
+
+
+--- On Wed, 4/1/09, MW &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michaelwri22 at yahoo.co.uk</A>&gt;&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michaelwri22 at yahoo</A>=
+.co.uk&gt; wrote:
+
+
+
+
+
+From: MW &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michaelwri22 at yahoo.co.uk</A>&gt;&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michaelwri22 at yahoo.co.uk</A>&gt;
+
+Subject: Re: [Opensim-users] Fw: Re: [SLED] Linden Lab Sells
+
+
+
+Second Life!
+
+
+
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+
+Date: Wednesday, April 1, 2009, 4:03 PM
+
+While
+
+Teravus did the april 1st joke, all of core (or certainly
+
+most of it) knew about it. And we fully supported him
+
+applying it. As he said it was never in a tagged version.
+
+
+
+--- On Wed, 1/4/09, Teravus Ovares
+
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt; wrote:
+
+From: Teravus Ovares
+
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;
+
+Subject: Re: [Opensim-users] Fw: Re: [SLED] Linden Lab
+
+Sells Second Life!
+
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&gt;,
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+
+Date: Wednesday, 1 April, 2009, 9:59 PM
+
+
+
+FYI, the avatar stick bug April 1 joke was my idea.
+
+
+
+Also, I think it's really important to note that all of
+
+the developers
+
+of OpenSimulator have, since day one told people to avoid
+
+SVN for
+
+something that is production.   That includes anything that
+
+ you want
+
+to work.
+
+
+
+April 1st is a tradition in OpenSimulator and on April 1st
+
+a sense of
+
+humor is required when using SVN.   We made sure that all
+
+releases and
+
+tags did *not* have the April fool's joke in it for
+
+this very reason.
+
+   We make releases and tag revisions not for our benefit,
+
+but for
+
+yours.
+
+
+
+I know some people on this list don't spend time on
+
+IRC, however, it's
+
+been hinted upon since February that there would likely be
+
+an April
+
+fool's joke there.  For those that argue that most
+
+people don't sit in
+
+IRC, see two paragraphs up.
+
+
+
+Now, if despite our warnings and hints, you continued to
+
+use SVN, then
+
+likely your avatar were stick-bugged.
+
+
+
+I reiterate what has been said all along.   Direct SVN
+
+revisions are
+
+risky.  They've always been, and it's always bad
+
+practice to use them
+
+unless you've thoroughly looked them over.   A lot of
+
+people thought
+
+it was funny.  The people who did not were in
+
+ the far minority.
+
+
+
+
+
+Sincerely
+
+
+
+Teravus
+
+
+
+
+
+On 4/1/09, Jonathan Greenlee
+
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&gt;&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&gt; wrote:
+
+
+
+
+
+This was funny.
+
+Vandalising everyone's avatar was not.
+
+
+
+
+
+On Wed, Apr 1, 2009 at 3:59 PM, S Collingwood
+
+
+
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">collingwood.7 at osu.edu</A>&gt;&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">collingwood.7 at osu.edu</A>&gt;
+
+
+
+wrote:
+
+This is really BIG.  A takeover!  We can expect
+
+panzer tanks rolling into shopping malls --
+
+
+
+uniformed guards at sim
+
+crossings
+
+
+
+--  dogs and cats living together -- it's the
+
+
+
+END!!
+
+
+
+Linden Lab Sells Second Life!
+
+
+
+
+
+
+
+<A HREF="http://www.secondlifeupdate.com/news-and-stuff/linden-lab-sells-">http://www.secondlifeupdate.com/news-and-stuff/linden-lab-sells-</A>
+
+
+
+second-life/
+
+
+
+--
+
+
+
+
+
+
+
+_______________________________________________
+
+Opensim-users mailing list
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+
+
+
+
+
+ <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+_______________________________________________
+
+Opensim-users mailing list
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----Inline Attachment Follows-----
+
+
+
+_______________________________________________
+
+Opensim-users mailing list
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+
+
+
+
+
+_______________________________________________
+
+Opensim-users mailing list
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+_______________________________________________
+
+Opensim-users mailing list
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+
+_______________________________________________
+
+Opensim-users mailing list
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+_______________________________________________
+
+Opensim-users mailing list
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+--_000_63FAD4F222230A4EA79DE9E8BE66473518FF041Dwinxbeus19excha_
+Content-Type: text/html; charset=&quot;us-ascii&quot;
+Content-Transfer-Encoding: quoted-printable
+
+&lt;html xmlns:v=3D&quot;urn:schemas-microsoft-com:vml&quot; xmlns:o=3D&quot;urn:schemas-micr=
+osoft-com:office:office&quot; xmlns:w=3D&quot;urn:schemas-microsoft-com:office:word&quot; =
+xmlns:x=3D&quot;urn:schemas-microsoft-com:office:excel&quot; xmlns:p=3D&quot;urn:schemas-m=
+icrosoft-com:office:powerpoint&quot; xmlns:a=3D&quot;urn:schemas-microsoft-com:office=
+:<i>access&quot; xmlns:dt=3D&quot;uuid:C2F41010-65B3-11d1-A29F-00AA00C14882&quot; xmlns:s=3D&quot;=
+</I>uuid:BDC6E3F0-6DA3-11d1-A2A3-00AA00C14882&quot; xmlns:rs=3D&quot;urn:schemas-microsof=
+t-com:rowset&quot; xmlns:z=3D&quot;#RowsetSchema&quot; xmlns:b=3D&quot;urn:schemas-microsoft-co=
+m:office:publisher&quot; xmlns:ss=3D&quot;urn:schemas-microsoft-com:office:spreadshee=
+t&quot; xmlns:c=3D&quot;urn:schemas-microsoft-com:office:component:spreadsheet&quot; xmlns=
+:<i>odc=3D&quot;urn:schemas-microsoft-com:office:odc&quot; xmlns:oa=3D&quot;urn:schemas-micro=
+</I>soft-com:office:activation&quot; xmlns:html=3D&quot;<A HREF="http://www.w3.org/TR/REC-html40">http://www.w3.org/TR/REC-html40</A>&quot; =
+xmlns:q=3D&quot;<A HREF="http://schemas.xmlsoap.org/soap/envelope/">http://schemas.xmlsoap.org/soap/envelope/</A>&quot; xmlns:D=3D&quot;DAV:&quot; xmln=
+s:mt=3D&quot;<A HREF="http://schemas.microsoft.com/sharepoint/soap/meetings/">http://schemas.microsoft.com/sharepoint/soap/meetings/</A>&quot; xmlns:x2=3D=
+&quot;<A HREF="http://schemas.microsoft.com/office/excel/2003/xml">http://schemas.microsoft.com/office/excel/2003/xml</A>&quot; xmlns:ois=3D&quot;<A HREF="http://sc=">http://sc=</A>
+hemas.microsoft.com/sharepoint/soap/ois/&quot; xmlns:dir=3D&quot;<A HREF="http://schemas.micro=">http://schemas.micro=</A>
+soft.com/sharepoint/soap/directory/&quot; xmlns:ds=3D&quot;<A HREF="http://www.w3.org/2000/09/=">http://www.w3.org/2000/09/=</A>
+xmldsig#&quot; xmlns:dsp=3D&quot;<A HREF="http://schemas.microsoft.com/sharepoint/dsp">http://schemas.microsoft.com/sharepoint/dsp</A>&quot; xmlns:u=
+dc=3D&quot;<A HREF="http://schemas.microsoft.com/data/udc">http://schemas.microsoft.com/data/udc</A>&quot; xmlns:xsd=3D&quot;<A HREF="http://www.w3.org=">http://www.w3.org=</A>
+/2001/XMLSchema&quot; xmlns:sub=3D&quot;<A HREF="http://schemas.microsoft.com/sharepoint/soap/=">http://schemas.microsoft.com/sharepoint/soap/=</A>
+2002/1/alerts/&quot; xmlns:ec=3D&quot;<A HREF="http://www.w3.org/2001/04/xmlenc#">http://www.w3.org/2001/04/xmlenc#</A>&quot; xmlns:sp=3D&quot;=
+<A HREF="http://schemas.microsoft.com/sharepoint/">http://schemas.microsoft.com/sharepoint/</A>&quot; xmlns:sps=3D&quot;<A HREF="http://schemas.micro=">http://schemas.micro=</A>
+soft.com/sharepoint/soap/&quot; xmlns:xsi=3D&quot;<A HREF="http://www.w3.org/2001/XMLSchema-in=">http://www.w3.org/2001/XMLSchema-in=</A>
+stance&quot; xmlns:udcs=3D&quot;<A HREF="http://schemas.microsoft.com/data/udc/soap">http://schemas.microsoft.com/data/udc/soap</A>&quot; xmlns:udc=
+xf=3D&quot;<A HREF="http://schemas.microsoft.com/data/udc/xmlfile">http://schemas.microsoft.com/data/udc/xmlfile</A>&quot; xmlns:udcp2p=3D&quot;http:/=
+/schemas.microsoft.com/data/udc/parttopart&quot; xmlns:wf=3D&quot;<A HREF="http://schemas.micr=">http://schemas.micr=</A>
+osoft.com/sharepoint/soap/workflow/&quot; xmlns:dsss=3D&quot;<A HREF="http://schemas.microsoft=">http://schemas.microsoft=</A>
+.com/office/2006/digsig-setup&quot; xmlns:dssi=3D&quot;<A HREF="http://schemas.microsoft.com/o=">http://schemas.microsoft.com/o=</A>
+ffice/2006/digsig&quot; xmlns:mdssi=3D&quot;<A HREF="http://schemas.openxmlformats.org/package=">http://schemas.openxmlformats.org/package=</A>
+/2006/digital-signature&quot; xmlns:mver=3D&quot;<A HREF="http://schemas.openxmlformats.org/ma=">http://schemas.openxmlformats.org/ma=</A>
+rkup-compatibility/2006&quot; xmlns:m=3D&quot;<A HREF="http://schemas.microsoft.com/office/200=">http://schemas.microsoft.com/office/200=</A>
+4/12/omml&quot; xmlns:mrels=3D&quot;<A HREF="http://schemas.openxmlformats.org/package/2006/re=">http://schemas.openxmlformats.org/package/2006/re=</A>
+lationships&quot; xmlns:spwp=3D&quot;<A HREF="http://microsoft.com/sharepoint/webpartpages">http://microsoft.com/sharepoint/webpartpages</A>&quot; xm=
+lns:ex12t=3D&quot;<A HREF="http://schemas.microsoft.com/exchange/services/2006/types">http://schemas.microsoft.com/exchange/services/2006/types</A>&quot; xml=
+ns:ex12m=3D&quot;<A HREF="http://schemas.microsoft.com/exchange/services/2006/messages">http://schemas.microsoft.com/exchange/services/2006/messages</A>&quot; x=
+mlns:pptsl=3D&quot;<A HREF="http://schemas.microsoft.com/sharepoint/soap/SlideLibrary/">http://schemas.microsoft.com/sharepoint/soap/SlideLibrary/</A>&quot; x=
+mlns:spsl=3D&quot;<A HREF="http://microsoft.com/webservices/SharePointPortalServer/Publis=">http://microsoft.com/webservices/SharePointPortalServer/Publis=</A>
+hedLinksService&quot; xmlns:Z=3D&quot;urn:schemas-microsoft-com:&quot; xmlns:st=3D&quot;&#1;&quot; x=
+mlns=3D&quot;<A HREF="http://www.w3.org/TR/REC-html40">http://www.w3.org/TR/REC-html40</A>&quot;&gt;
+
+&lt;head&gt;
+&lt;META HTTP-EQUIV=3D&quot;Content-Type&quot; CONTENT=3D&quot;text/html; charset=3Dus-ascii&quot;=
+&gt;<i>
+</I>&lt;meta name=3DGenerator content=3D&quot;Microsoft Word 12 (filtered medium)&quot;&gt;
+&lt;style&gt;
+&lt;!--
+ /* Font Definitions */
+ @font-face
+	{font-family:&quot;Cambria Math&quot;;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:&quot;Times New Roman&quot;,&quot;serif&quot;;
+	color:black;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+pre
+	{mso-style-priority:99;
+	mso-style-link:&quot;HTML Preformatted Char&quot;;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:&quot;Courier New&quot;;
+	color:black;}
+span.HTMLPreformattedChar
+	{mso-style-name:&quot;HTML Preformatted Char&quot;;
+	mso-style-priority:99;
+	mso-style-link:&quot;HTML Preformatted&quot;;
+	font-family:Consolas;
+	color:black;}
+span.EmailStyle19
+	{mso-style-type:personal-reply;
+	font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+	color:#1F497D;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.Section1
+	{page:Section1;}
+--&gt;
+&lt;/style&gt;
+&lt;!--[if gte mso 9]&gt;&lt;xml&gt;
+ &lt;o:shapedefaults v:ext=3D&quot;edit&quot; spidmax=3D&quot;1026&quot; /&gt;
+&lt;/xml&gt;&lt;![endif]--&gt;&lt;!--[if gte mso 9]&gt;&lt;xml&gt;
+ &lt;o:shapelayout v:ext=3D&quot;edit&quot;&gt;
+  &lt;o:idmap v:ext=3D&quot;edit&quot; data=3D&quot;1&quot; /&gt;
+ &lt;/o:shapelayout&gt;&lt;/xml&gt;&lt;![endif]--&gt;
+&lt;/head&gt;
+
+&lt;body bgcolor=3Dwhite lang=3DEN-AU link=3Dblue vlink=3Dpurple&gt;
+
+&lt;div class=3DSection1&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;My advice would be run both.&lt;o:p&gt;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;We don&#8217;t up the protocol version too often &#8211; so =
+there&#8217;s nothing
+stopping you from running a handful of regions at trunk, and the remainder =
+on
+stable. If you have customers involved, while we appreciate the feedback &amp;#=
+8211; I would
+probably say stick with stable there. &lt;o:p&gt;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;For your own testing purposes, running trunk isn&#8217;t a b=
+ad option &#8211;
+and it also gives you the flexibility that if something is broken majorly, =
+you
+still have all your stable regions.&lt;o:p&gt;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;To be fair, the 0.6.3 release was not fantastic &#8211; the =
+avatar bug
+should have probably been fixed before that was tagged. I think in future t=
+hat
+complaint has registered pretty soundly and releases might be more thorough=
+ly
+tested through release candidates.&lt;o:p&gt;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;Adam&lt;o:p&gt;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;div style=3D'border:none;border-left:solid blue 1.5pt;padding:0cm 0cm 0cm =
+4.0pt'&gt;
+
+&lt;div&gt;
+
+&lt;div style=3D'border:none;border-top:solid #B5C4DF 1.0pt;padding:3.0pt 0cm =
+0cm 0cm'&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;b&gt;&lt;span lang=3DEN-US style=3D'font-size:10.0pt;font-f=
+amily:
+&quot;Tahoma&quot;,&quot;sans-serif&quot;;color:windowtext'&gt;From:&lt;/span&gt;&lt;/b&gt;&lt;span lang=3DEN-US
+style=3D'font-size:10.0pt;font-family:&quot;Tahoma&quot;,&quot;sans-serif&quot;;color:windowtex=
+t'&gt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] &lt;b&gt;On Behalf Of &lt;/b&gt;John
+Sheridan&lt;br&gt;
+&lt;b&gt;Sent:&lt;/b&gt; Wednesday, 1 April 2009 6:32 PM&lt;br&gt;
+&lt;b&gt;To:&lt;/b&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;br&gt;
+&lt;b&gt;Subject:&lt;/b&gt; Re: [Opensim-users] Safe use of OpenSim - was &quot;Fw: Re:
+[SLED] Linden Lab Sells Second Life!&quot;&lt;o:p&gt;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;Holy blog wars Batman!&nbsp; I can see emotions are ru=
+nning
+high, so I thread lightly while writing this...&nbsp; &lt;br&gt;
+&lt;br&gt;
+For around six months now since I and my cohorts started building out our g=
+rid
+we've been more or less running off of the trunk.&nbsp; We have a weekly up=
+date
+process wherein every Sunday after the commit emails stop flying by I'll sh=
+ut
+down, back up, then update everything to that Sunday's SVN.&nbsp; After the
+update is complete I'll go around in world, try a few tests to make sure th=
+at
+everything is in one piece and that basic functionality is there.&nbsp; So =
+far
+there have only been a handful of times that I've had to cancel or roll bac=
+k an
+update due to broken functionality or warnings on the mailing lists that he=
+avy
+changes were taking place. &lt;br&gt;
+&lt;br&gt;
+As far as data and content are concerned, we all realize that this is alpha
+software and that certain instabilities may exist from week to week.&nbsp; =
+So
+far we've not had any major disasters as far as data and content save a few
+mangled, non-persisting, or overly persisting (where they won't go away) pr=
+ims.&nbsp;
+However in most cases workarounds were available and all users were told ho=
+w to
+go about utilizing them.&nbsp; As an added measure, just in case we rely on=
+ the
+weekly backups as well periodic dumps of our sims into OAR files.&nbsp; &lt;br=
+&gt;<i>
+</I>&lt;br&gt;
+My primary reason for choosing this sort of procedure is so that while we a=
+re
+building, creating, and using the grid we can also contribute back to OpenS=
+im
+in the form of bug reports and feedback.&nbsp; (See a draft copy of our
+community standards for more on this:&nbsp; &lt;a
+href=3D&quot;<A HREF="http://www.pseudospace.net/joomla/index.php?option=3Dcom_content&amp;am=">http://www.pseudospace.net/joomla/index.php?option=3Dcom_content&amp;am=</A>
+p;view=3Darticle&amp;id=3D56&amp;Itemid=3D60&quot;&gt;<A HREF="http://www.pseudospace.net/jo=">http://www.pseudospace.net/jo=</A>
+omla/index.php?option=3Dcom_content&amp;view=3Darticle&amp;id=3D56&amp;Item=
+id=3D60&lt;/a&gt;)&lt;br&gt;
+&lt;br&gt;
+Regardless, we do consider our setup to be in quasi-production regardless o=
+f
+whatever minor glitches exist within the trunk.&nbsp; As well, we are sure =
+to
+make it quite clear to the few users that we do have (albeit not many as we=
+ do
+not yet have any completed or usable environments other then Ellis) that bo=
+th
+OpenSim as the underlying software and Pseudospace as the service itself ar=
+e
+under heavy development and could be unstable at times.&nbsp; &lt;br&gt;
+&lt;br&gt;
+Now as a software developer myself (albeit in a completely different realm =
+then
+OpenSim as I do small scale database / windows apps) I can understand the r=
+isks
+of running untested software for production uses, however in this case I'm
+unsure as how to proceed.&nbsp; We like contributing back to the community =
+in
+whatever way we can, and also enjoy testing or riding the bleeding edge of =
+the
+wave, yet after reading the prior posts I'm suddenly not sure if simply bac=
+king
+up, exporting, and rolling back is as safe as I thought.&nbsp; From the
+standpoint of those who develop OpenSim, would you guys say what I'm doing =
+is
+safe?&lt;br&gt;
+&lt;br&gt;
+Thanks and good karma to you all,&lt;br&gt;
+&lt;br&gt;
+&nbsp;- John Sheridan / Orion Pseudo&lt;br&gt;
+&lt;br&gt;
+Frisby, Adam wrote: &lt;o:p&gt;&lt;/o:p&gt;&lt;/p&gt;
+
+&lt;pre&gt;Honestly, I think there's some disconnects between people here that ne=
+ed to be addressed.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;There =
+are several different audiences here, and consequently several different re=
+actions. There is the group of users attempting to put OpenSim into product=
+ion environments - the harsher reactions I have seen tend to fall into this=
+ group. There is home users and hobbyists - the more positive reactions are=
+ from there.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;To the produc=
+tion users, we do as a team find it unfortunate you were badly impacted, ho=
+wever as a group a large portion of work on OpenSim comes from personal dev=
+elopers without sponsorship. As a team, we also make absolutely no guarante=
+es about trunk releases at all (infact we often make the opposite), the bes=
+t practices we publish on our website very clearly state that production us=
+ers should stick to a tagged release, and even then you are operating alpha=
+ code.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;While we have gener=
+ally been blessed with a reasonably well written and maintained codebase - =
+trunk is not guaranteed to operate. Had there been an accident and the data=
+base became corrupted over time due to coding error - the outrage on this l=
+ist would not have been as loud, however the impacts would have been signif=
+icantly worsened.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Often, d=
+evelopers need to break code and features in order to improve things, if we=
+ cannot make trunk unstable, then the ability to develop and continually im=
+prove the codebase is restricted. One recent example was some avatar appear=
+ance issues that showed up after the MXP stack - that one I caused by remov=
+ing code which erroneously assumed an avatar utilized the LLUDP Stack.&lt;o:p&gt;=
+&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;The short term result of that =
+change was it broke avatar appearance in certain circumstances for a period=
+ of about 24 hours, the long term result was we got one step closer to more=
+ protocols, more neutrality and abstracted behaviour - all seen as good thi=
+ngs to the codebase -- however another example of why we do not recommend a=
+nyone utilize trunk for production - it was still broken for a day, and thi=
+s is a regular occurance.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;=
+For instance, a patch not too long ago adjusted the asset database format -=
+ while fine on local systems with small asset counts, in a production envir=
+onment (specifically osgrid), it caused the entire database to melt. OSGrid=
+ accepts that risk since they are a testing grid - but to another operator,=
+ you would have applied that same patch just as easily as osgrid did if tod=
+ay's example is the norm.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;=
+Now the first response, I expect will be 'this was deliberate/vandalism' - =
+yes there was an april fools joke in the codebase. However, please consider=
+ the following:&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;* The impa=
+ct was for the most part completely negligible - no permanent changes were =
+made, the code deactivates automatically, a patch is available on mantis (a=
+nd is no longer in trunk anyway).&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;* You are running a =
+version of the codebase that is *explicitly marked as 'not suitable for pro=
+duction'*.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;* You are receiving a product for free unde=
+r an extremely liberal license on behalf of the generosity of others.&lt;o:p&gt;&lt;=
+/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;That april fools joke was /only=
+ ever accessible in the developers and testers oriented release/. The inten=
+ded audience was those two groups - developers and testers. Even the releas=
+e candidate version had the offending code removed.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o=
+:<i>p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;If you want to put OpenSim into production, fanta=
+</I>stic - we like to see it being used. However when you then do not follow th=
+e advice we post clearly on the website in multiple places and put trunk in=
+to production, then no - the responsibility for failure rests upon your sho=
+ulders - trunk is /not safe for production/.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&amp;nbs=
+p;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;We do recognize the growing corporate demand for OpenSim=
+ - it's one of the reason that people such as Stefan have begun a back-patc=
+hes version (post-fixes) which incorporates fixes into the last stable vers=
+ion. We spend the time maintaining that version because we recognise the ne=
+ed, it's also the reason we have been as a group moving towards more releas=
+e-oriented packaging such as the installers and other easy-to-deploy packag=
+es.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;If you are a corporate=
+ user putting OpenSim into production, make sure you have the following pre=
+parations:&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;1. Have a stabl=
+e revision handy - currently that is 0.6.3-postfixes. Sometimes bugs show u=
+p randomly and break things badly. You should always have a backup system w=
+hen working with OpenSim.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;=
+2. Use our postfix releases normally - sometimes a feature patch is very te=
+mpting to upgrade to, but then ask yourself what the cost might be? If stic=
+k figure avatars are going to cause you to have issues with clients - ask y=
+ourself what random object destruction might cause. It's happened in the pa=
+st on trunk - I have no doubts major unintended bugs will sneak into trunk =
+in future.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Only upgrade pa=
+st post-fixes if you keep a very keen eye on SVN commit logs and are capabl=
+e of testing hardened revisions.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pr=
+e&gt;&lt;pre&gt;3. Keep backups. Too many OpenSim installs do not do this. OAR works=
+ well for content, however a full database backup is recommend (this varies=
+ from tool to tool, know your system.)&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:=
+p&gt;&lt;/pre&gt;&lt;pre&gt;4. Slow and steady is the name of the game. We actually keep s=
+everal of our clients on a r6XXX release since we're able to confirm it wor=
+ks for their uses in the majority of cases and doesn't have unknown factors=
+.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Regards,&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre=
+&gt;<i>&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Adam&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:=
+</I>p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;-----Origin=
+al Message-----&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;From: &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&quot;&gt;opensim-users-bounce=
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">s at lists.berlios.de</A>&lt;/a&gt; [&lt;a
+href=3D&quot;mailto:opensim-users&quot;&gt;mailto:opensim-users&lt;/a&gt;-&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pr=
+e&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>&lt;/a&gt;] On B=
+ehalf Of Teravus Ovares&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Sent: Wednesday, 1 April 2009 =
+2:57 PM&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;To: &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Cc: &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&lt;/a&gt;&lt;o=
+:<i>p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Subject: Re: [Opensim-users] Fw: Re: [SLED] Linden Lab =
+</I>Sells Second&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Life!&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o=
+:<i>p&gt;&lt;/pre&gt;&lt;pre&gt;One more reply to this.&nbsp;&nbsp; Have a look at some posit=
+</I>ive responses.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;<A HREF="http://osgrid.org/forums/viewtopic.php?f=3D14&amp;amp;t=3D1051&amp;amp;star=">http://osgrid.org/forums/viewtopic.php?f=3D14&amp;t=3D1051&amp;star=</A>
+t=3D10&quot;&gt;<A HREF="http://osgrid.org/forums/viewtopic.php?f=3D14&amp;amp;t=3D1051&amp;amp;star=">http://osgrid.org/forums/viewtopic.php?f=3D14&amp;t=3D1051&amp;star=</A>
+t=3D10&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Sincrerely&lt;o:p&gt;=
+&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Teravus&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;=
+o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;On 4/1/09, Teravus Ovares &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&quot;&gt;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;&lt;/a&gt; wrote:&lt;o:p&gt;=
+&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;Now now, le=
+ts be reasonable.&nbsp;&nbsp;&nbsp;&nbsp; It's one thing to get April foole=
+d..&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt; it's another to gloat about it.&nbsp; Generally, =
+I don't think it's a&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o=
+:<i>p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+</I>
+&lt;pre&gt;good&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;idea to glo=
+at.&nbsp;&nbsp; It is what it is ..&nbsp;&nbsp;&nbsp; and we learn and cont=
+inue on.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Sincerely&lt;o:p&gt;&lt;/o=
+:<i>p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Teravus&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p=
+</I>&gt;<i>&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;On 4/1/09, Skidz Tweak =
+</I>&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">skidz.tweak at gmail.com</A>&quot;&gt;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">skidz.tweak at gmail.com</A>&gt;&lt;/a&gt; wro=
+te:&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;Don't let t=
+he door hit you in the butt!&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Everyone bitching about t=
+his only has theirselves to blame!&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;If you can't live w=
+ith that fact, keep making up crap in your head&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;saying it&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;was someone=
+ else fault. That's it... the sweet feel of denial.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o=
+:<i>p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;-----Original Message-----&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;F=
+</I>rom: &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&quot;&gt;opensim-users-bounce=
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">s at lists.berlios.de</A>&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;[&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&quot;&gt;mailto:opensim-users=
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">-bounces at lists.berlios.de</A>&lt;/a&gt;] On Behalf Of&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&amp;nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;Jonathan&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;Greenlee&lt;o:=
+p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Sent: Wednesday, April 01, 2009 4:07 PM&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;=
+&lt;pre&gt;To: &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Subject: Re: [Opensim-users] Fw: Re: [SLED] Lin=
+den Lab Sells Second&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nb=
+sp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;Life!&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;=
+&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;I want to make sure you understand why my company is now&lt;o=
+:<i>p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;=
+</I>/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;withdrawing our&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/p=
+re&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;good will a=
+nd support toward OpenSim,&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;And why we are withdrawing =
+our financial support from several&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&amp;=
+nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;OpenSim Grids&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre=
+&gt;<i>
+</I>
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;we were sup=
+porting with our business.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre=
+&gt;<i>--- On Wed, 4/1/09, MW &lt;a
+</I>href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michaelwri22 at yahoo.co.uk</A>&quot;&gt;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michaelwri22 at yahoo.co.uk</A>&gt;&lt;/=
+a&gt; wrote:&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&amp;nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;From: MW &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michaelwri22 at yahoo.co.uk</A>&quot;&gt;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">michaelwri22 at yahoo.co.uk</A>&gt;&lt;/=
+a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Subject: Re: [Opensim-users] Fw: Re: [SLED] Linden =
+Lab Sells&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;n=
+bsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;Second Life!&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;To: &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Date: Wednesday, April 1, 2009, 4:03 PM&lt;o:p&gt;&lt;/o=
+:<i>p&gt;&lt;/pre&gt;&lt;pre&gt;While&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Teravus did the april 1st joke, al=
+</I>l of core (or certainly&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;most of it) knew about it. And=
+ we fully supported him&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;applying it. As he said it was=
+ never in a tagged version.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pr=
+e&gt;--- On Wed, 1/4/09, Teravus Ovares&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&quot;&gt;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;&lt;/a&gt; wrote:&lt;o:p&gt;=
+&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;From: Teravus Ovares&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&quot;&gt;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;=
+/pre&gt;&lt;pre&gt;Subject: Re: [Opensim-users] Fw: Re: [SLED] Linden Lab&lt;o:p&gt;&lt;/o:p&gt;=
+&lt;/pre&gt;&lt;pre&gt;Sells Second Life!&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;To: &lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&lt;/a&gt;,&lt;=
+o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Date: Wednesday, 1 April, 2009, 9:59 PM&lt;o:p&gt;&lt;/o=
+:<i>p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;FYI, the avatar stick bug April 1=
+</I> joke was my idea.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Also, I=
+ think it's really important to note that all of&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;the d=
+evelopers&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;of OpenSimulator have, since day one told pe=
+ople to avoid&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;SVN for&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;something t=
+hat is production.&nbsp;&nbsp; That includes anything that&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;=
+&lt;pre&gt; you want&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;to work.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&amp;nbs=
+p;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;April 1st is a tradition in OpenSimulator and on April 1=
+st&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;a sense of&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;humor is required w=
+hen using SVN.&nbsp;&nbsp; We made sure that all&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;relea=
+ses and&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;tags did *not* have the April fool's joke in i=
+t for&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;this very reason.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&amp;nb=
+sp; We make releases and tag revisions not for our benefit,&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre=
+&gt;<i>&lt;pre&gt;but for&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;yours.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;=
+</I>/o:p&gt;&lt;/pre&gt;&lt;pre&gt;I know some people on this list don't spend time on&lt;o:p&gt;&lt;/o=
+:<i>p&gt;&lt;/pre&gt;&lt;pre&gt;IRC, however, it's&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;been hinted upon sinc=
+</I>e February that there would likely be&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;an April&lt;o:p&gt;&lt;/o=
+:<i>p&gt;&lt;/pre&gt;&lt;pre&gt;fool's joke there.&nbsp; For those that argue that most&lt;o:p&gt;&lt;=
+</I>/o:p&gt;&lt;/pre&gt;&lt;pre&gt;people don't sit in&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;IRC, see two parag=
+raphs up.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Now, if despite =
+our warnings and hints, you continued to&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;use SVN, then=
+&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;likely your avatar were stick-bugged.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre=
+&gt;<i>&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;I reiterate what has been said all along.=
+</I>&nbsp;&nbsp; Direct SVN&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;revisions are&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;=
+&lt;pre&gt;risky.&nbsp; They've always been, and it's always bad&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;=
+&lt;pre&gt;practice to use them&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;unless you've thoroughly loo=
+ked them over.&nbsp;&nbsp; A lot of&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;people thought&lt;o:p=
+&gt;<i>&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;it was funny.&nbsp; The people who did not were in&lt;o:p&gt;&lt;/=
+</I>o:p&gt;&lt;/pre&gt;&lt;pre&gt; the far minority.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/p=
+re&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Sincerely&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&amp;nb=
+sp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Teravus&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pr=
+e&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;On 4/1/09, Jonathan Greenlee&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;=
+&lt;pre&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&quot;&gt;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jonathangreenlee at yahoo.com</A>&amp;g=
+t;&lt;/a&gt; wrote:&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nbs=
+p;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;=
+&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;This was funny.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Vandalising everyone'=
+s avatar was not.&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&amp;n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre=
+&gt;<i>
+</I>
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;On Wed, Apr=
+ 1, 2009 at 3:59 PM, S Collingwood&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&amp;=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pr=
+e&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;a href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">collingwood.7 at osu.edu</A>&quot;&gt;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">collingwood.7 at osu.edu</A>&gt;=
+&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;=
+nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;wrote:&lt;o:p&gt;=
+&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;This is really BIG.&nbsp; A takeover!&nbsp; We can expect&lt;=
+o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;panzer tanks rolling into shopping malls --&lt;o:p&gt;&lt;/o:p&gt;=
+&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nbs=
+p;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;uniformed guards at sim&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;crossings&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre=
+&gt;<i>&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/p=
+</I>re&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;--&nbsp; do=
+gs and cats living together -- it's the&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&amp;n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p=
+&gt;<i>&lt;/pre&gt;&lt;/blockquote&gt;
+</I>
+&lt;/blockquote&gt;
+
+&lt;pre&gt;END!!&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;=
+nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;Linden Lab =
+Sells Second Life!&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;=
+&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;a href=3D&quot;<A HREF="http://www.secondlifeupdate.com/news-and-stuff/linden-lab-s=">http://www.secondlifeupdate.com/news-and-stuff/linden-lab-s=</A>
+ells&quot;&gt;<A HREF="http://www.secondlifeupdate.com/news-and-stuff/linden-lab-sells&lt;/a">http://www.secondlifeupdate.com/news-and-stuff/linden-lab-sells&lt;/a</A>&gt;-&lt;=
+o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;=
+&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;/blockquote&gt;
+
+&lt;pre&gt;second-life/&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;
+
+&lt;blockquote style=3D'margin-top:5.0pt;margin-bottom:5.0pt'&gt;&lt;pre&gt;--&lt;o:p&gt;&lt;/o:=
+p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;n=
+bsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;______________=
+_________________________________&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Opensim-users mailin=
+g list&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&amp;=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquo=
+te&gt;
+
+&lt;pre&gt;&nbsp;&lt;a href=3D&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-use=">https://lists.berlios.de/mailman/listinfo/opensim-use=</A>
+rs&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users&lt;/a">https://lists.berlios.de/mailman/listinfo/opensim-users&lt;/a</A>&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;=
+/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p=
+&gt;<i>&lt;/pre&gt;&lt;pre&gt;_______________________________________________&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre=
+</I>&gt;<i>&lt;pre&gt;Opensim-users mailing list&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+</I>href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&quot;&gt;<A HREF="https://li=">https://li=</A>
+sts.berlios.de/mailman/listinfo/opensim-users&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p=
+&gt;<i>&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;=
+</I>&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o=
+:<i>p&gt;&lt;/pre&gt;&lt;pre&gt;-----Inline Attachment Follows-----&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p=
+</I>&gt;<i>&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;_______________________________________________&lt;o:p=
+</I>&gt;<i>&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Opensim-users mailing list&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+</I>href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&quot;&gt;<A HREF="https://li=">https://li=</A>
+sts.berlios.de/mailman/listinfo/opensim-users&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p=
+&gt;<i>&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nb=
+</I>sp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;______________=
+_________________________________&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Opensim-users mailin=
+g list&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&quot;&gt;<A HREF="https://li=">https://li=</A>
+sts.berlios.de/mailman/listinfo/opensim-users&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p=
+&gt;<i>&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;_______________________________________________&lt;o:p=
+</I>&gt;<i>&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;Opensim-users mailing list&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+</I>href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&quot;&gt;<A HREF="https://li=">https://li=</A>
+sts.berlios.de/mailman/listinfo/opensim-users&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;o:p=
+&gt;<i>&nbsp;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o=
+</I>:<i>p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+</I>
+&lt;/blockquote&gt;
+
+&lt;pre&gt;_______________________________________________&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;O=
+pensim-users mailing list&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&quot;&gt;<A HREF="https://li=">https://li=</A>
+sts.berlios.de/mailman/listinfo/opensim-users&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&amp;nbs=
+p;&nbsp;&nbsp; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+
+&lt;pre&gt;_______________________________________________&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;O=
+pensim-users mailing list&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.</A>=
+de&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&lt;a
+href=3D&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&quot;&gt;<A HREF="https://li=">https://li=</A>
+sts.berlios.de/mailman/listinfo/opensim-users&lt;/a&gt;&lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;&lt;pre&gt;&amp;nbs=
+p; &lt;o:p&gt;&lt;/o:p&gt;&lt;/pre&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+
+--_000_63FAD4F222230A4EA79DE9E8BE66473518FF041Dwinxbeus19excha_--
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001820.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="001985.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1919">[ date ]</a>
+              <a href="thread.html#1919">[ thread ]</a>
+              <a href="subject.html#1919">[ subject ]</a>
+              <a href="author.html#1919">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

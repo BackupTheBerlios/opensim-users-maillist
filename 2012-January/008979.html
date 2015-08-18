@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] script question: llTargetOmega keeps working even with script turned off..
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20script%20question%3A%20llTargetOmega%20keeps%20working%0A%20even%20with%20script%20turned%20off..&In-Reply-To=%3C4F06B527.2090405%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008978.html">
+   <LINK REL="Next"  HREF="008983.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] script question: llTargetOmega keeps working even with script turned off..</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20script%20question%3A%20llTargetOmega%20keeps%20working%0A%20even%20with%20script%20turned%20off..&In-Reply-To=%3C4F06B527.2090405%40cox.net%3E"
+       TITLE="[Opensim-users] script question: llTargetOmega keeps working even with script turned off..">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Fri Jan  6 09:47:35 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008978.html">[Opensim-users] script question: llTargetOmega keeps working even with script turned off..
+</A></li>
+        <LI>Next message: <A HREF="008983.html">[Opensim-users] script question: llTargetOmega keeps working even with script turned off..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8979">[ date ]</a>
+              <a href="thread.html#8979">[ thread ]</a>
+              <a href="subject.html#8979">[ subject ]</a>
+              <a href="author.html#8979">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Personally I call llTargetOmega in a link message, one message to start 
+it and one to stop it. Cuts down a bit on scripts it would seem :)
+
+Example script I wrote:
+
+float speed = 0.35;
+
+default
+{
+     state_entry()
+     {
+
+     }
+     touch_start(integer x)
+     {
+         llMessageLinked(LINK_SET, 0, &quot;touched&quot;, llDetectedKey(0));   
+//Let scripts know object with this script was touched and who touched it
+     }
+     link_message(integer sender_num, integer num, string str, key id)
+     {
+         if(str == &quot;startrot&quot;)
+         {
+             llTargetOmega(&lt;0,0,1&gt;, speed, speed); //Start rotation
+         }
+         else if(str == &quot;stoprot&quot;)
+         {
+             llTargetOmega(&lt;0,0,0&gt;, 0.0, 0.0); //Stop rotation
+         }
+     }
+}
+
+Hope this helps
+
+
+On 1/5/2012 1:11 PM, DutchGlory wrote:
+&gt;<i> ok :)  thanks,  i'll  create a script with no rotation, to stop prim
+</I>&gt;<i> rotating...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Dutch..
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----
+</I>&gt;<i> _________________________________________
+</I>&gt;<i> DutchGlory
+</I>&gt;<i> My Opensim/Second Life Blog
+</I>&gt;<i> <A HREF="http://verwijs.wordpress.com">http://verwijs.wordpress.com</A>
+</I>&gt;<i> (Dutch, basic hardware/software help  windows, Mac, Linux)
+</I>&gt;<i> <A HREF="http://verwijs-pc.nl">http://verwijs-pc.nl</A>
+</I>&gt;<i> My Twitter Page:
+</I>&gt;<i> <A HREF="http://twitter.com/OpenSimFan">http://twitter.com/OpenSimFan</A>
+</I>&gt;<i> My Facebook page (be my friend, please )
+</I>&gt;<i> <A HREF="http://www.facebook.com/andre.verwijs">http://www.facebook.com/andre.verwijs</A>
+</I>&gt;<i> .
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/script-question-llTargetOmega-keeps-working-even-with-script-turned-off-tp7155523p7155668.html">http://opensim-users.2152040.n2.nabble.com/script-question-llTargetOmega-keeps-working-even-with-script-turned-off-tp7155523p7155668.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 9 Region Standalone on 0.7.3 Dev
+Physics: Open Dynamics Engine
+OS: Windows XP 32 Bit
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 3 GB DDR3
+Database: MySQL 5.1.11
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008978.html">[Opensim-users] script question: llTargetOmega keeps working even with script turned off..
+</A></li>
+	<LI>Next message: <A HREF="008983.html">[Opensim-users] script question: llTargetOmega keeps working even with script turned off..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8979">[ date ]</a>
+              <a href="thread.html#8979">[ thread ]</a>
+              <a href="subject.html#8979">[ subject ]</a>
+              <a href="author.html#8979">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

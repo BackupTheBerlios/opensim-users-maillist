@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Ubuntu%20and%20magic%20mini-trampolines%20%28crash%0A%09problem%29&In-Reply-To=%3C73204.33994.qm%40web45610.mail.sp1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002008.html">
+   <LINK REL="Next"  HREF="002010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)</H1>
+    <B>Snoopy Pfeffer</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Ubuntu%20and%20magic%20mini-trampolines%20%28crash%0A%09problem%29&In-Reply-To=%3C73204.33994.qm%40web45610.mail.sp1.yahoo.com%3E"
+       TITLE="[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)">snoopy.pfeffer at yahoo.com
+       </A><BR>
+    <I>Thu Apr 23 01:55:10 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002008.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash problem)
+</A></li>
+        <LI>Next message: <A HREF="002010.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2009">[ date ]</a>
+              <a href="thread.html#2009">[ thread ]</a>
+              <a href="subject.html#2009">[ subject ]</a>
+              <a href="author.html#2009">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have experienced the same when MONO_THREADS_PER_CPU is set to a very high number. 500 works for me.
+
+  Snoopy Pfeffer
+
+
+
+
+________________________________
+From: John Hopkin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at jfhopkin.karoo.co.uk</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Sent: Thursday, April 23, 2009 1:50:37 AM
+Subject: [Opensim-users] Ubuntu and magic mini-trampolines (crash problem)
+
+I've just upgraded Mono from 2.1 to 2.2 under Ubuntu Hardy, using Dr
+Scofield's script from here:
+
+<A HREF="http://xyzzyxyzzy.net/2009/02/17/updated-mono-build-script-mono-22/">http://xyzzyxyzzy.net/2009/02/17/updated-mono-build-script-mono-22/</A>
+
+and all went smoothly with that.
+
+But now, when I run OpenSim.exe, it loads OK at first, but then I get
+the error:
+
+&lt;start paste&gt;
+Region (root) # 0x18 0x0 0x0 0x55 0x8b 0xec 0x57 0x56 0x83 0xec 0x20
+0x8b 0x75 0x8 0x83 0xec 0x8 0x56 0x68 0x10 0x75 0xe8 0x9c 0x8b 0x5
+0x10 0x75 0xe8 0x9c 0xff 0x50 0x34 
+**
+ERROR:mini-trampolines.c:122:mono_magic_trampoline: assertion failed:
+(vt)
+Stacktrace:
+
+  at log4net.LogManager.WrapLogger (log4net.Core.ILogger) &lt;0xffffffff&gt;
+  at log4net.LogManager.WrapLogger (log4net.Core.ILogger) &lt;0x0001d&gt;
+&lt;end paste&gt;
+
+and a long stacktrace.  The server crashes, of course.  Presumably,
+the references to magic mini-trampolines are within the code; I don't
+have any scripts or objects that I'm aware of like that.
+
+Vital stats:
+
+* OpenSim revision 9205 (binary package from OSGrid)
+* Ubuntu Intrepid, kernel 2.6.27-11-generic
+* Mono run with MONO_THREADS_PER_CPU set to 2000
+* 7 regions run by one OpenSim.exe
+*  P4/3.6GHz, 2GB RAM, more than adequate (or were under Mono 2.1)
+* UGAIM through OSGrid
+* MySQL 14.12
+
+I'm completely at a loss as to what could be causing this.  Does
+anyone have any ideas?
+-- 
+John Hopkin
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+      
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090422/662d4e38/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090422/662d4e38/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002008.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash problem)
+</A></li>
+	<LI>Next message: <A HREF="002010.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2009">[ date ]</a>
+              <a href="thread.html#2009">[ thread ]</a>
+              <a href="subject.html#2009">[ subject ]</a>
+              <a href="author.html#2009">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

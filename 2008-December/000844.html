@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim of 64 bit Linux servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%20of%2064%20bit%20Linux%20servers&In-Reply-To=%3C05EB201423015E4CBC59DF30AE7687EB1963F4%40AEXCMS03.network.uni%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000843.html">
+   <LINK REL="Next"  HREF="000845.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim of 64 bit Linux servers</H1>
+    <B>Joss Winn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%20of%2064%20bit%20Linux%20servers&In-Reply-To=%3C05EB201423015E4CBC59DF30AE7687EB1963F4%40AEXCMS03.network.uni%3E"
+       TITLE="[Opensim-users] Opensim of 64 bit Linux servers">jwinn at lincoln.ac.uk
+       </A><BR>
+    <I>Wed Dec 17 21:53:31 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000843.html">[Opensim-users] Opensim of 64 bit Linux servers
+</A></li>
+        <LI>Next message: <A HREF="000845.html">[Opensim-users] Opensim of 64 bit Linux servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#844">[ date ]</a>
+              <a href="thread.html#844">[ thread ]</a>
+              <a href="subject.html#844">[ subject ]</a>
+              <a href="author.html#844">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I made some notes similar to this, too, specific to RedHat/CentOS 5.2 AMD 64bit.
+
+<A HREF="http://learninglab.lincoln.ac.uk/wiki/OpenSim">http://learninglab.lincoln.ac.uk/wiki/OpenSim</A>
+
+Joss
+
+--
+Joss Winn
+Technology Officer
+Centre for Educational Research &amp; Development
+University of Lincoln
+Brayford Pool
+Lincoln
+LN6 7TS
+
+
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> on behalf of Snoopy Pfeffer
+Sent: Wed 12/17/2008 19:56
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: [Opensim-users] Opensim of 64 bit Linux servers
+ 
+I saw that the 64 bit installation instructions on <A HREF="http://opensimulator.org/">http://opensimulator.org/</A> are not up-to-date anymore.
+
+I have installed opensim #7731 with ODE on a 64 bit ubuntu 8.10 server by doing the following steps:
+
+1. I have installed Mono 2.3 as described here:
+   <A HREF="http://osgrid.org/forums/viewtopic.php?f=14&amp;t=475">http://osgrid.org/forums/viewtopic.php?f=14&amp;t=475</A>
+   Mono 2.3 is required to avoid startup problems with newer opensim versions.
+
+2. I have downloaded and installed the lastest SVN version of opensim as usual (like a 32 bit system):
+   <A HREF="http://opensimulator.org/wiki/Build_Instructions">http://opensimulator.org/wiki/Build_Instructions</A>
+
+3. I have downloaded and installed the Open Dynamics Engine (ODE) to replace the 32 bit version of ODE with a 64 bit version. I did that with the following linux commands (it is expected that you have all required Linux building tools installed):
+   &gt; svn co <A HREF="http://opensimulator.org/svn/opensim-libs/trunk/unmanaged/OpenDynamicsEngine">http://opensimulator.org/svn/opensim-libs/trunk/unmanaged/OpenDynamicsEngine</A>
+   &gt; cd OpenDynamicEngine
+   &gt; chmod a+x ou/bootstrap
+   &gt; sh autogen.sh
+   &gt; CFLAGS=&quot;-m64&quot; ./configure --enable-shared
+   &gt; make
+   &gt; cp ./ode/src/.libs/libode.so ../opensim/bin/
+   &gt; vi ../opensim/bin/OpenSim.ini  (change av_capsule_standup_tensor_linux to 1700000)
+   The 'chmod' command is required to fix permissions that are wrong. The change in OpenSim.ini is required to avoid that avatars have bend legs and/or their feet are in the ground.
+
+I use this installation since about 2 weeks with ODE, Meshmerizer and XEngine and it works reliable, although 64 bit installations of opensim are not officially supported at the moment.
+
+    Snoopy Pfeffer
+
+
+
+      
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: winmail.dat
+Type: application/ms-tnef
+Size: 3756 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20081217/7f8f40a6/attachment.bin">https://lists.berlios.de/pipermail/opensim-users/attachments/20081217/7f8f40a6/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000843.html">[Opensim-users] Opensim of 64 bit Linux servers
+</A></li>
+	<LI>Next message: <A HREF="000845.html">[Opensim-users] Opensim of 64 bit Linux servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#844">[ date ]</a>
+              <a href="thread.html#844">[ thread ]</a>
+              <a href="subject.html#844">[ subject ]</a>
+              <a href="author.html#844">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

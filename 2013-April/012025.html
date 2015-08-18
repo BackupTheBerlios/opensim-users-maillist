@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] llGiveInventoryList to an object raises	exception
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llGiveInventoryList%20to%20an%20object%20raises%0A%09exception&In-Reply-To=%3CCABK-FkNpWBntB0p6hQzrpoVqcF0UvaCThDaOjVC5j-KOKc7r9g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012027.html">
+   <LINK REL="Next"  HREF="012029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] llGiveInventoryList to an object raises	exception</H1>
+    <B>Storm Singer</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llGiveInventoryList%20to%20an%20object%20raises%0A%09exception&In-Reply-To=%3CCABK-FkNpWBntB0p6hQzrpoVqcF0UvaCThDaOjVC5j-KOKc7r9g%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] llGiveInventoryList to an object raises	exception">mycatlovesme at gmail.com
+       </A><BR>
+    <I>Fri Apr 12 06:29:41 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012027.html">[Opensim-users] On Mesh Avatars and skin creation
+</A></li>
+        <LI>Next message: <A HREF="012029.html">[Opensim-users] llGiveInventoryList to an object raises exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12025">[ date ]</a>
+              <a href="thread.html#12025">[ thread ]</a>
+              <a href="subject.html#12025">[ subject ]</a>
+              <a href="author.html#12025">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Are all the textures good ones? Or is one of them corrupted? I seem to
+remember having some problem way back when, with diva, with a couple of the
+library textures being inaccessable.
+On Apr 11, 2013 11:55 AM, &quot;Jeff Kelley&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at pescadoo.net</A>&gt; wrote:
+
+&gt;<i> list items = [&quot;item1&quot;, &quot;item2&quot;, &quot;item3&quot;];
+</I>&gt;<i> llGiveInventoryList (llGetOwner(), &quot;folder&quot;, items);
+</I>&gt;<i>
+</I>&gt;<i> Works ok.
+</I>&gt;<i> ______________________________**________________
+</I>&gt;<i>
+</I>&gt;<i> list items = [&quot;item1&quot;, &quot;item2&quot;, &quot;item3&quot;];
+</I>&gt;<i> key objectId = &quot;9a0da4c0-2a4a-47a2-9108-**0e24991d207d&quot;; // An object in
+</I>&gt;<i> the same sim
+</I>&gt;<i> llGiveInventoryList (objectId, &quot;folder&quot;, items);
+</I>&gt;<i>
+</I>&gt;<i> Fails with:
+</I>&gt;<i>
+</I>&gt;<i> [06:25 AM] Brick Textures: System.Reflection.**TargetInvocationException:
+</I>&gt;<i> Exception has been thrown by the target of an invocation.
+</I>&gt;<i>
+</I>&gt;<i> Server stack trace:
+</I>&gt;<i>   at System.Reflection.MonoMethod.**Invoke (System.Object obj,
+</I>&gt;<i> BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[]
+</I>&gt;<i> parameters, System.Globalization.**CultureInfo culture) [0x00000]
+</I>&gt;<i>   at System.Reflection.MethodBase.**Invoke (System.Object obj,
+</I>&gt;<i> System.Object[] parameters) [0x00000]
+</I>&gt;<i>   at OpenSim.Region.ScriptEngine.**Shared.ScriptBase.Executor.**ExecuteEvent
+</I>&gt;<i> (System.String state, System.String FunctionName, System.Object[] args)
+</I>&gt;<i> [0x00000]
+</I>&gt;<i>
+</I>&gt;<i> Exception rethrown at [0]:
+</I>&gt;<i>  ---&gt; System.NullReferenceException: Object reference not set to an
+</I>&gt;<i> instance of an object
+</I>&gt;<i>
+</I>&gt;<i> Server stack trace:
+</I>&gt;<i>   at OpenSim.Region.Framework.**Scenes.Scene.**MoveTaskInventoryItems
+</I>&gt;<i> (UUID destID, System.String category, OpenSim.Region.Framework.**Scenes.SceneObjectPart
+</I>&gt;<i> host, System.Collections.Generic.**List`1 items) [0x00000]
+</I>&gt;<i>   at OpenSim.Region.ScriptEngine.**Shared.Api.LSL_Api.**llGiveInventoryL
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**________________
+</I>&gt;<i>
+</I>&gt;<i> REPRO:
+</I>&gt;<i>
+</I>&gt;<i> Rez box A.
+</I>&gt;<i> Script A:
+</I>&gt;<i>
+</I>&gt;<i> default {
+</I>&gt;<i>     state_entry() {
+</I>&gt;<i>         key id = llGetKey();
+</I>&gt;<i>         llOwnerSay((string)id);
+</I>&gt;<i>         llRemoveInventory(**llGetScriptName()); // Delete self
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> Copy UUID.
+</I>&gt;<i>
+</I>&gt;<i> Rez box B.
+</I>&gt;<i> Fill with textures (full-mod).
+</I>&gt;<i> Script B:
+</I>&gt;<i>
+</I>&gt;<i> key target = &quot;__paste_UUID_here__&quot;;
+</I>&gt;<i> integer LIST_WHAT = INVENTORY_TEXTURE;
+</I>&gt;<i>
+</I>&gt;<i> list makeList (integer what) {
+</I>&gt;<i>     list result;
+</I>&gt;<i>     integer howMany = llGetInventoryNumber (what);
+</I>&gt;<i>     integer i; for (i=0; i&lt;howMany; i++)
+</I>&gt;<i>         result += [ llGetInventoryName (what, i) ];
+</I>&gt;<i>     return result;
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> default {
+</I>&gt;<i>     state_entry() {
+</I>&gt;<i>         list items = makeList (LIST_WHAT);
+</I>&gt;<i>         llOwnerSay (llDumpList2String (items,&quot;\n&quot;));
+</I>&gt;<i>         llGiveInventoryList (target, &quot;textures&quot;, items);
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130412/9330fe59/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130412/9330fe59/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012027.html">[Opensim-users] On Mesh Avatars and skin creation
+</A></li>
+	<LI>Next message: <A HREF="012029.html">[Opensim-users] llGiveInventoryList to an object raises exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12025">[ date ]</a>
+              <a href="thread.html#12025">[ thread ]</a>
+              <a href="subject.html#12025">[ subject ]</a>
+              <a href="author.html#12025">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

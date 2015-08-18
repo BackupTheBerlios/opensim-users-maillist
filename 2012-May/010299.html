@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Multiple concurrent logins on same user account possible?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multiple%20concurrent%20logins%20on%20same%20user%20account%0A%20possible%3F&In-Reply-To=%3C4FAB1317.7080000%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010296.html">
+   <LINK REL="Next"  HREF="010303.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Multiple concurrent logins on same user account possible?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multiple%20concurrent%20logins%20on%20same%20user%20account%0A%20possible%3F&In-Reply-To=%3C4FAB1317.7080000%40googlemail.com%3E"
+       TITLE="[Opensim-users] Multiple concurrent logins on same user account possible?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu May 10 03:00:07 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010296.html">[Opensim-users] Multiple concurrent logins on same user account	possible?
+</A></li>
+        <LI>Next message: <A HREF="010303.html">[Opensim-users] Multiple concurrent logins on same user account	possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10299">[ date ]</a>
+              <a href="thread.html#10299">[ thread ]</a>
+              <a href="subject.html#10299">[ subject ]</a>
+              <a href="author.html#10299">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Very cool to hear about this.
+
+To my constant surprise, it is possible to log in the same avatar multiple times on the same grid [1].  However, it's 
+certainly not currently possible to log two agents for the same user into the same region or neighbouring regions (since 
+child/root agents would interfere with each other).
+
+I would say your best bet would be to do this with a region module [2] that detected the logged in root ScenePresences 
+(the OpenSimulator class that handles your avatar in sim) and added http handlers that could receive external HTTP 
+requests to manipulate a certain avatar (by caling through to animations code).
+
+Unfortunately, the internals of OpenSimulator are very hairy since they've evolved from a place where only external 
+clients needed to be able to perform these operations.  However, if you want any help exploring the codebase we're very 
+happy to provide it via this list or the in-world IRC channels, though that does depend on whether the right people are 
+around at the time.
+
+I think you could also do this by placing an LSL script in the simulator that registered lslhttp handlers to receive the 
+commands and then invoking OSSL functions [3] such as osAvatarPlayAnimation and osAvatarStopAnimation to manipulate the 
+appropriate avatar.  However, this would rely on having that script in every region I think (though conversely the 
+region module approach requires that you have that region module in every simulator).
+
+[1] <A HREF="http://opensimulator.org/mantis/view.php?id=5969">http://opensimulator.org/mantis/view.php?id=5969</A>
+[2] <A HREF="http://opensimulator.org/wiki/IRegionModule">http://opensimulator.org/wiki/IRegionModule</A>
+[3] <A HREF="http://opensimulator.org/wiki/Category:OSSL_Functions">http://opensimulator.org/wiki/Category:OSSL_Functions</A>
+
+On 09/05/12 09:36, Stephen Howell wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> This will sound like a viewer question, and I understand this is not the right place to ask viewer questions, but I am
+</I>&gt;<i> trying to determine if OpenSim will allow a single user account be logged in twice concurrently from two different
+</I>&gt;<i> clients. I think it doesn't allow this, but I might be missing something that would enable it.
+</I>&gt;<i>
+</I>&gt;<i> I'm working on a project to integrate Kinect gestures to control avatar actions in OpenSim.
+</I>&gt;<i>
+</I>&gt;<i> I have a working prototype which runs as a region module (DLL) in standalone OpenSim mode.
+</I>&gt;<i> We would like to expand on this by allowing the client use the Kinect and sent the commands remotely to the server.
+</I>&gt;<i>
+</I>&gt;<i> Initially I hoped to find an existing viewer that had a plugin architecture where I could integrate the Kinect code, but
+</I>&gt;<i> I haven't found any clients like this.
+</I>&gt;<i> I have two options as I see it:
+</I>&gt;<i> 1. Fork an existing client and add the Kinect code (overkill).
+</I>&gt;<i> 2. Write a minimal OpenMetaverse library based client that has no viewer but sends avatar commands to a client.
+</I>&gt;<i>
+</I>&gt;<i> I have already coded a tiny, non-viewer proof of concept OpenMetaverse/Kinect client, but I hit the problem that only
+</I>&gt;<i> other accounts can see the resulting actions on the avatar.
+</I>&gt;<i> If I log in with Hippo, say,  to the same account, it logs out the Kinect client, and vice versa.
+</I>&gt;<i> This is good and proper normal function for a server, but as this is a special case, I thought there might be a way to
+</I>&gt;<i> enable multiple concurrent login on a single account on the server?
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Stephen
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010296.html">[Opensim-users] Multiple concurrent logins on same user account	possible?
+</A></li>
+	<LI>Next message: <A HREF="010303.html">[Opensim-users] Multiple concurrent logins on same user account	possible?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10299">[ date ]</a>
+              <a href="thread.html#10299">[ thread ]</a>
+              <a href="subject.html#10299">[ subject ]</a>
+              <a href="author.html#10299">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

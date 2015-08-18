@@ -1,0 +1,406 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [Opensim-dev] Grid Numberging
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20Grid%20Numberging&In-Reply-To=%3C170fa1780811030749v499aa593o4305b2bc71b20982%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000554.html">
+   <LINK REL="Next"  HREF="000564.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [Opensim-dev] Grid Numberging</H1>
+    <B>James Stallings II</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20Grid%20Numberging&In-Reply-To=%3C170fa1780811030749v499aa593o4305b2bc71b20982%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] [Opensim-dev] Grid Numberging">james.stallings at gmail.com
+       </A><BR>
+    <I>Mon Nov  3 16:49:17 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000554.html">[Opensim-users] [Opensim-dev]  Grid Numberging
+</A></li>
+        <LI>Next message: <A HREF="000564.html">[Opensim-users] [Opensim-dev]  Grid Numberging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#555">[ date ]</a>
+              <a href="thread.html#555">[ thread ]</a>
+              <a href="subject.html#555">[ subject ]</a>
+              <a href="author.html#555">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am starting to see the 'problem' as two distinct issues, depending on
+one's focus. In the provider-centric view of LL, with many nods to DRM, what
+they do makes sense. They are, after all, trying to take a modicum of
+responsibility for preserving the ownership and related rights on the asset.
+
+In the more user-centric world we seem to feel pulled toward, a more
+distributed scenario makes more sense, performance impacts notwithstanding.
+
+The key to the most  reasonable architecture, as a result, will depend on
+how one optimizes for these orientations.
+
+The short story is, the shortcomings of the existing protocol are being
+manifest in terms of the direction we are pushing it in with this
+application; and we aren't going to to be able to influence the direction
+taken except in the most limited ways, until we a) produce a client, so we
+have control of both ends of 'the pipe', or b) get more thoroughly involved
+in LL's open source client efforts.
+
+The bottom line is, as long as they dictate the protocol, we have to play
+ball on their field, by their rules. And as long as we refuse to take up
+some leadership roles with respect to a/the client, they are in complete
+control of the protocol. That they agree to play along with us at all is
+just a courtesy.
+
+Cheers,
+James
+
+On Mon, Nov 3, 2008 at 9:31 AM, Diva Canto &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+
+&gt;<i>  Sure, I'll do this so not to get stuck. But this is so wrong...
+</I>&gt;<i> Region servers should not *cache* assets. Period. It's an unnecessary
+</I>&gt;<i> burden in two dimensions:
+</I>&gt;<i> 1) Performance.
+</I>&gt;<i> 2) Security of assets.
+</I>&gt;<i>
+</I>&gt;<i> Any dealings between assets and the viewer should be done directly between
+</I>&gt;<i> the viewer and asset servers. Region servers should be out of the loop.
+</I>&gt;<i> Except, of course, for serving the objects that are inworld. But the act of
+</I>&gt;<i> dragging an object from inventory to the world should result in a *copy*
+</I>&gt;<i> being created (posted either from the viewer or from the user's asset
+</I>&gt;<i> server) in the region server's asset *storage* (not cache), and not this
+</I>&gt;<i> horrendous optimization that the LL system currently does, and that pretty
+</I>&gt;<i> much stops the idea of scalability on its tracks.
+</I>&gt;<i>
+</I>&gt;<i> Is anyone here involved with LL Viewer development? I wonder how hard it
+</I>&gt;<i> would be for them to interpret steganographic urls in uuids... or do the
+</I>&gt;<i> right thing and use decent global resource identifiers, but I suspect that's
+</I>&gt;<i> way off the radar.
+</I>&gt;<i>
+</I>&gt;<i> Stefan Andersson wrote:
+</I>&gt;<i>
+</I>&gt;<i> Diva,
+</I>&gt;<i>
+</I>&gt;<i> there's a blindingly simple remedy; start treating the asset guid
+</I>&gt;<i> as something private between the region and the client, and publicly refer
+</I>&gt;<i> to assets by url instead.
+</I>&gt;<i>
+</I>&gt;<i> In effect, the fact that we are storing the assets untampered in the
+</I>&gt;<i> database is just a legacy issue. If we were to start processing the asset
+</I>&gt;<i> data more intelligently, things would look a lot differently.
+</I>&gt;<i>
+</I>&gt;<i> Suppose we;
+</I>&gt;<i>
+</I>&gt;<i> a) on asset upload, processed the asset and changed guids to urls, firstly
+</I>&gt;<i> by lookup (is this already an asset guid known to the region) then by url
+</I>&gt;<i> synthetization (create an asset storage url (maybe using the users home
+</I>&gt;<i> asset server that we already said we would store... ;D ) , post the binary
+</I>&gt;<i> to that and change all guid references in the asset to that)
+</I>&gt;<i>
+</I>&gt;<i> b) on asset download (from asset storage) processed the asset and changed
+</I>&gt;<i> urls to guid, again firstly by lookup (is it already known to the region)
+</I>&gt;<i> then, by fetching the asset by url and assigning it a guid.
+</I>&gt;<i>
+</I>&gt;<i> This would mean that the client, when it refers to an asset, actually
+</I>&gt;<i> requests it by the local guid that the region has assigned it - more as a
+</I>&gt;<i> local cache key than a public asset id.
+</I>&gt;<i>
+</I>&gt;<i> I believe this would solve the whole thing, more or less. I would love to
+</I>&gt;<i> see a proof of concept - it should be fairly easily thrown together,
+</I>&gt;<i> probably as a custom asset cache.
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> Stefan Andersson
+</I>&gt;<i> Tribal Media AB
+</I>&gt;<i>
+</I>&gt;<i> Join the 3d web revolution : <A HREF="http://tribalnet.se/">http://tribalnet.se/</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Date: Sat, 1 Nov 2008 07:52:33 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] [Opensim-dev] Grid Numberging
+</I>&gt;<i>
+</I>&gt;<i> The only reason why I'm suggesting the encoding hack as a horrible option
+</I>&gt;<i> not to be immediately discarded  is that it is probably the simplest thing
+</I>&gt;<i> to do for the LL Viewer to start pulling assets from different places on the
+</I>&gt;<i> internet. From all I know, the LL Viewer is deeply rooted on UUIDs for
+</I>&gt;<i> universal identification; refactoring this will be a massive undertaking on
+</I>&gt;<i> the viewer. But simply giving semantics to UUIDs would not be that big of a
+</I>&gt;<i> deal. I'm thinking a few conditionals here and there:
+</I>&gt;<i>
+</I>&gt;<i> url = RetrieveUrl(uuid)
+</I>&gt;<i> if ItsASyntacticallyValidUrl(url)
+</I>&gt;<i>    try to do the right thing, please
+</I>&gt;<i> else
+</I>&gt;<i>    do what you do now
+</I>&gt;<i>
+</I>&gt;<i> or something to this effect.
+</I>&gt;<i>
+</I>&gt;<i> Of course, we're hitting our heads again on the pre-condition of using the
+</I>&gt;<i> LL Viewer...
+</I>&gt;<i>
+</I>&gt;<i> Dickson, Mike (ISS Software) wrote:
+</I>&gt;<i>
+</I>&gt;<i>  We really don't want to start encoding info into a GUID. The RFC that
+</I>&gt;<i> describes them pretty much details what kinds of entropy can be used.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I've been thinking for a while that the handle service (
+</I>&gt;<i> <A HREF="http://www.handle.net">http://www.handle.net</A>) might be a nice way to do a URL style mechanism to
+</I>&gt;<i> refer to assets and such not on a local server.  It's been a while since I
+</I>&gt;<i> looked at it but it's pretty much designed for the purpose and there's a
+</I>&gt;<i> proxy architecture already defined for it.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Mike
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> *From:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [
+</I>&gt;<i> mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&gt;]
+</I>&gt;<i> *On Behalf Of *Diva Canto
+</I>&gt;<i> *Sent:* Saturday, November 01, 2008 9:05 AM
+</I>&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Subject:* Re: [Opensim-users] [Opensim-dev] Grid Numberging
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Actually, I just realized that the problem is already much worse than I
+</I>&gt;<i> thought.
+</I>&gt;<i> The practices that we are all doing around opensim completely invalidate
+</I>&gt;<i> the concept of uniqueness in UUIDs. This comes from the fact that UUIDs are
+</I>&gt;<i> being externalized into DBs and XML representations, which are then being
+</I>&gt;<i> imported elsewhere. As people reuse entire DBs and XML files to recreate the
+</I>&gt;<i> same worlds in different grids, uniqueness goes down the drain. So
+</I>&gt;<i> definitely, forget about &quot;Universal&quot; Unique Identification with UUIDs;
+</I>&gt;<i> uris/urls are absolutely required for universal naming. The only way to
+</I>&gt;<i> savage UUIDs would be use part of their representation to deterministically
+</I>&gt;<i> code up the ip/port of where they come from.
+</I>&gt;<i>
+</I>&gt;<i> Stefan Andersson wrote:
+</I>&gt;<i>
+</I>&gt;<i> And the whole thread started with suggesting we allocate information bits
+</I>&gt;<i> to encode semantics. Which drastically heightens the risk of collisions,
+</I>&gt;<i> intentional or malicious.
+</I>&gt;<i>
+</I>&gt;<i> Just see guids as private to the trust domain, and we'll all fine. Grids
+</I>&gt;<i> should be publicly referred to by something riches, as an uri/url for
+</I>&gt;<i> example.
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> Stefan Andersson
+</I>&gt;<i> Tribal Media AB
+</I>&gt;<i>
+</I>&gt;<i> Join the 3d web revolution : <A HREF="http://tribalnet.se/">http://tribalnet.se/</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  ------------------------------
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Date: Fri, 31 Oct 2008 20:10:41 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] [Opensim-dev] Grid Numberging
+</I>&gt;<i>
+</I>&gt;<i> Not to mention the dudes and dudettes who generate region UUIDs by hand...
+</I>&gt;<i> (a-hem)
+</I>&gt;<i> Purely random UUIDs that don't encode higher-order information are too
+</I>&gt;<i> fragile when there is a chance that people will get their hands on them. I'm
+</I>&gt;<i> not even talking about malicious manipulation, just simple human
+</I>&gt;<i> intervention.
+</I>&gt;<i>
+</I>&gt;<i> Frisby, Adam wrote:
+</I>&gt;<i>
+</I>&gt;<i>  Yeah, the reason I said 'almost' wasn't because of a good UUID generator, - it's the bad ones.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> IE, people using bad random sources, etc which dramatically increase the chance of a collision - ie if you are only getting 30 bits of randomness, you could run into a collision fairly quickly.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Adam
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  -----Original Message-----
+</I>&gt;<i>
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:opensim-users &lt;opensim-users&gt;-
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>] On Behalf Of Sean Dague
+</I>&gt;<i>
+</I>&gt;<i> Sent: Friday, 31 October 2008 4:48 PM
+</I>&gt;<i>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> Subject: Re: [Opensim-users] [Opensim-dev] Grid Numberging
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Dr Scofield wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  Frisby, Adam wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  Shouldn't UUIDs by definition be unique?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> IE &#8211; if your generating them randomly a collision is almost
+</I>&gt;<i>
+</I>&gt;<i> guaranteed to never ever occur.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  &quot;almost&quot; being a key word here...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  &quot;...after generating 1 billion UUIDs every second for the next 100
+</I>&gt;<i>
+</I>&gt;<i> years, the probability of creating just one duplicate would be about
+</I>&gt;<i>
+</I>&gt;<i> 50%. The probability of one duplicate would be about 50% if every
+</I>&gt;<i>
+</I>&gt;<i> person on earth owns 600 million UUIDs.&quot; &lt;<A HREF="http://en.wikipedia.org/wiki/UuidJusttokeep">http://en.wikipedia.org/wiki/UuidJusttokeep</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>   &lt;<A HREF="http://en.wikipedia.org/wiki/UuidJusttokeep">http://en.wikipedia.org/wiki/UuidJusttokeep</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://en.wikipedia.org/wiki/Uuid">http://en.wikipedia.org/wiki/Uuid</A> &lt;<A HREF="http://en.wikipedia.org/wiki/UuidJusttokeep">http://en.wikipedia.org/wiki/UuidJusttokeep</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>   &lt;<A HREF="http://en.wikipedia.org/wiki/UuidJusttokeep">http://en.wikipedia.org/wiki/UuidJusttokeep</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> Just to keep &quot; &lt;<A HREF="http://en.wikipedia.org/wiki/UuidJusttokeep">http://en.wikipedia.org/wiki/UuidJusttokeep</A>&gt;almost&quot; in perspective,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         -Sean
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i>
+</I>&gt;<i> Sean Dague / Neas Bade
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">sdague at gmail.com</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://dague.net">http://dague.net</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+===================================
+The wind
+scours the earth for prayers
+The night obscures them
+
+<A HREF="http://osgrid.org">http://osgrid.org</A>
+<A HREF="http://del.icio.us/SPQR">http://del.icio.us/SPQR</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20081103/e9d276b0/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20081103/e9d276b0/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000554.html">[Opensim-users] [Opensim-dev]  Grid Numberging
+</A></li>
+	<LI>Next message: <A HREF="000564.html">[Opensim-users] [Opensim-dev]  Grid Numberging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#555">[ date ]</a>
+              <a href="thread.html#555">[ thread ]</a>
+              <a href="subject.html#555">[ subject ]</a>
+              <a href="author.html#555">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

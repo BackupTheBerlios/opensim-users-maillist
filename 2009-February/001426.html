@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Help in CPU usage diagnosis, please
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%20in%20CPU%20usage%20diagnosis%2C%20please&In-Reply-To=%3CBLU134-W391345E5377A0EF6D64B36D5B80%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001419.html">
+   <LINK REL="Next"  HREF="001427.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Help in CPU usage diagnosis, please</H1>
+    <B>Stefan Andersson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%20in%20CPU%20usage%20diagnosis%2C%20please&In-Reply-To=%3CBLU134-W391345E5377A0EF6D64B36D5B80%40phx.gbl%3E"
+       TITLE="[Opensim-users] Help in CPU usage diagnosis, please">stefan at tribalmedia.se
+       </A><BR>
+    <I>Fri Feb 13 08:46:41 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001419.html">[Opensim-users] Help in CPU usage diagnosis, please
+</A></li>
+        <LI>Next message: <A HREF="001427.html">[Opensim-users] Help in CPU usage diagnosis, please
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1426">[ date ]</a>
+              <a href="thread.html#1426">[ thread ]</a>
+              <a href="subject.html#1426">[ subject ]</a>
+              <a href="author.html#1426">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+There are some diagnostics commands like
+
+ 
+
+show statistics
+
+and
+
+show queues
+
+ 
+
+that could sometimes be instructional.
+
+
+Also, you can monitor the regions with the Statistics module that resides on /SStats on the region http server (if my memory serve me right)
+
+Best regards,
+Stefan Andersson
+Tribal Media AB
+
+
+
+ 
+&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at jfhopkin.karoo.co.uk</A>
+</I>&gt;<i> Date: Thu, 12 Feb 2009 19:07:21 +0000
+</I>&gt;<i> Subject: [Opensim-users] Help in CPU usage diagnosis, please
+</I>&gt;<i> 
+</I>&gt;<i> I've noticed the past couple of builds I've used have sometimes make
+</I>&gt;<i> heavy use of the CPU even when idle. For example, today, after
+</I>&gt;<i> leaving the system idle overnight, the two virtual CPUs (a single-core
+</I>&gt;<i> Pentium 4) were running constantly at 96-99% each, whereas normally
+</I>&gt;<i> I'd expect 35-40% and 12-15% during idle running, most of that
+</I>&gt;<i> non-Opensim overhead.
+</I>&gt;<i> 
+</I>&gt;<i> When this happens, sometimes - but not always - a reload of the server
+</I>&gt;<i> fixes it. I'm only running a single OpenSim.exe, and using OSGrid's
+</I>&gt;<i> UGAIM.
+</I>&gt;<i> 
+</I>&gt;<i> This is noticeable in-world as lag, and I'd like to find out what's
+</I>&gt;<i> causing it, but I don't know how to narrow it down, other than by
+</I>&gt;<i> eliminating various regions and also disabling services such as
+</I>&gt;<i> scripting and prim physics. With five regions, and more on the way,
+</I>&gt;<i> it's pretty difficult to eliminate anything that way, especially with
+</I>&gt;<i> something that's intermittent like this.
+</I>&gt;<i> 
+</I>&gt;<i> It strikes me that I know very little of what I, as a user, can do to
+</I>&gt;<i> try to diagnose something like this. I'd like to have more details
+</I>&gt;<i> before I file a Mantis, since a description alone can't really be much
+</I>&gt;<i> use to the devs. The steps I could take with what knowledge I have
+</I>&gt;<i> are:
+</I>&gt;<i> 
+</I>&gt;<i> 1. Examine OpenSim.log and look for anything suspicious-looking,
+</I>&gt;<i> especially if it's happening repeatedly. Do the same with the
+</I>&gt;<i> on-screen messages (difficult, since the virtual console only scrolls
+</I>&gt;<i> back so far).
+</I>&gt;<i> 
+</I>&gt;<i> 2. Look at other vital signs, such as network use and free memory -
+</I>&gt;<i> in this case, these are normal. In fact, at 33-38% user memory used
+</I>&gt;<i> of 2GB for four regions, that's better lately than it's been for a
+</I>&gt;<i> long time.
+</I>&gt;<i> 
+</I>&gt;<i> 3. Selectively disable various regions and services, as mentioned
+</I>&gt;<i> above, and monitor the situation over time. This is difficult, as it
+</I>&gt;<i> naturally affects our use of the sim in the meantime.
+</I>&gt;<i> 
+</I>&gt;<i> 4. Make sure that it is the OpenSim.exe process that's causing it by
+</I>&gt;<i> using &quot;ps&quot; (in *nix) and similar tools to examine the process. (It
+</I>&gt;<i> is).
+</I>&gt;<i> 
+</I>&gt;<i> What else can I do, in general terms? What debugging tools and
+</I>&gt;<i> techniques can a user with little direct experience of OS's internal
+</I>&gt;<i> machinations use to help pinpoint a problem? Is there any way of
+</I>&gt;<i> finding out the resource usage of, say, individual modules? Of
+</I>&gt;<i> getting more detailed logs? Anything?
+</I>&gt;<i> 
+</I>&gt;<i> Please note that the actual problem I'm having at the moment is only
+</I>&gt;<i> an example - I'm interested in general in being able to be more
+</I>&gt;<i> proactive in diagnosing Opensim problems, knowing as a developer
+</I>&gt;<i> myself (though not in this project) how valuable more detail from
+</I>&gt;<i> users can be in tacking a problem.
+</I>&gt;<i> -- 
+</I>&gt;<i> John Hopkin
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090213/3386e50b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090213/3386e50b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001419.html">[Opensim-users] Help in CPU usage diagnosis, please
+</A></li>
+	<LI>Next message: <A HREF="001427.html">[Opensim-users] Help in CPU usage diagnosis, please
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1426">[ date ]</a>
+              <a href="thread.html#1426">[ thread ]</a>
+              <a href="subject.html#1426">[ subject ]</a>
+              <a href="author.html#1426">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

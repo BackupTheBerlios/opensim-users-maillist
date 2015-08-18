@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Change console prompt
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Change%20console%20prompt&In-Reply-To=%3C2A6930AC-141E-410B-947A-9E531D67E44A%40spekuloos.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008583.html">
+   <LINK REL="Next"  HREF="008562.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Change console prompt</H1>
+    <B>Gudule Lapointe</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Change%20console%20prompt&In-Reply-To=%3C2A6930AC-141E-410B-947A-9E531D67E44A%40spekuloos.be%3E"
+       TITLE="[Opensim-users] Change console prompt">gudule at spekuloos.be
+       </A><BR>
+    <I>Thu Nov 10 02:38:54 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008583.html">[Opensim-users] De-centralized grid
+</A></li>
+        <LI>Next message: <A HREF="008562.html">[Opensim-users] Change console prompt
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8557">[ date ]</a>
+              <a href="thread.html#8557">[ thread ]</a>
+              <a href="subject.html#8557">[ subject ]</a>
+              <a href="author.html#8557">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+I submitted a patch 2 weeks ago for this mod, but I didn't get any reaction. Am I the only one running several simulators? ;-)
+	
+	<A HREF="http://opensimulator.org/mantis/view.php?id=5760">http://opensimulator.org/mantis/view.php?id=5760</A>
+
+
+
+Le 28 oct. 2011 &#224; 18:11, Gudule Lapointe a &#233;crit :
+
+&gt;<i> OK, it didn't work the way you said (things &quot;not defined in this context&quot;) and after tweaking a bit, it kinda worked, but didn't fetch the values with configSource.Configs
+</I>&gt;<i> 
+</I>&gt;<i> But I think I get it now. Here is what I have done:
+</I>&gt;<i> 	added  
+</I>&gt;<i> 		protected string m_custom_prompt;
+</I>&gt;<i> 	in public class OpenSim
+</I>&gt;<i> 	and 
+</I>&gt;<i> 		m_custom_prompt = startupConfig.GetString(&quot;custom_prompt&quot;, &quot;Region&quot;);
+</I>&gt;<i> 	after startupConfig (under &quot;if(startupConfig != NULL)
+</I>&gt;<i> 	and then
+</I>&gt;<i> 		m_console.DefaultPrompt = String.Format(&quot;{0} ({1}) &quot;, m_custom_prompt, regionName);
+</I>&gt;<i> 	at the original place
+</I>&gt;<i> 
+</I>&gt;<i> Now, I can set up the custom_prompt value in OpenSim.ini or GridCommon.ini, and if it is not set, it defaults to the current &quot;Region&quot; prompt.
+</I>&gt;<i> 
+</I>&gt;<i> In short, I patched OpenSim/Region/Application/OpenSim.cs this way:
+</I>&gt;<i> 58a59
+</I>&gt;&gt;<i> 	protected string m_custom_prompt;
+</I>&gt;<i> 110a112
+</I>&gt;&gt;<i> 		m_custom_prompt = startupConfig.GetString(&quot;custom_prompt&quot;, &quot;Region&quot;);
+</I>&gt;<i> 831d832
+</I>&gt;<i> &lt; 
+</I>&gt;<i> 834c835
+</I>&gt;<i> &lt;             m_console.DefaultPrompt = String.Format(&quot;Region ({0}) &quot;, regionName);
+</I>&gt;<i> ---
+</I>&gt;&gt;<i> 	    m_console.DefaultPrompt = String.Format(&quot;{0} ({1}) &quot;, m_custom_prompt, regionName);
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Le 28 oct. 2011 &#224; 16:49, Garmin Kawaguichi a &#233;crit :
+</I>&gt;<i> 
+</I>&gt;&gt;&gt;<i> ----- Original Message ----- From: &quot;Gudule Lapointe&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>&gt;
+</I>&gt;&gt;&gt;<i> Sent: Friday, October 28, 2011 4:32 PM
+</I>&gt;&gt;&gt;<i> Subject: Re: [Opensim-users] Change console prompt
+</I>&gt;&gt;&gt;<i> In
+</I>&gt;&gt;&gt;<i> string m_custom_prompt = configSource.Configs[&quot;Startup&quot;].GetString(&quot;custom_prompt&quot;, String.Empty);
+</I>&gt;&gt;&gt;<i> does &quot;String.Empty&quot; defines the value to use if custom_prompt is not set?
+</I>&gt;&gt;&gt;<i> In this case, I guess we should use &quot;Region&quot; (the current value) instead?
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Yes, it seems to be the &quot;default value&quot;
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> There is an example of string used as default in OpenSim.cs line 569
+</I>&gt;&gt;<i> and an example without default value in LoadImageURLModule.cs lines 109-110
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> GCI
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008583.html">[Opensim-users] De-centralized grid
+</A></li>
+	<LI>Next message: <A HREF="008562.html">[Opensim-users] Change console prompt
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8557">[ date ]</a>
+              <a href="thread.html#8557">[ thread ]</a>
+              <a href="subject.html#8557">[ subject ]</a>
+              <a href="author.html#8557">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

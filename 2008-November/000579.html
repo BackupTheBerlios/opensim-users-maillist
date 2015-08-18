@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sim Version Filtering (re: Mantis #0002361: adding simulator release control at grid level to avoid out of date	simulator registration )
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20Version%20Filtering%20%28re%3A%20Mantis%20%230002361%3A%0A%20adding%20simulator%20release%20control%20at%20grid%20level%20to%20avoid%20out%20of%0A%20date%09simulator%20registration%20%29&In-Reply-To=%3C49107B6A.2090307%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000576.html">
+   <LINK REL="Next"  HREF="000581.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sim Version Filtering (re: Mantis #0002361: adding simulator release control at grid level to avoid out of date	simulator registration )</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20Version%20Filtering%20%28re%3A%20Mantis%20%230002361%3A%0A%20adding%20simulator%20release%20control%20at%20grid%20level%20to%20avoid%20out%20of%0A%20date%09simulator%20registration%20%29&In-Reply-To=%3C49107B6A.2090307%40googlemail.com%3E"
+       TITLE="[Opensim-users] Sim Version Filtering (re: Mantis #0002361: adding simulator release control at grid level to avoid out of date	simulator registration )">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Nov  4 17:42:18 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000576.html">[Opensim-users] Sim Version Filtering (re: Mantis #0002361: adding	simulator release control at grid level to avoid out of date	simulator registration )
+</A></li>
+        <LI>Next message: <A HREF="000581.html">[Opensim-users] Sim Version Filtering (re: Mantis #0002361:	adding simulator release control at grid level to avoid out	of date simulator registration )
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#579">[ date ]</a>
+              <a href="thread.html#579">[ thread ]</a>
+              <a href="subject.html#579">[ subject ]</a>
+              <a href="author.html#579">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I agree that there does need to be a way to stop regions registering that do not implement the required interface.
+
+I don't like revision number as a solution because
+
+a)  It may well not be present for people running binaries or building source that doesn't come straight from SVN
+
+b)  Revision numbers are specific to the source control system we happen to be using.  If we ever migrate this is bad. 
+It may also be bad for people using git-svn.  It is also bad for interop with non-OpenSim virtual environment systems.
+
+Therefore, I tend to favour an approach where individual interfaces are manually versioned by the developer when the 
+interface is changed.  I don't think that this is too much to ask.
+
+However, if somebody wants to supply a patch that implements filtering by revision that somehow avoids the problems in 
+(a), then I will not object, though this will not be permanent.
+
+
+James Stallings II wrote:
+&gt;<i> Greetings Devs :)
+</I>&gt;<i> 
+</I>&gt;<i> Sacha Magne had asked me to annotate this issue in the Mantis, perhaps 
+</I>&gt;<i> unawares that it was an issue rather close to my heart, as I have been 
+</I>&gt;<i> asking for something like this for some time.
+</I>&gt;<i> 
+</I>&gt;<i> As my thinking on this somewhat exceeds the scope of a note to the 
+</I>&gt;<i> mantis, I decided to make my post here instead.
+</I>&gt;<i> 
+</I>&gt;<i> The short take: I think this is a feature very much in need of 
+</I>&gt;<i> implementation, generally speaking - I think it impacts region (and 
+</I>&gt;<i> therefore grid) stability in a sufficiently significant manner that it 
+</I>&gt;<i> should take on an increased level of prioritization.
+</I>&gt;<i> 
+</I>&gt;<i> The long view: Simply put, refusing to register an out of date revision 
+</I>&gt;<i> of the region is not sufficient to the cause. Additionally, there is the 
+</I>&gt;<i> (valid) conern about SVN revision numbers being used to track the 
+</I>&gt;<i> 'fingerprint' of a simulator that is being connected.
+</I>&gt;<i> 
+</I>&gt;<i> First, I'll address the issue of SVN revision number as a fingerprint:
+</I>&gt;<i> 
+</I>&gt;<i> While it may not be the most desireable means of identifying the region 
+</I>&gt;<i> for these purposes, it is the one that has the ideal level of 
+</I>&gt;<i> granularity - as quickly as the project moves, and as dramatic as 
+</I>&gt;<i> changes in operations sometimes are, the release number is simply not 
+</I>&gt;<i> sufficient to the cause as we currently stamp releases. So, in order to 
+</I>&gt;<i> make this feature deliver acording to the need, we either must use the 
+</I>&gt;<i> SVN revision number, or come up with some other methodology for 
+</I>&gt;<i> identifying the age of the region in  terms of its functional age. The 
+</I>&gt;<i> obvious thing to use is the revision number, as it tracks the level of 
+</I>&gt;<i> change at precisely the right granularity. The question becomes then one 
+</I>&gt;<i> of pinning the revision down in the runtime environment. There are 
+</I>&gt;<i> already provisions in place for this to happen, and if the software is 
+</I>&gt;<i> built to accomodate it, the revision will be available at run-time - it 
+</I>&gt;<i> may be sufficient to say that from the point of the introduction of this 
+</I>&gt;<i> feature, any region not built such that it identifies itself by revision 
+</I>&gt;<i> number is disallowed from participation (provided, of course, that this 
+</I>&gt;<i> feature is enabled in the approriate config file).
+</I>&gt;<i> 
+</I>&gt;<i> Finally, I'll address the insufficiency of this approach as a solution:
+</I>&gt;<i> 
+</I>&gt;<i> Denying registration of a new region for these purposes is good - but 
+</I>&gt;<i> it's not the full solution to the problem. First, I suppose I need to 
+</I>&gt;<i> point out the obvious in order to lay the groundwork for my assertion: a 
+</I>&gt;<i> running simulator connected to a grid is not 'connected' in any 
+</I>&gt;<i> meaningfull sense; rather, it is 'registered'. Registration means that 
+</I>&gt;<i> the simulator has a) permission to use the grid services provided, and 
+</I>&gt;<i> b) sufficient information on file in the grid backstore to facillitate 
+</I>&gt;<i> the delivery of grid services to the simulator. This is significant 
+</I>&gt;<i> because, for instance, one may upgrade a grid in the presence of many 
+</I>&gt;<i> running and 'connected' simulators, and provided there is not sufficient 
+</I>&gt;<i> change in the protocols, the simulator will never be the wiser for it.
+</I>&gt;<i> 
+</I>&gt;<i> Consequently, we need not only a way to refuse 'simulator X' 
+</I>&gt;<i> registration on the grounds of it's revision relative to the grid, but 
+</I>&gt;<i> also a mechanism for refusing service based on the relative simulator 
+</I>&gt;<i> revision, and a mechanism for arbitrarily deregistering a simulator 
+</I>&gt;<i> altogether. This will effectively temporarily or permanantly remove a 
+</I>&gt;<i> region from the grid, given sufficient differences in the revision in 
+</I>&gt;<i> the one instance, or operator intervention in the other. This will 
+</I>&gt;<i> effectively implement the philosophy Sacha is attempting to express with 
+</I>&gt;<i> his patch :)
+</I>&gt;<i> 
+</I>&gt;<i> I think it is fairly important that we do this; not just because I am 
+</I>&gt;<i> constantly beset on some border by misconfigured regions, but because it 
+</I>&gt;<i> will help to ensure a more 'statistically controlled' environment from a 
+</I>&gt;<i> testing and debugging standpoint; in other words, we can count on 
+</I>&gt;<i> regions to behave in particular ways when we have some control over what 
+</I>&gt;<i> revision is talking with the grid or with other simulators.
+</I>&gt;<i> 
+</I>&gt;<i> I apologize for being so long winded - I hope you have made it through 
+</I>&gt;<i> my post without getting a headache.
+</I>&gt;<i> 
+</I>&gt;<i> Cheers
+</I>&gt;<i> James
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> ===================================
+</I>&gt;<i> The wind
+</I>&gt;<i> scours the earth for prayers
+</I>&gt;<i> The night obscures them
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://osgrid.org">http://osgrid.org</A>
+</I>&gt;<i> <A HREF="http://del.icio.us/SPQR">http://del.icio.us/SPQR</A>
+</I>&gt;<i> <A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+</I>&gt;<i> <A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000576.html">[Opensim-users] Sim Version Filtering (re: Mantis #0002361: adding	simulator release control at grid level to avoid out of date	simulator registration )
+</A></li>
+	<LI>Next message: <A HREF="000581.html">[Opensim-users] Sim Version Filtering (re: Mantis #0002361:	adding simulator release control at grid level to avoid out	of date simulator registration )
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#579">[ date ]</a>
+              <a href="thread.html#579">[ thread ]</a>
+              <a href="subject.html#579">[ subject ]</a>
+              <a href="author.html#579">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

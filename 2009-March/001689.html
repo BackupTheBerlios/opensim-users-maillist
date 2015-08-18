@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [Opensim-dev] Round 2: Config changes preview
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20Round%202%3A%20Config%20changes%20preview&In-Reply-To=%3C9176BD63-1C38-4EF7-A22C-9BB527B4D436%40timberwoof.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001686.html">
+   <LINK REL="Next"  HREF="001682.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [Opensim-dev] Round 2: Config changes preview</H1>
+    <B>me at timberwoof.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20Round%202%3A%20Config%20changes%20preview&In-Reply-To=%3C9176BD63-1C38-4EF7-A22C-9BB527B4D436%40timberwoof.com%3E"
+       TITLE="[Opensim-users] [Opensim-dev] Round 2: Config changes preview">me at timberwoof.com
+       </A><BR>
+    <I>Sun Mar 15 02:15:35 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001686.html">[Opensim-users] [Opensim-dev] Round 2: Config changes preview
+</A></li>
+        <LI>Next message: <A HREF="001682.html">[Opensim-users] [Opensim-dev] Round 2: Config changes preview
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1689">[ date ]</a>
+              <a href="thread.html#1689">[ thread ]</a>
+              <a href="subject.html#1689">[ subject ]</a>
+              <a href="author.html#1689">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I agree with the proposed split, at least between 1 and the rest.  
+However, I doin't like the idea of having to use command line  
+aruments for set #1. The result is an ugly, ugly, undocumentable  
+shell script. And that's made worse because that's the one I have to  
+tinker with the most to get OpenSim running.
+
+I much prefer keeping a customized minimal OpenSim.ini file, as you  
+suggested might be a possibility. In the end, I want the system to be  
+able to bring itself up without my help (once it's configured  
+correctly).
+
+
+
+On Mar 14, 2009, at 6:52 AM, Stefan Andersson wrote:
+
+&gt;<i> Some random thoughts;
+</I>&gt;<i>
+</I>&gt;<i> Our config files serves three purposes, as it seems
+</I>&gt;<i> a) specifying default values (though why on earth these are ever  
+</I>&gt;<i> different from the hardcoded defaults escapes me)
+</I>&gt;<i> b) specifying user overriding values
+</I>&gt;<i> c) documenting available settings and their use
+</I>&gt;<i> d) pushing changing defaults from the svn to installed instances
+</I>&gt;<i>
+</I>&gt;<i> I think we need to address these concerns separately.
+</I>&gt;<i>
+</I>&gt;<i> As I understand it, the config dir is so that we can
+</I>&gt;<i> a) split humongous default config files into smaller ones
+</I>&gt;<i> b) to be able to 'drop' module default config files into an  
+</I>&gt;<i> installation without having to merge them into one big ini.
+</I>&gt;<i>
+</I>&gt;<i> I think the settings can be split thrice;
+</I>&gt;<i> 1) Stuff that _must_ be reconfigured per installation : ip number,  
+</I>&gt;<i> shared ports and stuff like that. (All users, should need no  
+</I>&gt;<i> expertise)
+</I>&gt;<i> 2) Stuff that _can_ be reconfigured per installation. (Special  
+</I>&gt;<i> installation cases, needs some knowledge)
+</I>&gt;<i> 3) Stuff that _seldom_ needs tampering. (Advanced user, special  
+</I>&gt;<i> installation)
+</I>&gt;<i>
+</I>&gt;<i> I would suggest we break free of the current mindset and think  
+</I>&gt;<i> about how 1) could be solved differently.
+</I>&gt;<i>
+</I>&gt;<i> Maybe we should say &quot;either supply these settings on the command  
+</I>&gt;<i> line, or create an OpenSim.ini file, look at OpenSim.ini.example  
+</I>&gt;<i> for an example&quot;
+</I>&gt;<i>
+</I>&gt;<i> Most users would probably go a long way just by specifying the 1)  
+</I>&gt;<i> params on the command line.
+</I>&gt;<i>
+</I>&gt;<i> Of course, the created OpenSim.ini should need to be a bare  
+</I>&gt;<i> minimum, and would probably need to change very seldom.
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> Stefan Andersson
+</I>&gt;<i> Tribal Media AB
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; Date: Sat, 14 Mar 2009 04:25:25 -0700
+</I>&gt;<i> &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">aerowolf at gmail.com</A>
+</I>&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev at lists.berlios.de</A>
+</I>&gt;<i> &gt; CC: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; Subject: Re: [Opensim-dev] Round 2: Config changes preview
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; because many people run their servers from inside their bin/
+</I>&gt;<i> &gt; directory, and if it's named OpenSim.ini then any changes that are
+</I>&gt;<i> &gt; made to that file will get overwritten (not just overridden) at the
+</I>&gt;<i> &gt; next svn update.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; That's why it was renamed to OpenSim.ini.example -- originally,  
+</I>&gt;<i> it was
+</I>&gt;<i> &gt; set to OpenSim.ini, and that problem was pretty much the number one
+</I>&gt;<i> &gt; support issue at that time.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -Kyle H
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Fri, Mar 13, 2009 at 5:00 PM, Paul Fishwick  
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; Justin Clark-Casey wrote:
+</I>&gt;<i> &gt; &gt;&gt; To get OpenSim to run at all, the user still has to copy  
+</I>&gt;<i> OpenSim.ini.example to OpenSim.ini (though it should be
+</I>&gt;<i> &gt; &gt;&gt; possible to override this if config is supplied over the  
+</I>&gt;<i> network).
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; This may be a silly question, but is there some reason why we  
+</I>&gt;<i> keep on
+</I>&gt;<i> &gt; &gt; suggesting
+</I>&gt;<i> &gt; &gt; that people copy OpenSim.ini.example to OpenSim.ini? Why not  
+</I>&gt;<i> just make
+</I>&gt;<i> &gt; &gt; OpenSim.ini what happens to be in OpenSim.ini.example?
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; -p
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Paul Fishwick, PhD
+</I>&gt;<i> &gt; &gt; Professor and Director, Digital Arts and Sciences Programs
+</I>&gt;<i> &gt; &gt; University of Florida
+</I>&gt;<i> &gt; &gt; Computer &amp; Information Science and Eng. Dept.
+</I>&gt;<i> &gt; &gt; Bldg. CSE, Room 301
+</I>&gt;<i> &gt; &gt; P.O. Box 116120
+</I>&gt;<i> &gt; &gt; Gainesville, FL 32611
+</I>&gt;<i> &gt; &gt; Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;<i> &gt; &gt; Phone: (352) 392-1414
+</I>&gt;<i> &gt; &gt; Fax: (352) 392-1220
+</I>&gt;<i> &gt; &gt; Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; Opensim-dev mailing list
+</I>&gt;<i> &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-dev mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-dev at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-dev">https://lists.berlios.de/mailman/listinfo/opensim-dev</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001686.html">[Opensim-users] [Opensim-dev] Round 2: Config changes preview
+</A></li>
+	<LI>Next message: <A HREF="001682.html">[Opensim-users] [Opensim-dev] Round 2: Config changes preview
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1689">[ date ]</a>
+              <a href="thread.html#1689">[ thread ]</a>
+              <a href="subject.html#1689">[ subject ]</a>
+              <a href="author.html#1689">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

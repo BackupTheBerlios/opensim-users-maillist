@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Media on a Prim - many video/audio streams
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Media%20on%20a%20Prim%20-%20many%20video/audio%20streams&In-Reply-To=%3C51411F28.1060903%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011885.html">
+   <LINK REL="Next"  HREF="011887.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Media on a Prim - many video/audio streams</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Media%20on%20a%20Prim%20-%20many%20video/audio%20streams&In-Reply-To=%3C51411F28.1060903%40googlemail.com%3E"
+       TITLE="[Opensim-users] Media on a Prim - many video/audio streams">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Mar 14 01:51:52 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011885.html">[Opensim-users] Media on a Prim - many video/audio streams
+</A></li>
+        <LI>Next message: <A HREF="011887.html">[Opensim-users] Media on a Prim - many video/audio streams
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11886">[ date ]</a>
+              <a href="thread.html#11886">[ thread ]</a>
+              <a href="subject.html#11886">[ subject ]</a>
+              <a href="author.html#11886">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In principle it might be possible to get the MOAP module to not serve shared media surfaces to users in other plots but 
+this wouldn't work if the avatar was crossing plot lines (since it would already have the data).
+
+I think one would really need the viewer to actively drop MOAP surfaces in other plots (in which case you wouldn't need 
+any simulator-side changes).
+
+I would actually be kind of surprised if there isn't a TPV that offers something like this, since MOAP is heavyweight 
+and afaik the display limit is 5 surfaces.  But I haven't explored that.
+
+This question actually finally triggered me to create a crude diagram of how MOAP works [1], namely that the 
+communication is directly with a website.  But I don't think that actually has anything to do with this question.
+
+[1] <A HREF="http://opensimulator.org/wiki/Media_On_A_Prim">http://opensimulator.org/wiki/Media_On_A_Prim</A>
+On 13/03/13 12:06, Emperor Starfinder wrote:
+&gt;<i> Unfortunately this is not just limited to Media On A Prim in Secondlife.  It
+</I>&gt;<i> also extends to sounds i.e. in breedable pets such as horses.  Unfortunately
+</I>&gt;<i> as a region manager in Secondlife I get these kinds of complaints but the
+</I>&gt;<i> only way I know to correct it is in the script itself.  There is nothing in
+</I>&gt;<i> the region manager that can fix that or really in about land.
+</I>&gt;<i>
+</I>&gt;<i> As for in opensim I think it's the same thing as I don't recall seeing
+</I>&gt;<i> anything in the Opensim.ini file or region.ini files that solves that but I
+</I>&gt;<i> could be missing something there.
+</I>&gt;<i>
+</I>&gt;<i> I also recently had to have a couple residents on the region in Secondlife I
+</I>&gt;<i> manage both own their parcels and not deed to group.  This seems to help a
+</I>&gt;<i> little bit.  Might also try changing the channel your script operates on
+</I>&gt;<i> including the  ranges in distance the script works in.  It may or may not
+</I>&gt;<i> help.
+</I>&gt;<i>
+</I>&gt;<i> I hope that helps a little bit.
+</I>&gt;<i>
+</I>&gt;<i> Emperor
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+</I>&gt;<i> Sent: Wednesday, March 13, 2013 7:00 AM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Opensim-users Digest, Vol 67, Issue 15
+</I>&gt;<i>
+</I>&gt;<i> Send Opensim-users mailing list submissions to
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> You can reach the person managing the list at
+</I>&gt;<i> 	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> When replying, please edit your Subject line so it is more specific than
+</I>&gt;<i> &quot;Re: Contents of Opensim-users digest...&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Today's Topics:
+</I>&gt;<i>
+</I>&gt;<i>     1. Media on a Prim - many video/audio streams leak across plot
+</I>&gt;<i>        and even region boundaries (Ai Austin)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Wed, 13 Mar 2013 10:00:02 +0000
+</I>&gt;<i> From: Ai Austin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at gmail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: [Opensim-users] Media on a Prim - many video/audio streams
+</I>&gt;<i> 	leak across plot and even region boundaries
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">51404e6a.c260b40a.5291.7a1e at mx.google.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;us-ascii&quot;; format=flowed
+</I>&gt;<i>
+</I>&gt;<i> This is really a general Media on a prim query... rather  than being OpenSim
+</I>&gt;<i> specific, so please excuse the use our of mailing list here... but I thought
+</I>&gt;<i> I would check what the experience of others here in the OpenSim community
+</I>&gt;<i> is... as it seems to be a real problem...
+</I>&gt;<i>
+</I>&gt;<i> We have noticed that on our Virtual University of Edinburgh regions in
+</I>&gt;<i> Second Life and OpenSim where many students set up MOAP screens in gallery
+</I>&gt;<i> spaces for their projects that the media playing (often YouTube videos, etc)
+</I>&gt;<i> appears in the &quot;playing&quot; list in viewers and we get perhaps 30 to 40 ites in
+</I>&gt;<i> that list which seem to fight to play...
+</I>&gt;<i> These leak across into adjacent plots even when play sounds and so on are
+</I>&gt;<i> limite dto the plots.  But we even notice it can leak across REGION
+</I>&gt;<i> boundaries in Second Life which seems odd.  It seems that a plot owner
+</I>&gt;<i> cannot control sound coming INTO their plor or region.
+</I>&gt;<i>
+</I>&gt;<i> Anyone else noticed this or seen on-line discussion of the best fixes?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> End of Opensim-users Digest, Vol 67, Issue 15
+</I>&gt;<i> *********************************************
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011885.html">[Opensim-users] Media on a Prim - many video/audio streams
+</A></li>
+	<LI>Next message: <A HREF="011887.html">[Opensim-users] Media on a Prim - many video/audio streams
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11886">[ date ]</a>
+              <a href="thread.html#11886">[ thread ]</a>
+              <a href="subject.html#11886">[ subject ]</a>
+              <a href="author.html#11886">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

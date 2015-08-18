@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Unable to connect to a region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Unable%20to%20connect%20to%20a%20region&In-Reply-To=%3C5038EFD4.1020405%40scoffoni.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010815.html">
+   <LINK REL="Next"  HREF="010818.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Unable to connect to a region</H1>
+    <B>Philippe Scoffoni</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Unable%20to%20connect%20to%20a%20region&In-Reply-To=%3C5038EFD4.1020405%40scoffoni.net%3E"
+       TITLE="[Opensim-users] Unable to connect to a region">philippe at scoffoni.net
+       </A><BR>
+    <I>Sat Aug 25 17:31:32 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010815.html">[Opensim-users] Unable to connect to a region
+</A></li>
+        <LI>Next message: <A HREF="010818.html">[Opensim-users] Unable to connect to a region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10817">[ date ]</a>
+              <a href="thread.html#10817">[ thread ]</a>
+              <a href="subject.html#10817">[ subject ]</a>
+              <a href="author.html#10817">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello
+
+I've tried what you suggest and make sure that os-reg.open-dsi.net
+&lt;<A HREF="http://os-reg.open-dsi.net">http://os-reg.open-dsi.net</A>&gt; is really pointing to a valid, external,
+real IP address.
+
+But :-)
+
+When i try to log, I saw an error on the grid server, saying he can't
+reach <A HREF="http://os-reg.open-dsi.net.">http://os-reg.open-dsi.net.</A>
+
+osd request for
+<A HREF="http://os-reg.open-dsi.net:9000/agent/ef341084-ebc4-48e0-a6d2-7af4de017442/,">http://os-reg.open-dsi.net:9000/agent/ef341084-ebc4-48e0-a6d2-7af4de017442/,</A>
+method POST FAILED: Error: ConnectFailure (Connection refused)
+
+I think, I have now to solve a problem with the fact that the
+communicaton go through the &quot;router&quot; twice. I've allready add a rules on
+the firewal to permit the connection and I don't have anything drop for
+this communication in the firewall's logs.
+
+I think it's a new question, but for an other mailing list ;-)
+
+Bye and thanks for your help
+
+Philippe
+
+Le 24/08/2012 23:01, Gwyneth Llewelyn a &#233;crit :
+&gt;<i> Hello Philippe!
+</I>&gt;<i>
+</I>&gt;<i> I believe that Fleep has covered most of the issues and provided a
+</I>&gt;<i> possible solution. I think Fleep is quite right: I had a similar error
+</I>&gt;<i> as you had and couldn't log in.
+</I>&gt;<i>
+</I>&gt;<i> Here was my problem: I have an OpenSim grid behind a firewall on a
+</I>&gt;<i> Linux server, with private IP addresses (10.X.X.X, just like you). I
+</I>&gt;<i> wanted local users, who also have IP addresses in the same range, to
+</I>&gt;<i> connect to OpenSim locally without going through the router. But, at
+</I>&gt;<i> the same time, I thought it would be nice to give external visitors
+</I>&gt;<i> the ability to log in from the outside.
+</I>&gt;<i>
+</I>&gt;<i> So I did the following configuration: I put a 10.x.x.x address on the
+</I>&gt;<i> InternalAddress and ExternalHostName = opensim.betatechnologies.info.
+</I>&gt;<i> Then, *on that server*, I added an entry on /etc/hosts to
+</I>&gt;<i> point opensim.betatechnologies.info to 10.x.x.x; externally, on the
+</I>&gt;<i> &quot;real&quot; DNS server, opensim.betatechnologies.info would of course point
+</I>&gt;<i> to a real IP address (which would be translated via NAT on the router
+</I>&gt;<i> to 10.x.x.x). So local users could login with the LoginURI set to
+</I>&gt;<i> <A HREF="http://10.x.x.x:8002/">http://10.x.x.x:8002/</A> and the external visitors would use
+</I>&gt;<i> <A HREF="http://opensim.betatechnologies.info:8002/">http://opensim.betatechnologies.info:8002/</A>
+</I>&gt;<i>
+</I>&gt;<i> OpenSim launched perfectly, and local users could log in. But external
+</I>&gt;<i> visitors cannot. On close inspection, I saw that, no matter where the
+</I>&gt;<i> user would come from, they would get a 10.x.x.x address, and, of
+</I>&gt;<i> course, external users would not be able to connect to that!
+</I>&gt;<i>
+</I>&gt;<i> Why? As Fleep explained, when OpenSim launches, it resolves all
+</I>&gt;<i> addresses before running. So what was happening is that the Linux
+</I>&gt;<i> server would ask for the IP address of opensim.betatechnologies.info,
+</I>&gt;<i> look it up on /etc/hosts, find it to be 10.x.x.x, and that's what it
+</I>&gt;<i> would use from now on, forever. It would never be aware of the
+</I>&gt;<i> &quot;external&quot;, real IP address.
+</I>&gt;<i>
+</I>&gt;<i> Clearly this doesn't work! So at the end I had to delete the entry on
+</I>&gt;<i> /etc/hosts, make sure that the server and all internal LAN clients
+</I>&gt;<i> would resolve opensim.betatechnologies.info correctly to a real IP
+</I>&gt;<i> address, and that configuration worked fine. Of course, this means
+</I>&gt;<i> that communications inside the LAN will go through the router twice
+</I>&gt;<i> (as opposed to staying inside the LAN...) since clients have no idea
+</I>&gt;<i> that opensim.betatechnologies.info, with an external IP address, is
+</I>&gt;<i> actually being forwarded to an internal, private address (some
+</I>&gt;<i> high-end routers, like the ones from Cisco, are sometimes able to
+</I>&gt;<i> figure that out and add an ARP entry on the router to avoid those
+</I>&gt;<i> kinds of double-connections; simple routers, however, don't do that
+</I>&gt;<i> kind of &quot;magic&quot;).
+</I>&gt;<i>
+</I>&gt;<i> So Fleep is right. You have to make sure, in your case, that when
+</I>&gt;<i> OpenSim launches, os-reg.open-dsi.net &lt;<A HREF="http://os-reg.open-dsi.net">http://os-reg.open-dsi.net</A>&gt; is
+</I>&gt;<i> really pointing to a valid, external, real IP address, and not to an
+</I>&gt;<i> &quot;internal&quot; private address, or else your setup won't work...
+</I>&gt;<i>
+</I>&gt;<i> Good luck,
+</I>&gt;<i>
+</I>&gt;<i> - Gwyn
+</I>&gt;<i>
+</I>&gt;<i> On 24/08/2012, at 11:18, Philippe Scoffoni wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm experiencing some problem with access to a region. I'm using
+</I>&gt;&gt;<i> OpenSim 0.7.3 on Debian 6 with Mono from the Debian repository.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm working with a server using openvz container. I'm using two
+</I>&gt;&gt;<i> virtual machine. One for the grid and an other for the region.
+</I>&gt;&gt;<i> The VM are on a private network. It means, they have a private IP.
+</I>&gt;&gt;<i> The grid : 10.0.0.10 and the region : 10.0.0.11.
+</I>&gt;&gt;<i> On the physical host, I'm using shorewall to build the rules of the
+</I>&gt;&gt;<i> firewall and make the NAT Translation for all the required port
+</I>&gt;&gt;<i> (9000TCP/UDP for the region , 8002TCP for the grid)
+</I>&gt;&gt;<i> In the Regions.ini, i've put in the ExternalHostName :
+</I>&gt;&gt;<i> os-reg.open-dsi.net &lt;<A HREF="http://os-reg.open-dsi.net">http://os-reg.open-dsi.net</A>&gt; wich is the public
+</I>&gt;&gt;<i> IP I'm using to access to the two vms.
+</I>&gt;&gt;<i> All seems to work fine. When I start the region, it is successfully
+</I>&gt;&gt;<i> registred by the grid.
+</I>&gt;&gt;<i> My problem occurs when I try to connect to the region. My account is
+</I>&gt;&gt;<i> succesfully authentified by the grid, but it seems that firestorm
+</I>&gt;&gt;<i> (4.1.1) is not able to connect to the region. In the log there is
+</I>&gt;&gt;<i> something like
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llworld.cpp(181) : addRegion: Add
+</I>&gt;&gt;<i> region with handle: 1099511628032000 on host 10.0.0.11:9000
+</I>&gt;&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llworld.cpp(214) : addRegion:
+</I>&gt;&gt;<i> Adding new region (1000:1000)
+</I>&gt;&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llworld.cpp(215) : addRegion:
+</I>&gt;&gt;<i> Host: 10.0.0.11:9000
+</I>&gt;&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llstartup.cpp(1503) :
+</I>&gt;&gt;<i> idle_startup: Adding initial simulator { 256000.0, 256000.0, 0.0 }
+</I>&gt;&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llviewerregion.cpp(1586) :
+</I>&gt;&gt;<i> setSeedCapability: posting to seed
+</I>&gt;&gt;<i> <A HREF="http://os-reg.open-dsi.net:9000/CAPS/005f52b3-5440-4775-97df-a1fd5117be9c0000/">http://os-reg.open-dsi.net:9000/CAPS/005f52b3-5440-4775-97df-a1fd5117be9c0000/</A>
+</I>&gt;&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llagent.cpp(781) :
+</I>&gt;&gt;<i> LLAgent::setRegion: Moving agent into region:  located at 10.0.0.11:9000
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *I d'ont understant why he is using the private IP*. On an other
+</I>&gt;&gt;<i> lines, he use the ExternalHostName.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> or
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-08-24T09:18:27Z INFO: newview/lleventpoll.cpp(140) :
+</I>&gt;&gt;<i> LLEventPollResponder: LLEventPoll initialized with sender 10.0.0.11:9000
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The last lines befoer the error message
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-08-24T09:18:31Z INFO: newview/llstartup.cpp(1735) :
+</I>&gt;&gt;<i> idle_startup: viewer: UserLoginLocationReply() Enabling
+</I>&gt;&gt;<i> 10.0.0.11:9000 with code 1940142022
+</I>&gt;&gt;<i> 2012-08-24T09:18:32Z INFO: llcommon/llprocess.cpp(692) :
+</I>&gt;&gt;<i> LLProcess::LLProcess: SLVoice (7733): launched cd
+</I>&gt;&gt;<i> /opt/Phoenix_Firestorm-Release_i686_4.1.1.28744:
+</I>&gt;&gt;<i> /opt/Phoenix_Firestorm-Release_i686_4.1.1.28744/bin/SLVoice -ll -1
+</I>&gt;&gt;<i> 2012-08-24T09:18:32Z WARNING: newview/lltexturefetch.cpp(1281) :
+</I>&gt;&gt;<i> doWork: Texture missing from server (404):
+</I>&gt;&gt;<i> <A HREF="http://os-reg.open-dsi.net:9000/CAPS/98b0e679-146d-4373-bfcd-94c669305532//?texture_id=cce0f112-878f-4586-a2e2-a8f104bba271">http://os-reg.open-dsi.net:9000/CAPS/98b0e679-146d-4373-bfcd-94c669305532//?texture_id=cce0f112-878f-4586-a2e2-a8f104bba271</A>
+</I>&gt;&gt;<i> 2012-08-24T09:18:52Z WARNING: newview/llstartup.cpp(2597) :
+</I>&gt;&gt;<i> use_circuit_callback: Backing up to login screen!
+</I>&gt;&gt;<i> 2012-08-24T09:18:52Z WARNING: newview/lltoastalertpanel.cpp(181) :
+</I>&gt;&gt;<i> LLToastAlertPanel::LLToastAlertPanel: Alert: Nous avons des
+</I>&gt;&gt;<i> difficult&#233;s &#224; vous connecter. Il y a peut-&#234;tre un probl&#232;me avec votre
+</I>&gt;&gt;<i> connexion Internet ou la Grille de Second Life.V&#233;rifiez votre
+</I>&gt;&gt;<i> connexion Internet et r&#233;essayez dans quelques minutes, cliquez sur
+</I>&gt;&gt;<i> Aide pour consulter la page Portail Assistance Second Life ou bien
+</I>&gt;&gt;<i> sur T&#233;l&#233;porter pour essayer d'aller chez vous.
+</I>&gt;&gt;<i> 2012-08-24T09:18:52Z INFO: newview/llworld.cpp(318) : removeRegion:
+</I>&gt;&gt;<i> Removing region 256000.0:256000.0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The complete log is on this pastebin
+</I>&gt;&gt;<i> <A HREF="http://pastebin.com/UGA7iH1E">http://pastebin.com/UGA7iH1E</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The region configuration
+</I>&gt;&gt;<i> <A HREF="http://pastebin.com/xe3mDYdV">http://pastebin.com/xe3mDYdV</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm not sure that you will understand my poor english :-) .
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Philippe
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i>
+</I>&gt;<i> &quot;I'm not building a game. I'm building a new country.&quot;
+</I>&gt;<i>
+</I>&gt;<i>   -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120825/031cabfb/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120825/031cabfb/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010815.html">[Opensim-users] Unable to connect to a region
+</A></li>
+	<LI>Next message: <A HREF="010818.html">[Opensim-users] Unable to connect to a region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10817">[ date ]</a>
+              <a href="thread.html#10817">[ thread ]</a>
+              <a href="subject.html#10817">[ subject ]</a>
+              <a href="author.html#10817">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

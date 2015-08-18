@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%20r/17830&In-Reply-To=%3C4F19521F.8040508%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009202.html">
+   <LINK REL="Next"  HREF="009083.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sensors are not detecting NPC avatars on git r/17830</H1>
+    <B>Marcus Llewellyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%20r/17830&In-Reply-To=%3C4F19521F.8040508%40gmail.com%3E"
+       TITLE="[Opensim-users] Sensors are not detecting NPC avatars on git r/17830">marcus.llewellyn at gmail.com
+       </A><BR>
+    <I>Fri Jan 20 12:38:07 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009202.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+        <LI>Next message: <A HREF="009083.html">[Opensim-users] Out of memory exception on logout r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9109">[ date ]</a>
+              <a href="thread.html#9109">[ thread ]</a>
+              <a href="subject.html#9109">[ subject ]</a>
+              <a href="author.html#9109">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 1/19/2012 5:57 PM, Justin Clark-Casey wrote:
+&gt;<i>
+</I>&gt;<i> Either way, what is missing at the moment is a way to actually tell if 
+</I>&gt;<i> a particular agent is an NPC.  One possibility is to make 
+</I>&gt;<i> llGetOwnerKey() return an owned NPC's owner.  For an unowned NPC, this 
+</I>&gt;<i> would need to return UUID.Zero - I'm not sure if there's a problem 
+</I>&gt;<i> disambiguating between an unowned NPC and a situation where no entity 
+</I>&gt;<i> with the ID is found.
+</I>&gt;<i>
+</I>
+The problem I have with this approach is that it seems a bit obscure. 
+Using llGetOwnerKey() is not going to be an approach that many scripters 
+will intuitively take, I think. Ideally, we could add an AGENT_NPC 
+constant to llGetAgentInfo(). But this is impractical since we have no 
+way of knowing what constants LL might choose to add in the future, and 
+there is little or no incentive for them to respect our additions. Plus 
+it appears to use bit flags, and there's only so many bits to go around.
+
+I do rather like the idea of the addition of a simpler, more 
+straight-forward function like osGetAgentType(). In addition to being 
+easy to use and understand, it offers the potential to detect and 
+identify things like bots or other specially flagged agents, as well as 
+unanticipated agent types that might be added in the future.
+
+I tend to lean toward the opinion that, where practical, most scripting 
+functions (and sensors are probably a sensible exception) should be 
+agent-type agnostic, and to allow scripts to make the differentiation 
+only when they choose to do so. From what I've seen from people working 
+with NPCs, there is a very real expectation that most scripts that work 
+on a user agent will also work on an NPC. This is an expectation they 
+rely on, even when they shouldn't. I've already had to warn a couple 
+scripters about using just any poseball script with an NPC, and to be 
+certain that any poseball script explicitly stops any animations it starts.
+
+Apologies if my suggestions are naive. I do realize that NPCs can be 
+awkward for OpenSim devs, and that you're dealing with square pegs and a 
+round hole. It can't be simple to decide when to try to just hammer it 
+in, when to try to sand off the edges, or when to make a new square 
+hole, all while trying to keep things as clean as possible.
+
+Marcus
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009202.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+	<LI>Next message: <A HREF="009083.html">[Opensim-users] Out of memory exception on logout r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9109">[ date ]</a>
+              <a href="thread.html#9109">[ thread ]</a>
+              <a href="subject.html#9109">[ subject ]</a>
+              <a href="author.html#9109">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

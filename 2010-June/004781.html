@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SYSTEMIP%20and%20a%20repeated%20UseCircuitCode&In-Reply-To=%3CC733213DE8F840008A27215C01F3DEB6%40mikevista%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004778.html">
+   <LINK REL="Next"  HREF="004786.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] SYSTEMIP and a repeated UseCircuitCode</H1>
+    <B>Damon Hindermann</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SYSTEMIP%20and%20a%20repeated%20UseCircuitCode&In-Reply-To=%3CC733213DE8F840008A27215C01F3DEB6%40mikevista%3E"
+       TITLE="[Opensim-users] SYSTEMIP and a repeated UseCircuitCode">damonh74 at gmail.com
+       </A><BR>
+    <I>Thu Jun 24 17:08:50 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004778.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+        <LI>Next message: <A HREF="004786.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4781">[ date ]</a>
+              <a href="thread.html#4781">[ thread ]</a>
+              <a href="subject.html#4781">[ subject ]</a>
+              <a href="author.html#4781">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>What I have found to be the problem in this, if I understand the situation
+properly, is when the server and client are on the same LAN.  To this day I
+have not yet solved the issue.  I use pfSense router/firewall software as my
+router.  Even though I am using the right setup in regions.ini and I
+supposedly have loopback enabled on the router, I get this error as long as
+my client is on the same side of the router.  I have created a separate LAN
+with it's own interface card and it still doesn't work.
+ 
+I use DynDNS for my WAN and I use that name as SYSTEMIP (myname.homedns.org)
+and I have the other address as 0.0.0.0.  Somehow when my client requests
+something of the server, my router is doing something wrong.  The server is
+seeing the request and replying, but the reply does not get back to the
+client, so the client tries again.  This is why the server says that it's
+ignoring repeated requests.  Ultimately the client gives up and you can see
+the cleanup on the server.
+ 
+I'm having a network pro that knows pfSense in and out come to my home and
+see what he can do.  I'm hoping we get it working and I can let people know
+what's going on.
+ 
+-Damon
+
+  _____  
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Bulli
+Sent: Thursday, June 24, 2010 3:12 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+
+
+and setting all values in the ini files to there, after startup I find 
+
+
+the following line in the opensim.log: 
+
+INFO - OpenSim.OpenSim [NETWORK]: Using xx.xx.xx.228 as SYSTEMIP 
+
+...but that's my default IP address. 
+
+
+
+Please be aware that this message is completely valid, and only informing
+you of the fact that the variable SYSTEMIP has been filled with the value
+xx.xx.xx.228 
+
+Quick look in the code: 
+
+m_log.InfoFormat(&quot;[NETWORK]: Using {0} as SYSTEMIP&quot;,
+Util.GetLocalHost().ToString());
+
+So the value of SYSTEMIP is based on the local host definition. 
+
+This does NOT mean that the value SYSTEMIP would actually be used in any
+other place. 
+
+What did you grep for? SYSTEMIP, the hostname or the actual IP-address?
+Remember that an IP-address of 0.0.0.0 will also map to the default. 
+
+Any chance you have (old) XML region files lying around with the default
+IP-address? 
+
+Regards, 
+
+Bulli Schumann
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100624/8d820bf4/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100624/8d820bf4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004778.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+	<LI>Next message: <A HREF="004786.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4781">[ date ]</a>
+              <a href="thread.html#4781">[ thread ]</a>
+              <a href="subject.html#4781">[ subject ]</a>
+              <a href="author.html#4781">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

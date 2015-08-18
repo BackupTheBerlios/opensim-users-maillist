@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripting: 10x speed boost with C#
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3Cp06240801c9e44fd2e51a%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007209.html">
+   <LINK REL="Next"  HREF="007212.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripting: 10x speed boost with C#</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3Cp06240801c9e44fd2e51a%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] Scripting: 10x speed boost with C#">opensim at pescadoo.net
+       </A><BR>
+    <I>Mon May  2 14:11:27 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007209.html">[Opensim-users] Room management application
+</A></li>
+        <LI>Next message: <A HREF="007212.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7211">[ date ]</a>
+              <a href="thread.html#7211">[ thread ]</a>
+              <a href="subject.html#7211">[ subject ]</a>
+              <a href="author.html#7211">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>At 4:36 AM +0100 4/25/11, Justin Clark-Casey wrote:
+
+&gt;<i>Very interesting, Jeff.  The scripting engine in OpenSim transforms LSL to C#
+</I>&gt;<i>before compiling it so there wouldn't be a time difference due to
+</I>&gt;<i>interpretation.
+</I>&gt;<i>
+</I>&gt;<i>Of course, I'm presuming that you had configured all LSL scripting delays down
+</I>&gt;<i>to zero
+</I>
+No, because I was not aware of that option.
+
+With ScriptDelayFactor = 0.0, the LSL version changes from an average of
+2.15s to 2.10s. No big deal. The C# version is still around 0.2s.
+
+I switched to C# because i noticed my script spent most of its time into
+list handling (llList2Rot, which was a first speed gain over
+4*llList2Float). Since LSL has no array structure, we use lists to emulate
+them and waste a lot of time here.
+
+Then, replacing llPow with System.Math.Pow gave me another speed boost.
+Finally, replacing osSetPenColour, osDrawLine with direct drawlist
+manipuations (drawList += ) accounted for the overall 10x speed increase.
+
+Of course, that depends a lot on your application. If you are manipulating
+prims, the gain may be near zero. If you do a lot of math and matrixes, it
+may be higher.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007209.html">[Opensim-users] Room management application
+</A></li>
+	<LI>Next message: <A HREF="007212.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7211">[ date ]</a>
+              <a href="thread.html#7211">[ thread ]</a>
+              <a href="subject.html#7211">[ subject ]</a>
+              <a href="author.html#7211">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

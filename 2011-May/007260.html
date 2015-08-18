@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mumble/Murmur%20not%20working%20in%20Diva%0A%20r15402/Opensim%200.7.1&In-Reply-To=%3C4DC5791A.7080807%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007259.html">
+   <LINK REL="Next"  HREF="007261.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1</H1>
+    <B>Diva Canto</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mumble/Murmur%20not%20working%20in%20Diva%0A%20r15402/Opensim%200.7.1&In-Reply-To=%3C4DC5791A.7080807%40metaverseink.com%3E"
+       TITLE="[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1">diva at metaverseink.com
+       </A><BR>
+    <I>Sat May  7 18:53:46 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007259.html">[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim	0.7.1
+</A></li>
+        <LI>Next message: <A HREF="007261.html">[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7260">[ date ]</a>
+              <a href="thread.html#7260">[ thread ]</a>
+              <a href="subject.html#7260">[ subject ]</a>
+              <a href="author.html#7260">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE> &gt; Field not found: 'OpenSim.Region.Framework.Scenes.SceneBase.LandChannel'
+
+The error that you are getting indicates that the dll you are using for 
+MurmurVoice was not compiled against OpenSim 0.7.1. When dropping dlls 
+into an OpenSim installation you need to make sure that those dlls were 
+compiled for the given version of OpenSim. So, you need to recompile 
+that module against 0.7.1.
+
+On 5/7/2011 9:41 AM, Fokides Aegean wrote:
+&gt;<i>
+</I>&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> After upgrading to diva-r15402 and to opensim 0.7.1, voice using the 
+</I>&gt;<i> combination of Murmur server, Murmur Voice Module in opensim/diva and 
+</I>&gt;<i> the whisper module in Imprudence, has stopped working.
+</I>&gt;<i>
+</I>&gt;<i> The Murmur voice module seems to be loading correctly when starting 
+</I>&gt;<i> opensim:
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:14:50,993 INFO  - OpenSim.Framework.PluginLoader`1 
+</I>&gt;<i> [PLUGINS]: Plugin Loaded: MurmurVoice
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:14:50,995 DEBUG - 
+</I>&gt;<i> OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControllerPlugin 
+</I>&gt;<i> [REGIONMODULES]: Found shared region module MurmurVoice, class 
+</I>&gt;<i> MurmurVoice.MurmurVoiceModule
+</I>&gt;<i>
+</I>&gt;<i> ...
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:14:59,096 INFO  - MurmurVoice.MurmurVoiceModule 
+</I>&gt;<i> [MurmurVoice] using murmur server ice 'Meta:tcp -h 127.0.0.1 -p 6502'
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:14:59,227 DEBUG - MurmurVoice.ServerManager 
+</I>&gt;<i> [MurmurVoice]: Server already started.
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:14:59,238 INFO  - MurmurVoice.ChannelManager 
+</I>&gt;<i> [MurmurVoice] Setting ACLs on channel
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:14:59,313 INFO  - MurmurVoice.MurmurVoiceModule 
+</I>&gt;<i> [MurmurVoice] using murmur server 'XXX.XXX.XXX.XXX:64738', sid '1'
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:14:59,314 INFO  - MurmurVoice.MurmurVoiceModule 
+</I>&gt;<i> [MurmurVoice] plugin enabled
+</I>&gt;<i>
+</I>&gt;<i> ...
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:15:00,903 DEBUG - 
+</I>&gt;<i> OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControllerPlugin 
+</I>&gt;<i> [REGIONMODULE]: Adding scene MyRegion 1 to shared module MurmurVoiceModule
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:15:07,789 DEBUG - 
+</I>&gt;<i> OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControllerPlugin 
+</I>&gt;<i> [REGIONMODULE]: Adding scene MyRegion 2 to shared module MurmurVoiceModule
+</I>&gt;<i>
+</I>&gt;<i> But when launching Imprudence and reconecting to Voice server an error 
+</I>&gt;<i> occurs:
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:21:43,073 INFO  - MurmurVoice.MurmurVoiceModule 
+</I>&gt;<i> [MurmurVoice] Calling ProvisionVoiceAccountRequest...
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:21:43,434 INFO  - MurmurVoice.AgentManager [MurmurVoice] 
+</I>&gt;<i> Found previously registered user x9MIbB50CS56ABxs_GxlXfg==
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:21:43,645 INFO  - MurmurVoice.AgentManager [MurmurVoice] 
+</I>&gt;<i> Registered f4c21b07-9d02-4b9e-8007-1b3f1b19577e (uid 14) identified by 
+</I>&gt;<i> u65e5e0ef6c9646c1
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:21:43,648 INFO  - MurmurVoice.MurmurVoiceModule 
+</I>&gt;<i> [MurmurVoice] VoiceAccount: 
+</I>&gt;<i> &lt;llsd&gt;&lt;map&gt;&lt;key&gt;username&lt;/key&gt;&lt;string&gt;x9MIbB50CS56ABxs_GxlXfg==&lt;/string&gt;&lt;key&gt;password&lt;/key&gt;&lt;string&gt;u65e5e0ef6c9646c1&lt;/string&gt;&lt;key&gt;voice_sip_uri_hostname&lt;/key&gt;&lt;string&gt;XXX.XXX.XXX.XXX&lt;/string&gt;&lt;key&gt;voice_account_server_name&lt;/key&gt;&lt;string&gt;<A HREF="tcp://195.251.147.120:64738&lt;/string">tcp://195.251.147.120:64738&lt;/string</A>&gt;&lt;/map&gt;&lt;/llsd&gt;
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-07 19:21:43,945 ERROR - 
+</I>&gt;<i> OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP 
+</I>&gt;<i> SERVER]: HandleRequest() threw System.MissingFieldException: Field not 
+</I>&gt;<i> found: 'OpenSim.Region.Framework.Scenes.SceneBase.LandChannel'.
+</I>&gt;<i>
+</I>&gt;<i>    at MurmurVoice.MurmurVoiceModule.ParcelVoiceInfoRequest(Scene 
+</I>&gt;<i> scene, String request, String path, String param, UUID agentID, Caps caps)
+</I>&gt;<i>
+</I>&gt;<i>    at 
+</I>&gt;<i> MurmurVoice.MurmurVoiceModule.&lt;OnRegisterCaps&gt;c__AnonStorey19.&lt;&gt;m__1A(String 
+</I>&gt;<i> request, String path, String param, OSHttpRequest httpRequest, 
+</I>&gt;<i> OSHttpResponse httpResponse)
+</I>&gt;<i>
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Framework.Servers.HttpServer.RestStreamHandler.Handle(String 
+</I>&gt;<i> path, Stream request, OSHttpRequest httpRequest, OSHttpResponse 
+</I>&gt;<i> httpResponse)
+</I>&gt;<i>
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Framework.Servers.HttpServer.BaseHttpServer.HandleRequest(OSHttpRequest 
+</I>&gt;<i> request, OSHttpResponse response)
+</I>&gt;<i>
+</I>&gt;<i> My configuration of murmur in opensim.ini is as follows:
+</I>&gt;<i>
+</I>&gt;<i> [MurmurVoice]
+</I>&gt;<i>
+</I>&gt;<i> ; New voice daemon which will do speaker indication,
+</I>&gt;<i>
+</I>&gt;<i> ; positional voice, and high quality audio codec. Host voice on the
+</I>&gt;<i>
+</I>&gt;<i> ; same server, or use Glacier2 to proxy the insecure ICE protocol.
+</I>&gt;<i>
+</I>&gt;<i> enabled = true
+</I>&gt;<i>
+</I>&gt;<i> ; Hostname to send the user
+</I>&gt;<i>
+</I>&gt;<i> murmur_host = XXX.XXX.XXX.XXX
+</I>&gt;<i>
+</I>&gt;<i> ; Server identifier (normally 1)
+</I>&gt;<i>
+</I>&gt;<i> murmur_sid = 1
+</I>&gt;<i>
+</I>&gt;<i> ; Endpoint to system running mumble
+</I>&gt;<i>
+</I>&gt;<i> murmur_ice = tcp -h 127.0.0.1 -p 6502
+</I>&gt;<i>
+</I>&gt;<i> ; Endpoint to this system (not needed for glacier2)
+</I>&gt;<i>
+</I>&gt;<i> murmur_ice_cb= tcp -h 127.0.0.1 -p 6503
+</I>&gt;<i>
+</I>&gt;<i> ; Parent channel name to use
+</I>&gt;<i>
+</I>&gt;<i> channel_name = MyRegion 1
+</I>&gt;<i>
+</I>&gt;<i> ; Enable use of glacier2 (ignore murmur_ice_cb if false)
+</I>&gt;<i>
+</I>&gt;<i> glacier = false
+</I>&gt;<i>
+</I>&gt;<i> ; Glacier proxy
+</I>&gt;<i>
+</I>&gt;<i> glacier_ice = Glacier2/router:tcp -p 4063 -h &lt;murmur-ip&gt;
+</I>&gt;<i>
+</I>&gt;<i> ; Glacier session user
+</I>&gt;<i>
+</I>&gt;<i> glacier_user = &lt;glacier2-user-name&gt;
+</I>&gt;<i>
+</I>&gt;<i> ; Glacier session password
+</I>&gt;<i>
+</I>&gt;<i> glacier_pass = &lt;glacier2-password&gt;
+</I>&gt;<i>
+</I>&gt;<i> So
+</I>&gt;<i>
+</I>&gt;<i> Any ideas on how to fix the problem?
+</I>&gt;<i>
+</I>&gt;<i> Since the only alternative seems to be Freeswitch (which in the past I 
+</I>&gt;<i> must admit that I totally failed to make it run), can anybody provide 
+</I>&gt;<i> a step by step tutorial on how to make in work with Opensim? 
+</I>&gt;<i> Especially, I need to know which version has the complete libraries 
+</I>&gt;<i> needed to run a Windows based Freeswitch, which files to configure and 
+</I>&gt;<i> so on.
+</I>&gt;<i>
+</I>&gt;<i> Finally, since only a couple of viewers can handle meshes, does 
+</I>&gt;<i> Freeswitch work with them?
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advance for you replies
+</I>&gt;<i>
+</I>&gt;<i> Manos
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110507/101256e5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110507/101256e5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007259.html">[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim	0.7.1
+</A></li>
+	<LI>Next message: <A HREF="007261.html">[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7260">[ date ]</a>
+              <a href="thread.html#7260">[ thread ]</a>
+              <a href="subject.html#7260">[ subject ]</a>
+              <a href="author.html#7260">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

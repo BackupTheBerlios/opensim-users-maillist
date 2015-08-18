@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Running opensim as a service
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Running%20opensim%20as%20a%20service&In-Reply-To=%3C1A53D5F2-0BC1-4144-A09E-C4DEE1F5D0FC%40scottnorman.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000065.html">
+   <LINK REL="Next"  HREF="000067.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Running opensim as a service</H1>
+    <B>Scott T. Norman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Running%20opensim%20as%20a%20service&In-Reply-To=%3C1A53D5F2-0BC1-4144-A09E-C4DEE1F5D0FC%40scottnorman.com%3E"
+       TITLE="[Opensim-users] Running opensim as a service">scott at scottnorman.com
+       </A><BR>
+    <I>Tue Jan  8 02:39:38 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000065.html">[Opensim-users] Running opensim as a service
+</A></li>
+        <LI>Next message: <A HREF="000067.html">[Opensim-users] SL banking ban: hot comments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#66">[ date ]</a>
+              <a href="thread.html#66">[ thread ]</a>
+              <a href="subject.html#66">[ subject ]</a>
+              <a href="author.html#66">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Look at this page for Automating  OpenSim startup, I'm not  sure about  
+accessing the consoles with Windows after  running start. I  have my  
+own Linux sever running  OpenSim going and using the  Screen Command  
+works fine for me. I ssh in and can get to the consoles. Though I   
+would agree it wouldn't probably hurt to have a remote console or  
+maybe even a web based console to  help in managing OpenSim.
+
+<A HREF="http://opensimulator.org/wiki/OpenSim:Configuration">http://opensimulator.org/wiki/OpenSim:Configuration</A>
+
+Windows
+Create a file called StartGrid.BAT:
+start OpenSim.Grid.UserServer.exe sleep 3 start  
+OpenSim.Grid.GridServer.exe sleep 3 start OpenSim.Grid.AssetServer.exe  
+sleep 3 start OpenSim.Grid.InventoryServer.exe sleep 3 start  
+OpenSim.exe -gridmode=true
+PS! Check that you have sleep command installed, I'm unsure if all  
+Windows versions have that.
+This knowledgebase article describes how to add a batch file to  
+startup of Windows (before logon).
+<A HREF="http://support.microsoft.com/kb/q243486/">http://support.microsoft.com/kb/q243486/</A>
+Note that you have to start all applications and answer the  
+configuration questions once before adding it to any startup.
+
+If you start the server before logon then there will be no window to  
+close if you want to shut down the server, so you can create a  
+&quot;StopGrid.BAT&quot; with:
+taskkill /FI &quot;IMAGENAME eq OpenSim.*&quot; sleep 3 taskkill /FI &quot;IMAGENAME  
+eq OpenSim.*&quot; sleep 3 taskkill /F /FI &quot;IMAGENAME eq OpenSim.*&quot;
+
+Linux/Mac OS X Use Screen Command
+Use the screen command to automate startup
+[edit]Setup screen command and setup shell file
+screen install:
+Linux
+apt-get install screen
+Mac OS X: Download either MacPorts, <A HREF="http://www.macports.org/,">http://www.macports.org/,</A> or Fink, <A HREF="http://www.finkproject.org/">http://www.finkproject.org/</A> 
+  to download *nix packages MacPorts
+sudo port install screen
+Fink
+Need command line for Fink.
+Create file runsim.sh
+#!/bin/sh cd opensim/bin sleep 3 screen -S UserServer -d -m mono  
+OpenSim.Grid.UserServer.exe sleep 3 screen -S GridServer -d -m mono  
+OpenSim.Grid.GridServer.exe sleep 3 screen -S AssetServer -d -m mono  
+OpenSim.Grid.AssetServer.exe sleep 3 screen -S InventoryServer -d -m  
+mono OpenSim.Grid.InventoryServer.exe sleep 3 screen -S OpenSim -d -m  
+mono OpenSim.exe -gridmode=true
+[edit]Startup and access servers
+./runsim.sh
+If you have permission issues
+chmod 755 runsim.sh
+To see a list of the servers in screen:
+screen -ls or screen -list
+Output will look like the following:
+There are screens on: 8419.OpenSim (Detached) 8403.InventoryServer  
+(Detached) 8378.AssetServer (Detached) 8360.GridServer (Detached)  
+8347.UserServer (Detached)
+To access server
+screen -r 8419.OpenSim screen -r 8403.InventoryServer etc.
+To exit screen, leaving server running, and to return to shell
+ctrl-a d
+[edit]Shutdown Servers
+Either manually access each sceen
+screen -r 8419.OpenSim shutdown
+Or use
+killall mono
+Or
+for i in `ps afxu | grep -i &quot;mono.*OpenSim&quot; | grep -v grep | awk  
+{'print $2'}`; do kill $i; done
+Need to see if there is a way to use a shell script using screen to  
+shutdown servers
+
+Blessings,
+
+Scott
+www.scottnorman.com
+
+God's covenant of revival fire has fallen upon Orange County,  
+California, so that the Church of Orange County will become one and  
+bring healing, salvation, and redemption to the county, and to take  
+part in the harvest of one billion plus souls into the Kingdom of God.  
+- Scott Norman
+
+
+
+On Jan 7, 2008, at 11:58 AM, Garth FairChang wrote:
+
+&gt;<i> Hi and thanks for your replies
+</I>&gt;<i>
+</I>&gt;<i> I feel we need a remote console (similar to games like quake, unreal  
+</I>&gt;<i> dedicated servers) to administrate our servers.
+</I>&gt;<i>
+</I>&gt;<i> I see there are remote settings in the  opensim.ini file. how do you  
+</I>&gt;<i> use that to contact/control the server?
+</I>&gt;<i> What do the do?
+</I>&gt;<i>
+</I>&gt;<i> Garth FairChang
+</I>&gt;<i>
+</I>&gt;<i> Impalah wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Let me be pessimist about this method... I think (I haven't tried,  
+</I>&gt;&gt;<i> of course, it's only experience) that you couldn't obtain access to  
+</I>&gt;&gt;<i> the console in &quot;operation&quot; mode (if you configure the .bat as  
+</I>&gt;&gt;<i> &quot;interactive&quot; you'll get the starting messages, but anything more).  
+</I>&gt;&gt;<i> It's almost the same as ANYSRV...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That's why I ask for the &quot;Linux&quot; guys. I supose in Linux the server  
+</I>&gt;&gt;<i> is started after Linux boot but I don't know if they have access to  
+</I>&gt;&gt;<i> the console.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Unless there is some magic way for OS administration without the  
+</I>&gt;&gt;<i> console we will be very limited in the future for install it into  
+</I>&gt;&gt;<i> production servers. Tell a SysOp that you need to get your used  
+</I>&gt;&gt;<i> logged &quot;ad infinitum&quot; in a server and watch his red burning killer  
+</I>&gt;&gt;<i> eyes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Greetings
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2008/1/7, Roger Schreiner &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">phillygeekx at gmail.com</A>&gt;:
+</I>&gt;&gt;<i> Curious to know the reasoning to run this as a service?  If it is  
+</I>&gt;&gt;<i> nothing more then to have the OS server start when the system  
+</I>&gt;&gt;<i> reboots without login to the server, instead of running it as a  
+</I>&gt;&gt;<i> service this can be run through a windows batch file and the NOS  
+</I>&gt;&gt;<i> can be configured to run the batch file in a maximazed mode at  
+</I>&gt;&gt;<i> start up prior to login, so it should load as cmd console  
+</I>&gt;&gt;<i> application and provide you with administration control via this  
+</I>&gt;&gt;<i> cmd console window. While this doesn't do much good for monitoring  
+</I>&gt;&gt;<i> a service or restarting an application on failure, it should allow  
+</I>&gt;&gt;<i> the server to start without intervention on the reboot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Running a batch File before login  =  <A HREF="http://support.microsoft.com/kb/q243486/">http://support.microsoft.com/kb/q243486/</A>
+</I>&gt;&gt;<i> Creating a batch file =  <A HREF="http://home.att.net/~gobruen/progs/dos_batch/dos_batch.html">http://home.att.net/~gobruen/progs/dos_batch/dos_batch.html</A>
+</I>&gt;&gt;<i> I haven't tired it but when i find some time i will post a pastebin  
+</I>&gt;&gt;<i> copy of the code and add the proceedure text when i can find  some  
+</I>&gt;&gt;<i> time.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Tworsley
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Jan 7, 2008 5:38 AM, Impalah &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A> &gt; wrote:
+</I>&gt;&gt;<i> You won't have access in any case to the console if you launch OS  
+</I>&gt;&gt;<i> as a service. OS will need a &quot;configuration service&quot; apart from the  
+</I>&gt;&gt;<i> console.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> How Linux guys solve this problem??? They must not have access to  
+</I>&gt;&gt;<i> the console, I supose.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2008/1/6, Garth FairChang &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garth at fairchang.com</A>&gt;:
+</I>&gt;&gt;<i> Hi and thanks
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have tried that. But after a while OpenSim.exe just seems to  
+</I>&gt;&gt;<i> close and if I use remote window it is not there.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What do you have the idle time set at on plesk?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Also I found a great application that works with Windows server  
+</I>&gt;&gt;<i> 2003.  <A HREF="http://www.application-as-service.com/">http://www.application-as-service.com/</A>
+</I>&gt;&gt;<i> I am testing the demo 14 day version. Works well but I have no  
+</I>&gt;&gt;<i> access to the opensim window. It looks like you could load the  
+</I>&gt;&gt;<i> other opensim servers in order as services before loading  
+</I>&gt;&gt;<i> Opensim.exe :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Garth FairChang
+</I>&gt;&gt;<i> www.fairchang.com
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> jean-fran&#231;ois peri wrote:
+</I>&gt;&gt;&gt;<i> Hi
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I have Opensim running on plesk on Windows server 2003 and I have  
+</I>&gt;&gt;&gt;<i> not this problem.
+</I>&gt;&gt;&gt;<i> Simply when you leave windows on your local computer dont stop it  
+</I>&gt;&gt;&gt;<i> just click on the cross on the top right of your screen.
+</I>&gt;&gt;&gt;<i> Opensim server will continue to run
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Le 5 janv. 08 &#224; 03:37, Impalah a &#233;crit :
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I haven't tried yet with OS but...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://support.microsoft.com/kb/137890">http://support.microsoft.com/kb/137890</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ANYSRV, to run any program as a service
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> 2008/1/5, Garth &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garth at fairchang.com</A>&gt;:
+</I>&gt;&gt;&gt;&gt;<i> Hi
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Is it possible to run opensim.exe (and the database programs) as  
+</I>&gt;&gt;&gt;&gt;<i> a windows
+</I>&gt;&gt;&gt;&gt;<i> service?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I am using a windows 2003 server and every time I logout of the  
+</I>&gt;&gt;&gt;&gt;<i> remote
+</I>&gt;&gt;&gt;&gt;<i> window (in plesk) after a short time the server is gone.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I am guessing it is closing the session.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Garth FairChang
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ________________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Message sent using UebiMiau 2.7.9
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> No virus found in this incoming message.
+</I>&gt;&gt;&gt;<i> Checked by AVG Free Edition.
+</I>&gt;&gt;&gt;<i> Version: 7.5.516 / Virus Database: 269.17.12/1203 - Release Date:  
+</I>&gt;&gt;&gt;<i> 12/30/2007 11:27 AM
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> No virus found in this incoming message.
+</I>&gt;&gt;<i> Checked by AVG Free Edition.
+</I>&gt;&gt;<i> Version: 7.5.516 / Virus Database: 269.17.13/1212 - Release Date:  
+</I>&gt;&gt;<i> 1/6/2008 10:55 PM
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20080107/9dd1a0ef/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20080107/9dd1a0ef/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000065.html">[Opensim-users] Running opensim as a service
+</A></li>
+	<LI>Next message: <A HREF="000067.html">[Opensim-users] SL banking ban: hot comments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#66">[ date ]</a>
+              <a href="thread.html#66">[ thread ]</a>
+              <a href="subject.html#66">[ subject ]</a>
+              <a href="author.html#66">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

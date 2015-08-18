@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Random%20OS%20console%20freeze%20on%20login%3B%0A%09OS%200.7.2%20Master&In-Reply-To=%3C4E7CC362.4070800%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008099.html">
+   <LINK REL="Next"  HREF="008208.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Random%20OS%20console%20freeze%20on%20login%3B%0A%09OS%200.7.2%20Master&In-Reply-To=%3C4E7CC362.4070800%40cox.net%3E"
+       TITLE="[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Fri Sep 23 19:35:30 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008099.html">[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+</A></li>
+        <LI>Next message: <A HREF="008208.html">[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8206">[ date ]</a>
+              <a href="thread.html#8206">[ thread ]</a>
+              <a href="subject.html#8206">[ subject ]</a>
+              <a href="author.html#8206">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am not sure if this is related to the OS console freeze but I just got 
+an exception message this time on console freeze:
+
+12:32:06 - [APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.ArgumentException: Destination array was not long 
+enough. Chec
+k destIndex and length, and the array's lower bounds.
+
+Server stack trace:
+    at System.Array.Copy(Array sourceArray, Int32 sourceIndex, Array 
+destinationA
+rray, Int32 destinationIndex, Int32 length, Boolean reliable)
+    at System.Collections.Generic.Queue`1.SetCapacity(Int32 capacity)
+    at System.Collections.Generic.Queue`1.Enqueue(T item)
+    at OpenSim.Region.ClientStack.Linden.EventQueueGetModule.Enqueue(OSD 
+ev, UUID
+  avatarID) in c:\Documents and 
+Settings\Chris\Desktop\opensim-tree-cbd2705 r1674
+4\OpenSim\Region\ClientStack\Linden\Caps\EventQueue\EventQueueGetModule.cs:line
+182
+    at 
+OpenSim.Region.ClientStack.Linden.EventQueueGetModule.EstablishAgentCommun
+ication(UUID avatarID, IPEndPoint endPoint, String capsPath) in 
+c:\Documents and
+  Settings\Chris\Desktop\opensim-tree-cbd2705 
+r16744\OpenSim\Region\ClientStack\L
+inden\Caps\EventQueue\EventQueueGetModule.cs:line 660
+    at 
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule.I
+nformClientOfNeighbourAsync(ScenePresence sp, AgentCircuitData a, 
+GridRegion reg
+, IPEndPoint endPoint, Boolean newAgent) in c:\Documents and 
+Settings\Chris\Desk
+top\opensim-tree-cbd2705 
+r16744\OpenSim\Region\CoreModules\Framework\EntityTrans
+fer\EntityTransferModule.cs:line 1355
+    at 
+System.Runtime.Remoting.Messaging.StackBuilderSink._PrivateProcessMessage(
+IntPtr md, Object[] args, Object server, Int32 methodPtr, Boolean 
+fExecuteInCont
+ext, Object[]&amp; outArgs)
+    at 
+System.Runtime.Remoting.Messaging.StackBuilderSink.PrivateProcessMessage(R
+untimeMethodHandle md, Object[] args, Object server, Int32 methodPtr, 
+Boolean fE
+xecuteInContext, Object[]&amp; outArgs)
+    at 
+System.Runtime.Remoting.Messaging.StackBuilderSink.AsyncProcessMessage(IMe
+ssage msg, IMessageSink replySink)
+
+Exception rethrown at [0]:
+    at System.Runtime.Remoting.Proxies.RealProxy.EndInvokeHelper(Message 
+reqMsg,
+Boolean bProxyCase)
+    at System.Runtime.Remoting.Proxies.RemotingProxy.Invoke(Object 
+NotUsed, Messa
+geData&amp; msgData)
+    at 
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule.I
+nformClientOfNeighbourDelegate.EndInvoke(IAsyncResult result)
+    at 
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule.I
+nformClientOfNeighbourCompleted(IAsyncResult iar) in c:\Documents and 
+Settings\C
+hris\Desktop\opensim-tree-cbd2705 
+r16744\OpenSim\Region\CoreModules\Framework\En
+tityTransfer\EntityTransferModule.cs:line 1301
+    at 
+System.Runtime.Remoting.Messaging.AsyncResult.SyncProcessMessage(IMessage
+msg)
+    at 
+System.Runtime.Remoting.Messaging.StackBuilderSink.AsyncProcessMessage(IMe
+ssage msg, IMessageSink replySink)
+    at System.Runtime.Remoting.Proxies.AgileAsyncWorkerItem.DoAsyncCall()
+    at 
+System.Runtime.Remoting.Proxies.AgileAsyncWorkerItem.ThreadPoolCallBack(Ob
+ject o)
+    at 
+System.Threading._ThreadPoolWaitCallback.WaitCallback_Context(Object state
+)
+    at System.Threading.ExecutionContext.Run(ExecutionContext 
+executionContext, C
+ontextCallback callback, Object state)
+    at 
+System.Threading._ThreadPoolWaitCallback.PerformWaitCallbackInternal(_Thre
+adPoolWaitCallback tpWaitCallBack)
+    at 
+System.Threading._ThreadPoolWaitCallback.PerformWaitCallback(Object state)
+
+
+Application is terminating: True
+
+
+Hope this helps
+Thank you =)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008099.html">[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+</A></li>
+	<LI>Next message: <A HREF="008208.html">[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8206">[ date ]</a>
+              <a href="thread.html#8206">[ thread ]</a>
+              <a href="subject.html#8206">[ subject ]</a>
+              <a href="author.html#8206">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

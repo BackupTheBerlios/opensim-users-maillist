@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Terraforming in OpenSim - State of Development
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Terraforming%20in%20OpenSim%20-%20State%20of%20Development&In-Reply-To=%3C025F8185-5E44-4D5D-918D-35A685A616E3%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002236.html">
+   <LINK REL="Next"  HREF="002227.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Terraforming in OpenSim - State of Development</H1>
+    <B>Brent Seidel</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Terraforming%20in%20OpenSim%20-%20State%20of%20Development&In-Reply-To=%3C025F8185-5E44-4D5D-918D-35A685A616E3%40mac.com%3E"
+       TITLE="[Opensim-users] Terraforming in OpenSim - State of Development">brentseidel at mac.com
+       </A><BR>
+    <I>Fri May 29 02:34:00 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002236.html">[Opensim-users] Terraforming in OpenSim - State of Development
+</A></li>
+        <LI>Next message: <A HREF="002227.html">[Opensim-users]  Using the SL Client with OpenSim on *NIX
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2240">[ date ]</a>
+              <a href="thread.html#2240">[ thread ]</a>
+              <a href="subject.html#2240">[ subject ]</a>
+              <a href="author.html#2240">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Adam,
+
+I just downloaded and tested SVN r9710 which has the new flatten  
+brush, among other things.  After some brief testing to make sure  
+that things didn't immediately crash, I found some jumbled terrain  
+that I wanted to be smoother.  The previous flatten wouldn't smooth  
+it, so I tried the new flatten.  The results were spectacular.  I've  
+included a snapshot of my avatar looking at the crater of where the  
+land used to be.
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Flattening-Brush_001.png
+Type: image/png
+Size: 63706 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090528/8fed669c/attachment.png">https://lists.berlios.de/pipermail/opensim-users/attachments/20090528/8fed669c/attachment.png</A>&gt;
+-------------- next part --------------
+
+I did another test raising some land from the sea bottom.  Even with  
+the strength set very low, flatten rapidly squashed fairly high  
+mountains.
+
+In other, fairly brief, testing, I was able to fly around through my  
+9 regions without anything appearing too broken.
+
+My configuration:
+Running standalone with 9 regions, usually only 1 avatar
+Mono 2.4
+Centos 5.2 (8 core Xeon 64 bit with 8 gigs)
+NHibernate with PostgreSQL
+
+brent
+
+On 28-May-2009, at 8:19 AM, Frisby, Adam wrote:
+
+&gt;<i> Interesting,
+</I>&gt;<i>
+</I>&gt;<i> I wasn't sure how the SL version worked exactly, so the flatten I  
+</I>&gt;<i> wrote uses the median for the selection. I might see if I can  
+</I>&gt;<i> implement the SL version, should be easy enough.
+</I>&gt;<i>
+</I>&gt;<i> Adam
+</I>&gt;<i>
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:opensim-users-
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>] On Behalf Of Ethan Grammatikidis
+</I>&gt;&gt;<i> Sent: Thursday, 28 May 2009 5:33 AM
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] Terraforming in OpenSim - State of
+</I>&gt;&gt;<i> Development
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I find OpenSim's flatten land much less useful than SL's. OpenSim
+</I>&gt;&gt;<i> flattens to some kind of average height, which is not predictable,
+</I>&gt;&gt;<i> where SL picks the terrain height at the point you click to start
+</I>&gt;&gt;<i> flattening. In OpenSim I have to use a prim with a script looping  
+</I>&gt;&gt;<i> over
+</I>&gt;&gt;<i> llFlattenLand or some such. The script is actually a bit more useful
+</I>&gt;&gt;<i> than SL's flatten land tool as the land height can be set by number.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, 28 May 2009 10:06:51 +0200
+</I>&gt;&gt;<i> &quot;Dirk Krause&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dirk.krause at pixelpark.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Just to mention it: you *can* export raw terrain files from Second
+</I>&gt;&gt;<i> Life and import them into OpenSim without a problem, if it's  
+</I>&gt;&gt;<i> easier to
+</I>&gt;&gt;<i> terraform in SL (which I wasn't aware of).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----Urspr?ngliche Nachricht-----
+</I>&gt;&gt;&gt;<i> Von: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:opensim-users-
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>] Im Auftrag von L?thien Athariel
+</I>&gt;&gt;&gt;<i> Gesendet: Donnerstag, 28. Mai 2009 09:10
+</I>&gt;&gt;&gt;<i> An: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> Betreff: Re: [Opensim-users] Terraforming in OpenSim - State of
+</I>&gt;&gt;<i> Development
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> hi,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;terrain fill 21&quot; is indeed a lot easier - but I concluded that
+</I>&gt;&gt;&gt;<i> flattening an entire region was not what he was looking for - given
+</I>&gt;&gt;&gt;<i> the fact that he mentioned that in his original post (see below)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> selecting a rectangle with the build tools and then flattening (and
+</I>&gt;&gt;&gt;<i> subsequently lowering or raising) also works fine - though you  
+</I>&gt;&gt;&gt;<i> cannot
+</I>&gt;&gt;&gt;<i> cross region borders then, and are limited to a rectangular shape. I
+</I>&gt;&gt;&gt;<i> found that when patching some rectangles together to get the wanted
+</I>&gt;&gt;&gt;<i> shape and getting them to meet when they cross a region border is
+</I>&gt;&gt;&gt;<i> usually more hassle than going via L3DT.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> - luthien
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 28-May-09, at 5:24 AM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">trucker.anthony at 3rdrockgrid.com</A>&gt;
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">trucker.anthony at 3rdrockgrid.com</A>
+</I>&gt;&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> type in the opensim.exe console
+</I>&gt;&gt;&gt;&gt;<i> change region (region name)
+</I>&gt;&gt;&gt;&gt;<i> then type
+</I>&gt;&gt;&gt;&gt;<i> terrain fill 21
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> In OpenSim the flatten command is very loose, and there is no
+</I>&gt;&gt;<i> way
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> to get perfectly flat land aside from entering &quot;terrain fill 21&quot;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> or such to
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> flatten the entire region.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> [...]
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> - Len W. Brown
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Ethan Grammatikidis
+</I>&gt;&gt;<i> The lyf so short, the craft so long to lerne. -- Chaucer
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002236.html">[Opensim-users] Terraforming in OpenSim - State of Development
+</A></li>
+	<LI>Next message: <A HREF="002227.html">[Opensim-users]  Using the SL Client with OpenSim on *NIX
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2240">[ date ]</a>
+              <a href="thread.html#2240">[ thread ]</a>
+              <a href="subject.html#2240">[ subject ]</a>
+              <a href="author.html#2240">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] &quot;Save OAR&quot; stopping since r9700
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%22Save%20OAR%22%20stopping%20since%20r9700&In-Reply-To=%3C453495.54882.qm%40web82604.mail.mud.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002248.html">
+   <LINK REL="Next"  HREF="002250.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] &quot;Save OAR&quot; stopping since r9700</H1>
+    <B>Charles Krinke</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%22Save%20OAR%22%20stopping%20since%20r9700&In-Reply-To=%3C453495.54882.qm%40web82604.mail.mud.yahoo.com%3E"
+       TITLE="[Opensim-users] &quot;Save OAR&quot; stopping since r9700">cfk at pacbell.net
+       </A><BR>
+    <I>Fri May 29 20:39:46 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002248.html">[Opensim-users] &quot;Save OAR&quot; stopping since r9700
+</A></li>
+        <LI>Next message: <A HREF="002250.html">[Opensim-users] &quot;Save OAR&quot; stopping since r9700
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2249">[ date ]</a>
+              <a href="thread.html#2249">[ thread ]</a>
+              <a href="subject.html#2249">[ subject ]</a>
+              <a href="author.html#2249">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I tried with r9573 this morning to do a &quot;save oar &lt;oarFileName&gt; and here is my observation:
+
+First on ckTai which is essentially a blank region.
+Region (ckTai) # save oar ckTai0529
+18:16:09 - [ARCHIVER]: Writing archive for region ckTai to ckTai0529
+18:16:09 - [ARCHIVER]: 0 scene objects to serialize requiring save of 0 assets
+18:16:09 - [ARCHIVER]: AssetsRequest executed looking for 0 assets
+18:16:09 - [ARCHIVER]: Creating archive file.  This may take some time.
+18:16:09 - [ARCHIVER]: Added control file to archive.
+18:16:09 - [ARCHIVER]: Added region settings to archive.
+18:16:10 - [ARCHIVER]: Added terrain information to archive.
+18:16:10 - [ARCHIVER]: Added scene objects to archive.
+18:16:10 - [ARCHIVER]: Wrote out OpenSimulator archive for ckTai
+Region (ckTai) # show version
+Version: OpenSimulator Server  0.6.4.9573  (interface version 3)
+
+Then on Europa which has pushing 1000 prims. What is interesting about Europa is that the first line (in bold) printed out immediately and then there is no response to console. The line below is 40 minutes later and there is still no console response.
+
+
+Region (Europa) # save oar Europa0529
+18:18:03 - [ARCHIVER]: Writing archive for region Europa to Europa0529
+18:31:43 - DIAGNOSTICS
+
+Time now is 5/29/2009 6:31:43 PM
+Server has been running since Tuesday, 5/19/2009 2:31:42 AM
+That is an elapsed time of 10.16:00:00.4956310
+
+ASSET STATISTICS
+Asset cache contains        1 assets
+Latest asset request time after cache miss: 0s
+Blocked client requests for missing textures: 0
+Asset service request failures: 0
+
+CONNECTION STATISTICS
+Abnormal client thread terminations: 0
+
+INVENTORY STATISTICS
+Initial inventory caching failures: 0
+
+FRAME STATISTICS
+Dilatn  SimFPS  PhyFPS  AgntUp  RootAg  ChldAg  Prims   AtvPrm  AtvScr  ScrLPS
+  0.00       0     0.0     0.0       0       1      48       1       0       0
+
+
+
+
+
+
+
+
+________________________________
+From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Sent: Friday, May 29, 2009 9:01:37 AM
+Subject: Re: [Opensim-users] &quot;Save OAR&quot; stopping since r9700
+
+The data that we (the developers) really need is the exact revision between r9561 to r9700 on which this started 
+failing.  I suggest a divide an conquer approach (see if the problem occurs on r9641, if not, then try r9670, etc.). 
+Then that information should be put in a mantis (or an existing one, in which case I'll need to know the number).
+
+John Hopkin wrote:
+&gt;<i> Interesting - thanks (to both of you).
+</I>&gt;<i> 
+</I>&gt;<i> I'm not what other information is relevant, but here's some:
+</I>&gt;<i> 
+</I>&gt;<i> 1. For prims counts, they are two of the largest regions among the
+</I>&gt;<i> seven, marked with asterisks here:
+</I>&gt;<i> 
+</I>&gt;<i> 2889
+</I>&gt;<i> 2717*
+</I>&gt;<i>  858*
+</I>&gt;<i>  526
+</I>&gt;<i>  257
+</I>&gt;<i>  195
+</I>&gt;<i>    3
+</I>&gt;<i> 
+</I>&gt;<i> 2. In total data size, they're the two of largest, as measured by the
+</I>&gt;<i> size of the last good backup:
+</I>&gt;<i> 
+</I>&gt;<i> 140M*
+</I>&gt;<i>  31M
+</I>&gt;<i>  23M*
+</I>&gt;<i>   7M
+</I>&gt;<i>   5M
+</I>&gt;<i>   4M
+</I>&gt;<i>   0.5M
+</I>&gt;<i> 
+</I>&gt;<i> 3. Regarding terrain, as well as location on the grid, they're not
+</I>&gt;<i> unusual; although they're adjacent to each other, all seven are
+</I>&gt;<i> located contiguously and contain a mix of elevations.
+</I>&gt;<i> 
+</I>&gt;<i> 4. They could well be the regions with the most scripts; I don't know
+</I>&gt;<i> how I can find that out without a manual audit in-world.
+</I>&gt;<i> 
+</I>&gt;<i> There are four other regions, not normally loaded, used occasionally
+</I>&gt;<i> as sandboxes and storage areas.  I don't yet know if they're affected
+</I>&gt;<i> by the bug.
+</I>&gt;<i> 
+</I>&gt;<i> Hope this gives some idea, and maybe helps.  If you want to know
+</I>&gt;<i> anything else, please ask.
+</I>&gt;<i> 
+</I>&gt;<i> John
+</I>&gt;<i> 
+</I>&gt;<i> BlueWall Slade wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> I have seen oar failures on Linux (Mono 2.4/64 Bit and Mono 2.5/32 Bit
+</I>&gt;&gt;<i> environments). And across several versions of OpenSim on several different
+</I>&gt;&gt;<i> regions. My experience is that any region, in these environments, with more
+</I>&gt;&gt;<i> than trivial content fails to complete the backup process. I am continuing
+</I>&gt;&gt;<i> to investigate. Any other information would be most helpful.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i> BlueWall
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, May 28, 2009 at 3:25 PM, dr scofield &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drscofield at xyzzyxyzzy.net</A>&gt;wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> John Hopkin wrote:
+</I>&gt;&gt;&gt;&gt;<i> Since I upgraded from r9561 to r9700, two out of seven regions don't
+</I>&gt;&gt;&gt;&gt;<i> back up using &quot;save oar&quot;.  Even when they're the only region running,
+</I>&gt;&gt;&gt;&gt;<i> those two have the same symptom: after a while, the archiver appears
+</I>&gt;&gt;&gt;&gt;<i> to stop writing to the file, as if it's given up.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Looking at the files with tar, they're fine for many MB, then the
+</I>&gt;&gt;&gt;&gt;<i> archive ends prematurely.  There's nothing on the screen or in the log
+</I>&gt;&gt;&gt;&gt;<i> to indicate a problem.  This problem persists, and only on the same
+</I>&gt;&gt;&gt;&gt;<i> two regions - other regions back up fine.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Platform is Ubuntu Linux (Jaunty), Mono 2.2, MySQL 5.0; all seven
+</I>&gt;&gt;&gt;&gt;<i> regions run under one instance of OpenSim.exe.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> my not actually be the issue, but mono 2.2 has a bad reputation. 2.0.1
+</I>&gt;&gt;&gt;<i> seems to be quite stable, 2.4 is also not too bad.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>    dirk
+</I>&gt;&gt;&gt;&gt;<i> Any ideas?  Thanks in advance.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> dr dirk husemann ---- math &amp; computer science ---- ibm zurich research lab
+</I>&gt;&gt;&gt;<i> RL: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">hud at zurich.ibm.com-</A> +41 44 724 8573 - <A HREF="http://www.zurich.ibm.com/~hud/&lt;http://www.zurich.ibm.com/%7Ehud/">http://www.zurich.ibm.com/~hud/&lt;http://www.zurich.ibm.com/%7Ehud/</A>&gt;
+</I>&gt;&gt;&gt;<i> SL: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drscofield at xyzzyxyzzy.net---------------------</A> <A HREF="http://xyzzyxyzzy.net/">http://xyzzyxyzzy.net/</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090529/47a94faf/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090529/47a94faf/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002248.html">[Opensim-users] &quot;Save OAR&quot; stopping since r9700
+</A></li>
+	<LI>Next message: <A HREF="002250.html">[Opensim-users] &quot;Save OAR&quot; stopping since r9700
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2249">[ date ]</a>
+              <a href="thread.html#2249">[ thread ]</a>
+              <a href="subject.html#2249">[ subject ]</a>
+              <a href="author.html#2249">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

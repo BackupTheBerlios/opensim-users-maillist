@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Streatching Opensim to far?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Streatching%20Opensim%20to%20far%3F&In-Reply-To=%3C4FBC5B78.7040002%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010384.html">
+   <LINK REL="Next"  HREF="010389.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Streatching Opensim to far?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Streatching%20Opensim%20to%20far%3F&In-Reply-To=%3C4FBC5B78.7040002%40googlemail.com%3E"
+       TITLE="[Opensim-users] Streatching Opensim to far?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed May 23 05:37:28 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010384.html">[Opensim-users] Streatching Opensim to far?
+</A></li>
+        <LI>Next message: <A HREF="010389.html">[Opensim-users] Streatching Opensim to far?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10387">[ date ]</a>
+              <a href="thread.html#10387">[ thread ]</a>
+              <a href="subject.html#10387">[ subject ]</a>
+              <a href="author.html#10387">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm very surprised at the big difference between actual heap allocation (883 mb) and actual process allocation (6193mb). 
+  You might want to monitor memory usage over time - it might be that some kind of peak in heap has put the process 
+memory up to a permanently higher level.
+
+Unfortunately, memory usage on OpenSimulator will go up and down quite a bit as many objects are allocated before the GC 
+kicks in.
+
+That said, 64 regions on a single simulator is definitely a stretch, I think.  You might want to check what the 
+difference is between your empty sims and the one with data.
+
+I believe there is scope for better memory efficiency in OpenSimulator but it might be difficult to make really huge 
+savings.  Unlike a web-server, OpenSimulator (and many other VE systems) has to keep data permanently in memory for 
+speed of response.
+
+On 22/05/12 15:57, InuYasha Meiji wrote:
+&gt;<i> I was working on building content for my grid when I got a warning from windows during using an external application. I
+</I>&gt;<i> typed &quot;Show stats&quot; in the console to find this.
+</I>&gt;<i>
+</I>&gt;<i> CONNECTION STATISTICS
+</I>&gt;<i> Abnormal client thread terminations: 0
+</I>&gt;<i>
+</I>&gt;<i> FRAME STATISTICS
+</I>&gt;<i> Dilatn SimFPS PhyFPS AgntUp RootAg ChldAg Prims AtvPrm AtvScr ScrLPS
+</I>&gt;<i> 1.00 50 51.7 0.0 0 0 60 0 4 0
+</I>&gt;<i>
+</I>&gt;<i> PktsIn PktOut PendDl PendUl UnackB TotlFt NetFt PhysFt OthrFt AgntFt ImgsFt
+</I>&gt;<i> 0 0 0 0 0 0.0 0.0 0.0 0.0 0.0 0.0
+</I>&gt;<i>
+</I>&gt;<i> MEMORY STATISTICS
+</I>&gt;<i> Allocated to OpenSim objects: 883 MB
+</I>&gt;<i> Process memory : 6193 MB
+</I>&gt;<i>
+</I>&gt;<i> Region (root) #
+</I>&gt;<i>
+</I>&gt;<i> Now I have a lot more I want to add to my grid. I currently run all that you see in my tag lines.
+</I>&gt;<i>
+</I>&gt;<i> Opensim User: Standalone Grid on Version 0.7.3.1 with 56 Regions
+</I>&gt;<i> on Windows 7, 64-bit. Phenom 9500 2.2 ghz Quad Core, Terabyte Hard
+</I>&gt;<i> Drive, 8gig DDR2 RAM. Used XAMPP to load PHP Version 5.3.0, Apache
+</I>&gt;<i> and MySQL 5.1.41-community edition. Groups, Profiles, Voice and
+</I>&gt;<i> Offline Mesages all working. (Not yet Public, 6 users allowed Now).
+</I>&gt;<i>
+</I>&gt;<i> I only have one sim with much on it, I was planning on making the other sims well forested and a couple more villages
+</I>&gt;<i> and then Shuri Castle from Okinawa in the middle. The reason for 56 regions was to make a nice 1.5 mile landscape all
+</I>&gt;<i> the way around the castle and surrounding villages.
+</I>&gt;<i>
+</I>&gt;<i> Am I expecting to much of my system and Opensim to be able to do this on one computer. I plan to eventually upgrade to a
+</I>&gt;<i> 32 gig DDR3, am3+ bulldozer motherboard. Looking at what little it took to fill over 6 gig of ram, I am worried after I
+</I>&gt;<i> save up a while and get the upgrade that it won't be enough to do all the things I dream of.
+</I>&gt;<i>
+</I>&gt;<i> Am I over reaching? I thought opensim even in 64bit used some disk cashing, and wouldn't use all the available ram? I
+</I>&gt;<i> still want to be able to do other things with my machine while running my grid. Seems I can't always do that without a
+</I>&gt;<i> shutdown a program warning from windows 7.
+</I>&gt;<i>
+</I>&gt;<i> Info is welcome.
+</I>&gt;<i>
+</I>&gt;<i> InuYasha
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010384.html">[Opensim-users] Streatching Opensim to far?
+</A></li>
+	<LI>Next message: <A HREF="010389.html">[Opensim-users] Streatching Opensim to far?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10387">[ date ]</a>
+              <a href="thread.html#10387">[ thread ]</a>
+              <a href="subject.html#10387">[ subject ]</a>
+              <a href="author.html#10387">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

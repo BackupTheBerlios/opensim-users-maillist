@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database clean up
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20clean%20up&In-Reply-To=%3C4F7F93FB.8050508%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010052.html">
+   <LINK REL="Next"  HREF="010061.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database clean up</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20clean%20up&In-Reply-To=%3C4F7F93FB.8050508%40googlemail.com%3E"
+       TITLE="[Opensim-users] Database clean up">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Apr  7 03:10:19 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010052.html">[Opensim-users] Database clean up
+</A></li>
+        <LI>Next message: <A HREF="010061.html">[Opensim-users] Database clean up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10059">[ date ]</a>
+              <a href="thread.html#10059">[ thread ]</a>
+              <a href="subject.html#10059">[ subject ]</a>
+              <a href="author.html#10059">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 06/04/12 18:53, Gudule Lapointe wrote:
+&gt;<i> I experience lot of timeout problems. I checked every side of the installation, and I suspect the database to be the
+</I>&gt;<i> bottleneck.
+</I>&gt;<i>
+</I>&gt;<i> The main question is: how can I clean up the database? Detail description below&#8230;
+</I>&gt;<i> Any advice on any part of the problem is welcome.
+</I>
+ From the data below I'm quite surprised you're having problems - this is not a particularly large grid.  I strongly 
+recommend actually measuring performance where you can and finding the actual bottleneck, rather than assuming that 
+certain things are issues.  You might find that the issue is not actually OpenSimulator related (e.g. a network issue, 
+machine overloaded for other reasons, etc).  In particular, I don't think 2.3Gb is all that large for an asset database.
+
+Unfortunately, I'm not aware of tools to measure things such as inventory service response, though in principle they 
+would not be all that hard to write.
+
+pCampbot [1] can do some simulator testing where many libomv clients are logged onto a simulator at once, though some of 
+its actions are currently highly unrealistic (e.g. logging in 20 bots simultaneously).
+
+I've written up some grid performance discussion and possible solutions at [1].  However, this only covers the issues 
+I've personally seen.  In general, scaling a grid is very hard and largely a step into an evolving unknown.  It's also 
+the hardest area to work in since diaganosing issues is very time consuming (and not always something I have the time to 
+help with, unfortunately, not least because it's an area I'm still learning about).  But again, I don't think your grid 
+numbers are actually high enough to encounter the more complex issues.
+
+More comments below.
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Current setup comes from an initial test installation, and changed a lot before going to prod (versions changes, server
+</I>&gt;<i> changes, oar save and load, etc).
+</I>&gt;<i> However it has been working quite fine for more than 3 months, since latest big change.
+</I>&gt;<i>
+</I>&gt;<i> - version: 0.7.3-post-fixes
+</I>&gt;<i> - robust server, with 7 simulators, for a total of 56 regions
+</I>&gt;<i> - From these region, I would say 15 &#224; 20 are really active, others are placeholders, without content.
+</I>&gt;<i> - About 20 registered users. Usually 3 or 4 concurrent users
+</I>&gt;<i> - Each region has it's own mysql database, and robust uses a single one.
+</I>&gt;<i>
+</I>&gt;<i> Since around 5 days, I get continuous timeout, access to inventory or assets errors and sometimes region crashes.
+</I>&gt;<i>
+</I>&gt;<i> Though they were no recent change on the set up when the problems began. Hence my suspicions on the database.
+</I>&gt;<i>
+</I>&gt;<i> (CPU, memory and disk usage don't show any overload)
+</I>&gt;<i>
+</I>&gt;<i> Regions database are fairly light (~20MB)
+</I>&gt;<i> Robust database is huge: 2.6 GB
+</I>&gt;<i> I am not sure such a big database is common for setup like ours.
+</I>
+This is not a very unusual size and I don't think that it's a problem to be honest.
+
+&gt;<i>
+</I>&gt;<i> So it looks obvious that I should clean up the database, which may contain a lot of outdated items.
+</I>&gt;<i> Fair enough. How can I do?
+</I>&gt;<i>
+</I>&gt;<i> I would like to know
+</I>&gt;<i> - which tables I can empty without losses, at all
+</I>
+Nothing that would make any significant difference compared to deleting/deduplicating assets.  There are some (a) 
+suggestion for asset dedupe at [1].  Asset deletion is a hard problem, though I think there might be some future stuff 
+that can be done by deleting/retiring assets that haven't been accessed for a very, very long time.
+
+&gt;<i> - which tables I can empty after having made a successful oar save of my regions
+</I>
+You could empty the region database, naturally.  I'm assuming you're not storing all region and service data in a single 
+database.  Even then there is a list of region tables on the wiki.
+
+To be able to remove all tables you would also need to save IARs for every single user.  I think there could be an 
+automatic tool for this but it would require considerable work.  Also, I'm not sure the restoration from whole inventory 
+backup story is currently very good.
+
+Even if you save all OARs and IARs you'll still lose things such as home position for users and region script state. 
+However, I don't think any of this is absolutely crucial for a data restore (e.g. users can always just reset their home 
+positions manually).
+
+&gt;<i> - how can I clean up the inventory and assets server, without having my users loosing their inventory?
+</I>&gt;<i> - and any advise on how to optimize mysql server for this usage is welcome
+</I>&gt;<i>
+</I>&gt;<i> Another clue is to split robust inventory and/or assets servers, so, in this case
+</I>&gt;<i> - which tables do I have to split?
+</I>&gt;<i> - are there risks of losses if the address/port of inventory and assets server change?
+</I>&gt;<i>
+</I>
+Better to split services into separate processes than tables.  See [1] for more information.  The biggest bottleneck 
+with services is actually the embedded HTTP server rather than db size, but your grid numbers aren't really high enough 
+to hit these issues, imo.
+
+&gt;<i> And, last but not least, monitoring sql show warning of lot of queries are made on non-indexes fields of mysql tables.
+</I>&gt;<i> Which is not harmful for marginal queries, but is a big problem for recurring ones. I can't imagine parsing the whole
+</I>&gt;<i> code to guess where there are such recurring queries. Any idea on how to track guilty queries? A clue: it seems to be
+</I>&gt;<i> happening mostly when accessing foreign content (content taken on HG regions, or content used by HG visitor).
+</I>
+To be honest, it wouldn't totally surprise me if there are some index issues and areas where things could be made much 
+more efficient.  I don't know how you would track down bad queries, though I'm sure MySQL has some kind of tracking that 
+could be done.
+
+HG is another issue entirely.  If foreigners are accessing their content then performance depends on their home services 
+and on network performance.  However, this shouldn't affect non-HG users or region operations.
+
+[1] <A HREF="http://opensimulator.org/wiki/Performance#Grid">http://opensimulator.org/wiki/Performance#Grid</A>
+
+&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010052.html">[Opensim-users] Database clean up
+</A></li>
+	<LI>Next message: <A HREF="010061.html">[Opensim-users] Database clean up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10059">[ date ]</a>
+              <a href="thread.html#10059">[ thread ]</a>
+              <a href="subject.html#10059">[ subject ]</a>
+              <a href="author.html#10059">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

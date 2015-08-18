@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.6.8-binaries startup issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.6.8-binaries%20startup%20issue&In-Reply-To=%3C4B8C40DE.2010008%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004068.html">
+   <LINK REL="Next"  HREF="004083.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.6.8-binaries startup issue</H1>
+    <B>Chris Kennedy</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.6.8-binaries%20startup%20issue&In-Reply-To=%3C4B8C40DE.2010008%40cox.net%3E"
+       TITLE="[Opensim-users] OpenSim 0.6.8-binaries startup issue">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Mon Mar  1 23:34:06 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004068.html">[Opensim-users] OpenSim 0.6.8-binaries startup issue
+</A></li>
+        <LI>Next message: <A HREF="004083.html">[Opensim-users] OpenSim 0.6.8-binaries startup issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4071">[ date ]</a>
+              <a href="thread.html#4071">[ thread ]</a>
+              <a href="subject.html#4071">[ subject ]</a>
+              <a href="author.html#4071">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Not sure, but from the looks of the error message it seems to me that it 
+can't find the ODE plugin. If you look in the Physics folder under bin 
+do you see the OpenSim.Region.Physics.OdePlugin.dll, and 
+OpenSim.Region.Physics.OdePlugin.dll.mdb files?
+
+If not you should be able to find them in the binaries zip file.
+
+Not sure what else to suggest to be honest though o_O
+
+Best of luck!
+
+
+On 3/1/2010 10:37 AM, Robert Klein wrote:
+&gt;<i> I have searched around and could not find this particular issue so hoping
+</I>&gt;<i> someone can help me. I grabbed the 0.6.8-binaries off the opensimulator.org
+</I>&gt;<i> home page, unzipped them, ran OpenSim.exe and I get the following:
+</I>&gt;<i>
+</I>&gt;<i> 2010-03-01 07:52:59,615 INFO  -
+</I>&gt;<i> OpenSim.Region.Physics.Manager.PhysicsPluginManager [PHYSICS]: creating
+</I>&gt;<i> OpenDynamicsEngine
+</I>&gt;<i> 2010-03-01 07:52:59,630 ERROR - OpenSim.Application [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.IO.FileNotFoundException: Could not load file or assembly
+</I>&gt;<i> 'System.Core, Version=3.5.0.0, Culture=neutral,
+</I>&gt;<i> PublicKeyToken=b77a5c561934e089' or one of its dependencies. The system
+</I>&gt;<i> cannot find the file specified.
+</I>&gt;<i> File name: 'System.Core, Version=3.5.0.0, Culture=neutral,
+</I>&gt;<i> PublicKeyToken=b77a5c561934e089'
+</I>&gt;<i>     at OpenSim.Region.Physics.OdePlugin.OdeScene..ctor(CollisionLocker dode,
+</I>&gt;<i> String sceneIdentifier)
+</I>&gt;<i>     at OpenSim.Region.Physics.OdePlugin.OdePlugin.GetScene(String
+</I>&gt;<i> sceneIdentifier)
+</I>&gt;<i>     at
+</I>&gt;<i> OpenSim.Region.Physics.Manager.PhysicsPluginManager.GetPhysicsScene(String
+</I>&gt;<i> physEngineName, String meshEngineName, IConfigSource config, String
+</I>&gt;<i> regionName)
+</I>&gt;<i>     at
+</I>&gt;<i> OpenSim.Region.ClientStack.RegionApplicationBase.GetPhysicsScene(String
+</I>&gt;<i> engine, String meshEngine, IConfigSource config, String osSceneIdentifier)
+</I>&gt;<i>     at OpenSim.OpenSimBase.GetPhysicsScene(String osSceneIdentifier)
+</I>&gt;<i>     at OpenSim.OpenSimBase.SetupScene(RegionInfo regionInfo, Int32
+</I>&gt;<i> proxyOffset, IConfigSource configSource, IClientNetworkServer&amp;  clientServer)
+</I>&gt;<i>     at OpenSim.OpenSimBase.CreateRegion(RegionInfo regionInfo, Boolean
+</I>&gt;<i> portadd_flag, Boolean do_post_init, IScene&amp;  mscene)
+</I>&gt;<i>     at OpenSim.OpenSimBase.CreateRegion(RegionInfo regionInfo, Boolean
+</I>&gt;<i> portadd_flag, IScene&amp;  scene)
+</I>&gt;<i>     at
+</I>&gt;<i> OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise()
+</I>&gt;<i>     at OpenSim.OpenSimBase.StartupSpecific()
+</I>&gt;<i>     at OpenSim.OpenSim.StartupSpecific()
+</I>&gt;<i>     at OpenSim.Framework.Servers.BaseOpenSimServer.Startup()
+</I>&gt;<i>     at OpenSim.Application.Main(String[] args)
+</I>&gt;<i>
+</I>&gt;<i> I am running on Windows 2008 Server. When I comment out the ODEPhysics and
+</I>&gt;<i> use BasicPhysics instead the simulator will run. Any thoughts?
+</I>&gt;<i>
+</I>&gt;<i> -Robert
+</I>&gt;<i>    
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004068.html">[Opensim-users] OpenSim 0.6.8-binaries startup issue
+</A></li>
+	<LI>Next message: <A HREF="004083.html">[Opensim-users] OpenSim 0.6.8-binaries startup issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4071">[ date ]</a>
+              <a href="thread.html#4071">[ thread ]</a>
+              <a href="subject.html#4071">[ subject ]</a>
+              <a href="author.html#4071">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

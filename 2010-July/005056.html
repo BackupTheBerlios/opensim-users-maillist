@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.7 upgrade - phantom objects
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.7%20upgrade%20-%20phantom%20objects&In-Reply-To=%3C4C50A398.1080500%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005054.html">
+   <LINK REL="Next"  HREF="005058.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.7 upgrade - phantom objects</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.7%20upgrade%20-%20phantom%20objects&In-Reply-To=%3C4C50A398.1080500%40googlemail.com%3E"
+       TITLE="[Opensim-users] OpenSim 0.7 upgrade - phantom objects">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Jul 28 23:39:36 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005054.html">[Opensim-users] OpenSim 0.7 upgrade - phantom objects
+</A></li>
+        <LI>Next message: <A HREF="005058.html">[Opensim-users] Recommended Approach for Voice for Opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5056">[ date ]</a>
+              <a href="thread.html#5056">[ thread ]</a>
+              <a href="subject.html#5056">[ subject ]</a>
+              <a href="author.html#5056">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 28/07/10 20:47, Clive Gould wrote:
+&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the prompt feedback :)
+</I>&gt;<i>
+</I>&gt;<i> 1) I've solved the problem with the phantom objects. The objects were
+</I>&gt;<i> not marked as phantom, but were behaving as phantom. During the
+</I>&gt;<i> upgrade, in editing OpenSim.ini I has set CombineContiguousRegions =
+</I>&gt;<i> false, whereas before the upgrade this had been set to true. Setting
+</I>&gt;<i> this parameter back to true and restarting the simulator solved the
+</I>&gt;<i> problem and the objects are no longer phantom :)
+</I>&gt;<i>
+</I>&gt;<i> 2) Some of the linked objects originally imported from SL have now
+</I>&gt;<i> reappeared, some appear occasionally after a simulator restart/client
+</I>&gt;<i> cache clear, and some are invisible/uneditable but can't be walked
+</I>&gt;<i> through!
+</I>
+If an object has turned invisible but can't be walked through then this suggests that the object information has got 
+lost between the server and the client.  This is usually due to network bandwidth issues though it may also only show up 
+after a configuration/version change.  Symptoms are that objects reappear on relogs and disappearance is not consistent. 
+  The chief solution is to reduce network bandwidth usage in the viewer settings.
+
+I'm surprised if this problem is showing up on a LAN though.
+
+&gt;<i>
+</I>&gt;<i> I have found comment stripping invaluable in getting a manageable
+</I>&gt;<i> version of OpenSim.ini. Can I please put in a plea? When future
+</I>&gt;<i> releases of OpenSim come out and someone creates OpenSim.ini.example
+</I>&gt;<i> can they please put all ; delimited comments on a separate line and
+</I>&gt;<i> also remove any unnecessary semi-colons?
+</I>&gt;<i>
+</I>&gt;<i> Lines such as
+</I>&gt;<i>
+</I>&gt;<i> http_listener_ssl_cert = &quot;&quot; ; Currently unused, but will be used for
+</I>&gt;<i> OSHttpServer
+</I>&gt;<i> enabled = true;
+</I>&gt;<i>
+</I>&gt;<i> make using grep -v &quot;;&quot; much harder to use for comment stripping ;)
+</I>
+You need to use a regex more like grep -ve &quot;^\s*;&quot; or something :), as Robert suggested.
+
+&gt;<i>
+</I>&gt;<i> Thanks everyone
+</I>&gt;<i>
+</I>&gt;<i> Clive
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --------------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> On 28/07/10 12:56, Clive Gould wrote:
+</I>&gt;&gt;<i> Hi
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've just upgraded out test server from opensim-0.6.9 to opensim-0.7
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We're running under mono and Linux.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1) Can anyone suggest, why after the upgrade certain objects that were
+</I>&gt;&gt;<i> not phantom before are behaving as if they were phantom now? (Many of
+</I>&gt;&gt;<i> these objects were originally derived from an OAR import)
+</I>&gt;<i>
+</I>&gt;<i> Are they actually marked phantom or just behaving that way?
+</I>&gt;<i>
+</I>&gt;<i> If they're not marked then it might be related to this issue
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=4716">http://opensimulator.org/mantis/view.php?id=4716</A>
+</I>&gt;<i>
+</I>&gt;<i> The mantis is assigned to me but I haven't had a chance to look
+</I>&gt;<i> further into it and might still not for some time.  So
+</I>&gt;<i> if anybody else wants to fix it please feel free.
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2) Also any ideas why another set of linked objects originally
+</I>&gt;&gt;<i> imported from SL has become invisible since the upgrade? I cannot see
+</I>&gt;&gt;<i> them and I cannot edit them, but at the same time I cannot walk
+</I>&gt;&gt;<i> through where they used to be either as something is getting in my
+</I>&gt;&gt;<i> way!
+</I>&gt;<i>
+</I>&gt;<i> I believe there are still quite a few bugs relating to linked objects
+</I>&gt;<i> - you might have got unlucky.
+</I>&gt;<i>
+</I>&gt;<i> You could try to restore the object by saving it to inventory and
+</I>&gt;<i> re-rezzing it in the old OpenSim version, or perhaps
+</I>&gt;<i> by saving it to an IAR in the old version and loading it back into the new.
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005054.html">[Opensim-users] OpenSim 0.7 upgrade - phantom objects
+</A></li>
+	<LI>Next message: <A HREF="005058.html">[Opensim-users] Recommended Approach for Voice for Opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5056">[ date ]</a>
+              <a href="thread.html#5056">[ thread ]</a>
+              <a href="subject.html#5056">[ subject ]</a>
+              <a href="author.html#5056">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

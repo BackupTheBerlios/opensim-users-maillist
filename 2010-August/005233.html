@@ -1,0 +1,368 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Trying to get OpenSim to work behind a SonicWALL	router/firewall
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Trying%20to%20get%20OpenSim%20to%20work%20behind%20a%20SonicWALL%0A%09router/firewall&In-Reply-To=%3CAANLkTi%3DWhWEJNcUN0_LYRkEZ6CwFjzx3fAfYSi8nu-FC%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005232.html">
+   <LINK REL="Next"  HREF="005234.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Trying to get OpenSim to work behind a SonicWALL	router/firewall</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Trying%20to%20get%20OpenSim%20to%20work%20behind%20a%20SonicWALL%0A%09router/firewall&In-Reply-To=%3CAANLkTi%3DWhWEJNcUN0_LYRkEZ6CwFjzx3fAfYSi8nu-FC%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Trying to get OpenSim to work behind a SonicWALL	router/firewall">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Sat Aug 14 03:31:57 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005232.html">[Opensim-users] Missing library items
+</A></li>
+        <LI>Next message: <A HREF="005234.html">[Opensim-users] Trying to get OpenSim to work behind a SonicWALL router/firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5233">[ date ]</a>
+              <a href="thread.html#5233">[ thread ]</a>
+              <a href="subject.html#5233">[ subject ]</a>
+              <a href="author.html#5233">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all :)
+
+I humbly apologise if this question was ever asked before (in that case I
+would really appreciate a nice link to the answer :) ) but I'm afraid that
+Google searches have failed me utterly...
+
+As part of the diversification/expansion of our own internal OpenSim grid
+(but visitable!), we're trying to add regions using extreme
+configurations... e.g. looking at different CPU/memory/bandwidth
+alternatives and get a feeling what works best.
+
+One of those tests was to launch a few regions on a server behind a
+SonicWALL router/firewall. Now I have zero experience configuring one of
+those. SonicWALL seems to be a very advanced, highly flexible, tremendously
+powerful router/firewall for its class; and, as it's usually the case, it's
+also tough to configure! It's not part of the list at
+<A HREF="http://opensimulator.org/wiki/NAT_Loopback_Routers">http://opensimulator.org/wiki/NAT_Loopback_Routers</A>
+
+This particular router/firewall has a DSL connection with a cable connection
+as failover. Both are usually active (not always though!) and there is some
+level of load balancing between them. DynDNS flawlessly recognises what IP
+address was last active and updates it accordingly, giving priority to the
+&quot;primary&quot; address.
+
+After some head-banging, I admit I'm stumped to what the proper
+configuration is supposed to be. All ports in the range 8000-8006 (TCP) and
+9000-9100 (TCP + UDP) are open, as well as SSH/Web/monit. The database is on
+a remote server, physically hosted elsewhere.
+
+SSH/Web/monit work flawlessly under all circumstances. So I know that at
+least the basics are right.
+
+Initiating connections from the server also work fine. The database is
+easily reached. No problems there, either.
+
+When launching OpenSim, all regions are launched, the server properly
+connects to the Robust server on a different data centre (at this moment, we
+have our grid scattered among three data centres, and a &quot;test sim&quot; running
+from my home iMac, also behind a Linksys router/firewall). It registers
+correctly and Robust also correctly shows the relevant data. The regions
+also show on the map &#8212; even the default island texture gets properly
+updated. So some basic things are indeed working.
+
+But teleports always fail.
+
+Here is what I get on this server (metrics.betatechnologies.info):
+
+19:54:29 - [LOCAL SIMULATION CONNECTOR]: Found region JeffBush to send
+SendCreateChildAgent
+19:54:29 - [CONNECTION BEGIN]: Region JeffBush told of incoming child agent
+Gwyneth Llewelyn 35c965ac-0b37-4b36-968a-6dbdc127a544 (circuit code
+930048553, teleportflags 16)
+19:54:31 - [CONNECTION BEGIN]: Region JeffBush authenticated and authorized
+incoming child agent Gwyneth Llewelyn 35c965ac-0b37-4b36-968a-6dbdc127a544
+(circuit code 930048553)
+19:54:31 - [CAPS]: Registered seed capability
+/CAPS/b371218d-c3c2-402c-9ad6-3237e23af90f0000/ for
+35c965ac-0b37-4b36-968a-6dbdc127a544
+19:54:31 - [OBJECTADD]: /CAPS/OA/03216999-25b1-4509-b428-63c41f151fe7/
+19:54:31 - [EVENTQUEUE]: Adding new queue for agent
+35c965ac-0b37-4b36-968a-6dbdc127a544 in region JeffBush
+19:54:31 - [VC]: OnRegisterCaps: agentID
+35c965ac-0b37-4b36-968a-6dbdc127a544 caps
+OpenSim.Framework.Capabilities.Caps
+19:54:31 - [GETTEXTURE]: /CAPS/6db85c61-5166-4d21-86b6-ad47428ed3cc
+19:54:31 - [LOCAL SIMULATION CONNECTOR]: Found region JeffBush
+4007719884176640 to send AgentUpdate
+19:54:31 - [SCENE]: Incoming child agent update for
+35c965ac-0b37-4b36-968a-dbdc127a544 in JeffBush
+19:54:32 - [CAPS]: Seed Caps Request in region: JeffBush
+19:54:43 - [CAPS]: Seed Caps Request in region: JeffBush
+19:55:02 -  &gt;&gt;&gt; DoDelete action:;
+RegionID:f154dd20-a558-11df-981c-0800200c9a66
+19:55:02 - [AGENT HANDLER]: Agent Released/Deleted.
+
+Ok, so this server timed out and gave up.
+
+Now let's see what happens on the side of the server where the avatar
+originally was (opensim.betatechnologies.info; timestamps are slightly
+different because of timezone differences and probably a clock out of sync):
+
+2010-08-13 16:52:29,177 DEBUG -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.HGEntityTransferModule
+[HG ENTITY TRANSFER MODULE]: region f154dd20-a558-11df-981c-0800200c9a66
+flags: 4
+2010-08-13 16:52:29,177 DEBUG -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+[ENTITY TRANSFER MODULE]: Final destination is x=3645 y=3645
+uuid=f154dd20-a558-11df-981c-0800200c9a66
+2010-08-13 16:52:29,177 DEBUG -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+[ENTITY TRANSFER MODULE]: Request Teleport to
+metrics.betatechnologies.info:9000:JeffBush/&lt;106.4307, 149.6743, 22.09751&gt;
+2010-08-13 16:52:29,246 DEBUG -
+OpenSim.Region.CoreModules.ServiceConnectorsOut.Simulation.LocalSimulationConnectorModule
+[LOCAL SIMULATION CONNECTOR]: Did not find region JeffBush for
+SendCreateChildAgent
+2010-08-13 16:52:29,378 INFO  -
+OpenSim.Services.Connectors.Simulation.SimulationServiceConnector [REMOTE
+SIMULATION CONNECTOR]: Posted CreateAgent request to remote sim
+<A HREF="http://76.250.194.143:9000/agent/35c965ac-0b37-4b36-968a-6dbdc127a544/,">http://76.250.194.143:9000/agent/35c965ac-0b37-4b36-968a-6dbdc127a544/,</A>
+region JeffBush, x=933120 y=933120
+2010-08-13 16:52:30,603 INFO  -
+OpenSim.Services.Connectors.Simulation.SimulationServiceConnector [REMOTE
+SIMULATION CONNECTOR]: DoCreateChildAgentCall reply was {&quot;success&quot;:true}
+2010-08-13 16:52:30,604 DEBUG -
+OpenSim.Region.Framework.Scenes.ScenePresence [SCENE PRESENCE]: Closing
+child agents. Checking 4 regions in Terreiro Paco Oeste
+2010-08-13 16:52:30,604 DEBUG -
+OpenSim.Region.Framework.Scenes.ScenePresence [SCENE PRESENCE]: Closing 3
+child agents
+2010-08-13 16:52:30,604 DEBUG -
+OpenSim.Region.Framework.Scenes.SceneCommunicationService [INTERGRID]:
+Sending close agent to 4012117930690048
+2010-08-13 16:52:30,605 DEBUG -
+OpenSim.Region.ClientStack.LindenUDP.LLClientView [CLIENT]: Close has been
+called for Gwyneth Llewelyn attached to scene Terreiro Paco Noroeste
+2010-08-13 16:52:30,605 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+[SCENE]: Removing child agent 35c965ac-0b37-4b36-968a-6dbdc127a544 from
+region Terreiro Paco Noroeste
+2010-08-13 16:52:30,605 DEBUG -
+OpenSim.Region.CoreModules.Framework.EventQueue.EventQueueGetModule
+[EVENTQUEUE]: Closed client 35c965ac-0b37-4b36-968a-6dbdc127a544 in region
+Terreiro Paco Noroeste
+2010-08-13 16:52:30,605 DEBUG -
+OpenSim.Region.Framework.Scenes.SceneCommunicationService [INTERGRID]:
+Sending close agent to 4013217442317824
+2010-08-13 16:52:30,605 DEBUG -
+OpenSim.Region.ClientStack.LindenUDP.LLClientView [CLIENT]: Close has been
+called for Gwyneth Llewelyn attached to scene Terreiro Paco Norte
+2010-08-13 16:52:30,606 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+[SCENE]: Removing child agent 35c965ac-0b37-4b36-968a-6dbdc127a544 from
+region Terreiro Paco Norte
+2010-08-13 16:52:30,606 DEBUG -
+OpenSim.Region.CoreModules.Framework.EventQueue.EventQueueGetModule
+[EVENTQUEUE]: Closed client 35c965ac-0b37-4b36-968a-6dbdc127a544 in region
+Terreiro Paco Norte
+2010-08-13 16:52:30,605 DEBUG -
+OpenSim.Region.Framework.Scenes.SceneCommunicationService [INTERGRID]:
+Sending close agent to 4013217442317568
+2010-08-13 16:52:30,606 DEBUG -
+OpenSim.Region.ClientStack.LindenUDP.LLClientView [CLIENT]: Close has been
+called for Gwyneth Llewelyn attached to scene Terreiro do Paco
+2010-08-13 16:52:30,606 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+[SCENE]: Removing child agent 35c965ac-0b37-4b36-968a-6dbdc127a544 from
+region Terreiro do Paco
+2010-08-13 16:52:30,606 DEBUG -
+OpenSim.Region.CoreModules.Framework.EventQueue.EventQueueGetModule
+[EVENTQUEUE]: Closed client 35c965ac-0b37-4b36-968a-6dbdc127a544 in region
+Terreiro do Paco
+2010-08-13 16:52:40,939 INFO  -
+OpenSim.Services.Connectors.Simulation.SimulationServiceConnector [REMOTE
+SIMULATION CONNECTOR]: exception on reply of ChilAgentUpdate The request
+timed out
+2010-08-13 16:52:40,939 DEBUG -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+[ENTITY TRANSFER MODULE]: Sending new CAPS seed url
+<A HREF="http://metrics.betatechnologies.info:9000/CAPS/b371218d-c3c2-402c-9">http://metrics.betatechnologies.info:9000/CAPS/b371218d-c3c2-402c-9</A>
+ad6-3237e23af90f0000/ to client 35c965ac-0b37-4b36-968a-6dbdc127a544
+
+This seems not to get any reply!... So it aborts the teleport and continues
+to fall back to the original sim where it was:
+
+2010-08-13 16:52:53,026 DEBUG -
+OpenSim.Services.Connectors.UserAccountServicesConnector [ACCOUNTS
+CONNECTOR]: GetUserAccount c89b204e-6c8e-4979-b21d-1ae62d767053
+2010-08-13 16:52:53,095 DEBUG -
+OpenSim.Region.CoreModules.ServiceConnectorsOut.UserAccounts.UserAccountCache
+[USER CACHE]: cached user c89b204e-6c8e-4979-b21d-1ae62d767053
+2010-08-13 16:53:02,196 INFO  -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+[ENTITY TRANSFER MODULE]: Starting to inform client about neighbour 3649,
+3654(64.150.191.205:9009)
+
+[etc... which works flawlessly as it should]
+
+And here go the logs on Imprudence:
+
+2010-08-13T23:52:24Z INFO: sendMapLayerRequest:
+LLWorldMap::sendMapLayerRequest via capability
+2010-08-13T23:52:25Z INFO: parse: LLSDXMLParser::Impl::parse:
+XML_STATUS_ERROR parsing:OpenSim.Framework.Capabilities.LLSDMapLayerResponse
+2010-08-13T23:52:25Z INFO: result: LLMapLayerResponder::result from
+capabilities
+2010-08-13T23:52:28Z INFO: LLAgent::teleportRequest: TeleportRequest:
+'4007719884176640':{ 106.431, 149.674, 22.0975 }
+2010-08-13T23:52:28Z INFO: updateGeometry: WL Skydome strips in 1 batches.
+2010-08-13T23:52:30Z INFO: removeRegion: Removing region 934144:935424
+2010-08-13T23:52:30Z INFO: stop: LLEventPollResponder::stop     &lt;24&gt;
+<A HREF="http://opensim.betatechnologies.info:9000/CAPS/EQG/8686fe89-951b-4db0-a05f-2a00007f2cc0/">http://opensim.betatechnologies.info:9000/CAPS/EQG/8686fe89-951b-4db0-a05f-2a00007f2cc0/</A>
+2010-08-13T23:52:30Z INFO: disableCircuit: LLMessageSystem::disableCircuit
+for 64.150.191.205:9009
+2010-08-13T23:52:30Z WARNING: disableCircuit: Couldn't find circuit code for
+64.150.191.205:9009
+2010-08-13T23:52:30Z INFO: removeRegion: Removing region 934400:935168
+2010-08-13T23:52:30Z INFO: stop: LLEventPollResponder::stop     &lt;22&gt;
+<A HREF="http://opensim.betatechnologies.info:9000/CAPS/EQG/1e35a957-d433-485f-8e4e-a57ec96ea4cb/">http://opensim.betatechnologies.info:9000/CAPS/EQG/1e35a957-d433-485f-8e4e-a57ec96ea4cb/</A>
+2010-08-13T23:52:30Z INFO: disableCircuit: LLMessageSystem::disableCircuit
+for 64.150.191.205:9002
+2010-08-13T23:52:30Z WARNING: disableCircuit: Couldn't find circuit code for
+64.150.191.205:9002
+2010-08-13T23:52:30Z INFO: removeRegion: Removing region 934400:935424
+2010-08-13T23:52:30Z INFO: stop: LLEventPollResponder::stop     &lt;23&gt;
+<A HREF="http://opensim.betatechnologies.info:9000/CAPS/EQG/4240a9b1-15e4-4049-a99d-a6d9fd286ec3/">http://opensim.betatechnologies.info:9000/CAPS/EQG/4240a9b1-15e4-4049-a99d-a6d9fd286ec3/</A>
+2010-08-13T23:52:30Z INFO: disableCircuit: LLMessageSystem::disableCircuit
+for 64.150.191.205:9008
+2010-08-13T23:52:30Z WARNING: disableCircuit: Couldn't find circuit code for
+64.150.191.205:9008
+2010-08-13T23:52:30Z WARNING: processObjectUpdate: Object update from
+unknown region!
+2010-08-13T23:52:31Z WARNING: processObjectUpdate: Object update from
+unknown region!
+2010-08-13T23:52:31Z WARNING: processObjectUpdate: Object update from
+unknown region!
+2010-08-13T23:52:31Z WARNING: processObjectUpdate: Object update from
+unknown region!
+2010-08-13T23:52:31Z INFO: addCircuitData: LLCircuit::addCircuitData for
+76.250.194.143:9014
+2010-08-13T23:52:31Z INFO: addRegion: Adding new region (3645:3645)
+2010-08-13T23:52:31Z INFO: addRegion: Host: 76.250.194.143:9014
+2010-08-13T23:52:31Z INFO: process_enable_simulator: simulator_enable()
+Enabling 76.250.194.143:9014 with code 930048553
+2010-08-13T23:52:31Z INFO: setSeedCapability: posting to seed
+<A HREF="http://metrics.betatechnologies.info:9000/CAPS/b371218d-c3c2-402c-9ad6-3237e23af90f0000/">http://metrics.betatechnologies.info:9000/CAPS/b371218d-c3c2-402c-9ad6-3237e23af90f0000/</A>
+2010-08-13T23:52:31Z INFO: stop: LLEventPollResponder::stop     &lt;23&gt;
+<A HREF="http://opensim.betatechnologies.info:9000/CAPS/EQG/4240a9b1-15e4-4049-a99d-a6d9fd286ec3/">http://opensim.betatechnologies.info:9000/CAPS/EQG/4240a9b1-15e4-4049-a99d-a6d9fd286ec3/</A>
+2010-08-13T23:52:31Z INFO: stop: LLEventPollResponder::stop     &lt;22&gt;
+<A HREF="http://opensim.betatechnologies.info:9000/CAPS/EQG/1e35a957-d433-485f-8e4e-a57ec96ea4cb/">http://opensim.betatechnologies.info:9000/CAPS/EQG/1e35a957-d433-485f-8e4e-a57ec96ea4cb/</A>
+2010-08-13T23:52:31Z INFO: stop: LLEventPollResponder::stop     &lt;24&gt;
+<A HREF="http://opensim.betatechnologies.info:9000/CAPS/EQG/8686fe89-951b-4db0-a05f-2a00007f2cc0/">http://opensim.betatechnologies.info:9000/CAPS/EQG/8686fe89-951b-4db0-a05f-2a00007f2cc0/</A>
+2010-08-13T23:52:32Z INFO: LLEventPollResponder: LLEventPoll initialized
+with sender 76.250.194.143:9014
+2010-08-13T23:52:32Z INFO: start: LLEventPollResponder::start &lt;25&gt;
+<A HREF="http://metrics.betatechnologies.info:9000/CAPS/EQG/61096563-91f5-489d-8b53-3853dfca7441/">http://metrics.betatechnologies.info:9000/CAPS/EQG/61096563-91f5-489d-8b53-3853dfca7441/</A>
+2010-08-13T23:52:33Z INFO: dumpResendCountAndReset: Circuit:
+76.250.194.143:9015 resent 6 packets
+2010-08-13T23:52:34Z INFO: display_stats: FPS: 20.20
+2010-08-13T23:52:34Z INFO: idle: Kills on unknown objects: 3
+2010-08-13T23:52:42Z INFO: process_teleport_finish:
+process_teleport_finish() Enabling 76.250.194.143:9014 with code 930048553
+2010-08-13T23:52:42Z INFO: setSeedCapability: posting to seed
+<A HREF="http://metrics.betatechnologies.info:9000/CAPS/b371218d-c3c2-402c-9ad6-3237e23af90f0000/">http://metrics.betatechnologies.info:9000/CAPS/b371218d-c3c2-402c-9ad6-3237e23af90f0000/</A>
+2010-08-13T23:52:42Z INFO: LLEventPollResponder: LLEventPoll initialized
+with sender 76.250.194.143:9014
+2010-08-13T23:52:42Z INFO: start: LLEventPollResponder::start &lt;26&gt;
+<A HREF="http://metrics.betatechnologies.info:9000/CAPS/EQG/61096563-91f5-489d-8b53-3853dfca7441/">http://metrics.betatechnologies.info:9000/CAPS/EQG/61096563-91f5-489d-8b53-3853dfca7441/</A>
+2010-08-13T23:52:44Z INFO: display_stats: FPS: 12.20
+2010-08-13T23:52:54Z INFO: display_stats: FPS: 12.20
+2010-08-13T23:53:01Z WARNING: LLAlertDialog: Alert: Could not teleport.
+
+Problems connecting to destination.
+2010-08-13T23:53:01Z WARNING: loadWAV: LLAudioBufferOpenAL::loadWAV() Error
+loading
+/Users/lms/Library/Caches/Imprudence/ed124764-705d-d497-167a-182cd9fa2e6c.dsf
+There was already an AL error on entry to an ALUT function
+2010-08-13T23:53:03Z INFO: dumpResendCountAndReset: Circuit:
+76.250.194.143:9014 resent 7 packets
+
+So... Imprudence seems to encounter the same problem. It correctly
+communicates with the server, exchanges a bit of data, attempts a
+teleport... and fails.
+
+I've tried connecting from my own computer from the console to, say,
+<A HREF="http://metrics.betatechnologies.info:9000/CAPS/EQG/61096563-91f5-489d-8b53-3853dfca7441/just">http://metrics.betatechnologies.info:9000/CAPS/EQG/61096563-91f5-489d-8b53-3853dfca7441/just</A>
+to see if I can initiate a HTTP request to the server on that port. No
+problem with that (of course, it retrieves an error, but it shows that at
+least the router/firewall is NOT blocking the call, and correctly provides
+an answer).
+
+At this stage either the OpenSim configuration was wrong, or the
+router/firewall configuration has a problem. To eliminate the OpenSim
+configuration, I copied the config from metrics.betatechnologies.info, and
+just dumped it on another server (which has a fixed IP address and no
+firewall), as well as to my iMac at home (which has a DynDNS address and a
+Linksys router in front of it &#8212; which is quite easier to configure). The
+only difference in terms of configuration is on the region data itself,
+(OpenSim.ini is exactly the same) and I took into account the binding to the
+local (internal) IP address and the information related to the external;
+also note that in all cases the database access is always remotely done to
+the same server cluster (the same database serves all sims). Teleporting
+works in both cases flawlessly. (Hypergrid teleporting to HG 1.5-enabled
+grids also work like a charm! Thanks to Ai Austin to help me with some
+setting up and the many tests we did!).
+
+I thus guess that the SonicWALL configuration is not correct. My first
+suspicion was that the load balancing might not be working fine, but this
+seems to be contradicted by the ability to call services from the outside to
+at least SSH, Web, monit... and on port 9000, which definitely replies to
+requests. Similarly, initiating communications from within the server to the
+outside world also work fine. The only thing I cannot test is UDP
+connections; they certainly are configured on the firewall, but I don't know
+if the configuration is working.
+
+I'd be very grateful if anyone with SonicWALL configuration experience would
+provide some useful tips :)
+
+Thanks in advance!
+
+Cheers,
+
+   - Gwyn
+
+-- 
+&quot;I'm not building a game. I'm building a new country.&quot;
+  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100814/3a903ba9/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100814/3a903ba9/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005232.html">[Opensim-users] Missing library items
+</A></li>
+	<LI>Next message: <A HREF="005234.html">[Opensim-users] Trying to get OpenSim to work behind a SonicWALL router/firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5233">[ date ]</a>
+              <a href="thread.html#5233">[ thread ]</a>
+              <a href="subject.html#5233">[ subject ]</a>
+              <a href="author.html#5233">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

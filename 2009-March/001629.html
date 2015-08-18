@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Load Testing
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Load%20Testing&In-Reply-To=%3C49AF4DD3.2030903%40nowostawski.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001624.html">
+   <LINK REL="Next"  HREF="001631.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Load Testing</H1>
+    <B>Mariusz Nowostawski</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Load%20Testing&In-Reply-To=%3C49AF4DD3.2030903%40nowostawski.org%3E"
+       TITLE="[Opensim-users] Load Testing">mariusz at nowostawski.org
+       </A><BR>
+    <I>Thu Mar  5 04:58:11 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001624.html">[Opensim-users] Load Testing
+</A></li>
+        <LI>Next message: <A HREF="001631.html">[Opensim-users] Load Testing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1629">[ date ]</a>
+              <a href="thread.html#1629">[ thread ]</a>
+              <a href="subject.html#1629">[ subject ]</a>
+              <a href="author.html#1629">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dave Coyle wrote:
+&gt;<i> On 2009-03-04 01:33:40 -0500, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dirk.krause at pixelpark.com</A> wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I am not aware of any attempts to get enough users together ...? was
+</I>&gt;&gt;<i> this announced on this list? I was sort of waiting in the wings to
+</I>&gt;&gt;<i> get all active users of my company together to contribute to such a
+</I>&gt;&gt;<i> test, but maybe I just missed it :-/.
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Would there be any interest in a regularly scheduled &quot;come and break
+</I>&gt;<i> stuff hour&quot; on OSGrid?  Time, victim^H^H^H^H target sim, and desired
+</I>&gt;<i> activity would be prearranged, and at the appointed time and place
+</I>&gt;<i> anyone who's interested logs in and we see what happens.  We could
+</I>&gt;<i> test TPs or region crossings or messaging modules or rezzing objects
+</I>&gt;<i> or sitting in a boat and sailing around in a circle or capacity of
+</I>&gt;<i> different hardware combinations.  Wright Plaza seems to get a good
+</I>&gt;<i> turnout for weekly office hours, but I think everyone goes out of
+</I>&gt;<i> their way to not do anything to break stuff.  The point of &quot;come and
+</I>&gt;<i> break stuff hour&quot; would be to do the opposite.
+</I>&gt;<i>
+</I>&gt;<i> Also, right now the answer to &quot;what hardware do I need to run
+</I>&gt;<i> OpenSim?&quot; is &quot;it depends&quot;.  It would be great if we could test various
+</I>&gt;<i> combinations of hardware/.NET/Mono builds/etc. and get some more
+</I>&gt;<i> concrete info on what works, what's mediocre, and what fails.
+</I>&gt;<i>
+</I>&gt;<i> I haven't been to the &quot;Q&amp;A / Testing&quot; hour on OSGrid in a while, but
+</I>&gt;<i> when I did attend it was focused on Q&amp;A.
+</I>&gt;<i>
+</I>&gt;<i> Say, Thursdays @ 0300 UTC?  We could give it a go a couple times and,
+</I>&gt;<i> depending on turnout, decide if it's worth making a regular thing.
+</I>&gt;<i> And it's an earlier/later time to try to accomodate people in other
+</I>&gt;<i> regions/on different schedules.
+</I>&gt;<i>
+</I>&gt;<i> Anyone interested
+</I>
+
+Load testing by assembling users in an ad-hoc manner has its place, and 
+it might be a good way of keeping track of certain server-side behaviour 
+and user experiences. However, logs from such sessions are limited in 
+use, because the tests cannot be redone, and no statistics can be 
+obtained. From our experiences we have observed quite substantial 
+variations of certain load parameters with no correlation to what was 
+been actually done in a particular instance. Identifying the causes of 
+sertain bottlenecks or server behaviour is not easy, and multiple tries 
+of the same test schema with varying only few parameters are useful in 
+that regard.
+
+
+Generally, there are three general types of tests, that people currently 
+do on OpenSim.
+A) ad-hoc gathering of users (as prescribed above), without the ability 
+to replicate the tests or conditions, and without the ability to draw 
+statistics on the server behaviour
+B) more formal runs with real users (and real user clients) in a 
+controlled environment, where effectively the same runs can be repeated 
+over and over again to obtain statistical behaviour and identify 
+bottlenecks by controlling limited number of factors
+C) runs without real clients and without real users, where the inputs to 
+the system are generated by TestClients that &quot;simulate&quot; real clients - 
+these can be used as Mic Bowman explained to test various individual 
+aspects of the server performance and these are ideal for tuning those 
+isolated modules of the server
+
+
+Each of these has its place and role, and they all play a complementary 
+roles. At Otago, we focus primarily on B, where real clients are used to 
+test the system holistically, and investigate different 
+cross-dependencies between the server modules. I do not think Type A can 
+be formalised or automated. As for B, we tried to automate as much as 
+possible as to make the tests easier to run and manage, but, we are far 
+from NANT-like automation.  It should be possible to automate Case C, 
+and conduct multiple runs to obtain statistics in a fully automated way. 
+We are quite interested in that, and will watch where the developments 
+are heading.
+
+
+-- 
+cheers
+Mariusz
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001624.html">[Opensim-users] Load Testing
+</A></li>
+	<LI>Next message: <A HREF="001631.html">[Opensim-users] Load Testing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1629">[ date ]</a>
+              <a href="thread.html#1629">[ thread ]</a>
+              <a href="subject.html#1629">[ subject ]</a>
+              <a href="author.html#1629">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Posted osGetInventoryLandmarkParams on mantis	(Function to read a landmark)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Posted%20osGetInventoryLandmarkParams%20on%20mantis%0A%09%28Function%20to%20read%20a%20landmark%29&In-Reply-To=%3C7227FD19-0D31-4C3A-9D35-9D8BE1C5667A%40spekuloos.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009840.html">
+   <LINK REL="Next"  HREF="009844.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Posted osGetInventoryLandmarkParams on mantis	(Function to read a landmark)</H1>
+    <B>Gudule Lapointe</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Posted%20osGetInventoryLandmarkParams%20on%20mantis%0A%09%28Function%20to%20read%20a%20landmark%29&In-Reply-To=%3C7227FD19-0D31-4C3A-9D35-9D8BE1C5667A%40spekuloos.be%3E"
+       TITLE="[Opensim-users] Posted osGetInventoryLandmarkParams on mantis	(Function to read a landmark)">gudule at spekuloos.be
+       </A><BR>
+    <I>Thu Mar 15 17:55:57 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009840.html">[Opensim-users] Posted osGetInventoryLandmarkParams on mantis (Function to read a landmark)
+</A></li>
+        <LI>Next message: <A HREF="009844.html">[Opensim-users] Posted osGetInventoryLandmarkParams on mantis (Function to read a landmark)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9841">[ date ]</a>
+              <a href="thread.html#9841">[ thread ]</a>
+              <a href="subject.html#9841">[ subject ]</a>
+              <a href="author.html#9841">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Though &quot;About landmark&quot; is a viewer think, it relies on info given by the server.
+Having the same issues as with the internal GetRegionByUUID leads me to the conclusion that the failure is a server thing.
+
+I made additional test using my OSGrid account, and got the same issues (leads me to thing it's not a config issue, but a software issue)
+
+Here is the detailed process:
+
+- Hyperlink to a foreign grid and add a landmark
+	-&gt; in some places, the landmark shows as local, but this seems to be a foreign-grid config or server version issue (to be confirmed)
+	-&gt; I made test with both landmarks showing as local and landmarks showing as HG
+- Go back to a sim on your grid and display &quot;about landmark&quot;. 
+	-&gt; at this stage it displays complete information, including gatekeeper, description, region name&#8230;
+	-&gt; if patch is applied, the function osGetInventoryLandmarkParams  returns relevant information 
+	-&gt; typing &quot;show hyperlinks&quot; in sim's console show the temporary linked region
+- Log off, shut down and restart your sim (restarting robust is not mandatory to observe the issue)
+- Go back to your sim and  display &quot;about landmark&quot; again
+	-&gt; it displays only basic information (same as information available in landmark name and landmark desc)
+	-&gt; if patch is applied, the function osGetInventoryLandmarkParams  returns only information not depending of region info, and gatekeeper is incorrect
+	-&gt; typing &quot;show hyperlinks&quot; in sim's console show the temporary linked region has disappeared (as expected)
+
+In both cases, landmark teleport does work, whatever information is available.
+
+As landmark info is a feature depending on info given by the server, the server should have a fallback process to request new information if HG region is unlinked
+
+--
+<A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+<A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+Speculoos, the belgian cookie-flavored metaverse
+
+Le 15 mars 2012 &#224; 00:54, M.E. Verhagen a &#233;crit :
+
+&gt;<i> does the about landmark function properly when you have teleported ?
+</I>&gt;<i> 
+</I>&gt;<i> the about landmark sound like a viewer functionalty, it probably asks opensim to give the info and opensim gives the info it has. And probably a link region is nessesary when that info is not present.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Op donderdag 15 maart 2012 schreef Gudule Lapointe (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>) het volgende:
+</I>&gt;<i> &gt; Not random result. Clearly identified: linked region = result; not linked region = no result.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But there may be a config problem:
+</I>&gt;<i> &gt; When choose &quot;About landmark&quot; on any (not linked) landmark in my inventory, it gives limited result (no picture, no info, no region name). Though teleport does work.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Is this the case for everybody, or just for me?
+</I>&gt;<i> &gt; If it is for everybody, it is a bug...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;<i> &gt; <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;<i> &gt; Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Le 14 mars 2012 &#224; 22:18, M.E. Verhagen a &#233;crit :
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; oeps a ramdom result. That is not logica,.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; are the opensim versions different or the same ?
+</I>&gt;<i> &gt;&gt; could it be some sort of network issue ?
+</I>&gt;<i> &gt;&gt; a bug ?
+</I>&gt;<i> &gt;&gt; or does a region needs to do a link to succesfully return the data ?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Op woensdag 14 maart 2012 schreef Gudule Lapointe (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>) het volgende:
+</I>&gt;<i> &gt;&gt; &gt; We posted a patch to implement osGetInventoryLandmarkParams on Mantis
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="http://opensimulator.org/mantis/view.php?id=5936">http://opensimulator.org/mantis/view.php?id=5936</A>
+</I>&gt;<i> &gt;&gt; &gt; It still needs some enhancement, but it's already working and useful in lot of cases.
+</I>&gt;<i> &gt;&gt; &gt; What's missing?
+</I>&gt;<i> &gt;&gt; &gt; The function returns all values  same grid landmarks and landmarks to hyperlinked region.
+</I>&gt;<i> &gt;&gt; &gt; For other external regions, we couldn't fetch region, particularly &quot;regionName&quot;, which is needed to output url, address, map search and region name.
+</I>&gt;<i> &gt;&gt; &gt; In this case, the function returns &quot;REGION_NOT_FOUND&quot; instead of the answer, to allow the script to handle it.
+</I>&gt;<i> &gt;&gt; &gt; Other values are returned in all cases (gatekeeper uri, position)
+</I>&gt;<i> &gt;&gt; &gt; Background: in our first steps, we thought we got the url successfully, even for HG landmarks. We were wrong, it was random situation: the regions of the first landmarks we tested were already linked on server (appearing on console with &quot;show hyperlinks&quot;).
+</I>&gt;<i> &gt;&gt; &gt; We are still looking for a way to get regionName (only value needed) for external regions.
+</I>&gt;<i> &gt;&gt; &gt; We use World.GridService.GetRegionByUUID
+</I>&gt;<i> &gt;&gt; &gt; We tried to use code from HGEntityTransferModule, but it didn't work (scene issues?)&#8230;
+</I>&gt;<i> &gt;&gt; &gt; Any idea is welcome!
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; --
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;<i> &gt;&gt; &gt; Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;<i> &gt;&gt; &gt; Le 13 mars 2012 &#224; 23:20, Gudule Lapointe a &#233;crit :
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; For now, my function returns values depending on these constants:
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; osGetInventoryLandmarkParams (string landmarkname, int type)
+</I>&gt;<i> &gt;&gt; &gt; LANDMARK_URL
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="secondlife://hostname:port:region/X/Y/Z/">secondlife://hostname:port:region/X/Y/Z/</A>
+</I>&gt;<i> &gt;&gt; &gt; LANDMARK_ADDRESS
+</I>&gt;<i> &gt;&gt; &gt; hostname:port:region
+</I>&gt;<i> &gt;&gt; &gt; LANDMARK_MAPSEARCH
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="http://hostname:port/">http://hostname:port/</A> region
+</I>&gt;<i> &gt;&gt; &gt; LANDMARK_GATEKEEPER
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="http://hostname:port">http://hostname:port</A>
+</I>&gt;<i> &gt;&gt; &gt; LANDMARK_REGION_NAME
+</I>&gt;<i> &gt;&gt; &gt; region
+</I>&gt;<i> &gt;&gt; &gt; LANDMARK_POSITION
+</I>&gt;<i> &gt;&gt; &gt; &lt;X,Y,Z&gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; Groningen en Hannover Opensims:   <A HREF="secondlife://meverhagen.nl:8002:Hannover">secondlife://meverhagen.nl:8002:Hannover</A> ZW/
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Groningen en Hannover Opensims:   <A HREF="secondlife://meverhagen.nl:8002:Hannover">secondlife://meverhagen.nl:8002:Hannover</A> ZW/ 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120315/68a72ea5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120315/68a72ea5/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009840.html">[Opensim-users] Posted osGetInventoryLandmarkParams on mantis (Function to read a landmark)
+</A></li>
+	<LI>Next message: <A HREF="009844.html">[Opensim-users] Posted osGetInventoryLandmarkParams on mantis (Function to read a landmark)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9841">[ date ]</a>
+              <a href="thread.html#9841">[ thread ]</a>
+              <a href="subject.html#9841">[ subject ]</a>
+              <a href="author.html#9841">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

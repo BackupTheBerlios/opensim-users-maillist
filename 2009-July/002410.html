@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] HTML on a Prim in OpenSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HTML%20on%20a%20Prim%20in%20OpenSim&In-Reply-To=%3C1248034796633-3285652.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002409.html">
+   <LINK REL="Next"  HREF="002411.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] HTML on a Prim in OpenSim</H1>
+    <B>Robert Klein</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HTML%20on%20a%20Prim%20in%20OpenSim&In-Reply-To=%3C1248034796633-3285652.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] HTML on a Prim in OpenSim">rtkwebman at gmail.com
+       </A><BR>
+    <I>Sun Jul 19 22:19:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002409.html">[Opensim-users] HTML on a Prim in OpenSim
+</A></li>
+        <LI>Next message: <A HREF="002411.html">[Opensim-users] HTML on a Prim in OpenSim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2410">[ date ]</a>
+              <a href="thread.html#2410">[ thread ]</a>
+              <a href="subject.html#2410">[ subject ]</a>
+              <a href="author.html#2410">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hey Daniel,
+
+Here is the script that used to work. If you can get it working please let
+me know how you did it.
+
+-Robert
+
+//XEngine:
+// Original by tx Oh
+// commented MODS by WhiteStar (Apr.21.09)
+//
+string url;  // to keep the URL persistent
+default 
+{
+    state_entry() 
+    {
+        llListen(5, &quot;&quot;, llGetOwner(), &quot;&quot;); // listen to Owner Only
+        llSetText(&quot;Say '/5 <A HREF="http://someurl.org">http://someurl.org</A>'\nto get a webpage displayed
+on the prim&quot;, &lt;1.0, 0.5, 0.0&gt;, 1);
+    }
+       
+    listen(integer ch, string name, key id, string url) 
+    {
+        llSetText(&quot;&quot;,&lt;0,0,0&gt;,0); // Got a URL so clear the hover text
+       
+llHTTPRequest(&quot;<A HREF="http://pici.picidae.net/browse.php?c=0&amp;f=&amp;u=">http://pici.picidae.net/browse.php?c=0&amp;f=&amp;u=</A>&quot;+url,[],&quot;&quot;);
+    }
+    http_response(key rid, integer status, list metadata, string msg) {
+        list l = llParseString2List(msg, [&quot;img src=\&quot;&quot;], []);
+        string img = llList2String(l, 1);
+        l = llParseString2List(img, [&quot;\&quot;&quot;], []);
+        img = llList2String(l, 0);
+        string url = &quot;<A HREF="http://pici.picidae.net/">http://pici.picidae.net/</A>&quot; + img;
+        string URLTexture = osSetDynamicTextureURL(&quot;&quot;, &quot;image&quot;, url, &quot;&quot;,
+600);
+        if (llStringLength(URLTexture)&gt;0) 
+        {
+            llSetTexture(URLTexture, ALL_SIDES);
+        }
+    }
+}
+
+//===================================================================
+
+
+
+
+Daniel-25 wrote:
+&gt;<i> 
+</I>&gt;<i> Hi Robert,
+</I>&gt;<i> 
+</I>&gt;<i> thanks for your reply. Your script works fine for me, too. Showing an 
+</I>&gt;<i> image on a prim is no problem. But have you ever tried to show a 
+</I>&gt;<i> complete web page (eg.: www.msn.com) on a texture like it is done in 
+</I>&gt;<i> Second Life? That's the feature that doesn't work for me and I'm 
+</I>&gt;<i> interested in how to get it work in Opensim.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Daniel
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+View this message in context: <A HREF="http://n2.nabble.com/HTML-on-a-Prim-in-OpenSim-tp3273574p3285652.html">http://n2.nabble.com/HTML-on-a-Prim-in-OpenSim-tp3273574p3285652.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002409.html">[Opensim-users] HTML on a Prim in OpenSim
+</A></li>
+	<LI>Next message: <A HREF="002411.html">[Opensim-users] HTML on a Prim in OpenSim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2410">[ date ]</a>
+              <a href="thread.html#2410">[ thread ]</a>
+              <a href="subject.html#2410">[ subject ]</a>
+              <a href="author.html#2410">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sim size limits
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3CCAJaF1_F_oQMCVndmUZCHVJtNbD5ssXk3zbWJ8wvk-YUTyvJqhQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009928.html">
+   <LINK REL="Next"  HREF="009886.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sim size limits</H1>
+    <B>Mic Bowman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3CCAJaF1_F_oQMCVndmUZCHVJtNbD5ssXk3zbWJ8wvk-YUTyvJqhQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Sim size limits">cmickeyb at gmail.com
+       </A><BR>
+    <I>Mon Mar 26 17:29:47 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009928.html">[Opensim-users] Sim size limits
+</A></li>
+        <LI>Next message: <A HREF="009886.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9942">[ date ]</a>
+              <a href="thread.html#9942">[ thread ]</a>
+              <a href="subject.html#9942">[ subject ]</a>
+              <a href="author.html#9942">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Regarding the DB question... we use mysql rather than sqlite.
+
+Imprudence supports the 10x10 minimap we needed. But the view distance in
+this case is set in the simulator rather than the viewer. OpenSim does not
+trim objects by viewers view distance but by a configuration variable in
+the simulator. The viewer may also trim objects but thats separate. And
+there are viewer debug settings to push the viewdistance beyond the slider
+limits.
+
+--mic
+
+
+On Sat, Mar 24, 2012 at 5:22 AM, Ovi Chris Rouly &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">maelzel at ieee.org</A>&gt; wrote:
+
+&gt;<i> **
+</I>&gt;<i> Mic,
+</I>&gt;<i>
+</I>&gt;<i> Another question:  &quot;see a 10x10 area.&quot;  Which viewer allows you to set a
+</I>&gt;<i> renderable 2560 meter distance?
+</I>&gt;<i>
+</I>&gt;<i> Thanks, (for this and the previous question/answer)
+</I>&gt;<i>
+</I>&gt;<i> Chris
+</I>&gt;<i>
+</I>&gt;<i> ----- Original Message -----
+</I>&gt;<i> *From:* Mic Bowman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cmickeyb at gmail.com</A>&gt;
+</I>&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Sent:* Wednesday, March 21, 2012 6:15 PM
+</I>&gt;<i> *Subject:* Re: [Opensim-users] Sim size limits
+</I>&gt;<i>
+</I>&gt;<i> If you don't have memory issues... we run the Yellowstone regions in
+</I>&gt;<i> scisim with 64 regions per sim and 16 sims (total of 1024 regions). We set
+</I>&gt;<i> the view distance up so you can see a 10x10 area. That causes problems with
+</I>&gt;<i> the current method of connecting the viewer to each of the regions (cant
+</I>&gt;<i> seem to get connections to 100 different regions before the circuit times
+</I>&gt;<i> out). We run the sims largely without prims, just GIS-derived terrain. It
+</I>&gt;<i> takes 2 8-core servers with 16G of memory in each. Stock opensim.
+</I>&gt;<i>
+</I>&gt;<i> --mic
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Mar 19, 2012 at 9:31 AM, Diva Canto &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> On 3/19/2012 2:54 AM, David Burden wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Diva - is yours just a Vanilla opensim build with 64+ sims? Any problems
+</I>&gt;&gt;&gt;<i> with building across the boundaries - is it urban or rural? Any special
+</I>&gt;&gt;&gt;<i> tools to generate/manage it? 64 OAR files?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Vanilla OpenSim and I'm not using megaregions, they're regular regions.
+</I>&gt;&gt;<i> It's an urban environment.
+</I>&gt;&gt;<i> It's 8 sims, 72 regions.
+</I>&gt;&gt;<i> I have some internally-developed tools both for GIS and for managing
+</I>&gt;&gt;<i> grids like this, and I'm using a combination of fixed servers and AWS. Sims
+</I>&gt;&gt;<i> are only up when we need them.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have considered many times switching to Unity3d for this project
+</I>&gt;&gt;<i> because of its availability in the Web Browser, and its compatibility with
+</I>&gt;&gt;<i> mainstream modeling tools. But Unity3d is not a collaborative modeling
+</I>&gt;&gt;<i> environment. For my use case, collaboration during builds is pretty
+</I>&gt;&gt;<i> important, because we have people all over the world, so I'm sticking with
+</I>&gt;&gt;<i> OpenSim. If collaboration wasn't a requirement, the case for OpenSim would
+</I>&gt;&gt;<i> be weaker.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120326/0c92584b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120326/0c92584b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009928.html">[Opensim-users] Sim size limits
+</A></li>
+	<LI>Next message: <A HREF="009886.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9942">[ date ]</a>
+              <a href="thread.html#9942">[ thread ]</a>
+              <a href="subject.html#9942">[ subject ]</a>
+              <a href="author.html#9942">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

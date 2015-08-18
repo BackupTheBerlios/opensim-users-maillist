@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Announcement%20of%20inventory%20tool%20%28MyInventory%29%2C%0A%20mostly%20of%20interest%20to%20grid%20operators/grid%20nauts&In-Reply-To=%3CCAMvcWdgSPWs--EjCjYUsy6P-AWXA5cMXG-%3DwxOEYx%3DT2i73%2BOQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011278.html">
+   <LINK REL="Next"  HREF="011293.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts</H1>
+    <B>Snowcrash Short</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Announcement%20of%20inventory%20tool%20%28MyInventory%29%2C%0A%20mostly%20of%20interest%20to%20grid%20operators/grid%20nauts&In-Reply-To=%3CCAMvcWdgSPWs--EjCjYUsy6P-AWXA5cMXG-%3DwxOEYx%3DT2i73%2BOQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts">snowcrash.short at gmail.com
+       </A><BR>
+    <I>Fri Nov 16 14:36:44 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011278.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+        <LI>Next message: <A HREF="011293.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11280">[ date ]</a>
+              <a href="thread.html#11280">[ thread ]</a>
+              <a href="subject.html#11280">[ subject ]</a>
+              <a href="author.html#11280">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Nov 16, 2012 at 2:14 PM, Diva Canto &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+
+&gt;<i> On 11/15/2012 11:34 PM, Snowcrash Short wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I'm not terribly familiar with the terminology used by the core, to
+</I>&gt;&gt;<i> somebody with my intelligence or lack thereof the number of interfaces and
+</I>&gt;&gt;<i> their differences are a bit bewildering (but hey, my code is bewildering
+</I>&gt;&gt;<i> too). The webservices I rely on can be found in the config files under
+</I>&gt;&gt;<i> [AssetService] and [InventoryService]. E.g.
+</I>&gt;&gt;<i> AssetServerURI = &quot;<A HREF="http://assets.osgrid.org">http://assets.osgrid.org</A>&quot;
+</I>&gt;&gt;<i> InventoryServerURI = &quot;<A HREF="http://inventory.osgrid.org">http://inventory.osgrid.org</A>&quot;
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This would be a really bad idea, and I'll be the first to discourage grid
+</I>&gt;<i> operators from doing this. You're basically asking grid operators to place
+</I>&gt;<i> their internal inventory services on the Internet, which would put
+</I>&gt;<i> inventories at risk. Wiping out entire inventories would be trivial. (Yes,
+</I>&gt;<i> osgrid does this, but that's because it has no choice, given its purpose
+</I>&gt;<i> and configuration)
+</I>&gt;<i>
+</I>&gt;<i> Any grid that allows open access to attach regions are open to this
+</I>vulnerability, the security breach exists irrespective of my project. The
+good news is that it should be quite trivial to toughen the services.
+Initially I thought that the principal id used in some of the XInventory
+method calls were session id's, I was quite surprised that they were avatar
+id's.
+
+These services are designed to be called by the simulators *only*. They are
+&gt;<i> devoid of any security or permissions checks *whatsoever*. They're
+</I>&gt;<i> basically just getters/setters for the database. That's on purpose; in a
+</I>&gt;<i> system like what we have at hand, the simulators are the ones doing the
+</I>&gt;<i> security / permissions checks, so doing them again in the backend
+</I>&gt;<i> [internal] services would be redundant.
+</I>&gt;<i>
+</I>&gt;<i> Yes, I was quite surprised when my research revealed this fact, it would
+</I>be quite trivial to rip quite a lot of assets from the asset service.
+
+&gt;<i> That's why we have been designing other services on top of the database,
+</I>&gt;<i> the HG services, which toughen security. So pointing this to the HG
+</I>&gt;<i> services might make sense. You'll find those configs in the HG versions of
+</I>&gt;<i> the configuration files under the [LoginService] section.
+</I>&gt;<i>
+</I>&gt;<i> Using the HG services might be a way forward in some scenarioes, but it
+</I>would not alleviate the issues that non open grids face.
+Currently MyInventory has two means of uploading content, the traditional
+UDP/CAPS methods used by traditional viewers, which has the side effect of
+always creating new assets just like the traditional viewer does. The
+second is uploading via the &quot;internal&quot; web-interfaces, the benefit of this
+is a reduction in the number of duplicate assets being created.
+
+As things stand now, the inventory and asset servers are quite vulnerable,
+and this vulnerability has nothing to do with my project, but I'm
+definitely willing to help address these vulnerabilities, where I have
+detected them.
+
+&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121116/65e98a88/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20121116/65e98a88/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011278.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+	<LI>Next message: <A HREF="011293.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11280">[ date ]</a>
+              <a href="thread.html#11280">[ thread ]</a>
+              <a href="subject.html#11280">[ subject ]</a>
+              <a href="author.html#11280">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

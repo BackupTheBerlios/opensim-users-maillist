@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] new forge project: linux client utilitites
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20new%20forge%20project%3A%20linux%20client%20utilitites&In-Reply-To=%3C48C02CC0.8050005%40xyzzyxyzzy.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000411.html">
+   <LINK REL="Next"  HREF="000413.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] new forge project: linux client utilitites</H1>
+    <B>Dr Scofield</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20new%20forge%20project%3A%20linux%20client%20utilitites&In-Reply-To=%3C48C02CC0.8050005%40xyzzyxyzzy.net%3E"
+       TITLE="[Opensim-users] new forge project: linux client utilitites">DrScofield at xyzzyxyzzy.net
+       </A><BR>
+    <I>Thu Sep  4 20:45:20 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000411.html">[Opensim-users] Help! Region server crash on startup due to request	time out
+</A></li>
+        <LI>Next message: <A HREF="000413.html">[Opensim-users] Nightly Builds?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#412">[ date ]</a>
+              <a href="thread.html#412">[ thread ]</a>
+              <a href="subject.html#412">[ subject ]</a>
+              <a href="author.html#412">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hi,
+
+there's a new OpenSim forge project: linux client utilities
+(<A HREF="http://forge.opensimulator.org/gf/project/lcu/">http://forge.opensimulator.org/gf/project/lcu/</A>). just wanted to share
+those two scripts in case someone else has the same (or similar) itch to
+scratch. it's a python package and requires python 2.5. licensed under
+OpenSim License.
+
+have fun
+    dr scofield
+
+from its README:
+
+### linux-client-utilities
+
+_linux-client-utilities_ allow you to easily maintain a secondlife
+client setup on your linux box:
+
+* `slupdate` will download the latest available versions of the
+  _secondlife_ client
+
+* `secondlife` is a wrapper that will use the latest available version
+  of the secondlife client on your box
+
+
+by default `slupdate` will install the secondlife client to
+`/opt/SL`. you can change that by providing an install path as command
+line argument:
+
+    slupdate /path/to/install/directory
+
+the `secondlife` wrapper will pick up the new install path from
+`$HOME/.secondliferc`
+
+`slupdate` also allows you to install release candidates as well as
+preview clients:
+
+    slupdate --previews
+
+to install available preview clients, and
+
+    slupdate --releasecandidates
+
+to install available release candidates.
+
+finally, `slupdate --help` gives short usage instructions.
+
+
+### `$HOME/.secondliferc` config file
+
+both, `slupdate` and `secondlife` will pay attention to the
+`$HOME/.secondliferc` config file. the format is straightforward:
+
+    [secondlife]
+    base = /tmp/SL
+   
+    [modifications]
+    gl_basicext = x
+    bad_oss = x
+    bad_alsa = x
+    gl_noext = x
+    gl_blacklist = ij
+
+the `[secondlife]` section currently only contains the path to the
+base directory where we &quot;keep&quot; the secondlife client.
+
+with the `[modifications]` section you can basically adapt the
+behavior of the secondlife client to your system (this uses basically
+the same conventions as the Linden Lab supplied `secondlife` shell
+wrapper): all settings which you include in this section will be
+turned into environment variables by upper casing them and prefixing
+them with `LL_`; for example:
+
+    gl_blacklist = ij
+
+will become
+
+    LL_GL_BLACKLIST=ij
+
+and will be placed into the environment of the real secondlife client.
+
+
+### credits
+
+_linux-client-utilities_ were inspired by the (no longer available)
+`slutils` package that was hosted on
+<A HREF="https://lepercolony.ocgnet.org/wiki/slutils">https://lepercolony.ocgnet.org/wiki/slutils</A> but are a complete rewrite
+and redesign in python.
+
+
+### license
+
+_linux-client-utilities_ are licensed under the OpenSim license, see
+also the file `LICENSE.txt` which is part of this package.
+
+-- 
+dr dirk husemann ---- virtual worlds research ---- ibm zurich research lab
+SL: dr scofield ---- <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drscofield at xyzzyxyzzy.net</A> ---- <A HREF="http://xyzzyxyzzy.net/">http://xyzzyxyzzy.net/</A>
+RL: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">hud at zurich.ibm.com</A> - +41 44 724 8573 - <A HREF="http://www.zurich.ibm.com/~hud/">http://www.zurich.ibm.com/~hud/</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000411.html">[Opensim-users] Help! Region server crash on startup due to request	time out
+</A></li>
+	<LI>Next message: <A HREF="000413.html">[Opensim-users] Nightly Builds?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#412">[ date ]</a>
+              <a href="thread.html#412">[ thread ]</a>
+              <a href="subject.html#412">[ subject ]</a>
+              <a href="author.html#412">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

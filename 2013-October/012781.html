@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] UserManipulation PHP
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20UserManipulation%20PHP&In-Reply-To=%3C526F03F4.7020505%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012763.html">
+   <LINK REL="Next"  HREF="012764.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] UserManipulation PHP</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20UserManipulation%20PHP&In-Reply-To=%3C526F03F4.7020505%40googlemail.com%3E"
+       TITLE="[Opensim-users] UserManipulation PHP">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Oct 29 01:40:20 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012763.html">[Opensim-users] UserManipulation PHP
+</A></li>
+        <LI>Next message: <A HREF="012764.html">[Opensim-users] Build-in userprofiles.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12781">[ date ]</a>
+              <a href="thread.html#12781">[ thread ]</a>
+              <a href="subject.html#12781">[ subject ]</a>
+              <a href="author.html#12781">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The chief issue you have is that these are vanilla POST calls, not XMLRPC.  Instead, you want something like
+
+function PostToService($uri, $postFields, $debug = FALSE)
+{
+     if ($debug)
+         echo &quot;postFields:$postFields\n&quot;;
+
+     $ch = curl_init($uri);
+
+     curl_setopt($ch, CURLOPT_POST, TRUE);
+     curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+     $result = curl_exec($ch);
+     $info = curl_getinfo($ch);
+     curl_close($ch);
+
+     if ($debug)
+         PrintReturnDebugInfo($result, $info);
+
+     return new SimpleXmlElement($result);
+}
+
+function CreateUser($serviceUri, $firstName, $lastName, $password, $debug = FALSE)
+{
+     $params
+         = array(
+             'FirstName' =&gt; $firstName,
+             'LastName' =&gt; $lastName,
+             'Password' =&gt; $password,
+             'METHOD' =&gt; &quot;getaccount&quot;);
+
+     $responseXml = PostToService($serviceUri, http_build_query($params), $debug);
+
+     // At the moment we take advantage of the fact that only errors will return a &lt;result&gt;
+     if ($responseXml-&gt;result == &quot;null&quot;)
+         return null;
+     else
+         return $responseXml;
+}
+
+this uses CURL to send a POST request.  The above is not guaranteed to work straight off - I adapted it from somethig 
+else but it should be close.
+
+On 26/10/13 18:48, hack13 wrote:
+&gt;<i> it might help if I show you my code
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://pastebin.com/qr12JJT3">http://pastebin.com/qr12JJT3</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/UserManipulation-PHP-tp7580560p7580561.html">http://opensim-users.2152040.n2.nabble.com/UserManipulation-PHP-tp7580560p7580561.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012763.html">[Opensim-users] UserManipulation PHP
+</A></li>
+	<LI>Next message: <A HREF="012764.html">[Opensim-users] Build-in userprofiles.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12781">[ date ]</a>
+              <a href="thread.html#12781">[ thread ]</a>
+              <a href="subject.html#12781">[ subject ]</a>
+              <a href="author.html#12781">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Template string for RemoteAdmin control
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Template%20string%20for%20RemoteAdmin%20control&In-Reply-To=%3C4EC2B39A.1070904%40rigutech.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008596.html">
+   <LINK REL="Next"  HREF="008606.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Template string for RemoteAdmin control</H1>
+    <B>R. Gunther</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Template%20string%20for%20RemoteAdmin%20control&In-Reply-To=%3C4EC2B39A.1070904%40rigutech.com%3E"
+       TITLE="[Opensim-users] Template string for RemoteAdmin control">rigun at rigutech.com
+       </A><BR>
+    <I>Tue Nov 15 19:46:50 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008596.html">[Opensim-users] Template string for RemoteAdmin control
+</A></li>
+        <LI>Next message: <A HREF="008606.html">[Opensim-users] Template string for RemoteAdmin control
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8599">[ date ]</a>
+              <a href="thread.html#8599">[ thread ]</a>
+              <a href="subject.html#8599">[ subject ]</a>
+              <a href="author.html#8599">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You dont mean this site ? <A HREF="http://opensimulator.org/wiki/RemoteAdmin">http://opensimulator.org/wiki/RemoteAdmin</A>
+Problem is there a remote admin and some remote console stuff (last one 
+i dont know how to use)
+i wish remoteadmin did have more commands, its easy to use. and still 
+secure if it keeps local
+
+On 2011-11-15 16:58, Ovi Chris Rouly wrote:
+&gt;<i> Folks,
+</I>&gt;<i> What follows may be of no use to anyone.  But, this week I needed it 
+</I>&gt;<i> and couldn't find one like it (or anything even close to it).  What it 
+</I>&gt;<i> is is a simple example of the input required by OpenSim 0.7.2 through 
+</I>&gt;<i> its [Remote Admin] control port in order to control, for example, the 
+</I>&gt;<i> &quot;create a new user&quot; function.
+</I>&gt;<i> Shown below is a plain text string that OpenSim 0.7.2 will accept 
+</I>&gt;<i> through the remoteAdmin control port.  Some of you may know and 
+</I>&gt;<i> understand the implications of using an XML-based remote procedure 
+</I>&gt;<i> calling (RPC) service to control an external application via a few key 
+</I>&gt;<i> control tokens, an available network connection, and the former's 
+</I>&gt;<i> transmission through that connection.  Others may not.  So, to be 
+</I>&gt;<i> brief, I'll just say that the remoteAdmin port provides such a 
+</I>&gt;<i> functionality.  And, in order to take advantage of OpenSim's remote 
+</I>&gt;<i> admin facility, I &quot;knitted&quot; together some C# source that produced the 
+</I>&gt;<i> remoteAdmin control port's required HTTP/1.0 protocol stream with its 
+</I>&gt;<i> embedded data tokens.  The example that follows is that plain text 
+</I>&gt;<i> control/data stream output.  I have found that this string will cause 
+</I>&gt;<i> OpenSim to &quot;create a new user&quot; on my box with its StandAlone 0.7.2 
+</I>&gt;<i> instance.
+</I>&gt;<i> Maybe I'm wrong, but since I had to work fairly hard to gain this 
+</I>&gt;<i> &quot;template string&quot; (and its implications for all the other remoteAdmin 
+</I>&gt;<i> functions), I thought maybe it might have value for someone else in 
+</I>&gt;<i> the group.  Thus, may I offer to toss it out to the OpenSim Users 
+</I>&gt;<i> Group.  The web site (see the reference below) has other more 
+</I>&gt;<i> language-specific, abstract, yet &quot;vital&quot; resources.  In particular, 
+</I>&gt;<i> the C# methods were *INVALUABLE* as were Justin's helpful words.
+</I>&gt;<i> Respectfully,
+</I>&gt;<i> Chris
+</I>&gt;<i> ref: <A HREF="http://opensimulator.org/wiki/RemoteAdmin">http://opensimulator.org/wiki/RemoteAdmin</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;&gt;EXAMPLE FOLLOWS&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+</I>&gt;<i>
+</I>&gt;<i> POST admin_create_user HTTP/1.0
+</I>&gt;<i> Host: <A HREF="http://10.0.0.12:16384/">http://10.0.0.12:16384/</A>
+</I>&gt;<i> Content-type: text/xml
+</I>&gt;<i> Content-Length: 993
+</I>&gt;<i>
+</I>&gt;<i> &lt;?xml version=&quot;1.0&quot;?&gt;
+</I>&gt;<i> &lt;methodCall&gt;
+</I>&gt;<i> &lt;methodName&gt;admin_create_user&lt;/methodName&gt;
+</I>&gt;<i> &lt;params&gt;
+</I>&gt;<i> &lt;param&gt;
+</I>&gt;<i> &lt;value&gt;
+</I>&gt;<i> &lt;struct&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;password&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;password&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;user_firstname&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;male&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;user_lastname&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;9999&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;user_password&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;password&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;user_email&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">none at email.com</A>&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;start_region_x&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;int&gt;128&lt;/int&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;start_region_y&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;int&gt;128&lt;/int&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;/struct&gt;
+</I>&gt;<i> &lt;/value&gt;
+</I>&gt;<i> &lt;/param&gt;
+</I>&gt;<i> &lt;/params&gt;
+</I>&gt;<i> &lt;/methodCall&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111115/1b472595/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20111115/1b472595/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008596.html">[Opensim-users] Template string for RemoteAdmin control
+</A></li>
+	<LI>Next message: <A HREF="008606.html">[Opensim-users] Template string for RemoteAdmin control
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8599">[ date ]</a>
+              <a href="thread.html#8599">[ thread ]</a>
+              <a href="subject.html#8599">[ subject ]</a>
+              <a href="author.html#8599">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [Opensim-dev]  Grid Numberging
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20%20Grid%20Numberging&In-Reply-To=%3CBLU134-W14BF7F7DD021B3A3461A9ED5220%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000523.html">
+   <LINK REL="Next"  HREF="000554.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [Opensim-dev]  Grid Numberging</H1>
+    <B>Stefan Andersson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20%20Grid%20Numberging&In-Reply-To=%3CBLU134-W14BF7F7DD021B3A3461A9ED5220%40phx.gbl%3E"
+       TITLE="[Opensim-users] [Opensim-dev]  Grid Numberging">stefan at tribalmedia.se
+       </A><BR>
+    <I>Sun Nov  2 14:54:42 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000523.html">[Opensim-users] [Opensim-dev]  Grid Numberging
+</A></li>
+        <LI>Next message: <A HREF="000554.html">[Opensim-users] [Opensim-dev]  Grid Numberging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#538">[ date ]</a>
+              <a href="thread.html#538">[ thread ]</a>
+              <a href="subject.html#538">[ subject ]</a>
+              <a href="author.html#538">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Diva,
+ 
+there's a blindingly simple remedy; start treating the asset guid as something private between the region and the client, and publicly refer to assets by url instead.
+ 
+In effect, the fact that we are storing the assets untampered in the database is just a legacy issue. If we were to start processing the asset data more intelligently, things would look a lot differently.
+ 
+Suppose we;
+ 
+a) on asset upload, processed the asset and changed guids to urls, firstly by lookup (is this already an asset guid known to the region) then by url synthetization (create an asset storage url (maybe using the users home asset server that we already said we would store... ;D ) , post the binary to that and change all guid references in the asset to that)
+ 
+b) on asset download (from asset storage) processed the asset and changed urls to guid, again firstly by lookup (is it already known to the region) then, by fetching the asset by url and assigning it a guid.
+ 
+This would mean that the client, when it refers to an asset, actually requests it by the local guid that the region has assigned it - more as a local cache key than a public asset id.
+I believe this would solve the whole thing, more or less. I would love to see a proof of concept - it should be fairly easily thrown together, probably as a custom asset cache. Best regards,Stefan AnderssonTribal Media AB Join the 3d web revolution : <A HREF="http://tribalnet.se/">http://tribalnet.se/</A> 
+
+
+
+Date: Sat, 1 Nov 2008 07:52:33 -0700From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.comTo</A>: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.deSubject</A>: Re: [Opensim-users] [Opensim-dev] Grid Numberging
+The only reason why I'm suggesting the encoding hack as a horrible option not to be immediately discarded  is that it is probably the simplest thing to do for the LL Viewer to start pulling assets from different places on the internet. From all I know, the LL Viewer is deeply rooted on UUIDs for universal identification; refactoring this will be a massive undertaking on the viewer. But simply giving semantics to UUIDs would not be that big of a deal. I'm thinking a few conditionals here and there:url = RetrieveUrl(uuid)if ItsASyntacticallyValidUrl(url)   try to do the right thing, pleaseelse   do what you do nowor something to this effect.Of course, we're hitting our heads again on the pre-condition of using the LL Viewer...Dickson, Mike (ISS Software) wrote: 
+
+
+
+
+
+
+We really don&#8217;t want to start encoding info into a GUID. The RFC that describes them pretty much details what kinds of entropy can be used.  
+ 
+I&#8217;ve been thinking for a while that the handle service (<A HREF="http://www.handle.net">http://www.handle.net</A>) might be a nice way to do a URL style mechanism to refer to assets and such not on a local server.  It&#8217;s been a while since I looked at it but it&#8217;s pretty much designed for the purpose and there&#8217;s a proxy architecture already defined for it.
+ 
+Mike
+ 
+
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Diva CantoSent: Saturday, November 01, 2008 9:05 AMTo: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.deSubject</A>: Re: [Opensim-users] [Opensim-dev] Grid Numberging
+ 
+Actually, I just realized that the problem is already much worse than I thought.The practices that we are all doing around opensim completely invalidate the concept of uniqueness in UUIDs. This comes from the fact that UUIDs are being externalized into DBs and XML representations, which are then being imported elsewhere. As people reuse entire DBs and XML files to recreate the same worlds in different grids, uniqueness goes down the drain. So definitely, forget about &quot;Universal&quot; Unique Identification with UUIDs; uris/urls are absolutely required for universal naming. The only way to savage UUIDs would be use part of their representation to deterministically code up the ip/port of where they come from.Stefan Andersson wrote: 
+And the whole thread started with suggesting we allocate information bits to encode semantics. Which drastically heightens the risk of collisions, intentional or malicious.Just see guids as private to the trust domain, and we'll all fine. Grids should be publicly referred to by something riches, as an uri/url for example.Best regards,Stefan AnderssonTribal Media AB Join the 3d web revolution : <A HREF="http://tribalnet.se/">http://tribalnet.se/</A> 
+
+
+
+Date: Fri, 31 Oct 2008 20:10:41 -0700From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.comTo</A>: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.deSubject</A>: Re: [Opensim-users] [Opensim-dev] Grid NumbergingNot to mention the dudes and dudettes who generate region UUIDs by hand... (a-hem)Purely random UUIDs that don't encode higher-order information are too fragile when there is a chance that people will get their hands on them. I'm not even talking about malicious manipulation, just simple human intervention.Frisby, Adam wrote: Yeah, the reason I said 'almost' wasn&#8217;t because of a good UUID generator, - it's the bad ones. IE, people using bad random sources, etc which dramatically increase the chance of a collision - ie if you are only getting 30 bits of randomness, you could run into a collision fairly quickly. Adam   
+-----Original Message-----From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Sean DagueSent: Friday, 31 October 2008 4:48 PMTo: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.deSubject</A>: Re: [Opensim-users] [Opensim-dev] Grid Numberging Dr Scofield wrote:    
+Frisby, Adam wrote:      
+Shouldn&#8217;t UUIDs by definition be unique?   IE &#8211; if your generating them randomly a collision is almostguaranteed to never ever occur.        &quot;almost&quot; being a key word here...      &quot;...after generating 1 billion UUIDs every second for the next 100years, the probability of creating just one duplicate would be about50%. The probability of one duplicate would be about 50% if everyperson on earth owns 600 million UUIDs.&quot; <A HREF="http://en.wikipedia.org/wiki/Uuid">http://en.wikipedia.org/wiki/Uuid</A> Just to keep &quot;almost&quot; in perspective,         -Sean --Sean Dague / Neas <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Badesdague at gmail.comhttp</A>://dague.net     _______________________________________________Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users   
+ 
+
+   _______________________________________________Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users  
+ 
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20081102/005b9c79/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20081102/005b9c79/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000523.html">[Opensim-users] [Opensim-dev]  Grid Numberging
+</A></li>
+	<LI>Next message: <A HREF="000554.html">[Opensim-users] [Opensim-dev]  Grid Numberging
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#538">[ date ]</a>
+              <a href="thread.html#538">[ thread ]</a>
+              <a href="subject.html#538">[ subject ]</a>
+              <a href="author.html#538">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

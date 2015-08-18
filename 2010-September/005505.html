@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Windlight and LightShare in Opensim 0.7
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Windlight%20and%20LightShare%20in%20Opensim%200.7&In-Reply-To=%3CAANLkTi%3D7RmV4v5Kd3sormzgf_aDz_CY1%2BH%3D4YO2HT%2BUe%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005504.html">
+   <LINK REL="Next"  HREF="005506.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Windlight and LightShare in Opensim 0.7</H1>
+    <B>M.E. Verhagen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Windlight%20and%20LightShare%20in%20Opensim%200.7&In-Reply-To=%3CAANLkTi%3D7RmV4v5Kd3sormzgf_aDz_CY1%2BH%3D4YO2HT%2BUe%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Windlight and LightShare in Opensim 0.7">marceled9 at gmail.com
+       </A><BR>
+    <I>Mon Sep 13 23:29:53 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005504.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+        <LI>Next message: <A HREF="005506.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5505">[ date ]</a>
+              <a href="thread.html#5505">[ thread ]</a>
+              <a href="subject.html#5505">[ subject ]</a>
+              <a href="author.html#5505">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I think your windlight is working :)
+
+The lsGetWindlightScene expects a list as a parameter to be given. You gave
+an emply list in your example. In that case the function returns a empty
+list.
+
+I do not understand the logic in implementing that function in the way it
+was done, the function matches the integers given in the list with the
+windlight parameters already in the opensim memory. (I would rather like it
+when that function would give the list with the settings back, must be
+something with the lsl lists ? Can't we use cs to list and manipulate the
+windlight settings ?)
+
+
+Try this script:
+------------------------------------------------
+
+list preset_test;
+list scene_integers;
+list preset_default;
+list wlist;
+integer switch;
+
+default
+{
+    state_entry()
+    {
+     scene_integers = [
+
+WL_WATER_COLOR,WL_WATER_FOG_DENSITY_EXPONENT,WL_UNDERWATER_FOG_MODIFIER,
+            WL_REFLECTION_WAVELET_SCALE,WL_FRESNEL_SCALE,WL_FRESNEL_OFFSET,
+
+WL_REFRACT_SCALE_ABOVE,WL_REFRACT_SCALE_BELOW,WL_BLUR_MULTIPLIER,
+
+WL_BIG_WAVE_DIRECTION,WL_LITTLE_WAVE_DIRECTION,WL_NORMAL_MAP_TEXTURE,
+            WL_HORIZON,WL_HAZE_HORIZON,WL_BLUE_DENSITY,WL_HAZE_DENSITY,
+            WL_DENSITY_MULTIPLIER,WL_DISTANCE_MULTIPLIER,WL_MAX_ALTITUDE,
+            WL_SUN_MOON_POSITION,WL_SUN_MOON_COLOR,WL_AMBIENT,WL_EAST_ANGLE,
+
+WL_SUN_GLOW_FOCUS,WL_SUN_GLOW_SIZE,WL_SCENE_GAMMA,WL_STAR_BRIGHTNESS,
+
+WL_CLOUD_COLOR,WL_CLOUD_XY_DENSITY,WL_CLOUD_COVERAGE,WL_CLOUD_SCALE,
+            WL_CLOUD_DETAIL_XY_DENSITY,WL_CLOUD_SCROLL_X,WL_CLOUD_SCROLL_Y,
+
+WL_DRAW_CLASSIC_CLOUDS,WL_CLOUD_SCROLL_X_LOCK,WL_CLOUD_SCROLL_Y_LOCK];
+     preset_test = [WL_WATER_COLOR, &lt;55,138,164&gt;,
+            WL_WATER_FOG_DENSITY_EXPONENT, 8.0,
+            WL_UNDERWATER_FOG_MODIFIER, 0.8,
+            WL_REFLECTION_WAVELET_SCALE, &lt;5.0,5.0,5.0&gt;,
+            WL_FRESNEL_SCALE, 0.40,
+            WL_FRESNEL_OFFSET, 0.80,
+            WL_REFRACT_SCALE_ABOVE, 0.05,
+            WL_REFRACT_SCALE_BELOW, 0.70,
+            WL_BLUR_MULTIPLIER, 0.090,
+            WL_BIG_WAVE_DIRECTION, &lt;1.05,-0.42,0&gt;,
+            WL_LITTLE_WAVE_DIRECTION, &lt;1.11,-1.16,0&gt;,
+            WL_NORMAL_MAP_TEXTURE, &quot;822ded49-9a6c-f61c-cb89-6df54f42cdf4&quot;,
+            WL_HORIZON, &lt;0.25,0.25,0.32,0.32&gt;,
+            WL_HAZE_HORIZON, 0.19,
+            WL_BLUE_DENSITY, &lt;2.12,2.22,2.38,2.38&gt;,
+            WL_HAZE_DENSITY, 0.70,
+            WL_DENSITY_MULTIPLIER, 0.18,
+            WL_DISTANCE_MULTIPLIER, 0.8,
+            WL_MAX_ALTITUDE, 1605,
+            WL_SUN_MOON_POSITION, 0.317,
+            WL_SUN_MOON_COLOR, &lt;0.24,0.26,0.30,0.30&gt;,
+            WL_AMBIENT, &lt;0.35,0.35,0.35,0.35&gt;,
+            WL_EAST_ANGLE, 0.00,
+            WL_SUN_GLOW_FOCUS, 0.10,
+            WL_SUN_GLOW_SIZE, 1.75,
+            WL_SCENE_GAMMA, 1.00,
+            WL_STAR_BRIGHTNESS, 0.00,
+            WL_CLOUD_COLOR, &lt;6.41,23.41,33.41,3.41&gt;,
+            WL_CLOUD_XY_DENSITY, &lt;1.00,0.53,1.0&gt;,
+            WL_CLOUD_COVERAGE, 0.27,
+            WL_CLOUD_SCALE, 0.42,
+            WL_CLOUD_DETAIL_XY_DENSITY, &lt;1.00,0.53,0.12&gt;,
+            WL_CLOUD_SCROLL_X, 0.20,
+            WL_CLOUD_SCROLL_Y, 0.01,
+            WL_DRAW_CLASSIC_CLOUDS, TRUE,
+            WL_CLOUD_SCROLL_X_LOCK, FALSE,
+            WL_CLOUD_SCROLL_Y_LOCK, FALSE];
+     preset_default = [
+            WL_WATER_COLOR, &lt;4,38,64&gt;,
+            WL_WATER_FOG_DENSITY_EXPONENT, 4.0,
+            WL_UNDERWATER_FOG_MODIFIER, 0.25,
+            WL_REFLECTION_WAVELET_SCALE, &lt;2.0,2.0,2.0&gt;,
+            WL_FRESNEL_SCALE, 0.40,
+            WL_FRESNEL_OFFSET, 0.50,
+            WL_REFRACT_SCALE_ABOVE, 0.03,
+            WL_REFRACT_SCALE_BELOW, 0.20,
+            WL_BLUR_MULTIPLIER, 0.040,
+            WL_BIG_WAVE_DIRECTION, &lt;1.05,-0.42,0&gt;,
+            WL_LITTLE_WAVE_DIRECTION, &lt;1.11,-1.16,0&gt;,
+            WL_NORMAL_MAP_TEXTURE, &quot;822ded49-9a6c-f61c-cb89-6df54f42cdf4&quot;,
+            WL_HORIZON, &lt;0.25,0.25,0.32,0.32&gt;,
+            WL_HAZE_HORIZON, 0.19,
+            WL_BLUE_DENSITY, &lt;0.12,0.22,0.38,0.38&gt;,
+            WL_HAZE_DENSITY, 0.70,
+            WL_DENSITY_MULTIPLIER, 0.18,
+            WL_DISTANCE_MULTIPLIER, 0.8,
+            WL_MAX_ALTITUDE, 1605,
+            WL_SUN_MOON_POSITION, 0.317,
+            WL_SUN_MOON_COLOR, &lt;0.24,0.26,0.30,0.30&gt;,
+            WL_AMBIENT, &lt;0.35,0.35,0.35,0.35&gt;,
+            WL_EAST_ANGLE, 0.00,
+            WL_SUN_GLOW_FOCUS, 0.10,
+            WL_SUN_GLOW_SIZE, 1.75,
+            WL_SCENE_GAMMA, 1.00,
+            WL_STAR_BRIGHTNESS, 0.00,
+            WL_CLOUD_COLOR, &lt;0.41,0.41,0.41,0.41&gt;,
+            WL_CLOUD_XY_DENSITY, &lt;1.00,0.53,1.0&gt;,
+            WL_CLOUD_COVERAGE, 0.27,
+            WL_CLOUD_SCALE, 0.42,
+            WL_CLOUD_DETAIL_XY_DENSITY, &lt;1.00,0.53,0.12&gt;,
+            WL_CLOUD_SCROLL_X, 0.20,
+            WL_CLOUD_SCROLL_Y, 0.01,
+            WL_DRAW_CLASSIC_CLOUDS, TRUE,
+            WL_CLOUD_SCROLL_X_LOCK, FALSE,
+            WL_CLOUD_SCROLL_Y_LOCK, FALSE];
+
+      lsSetWindlightScene(preset_test);
+      switch = 1;
+      wlist = lsGetWindlightScene( scene_integers );
+      llSay(0, llList2CSV( wlist ));
+    }
+
+    touch_start ( integer number )
+    {
+        if (switch == 1) {
+          wlist = lsGetWindlightScene( scene_integers );
+          llSay(0, llList2CSV( wlist ));
+          lsSetWindlightScene(preset_default);
+          switch = 0;
+        } else {
+          wlist = lsGetWindlightScene( scene_integers );
+          llSay(0, llList2CSV( wlist ));
+          lsSetWindlightScene(preset_test);
+          switch = 1;
+        }
+
+    }
+
+}
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100913/edc82824/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100913/edc82824/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005504.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+	<LI>Next message: <A HREF="005506.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5505">[ date ]</a>
+              <a href="thread.html#5505">[ thread ]</a>
+              <a href="subject.html#5505">[ subject ]</a>
+              <a href="author.html#5505">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

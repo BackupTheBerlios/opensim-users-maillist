@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; messages
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Proposal%20for%20removing%20%22ERROR%3A%20There%20was%20an%20error%0A%20while%20scanning%20assembly%3A%22%20messages&In-Reply-To=%3C4808EFD6.2050908%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000225.html">
+   <LINK REL="Next"  HREF="000227.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; messages</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Proposal%20for%20removing%20%22ERROR%3A%20There%20was%20an%20error%0A%20while%20scanning%20assembly%3A%22%20messages&In-Reply-To=%3C4808EFD6.2050908%40googlemail.com%3E"
+       TITLE="[Opensim-users] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; messages">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Apr 18 21:00:38 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000225.html">[Opensim-users] Unable to set parcel media url
+</A></li>
+        <LI>Next message: <A HREF="000227.html">[Opensim-users] [Opensim-dev] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; message
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#226">[ date ]</a>
+              <a href="thread.html#226">[ thread ]</a>
+              <a href="subject.html#226">[ subject ]</a>
+              <a href="author.html#226">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+This is a technical post but I'm copying it to users for information.  
+You may (or may not) want to stop reading quickly :-)
+
+So, some of you may have noticed that the latest OpenSim revisions now 
+have many more of the subject error messages on the console.  The cause 
+is the Mono Addins manager we're using, which writes these errors to the 
+console if the dll doesn't contain the configuration data it's expecting.
+
+So today I looked at removing these errors.  I had to follow several 
+lines of investigation.
+
+1.  My initial thought was to move all the external libraries which are 
+causing the problem to a separate $OPENSIM_ROOT/lib/ext directory.  
+However, this means changes to make sure that the dlls can be found in 
+the new directory.  For a cross platform application, it's hard.  On 
+Microsoft's CLR we can simply use &lt;Probing&gt; in config files.  However, 
+Mono does appear to support this, at least according to
+
+<A HREF="http://www.mono-project.com/Assemblies_and_the_GAC">http://www.mono-project.com/Assemblies_and_the_GAC</A>
+
+I tried it anyway, without success.  Instead, the only option on Mono is 
+to either set the MONO_PATH or put the assemblies in the Global Assembly 
+Cache.
+
+2.  This makes things awkward, so instead I looked at moving the plugin 
+dlls.  Same problem.
+
+3.  So instead I looked at simply suppressing the messages.  
+Unfortunately, the Mono addins code writes these messages out to the 
+console.  Although in theory you could give it an IProgressMonitor and 
+stop this, all the classes for this (and the interface) are internal and 
+hence not accessible.  Later versions of mono-addins than the one we are 
+using would appear to have the same problem.
+
+So although we could hack the code in 3. to remove the message (or even 
+replace or code our own plugin solution), the fact is that we really 
+need to have dlls in different directories eventually anyway - bin/ is 
+already overloaded.  This means I'm forced to come back to suggestion 
+1.  Putting things in the GAC is unrealistic at this stage I think, so 
+I'm proposing that we move all the external libraries to 
+$OPENSIM_ROOT/lib/ext and set the MONO_PATH environmental variable to 
+point to this directory.  Under Windows, we would instead put &lt;Probing&gt; 
+entries in the executable's config files.
+
+I tried setting MONO_PATH programatically in OpenSimMain.cs, but the set 
+doesn't look like it is exported so the load fails.  The same path works 
+fine when exported from the command line.
+
+If we go the MONO_PATH route, then I think we could provide shell 
+scripts for all the executables to set the path and then launch the 
+program, even though this is a little messy.  The executable itself 
+would complain loudly if it is not on Windows and MONO_PATH is unset 
+(which would be inconvenient for Windows mono users, though there may 
+not be that many of them).
+
+I'm open to constructive suggestions on this, particularly from core 
+developers.
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000225.html">[Opensim-users] Unable to set parcel media url
+</A></li>
+	<LI>Next message: <A HREF="000227.html">[Opensim-users] [Opensim-dev] Proposal for removing &quot;ERROR: There was an error while scanning assembly:&quot; message
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#226">[ date ]</a>
+              <a href="thread.html#226">[ thread ]</a>
+              <a href="subject.html#226">[ subject ]</a>
+              <a href="author.html#226">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

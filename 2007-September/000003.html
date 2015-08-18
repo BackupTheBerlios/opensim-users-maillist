@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [To sered secondlife] About gdiplus error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2007-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BTo%20sered%20secondlife%5D%20About%20gdiplus%20error&In-Reply-To=%3C742dcb680709290304m3ac3c1eco1b9ef4e36e630af8%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000002.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [To sered secondlife] About gdiplus error</H1>
+    <B>Mao Jiayin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BTo%20sered%20secondlife%5D%20About%20gdiplus%20error&In-Reply-To=%3C742dcb680709290304m3ac3c1eco1b9ef4e36e630af8%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] [To sered secondlife] About gdiplus error">maojiayin at gmail.com
+       </A><BR>
+    <I>Sat Sep 29 12:04:15 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000002.html">[Opensim-users] gdiplus error
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am sorry I can't reply to the thread &quot;gdiplus error&quot; since i just
+subscribed this maillist.
+I've encountered this problem too, and I found this is a dependency problem
+caused by mono, not OpenSim.
+Your mono looked for gdiplus.dll, but failed to find it.
+First, run &quot;ldconfig -p | grep gdiplus&quot; to find out what kind of gdiplus lib
+you have.
+Then, modify /etc/mono/config, add a mapping like this:
+*********************************************************************
+&lt;dllmap dll=&quot;gdiplus.dll&quot; target=&quot;libgdiplus&quot; os=&quot;!windows&quot;/&gt;
+*********************************************************************
+Replace the target with the lib name on your system.
+At last, run
+
+MONO_LOG_LEVEL=debug mono Opensim.exe
+to see if it works.
+
+Maybe you also need to change the name (or create symbolic name) of other libs,
+such as libexif and libexpat.
+On my machine, I need to do the following since my libgdiplus is looking for
+wrong versions of those libs
+*********************************************************************
+ln -s libexif.so.12 libexif.so.9
+ln -s libexpat.so.1 libexpat.so.0
+*********************************************************************
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20070929/c5fad8ff/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20070929/c5fad8ff/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000002.html">[Opensim-users] gdiplus error
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

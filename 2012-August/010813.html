@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Unable to connect to a region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Unable%20to%20connect%20to%20a%20region&In-Reply-To=%3C503754EE.2010509%40scoffoni.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010810.html">
+   <LINK REL="Next"  HREF="010814.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Unable to connect to a region</H1>
+    <B>Philippe Scoffoni</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Unable%20to%20connect%20to%20a%20region&In-Reply-To=%3C503754EE.2010509%40scoffoni.net%3E"
+       TITLE="[Opensim-users] Unable to connect to a region">philippe at scoffoni.net
+       </A><BR>
+    <I>Fri Aug 24 12:18:22 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010810.html">[Opensim-users] Strange, why does iar have a problem with flexi prims?
+</A></li>
+        <LI>Next message: <A HREF="010814.html">[Opensim-users] Unable to connect to a region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10813">[ date ]</a>
+              <a href="thread.html#10813">[ thread ]</a>
+              <a href="subject.html#10813">[ subject ]</a>
+              <a href="author.html#10813">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm experiencing some problem with access to a region. I'm using OpenSim
+0.7.3 on Debian 6 with Mono from the Debian repository.
+
+I'm working with a server using openvz container. I'm using two virtual
+machine. One for the grid and an other for the region.
+The VM are on a private network. It means, they have a private IP. The
+grid : 10.0.0.10 and the region : 10.0.0.11.
+On the physical host, I'm using shorewall to build the rules of the
+firewall and make the NAT Translation for all the required port
+(9000TCP/UDP for the region , 8002TCP for the grid)
+In the Regions.ini, i've put in the ExternalHostName :
+os-reg.open-dsi.net wich is the public IP I'm using to access to the two
+vms.
+All seems to work fine. When I start the region, it is successfully
+registred by the grid.
+My problem occurs when I try to connect to the region. My account is
+succesfully authentified by the grid, but it seems that firestorm
+(4.1.1) is not able to connect to the region. In the log there is
+something like
+
+2012-08-24T09:18:27Z INFO: newview/llworld.cpp(181) : addRegion: Add
+region with handle: 1099511628032000 on host 10.0.0.11:9000
+2012-08-24T09:18:27Z INFO: newview/llworld.cpp(214) : addRegion: Adding
+new region (1000:1000)
+2012-08-24T09:18:27Z INFO: newview/llworld.cpp(215) : addRegion: Host:
+10.0.0.11:9000
+2012-08-24T09:18:27Z INFO: newview/llstartup.cpp(1503) : idle_startup:
+Adding initial simulator { 256000.0, 256000.0, 0.0 }
+2012-08-24T09:18:27Z INFO: newview/llviewerregion.cpp(1586) :
+setSeedCapability: posting to seed
+<A HREF="http://os-reg.open-dsi.net:9000/CAPS/005f52b3-5440-4775-97df-a1fd5117be9c0000/">http://os-reg.open-dsi.net:9000/CAPS/005f52b3-5440-4775-97df-a1fd5117be9c0000/</A>
+2012-08-24T09:18:27Z INFO: newview/llagent.cpp(781) :
+LLAgent::setRegion: Moving agent into region:  located at 10.0.0.11:9000
+
+*I d'ont understant why he is using the private IP*. On an other lines,
+he use the ExternalHostName.
+
+or
+
+2012-08-24T09:18:27Z INFO: newview/lleventpoll.cpp(140) :
+LLEventPollResponder: LLEventPoll initialized with sender 10.0.0.11:9000
+
+The last lines befoer the error message
+
+2012-08-24T09:18:31Z INFO: newview/llstartup.cpp(1735) : idle_startup:
+viewer: UserLoginLocationReply() Enabling 10.0.0.11:9000 with code
+1940142022
+2012-08-24T09:18:32Z INFO: llcommon/llprocess.cpp(692) :
+LLProcess::LLProcess: SLVoice (7733): launched cd
+/opt/Phoenix_Firestorm-Release_i686_4.1.1.28744:
+/opt/Phoenix_Firestorm-Release_i686_4.1.1.28744/bin/SLVoice -ll -1
+2012-08-24T09:18:32Z WARNING: newview/lltexturefetch.cpp(1281) : doWork:
+Texture missing from server (404):
+<A HREF="http://os-reg.open-dsi.net:9000/CAPS/98b0e679-146d-4373-bfcd-94c669305532//?texture_id=cce0f112-878f-4586-a2e2-a8f104bba271">http://os-reg.open-dsi.net:9000/CAPS/98b0e679-146d-4373-bfcd-94c669305532//?texture_id=cce0f112-878f-4586-a2e2-a8f104bba271</A>
+2012-08-24T09:18:52Z WARNING: newview/llstartup.cpp(2597) :
+use_circuit_callback: Backing up to login screen!
+2012-08-24T09:18:52Z WARNING: newview/lltoastalertpanel.cpp(181) :
+LLToastAlertPanel::LLToastAlertPanel: Alert: Nous avons des difficult&#233;s
+&#224; vous connecter. Il y a peut-&#234;tre un probl&#232;me avec votre connexion
+Internet ou la Grille de Second Life.V&#233;rifiez votre connexion Internet
+et r&#233;essayez dans quelques minutes, cliquez sur Aide pour consulter la
+page Portail Assistance Second Life ou bien sur T&#233;l&#233;porter pour essayer
+d'aller chez vous.
+2012-08-24T09:18:52Z INFO: newview/llworld.cpp(318) : removeRegion:
+Removing region 256000.0:256000.0
+
+The complete log is on this pastebin
+<A HREF="http://pastebin.com/UGA7iH1E">http://pastebin.com/UGA7iH1E</A>
+
+The region configuration
+<A HREF="http://pastebin.com/xe3mDYdV">http://pastebin.com/xe3mDYdV</A>
+
+I'm not sure that you will understand my poor english :-) .
+
+Thanks
+
+Philippe
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120824/22e23d19/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120824/22e23d19/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010810.html">[Opensim-users] Strange, why does iar have a problem with flexi prims?
+</A></li>
+	<LI>Next message: <A HREF="010814.html">[Opensim-users] Unable to connect to a region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10813">[ date ]</a>
+              <a href="thread.html#10813">[ thread ]</a>
+              <a href="subject.html#10813">[ subject ]</a>
+              <a href="author.html#10813">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

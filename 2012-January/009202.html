@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%20r/17830&In-Reply-To=%3C4F1F513E.4070309%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009107.html">
+   <LINK REL="Next"  HREF="009109.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sensors are not detecting NPC avatars on git r/17830</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%20r/17830&In-Reply-To=%3C4F1F513E.4070309%40googlemail.com%3E"
+       TITLE="[Opensim-users] Sensors are not detecting NPC avatars on git r/17830">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Jan 25 01:47:58 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009107.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+        <LI>Next message: <A HREF="009109.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9202">[ date ]</a>
+              <a href="thread.html#9202">[ thread ]</a>
+              <a href="subject.html#9202">[ subject ]</a>
+              <a href="author.html#9202">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>An NPC flag is already kept, so there's no need to do any useraccount lookups.
+
+On reflection, I'm not sure that llGetOwnerKey() returning UUID.Zero for 'unowned' avatars is really a problem.  The 
+case in which this already happens is if the key is malformed.  But if you have received this from a sensor you know 
+that the uuid is valid.
+
+Still, I think it would be good to have another more intuitive means of knowing a given agent is an NPC.  Possibly 
+llGetAgentInfo() could return an AGENT_IS_OS_NPC in the flags.
+
+As for sensing, I think I'll have to go with OS_NPC_SENSE_AS_AGENT (sorry for the long name, Chris).  I'm still not 
+really convinced that this really makes sense but it's very difficult to say without having it in the wild.  The worse 
+that can happen is that the majority of people writing NPC scripts will have to remember to set this flag.
+&gt;<i>
+</I>&gt;<i> Just my 2 cents but, as far as actually detecting if an avatar is an NPC, instead of having llGetOwnerKey() return
+</I>&gt;<i> 00000000-0000-0000-0000-000000000000 (I'm assuming that is essentially what UUID.Zero is in the server code) would it be
+</I>&gt;<i> possible to do a simple check routine against the UUID's in the useraccounts table? If the ID does not exist then it
+</I>&gt;<i> must be an NPC; if it does exist then it's an AGENT? Not sure how efficient this would be though if the useraccounts
+</I>&gt;<i> table is rather large... Or perhaps put a flag (transparent to the viewer) on each NPC created and have the code check
+</I>&gt;<i> for this flag each time it needs to deal with a targeted NPC; if the flag is there then it's an NPC, and vice versa.
+</I>&gt;<i> Reason I ask is, it's not so much as the sensor having issues dealing with an avatar that has
+</I>&gt;<i> 00000000-0000-0000-0000-000000000000 for a UUID, but the rest of the code actually having to deal with that number for
+</I>&gt;<i> an avatar's key. Like a poseball script for example, most of them are coded to assume that no one is sitting on it if
+</I>&gt;<i> the avatar key is NULL_KEY, therefore I would think that it would really confuse the script if the NPC was directed to
+</I>&gt;<i> sit on the poseball and its key is 00000000-0000-0000-0000-000000000000 . This is just a simple example but I have ran
+</I>&gt;<i> into problems with more complex scripts that utilize a list of owners in order to determine if an avatar is able to have
+</I>&gt;<i> access to its functions and the avatar being NULL_KEY.
+</I>&gt;<i>
+</I>&gt;<i> I think having a OS_NPC_SHOW_AS_AGENT (or perhaps maybe OS_NPC_AS_AGENT just to keep things short and sweet? :) ) option
+</I>&gt;<i> to the npc create command would be a good idea and a handy option to keep compatibility with older sensor scripts
+</I>&gt;<i> (especially ones that are no mod and can't be changed to include the NPC type) if it would allow the NPC's actual UUID
+</I>&gt;<i> to be seen by script(s)?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 1/19/2012 5:57 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> This is indeed correct. It means that sensors using the LSL AGENT type will not detect NPCs. To detect an NPC you must
+</I>&gt;&gt;<i> specify the currently OpenSim-only NPC constant. This has been true since 7518b07 (Fri Jan 6 22:35:06 2012).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> One reason for doing this is because the sensor limit is 16 and one doesn't want the return to be overwhelmed by NPCs.
+</I>&gt;&gt;<i> It means that sensor using scripts not designed with NPCs in mind (both in the past and the future) won't work with
+</I>&gt;&gt;<i> NPCs without alteration. It strikes me that sometimes this is a disadvantage (e.g. a light that should come on when it
+</I>&gt;&gt;<i> detects any presence) but for other items an advantage (e.g. non-NPC aware radars that wouldn't be designed to pick
+</I>&gt;&gt;<i> them up anyway).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So one option is to change the default so that AGENT will pick up NPCs. However, this is a problem with the 16 avatar
+</I>&gt;&gt;<i> sensor limit. Even if this is turned up, it might then cause script problems (e.g. ones designed to work with only 16
+</I>&gt;&gt;<i> avatars).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Another slightly messy option is to provide something like an OS_NPC_SHOW_AS_AGENT option to osNpcCreate() that will
+</I>&gt;&gt;<i> show such NPCs as agents. I'm favouring this option right now.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Either way, what is missing at the moment is a way to actually tell if a particular agent is an NPC. One possibility
+</I>&gt;&gt;<i> is to make llGetOwnerKey() return an owned NPC's owner. For an unowned NPC, this would need to return UUID.Zero - I'm
+</I>&gt;&gt;<i> not sure if there's a problem disambiguating between an unowned NPC and a situation where no entity with the ID is found.
+</I>&gt;<i> --
+</I>&gt;<i> OpenSim: 9 Region Standalone on 0.7.3 Dev
+</I>&gt;<i> Physics: Open Dynamics Engine
+</I>&gt;<i> OS: Windows XP 32 Bit
+</I>&gt;<i> CPU: AMD Phenom II X4 840 3.2 GHz
+</I>&gt;<i> Memory: 3 GB DDR3
+</I>&gt;<i> Database: MySQL 5.1.11
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009107.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+	<LI>Next message: <A HREF="009109.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9202">[ date ]</a>
+              <a href="thread.html#9202">[ thread ]</a>
+              <a href="subject.html#9202">[ subject ]</a>
+              <a href="author.html#9202">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] XEngine causing CPU spikes under mono
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20XEngine%20causing%20CPU%20spikes%20under%20mono&In-Reply-To=%3C4D87E1BF.90706%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006833.html">
+   <LINK REL="Next"  HREF="006834.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] XEngine causing CPU spikes under mono</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20XEngine%20causing%20CPU%20spikes%20under%20mono&In-Reply-To=%3C4D87E1BF.90706%40googlemail.com%3E"
+       TITLE="[Opensim-users] XEngine causing CPU spikes under mono">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Mar 22 00:39:43 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006833.html">[Opensim-users] XEngine causing CPU spikes under mono
+</A></li>
+        <LI>Next message: <A HREF="006834.html">[Opensim-users] MySQL 5.1.55+ and OpenSim 0.7.0.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6836">[ date ]</a>
+              <a href="thread.html#6836">[ thread ]</a>
+              <a href="subject.html#6836">[ subject ]</a>
+              <a href="author.html#6836">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 21/03/11 03:52, Adam Farrugia wrote:
+&gt;<i> On 11/03/11 06:42, Adam Farrugia wrote:
+</I>&gt;&gt;<i> Hi All,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Running the following:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ubuntu 10.10 Server
+</I>&gt;&gt;<i> mono 2.6.7
+</I>&gt;&gt;<i> 16GB RAM
+</I>&gt;&gt;<i> 1 x Quad-core AMD CPU
+</I>&gt;&gt;<i> opensim 0.7.0.2 (Grid Mode)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Found that XEngine causes mono spike CPU usage over 100% briefly when automatic script save is invoked. Actual spike value varies with sim load, but pattern is the same regardless of load. Parameter is &quot;SaveInterval&quot; in XEngine params in OpenSim.ini. Default interval is 120 seconds. Changed SaveInterval to other time values to test and sure enough, spike occurs at those intervals.
+</I>&gt;&gt;<i> Currently running 4 regions, Grid mode, all regions running numerous scripts.
+</I>&gt;&gt;<i> Has anyone seen this before? Searched pretty hard and seen plenty of issues with earlier versions of mono with high CPU usage and workarounds by tweaking MONO_THREADS_PER_CPU but nothing specifically relating to this.
+</I>&gt;&gt;<i> Not sure if it is a bug to be reported, or just a natural limit of XEngine when it auto-saves script states when there lots of scripts on a grid.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Rgds,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Adam Farrugia
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Out of interest, how many scripts are we talking about here?  Are they complicated scripts with a lot of state?
+</I>&gt;<i>
+</I>&gt;<i> As far as I can see, script state saving is single threaded.
+</I>&gt;<i>
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hi Justin- sorry for the delay in reply. There is about 160-odd scripts per region. Close to half of them are what I'd call somewhat complicated in terms of use of state- those ones are particularly focused on transaction processing, i.e., each region consists of shops (or stores) that provide various goods and services and the system to support this is scripted into objects, some of which avatars use to &quot;produce&quot; (from a defined set of resources), price/re-price and sell products/services for their store as well as buying products/services from other stores. Using &quot;top&quot; in Ubuntu, when the XEngine automatic script save is invoked, the CPU% for mono briefly spikes well over 100%, but overall CPU %idle is still quite high (roughly 60-70%). It doesn't cause of itself the sim to crash- it was just something I discovered when trying to work out why mono was causing CPU spikes at what appeared to be regular intervals. So what you're implying is that it's state complexity within 
+</I>sc
+&gt;<i>   ripts rather than script count that may account for this?
+</I>
+Hi Adam.  I'm afraid I don't know enough about the script engine right now to comment further - I was more interested in 
+getting a sense of when this problem revealed itself.
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006833.html">[Opensim-users] XEngine causing CPU spikes under mono
+</A></li>
+	<LI>Next message: <A HREF="006834.html">[Opensim-users] MySQL 5.1.55+ and OpenSim 0.7.0.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6836">[ date ]</a>
+              <a href="thread.html#6836">[ thread ]</a>
+              <a href="subject.html#6836">[ subject ]</a>
+              <a href="author.html#6836">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

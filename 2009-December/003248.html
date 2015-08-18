@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] LSL Syntax in Opensim - restrictions?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20LSL%20Syntax%20in%20Opensim%20-%20restrictions%3F&In-Reply-To=%3C699118.99106.qm%40web63104.mail.re1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003244.html">
+   <LINK REL="Next"  HREF="003249.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] LSL Syntax in Opensim - restrictions?</H1>
+    <B>Karen Palen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20LSL%20Syntax%20in%20Opensim%20-%20restrictions%3F&In-Reply-To=%3C699118.99106.qm%40web63104.mail.re1.yahoo.com%3E"
+       TITLE="[Opensim-users] LSL Syntax in Opensim - restrictions?">karen_palen at yahoo.com
+       </A><BR>
+    <I>Wed Dec  9 17:05:09 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003244.html">[Opensim-users] LSL Syntax in Opensim - restrictions?
+</A></li>
+        <LI>Next message: <A HREF="003249.html">[Opensim-users] LSL Syntax in Opensim - restrictions?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3248">[ date ]</a>
+              <a href="thread.html#3248">[ thread ]</a>
+              <a href="subject.html#3248">[ subject ]</a>
+              <a href="author.html#3248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I haven't run into that one yet, but I finding that the OpenSim script engine is stricter than the LSL engine in SL.
+
+The error trace and messages are not as complete as I would like either.
+
+Unfortunately the line count for the error message tends to be inaccurate as well. I will try to document a few examples next time I play with scripting.
+
+I have not found that unimplemented functions are a problem since there are only a few which are still not handled at all in OpenSim. They are well documented in the wiki.
+
+The most troublesome problem so far is variable scoping problems, where a variable (e.g. i) is reused within the defined scope. The SL script engine will allow this even though it is bad practice, the OpenSim script engine rejects it. 
+
+This gets to be a major problem if the actual intent of the scoping is not obvious and the obvious fix (i -&gt; i1, i2, etc.) results in changing the functionality of the code!
+
+In one case (the GPL version of Prim Skirt Builder) I have 6 or 7 redefinitions of &quot;i&quot; to deal with.
+
+So far a close examination of the code has revealed the problem eventually.
+
+Another thing to watch is the allowed functions in the config file, on a private sim (e.g. development) you need to allow everything, but on a public sim you need to restrict the available OS functions for security. This too can cause apparent syntax errors.
+
+Karen
+
+--- On Wed, 12/9/09, Ai Austin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at googlemail.com</A>&gt; wrote:
+
+&gt;<i> From: Ai Austin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at googlemail.com</A>&gt;
+</I>&gt;<i> Subject: [Opensim-users] LSL Syntax in Opensim - restrictions?
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Date: Wednesday, December 9, 2009, 3:27 AM
+</I>&gt;<i> I know there are a few issues with
+</I>&gt;<i> some syntax forms of 
+</I>&gt;<i> conditionals... can someone remind me what the issues are
+</I>&gt;<i> in moving 
+</I>&gt;<i> LSL code from SL to Opensim.
+</I>&gt;<i> 
+</I>&gt;<i> e.g. this one fails with a syntax error
+</I>&gt;<i> 
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160;&#160;&#160;if(
+</I>&gt;<i> ((c = llList2Float(time,a)) &lt;= ticks) || 
+</I>&gt;<i> (llGetAgentSize(d = llList2Key(users,a)) ==
+</I>&gt;<i> &lt;0.0,0.0,0.0&gt;))
+</I>&gt;<i> 
+</I>&gt;<i> is it one of the things not yet allowed?
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+      
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003244.html">[Opensim-users] LSL Syntax in Opensim - restrictions?
+</A></li>
+	<LI>Next message: <A HREF="003249.html">[Opensim-users] LSL Syntax in Opensim - restrictions?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3248">[ date ]</a>
+              <a href="thread.html#3248">[ thread ]</a>
+              <a href="subject.html#3248">[ subject ]</a>
+              <a href="author.html#3248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

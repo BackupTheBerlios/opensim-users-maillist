@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Asset setup incorrect?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Asset%20setup%20incorrect%3F&In-Reply-To=%3CAANLkTimqjNScST4LoEUYT3mxVGPsJCmiSM%3DiEgd1hW%3Dw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005856.html">
+   <LINK REL="Next"  HREF="005895.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Asset setup incorrect?</H1>
+    <B>Mic Bowman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Asset%20setup%20incorrect%3F&In-Reply-To=%3CAANLkTimqjNScST4LoEUYT3mxVGPsJCmiSM%3DiEgd1hW%3Dw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Asset setup incorrect?">cmickeyb at gmail.com
+       </A><BR>
+    <I>Wed Oct 20 06:48:54 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005856.html">[Opensim-users] Asset setup incorrect?
+</A></li>
+        <LI>Next message: <A HREF="005895.html">[Opensim-users] Asset setup incorrect?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5859">[ date ]</a>
+              <a href="thread.html#5859">[ thread ]</a>
+              <a href="subject.html#5859">[ subject ]</a>
+              <a href="author.html#5859">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Some of the grid management packages create default inventories including
+all the appropriate appearance items. SimianGrid clones an existing avatar
+inventory into a class that can be loaded to pre-create a fully populated
+initial inventory for every avatar (including appearance settings).
+
+Would it be that hard to do something similar for stock opensim where you
+distribute an IAR that would be loaded when the initial avatar is created
+(like a parameter to the create user functions).
+
+--mic
+
+
+On Tue, Oct 19, 2010 at 3:04 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> On 19/10/10 14:25, Brooks Boyd wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Thanks, that worked! So, now I can see the avatar, but it still begs the
+</I>&gt;&gt;<i> question, why weren't default shape, skin, hair and eyes created? I see
+</I>&gt;&gt;<i> in the /opensim/bin/assets/ folder that there is a
+</I>&gt;&gt;<i> BodyPartsAssetSet/BodyPartsAssetSet.xml file and AssetSets.xml file that
+</I>&gt;&gt;<i> looks like it's referencing it, but those items weren't created in the
+</I>&gt;&gt;<i> new avatar. There's also /bin/inventory/BodyPartsLibrary/ files, and
+</I>&gt;&gt;<i> those weren't created in the avatar's inventory either. The only library
+</I>&gt;&gt;<i> items that got created were texture files. Anything I can do to rectify
+</I>&gt;&gt;<i> that?
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Those aren't used to create a new avatar - currently no items are set up by
+</I>&gt;<i> default on stock OpenSim.
+</I>&gt;<i>
+</I>&gt;<i> I'm rather surprised you were able to actually create those parts, since in
+</I>&gt;<i> my last test Viewer 2 would not let you wear anything if it couldn't
+</I>&gt;<i> download your appearance in the first place.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately there isn't anything you can do yet, short of having a
+</I>&gt;<i> separate script that creates and sets appearance for a new user (I believe
+</I>&gt;<i> this is how grids do it).  Actually, now I think about this there is some
+</I>&gt;<i> code in the XMLRPC module that allows you to specify default body
+</I>&gt;<i> parts/clothing, but I haven't tried to use it and this would require
+</I>&gt;<i> invoking create user via an HTTP XMLRPC call.
+</I>&gt;<i>
+</I>&gt;<i> Hopefully these issues will be addressed sometime soon.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Brooks
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Oct 19, 2010 at 1:45 AM, Teravus Ovares &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    The most common cause of this is the avatar parts not worn with
+</I>&gt;&gt;<i> Viewer2.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    To resolve the issue, Create and wear, Shape, Skin, Hair and
+</I>&gt;&gt;<i>    Eyes.     You may have to also create clothes depending on the
+</I>&gt;&gt;<i>    rating of the simulator and your client settings.     once you've
+</I>&gt;&gt;<i>    created these in your inventory and worn them, The client will bake
+</I>&gt;&gt;<i>    a texture and your avatar will appear.   Be warned.  If you don't
+</I>&gt;&gt;<i>    create clothes..   you may appear nude.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Teravus
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    On Tue, Oct 19, 2010 at 2:28 AM, Brooks Boyd
+</I>&gt;&gt;<i>    &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">boydb at midnightdesign.ws</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">boydb at midnightdesign.ws</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        I'm trying to get an OpenSim server running on a Fedora box, and
+</I>&gt;&gt;<i>        I was able to get most of the installation complete
+</I>&gt;&gt;<i>        successfully, and I can connect to the new server with a client,
+</I>&gt;&gt;<i>        but when I do so, the client is showing no inventory items at
+</I>&gt;&gt;<i>        all (though it does have Library items), including no shape,
+</I>&gt;&gt;<i>        skin, or clothing. The avatar looks like a white gas cloud, and
+</I>&gt;&gt;<i>        does have the &quot;(Loading...)&quot; tag under their name. Creating a
+</I>&gt;&gt;<i>        skin and shape, wearing them, and editing them does nothing. I
+</I>&gt;&gt;<i>        saw some troubleshooting pages about if you wear all the default
+</I>&gt;&gt;<i>        items at once, the viewer makes you look like a cloud due to it
+</I>&gt;&gt;<i>        thinking you're &quot;Ruth&quot;, but in this case there are no default
+</I>&gt;&gt;<i>        items, and I was trying wearing only one item at a time.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        Editing the appearance of the clothing item, skin or shape shows
+</I>&gt;&gt;<i>        proper rendered shapes of the avatar in the thumbnail boxes in
+</I>&gt;&gt;<i>        the editing panel, so I'm guessing the mesh is in there
+</I>&gt;&gt;<i>        somewhere, but not loading. Where should I look first to correct
+</I>&gt;&gt;<i>        this? The only customization I made to this server setup is to
+</I>&gt;&gt;<i>        use MySQL instead of SQLite. I'm using the 0.7.0.2 version of
+</I>&gt;&gt;<i>        OpenSim, with the Second Life Viewer 2 client.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        Brooks
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        _______________________________________________
+</I>&gt;&gt;<i>        Opensim-users mailing list
+</I>&gt;&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i>        &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    _______________________________________________
+</I>&gt;&gt;<i>    Opensim-users mailing list
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101019/3897cc0d/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101019/3897cc0d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005856.html">[Opensim-users] Asset setup incorrect?
+</A></li>
+	<LI>Next message: <A HREF="005895.html">[Opensim-users] Asset setup incorrect?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5859">[ date ]</a>
+              <a href="thread.html#5859">[ thread ]</a>
+              <a href="subject.html#5859">[ subject ]</a>
+              <a href="author.html#5859">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

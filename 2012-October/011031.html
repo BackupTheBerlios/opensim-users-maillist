@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim and VirWox
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20and%20VirWox&In-Reply-To=%3C50712348.6050602%40chasedata.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011010.html">
+   <LINK REL="Next"  HREF="011032.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim and VirWox</H1>
+    <B>David Saunders</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20and%20VirWox&In-Reply-To=%3C50712348.6050602%40chasedata.com%3E"
+       TITLE="[Opensim-users] OpenSim and VirWox">dave at chasedata.com
+       </A><BR>
+    <I>Sun Oct  7 08:38:00 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011010.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+        <LI>Next message: <A HREF="011032.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11031">[ date ]</a>
+              <a href="thread.html#11031">[ thread ]</a>
+              <a href="subject.html#11031">[ subject ]</a>
+              <a href="author.html#11031">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok I downloaded  the 
+<A HREF="http://opensimulator.org/dist/opensim-0.7.4-source.zip">http://opensimulator.org/dist/opensim-0.7.4-source.zip</A> Placed the src 
+into the addon dir as per instructions and it throws these errors on 
+compile:
+
+  'OpenSim.Framework.IClientAPI' does not contain a definition for 
+'GetClientEP' and no extension method 'GetClientEP' accepting a first 
+argument of type 'OpenSim.Framework.IClientAPI' could be found (are you 
+missing a using directive or an assembly reference?) 
+\opensim-0.7.4-source\addon-modules\OMEconomy\OMEconomy.OMBase\OMBase.cs 
+271    45    OMEconomy.OMBase
+
+
+
+David
+
+
+On 10/3/2012 8:09 AM, Melanie wrote:
+&gt;<i> Your DLL doesn't match your OpenSim version. You will need to
+</I>&gt;<i> compile VirWox from source. In this case, late bound method
+</I>&gt;<i> references could not be resolved and the call to the VirWox function
+</I>&gt;<i> failed.
+</I>&gt;<i>
+</I>&gt;<i> Melanie
+</I>&gt;<i>
+</I>&gt;<i> On 03/10/2012 13:20, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dogwomble at exemail.com.au</A> wrote:
+</I>&gt;&gt;<i> Hi guys,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I know this is venturing into somewhat unsupported territory but I thought
+</I>&gt;&gt;<i> I'd ask anyways.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> At the moment, I'm experimenting with OpenSim 0.7.4 and want to try and
+</I>&gt;&gt;<i> get VirWox working.  This is currently set up on a Windows 2003 Server box
+</I>&gt;&gt;<i> in grid mode.  I've _almost_ got it working but I'm not quite there - I'm
+</I>&gt;&gt;<i> sure I've missed something obvious but I can't quite work out what.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As per the VirWox instructions
+</I>&gt;&gt;<i> (<A HREF="https://www.virwox.com:419/OSMoneyGateway/4.0.3/Public/index.php/OMHelp">https://www.virwox.com:419/OSMoneyGateway/4.0.3/Public/index.php/OMHelp</A>)
+</I>&gt;&gt;<i> I have added the appropriate DLL files (I used the binary versions for
+</I>&gt;&gt;<i> convenience).  I have placed the following into all my OpenSim.ini files:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [OpenMetaverseEconomy]
+</I>&gt;&gt;<i>    OMEconomyInitialize =
+</I>&gt;&gt;<i> &quot;<A HREF="https://www.virwox.com:419/OSMoneyGateway/init.php">https://www.virwox.com:419/OSMoneyGateway/init.php</A>&quot;
+</I>&gt;&gt;<i>    GridShortName =          &quot;TestingOnly&quot;
+</I>&gt;&gt;<i>    OMBaseEnvironment =      &quot;TEST&quot;
+</I>&gt;&gt;<i>    OMCurrencyEnvironment =  &quot;TEST&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The following shows in the logs, which seems to indicate that it is
+</I>&gt;&gt;<i> loading correctly.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-10-02 22:00:47,280 DEBUG - OMEconomy.OMBase.CommunicationHelpers
+</I>&gt;&gt;<i> [OMECONOMY] Request:
+</I>&gt;&gt;<i> <A HREF="https://www.virwox.com:419/OSMoneyGateway/TEST/4.0.3/API/Simulator.php?method=initializeRegion&amp;regionIP=http://192.168.1.67:9004/&amp;regionName=Newton&amp;regionUUID=591ee37b-2e00-4278-aae2-6db86937bc5b&amp;simulatorVersion=OpenSim">https://www.virwox.com:419/OSMoneyGateway/TEST/4.0.3/API/Simulator.php?method=initializeRegion&amp;regionIP=http://192.168.1.67:9004/&amp;regionName=Newton&amp;regionUUID=591ee37b-2e00-4278-aae2-6db86937bc5b&amp;simulatorVersion=OpenSim</A>
+</I>&gt;&gt;<i> 0.7.4 Release
+</I>&gt;&gt;<i> &amp;moduleVersion=4.0.5&amp;gridShortName=TestingOnly&amp;gridURL=<A HREF="http://192.168.1.67:8003">http://192.168.1.67:8003</A>
+</I>&gt;&gt;<i> 2012-10-02 22:00:47,998 DEBUG - OMEconomy.OMBase.CommunicationHelpers
+</I>&gt;&gt;<i> [OMECONOMY] Response: {&quot;success&quot;:&quot;true&quot;,&quot;regionSecret&quot;:&quot;removed&quot;}
+</I>&gt;&gt;<i> 2012-10-02 22:00:48,014 INFO  - OMEconomy.OMBase.OMBaseModule [OMBASE]:
+</I>&gt;&gt;<i> The Service is Available
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The terminal has been successfully brought in and a test account created
+</I>&gt;&gt;<i> and verified - so all good so far.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However, whenever I try and &quot;Pay&quot; an object or avatar, I start getting
+</I>&gt;&gt;<i> problems.  Because I have $OS0, it wants me to purcahse some currency -
+</I>&gt;&gt;<i> which is expected.  However, at the stage of it &quot;Getting data&quot;, I receive
+</I>&gt;&gt;<i> the error: &quot;Despite our best efforts, something unexpected has gone
+</I>&gt;&gt;<i> wrong&quot;.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have added the appropriate Helper URI to my client settings, as well as
+</I>&gt;&gt;<i> place the Helper files as part of my web server.  My Apache log seems to
+</I>&gt;&gt;<i> indicate they are being loaded successfully:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 192.168.1.66 - - [03/Oct/2012:21:15:03 +1000] &quot;POST
+</I>&gt;&gt;<i> /grid/helper/currency.php HTTP/1.1&quot; 200 122
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The only odd thing I'm noticing is this in my OpenSim.log:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-10-02 22:06:23,014 ERROR -
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Scenes.EventManager [EVENT MANAGER]: Delegate for
+</I>&gt;&gt;<i> TriggerOnMakeRootAgent failed - continuing.  Method not found:
+</I>&gt;&gt;<i> 'System.Net.EndPoint OpenSim.Framework.IClientAPI.GetClientEP()'.    at
+</I>&gt;&gt;<i> OMEconomy.OMBase.OMBaseModule.AddAvatar(ScenePresence avatar)
+</I>&gt;&gt;<i>     at
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Scenes.EventManager.TriggerOnMakeRootAgent(ScenePresence
+</I>&gt;&gt;<i> presence)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This seems to correlate with me loggin in, and I can't for the life of me
+</I>&gt;&gt;<i> work out what's happening here, even with the help of Google.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm sure I'm missing something obvious and it's staring me in the face - I
+</I>&gt;&gt;<i> just can't see it so any help (and I know I'm verging on tl;dr) would be
+</I>&gt;&gt;<i> appreciated!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011010.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+	<LI>Next message: <A HREF="011032.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11031">[ date ]</a>
+              <a href="thread.html#11031">[ thread ]</a>
+              <a href="subject.html#11031">[ subject ]</a>
+              <a href="author.html#11031">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

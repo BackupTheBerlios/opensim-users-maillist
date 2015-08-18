@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Odd problem with cross server's
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Odd%20problem%20with%20cross%20server%27s&In-Reply-To=%3C704c3e201002161628i595a5124t9a3b99c07913e9c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003850.html">
+   <LINK REL="Next"  HREF="003852.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Odd problem with cross server's</H1>
+    <B>John Mieske</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Odd%20problem%20with%20cross%20server%27s&In-Reply-To=%3C704c3e201002161628i595a5124t9a3b99c07913e9c%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Odd problem with cross server's">johnmieske at gmail.com
+       </A><BR>
+    <I>Wed Feb 17 01:28:06 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003850.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+        <LI>Next message: <A HREF="003852.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3851">[ date ]</a>
+              <a href="thread.html#3851">[ thread ]</a>
+              <a href="subject.html#3851">[ subject ]</a>
+              <a href="author.html#3851">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I ran into this with a Grid that didn't have the proper OpenSim ini
+configured with the XMLRPC.PHP file. The database stores the info your
+talking about. The XMLRPC Module may not be firing correctly on the other
+regions. The problem we had was to double check the bottom of the ini files
+to make sure the xmlrpc modules are uncommented and then to make sure that
+the path in the messaging section is correctly set to point to the
+offline.php file. All of this uses the Database.
+
+Remember, ALL the regions who use the ini needs to point to the MAIN
+Region's Server. HyperGrid technology can cause an issue as well.
+
+Also inside the config.php file for the Groups has one item that if
+commented out will keep everyone out that is not going through your domain :
+// Specify the following to hard-code / lockdown the User Service used to
+authenticate
+// user sessions.  Example: <A HREF="http://osgrid.org:8002">http://osgrid.org:8002</A>
+// Note:  This causes the User Service specified with requests to be
+ignored, and
+// prevents the service from being used cross-grid or by hypergridded users.
+$overrideAgentUserService = '<A HREF="http://yourserver:8002">http://yourserver:8002</A>';
+
+
+Make sure all who have tied in a region has used the SAME exact server and
+PHP. If you host it, then they need to USE yours. The only thing that you do
+not share is your MySQL Assets. But all other settings go through the main
+Region Grid Server. ( OpenSim.xxx.exe or whatever )
+
+I repeat, what your INI files have for all settings the others have as well
+ACCEPT the Database Strings. Each region should have their own MySQL setup.
+Hope this helps.
+
+John
+
+On Tue, Feb 16, 2010 at 7:13 PM, Master_Mirage &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mirage123 at verizon.net</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> I have had no luck trying to figuer this one out.
+</I>&gt;<i> I have serveral server that form one Grid. A frontend on another thay all
+</I>&gt;<i> use.
+</I>&gt;<i> What i have been seeing for sometime now is this.
+</I>&gt;<i> Server A (some regions) Server B (more regions) User A logs into server A
+</I>&gt;<i> and send off a message to someone not on atm. Why hes there also say sets
+</I>&gt;<i> some land forsale and makes it searchable (np yet).
+</I>&gt;<i>
+</I>&gt;<i> Now user B logs in to server A and sees the message that was sent and looks
+</I>&gt;<i> in search for the land that was set for sale by user A. (still all good).
+</I>&gt;<i>
+</I>&gt;<i> The problem starts is IF user B dident log into server A but rather server
+</I>&gt;<i> B, there is no message waiting and the search shows nothing about users A
+</I>&gt;<i> land at all. User B tp's to server A from B still no message but can now
+</I>&gt;<i> see
+</I>&gt;<i> the land that was set in search.
+</I>&gt;<i>
+</I>&gt;<i> User A logs on seeing that user B is on. Logs into server A , User B is
+</I>&gt;<i> back
+</I>&gt;<i> on server B thay are friends but User B never gets the popup saying thay
+</I>&gt;<i> are
+</I>&gt;<i> online. ether way.
+</I>&gt;<i>
+</I>&gt;<i> User A relogs but inot server B user B is there. And sees the popup about
+</I>&gt;<i> user A has logged in.
+</I>&gt;<i>
+</I>&gt;<i> I think you get the idea. The thing is that up untill about 2mos ago none
+</I>&gt;<i> of
+</I>&gt;<i> that was a problem no matter what server thay logged into.
+</I>&gt;<i>
+</I>&gt;<i> I am running current stuff Inc the front end addons ect. and other than rev
+</I>&gt;<i> changes to opensimulator no major changes have been made from the time none
+</I>&gt;<i> of it was an issue.
+</I>&gt;<i>
+</I>&gt;<i> Im rather stumped and has defeted our best attemps to fix. Hopefully
+</I>&gt;<i> someone
+</I>&gt;<i> here may have allready worked it out or at least has a good idea whats
+</I>&gt;<i> going
+</I>&gt;<i> on with that.
+</I>&gt;<i>
+</I>&gt;<i> %-|
+</I>&gt;<i> tnx
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context:
+</I>&gt;<i> <A HREF="http://n2.nabble.com/Odd-problem-with-cross-server-s-tp4583453p4583453.html">http://n2.nabble.com/Odd-problem-with-cross-server-s-tp4583453p4583453.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+John Mieske / Winword Exonar
+<A HREF="http://johnmieske.org">http://johnmieske.org</A>
+Space Grid Station
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100216/04a3d8e0/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100216/04a3d8e0/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003850.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+	<LI>Next message: <A HREF="003852.html">[Opensim-users] Odd problem with cross server's
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3851">[ date ]</a>
+              <a href="thread.html#3851">[ thread ]</a>
+              <a href="subject.html#3851">[ subject ]</a>
+              <a href="author.html#3851">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Default .ini settings question
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Default%20.ini%20settings%20question&In-Reply-To=%3C4C63270D.4080907%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005161.html">
+   <LINK REL="Next"  HREF="005162.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Default .ini settings question</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Default%20.ini%20settings%20question&In-Reply-To=%3C4C63270D.4080907%40googlemail.com%3E"
+       TITLE="[Opensim-users] Default .ini settings question">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Aug 12 00:41:17 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005161.html">[Opensim-users] Default .ini settings question
+</A></li>
+        <LI>Next message: <A HREF="005162.html">[Opensim-users] 0.7.0.1 release now available
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5207">[ date ]</a>
+              <a href="thread.html#5207">[ thread ]</a>
+              <a href="subject.html#5207">[ subject ]</a>
+              <a href="author.html#5207">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 09/08/10 22:47, Mark Dubin wrote:
+&gt;<i> There are numerous default settings in OpenSim.ini that are possibly
+</I>&gt;<i> related to client performance lag. I cannot (at least readily) find
+</I>&gt;<i> explanations of how these defaults affect performance if they are
+</I>&gt;<i> increased or decreased or changed. I would like to know, thus this posting.
+</I>&gt;<i>
+</I>&gt;<i> Here are normally used ones I think are relevant to my question, and
+</I>&gt;<i> their defaults. If you know the impact of changing any of them, please
+</I>&gt;<i> post to this list, or off-line to me by e-mail. I will collate the
+</I>&gt;<i> answers and add them to the Wiki in an appropriate manner, perhaps as a
+</I>&gt;<i> separate linked page.
+</I>&gt;<i>
+</I>&gt;<i> I apologize in advance to those who think the answers are self-evident
+</I>&gt;<i> :D Thanks, Mark
+</I>
+I know a few of these, though unfortunately not all off the top of my head.
+
+&gt;<i>
+</I>&gt;<i> ----------
+</I>&gt;<i> ; Max threads to allocate on the FireAndForget thread pool when running
+</I>&gt;<i> with the SmartThreadPool option above
+</I>&gt;<i> MaxPoolThreads = 15
+</I>&gt;<i>
+</I>&gt;<i> ; Objects will be considered for persistance in the next sweep when they
+</I>&gt;<i> have not changed for this number of seconds
+</I>&gt;<i> MinimumTimeBeforePersistenceConsidered = 60
+</I>
+Amount of time before a new or changed scene object can be persisted to the database.  On this setting, if one moves a 
+prim then the details will not be updated until at least 60 seconds have passed.
+
+&gt;<i>
+</I>&gt;<i> ; Objects will always be considered for persistance in the next sweep if
+</I>&gt;<i> the first change occurred this number of seconds ago
+</I>&gt;<i> MaximumTimeBeforePersistenceConsidered = 600
+</I>
+Amount of time after which a scene object will always be persisted.  For instance, suppose that an object has a script 
+that changes it every 45 seconds.  If we only had the MinimumTimeBeforePersistenceConsidered setting above, then the 
+object would never be updated in the database since it never reaches 60 seconds without changing.
+
+However, with the setting of 600 here, that scene object will always be made to persist after 600 seconds have passed.
+
+&gt;<i>
+</I>&gt;<i> ; Maximum number of llListen events we allow per script. Set this to 0
+</I>&gt;<i> to have no limit imposed.
+</I>&gt;<i> max_listens_per_script = 64
+</I>&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; How many threads to start at maximum load
+</I>&gt;<i> MaxThreads = 100
+</I>&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; Time a thread must be idle (in seconds) before it dies
+</I>&gt;<i> IdleTimeout = 60
+</I>&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; Thread priority (&quot;Lowest&quot;, &quot;BelowNormal&quot;, &quot;Normal&quot;, &quot;AboveNormal&quot;,
+</I>&gt;<i> &quot;Highest&quot;)
+</I>&gt;<i> Priority = &quot;BelowNormal&quot;
+</I>
+This refers to thread priority in the VM.  Afaik, this is not yet implemented in Mono (would love to know if I'm wrong). 
+  Higher priorities would theoretically give script threads some precendence over other OpenSim thrads.
+
+&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; Maximum number of events to queue for a script (excluding timers)
+</I>&gt;<i> MaxScriptEventQueue = 300
+</I>
+This refers to LSL events.  The higher this number, the more that can stack up waiting to be dealt with.
+
+&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; Stack size per thread created
+</I>&gt;<i> ThreadStackSize = 262144
+</I>&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; Interval (s) between background save of script states
+</I>&gt;<i> SaveInterval = 120
+</I>
+Script state is all the variables in an LSL script.  I presume that on a setting of 120 this will be persisted every 2 
+minutes.  If your sim crashes the script would revert to the previously persisted state.
+
+&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; Interval (s) between maintenance runs (0 = disable)
+</I>&gt;<i> MaintenanceInterval = 10
+</I>&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; Time a script can spend in an event handler before it is interrupted
+</I>&gt;<i> EventLimit = 30
+</I>&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; If a script overruns it's event limit, kill the script?
+</I>&gt;<i> KillTimedOutScripts = false
+</I>&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ; Sets the multiplier for the scripting delays
+</I>&gt;<i> ScriptDelayFactor = 1.0
+</I>
+This refers to the delays built into each script command to stop a region being overloaded.  If 1.0, then the normal 
+Linden Lab delays are used (see LSL wiki and such for details).  If 0.0, then there are no delays.
+
+&gt;<i>
+</I>&gt;<i> [InterestManagement]
+</I>&gt;<i> ; This section controls how state updates are prioritized for each client
+</I>&gt;<i> ; Valid values are Time, Distance, SimpleAngularDistance, and FrontBack
+</I>&gt;<i> UpdatePrioritizationScheme = FrontBack
+</I>&gt;<i> ReprioritizationEnabled = true
+</I>&gt;<i> ReprioritizationInterval = 2000.0
+</I>&gt;<i> RootReprioritizationDistance = 10.0
+</I>&gt;<i> ChildReprioritizationDistance = 20.0
+</I>
+This affects how prim information is sent to the viewer.  I believe Time prioritizes them by when the server requests 
+the update is sent.  Distance by how close they are to the viewer.  SimpleAngularDistance is currently identical to 
+Distance.  FrontBack increases priorities for objects in front and decreases it for those behind.
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005161.html">[Opensim-users] Default .ini settings question
+</A></li>
+	<LI>Next message: <A HREF="005162.html">[Opensim-users] 0.7.0.1 release now available
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5207">[ date ]</a>
+              <a href="thread.html#5207">[ thread ]</a>
+              <a href="subject.html#5207">[ subject ]</a>
+              <a href="author.html#5207">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

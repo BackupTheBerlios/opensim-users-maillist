@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Phoenix Viewer hangs at &quot;Waiting for Region	handshake&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Phoenix%20Viewer%20hangs%20at%20%22Waiting%20for%20Region%0A%09handshake%22&In-Reply-To=%3CCALGOjbmxfL8yxqXqgyV9w3NZp5aY8FfWBYMbu7ZrfL3kkuUDnw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009000.html">
+   <LINK REL="Next"  HREF="009137.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Phoenix Viewer hangs at &quot;Waiting for Region	handshake&quot;</H1>
+    <B>Chris Collins</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Phoenix%20Viewer%20hangs%20at%20%22Waiting%20for%20Region%0A%09handshake%22&In-Reply-To=%3CCALGOjbmxfL8yxqXqgyV9w3NZp5aY8FfWBYMbu7ZrfL3kkuUDnw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Phoenix Viewer hangs at &quot;Waiting for Region	handshake&quot;">chris at tipodean.com
+       </A><BR>
+    <I>Sun Jan  8 21:09:24 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009000.html">[Opensim-users] Phoenix Viewer hangs at &quot;Waiting for Region	handshake&quot;
+</A></li>
+        <LI>Next message: <A HREF="009137.html">[Opensim-users] Phoenix Viewer hangs at &quot;Waiting for Region	handshake&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9001">[ date ]</a>
+              <a href="thread.html#9001">[ thread ]</a>
+              <a href="subject.html#9001">[ subject ]</a>
+              <a href="author.html#9001">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In the region.ini &quot;InternalAddress = &quot;0.0.0.0&quot;&quot; you need to set that to the
+internal IP that you get with the EC2 instance. run the command 'ifconfig'
+to get that machines internal IP. They usually start with 10. . On EC2 if
+you do not do that it will just sit there with Region Handshake. Also I
+generally allocate an external IP on AWS and use that for the external IP.
+ONE other thing to watch is that if you stop and start your EC2 machine you
+will be allocated another internal IP address.
+
+On Sun, Jan 8, 2012 at 11:14 AM, Kenneth &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">stretchgargan at gmail.com</A>&gt; wrote:
+
+&gt;<i> On 08/01/2012 19:12, Vanish wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> You need to set the correct URI for the loginservice, assetservice, etc.
+</I>&gt;&gt;<i> in OpenSim.ini. Currently it's still set to localhost (127.0.0.1)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Hi,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've installed OpenSim version 0.7.2 on an Amazon EC2 instance (Linux
+</I>&gt;&gt;&gt;<i> with Mono 2.10.2). The machine has TCP port 9000 open.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Amazon EC2 virtual machines run behind a NAT gateway, so I edit the
+</I>&gt;&gt;&gt;<i> Regions.ini file as follows:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  [Main Island]
+</I>&gt;&gt;&gt;&gt;<i> RegionUUID = 7d69b9dc-0cda-47f5-8f84-**df925c96b3ee
+</I>&gt;&gt;&gt;&gt;<i> Location = &quot;1000,1000&quot;
+</I>&gt;&gt;&gt;&gt;<i> InternalAddress = &quot;0.0.0.0&quot;
+</I>&gt;&gt;&gt;&gt;<i> InternalPort = 9000
+</I>&gt;&gt;&gt;&gt;<i> AllowAlternatePorts = False
+</I>&gt;&gt;&gt;&gt;<i> ExternalHostName = &quot;ec2-46-51-xxx-xxx.eu-west-1.**compute.amazonaws.com&lt;<A HREF="http://ec2-46-51-xxx-xxx.eu-west-1.compute.amazonaws.com">http://ec2-46-51-xxx-xxx.eu-west-1.compute.amazonaws.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> &quot;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> (External hostname changed for privacy).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I then launch it using:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  cd /opt/OpenSim/current/bin/
+</I>&gt;&gt;&gt;&gt;<i> mono --debug OpenSim.exe
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The server starts up, and I can begin to login from an external IP using
+</I>&gt;&gt;&gt;<i> Phoenix Viewer 1.6.0.1600
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> However, the login never completes. It hangs at &quot;Waiting for Region
+</I>&gt;&gt;&gt;<i> handshake&quot;.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The output in the OpenSim console is:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  18:37:31 - [LLOGIN SERVICE]: Login request for Stretch Resident at last
+</I>&gt;&gt;&gt;&gt;<i> using viewer Phoenix Viewer Release Mesh 1.6.0.1600, channel Phoenix Viewer
+</I>&gt;&gt;&gt;&gt;<i> Release Mesh, IP aa.bb.cc.dd, (ie my client's IP) Mac
+</I>&gt;&gt;&gt;&gt;<i> d8301f01b2628de041aaf7f8725184**f4, Id0 8d97035b4b25cd9c199076d79989b3*
+</I>&gt;&gt;&gt;&gt;<i> *ca
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [PRESENCE SERVICE]: LoginAgent 8d4bbba1-198b-4c9e-a1d0-**c2854db8401a
+</I>&gt;&gt;&gt;&gt;<i> with session d9eac461-ac31-4f6a-9c7b-**8bb92e2c0608 and ssession
+</I>&gt;&gt;&gt;&gt;<i> 62c09669-55b0-42c7-bd10-**b860b69d342d
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [GRID USER SERVICE]: User 8d4bbba1-198b-4c9e-a1d0-**c2854db8401a
+</I>&gt;&gt;&gt;&gt;<i> is online
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLOGIN SERVICE]: FindDestination for start location last
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [GRID SERVICE]: GetDefaultRegions returning 0 regions
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLOGIN SERVICE]: Last Region Not Found Attempting to find
+</I>&gt;&gt;&gt;&gt;<i> random region
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [GRID SERVICE]: Fallback returned 0 regions
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [GRID SERVICE]: Hyperlinks returned 0 regions
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLLOGIN SERVICE]: found new key HomeURI
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://127.0.0.1:9000/">http://127.0.0.1:9000/</A>
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLLOGIN SERVICE]: found new key InventoryServerURI
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://127.0.0.1:9000/">http://127.0.0.1:9000/</A>
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLLOGIN SERVICE]: found new key AssetServerURI
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://127.0.0.1:9000/">http://127.0.0.1:9000/</A>
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLLOGIN SERVICE]: found new key ProfileServerURI
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://127.0.0.1:9000/">http://127.0.0.1:9000/</A>
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLLOGIN SERVICE]: found new key FriendsServerURI
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://127.0.0.1:9000/">http://127.0.0.1:9000/</A>
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLLOGIN SERVICE]: found new key IMServerURI
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://127.0.0.1:9000/">http://127.0.0.1:9000/</A>
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LOCAL SIMULATION CONNECTOR]: Found region Main Island to
+</I>&gt;&gt;&gt;&gt;<i> send SendCreateChildAgent
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [CONNECTION BEGIN]: Region Main Island told of incoming root
+</I>&gt;&gt;&gt;&gt;<i> agent Stretch Resident 8d4bbba1-198b-4c9e-a1d0-**c2854db8401a (circuit
+</I>&gt;&gt;&gt;&gt;<i> code 200990915, teleportflags 128)
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [CONNECTION BEGIN]: Region Main Island authenticated and
+</I>&gt;&gt;&gt;&gt;<i> authorized incoming root agent Stretch Resident 8d4bbba1-198b-4c9e-a1d0-
+</I>&gt;&gt;&gt;&gt;<i> **c2854db8401a (circuit code 200990915)
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [CAPS]: Registered seed capability
+</I>&gt;&gt;&gt;&gt;<i> /CAPS/390ce6a7-e446-4fbc-b365-**faf80f496b650000/ for
+</I>&gt;&gt;&gt;&gt;<i> 8d4bbba1-198b-4c9e-a1d0-**c2854db8401a
+</I>&gt;&gt;&gt;&gt;<i> 18:37:31 - [LLOGIN SERVICE]: All clear. Sending login response to
+</I>&gt;&gt;&gt;&gt;<i> client.
+</I>&gt;&gt;&gt;&gt;<i> 18:37:32 - [SCENE]: Incoming client Stretch Resident in region Main
+</I>&gt;&gt;&gt;&gt;<i> Island via regular login. Client IP verification not performed.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> That's all I get. Eventually the Phoenix viewer says: &quot;We're having
+</I>&gt;&gt;&gt;<i> trouble connecting. There may be a problem with your internet connection or
+</I>&gt;&gt;&gt;<i> the Second Life servers.&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Running a tcpdump on the client shows it sending, at the end:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  POST /CAPS/EQG/e0c5a989-69b3-4baa-**82ec-efa2248471e2/ HTTP/1.1
+</I>&gt;&gt;&gt;&gt;<i> Host: ec2-46-51-xx-xx.eu-west-1.**compute.amazonaws.com:9000&lt;<A HREF="http://ec2-46-51-xx-xx.eu-west-1.compute.amazonaws.com:9000">http://ec2-46-51-xx-xx.eu-west-1.compute.amazonaws.com:9000</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> Accept: */*
+</I>&gt;&gt;&gt;&gt;<i> Accept-Encoding: deflate, gzip
+</I>&gt;&gt;&gt;&gt;<i> X-SecondLife-UDP-Listen-Port: 60426
+</I>&gt;&gt;&gt;&gt;<i> Content-Type: application/llsd+xml
+</I>&gt;&gt;&gt;&gt;<i> Content-Length: 83
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> &lt;llsd&gt;&lt;map&gt;&lt;key&gt;ack&lt;/key&gt;&lt;**undef /&gt;&lt;key&gt;done&lt;/key&gt;&lt;boolean&gt;0&lt;/**
+</I>&gt;&gt;&gt;&gt;<i> boolean&gt;&lt;/map&gt;&lt;/llsd&gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> And the server responding:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  HTTP/1.0 502 Upstream error:
+</I>&gt;&gt;&gt;&gt;<i> Content-Type: text/plain
+</I>&gt;&gt;&gt;&gt;<i> Date: Sun, 08 Jan 2012 18:47:04 GMT
+</I>&gt;&gt;&gt;&gt;<i> Content-Length: 16
+</I>&gt;&gt;&gt;&gt;<i> Server: Tiny WebServer
+</I>&gt;&gt;&gt;&gt;<i> Connection: close
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Upstream error:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Any ideas what's going wrong?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks in advance,
+</I>&gt;&gt;&gt;<i> Kenneth.
+</I>&gt;&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Thanks very much for the quick reply!
+</I>&gt;<i> I'll try that soon!
+</I>&gt;<i>
+</I>&gt;<i> -Kenneth
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>
+
+
+-- 
+-- 
+Chris Collins
+CEO
+Tipodean Technologies
++1 415-515-6928 | <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris at tipodean.com</A>
+Skype: cozza13 | SL: Chris Collins
+Website: www.tipodean.com
+Twitter: <A HREF="http://www.twitter.com/tipodean">http://www.twitter.com/tipodean</A>
+<A HREF="http://www.linkedin.com/in/collinschris">http://www.linkedin.com/in/collinschris</A>
+<A HREF="http://www.builtbuy.me">http://www.builtbuy.me</A>
+Tools for your distributed workforce
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120108/f4cb753c/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120108/f4cb753c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009000.html">[Opensim-users] Phoenix Viewer hangs at &quot;Waiting for Region	handshake&quot;
+</A></li>
+	<LI>Next message: <A HREF="009137.html">[Opensim-users] Phoenix Viewer hangs at &quot;Waiting for Region	handshake&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9001">[ date ]</a>
+              <a href="thread.html#9001">[ thread ]</a>
+              <a href="subject.html#9001">[ subject ]</a>
+              <a href="author.html#9001">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

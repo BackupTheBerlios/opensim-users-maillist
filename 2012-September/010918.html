@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Bypassing the 10 m rezzing limit for llRezObject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Bypassing%20the%2010%20m%20rezzing%20limit%20for%20llRezObject&In-Reply-To=%3CCAHi41xJzt4%2BWMwLObY-iTYoh2%3DdajH2nyecT65gBkHtT2heLpQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010917.html">
+   <LINK REL="Next"  HREF="010919.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Bypassing the 10 m rezzing limit for llRezObject</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Bypassing%20the%2010%20m%20rezzing%20limit%20for%20llRezObject&In-Reply-To=%3CCAHi41xJzt4%2BWMwLObY-iTYoh2%3DdajH2nyecT65gBkHtT2heLpQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Bypassing the 10 m rezzing limit for llRezObject">r.ramloll at gmail.com
+       </A><BR>
+    <I>Sat Sep 15 03:25:18 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010917.html">[Opensim-users] Bypassing the 10 m rezzing limit for llRezObject
+</A></li>
+        <LI>Next message: <A HREF="010919.html">[Opensim-users] Bypassing the 10 m rezzing limit for llRezObject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10918">[ date ]</a>
+              <a href="thread.html#10918">[ thread ]</a>
+              <a href="subject.html#10918">[ subject ]</a>
+              <a href="author.html#10918">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well said Edmund, you said what I was expecting to happen.
+' so it ended
+up being easier just to rez them where we were and tell them to move
+to where we wanted them. '
+
+and
+' , it doesn't
+always seem to be in a position to listen for and handle messages. I
+think the issue is that it takes a bit of time after an object rezzes
+for it to start running its scripts and start listening for messages. '
+
+So unfortunately, I will have to do dirty coding again to make it happen.
+Unless there is a compelling reason,
+does implementing an opensim function RezObjectAtRegionCoordinates() going
+to lead to problems?
+I understand that 10 m limit might have been implemented to avoid griefing
+initially,
+for the same reason that llSetRegionPos is being implemented ... I think
+there is a need for something similar for Rezzing.
+
+How else could we do 'parametric building' and procedural based building
+sim wide? This is quite important I think.
+There are lots of viz applications that would require the 10 m rez limit to
+be bypassed.
+
+If dirty coding in LSL ... (also implying waste of tons of computing
+resources ...listening to this and that message etc...) could allow it, I
+think there is a need for a sim wide rez function.
+
+Hope the opensim gods will answer my prayers.
+
+On Fri, Sep 14, 2012 at 9:04 PM, Edmund Edgar &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ed at avatarclassroom.com</A>&gt;wrote:
+
+&gt;<i> On 15 September 2012 08:16, Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Thanks for the reply Daniel, I am trying to rez region wide ... objects.
+</I>&gt;<i> how
+</I>&gt;<i> &gt; would this relay object work?
+</I>&gt;<i>
+</I>&gt;<i> I made a rezzer for sloodle once like this although we ended up not
+</I>&gt;<i> using it. The objects were rezzed by a little UFO thingy (I called it
+</I>&gt;<i> the &quot;mothership&quot;) that would move to where you wanted to rez the
+</I>&gt;<i> object and rez it there, then move back. There are a few ways to do
+</I>&gt;<i> this:
+</I>&gt;<i> a) The user controls the mothership directly - it flies to where it
+</I>&gt;<i> should rez things, then flies back.
+</I>&gt;<i> b) The user interacts with a stationary controller object which sends
+</I>&gt;<i> instructions to the mothership.
+</I>&gt;<i> c) Every time you want to rez something, the stationary controller
+</I>&gt;<i> object rezzes a mothership and tells it where to go and what to rez,
+</I>&gt;<i> and the mothership flies off, rezzes that object and derezzes itself
+</I>&gt;<i> when it's done.
+</I>&gt;<i>
+</I>&gt;<i> The advantage of this approach is that you don't have to put a script
+</I>&gt;<i> in the object you want to rez. But since there's no
+</I>&gt;<i> llDeRezOtherObject(), we ended up needing to put a script in the
+</I>&gt;<i> objects in any case for when we wanted to get rid of them, so it ended
+</I>&gt;<i> up being easier just to rez them where we were and tell them to move
+</I>&gt;<i> to where we wanted them.
+</I>&gt;<i>
+</I>&gt;<i> BTW, one thing to watch out for if you end up telling objects where to
+</I>&gt;<i> move to - at least in SL, probably OpenSim too - is that right after
+</I>&gt;<i> you rez an object (ie when the object_rez event fires), it doesn't
+</I>&gt;<i> always seem to be in a position to listen for and handle messages. I
+</I>&gt;<i> think the issue is that it takes a bit of time after an object rezzes
+</I>&gt;<i> for it to start running its scripts and start listening for messages.
+</I>&gt;<i> So if you need this to work reliably, you probably need some logic to
+</I>&gt;<i> make the rezzer resend the message if the rezzed object hasn't got it
+</I>&gt;<i> yet. (It may be enough just make your rezzer llSleep() for a bit after
+</I>&gt;<i> object_rez fires and hope for the best...)
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Edmund Edgar
+</I>&gt;<i> Avatar Classroom
+</I>&gt;<i> Your classroom, on the web, in a virtual world.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ed at avatarclassroom.com</A>
+</I>&gt;<i> +81 090 3912 3380
+</I>&gt;<i> Skype: edmundedgar
+</I>&gt;<i> Second Life: Edmund Earp
+</I>&gt;<i> Linked In: edmundedgar
+</I>&gt;<i> Twitter: @edmundedgar
+</I>&gt;<i> <A HREF="http://www.avatarclassroom.com">http://www.avatarclassroom.com</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+*Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+208-240-0040
+Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;,
+LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+, DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+
+profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120914/6ce5135e/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120914/6ce5135e/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010917.html">[Opensim-users] Bypassing the 10 m rezzing limit for llRezObject
+</A></li>
+	<LI>Next message: <A HREF="010919.html">[Opensim-users] Bypassing the 10 m rezzing limit for llRezObject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10918">[ date ]</a>
+              <a href="thread.html#10918">[ thread ]</a>
+              <a href="subject.html#10918">[ subject ]</a>
+              <a href="author.html#10918">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

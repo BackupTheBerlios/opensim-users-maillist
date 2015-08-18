@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Streatching Opensim to far?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Streatching%20Opensim%20to%20far%3F&In-Reply-To=%3CCAG6z%2BU4wZUne%2BG3oP2bL3Dt2nAt7hqNUrLQ3JCrynCExKWmn3Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010389.html">
+   <LINK REL="Next"  HREF="010391.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Streatching Opensim to far?</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Streatching%20Opensim%20to%20far%3F&In-Reply-To=%3CCAG6z%2BU4wZUne%2BG3oP2bL3Dt2nAt7hqNUrLQ3JCrynCExKWmn3Q%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Streatching Opensim to far?">fleep513 at gmail.com
+       </A><BR>
+    <I>Wed May 23 14:10:08 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010389.html">[Opensim-users] Streatching Opensim to far?
+</A></li>
+        <LI>Next message: <A HREF="010391.html">[Opensim-users] Streatching Opensim to far?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10390">[ date ]</a>
+              <a href="thread.html#10390">[ thread ]</a>
+              <a href="subject.html#10390">[ subject ]</a>
+              <a href="author.html#10390">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>We ran into memory issues when we had 32 regions on a single simulator and
+shortly thereafter switched to ~ 4 regions per opensim process
+architecture.  The overall memory allocation went up, but the performance
+improved considerably.  Have you tried portioning things out across
+multiple opensim processes?
+
+- Chris/Fleep
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Wed, May 23, 2012 at 3:54 AM, InuYasha Meiji &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt;wrote:
+
+&gt;<i> Not that is will make a difference, but I run 56 not 64.  I rebooted my
+</I>&gt;<i> system and checked stats.  The memory used started at 1205 and over night
+</I>&gt;<i> without any use that I know of, it rose up to 5349 MB.  I would be saving
+</I>&gt;<i> cost of installation, with my knowledge and my wife's good sight, I can do
+</I>&gt;<i> the install myself.  Getting all the parts for the upgrade to a AM3+ 8 core
+</I>&gt;<i> bulldozer on a FX990 MSI mobo and 32 gig of crucial DDR3, for under $600
+</I>&gt;<i> would be worth it for opensim or not?
+</I>&gt;<i>
+</I>&gt;<i> It will take me sacrifice and lots of effort.  I didn't want to go through
+</I>&gt;<i> all that and find out even that won't run my 56 regions well.  I thought I
+</I>&gt;<i> might have set something wrong.  I double checked last night to be sure I
+</I>&gt;<i> used MySQL for cashing regions and not the default memory setting.  I did
+</I>&gt;<i> it right, so it wasn't that.  Anyone know of any memory leaks in the ODE or
+</I>&gt;<i> something else to do with version 7.3.1?
+</I>&gt;<i>
+</I>&gt;<i> InuYasha.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 5/22/2012 11:37 PM, Justin Clark-Casey wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I'm very surprised at the big difference between actual heap allocation
+</I>&gt;&gt;<i> (883 mb) and actual process allocation (6193mb).  You might want to monitor
+</I>&gt;&gt;<i> memory usage over time - it might be that some kind of peak in heap has put
+</I>&gt;&gt;<i> the process memory up to a permanently higher level.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Unfortunately, memory usage on OpenSimulator will go up and down quite a
+</I>&gt;&gt;<i> bit as many objects are allocated before the GC kicks in.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That said, 64 regions on a single simulator is definitely a stretch, I
+</I>&gt;&gt;<i> think.  You might want to check what the difference is between your empty
+</I>&gt;&gt;<i> sims and the one with data.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I believe there is scope for better memory efficiency in OpenSimulator
+</I>&gt;&gt;<i> but it might be difficult to make really huge savings.  Unlike a
+</I>&gt;&gt;<i> web-server, OpenSimulator (and many other VE systems) has to keep data
+</I>&gt;&gt;<i> permanently in memory for speed of response.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 22/05/12 15:57, InuYasha Meiji wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I was working on building content for my grid when I got a warning from
+</I>&gt;&gt;&gt;<i> windows during using an external application. I
+</I>&gt;&gt;&gt;<i> typed &quot;Show stats&quot; in the console to find this.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> CONNECTION STATISTICS
+</I>&gt;&gt;&gt;<i> Abnormal client thread terminations: 0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> FRAME STATISTICS
+</I>&gt;&gt;&gt;<i> Dilatn SimFPS PhyFPS AgntUp RootAg ChldAg Prims AtvPrm AtvScr ScrLPS
+</I>&gt;&gt;&gt;<i> 1.00 50 51.7 0.0 0 0 60 0 4 0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> PktsIn PktOut PendDl PendUl UnackB TotlFt NetFt PhysFt OthrFt AgntFt
+</I>&gt;&gt;&gt;<i> ImgsFt
+</I>&gt;&gt;&gt;<i> 0 0 0 0 0 0.0 0.0 0.0 0.0 0.0 0.0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> MEMORY STATISTICS
+</I>&gt;&gt;&gt;<i> Allocated to OpenSim objects: 883 MB
+</I>&gt;&gt;&gt;<i> Process memory : 6193 MB
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Region (root) #
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Now I have a lot more I want to add to my grid. I currently run all that
+</I>&gt;&gt;&gt;<i> you see in my tag lines.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Opensim User: Standalone Grid on Version 0.7.3.1 with 56 Regions
+</I>&gt;&gt;&gt;<i> on Windows 7, 64-bit. Phenom 9500 2.2 ghz Quad Core, Terabyte Hard
+</I>&gt;&gt;&gt;<i> Drive, 8gig DDR2 RAM. Used XAMPP to load PHP Version 5.3.0, Apache
+</I>&gt;&gt;&gt;<i> and MySQL 5.1.41-community edition. Groups, Profiles, Voice and
+</I>&gt;&gt;&gt;<i> Offline Mesages all working. (Not yet Public, 6 users allowed Now).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I only have one sim with much on it, I was planning on making the other
+</I>&gt;&gt;&gt;<i> sims well forested and a couple more villages
+</I>&gt;&gt;&gt;<i> and then Shuri Castle from Okinawa in the middle. The reason for 56
+</I>&gt;&gt;&gt;<i> regions was to make a nice 1.5 mile landscape all
+</I>&gt;&gt;&gt;<i> the way around the castle and surrounding villages.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Am I expecting to much of my system and Opensim to be able to do this on
+</I>&gt;&gt;&gt;<i> one computer. I plan to eventually upgrade to a
+</I>&gt;&gt;&gt;<i> 32 gig DDR3, am3+ bulldozer motherboard. Looking at what little it took
+</I>&gt;&gt;&gt;<i> to fill over 6 gig of ram, I am worried after I
+</I>&gt;&gt;&gt;<i> save up a while and get the upgrade that it won't be enough to do all
+</I>&gt;&gt;&gt;<i> the things I dream of.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Am I over reaching? I thought opensim even in 64bit used some disk
+</I>&gt;&gt;&gt;<i> cashing, and wouldn't use all the available ram? I
+</I>&gt;&gt;&gt;<i> still want to be able to do other things with my machine while running
+</I>&gt;&gt;&gt;<i> my grid. Seems I can't always do that without a
+</I>&gt;&gt;&gt;<i> shutdown a program warning from windows 7.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Info is welcome.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> InuYasha
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> ______________________________**______________________________**____
+</I>&gt;<i>
+</I>&gt;<i> Opensim User: Standalone Grid on Version 0.7.3.1 with 56 Regions
+</I>&gt;<i> on Windows 7, 64-bit. Phenom 9500 2.2 ghz Quad Core, Terabyte Hard
+</I>&gt;<i> Drive, 8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+</I>&gt;<i> and MySQL 5.1.41-community edition.  Groups, Profiles, Voice and
+</I>&gt;<i> Offline Mesages all working. (Not yet Public, 6 users allowed Now).
+</I>&gt;<i> ______________________________**______________________________**____
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120523/6cbe6e59/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120523/6cbe6e59/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010389.html">[Opensim-users] Streatching Opensim to far?
+</A></li>
+	<LI>Next message: <A HREF="010391.html">[Opensim-users] Streatching Opensim to far?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10390">[ date ]</a>
+              <a href="thread.html#10390">[ thread ]</a>
+              <a href="subject.html#10390">[ subject ]</a>
+              <a href="author.html#10390">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

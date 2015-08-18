@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Moving Avatars from Region to Region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Moving%20Avatars%20from%20Region%20to%20Region&In-Reply-To=%3CAANLkTinKd8LJZRTnqAGYRX5KPNZ%3Du%2BkFv%3Dm6%2BouMgr5e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006600.html">
+   <LINK REL="Next"  HREF="006591.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Moving Avatars from Region to Region</H1>
+    <B>Levi Martson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Moving%20Avatars%20from%20Region%20to%20Region&In-Reply-To=%3CAANLkTinKd8LJZRTnqAGYRX5KPNZ%3Du%2BkFv%3Dm6%2BouMgr5e%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Moving Avatars from Region to Region">levi.martson at immersiveeducation.org
+       </A><BR>
+    <I>Tue Feb  8 05:23:15 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006600.html">[Opensim-users] Moving Avatars from Region to Region
+</A></li>
+        <LI>Next message: <A HREF="006591.html">[Opensim-users] Phoenix viewer corrupting MySQL database. Anyone	else?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6601">[ date ]</a>
+              <a href="thread.html#6601">[ thread ]</a>
+              <a href="subject.html#6601">[ subject ]</a>
+              <a href="author.html#6601">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks guys! I will give a shot!
+
+Levi
+
+----------------------------
+Levi Martson
+Immersive Education Initiative: <A HREF="http://ImmersiveEducation.org">http://ImmersiveEducation.org</A>
+Immersive Education Forums: <A HREF="http://ImmersiveEducation.org/forums">http://ImmersiveEducation.org/forums</A>
+
+
+
+On Mon, Feb 7, 2011 at 17:56, Jason Shipley &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">core at aliensignals.com</A>&gt; wrote:
+
+&gt;<i> On 2/7/2011 5:17 PM, Justin Clark-Casey wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> On 07/02/11 21:12, Ken G wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 02/07/2011 01:50 PM, Levi Martson wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I guess this might be more for the opensim-dev list, but I'm trying to
+</I>&gt;&gt;&gt;&gt;<i> move the avatar back on the server side of
+</I>&gt;&gt;&gt;&gt;<i> things, not in the viewer side. I need to move avatars from one instance
+</I>&gt;&gt;&gt;&gt;<i> of opensim to another instance of opensim.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> As far as I know from being a casual opensim user for the last two years,
+</I>&gt;&gt;&gt;<i> and lurking here and on the IRC channels,
+</I>&gt;&gt;&gt;<i> there isn't a specific single process for doing this.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> You would probably need to recreate each avatar as a new user in the
+</I>&gt;&gt;&gt;<i> console first. Then if you need the UUIDs to match,
+</I>&gt;&gt;&gt;<i> do a direct edit of the database. Something I've never had reason to do,
+</I>&gt;&gt;&gt;<i> so if I am wrong well it's open for correction
+</I>&gt;&gt;&gt;<i> here.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> For shape and other appearance items, inventory can be transferred with
+</I>&gt;&gt;&gt;<i> an IAR for each avatar:
+</I>&gt;&gt;&gt;<i> <A HREF="http://opensimulator.org/wiki/Inventory_Archives">http://opensimulator.org/wiki/Inventory_Archives</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Unfortunately, Ken is right - there's currently no good way of doing this
+</I>&gt;&gt;<i> short of recreating the user accounts and transferring their inventories
+</I>&gt;&gt;<i> manually, if that is required.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Possibly one of the webinterfaces might have a solution for this
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/wiki/Webinterface">http://opensimulator.org/wiki/Webinterface</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> though I don't have much direct experience with them myself.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  Both Ken and Justin are correct.  The only reliable way is to manually
+</I>&gt;<i> alter the DB tables.  It's actually not terribly complicated and I've done
+</I>&gt;<i> it may times.  Just create, via console command, a user with the same name
+</I>&gt;<i> in the new OS instance.  With the new bare-bones inventory and attributes
+</I>&gt;<i> now added to the DB you can begin replacing references to the new UUID with
+</I>&gt;<i> whatever the old UUID value was.  I'm not making any assumptions as to your
+</I>&gt;<i> familiarity/comfort level with manually editing DB tables, but if you want a
+</I>&gt;<i> friendly GUI that is more elegant that the standard phpMyAdmin interface,
+</I>&gt;<i> you might want to try MySQLBuddy - <A HREF="http://http://www.sqlbuddy.com.">http://http://www.sqlbuddy.com.</A>  It's
+</I>&gt;<i> all just cutting and pasting from then on.
+</I>&gt;<i>
+</I>&gt;<i> NOTE: Make all of the changes (there really aren't that many) BEFORE you
+</I>&gt;<i> import any previous inventory .iar files.  Once the main identity values are
+</I>&gt;<i> changed, any subsequent imported assets will inherit the new UUID for
+</I>&gt;<i> ownership.  Also, I'm not sure what OpenSim version you're running, but if
+</I>&gt;<i> it's 0.7.x the main tables you need to be concerned with are:
+</I>&gt;<i>
+</I>&gt;<i> auth (UUID field)
+</I>&gt;<i> useraccounts (PrincipleID field)
+</I>&gt;<i> inventoryfolders (agentID field)
+</I>&gt;<i> estate_settings (EstateOwner field)
+</I>&gt;<i>
+</I>&gt;<i> Hope this helps.  Good luck and happy hacking...
+</I>&gt;<i>
+</I>&gt;<i> Jason (.core)
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110207/a3148943/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110207/a3148943/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006600.html">[Opensim-users] Moving Avatars from Region to Region
+</A></li>
+	<LI>Next message: <A HREF="006591.html">[Opensim-users] Phoenix viewer corrupting MySQL database. Anyone	else?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6601">[ date ]</a>
+              <a href="thread.html#6601">[ thread ]</a>
+              <a href="subject.html#6601">[ subject ]</a>
+              <a href="author.html#6601">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

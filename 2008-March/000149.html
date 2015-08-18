@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Got a SIGSEGV error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Got%20a%20SIGSEGV%20error&In-Reply-To=%3C20080311132333.2yib03wuo8wo8c8c%40www.greenemyst.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000148.html">
+   <LINK REL="Next"  HREF="000150.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Got a SIGSEGV error</H1>
+    <B>Joe Greene</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Got%20a%20SIGSEGV%20error&In-Reply-To=%3C20080311132333.2yib03wuo8wo8c8c%40www.greenemyst.com%3E"
+       TITLE="[Opensim-users] Got a SIGSEGV error">jgreene at greenemyst.com
+       </A><BR>
+    <I>Tue Mar 11 18:23:33 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000148.html">[Opensim-users] Got a SIGSEGV error
+</A></li>
+        <LI>Next message: <A HREF="000150.html">[Opensim-users] Got a SIGSEGV error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#149">[ date ]</a>
+              <a href="thread.html#149">[ thread ]</a>
+              <a href="subject.html#149">[ subject ]</a>
+              <a href="author.html#149">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+   Jeanne Try this:
+
+   Create a user for opensim with the homedir set to the base  
+directory of your opensim install.
+
+   cd to your opensim base directory
+
+   execute the following:
+
+   chown -R opensim ~opensim
+echo cd ~opensim/bin &gt;~opensim/start_opensim.sh
+echo mono OpenSim.exe &gt;&gt;~opensim/start_opensim.sh
+
+   now when you want to start opensim execute:
+
+   sudo -u opensim ~opensim/start_opensim.sh
+
+   That should resolve any permissions problems which might be causing  
+the error and prevent the creation of an opensim directory structure  
+in whatever directory you run it from.
+
+   Try not to run opensim as root (which is what 'sudo mono  
+OpenSim.exe' will do), but it needs full permissions to it's files and  
+directories.
+
+   Dev team: how difficult would it be (I really do not know) to set a  
+variable for SimPath or some such in the ini file and have  
+mono/opensim switch to that for it's path to locate and create sim  
+directories and files?
+-- 
+Joe Greene
+UNIX Systems, Network and IT Specialist
+If you aren't having fun, you're doing the wrong thing!
+All opinions expressed are mine alone. You Can't Have them!
+
+Fish Kungfu &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fish.kungfu at earthlink.net</A>&gt; wrote:
+
+&gt;<i> jean-fran&#231;ois...
+</I>&gt;<i>
+</I>&gt;<i> When I run OpenSim.exe (in Ubuntu 7.10), I cd to the&#160;  
+</I>&gt;<i> &quot;../opensim/bin/&quot;&#160; folder then I &quot;sudo mono OpenSim.exe&quot;.&#160; If I&#160;  
+</I>&gt;<i> don't sudo I get errors and OpenSim won't launch.&#160; If I don't cd to&#160;  
+</I>&gt;<i> the &quot;../opensim/bin/&quot; app directory, when I launch &quot;sudo mono&#160;  
+</I>&gt;<i> OpenSim.exe&quot; it starts creating folders and files in whatever dir I&#160;  
+</I>&gt;<i> am in.
+</I>&gt;<i>
+</I>&gt;<i> I hope this helps some....Fish
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: jean-fran&#231;ois peri &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jfperi at mac.com</A>&gt;
+</I>&gt;&gt;<i> Sent: Mar 11, 2008 6:27 AM
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: [Opensim-users] Got a SIGSEGV error
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hello
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This morning afteur a reinstal of my server, at the first launch of
+</I>&gt;&gt;<i> OpenSim.exe in grid mod I got this message :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Calling to 'ScriptAppDomain_6'.
+</I>&gt;&gt;<i> ScriptEngine: Executing function name: default_event_state_entry
+</I>&gt;&gt;<i> Stacktrace:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &#160; &#160;at (wrapper managed-to-native)
+</I>&gt;&gt;<i> System.Object.__icall_wrapper_mono_delegate_begin_invoke
+</I>&gt;&gt;<i> (object,intptr) &lt;0x00004&gt;
+</I>&gt;&gt;<i> &#160; &#160;at (wrapper managed-to-native)
+</I>&gt;&gt;<i> System.Object.__icall_wrapper_mono_delegate_begin_invoke
+</I>&gt;&gt;<i> (object,intptr) &lt;0xffffffff&gt;
+</I>&gt;&gt;<i> &#160; &#160;at (wrapper delegate-begin-invoke)
+</I>&gt;&gt;<i> System
+</I>&gt;&gt;<i> .MulticastDelegate
+</I>&gt;&gt;<i> .begin_invoke_IAsyncResult_object_AsyncCallback_object
+</I>&gt;&gt;<i> (object,System.AsyncCallback,object) &lt;0xffffffff&gt;
+</I>&gt;&gt;<i> &#160; &#160;at System.Threading.ThreadPool.QueueUserWorkItem
+</I>&gt;&gt;<i> (System.Threading.WaitCallback,object) &lt;0x00015&gt;
+</I>&gt;&gt;<i> &#160; &#160;at System.Timers.Timer.StartTimer () &lt;0x00058&gt;
+</I>&gt;&gt;<i> &#160; &#160;at (wrapper delegate-invoke) System.MulticastDelegate.invoke_void
+</I>&gt;&gt;<i> () &lt;0xffffffff&gt;
+</I>&gt;&gt;<i> &#160; &#160;at (wrapper runtime-invoke) System.Object.runtime_invoke_void
+</I>&gt;&gt;<i> (object,intptr,intptr,intptr) &lt;0xffffffff&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Native stacktrace:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x818f7de]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x8171be4]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;[0xffffe440]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x813c585]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x8144960]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono(mono_array_new_specific+0xd4) [0x80b42a1]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono(mono_array_new+0x67) [0x80b4336]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x80e62e7]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x80e7856]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x80ce1dd]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;[0xb6a1b95a]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;[0xb480922c]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;[0xb48091ce]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;[0xb50502d1]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;[0xb6cb5fd0]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;[0xb6ea2d69]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x8171aaf]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono(mono_runtime_invoke+0x27) [0x80b038f]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono(mono_runtime_delegate_invoke+0x62) [0x80b0617]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x80e4f6e]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x812c50d]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;mono [0x8145972]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;/lib/tls/i686/cmov/libpthread.so.0 [0xb7ebc31b]
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;/lib/tls/i686/cmov/libc.so.6(clone+0x5e) [0xb7e1e57e]
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> =================================================================
+</I>&gt;&gt;<i> Got a SIGSEGV while executing native code. This usually indicates
+</I>&gt;&gt;<i> a fatal error in the mono runtime or one of the native libraries
+</I>&gt;&gt;<i> used by your application.
+</I>&gt;&gt;<i> =================================================================
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Abandon (core dumped)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Somebody&#160; can explain that (it's not the first time i got this error).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20080311/457424ec/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20080311/457424ec/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000148.html">[Opensim-users] Got a SIGSEGV error
+</A></li>
+	<LI>Next message: <A HREF="000150.html">[Opensim-users] Got a SIGSEGV error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#149">[ date ]</a>
+              <a href="thread.html#149">[ thread ]</a>
+              <a href="subject.html#149">[ subject ]</a>
+              <a href="author.html#149">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

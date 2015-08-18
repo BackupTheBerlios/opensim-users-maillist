@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Murmur Voice Instructions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Murmur%20Voice%20Instructions&In-Reply-To=%3C5194E6AAB6C7334E938662763813B3F24895DE7EF4%40hermes.fdn.uq.edu.au.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007604.html">
+   <LINK REL="Next"  HREF="007611.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Murmur Voice Instructions</H1>
+    <B>Adam Farrugia</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Murmur%20Voice%20Instructions&In-Reply-To=%3C5194E6AAB6C7334E938662763813B3F24895DE7EF4%40hermes.fdn.uq.edu.au.local%3E"
+       TITLE="[Opensim-users] Murmur Voice Instructions">uqafarru at fdn.uq.edu.au
+       </A><BR>
+    <I>Mon Jul  4 02:10:35 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007604.html">[Opensim-users] Good Grid Management Software Tools
+</A></li>
+        <LI>Next message: <A HREF="007611.html">[Opensim-users] Murmur Voice Instructions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7607">[ date ]</a>
+              <a href="thread.html#7607">[ thread ]</a>
+              <a href="subject.html#7607">[ subject ]</a>
+              <a href="author.html#7607">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i>Well I get a grayed out button to and no voice dot either.  I did leave the defaults but was wondering about them because murmur seems to make its own sqlite file, and I &gt;used MySQL on my opensims.  If the server needs access to a user list with UUID numbers or any data to do with my opensim, then it will need access to that data base. So I &gt;was wondering if I should change it to that one or not.  Because it won't find that in that Sqlite file.
+</I>&gt;<i>
+</I>&gt;<i>I also noticed that in the log it said it won't be assessable to the outside  world because it can't load a file:  This is what it said...
+</I>&gt;<i>
+</I>&gt;<i>&lt;W&gt;2011-07-02 17:53:59.622 Bonjour: Failed to load dnssd.dll
+</I>&gt;<i>&lt;W&gt;2011-07-02 17:53:59.715 1 =&gt;  Not registering server as public
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>I assumed it was either without a connection to my users on the MySql Database or because of the error loading dnssd.dll it can't access it.  
+</I>&gt;<i>I opened the port 64738 and left the defaults and copied the section for opensim.ini
+</I>&gt;<i>
+</I>&gt;<i>So much since 7.1 has changed as for where some settings are, I was also wondering if that pasrt has changed places too?  I run a standalone non hypergrid, with 48 regions.  &gt;So am I to assume this will only run in one of them if at all?
+</I>&gt;<i>
+</I>&gt;<i>Youmight not know any of this, but thanks forlistening, and maybe someone else might know what I am looking for?
+</I>&gt;<i>
+</I>&gt;<i>Thanks again for your time.
+</I>&gt;<i>InuYasah
+</I>
+Hello Meiji-san,
+
+Don't worry about the &quot;error&quot; reported above- that is only about whether you want your Murmur server to be listed as an available public server, ie, Murmur as voice server in its own right on a public directory listing, unrelated to OpenSim. It just means that others running the native mumble voice client cannot see your murmur server in its list of available public servers. Also, don't worry about the database- the sqlite file automatically writes to either somewhere in your userprofile path or in the Mumble directory and doesn't have anything directly to do with Opensim user authentication anyway.
+
+I have managed to get Murmur-Mumble/Whisper working on Ubuntu Server and Windows Server. Before I go to the extent of posting all of my config files (which I'm happy to do if need be), I'll share the main learnings I had in getting it going:
+
+* Make sure you are using Murmur 1.2.1. The provided .dlls for Opensim (Ice, Glacier and MurmurVoice) have been compiled for that version and won't work on other server Versions
+* The real &quot;gotchya&quot; for me in the end was the Region Name- are you using any special characters in the Region name? If you are, you have two choices: change the region name (the one you are configuring to register murmur to, specified as &quot;channel_name&quot; in OpenSim.ini) to one with no special characters (including spaces if region name is multiple words) or uncomment the following line in Murmur.ini and add the special character/s to the string:
+
+#channelname=[ \\-=\\w\\#\\[\\]\\{\\}\\(\\)\\@\\|\\_\\-]+
+
+Each character is separated by &quot;\\&quot;, so you can see how the pattern works to add additional special characters. The easiest though is just to change the registered region name to contain no special characters, or in your case with 48 regions to choose from, use one with no special characters.
+
+* Make sure you use whisper client 0.2.7 if you are under windows for the viewer
+* Use a dedicated viewer for mumble/whisper. If you connect to other grids, it might be an idea to run another viewer for grids that have voice and use the &quot;original&quot; SLVoice.exe. There is a couple of .bat files that &quot;should&quot; be able to interchange between the modified SLVoice.exe needed for Mumble/Whisper and the Vivox-based SLVoice.exe but I found that this wasn't as smooth as hoped. That could just be me, but I've found that sticking with a dedicated viewer running just the modified SLVoice.exe works best. BTW, I am using Imprudence 1.3.2 SSE-optimised latest stable. For some reason, it just wouldn't work for me using the &quot;experimental&quot; version. It also works fine with Hippo 0.6.3. Haven't tried any SL Viewer. 
+
+I am assuming that you have configured the client to ensure voice is enabled at both estate-level and parcel level. Finally, you may need to go into the voice settings in the viewer preferences and click &quot;reconnect to voice&quot; to finally get it all going.
+
+Of all the above, the region name/channel_name mapping was the final domino to fall for me and it sounds like from your (and Paul's) symptoms that this may be your issue as well. If not, let me know and I'll post all my config files if that would help.
+
+Keep trying, though- Mumble really is far superior to Freeswitch in sound quality- Volker and his team really have done an excellent job.
+
+Rgds,
+Adam Farrugia
+PIER Virtual
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007604.html">[Opensim-users] Good Grid Management Software Tools
+</A></li>
+	<LI>Next message: <A HREF="007611.html">[Opensim-users] Murmur Voice Instructions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7607">[ date ]</a>
+              <a href="thread.html#7607">[ thread ]</a>
+              <a href="subject.html#7607">[ subject ]</a>
+              <a href="author.html#7607">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

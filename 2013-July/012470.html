@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Separate Robust instance for inventory....
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Separate%20Robust%20instance%20for%20inventory....&In-Reply-To=%3C51F30460.8060703%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012455.html">
+   <LINK REL="Next"  HREF="012454.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Separate Robust instance for inventory....</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Separate%20Robust%20instance%20for%20inventory....&In-Reply-To=%3C51F30460.8060703%40googlemail.com%3E"
+       TITLE="[Opensim-users] Separate Robust instance for inventory....">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Jul 27 01:21:04 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012455.html">[Opensim-users] Separate Robust instance for inventory....
+</A></li>
+        <LI>Next message: <A HREF="012454.html">[Opensim-users] Collaboration in 3D virtual environments- take the	survey and earn 100L$ I need you assistance please
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12470">[ date ]</a>
+              <a href="thread.html#12470">[ thread ]</a>
+              <a href="subject.html#12470">[ subject ]</a>
+              <a href="author.html#12470">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The login service does require access to a lot of other services but I didn't think it would be necessary to actually 
+have connectors for them active.
+
+In your separate login service config, do you still have a section like
+
+[LoginService]
+; for the server connector
+LocalServiceModule = OpenSim.Services.LLLoginService.dll:LLLoginService
+; for the service
+UserAccountService = OpenSim.Services.UserAccountService.dll:UserAccountService
+GridUserService = OpenSim.Services.UserAccountService.dll:GridUserService
+AuthenticationService = OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService
+InventoryService = OpenSim.Services.InventoryService.dll:XInventoryService
+AvatarService = OpenSim.Services.AvatarService.dll:AvatarService
+PresenceService = OpenSim.Services.PresenceService.dll:PresenceService
+GridService = OpenSim.Services.Connectors.dll:GridServicesConnector
+SimulationService = OpenSim.Services.Connectors.dll:SimulationServiceConnector
+LibraryService = OpenSim.Services.InventoryService.dll:LibraryService
+UserAgentService = OpenSim.Services.HypergridService.dll:UserAgentService
+FriendsService = OpenSim.Services.FriendsService.dll:FriendsService
+
+?  I believe this is the part that sets up internal services for the login service to access all the other bits of 
+OpenSimulator that it needs.  These internal services still need to connect to the database but do not have external 
+connectors if they are not set up in the [Startup] section.
+
+It's also possible that there bugs and this is not working as it should.  Is it just adding the connectors back to 
+ServiceList (master only, I think) or ServiceConnectors (OpenSimulator 0.7.5 and earlier) that makes this work again?
+
+On 13/07/13 17:54, BoneZ wrote:
+&gt;<i> Thanks for the links, I've tried for hours to get this to work correctly..... but have failed.
+</I>&gt;<i> I have an instance of MySQL running on one machine with an instance of robust.exe running there with only the inventory
+</I>&gt;<i> services connector initialized using port 8005.... started and running fine. Firewall is open on that port as well.
+</I>&gt;<i>
+</I>&gt;<i> I have a second machine which is running all other robust.ini service connectors with default ports except for inventory
+</I>&gt;<i> and freeswitch(I am not using this
+</I>&gt;<i> ). This robust instance starts with no errors. Firewall is open on all of these ports as well.
+</I>&gt;<i>
+</I>&gt;<i> I have a 3rd machine which is running a simulator instance where gridcommon.ini points it to the first machine/port for
+</I>&gt;<i> the inventory and second machine for all other robust services.
+</I>&gt;<i> This region simulator starts up with no errors.
+</I>&gt;<i>
+</I>&gt;<i> Using the 2nd machine/robust instance I am able to create an avatar and everything seems fine... no errors, but upon
+</I>&gt;<i> trying to login to the &quot;Grid&quot; I am unable to connect.
+</I>&gt;<i> I get a failure; &quot;The inventory service is not responding. Please notify your login region operator&quot;.
+</I>&gt;<i>
+</I>&gt;<i> When I check the robust instance on the 2nd machine, there is a message; Login Failed Reason: Inventory Service Not Set up.
+</I>&gt;<i>
+</I>&gt;<i> When I allow the 2nd machine to handle all robust services and point my gridcommon.ini to that machine for all services
+</I>&gt;<i> I have no issues.
+</I>&gt;<i>
+</I>&gt;<i> I have checked the first machine for the obvious; Closed Ports, etc.... I'm sure my problem is that I am a rookie at
+</I>&gt;<i> splitting these services and do not know the correct settings.
+</I>&gt;<i> I was hopeful someone else has already been successful with this and would share their robust.ini files so that I could
+</I>&gt;<i> see where my mistakes are.
+</I>&gt;<i>
+</I>&gt;<i> Thanks.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012455.html">[Opensim-users] Separate Robust instance for inventory....
+</A></li>
+	<LI>Next message: <A HREF="012454.html">[Opensim-users] Collaboration in 3D virtual environments- take the	survey and earn 100L$ I need you assistance please
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12470">[ date ]</a>
+              <a href="thread.html#12470">[ thread ]</a>
+              <a href="subject.html#12470">[ subject ]</a>
+              <a href="author.html#12470">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

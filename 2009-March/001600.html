@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database overview needed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20overview%20needed&In-Reply-To=%3C288074AD077243F28C8D5828BD18D28F%40VM04%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001598.html">
+   <LINK REL="Next"  HREF="001601.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database overview needed</H1>
+    <B>Frank W Sweet</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20overview%20needed&In-Reply-To=%3C288074AD077243F28C8D5828BD18D28F%40VM04%3E"
+       TITLE="[Opensim-users] Database overview needed">fwsweet at backintyme.com
+       </A><BR>
+    <I>Tue Mar  3 17:51:30 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001598.html">[Opensim-users] Database overview needed
+</A></li>
+        <LI>Next message: <A HREF="001601.html">[Opensim-users] Database overview needed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1600">[ date ]</a>
+              <a href="thread.html#1600">[ thread ]</a>
+              <a href="subject.html#1600">[ subject ]</a>
+              <a href="author.html#1600">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Impalah wrote: The connection between them is 
+assetID(inventoryItems)-&gt;id(assets) but there aren't any foreign keys.
+
+The asset UUID in the inventory record is a foreign key. Located in 
+one table (inventoryitems), it is the unique key to an entry in a 
+different table (assets). The problem, in this specific example, is 
+that if the asset record is copied whenever it is modified, for fear 
+that some other inventory item might be pointing to it, eventually 
+most of the asset records in my database will be junk--not referenced 
+by any item and so unreachable. Worse yet, due to glitches and 
+crashes, an inventory item might be pointing to a non-existent 
+asset-ID. (Now that I know the data structure, I have already found 
+several such situations in my database.)
+
+Frank W Sweet
+Backintyme Publishing.
+
+----- Original Message ----- 
+From: &quot;Impalah&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A>&gt;
+To: &quot;Frank W Sweet&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;; 
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Sent: Tuesday, March 03, 2009 9:12 AM
+Subject: Re: [Opensim-users] Database overview needed
+
+
+Not, there aren't any, at least in the &quot;original&quot; opensim servers.
+
+Asset server is a huge store of anything, even the generated maps and
+terrain revisions (opensim region servers). Not only inventory assets 
+are
+stored there.
+
+Asset server and inventory server are separated processes each one 
+with
+their own data models. The connection between them is
+assetID(inventoryItems)-&gt;id(assets) but there aren't any foreign keys. 
+You
+could use different databases for assets/inventory.
+
+I have only doubts about the new AssetsInventory server, I hadn't time 
+to
+play with it.
+
+Greetings
+
+2009/3/3 Frank W Sweet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;
+
+&gt;<i> Thank you so much! I had no idea that section of the Wiki was out
+</I>&gt;<i> there!
+</I>&gt;<i>
+</I>&gt;<i> One other question: Since there is no reference counter in &quot;asset&quot; 
+</I>&gt;<i> for
+</I>&gt;<i> inventory-to-asset references (nor in &quot;userfriend&quot; for
+</I>&gt;<i> user-to-userfriend references, nor in any other table receiving
+</I>&gt;<i> one-to-many relationships, for that matter), I assume that there are
+</I>&gt;<i> utility procedures in the code that are run periodically to purge
+</I>&gt;<i> unreferenced records and to check referential integrity. Where in 
+</I>&gt;<i> the
+</I>&gt;<i> code would these be, and how often are they run (at startup, 
+</I>&gt;<i> shutdown,
+</I>&gt;<i> every so often)?
+</I>&gt;<i>
+</I>&gt;<i> Frank W Sweeet
+</I>&gt;<i> Backintyme Publishing
+</I>&gt;<i>
+</I>&gt;<i> ----- Original Message -----
+</I>&gt;<i> From: &quot;Jeff Ames&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jeffames at gmail.com</A>&gt;
+</I>&gt;<i> To: &quot;Frank W Sweet&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;;
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Sent: Monday, March 02, 2009 10:58 PM
+</I>&gt;<i> Subject: Re: [Opensim-users] Database overview needed
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> There is some existing documentation at
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Database:Documentation">http://opensimulator.org/wiki/Database:Documentation</A> and the pages
+</I>&gt;<i> linked there.
+</I>&gt;<i>
+</I>&gt;<i> As for assets versus inventory items, an asset is the object itself,
+</I>&gt;<i> whereas the inventory item simply points to the asset (via the asset
+</I>&gt;<i> ID), and adds some information about the asset that the inventory
+</I>&gt;<i> needs to be aware of, such as permissions.
+</I>&gt;<i>
+</I>&gt;<i> When assets are modified, a copy is created, since we can't be sure
+</I>&gt;<i> that there is only one reference to the original asset.
+</I>&gt;<i>
+</I>&gt;<i> (I believe this is accurate, but those of you more familiar with
+</I>&gt;<i> current asset handling, please correct me if I'm mistaken.)
+</I>&gt;<i>
+</I>&gt;<i> Jeff
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001598.html">[Opensim-users] Database overview needed
+</A></li>
+	<LI>Next message: <A HREF="001601.html">[Opensim-users] Database overview needed
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1600">[ date ]</a>
+              <a href="thread.html#1600">[ thread ]</a>
+              <a href="subject.html#1600">[ subject ]</a>
+              <a href="author.html#1600">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

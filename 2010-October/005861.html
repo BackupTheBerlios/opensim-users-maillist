@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] monodev target in prebuild
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20monodev%20target%20in%20prebuild&In-Reply-To=%3C4CBE92CA.5070701%40bluewallgroup.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005860.html">
+   <LINK REL="Next"  HREF="005785.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] monodev target in prebuild</H1>
+    <B>James Hughes</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20monodev%20target%20in%20prebuild&In-Reply-To=%3C4CBE92CA.5070701%40bluewallgroup.com%3E"
+       TITLE="[Opensim-users] monodev target in prebuild">jamesh at bluewallgroup.com
+       </A><BR>
+    <I>Wed Oct 20 08:57:14 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005860.html">[Opensim-users] monodev target in prebuild
+</A></li>
+        <LI>Next message: <A HREF="005785.html">[Opensim-users] Prim to Mesh Converter script or tool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5861">[ date ]</a>
+              <a href="thread.html#5861">[ thread ]</a>
+              <a href="subject.html#5861">[ subject ]</a>
+              <a href="author.html#5861">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 10/20/2010 02:04 AM, Jeroen van Veen wrote:
+&gt;<i> Did i miss something? monodevelop opens any regular visual studio
+</I>&gt;<i> solution fine. Works for me at least :)
+</I>&gt;<i>
+</I>&gt;<i> Jeroen
+</I>Maybe ...
+
+Our solutions were using *.csproj.user files to set the reference path
+to assemblies used to build the application. Monodevelop and xbuild
+can't use those files. And, while you can use tMonodevelop to read and
+edit the sources, the application will fail to build because of the
+missing assembly references.
+
+Monodevelop and xbuild need HintPath attributes in our *.csproj files to
+find the assemblies ...
+
+                            &lt;HintPath&gt;../../bin/BclExtras35.dll&lt;/HintPath&gt;
+
+We get those by adding the path=&quot;../../bin/BclExtras35&quot; in out prebuild
+files. After getting these right, we are able to edit sources, build and
+debug the application within monodevelop. And we can also build  with
+xbuild from the command  line after generating the solution and project
+files with Prebuild.exe.
+
+BlueWall
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005860.html">[Opensim-users] monodev target in prebuild
+</A></li>
+	<LI>Next message: <A HREF="005785.html">[Opensim-users] Prim to Mesh Converter script or tool?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5861">[ date ]</a>
+              <a href="thread.html#5861">[ thread ]</a>
+              <a href="subject.html#5861">[ subject ]</a>
+              <a href="author.html#5861">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

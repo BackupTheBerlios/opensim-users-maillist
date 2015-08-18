@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database cleanup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20cleanup&In-Reply-To=%3C4521d1810912222321l51d81d0fk1e0be65a119006ae%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003365.html">
+   <LINK REL="Next"  HREF="003370.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database cleanup</H1>
+    <B>Michael</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20cleanup&In-Reply-To=%3C4521d1810912222321l51d81d0fk1e0be65a119006ae%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Database cleanup">mikeeab at gmail.com
+       </A><BR>
+    <I>Wed Dec 23 08:21:00 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003365.html">[Opensim-users] Database cleanup
+</A></li>
+        <LI>Next message: <A HREF="003370.html">[Opensim-users] Database cleanup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3368">[ date ]</a>
+              <a href="thread.html#3368">[ thread ]</a>
+              <a href="subject.html#3368">[ subject ]</a>
+              <a href="author.html#3368">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Inactive regions are pretty easy to fix. But, as always, a backup is
+recommended before poking that thar bear with a stick. :)
+
+Ya just need to take your favorite database tool, and connect to your
+OpenSim db. First you'll need the UUIDs of any inactive regions. If you no
+longer have a record of this somewhere (say, in an old XML or INI region
+file) you can compare the UUIDs from your active regions to the results of
+the following query, and take note of the ones that are dead:
+
+SELECT RegionID FROM estate_map;
+
+Looks to me like there's only really two tables to worry about here named
+&quot;prims&quot; and &quot;primshapes&quot;. We'll start with safe queries that don't actually
+change anything, so you can get a feel for whether this is worthwhile for
+you. We'll also only do one stale region for the sake of simplicity. Let's
+start by seeing just how many rows you might be able to remove. Run this
+simple query:
+
+SELECT COUNT(*) FROM prims WHERE RegionUUID = '&lt;OldRegionUUID&gt;';
+
+Replace &lt;OldRegionUUID&gt; with the inactive region's UUID. That query will
+return a number  equaling the number of stale prims sitting in that table.
+
+That's the prims table, which is easiest since each prim has a RegionUUID
+column. The primshapes table doesn't, so we'll have to use the prims table
+to figure out which shapes are stale. The following query will do this for
+you:
+
+SELECT COUNT(*)
+    FROM primshapes
+    WHERE EXISTS
+    (SELECT * FROM prims WHERE
+    prims.RegionUUID = '&lt;OldRegionUUID&gt;'
+    AND prims.UUID = primshapes.UUID);
+
+This *should* return the exact same number for primshapes that that you got
+from the query to the prims table. If you do not, stop right here, and don't
+make any changes to your database. If both counts are the same though, you
+now know how many rows you can remove by combining the two counts. So now
+we'll remove those rows. Make sure you have that backup before the next
+steps.
+
+Now we'll remove the stale prims from the primshapes table. It's important
+to do this with primshapes before modifying the prims table. The following
+query will do so:
+
+DELETE FROM primshapes
+    WHERE EXISTS
+    (SELECT * FROM prims WHERE
+    prims.RegionUUID = '&lt;OldRegionUUID&gt;'
+    AND prims.UUID = primshapes.UUID);
+
+Finally, the query to remove them from the prims table:
+
+DELETE FROM prims WHERE RegionUUID = '&lt;OldRegionUUID&gt;';
+
+And there you have it. These queries removed over 9000 rows from my little
+OpenSim database. You can also remove those stale region UUIDs from the
+estate_* tables, but that should be pretty easy to do via a GUI of your
+choice since these tables tend to be very small in comparison to the prim
+tables. I just left them out of sheer laziness... they're a single row, so
+the space they take up is insignificant.
+
+Marcus Llewellyn
+
+
+On Tue, Dec 22, 2009 at 6:27 PM, Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karen_palen at yahoo.com</A>&gt; wrote:
+
+&gt;<i> I definitely have the remove/replace region problem. I suspect that I have
+</I>&gt;<i> more than that too though :-)
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091223/b30c6900/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091223/b30c6900/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003365.html">[Opensim-users] Database cleanup
+</A></li>
+	<LI>Next message: <A HREF="003370.html">[Opensim-users] Database cleanup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3368">[ date ]</a>
+              <a href="thread.html#3368">[ thread ]</a>
+              <a href="subject.html#3368">[ subject ]</a>
+              <a href="author.html#3368">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

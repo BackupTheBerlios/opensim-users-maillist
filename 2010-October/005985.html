@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPCs%20DoMoveToPosition%20vs%20DoAutoPilot&In-Reply-To=%3CAANLkTikEethBBKhCFPRPvxrwec%2BpPbOw6F27mnEYGLti%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005984.html">
+   <LINK REL="Next"  HREF="005986.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPCs%20DoMoveToPosition%20vs%20DoAutoPilot&In-Reply-To=%3CAANLkTikEethBBKhCFPRPvxrwec%2BpPbOw6F27mnEYGLti%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot">teravus at gmail.com
+       </A><BR>
+    <I>Thu Oct 28 22:35:57 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005984.html">[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+</A></li>
+        <LI>Next message: <A HREF="005986.html">[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5985">[ date ]</a>
+              <a href="thread.html#5985">[ thread ]</a>
+              <a href="subject.html#5985">[ subject ]</a>
+              <a href="author.html#5985">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>* Every avatar in the Scene is represented by a ScenePresence
+* The Scene contains Objects and Avatars and Parcels and terrain and all
+that good stuff
+* The ScenePresence requires you to pump messages to it for it to do normal
+movement.
+
+* When you use the Move To Position option, you don't actually need to do
+much calculation, you just create the object with a compatible body
+rotation.   The rest is just filler and you feed that to the
+ScenePresence.   I was using the frame event count mod 5 to pump a message
+every 5 frames.   It isn't so much the message data as much as the action of
+sending the message using  HandleAgentUpdate.    The code in the
+HandleAgentUpdate method actually implements getting you from point A to
+point B.   It assumes the avatar's known rotation is sent in the
+BodyRotation member and if the BodyRotation isn't reasonable, it might send
+you off in another direction to try and correct your course.
+
+Alternatively, you could create a full AgentUpdateArgs and not use the Move
+to Position functionality.    You'd do that the same way except you wouldn't
+call the respective Move To Position method and you'd create a feedback
+controller that fed the proper movement flags to the ScenePresence.
+
+Teravus
+
+
+On Thu, Oct 28, 2010 at 2:02 PM, bodzette Coignet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bodzettecoignet at gmail.com</A>
+&gt;<i> wrote:
+</I>
+&gt;<i> Thanks again Teravus.
+</I>&gt;<i>
+</I>&gt;<i> Anybody who understands how avatars move willing to take a stab at
+</I>&gt;<i> sense-checking my vague understanding?
+</I>&gt;<i>
+</I>&gt;<i> Here's what I think happens when an avatar moves based on the code Teravus
+</I>&gt;<i> produced and my somewhat vague understanding of scenes and regions:
+</I>&gt;<i>
+</I>&gt;<i> * There is a scene object where all the avatars who are active in a region
+</I>&gt;<i> live.
+</I>&gt;<i>
+</I>&gt;<i>  * Each of the avatars is associated with a scenepresence which is
+</I>&gt;<i> basically your particular avatar's view of the scene.
+</I>&gt;<i>
+</I>&gt;<i> * What you need to do to move an avatar is update some part of your
+</I>&gt;<i> scenepresence and the corresponding scene will ripple through to all the
+</I>&gt;<i> other scenepresences of the other avatars that have you in their field of
+</I>&gt;<i> vision.
+</I>&gt;<i>
+</I>&gt;<i> * So using the rotation of the av, the current position and the destination
+</I>&gt;<i> position of the av what I need to do is generate the avatar movement
+</I>&gt;<i> arguments (which I should be able to do by looking at how it's done for a
+</I>&gt;<i> real avatar and Teravus's code) and create an update of the screnepresence
+</I>&gt;<i> object for each step the avatar takes until the movement is completed.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101028/c7e9d8f1/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101028/c7e9d8f1/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005984.html">[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+</A></li>
+	<LI>Next message: <A HREF="005986.html">[Opensim-users] NPCs DoMoveToPosition vs DoAutoPilot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5985">[ date ]</a>
+              <a href="thread.html#5985">[ thread ]</a>
+              <a href="subject.html#5985">[ subject ]</a>
+              <a href="author.html#5985">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] llBreakLink silently fails or reorders linkset in	opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llBreakLink%20silently%20fails%20or%20reorders%20linkset%0A%20in%09opensim&In-Reply-To=%3C63FAD4F222230A4EA79DE9E8BE6647354DAE7C5A%40winxbeus19.exchange.xchg%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003178.html">
+   <LINK REL="Next"  HREF="003180.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] llBreakLink silently fails or reorders linkset in	opensim</H1>
+    <B>Frisby, Adam</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llBreakLink%20silently%20fails%20or%20reorders%20linkset%0A%20in%09opensim&In-Reply-To=%3C63FAD4F222230A4EA79DE9E8BE6647354DAE7C5A%40winxbeus19.exchange.xchg%3E"
+       TITLE="[Opensim-users] llBreakLink silently fails or reorders linkset in	opensim">adam at deepthink.com.au
+       </A><BR>
+    <I>Sun Nov 29 19:27:23 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003178.html">[Opensim-users] llBreakLink silently fails or reorders linkset in	opensim
+</A></li>
+        <LI>Next message: <A HREF="003180.html">[Opensim-users] llRotLookAt() anytime soon?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3179">[ date ]</a>
+              <a href="thread.html#3179">[ thread ]</a>
+              <a href="subject.html#3179">[ subject ]</a>
+              <a href="author.html#3179">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Can you report this on mantis? <A HREF="http://www.opensimulator.org/mantis">http://www.opensimulator.org/mantis</A> - it is the appropriate place for bug reports.
+
+Adam
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Kevin Buckley
+Sent: Sunday, 29 November 2009 8:30 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: [Opensim-users] llBreakLink silently fails or reorders linkset in opensim
+
+I think there is a bug in llBreakLink() in Opensim (compared with the 2L description, 2L actual behaviour and what would actually make sense!).
+
+I am trying to do the following with a script inside a single prim:
+
+- Rez an object (made from many prims) from prim inventory: llRezObject()
+- Get permission for the script to link/unlink: llRequestPermissions()
+- Link object to myself: llCreateLink()
+- Do 'some stuff' with the linked parts
+- Unlink myself from the object*: llBreakLink()
+
+(*The script is in a single prim, so I unlink myself rather than trying to unlink all the prims in the rezzed linkset, or getting the rezzed object to delink me - which would require each newly rezzed object to call llRequestPermissions() each time)
+
+If I set 'parent' to TRUE in llCreateLink() - so the rezzer prim becomes the root prim of the new linkset, then the subsequent llBreakLink() (used to unlink myself from the linkset) changes which prim is the root prim in the original rezzed object in some seemingly random way (this is no good! The root prim is also scripted and needs to remain the root prim after this process is finished).
+
+If I set 'parent' to FALSE in llCreateLink() - so the root prim of the rezzed object becomes the root prim of the linkset, then the subsequent llBreakLink() silently fails (it doesn't unlink and so also doesn't trigger a 'changed' event).
+
+Below is a script you can use to test this - put it in a single prim which also contains some multi-prim object called &quot;Rez Thing&quot;.
+
+Changing 'makeMeParent' determines the mode of operation: either the rezzer prim is the root prim of the linked set (TRUE) or not (FALSE).
+
+It reports its progress as it carries out the above actions - touching it causes it to run again (after you have manually disposed of the rezzed object).
+
+It works just fine in 2L in both modes.
+
+Any suggestions on how to fix this in Opensim would be most welcome (or if it IS a bug, can someone familiar with the process report if officially?) - Thanks, Kevin
+
+========================================================================================
+
+integer makeMeParent = FALSE;
+string objectName = &quot;Rez Thing&quot;;
+
+key objectKey;
+
+default
+{
+    on_rez(integer channel)
+    {
+        llResetScript();
+    }
+
+    state_entry()
+    {
+        llSay(0, &quot;Rezzing object&quot;);
+        llRezObject(objectName, llGetPos() + &lt;0,0,2&gt;, ZERO_VECTOR, ZERO_ROTATION , 0);
+        llSay(0, &quot;Get link/unlink perms&quot;);
+
+    }
+
+    object_rez(key _id)
+    {
+        llSay(0, &quot;Object rezzed, key: &quot; + (string)_id);
+        objectKey = _id;
+
+        llSay(0, &quot;Getting link/unlink perms&quot;);
+        llRequestPermissions(llGetOwner(), PERMISSION_CHANGE_LINKS);
+    }
+
+    run_time_permissions(integer _perm)
+    {
+        llSay(0, &quot;run_time_permissions triggered with value: &quot; + (string)_perm);
+
+        //Check we got permission
+        if (_perm == PERMISSION_CHANGE_LINKS)
+        {
+            llSay(0, &quot;Linking to me&quot;);
+            llCreateLink(objectKey, makeMeParent);
+        } else
+        {//No - permission to link/unlink was not granted - error message &amp; halt
+            llSay(0, &quot;Permission to link was denied&quot;);
+            state halted;
+        }
+    }
+
+    changed(integer change)
+    {
+        llSay(0, &quot;'changed' called with value: &quot; + (string)change);
+        if (change &amp; CHANGED_INVENTORY )
+        {
+            llResetScript();
+        } else if (change &amp; CHANGED_LINK)
+        {
+            integer myLinkNumber = llGetLinkNumber();
+            llSay(0, &quot;My new link number is: &quot;+(string)myLinkNumber);
+            if (makeMeParent)
+            {
+                if (myLinkNumber &lt; 2)//Root
+                {
+                    llSay(0, &quot;Delinking self&quot;);
+                    llBreakLink(myLinkNumber);
+                }
+            } else
+            {
+                if (myLinkNumber &gt; 1)//Rezzed object is root
+                {
+                    llSay(0, &quot;Delinking self&quot;);
+                    llBreakLink(myLinkNumber);
+                }
+            }
+        }
+    }
+
+    touch_end(integer num_detected)
+    {
+        llSay(0, &quot;Rezzing new object&quot;);
+        llRezObject(objectName, llGetPos() + &lt;0,0,2&gt;, ZERO_VECTOR, ZERO_ROTATION , 0);
+    }
+}
+
+state halted
+{
+    on_rez(integer channel)
+    {
+        llResetScript();
+    }
+
+    state_entry()
+    {
+        llSay(0, &quot;Halted&quot;);
+    }
+
+    changed(integer _change)
+    {
+        llResetScript();
+    }
+}
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091129/2387a019/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091129/2387a019/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003178.html">[Opensim-users] llBreakLink silently fails or reorders linkset in	opensim
+</A></li>
+	<LI>Next message: <A HREF="003180.html">[Opensim-users] llRotLookAt() anytime soon?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3179">[ date ]</a>
+              <a href="thread.html#3179">[ thread ]</a>
+              <a href="subject.html#3179">[ subject ]</a>
+              <a href="author.html#3179">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%20r/17830&In-Reply-To=%3C4F18ADDB.40909%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009091.html">
+   <LINK REL="Next"  HREF="009106.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sensors are not detecting NPC avatars on git r/17830</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%20r/17830&In-Reply-To=%3C4F18ADDB.40909%40googlemail.com%3E"
+       TITLE="[Opensim-users] Sensors are not detecting NPC avatars on git r/17830">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Jan 20 00:57:15 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009091.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+        <LI>Next message: <A HREF="009106.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9101">[ date ]</a>
+              <a href="thread.html#9101">[ thread ]</a>
+              <a href="subject.html#9101">[ subject ]</a>
+              <a href="author.html#9101">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This is indeed correct.  It means that sensors using the LSL AGENT type will not detect NPCs.  To detect an NPC you must 
+specify the currently OpenSim-only NPC constant.  This has been true since 7518b07 (Fri Jan 6 22:35:06 2012).
+
+One reason for doing this is because the sensor limit is 16 and one doesn't want the return to be overwhelmed by NPCs. 
+It means that sensor using scripts not designed with NPCs in mind (both in the past and the future) won't work with NPCs 
+without alteration.  It strikes me that sometimes this is a disadvantage (e.g. a light that should come on when it 
+detects any presence) but for other items an advantage (e.g. non-NPC aware radars that wouldn't be designed to pick them 
+up anyway).
+
+So one option is to change the default so that AGENT will pick up NPCs.  However, this is a problem with the 16 avatar 
+sensor limit.  Even if this is turned up, it might then cause script problems (e.g. ones designed to work with only 16 
+avatars).
+
+Another slightly messy option is to provide something like an OS_NPC_SHOW_AS_AGENT option to osNpcCreate() that will 
+show such NPCs as agents.  I'm favouring this option right now.
+
+Either way, what is missing at the moment is a way to actually tell if a particular agent is an NPC.  One possibility is 
+to make llGetOwnerKey() return an owned NPC's owner.  For an unowned NPC, this would need to return UUID.Zero - I'm not 
+sure if there's a problem disambiguating between an unowned NPC and a situation where no entity with the ID is found.
+
+I'm interested if people have any thoughts about this.
+
+On 18/01/12 23:43, Trinity wrote:
+&gt;<i> try using the flag NPC
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Jan 18, 2012 at 7:21 AM, Chris &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at cox.net</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at cox.net</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     Hello all. I'm having a bit of trouble getting my sensor scripts to detect NPC's now on git r/17830.
+</I>&gt;<i>
+</I>&gt;<i>     In my script I have tried using
+</I>&gt;<i>
+</I>&gt;<i>     npc = osNpcCreate(firstname, lastname, pos, npc_note, OS_NPC_NOT_OWNED);
+</I>&gt;<i>
+</I>&gt;<i>     as well as
+</I>&gt;<i>
+</I>&gt;<i>     npc = osNpcCreate(firstname, lastname, pos, npc_note, OS_NPC_CREATOR_OWNED);
+</I>&gt;<i>
+</I>&gt;<i>     to no avail. (firstname, lastname, pos, and npc_note are variables I've declared at the top of my script)
+</I>&gt;<i>
+</I>&gt;<i>     The NPC shows up fine and seems to react the way I expect it to except it won't show up in any of my scripts that
+</I>&gt;<i>     utilize sensors. The sensor scripts will detect a non NPC avatar just fine and interact with a non NPC avatar the
+</I>&gt;<i>     way I scripted it to. I was not having this issue prior to the git commits that introduced owner checking on the
+</I>&gt;<i>     NPCs. I know that for a little while this was disabled but it was reintroduced in commit d27dd3 (r/17792).
+</I>&gt;<i>
+</I>&gt;<i>     Am I doing something wrong?
+</I>&gt;<i>
+</I>&gt;<i>     Thanks!
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     OpenSim: 9 Region Standalone on 0.7.3 Dev
+</I>&gt;<i>     Physics: Open Dynamics Engine
+</I>&gt;<i>     OS: Windows XP 32 Bit
+</I>&gt;<i>     CPU: AMD Phenom II X4 840 3.2 GHz
+</I>&gt;<i>     Memory: 3 GB DDR3
+</I>&gt;<i>     Database: MySQL 5.1.11
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     _________________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009091.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+	<LI>Next message: <A HREF="009106.html">[Opensim-users] Sensors are not detecting NPC avatars on git r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9101">[ date ]</a>
+              <a href="thread.html#9101">[ thread ]</a>
+              <a href="subject.html#9101">[ subject ]</a>
+              <a href="author.html#9101">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

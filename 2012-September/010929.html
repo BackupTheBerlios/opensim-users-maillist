@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Buying and Selling Land - What module is needed?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Buying%20and%20Selling%20Land%20-%20What%20module%20is%20needed%3F&In-Reply-To=%3CCAG6z%2BU7Fisy4STys4sM3S%2BYUsp3udVo0XXN-oWG6P62M6kODhw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010924.html">
+   <LINK REL="Next"  HREF="010930.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Buying and Selling Land - What module is needed?</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Buying%20and%20Selling%20Land%20-%20What%20module%20is%20needed%3F&In-Reply-To=%3CCAG6z%2BU7Fisy4STys4sM3S%2BYUsp3udVo0XXN-oWG6P62M6kODhw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Buying and Selling Land - What module is needed?">fleep513 at gmail.com
+       </A><BR>
+    <I>Fri Sep 21 18:12:24 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010924.html">[Opensim-users] Buying and Selling Land - What module is needed?
+</A></li>
+        <LI>Next message: <A HREF="010930.html">[Opensim-users] Buying and Selling Land - What module is needed?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10929">[ date ]</a>
+              <a href="thread.html#10929">[ thread ]</a>
+              <a href="subject.html#10929">[ subject ]</a>
+              <a href="author.html#10929">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Nebadon,
+
+I must have done something wrong, buying and selling land still doesn't
+seem to be working.  Here are the steps I followed to try to implement this
+(windows server):
+
+1. Download the helper tools zip file from
+<A HREF="http://download.osgrid.org/helper_tools_opensim.zip">http://download.osgrid.org/helper_tools_opensim.zip</A> and unpackage
+
+2. Copy the helper directory to webserver root; give creator-owner
+read/write perms, IUSR read perms
+
+3. Create a new mysql account, give read only perms:  GRANT SELECT ON
+opensim.* TO user_name;
+
+4.  Create a new banker user account on my grid, copy UUID for string in
+the config file.
+
+5. Used the following settings in \helper\settings\config.php:
+
+##################### System #########################
+define(&quot;SYSNAME&quot;,&quot;FleepGrid);
+define(&quot;SYSURL&quot;,&quot;<A HREF="http://fleepgrid.com">http://fleepgrid.com</A>&quot;);
+define(&quot;SYSMAIL&quot;,&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleepgrid at gmail.com</A>&quot;);
+
+
+$userInventoryURI=&quot;<A HREF="http://fleepgrid.com:8002">http://fleepgrid.com:8002</A>&quot;;
+$userAssetURI=&quot;<A HREF="http://fleepgrid.com:8003">http://fleepgrid.com:8003</A>&quot;;
+
+...
+
+// Key of the account that all fees go to:
+$economy_sink_account=&quot;&lt;UUID of my banker avatar&gt;&quot;;
+
+// Key of the account that all purchased currency is debited from:
+$economy_source_account=&quot;&lt;UUID of my banker avatar&gt;&quot;;
+
+...
+
+//Server Hanlder URL to get images eg.: <A HREF="http://127.0.0.1:9000/">http://127.0.0.1:9000/</A>
+$RegionImageServer=&quot;<A HREF="http://74.83.148.18:8003">http://74.83.148.18:8003</A>&quot;;
+
+...
+
+##################### Database ########################
+define(&quot;C_DB_TYPE&quot;,&quot;mysql&quot;);
+//Your Hostname here:
+define(&quot;C_DB_HOST&quot;,&quot;localhost&quot;);
+//Your Databasename here:
+define(&quot;C_DB_NAME&quot;,&quot;&lt;my database name&gt;&quot;);
+//Your Username from Database here:
+define(&quot;C_DB_USER&quot;,&quot;&lt;my read only mysql helper account username&gt;&quot;);
+//Your Database Password here:
+define(&quot;C_DB_PASS&quot;,&quot;&lt;my password for the helper account above&gt;&quot;);
+
+6.  Changed the helper URI in robust.HG.ini:
+
+economy = <A HREF="http://fleepgrid.com/helper">http://fleepgrid.com/helper</A>
+
+7.  Restarted ROBUST
+
+
+After that, I logged in and created a parcel and set it for sale to a test
+user account, logged in the test user account to try to purchase it, and
+got the same &quot;Could not complete purchase&quot; errors I saw before.
+
+Not sure what I did wrong, but any assistance would be greatly appreciated!
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Wed, Sep 19, 2012 at 12:53 PM, Nebadon Izumi &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">nebadon2025 at gmail.com</A>&gt;wrote:
+
+&gt;<i> you need the landtools php files available here from OSgrid :
+</I>&gt;<i> <A HREF="http://download.osgrid.org/helper_tools_opensim.zip">http://download.osgrid.org/helper_tools_opensim.zip</A> : this needs to be in
+</I>&gt;<i> a folder on your website configured for your grid database, i suggest
+</I>&gt;<i> making a read only account for mysql, these do not need write access, so
+</I>&gt;<i> something like this <A HREF="http://helper.osgrid.org">http://helper.osgrid.org</A> or <A HREF="http://osgrid.org/helperand">http://osgrid.org/helperand</A> then just point your viewer grid manager to this location, then you
+</I>&gt;<i> should be able to transfer and sell land.  Let me know if you have any
+</I>&gt;<i> questions.
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Sep 19, 2012 at 11:54 AM, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi folks,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We have an upcoming project on our campus grid that is going to require
+</I>&gt;&gt;<i> students to be able to own parcels.  As far as I can tell reading various
+</I>&gt;&gt;<i> posts on the listserv and notes on the opensim wiki, it appears some kind
+</I>&gt;&gt;<i> of economy module is required to permit land transactions, but I'll be
+</I>&gt;&gt;<i> darned if I can figure out what module and what the steps are to facilitate
+</I>&gt;&gt;<i> this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can someone point me in the right direction?  If it matters, the grid is
+</I>&gt;&gt;<i> running on Windows Server 2008.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks in advance!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Chris/Fleep
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;&gt;<i> University of Cincinnati
+</I>&gt;&gt;<i> 406A Zimmer Hall
+</I>&gt;&gt;<i> 315 College Drive
+</I>&gt;&gt;<i> PO BOX 210088
+</I>&gt;&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;&gt;<i> (513) 556-3018
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Michael Emory Cerquoni
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120921/cc1a9549/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120921/cc1a9549/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010924.html">[Opensim-users] Buying and Selling Land - What module is needed?
+</A></li>
+	<LI>Next message: <A HREF="010930.html">[Opensim-users] Buying and Selling Land - What module is needed?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10929">[ date ]</a>
+              <a href="thread.html#10929">[ thread ]</a>
+              <a href="subject.html#10929">[ subject ]</a>
+              <a href="author.html#10929">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database overview needed
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20overview%20needed&In-Reply-To=%3Cc5851bcf0903030933i107c8576w8606e0fbed328165%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001600.html">
+   <LINK REL="Next"  HREF="001589.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database overview needed</H1>
+    <B>Impalah</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20overview%20needed&In-Reply-To=%3Cc5851bcf0903030933i107c8576w8606e0fbed328165%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Database overview needed">impalah at gmail.com
+       </A><BR>
+    <I>Tue Mar  3 18:33:32 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001600.html">[Opensim-users] Database overview needed
+</A></li>
+        <LI>Next message: <A HREF="001589.html">[Opensim-users] Permanent Ghosting of Avatar..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1601">[ date ]</a>
+              <a href="thread.html#1601">[ thread ]</a>
+              <a href="subject.html#1601">[ subject ]</a>
+              <a href="author.html#1601">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It's a &quot;foreign key&quot; in the sense that it references a &quot;record in another
+table&quot;, but for opensim assetID it's only an uuid to be served for the
+&quot;asset server&quot;, not for being recovered directly from the database. That is,
+you could set a foreign key in your database model (I did it last year when
+starting with nhibernate, but I was playing in standalone mode) but asset
+management and inventory management are independent.
+
+When you are in &quot;grid&quot; mode you will have 5 UGAIM + X region servers, each
+one with its data model and you could be using different schemas/database
+servers/machines/networks...
+
+If you need to implement a process to take care of referencial integrity
+between assets and inventory I think (please &quot;masters of the opensim&quot;
+correct me if I'm wrong) you must implement the &quot;look for shit&quot; process in
+the inventory server and a REST delete method in the assets server, but
+taking care with the things you delete, you must be absolutely sure that the
+asset you are deleting is ONLY and inventory item (and not library asset,
+region map, terrain, etc.). It isn't anything similar right now (at least
+not in the 0.6 version I am working on)
+
+The implementation of the asset server is very simple, extremely simple (I
+did it with less than 100 php code lines.. well... using a mvc framework :-P
+). It only has get and save... by now, of course.
+
+I think was Adam Frisby? who made a new asset server with authentication and
+some other things like storing into amazon's S3 (my memory fails often) but
+I don't know if this implements something like delete or modify.
+
+So... maybe you need to create the methods for yourself or wait for the next
+evolution of opensim. If you want to develope them, my advice is to include
+the possibility to deactivate the behavior (config file or something).
+
+Greetings
+
+
+
+2009/3/3 Frank W Sweet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;
+
+&gt;<i> Impalah wrote: The connection between them is
+</I>&gt;<i> assetID(inventoryItems)-&gt;id(assets) but there aren't any foreign keys.
+</I>&gt;<i>
+</I>&gt;<i> The asset UUID in the inventory record is a foreign key. Located in
+</I>&gt;<i> one table (inventoryitems), it is the unique key to an entry in a
+</I>&gt;<i> different table (assets). The problem, in this specific example, is
+</I>&gt;<i> that if the asset record is copied whenever it is modified, for fear
+</I>&gt;<i> that some other inventory item might be pointing to it, eventually
+</I>&gt;<i> most of the asset records in my database will be junk--not referenced
+</I>&gt;<i> by any item and so unreachable. Worse yet, due to glitches and
+</I>&gt;<i> crashes, an inventory item might be pointing to a non-existent
+</I>&gt;<i> asset-ID. (Now that I know the data structure, I have already found
+</I>&gt;<i> several such situations in my database.)
+</I>&gt;<i>
+</I>&gt;<i> Frank W Sweet
+</I>&gt;<i> Backintyme Publishing.
+</I>&gt;<i>
+</I>&gt;<i> ----- Original Message -----
+</I>&gt;<i> From: &quot;Impalah&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A>&gt;
+</I>&gt;<i> To: &quot;Frank W Sweet&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;;
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Sent: Tuesday, March 03, 2009 9:12 AM
+</I>&gt;<i> Subject: Re: [Opensim-users] Database overview needed
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Not, there aren't any, at least in the &quot;original&quot; opensim servers.
+</I>&gt;<i>
+</I>&gt;<i> Asset server is a huge store of anything, even the generated maps and
+</I>&gt;<i> terrain revisions (opensim region servers). Not only inventory assets
+</I>&gt;<i> are
+</I>&gt;<i> stored there.
+</I>&gt;<i>
+</I>&gt;<i> Asset server and inventory server are separated processes each one
+</I>&gt;<i> with
+</I>&gt;<i> their own data models. The connection between them is
+</I>&gt;<i> assetID(inventoryItems)-&gt;id(assets) but there aren't any foreign keys.
+</I>&gt;<i> You
+</I>&gt;<i> could use different databases for assets/inventory.
+</I>&gt;<i>
+</I>&gt;<i> I have only doubts about the new AssetsInventory server, I hadn't time
+</I>&gt;<i> to
+</I>&gt;<i> play with it.
+</I>&gt;<i>
+</I>&gt;<i> Greetings
+</I>&gt;<i>
+</I>&gt;<i> 2009/3/3 Frank W Sweet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> &gt; Thank you so much! I had no idea that section of the Wiki was out
+</I>&gt;<i> &gt; there!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; One other question: Since there is no reference counter in &quot;asset&quot;
+</I>&gt;<i> &gt; for
+</I>&gt;<i> &gt; inventory-to-asset references (nor in &quot;userfriend&quot; for
+</I>&gt;<i> &gt; user-to-userfriend references, nor in any other table receiving
+</I>&gt;<i> &gt; one-to-many relationships, for that matter), I assume that there are
+</I>&gt;<i> &gt; utility procedures in the code that are run periodically to purge
+</I>&gt;<i> &gt; unreferenced records and to check referential integrity. Where in
+</I>&gt;<i> &gt; the
+</I>&gt;<i> &gt; code would these be, and how often are they run (at startup,
+</I>&gt;<i> &gt; shutdown,
+</I>&gt;<i> &gt; every so often)?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Frank W Sweeet
+</I>&gt;<i> &gt; Backintyme Publishing
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ----- Original Message -----
+</I>&gt;<i> &gt; From: &quot;Jeff Ames&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jeffames at gmail.com</A>&gt;
+</I>&gt;<i> &gt; To: &quot;Frank W Sweet&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fwsweet at backintyme.com</A>&gt;;
+</I>&gt;<i> &gt; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> &gt; Sent: Monday, March 02, 2009 10:58 PM
+</I>&gt;<i> &gt; Subject: Re: [Opensim-users] Database overview needed
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; There is some existing documentation at
+</I>&gt;<i> &gt; <A HREF="http://opensimulator.org/wiki/Database:Documentation">http://opensimulator.org/wiki/Database:Documentation</A> and the pages
+</I>&gt;<i> &gt; linked there.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; As for assets versus inventory items, an asset is the object itself,
+</I>&gt;<i> &gt; whereas the inventory item simply points to the asset (via the asset
+</I>&gt;<i> &gt; ID), and adds some information about the asset that the inventory
+</I>&gt;<i> &gt; needs to be aware of, such as permissions.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; When assets are modified, a copy is created, since we can't be sure
+</I>&gt;<i> &gt; that there is only one reference to the original asset.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; (I believe this is accurate, but those of you more familiar with
+</I>&gt;<i> &gt; current asset handling, please correct me if I'm mistaken.)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Jeff
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090303/c3c827af/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090303/c3c827af/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001600.html">[Opensim-users] Database overview needed
+</A></li>
+	<LI>Next message: <A HREF="001589.html">[Opensim-users] Permanent Ghosting of Avatar..
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1601">[ date ]</a>
+              <a href="thread.html#1601">[ thread ]</a>
+              <a href="subject.html#1601">[ subject ]</a>
+              <a href="author.html#1601">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

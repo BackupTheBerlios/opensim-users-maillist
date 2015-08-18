@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] viewer with minimal streaming delay
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20viewer%20with%20minimal%20streaming%20delay&In-Reply-To=%3C4CBEEE1A.4080202%40cise.ufl.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005863.html">
+   <LINK REL="Next"  HREF="005862.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] viewer with minimal streaming delay</H1>
+    <B>Paul Fishwick</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20viewer%20with%20minimal%20streaming%20delay&In-Reply-To=%3C4CBEEE1A.4080202%40cise.ufl.edu%3E"
+       TITLE="[Opensim-users] viewer with minimal streaming delay">fishwick at cise.ufl.edu
+       </A><BR>
+    <I>Wed Oct 20 15:26:50 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005863.html">[Opensim-users] viewer with minimal streaming delay
+</A></li>
+        <LI>Next message: <A HREF="005862.html">[Opensim-users]  ReflectionTypeLoadException
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5864">[ date ]</a>
+              <a href="thread.html#5864">[ thread ]</a>
+              <a href="subject.html#5864">[ subject ]</a>
+              <a href="author.html#5864">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>  Gwyneth and Jor3l:
+
+  The audio stream using the parcel streaming URL (mp3 file), which is 
+produced
+dynamically by Pure Data (PD), which operates through avatar interaction 
+in-world,
+so a control/audio feedback loop.
+  If I manually make an ajustment in PD, I hear the results immediately 
+if I route the
+audio to the sound card. If I instead route the audio to mp3cast~ (an 
+object in PD),
+then it routes to land parcel via the streaming URL. Therefore, the 
+delay lies somewhere
+in between the bytes sent from PD to the bytes received by the land 
+parcel, which
+is presumably forwarded to the client. PD has no perceivable delays -- 
+its audio output is
+immediate as a result of real-time parameter modification (e.g., UI 
+sliders).
+  Maybe you are right that a few seconds is normal and that we cannot 
+get beyond
+that.
+  Here is an entry into my R&amp;D blog which points to the student web URL:
+
+   
+<A HREF="http://www.cise.ufl.edu/~fishwick/Blog/Entries/2010/10/3_Dancing_resonance.html">http://www.cise.ufl.edu/~fishwick/Blog/Entries/2010/10/3_Dancing_resonance.html</A>
+
+  We use Shoutcast because we could not get Icecast to work correctly 
+(always had
+lots of distortion in the stream).
+-p
+
+
+
+On 10/20/2010 7:03 AM, Gwyneth Llewelyn wrote:
+&gt;<i> Paul,
+</I>&gt;<i>
+</I>&gt;<i> How does that audio stream get into the viewer? Is it the parcel 
+</I>&gt;<i> streaming URL that has the link to the file that gets downloaded (or 
+</I>&gt;<i> the stream that gets connected to)?
+</I>&gt;<i>
+</I>&gt;<i> If so, the &quot;delay&quot; is not related neither to OpenSim, nor to the 
+</I>&gt;<i> viewer, but merely with the software you use to send the file/stream. 
+</I>&gt;<i> If it's a *file*, obviously there is some buffering: a 1 MByte file 
+</I>&gt;<i> that will be played by the viewer needs to be transmitted in full 
+</I>&gt;<i> first, and &quot;a few seconds&quot; is normal. If it's a *stream*, the 
+</I>&gt;<i> buffering will take a bit less, but it will never be &quot;zero&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Unless I didn't understand your setup, and in reality, what you do is 
+</I>&gt;<i> something way more interesting, which is getting the sound synthesised 
+</I>&gt;<i> externally, uploaded as an asset to OpenSim, transferred to the 
+</I>&gt;<i> viewer, and played as any other sound asset. If that's what you do in 
+</I>&gt;<i> merely 3-5 seconds, wow, I'm impressed it's so fast!
+</I>&gt;<i>
+</I>&gt;<i>     - Gwyn
+</I>&gt;<i>
+</I>&gt;<i> On 2010/10/20, at 05:45, Paul Fishwick wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> We have a project where actions initiated in OpenSim create a signal
+</I>&gt;&gt;<i> which goes out to modulate a real-time sound synthesis engine, whose
+</I>&gt;&gt;<i> output gets fed back into the OpenSim viewer. Unfortunately, there
+</I>&gt;&gt;<i> is usually a 3-5 second delay between the action and hearing the
+</I>&gt;&gt;<i> result. Presumably, this delay is due to buffering, probably by the
+</I>&gt;&gt;<i> client viewer since we've tested the other parts of the loop. This leads
+</I>&gt;&gt;<i> to the question of whether anyone knows of an OpenSim world
+</I>&gt;&gt;<i> viewer where one can fine-tune the buffer size for streaming audio?
+</I>&gt;&gt;<i> For the stock LL viewer, I cannot find any debug options to allow
+</I>&gt;&gt;<i> this tweak.
+</I>&gt;&gt;<i> -p
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> Paul Fishwick, PhD
+</I>&gt;&gt;<i> Professor and Director, Digital Arts and Sciences
+</I>&gt;&gt;<i> CISE Department, CSE 301
+</I>&gt;&gt;<i> University of Florida
+</I>&gt;&gt;<i> Gainesville, FL 32611
+</I>&gt;&gt;<i> Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;&gt;<i> Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;&gt;<i> Blog: <A HREF="http://www.representationz.com">http://www.representationz.com</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> &quot;I'm not building a game. I'm building a new country.&quot;
+</I>&gt;<i>   -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Paul Fishwick, PhD
+Professor and Director, Digital Arts and Sciences
+CISE Department, CSE 301
+University of Florida
+Gainesville, FL 32611
+Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+Blog: <A HREF="http://www.representationz.com">http://www.representationz.com</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005863.html">[Opensim-users] viewer with minimal streaming delay
+</A></li>
+	<LI>Next message: <A HREF="005862.html">[Opensim-users]  ReflectionTypeLoadException
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5864">[ date ]</a>
+              <a href="thread.html#5864">[ thread ]</a>
+              <a href="subject.html#5864">[ subject ]</a>
+              <a href="author.html#5864">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

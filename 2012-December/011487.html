@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] HyperGrid Issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HyperGrid%20Issues&In-Reply-To=%3C000301cde3ef%24df3b0b50%249db121f0%24%40net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011484.html">
+   <LINK REL="Next"  HREF="011488.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] HyperGrid Issues</H1>
+    <B>Randy Pierce</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HyperGrid%20Issues&In-Reply-To=%3C000301cde3ef%24df3b0b50%249db121f0%24%40net%3E"
+       TITLE="[Opensim-users] HyperGrid Issues">thepierces-rwpt at charter.net
+       </A><BR>
+    <I>Thu Dec 27 06:06:21 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011484.html">[Opensim-users] HyperGrid Issues
+</A></li>
+        <LI>Next message: <A HREF="011488.html">[Opensim-users] HyperGrid Issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11487">[ date ]</a>
+              <a href="thread.html#11487">[ thread ]</a>
+              <a href="subject.html#11487">[ subject ]</a>
+              <a href="author.html#11487">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well Fleep -&gt; bad news. I have read both posts by Diva in their entirety and they did not repair the problem.
+
+ 
+
+I am attempting to solve multiple problems simultaneously and not having luck with any of them.
+
+ 
+
+Meanwhile, rather than open up another thread I am running into another issue.
+
+ 
+
+I am attempting to split region loads across multiple computers (all running windows xp and 0.7.4) but cannot for the life of me get the SQL to be able to be accessed from computer #2. Computer #1 (and the rest of the world) can access the SQL file as they can login and all services are there. But my computer #2 reports the following during OpenSim startup:
+
+ 
+
+====================================================================
+
+2012-12-26 22:59:02,544 INFO  - OpenSim.OpenSim ========================= STARTING OPENSIM =========================
+
+2012-12-26 22:59:02,544 INFO  - OpenSim.OpenSim ====================================================================
+
+2012-12-26 22:59:17,809 ERROR - OpenSim.Services.Base.ServiceBase [SERVICE BASE]: Failed to load plugin OpenSim.Region.Framework.Interfaces.ISimulationDataStore from OpenSim.Data.MySQL.dll with args Data Source=192.168.1.125;Database=opensim;User ID=opensim;Password=***;Old Guids=true;
+
+System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---&gt; MySql.Data.MySqlClient.MySqlException: Unable to connect to any of the specified MySQL hosts.
+
+   at MySql.Data.MySqlClient.NativeDriver.Open()
+
+   at MySql.Data.MySqlClient.Driver.Open()
+
+   at MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+
+   at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()
+
+   at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()
+
+   at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()
+
+   at MySql.Data.MySqlClient.MySqlPool.GetConnection()
+
+   at MySql.Data.MySqlClient.MySqlConnection.Open()
+
+   at OpenSim.Data.MySQL.MySQLSimulationData.Initialise(String connectionString)
+
+   at OpenSim.Data.MySQL.MySQLSimulationData..ctor(String connectionString)
+
+   --- End of inner exception stack trace ---
+
+   at System.RuntimeMethodHandle._InvokeConstructor(Object[] args, SignatureStruct&amp; signature, IntPtr declaringType)
+
+   at System.RuntimeMethodHandle.InvokeConstructor(Object[] args, SignatureStruct signature, RuntimeTypeHandle declaringType)
+
+   at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+   at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes)
+
+   at System.Activator.CreateInstance(Type type, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes)
+
+   at OpenSim.Services.Base.ServiceBase.LoadPlugin[T](String dllName, String className, Object[] args)
+
+2012-12-26 22:59:17,825 ERROR - OpenSim.Server.Base.ServerUtils Error loading plugin OpenSim.Region.Framework.Interfaces.ISimulationDataService from OpenSim.Services.Connectors.dll. Exception: Could not find a storage interface in the given module
+
+2012-12-26 22:59:17,840 INFO  - OpenSim.Data.MySQL.MySQLEstateStore [REGION DB]: MySql - connecting: Data Source=192.168.1.125;Database=opensim;User ID=opensim;Password=***;Old Guids=true;
+
+ 
+
+1)      I am NOT trying to run two Robust instances. The operating instance is on computer #1
+
+2)      The passwords have been removed.
+
+3)      I have tried &#8220;localhost&#8221;, &#8220;192.168.1.125&#8221; (local IP), as well as &#8220;gcse.dyndns.org&#8221; (external DNS port forwarding)
+
+ 
+
+From: Fleep Tuque [via opensim-users] [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ml-node+s2152040n7579217h19 at n2.nabble.com</A>] 
+Sent: Tuesday, December 25, 2012 6:58 PM
+To: Randy Pierce
+Subject: Re: HyperGrid Issues
+
+ 
+
+Hi,
+
+ 
+
+There are two previous listserv threads where Diva has replied about similar Hypergrid issues that may be helpful in your situation:
+
+ 
+
+<A HREF="http://opensim-users.2152040.n2.nabble.com/can-t-tp-home-after-hypergrid-jump-td6227904.html">http://opensim-users.2152040.n2.nabble.com/can-t-tp-home-after-hypergrid-jump-td6227904.html</A>
+
+ 
+
+<A HREF="http://opensim-users.2152040.n2.nabble.com/Any-way-to-display-the-values-of-quot-IP-quot-and-quot-MyIP-quot-td7456408.html">http://opensim-users.2152040.n2.nabble.com/Any-way-to-display-the-values-of-quot-IP-quot-and-quot-MyIP-quot-td7456408.html</A>
+
+ 
+
+The second one I consider required reading for anyone who needs to understand how the Hypergrid networking stuff works.  Hopefully that information will help you troubleshoot the problem.
+
+ 
+
+Best of luck and let us know how it goes!
+
+ 
+
+- Chris/Fleep
+
+ 
+
+ 
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+
+UCIT Instructional &amp; Research Computing
+
+University of Cincinnati
+
+406A Zimmer Hall
+
+315 College Drive
+
+PO BOX 210088
+
+Cincinnati, OH 45221-0088
+
+[hidden email]
+
+(513) 556-3018
+
+ 
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Tue, Dec 25, 2012 at 3:18 PM, The Pierce Family &lt;[hidden email]&gt; wrote:
+
+I am operating my own grid using v0.7.4 under Windows XP. I am utilizing WAMP for my web server.
+
+ 
+
+What I need to know is why the HyperGrid on my grid keeps reporting &#8220;teleport refused &#8211; unable to verify identity&#8221;
+
+ 
+
+What specific changes must I make either in my OpenSim.ini or RobustHG.ini for this to work properly?
+I have my OpenSim.ini set to use GridHyperGrid.ini &#8230; not sure what to change now. It worked about 3 months ago.
+
+ 
+
+If you have received this email and wish to be removed from the list, please send an email to the sender. This email list is used for the sole purpose of sending out band-specific information as part of routine business with the Kenwood High School Band and Booster Club, Inc. and is not intended to be shared or used for any other purpose. Please report suspected violations to Ms. Suiter and to this email address.
+
+ 
+
+
+_______________________________________________
+Opensim-users mailing list
+[hidden email]
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+ 
+
+
+_______________________________________________ 
+Opensim-users mailing list 
+[hidden email] 
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A> 
+
+  _____  
+
+If you reply to this email, your message will be added to the discussion below:
+
+<A HREF="http://opensim-users.2152040.n2.nabble.com/HyperGrid-Issues-tp7579211p7579217.html">http://opensim-users.2152040.n2.nabble.com/HyperGrid-Issues-tp7579211p7579217.html</A> 
+
+To start a new topic under opensim-users, email <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ml-node+s2152040n2152040h32 at n2.nabble.com</A> 
+To unsubscribe from opensim-users, click here &lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/template/NamlServlet.jtp?macro=unsubscribe_by_code&amp;node=2152040&amp;code=dGhlcGllcmNlcy1yd3B0QGNoYXJ0ZXIubmV0fDIxNTIwNDB8MTEzMzY4MTU3NA==">http://opensim-users.2152040.n2.nabble.com/template/NamlServlet.jtp?macro=unsubscribe_by_code&amp;node=2152040&amp;code=dGhlcGllcmNlcy1yd3B0QGNoYXJ0ZXIubmV0fDIxNTIwNDB8MTEzMzY4MTU3NA==</A>&gt; .
+NAML 
+
+
+
+
+
+--
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/HyperGrid-Issues-tp7579211p7579220.html">http://opensim-users.2152040.n2.nabble.com/HyperGrid-Issues-tp7579211p7579220.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121226/02573e3b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20121226/02573e3b/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011484.html">[Opensim-users] HyperGrid Issues
+</A></li>
+	<LI>Next message: <A HREF="011488.html">[Opensim-users] HyperGrid Issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11487">[ date ]</a>
+              <a href="thread.html#11487">[ thread ]</a>
+              <a href="subject.html#11487">[ subject ]</a>
+              <a href="author.html#11487">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

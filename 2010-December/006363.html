@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow LSL timers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3C1DEA2A500941AD41AF9F9A712451BD80C10BCC71%40orsmsx502.amr.corp.intel.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006351.html">
+   <LINK REL="Next"  HREF="006364.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow LSL timers</H1>
+    <B>Lake, Dan</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3C1DEA2A500941AD41AF9F9A712451BD80C10BCC71%40orsmsx502.amr.corp.intel.com%3E"
+       TITLE="[Opensim-users] Slow LSL timers">dan.lake at intel.com
+       </A><BR>
+    <I>Mon Dec  6 17:38:58 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006351.html">[Opensim-users] Slow LSL timers
+</A></li>
+        <LI>Next message: <A HREF="006364.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6363">[ date ]</a>
+              <a href="thread.html#6363">[ thread ]</a>
+              <a href="subject.html#6363">[ subject ]</a>
+              <a href="author.html#6363">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I agree with Justin that the implementation is quite imprecise and has built in a lot of overhead and &quot;jitter&quot; to the firing of timer events. If you are interested in looking into the code, here is a background on what I know about timers in XEngine.
+
+Timers are only checked for expiration in Timers.cs every 100ms so there is some &quot;overhead&quot; always built in. This value used to be configurable in OpenSim.ini using AsyncLLCommandLoopms but is has apparently been removed at some point.
+
+Each time the AsyncCommandManager loops (100ms), it calls into CheckTimerEvents() in Timer.cs that Justin mentioned. Each elapsed timer in the list of timers will trigger a ScriptEngine.PostScriptEvent of type &quot;timer&quot; on the script engine. The script engine passes the event on to the specific script instance which may accumulate/batch events with a minimum delay. This batching typically does not apply to timer events but it can. It's configurable with the LSL command llMinEventDelay(double delay).  The script instance queues the timer event onto XEngine as a normal thread pool QueueWorkItem which will then be executed as soon as it can be scheduled.
+
+So, the only guaranteed delay is the (up to) 100ms added by the async command loop in checking for expired timers. If there are lots of timers, then there are several linear lists of searching and processing events which can create additional overhead but it doesn't sound like that's what you are doing (just 1 timer).  After that, there is possibly a minimum batching time for script events and 1 asyc call to QueueWorkItem. The queued work item is EventProcessor in ScriptInstance.cs and for a timer event, I don't think there are additional delays in there.
+
+~Dan
+
+From: Mic Bowman [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cmickeyb at gmail.com</A>]
+Sent: Friday, December 03, 2010 8:04 PM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Cc: Lake, Dan
+Subject: Re: [Opensim-users] Slow LSL timers
+
+i believe dan did some work on optimizing the timers. maybe he can give some insight...
+
+--mic
+
+On Fri, Dec 3, 2010 at 5:35 PM, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt; wrote:
+I'm not familiar with the this area of the code but I had a quick look since I was curious (the meat is in OpenSim/Region/ScriptEngine/Shared/Api/Plugins/Timer.cs).  The code isn't using C# timers so I'm not totally surprised at the behaviour that you're seeing.
+
+I suspect addressing this would require a considerably different implementation.
+
+
+On 03/12/10 17:18, Jorge Lima wrote:
+Ran 100 timer events with a single if(++i&gt;  100) inside. I suppose
+decrementing and comparing to 0 might be faster, but I also
+copy-pasted 100 inlined if clauses and the time to run them was
+negligible.
+
+llSetTimerEvent(0.1) -&gt;  59 s -&gt;  490% overhead
+llSetTimerEvent(0.2) -&gt;  59 s -&gt;  195% overhead
+llSetTimerEvent(0.5) -&gt;  59 s -&gt;  18% overhead
+llSetTimerEvent(0.75) -&gt;  81 s -&gt;  8% overhead
+llSetTimerEvent(1.0) -&gt;  108 s -&gt;  8% overhead
+llSetTimerEvent(2.0) -&gt;  209 s -&gt;  4.5% overhead
+llSetTimerEvent(4.0) -&gt;  407 s -&gt;  1.75% overhead
+
+I am guessing that the overhead is, therefore, internal to the timer
+implementation. I haven't tested raw C# timers as comparison but 100ms
+is an eternity in modern computing, I can ping servers across the
+Atlantic ocean in less than that!
+
+I went through the code but I haven't yet found the part that handles
+timers. It's not in EventManager.
+Does anyone know what's going on? The code works fine in SL.
+Should I be posting this in the dev list? I'd like to see if I can fix it.
+Any thoughts on how to get fast timers in OpenSim?
+Faster computer? (I did check and was only getting about 20% CPU usage...)
+Porting them to a Real-Time operating system? :)
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+--
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101206/ad19c65d/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101206/ad19c65d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006351.html">[Opensim-users] Slow LSL timers
+</A></li>
+	<LI>Next message: <A HREF="006364.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6363">[ date ]</a>
+              <a href="thread.html#6363">[ thread ]</a>
+              <a href="subject.html#6363">[ subject ]</a>
+              <a href="author.html#6363">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

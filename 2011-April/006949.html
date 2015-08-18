@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NAT &amp; Corporate Firewall
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3C4D967E91.2080906%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006939.html">
+   <LINK REL="Next"  HREF="006957.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NAT &amp; Corporate Firewall</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3C4D967E91.2080906%40googlemail.com%3E"
+       TITLE="[Opensim-users] NAT &amp; Corporate Firewall">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Apr  2 03:40:33 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006939.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+        <LI>Next message: <A HREF="006957.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6949">[ date ]</a>
+              <a href="thread.html#6949">[ thread ]</a>
+              <a href="subject.html#6949">[ subject ]</a>
+              <a href="author.html#6949">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the info Simon, that's cleared that up for me.  And thanks to the others contributing to this thread.
+
+I think that a utility to test a connection and provide an explicit diagnosis (rather than the clues provided by the 
+client just hanging in various places) would be rather nice to have.
+
+On 01/04/11 12:59, Simon Slavin wrote:
+&gt;<i>
+</I>&gt;<i> On 1 Apr 2011, at 12:43am, Justin Clark-Casey wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Some people on Stack Overflow think that IPAddress.Any means listen on all NICs (<A HREF="http://stackoverflow.com/questions/1777629/how-to-listen-on-multiple-ip-addresses">http://stackoverflow.com/questions/1777629/how-to-listen-on-multiple-ip-addresses</A>).  But my reading of the MS SDK reference above means that it only binds to one.  Anybody able to comment on this?
+</I>&gt;<i>
+</I>&gt;<i> Stack Overflow is right.  My reading of that SDK page is that it's wrong, and should be corrected, but other MS documentation is clearer on what '::Any' means, for example
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://msdn.microsoft.com/en-us/library/system.net.ipaddress.any.aspx">http://msdn.microsoft.com/en-us/library/system.net.ipaddress.any.aspx</A>
+</I>&gt;<i>
+</I>&gt;<i> Returning to the standards, IP address 0.0.0.0 is reserved for specific purposes for both sending and receiving.  It's called the 'anonymous' address (for historical reasons) or the 'broadcast' address (for current reasons).
+</I>&gt;<i>
+</I>&gt;<i> If a computer SENDS a packet to 0.0.0.0 then it is multibroadcasting: sending one message to every computer that can hear it.  This is done most often to announce the (un)availability of a service, for instance that a printer service has come online.  Sending to address 0.0.0.0 is done by, for example, DHCP and zeroconf (what Apple calls 'Bonjour').  Things like routers are usually set up to drop packets SENT to 0.0.0.0 so that you don't announce to the entire world what address your printer can be found on.
+</I>&gt;<i>
+</I>&gt;<i> When a computer LISTENS to the network interface bound to 0.0.0.0 then it is telling its TCP stack that it doesn't care which network interface a message comes in on, it wants it anyway.  Almost every Internet application does this, especially now many have both Ethernet sockets and WiFi capabilities: an app doesn't care what its user is using right now, it just wants to 'use the internet'.  Under normal circumstances the only programs which /don't/ listen on 0.0.0.0 are techie programs like network utilities, or a web server on a gateway computer which needs to present a web site to internal users and make sure it isn't available to external users.
+</I>&gt;<i>
+</I>&gt;<i> I tried to find an RFC to point to as reference but nothing seems to spell this out.  The nearest thing i could find was RFC950.
+</I>&gt;<i>
+</I>&gt;<i> Simon.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006939.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+	<LI>Next message: <A HREF="006957.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6949">[ date ]</a>
+              <a href="thread.html#6949">[ thread ]</a>
+              <a href="subject.html#6949">[ subject ]</a>
+              <a href="author.html#6949">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] External Access to standalone
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20External%20Access%20to%20standalone&In-Reply-To=%3C4BBC1BED1B354F26A59CCDF681945F9D%40GABPC%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012097.html">
+   <LINK REL="Next"  HREF="012067.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] External Access to standalone</H1>
+    <B>Gary Beck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20External%20Access%20to%20standalone&In-Reply-To=%3C4BBC1BED1B354F26A59CCDF681945F9D%40GABPC%3E"
+       TITLE="[Opensim-users] External Access to standalone">gab4gab at gmail.com
+       </A><BR>
+    <I>Mon Apr 22 00:31:39 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012097.html">[Opensim-users] External Access to standalone
+</A></li>
+        <LI>Next message: <A HREF="012067.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12098">[ date ]</a>
+              <a href="thread.html#12098">[ thread ]</a>
+              <a href="subject.html#12098">[ subject ]</a>
+              <a href="author.html#12098">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tom,
+    Regarding the connection refused on ports 9001-9004.  It's likely the remote port testing site only detects listening TCP ports.  I assume your login URL (TCP) points to port 9000.  That would account for success on port 9000.  The other ports are open but the server is only listening on UDP there so TCP communication would be 'refused.' 
+- Gary Beck
+
+----- Original Message ----- 
+  From: Tom Willans 
+  To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> 
+  Sent: Sunday, April 21, 2013 3:36 PM
+  Subject: Re: [Opensim-users] External Access to standalone
+
+
+  Thank you to everyone who helped all is now working - simple when it works!  I have a standalone diva distribution (0.75 opensim) with 5 regions working (ports 9000-9004)  and 3 simultaneous avatars working with insignificant lag, even with my ancient Pentium 4 Processors.  Curiously <A HREF="http://www.canyouseeme.org/">http://www.canyouseeme.org/</A>  reports ports 9001-9004 as connection refused which proved to be a red herring. 
+
+
+  The primary issues related to the dynamic address not updating as expected and configuring the BT Home Hub 3 router (there is a lot of confusion on the web regarding versions A or B and firmware updates e.g. NAT loop back or not.) . 
+
+
+  -    A dynamic dns service linked a url to my address to my routers external address (dynamic)
+  -    The ExternalHostName was set to this external URL in both the MyWorld.ini and Region.ini files e.g. Region Config.ini
+  -    Port forwarding was set up for TCP and UDP on ports 9000-9004.
+
+
+  BT Home Hub 3 despite many BT community forum blogs comments must now be supporting NAT loop back (the router recognises that the external url refers to its own address). I am now able to access the server over the internal LAN as well. I need to add the BT Home Hub 3 to the open simulator site as working.
+
+
+  Next step is making is to make this robust/backups etc. Oh and recruit participants :)
+
+
+  Thanks again.
+
+
+
+
+
+
+
+
+  Tom Willans  BSc(Hons)  MBCS  CITP
+  PhD Student
+  Serious Games Institute, Coventry University
+  United Kingdom
+
+
+  Managing Director Bessacarr Publications Ltd
+  Senior Research Representative:Engineering and Computing
+  +44 (0)121 288 0281
+  email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tom.willans at bessacarr.com</A>
+  skype: tom.willans
+  Second Life and OSGrid: Tom Tiros
+
+
+
+
+
+
+  Sent from my iPad
+
+  On 17 Apr 2013, at 12:59, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt; wrote:
+
+
+    Hi Tom,
+
+
+    This is a fairly common question that can have a number of different root causes.  
+
+
+    It might be helpful to go over the details of exactly what happens when you try to log in.  Based on my understanding and previous posts from Justin, Diva and others, this is my understanding of how it works:  When you start up the client and enter your name/password, it sends those details to the OpenSim login service. If your password is correct, it tells the region simulator that you're coming.  The login service then sends back to your client the IP address and port to use to enter that region based on the information in the regions.ini configuration file.  Your client then connects to the region using those details.  
+
+
+    If you are stuck at &quot;Connecting to Region..&quot; or &quot;Waiting for region handshake...&quot; then your client successfully connected to the Opensim login service, but the information it is using to try to connect to the region (IP address and port number) is not allowing the connection.  This can be any number of issues related to your networking setup.  
+
+
+    1)  Check to make sure you have the correct ports open on your router and firewall by reviewing the Opensim Network Settings page and Firewall settings page.  You can verify this by using 3rd party port checker software, I've used this successfully:  <A HREF="http://portforward.com/help/portcheck.htm">http://portforward.com/help/portcheck.htm</A>
+
+
+    2)  If you are on a home network, make sure your router supports NAT Loopback, per the instructions on the Opensim wiki:  <A HREF="http://opensimulator.org/wiki/NAT_Loopback_Routers">http://opensimulator.org/wiki/NAT_Loopback_Routers</A>
+
+
+    3)  If you do not have a router that supports NAT Loopback, or are on a corporate or campus network with 1-to-1 NATing, you will need to have an external static IP address assigned to your server for users outside your network to connect.  See this thread for more information:  <A HREF="http://opensim-users.2152040.n2.nabble.com/NAT-amp-Corporate-Firewall-td6223654.html">http://opensim-users.2152040.n2.nabble.com/NAT-amp-Corporate-Firewall-td6223654.html</A>
+
+
+    I run FleepGrid from home and since my router didn't support NAT Loopback, I got a static IP address from my ISP and that resolved all my issues with people not being able to connect from outside my home network.
+
+
+    Hope this info is helpful.  Good luck and let us know how it goes!
+
+
+    - Chris/Fleep
+
+
+
+
+    Chris M. Collins (SL/OS: Fleep Tuque)
+    Center for Simulations &amp; Virtual Environments Research (UCSIM)
+    UCIT Instructional &amp; Research Computing
+    University of Cincinnati
+    406A Zimmer Hall
+    315 College Drive
+    PO BOX 210088
+    Cincinnati, OH 45221-0088
+    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+    (513) 556-3018
+
+
+    <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+
+
+
+
+
+    On Wed, Apr 17, 2013 at 12:44 AM, Tom &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tom.willans at bessacarr.com</A>&gt; wrote:
+
+      I am trying to gain external access to my OS standalone server &quot;Diva&quot;.  On the internal network all is fine even using my external url (via dynamic dns). The  External login gets as far as [SCENE]: Region Central authenticated and authorized incoming root agent XXXXX (circuit code 230241706) (using the rest console).  Firestorm then fails giving the message &quot;Waiting for region handshake&quot; after a number of attempts. 
+
+
+      The IP address is redirected using dynamic dns, the host machine has a reserved IP address.  Port forwarding for both TCP and UDP are set to 9000..9004 to this machine is set up. I have the same problem with an without the firewall on (but forwarding set).
+
+
+      I am able to access the diva Wifi, webpage and use the rest console for this machine. ssh works fine.
+
+
+      Any ideas?
+
+
+      Thanks 
+
+
+      p.s. apologies for having sent request on another posting
+
+
+
+      _______________________________________________
+      Opensim-users mailing list
+      <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+      <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+    _______________________________________________
+    Opensim-users mailing list
+    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+------------------------------------------------------------------------------
+
+
+  _______________________________________________
+  Opensim-users mailing list
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130421/00a852fc/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130421/00a852fc/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012097.html">[Opensim-users] External Access to standalone
+</A></li>
+	<LI>Next message: <A HREF="012067.html">[Opensim-users] Approach to get fresh content for an OpenSim Grid on New Servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12098">[ date ]</a>
+              <a href="thread.html#12098">[ thread ]</a>
+              <a href="subject.html#12098">[ subject ]</a>
+              <a href="author.html#12098">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

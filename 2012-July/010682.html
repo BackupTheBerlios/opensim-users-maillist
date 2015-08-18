@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Script states are not being persisted on	r/19526?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20states%20are%20not%20being%20persisted%20on%0A%09r/19526%3F&In-Reply-To=%3C50034439.9060901%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010673.html">
+   <LINK REL="Next"  HREF="010660.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Script states are not being persisted on	r/19526?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20states%20are%20not%20being%20persisted%20on%0A%09r/19526%3F&In-Reply-To=%3C50034439.9060901%40gmail.com%3E"
+       TITLE="[Opensim-users] Script states are not being persisted on	r/19526?">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Mon Jul 16 00:29:13 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010673.html">[Opensim-users] Script states are not being persisted on	r/19526?
+</A></li>
+        <LI>Next message: <A HREF="010660.html">[Opensim-users] login problems with 2/3 viewers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10682">[ date ]</a>
+              <a href="thread.html#10682">[ thread ]</a>
+              <a href="subject.html#10682">[ subject ]</a>
+              <a href="author.html#10682">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sure thing! And thank you for the info, wasn't sure what to make of the 
+messages =)
+
+On 7/11/2012 6:52 PM, Justin Clark-Casey wrote:
+&gt;<i> Hi Chris.  Thanks for the fix confirmation.
+</I>&gt;<i>
+</I>&gt;<i> The &quot;Dropped...&quot; messages are a little more frequent now on teleport 
+</I>&gt;<i> since I tightened the teleport code.  They occur when a message is 
+</I>&gt;<i> processed from a viewer but the simulator has already removed the 
+</I>&gt;<i> connection.  You can ignore them and they may eventually get commented 
+</I>&gt;<i> out but they're still useful for diagnosing other problems where a 
+</I>&gt;<i> client is removed from a simulator unexpectedly.
+</I>&gt;<i>
+</I>&gt;<i> On 11/07/12 08:09, Chris wrote:
+</I>&gt;&gt;<i> Hi Justin,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ran a few quick tests and script states appear to be functioning 
+</I>&gt;&gt;<i> correctly now as far as I can tell =)
+</I>&gt;&gt;<i> Will file a mantis if I happen to run into something later once I've 
+</I>&gt;&gt;<i> gotten a chance to test for an extensive period of
+</I>&gt;&gt;<i> time.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> P.S. What does this message mean?
+</I>&gt;&gt;<i> 01:58:23 - [LLUDPSERVER]: Dropped incoming RemoveInventoryItem for 
+</I>&gt;&gt;<i> dead client mewtwo0641 Alito in Test Region 2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I came across it a few times upon logouts while testing.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 7/10/2012 6:39 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;<i> Hi Chris.  Hopefully this is addressed by f3134b5, committed today.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> If not, please could you open a mantis and put the details in there. 
+</I>&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 10/07/12 01:12, Chris wrote:
+</I>&gt;&gt;&gt;&gt;<i> Alrighty; Thanks Justin! Anxious to test it =)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 7/9/2012 7:05 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> Hi Chris.  You're right, this is a regression that started 
+</I>&gt;&gt;&gt;&gt;&gt;<i> occuring in commit 5301648 (Mon Jun 25 21:08:19 2012).  I
+</I>&gt;&gt;&gt;&gt;&gt;<i> hope to have a fix tomorrow.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> On 09/07/12 06:08, Chris wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I have recently compiled commit 1a2ab7b (r/19526) and have 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> noticed that script states are not being persisted between
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> detaches, region crossings / TP (sometimes), and relogs. When 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> attaching a scripted object and using the scripts, it
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> appears to work fine, but upon detach, and then later 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> reattaching, the scripts seem to be starting over from a freshly
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> blank state. This is also true of a relog when logging out with 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> the attachments worn and is also true when a teleport
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> fails.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Is any one else experiencing this?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.4 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010673.html">[Opensim-users] Script states are not being persisted on	r/19526?
+</A></li>
+	<LI>Next message: <A HREF="010660.html">[Opensim-users] login problems with 2/3 viewers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10682">[ date ]</a>
+              <a href="thread.html#10682">[ thread ]</a>
+              <a href="subject.html#10682">[ subject ]</a>
+              <a href="author.html#10682">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

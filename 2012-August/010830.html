@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Question: Avatar Draw Weight
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%3A%20Avatar%20Draw%20Weight&In-Reply-To=%3CBA6325A7-D936-4EAD-82EE-1162E1924746%40gwynethllewelyn.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010827.html">
+   <LINK REL="Next"  HREF="010831.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Question: Avatar Draw Weight</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%3A%20Avatar%20Draw%20Weight&In-Reply-To=%3CBA6325A7-D936-4EAD-82EE-1162E1924746%40gwynethllewelyn.net%3E"
+       TITLE="[Opensim-users] Question: Avatar Draw Weight">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Wed Aug 29 18:45:49 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010827.html">[Opensim-users] Question: Avatar Draw Weight
+</A></li>
+        <LI>Next message: <A HREF="010831.html">[Opensim-users] Question: Avatar Draw Weight
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10830">[ date ]</a>
+              <a href="thread.html#10830">[ thread ]</a>
+              <a href="subject.html#10830">[ subject ]</a>
+              <a href="author.html#10830">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dear Kay,
+
+You might wish read how Avatar Draw Weight is calculated: <A HREF="http://wiki.secondlife.com/wiki/Mesh/Rendering_weight">http://wiki.secondlife.com/wiki/Mesh/Rendering_weight</A>
+
+Base calculation is indeed linked to the number of triangles an avatar has, and, of course, any attachment will add to that value. But extra settings like glow, flexi, and some scripts will add even more.
+
+But remember: except for scripts on attachments, Avatar Draw Weight is a measure of viewer-side lag, i.e. how big an effort your graphics card has to make in order to render an avatar, and not an impact on the server where OpenSim is running. While an avatar with tons of attachments needs to download them first &#8212; which will create some impact on the simulator, as it starts sending all that data to you; the more avatars with attachments on the region, the more effort the simulator has to do &#8212; after they're fully loaded, they should have no impact on the simulator any more (attachments are phantom). Scripts, of course, running server-side, are a different story. Scriptless attachments should not make a huge difference on the simulator (except during the initial load).
+
+On the other hand, viewers will definitely notice the impact of high draw weights. This is mostly noticeable on low-end, old graphics cards, which cannot process so many triangles per frame. It's not so easy to find specs for each and every card out there, and to know where the threshold is. Modern, high-end graphics cards can render so many polygons per frame that I would seriously suspect that they would not notice much of a difference.
+
+A simple rule of thumb: Draw weight of 1000 = just the standard avatar = 7500 triangles
+Everything above 1000, divided by 5, gives the amount of extra triangles (assuming no glow, no flexiprims, etc.) So an avatar with draw weight of 25,950 would have at most 12,500 or so triangles. 18 of those would come up to 225,000 triangles. As far back as 2001, high-end graphic cards would easily handle 60-100k triangles per frame, assuming 30 FPS (<A HREF="http://www.gamedev.net/topic/55764-how-many-triangles-do-most-computer-games-render-per-frame/">http://www.gamedev.net/topic/55764-how-many-triangles-do-most-computer-games-render-per-frame/</A>). In 2004, 400-500k triangles at 30 FPS seemed to be more typical (<A HREF="http://www.gamedev.net/topic/253770-how-many-triangles-can-your-engine-handle/">http://www.gamedev.net/topic/253770-how-many-triangles-can-your-engine-handle/</A>)
+
+Raz Welles has a thorough explanation of where all those triangles come from: <A HREF="http://razwelles.blogspot.pt/2012/06/opensim-and-mesh-understanding.html">http://razwelles.blogspot.pt/2012/06/opensim-and-mesh-understanding.html</A> He quotes a &quot;typical&quot; graphics card being able to render 1.5 million triangles at 33 FPS. His articles is from June 2012, so you can see how the amount of triangle rendering per second has been growing steadily in the past decade.
+
+Still, all these numbers are merely a rough guideline. LL's own engine on the viewer might have performance limits as well &#8212; i.e. it may not be able to send all those triangles to the OpenGL layer quickly enough for the GPU to tender them. OpenGL, in return, also has a limit on how many triangles it can send. And finally, these counts are usually for untextured triangles &#8212; add texturing, and the number obviously drops!
+
+However, I think it's a relatively safe bet that anyone with a graphics card of around 2010 or so should easily view those 18 avatars with Avatar Draw Weight of 25,950, as easily as if they had no attachments, and still get 30 FPS, if they don't turn on shadows or the more sophisticated advanced lighting options on the newest viewers.
+
+I hope this helps.
+
+Cheers,
+
+	- Gwyn
+
+On 29/08/2012, at 16:18, Kay McLennan wrote:
+
+&gt;<i> OpenSim-User List Serve Colleagues,
+</I>&gt;<i> 
+</I>&gt;<i> I currently use the Zen and Phoenix viewers (3) and noticed how the &quot;avatar draw weight&quot; feature in these viewers reveals a dramatic increase in my draw weight whenever I add any attachments to my avatar (read:  prim hair, face light, sculpt shoes or clothes, etc.).  More specifically, without any attachments, my avatar has a draw weight of 1,000 but with the above listed attachments has a draw weight of 25,950.  Further, when I was at an [OpenSim] in-world meeting last week, I observed how many of the approximately 18 avatars in attendance had even higher draw weights.
+</I>&gt;<i> 
+</I>&gt;<i> What is the significance of the avatar draw weight when it comes to region performance and lag?  More specifically, if a region can support 18 avatars with fairly high draw weights, could the region support double the number of avatars if everyone used an avatar than only had a draw weight of 1,000?
+</I>&gt;<i> 
+</I>&gt;<i> Thank you in advance.
+</I>&gt;<i> 
+</I>&gt;<i> -- Kay McLennan
+</I>
+
+--
+&quot;I'm not building a game. I'm building a new country.&quot;
+  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120829/335fdbdd/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120829/335fdbdd/attachment-0001.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 4917 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120829/335fdbdd/attachment-0001.bin">https://lists.berlios.de/pipermail/opensim-users/attachments/20120829/335fdbdd/attachment-0001.bin</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010827.html">[Opensim-users] Question: Avatar Draw Weight
+</A></li>
+	<LI>Next message: <A HREF="010831.html">[Opensim-users] Question: Avatar Draw Weight
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10830">[ date ]</a>
+              <a href="thread.html#10830">[ thread ]</a>
+              <a href="subject.html#10830">[ subject ]</a>
+              <a href="author.html#10830">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

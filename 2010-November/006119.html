@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Implementing Groups
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Implementing%20Groups&In-Reply-To=%3CAANLkTim2GXqt8_3ndzAu9bht%3DYg2YQ5n2ocVVwMVR8zq%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006118.html">
+   <LINK REL="Next"  HREF="006121.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Implementing Groups</H1>
+    <B>Jor3l Boa</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Implementing%20Groups&In-Reply-To=%3CAANLkTim2GXqt8_3ndzAu9bht%3DYg2YQ5n2ocVVwMVR8zq%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Implementing Groups">jor3l at foravatars.com
+       </A><BR>
+    <I>Mon Nov 15 04:19:22 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006118.html">[Opensim-users] Implementing Groups
+</A></li>
+        <LI>Next message: <A HREF="006121.html">[Opensim-users] Implementing Groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6119">[ date ]</a>
+              <a href="thread.html#6119">[ thread ]</a>
+              <a href="subject.html#6119">[ subject ]</a>
+              <a href="author.html#6119">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I was trying too but I'm getting this error, any idea?
+
+2010-11-14 22:09:32,067 ERROR -
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsServicesConnectorModule
+[XMLRPC-GROUPS-CONNECTOR]: An error has occured while attempting to access
+the XmlRpcGroups server method: groups.getAgentActiveMembership
+2010-11-14 22:09:32,069 ERROR -
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsServicesConnectorModule
+[XMLRPC-GROUPS-CONNECTOR]: System.Xml.XmlException: Text node cannot appear
+in this state.  Line 2, position 1.
+  at Mono.Xml2.XmlTextReader.ReadText (Boolean notWhitespace) [0x00000]
+  at Mono.Xml2.XmlTextReader.ReadContent () [0x00000]
+  at Mono.Xml2.XmlTextReader.Read () [0x00000]
+  at System.Xml.XmlTextReader.Read () [0x00000]
+  at Nwc.XmlRpc.XmlRpcResponseDeserializer.Deserialize (System.IO.TextReader
+xmlData) [0x00000]
+  at Nwc.XmlRpc.XmlRpcRequest.Send (System.String url, Int32 timeout)
+[0x00000]
+  at
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsServicesConnectorModule.XmlRpcCall
+(UUID requestingAgentID, System.String function,
+System.Collections.Hashtable param) [0x00000]
+2010-11-14 22:09:32,070 ERROR -
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsServicesConnectorModule
+[XMLRPC-GROUPS-CONNECTOR]:
+2010-11-14 22:09:32,071 WARN  -
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsServicesConnectorModule
+[XMLRPC-GROUPS-CONNECTOR]: WriteKey ::
+2010-11-14 22:09:32,071 WARN  -
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsServicesConnectorModule
+[XMLRPC-GROUPS-CONNECTOR]: RequestingSessionID ::
+00000000-0000-0000-0000-000000000000
+2010-11-14 22:09:32,071 WARN  -
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsServicesConnectorModule
+[XMLRPC-GROUPS-CONNECTOR]: ReadKey ::
+2010-11-14 22:09:32,071 WARN  -
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsServicesConnectorModule
+[XMLRPC-GROUPS-CONNECTOR]: AgentID :: 2496b438-f3de-47ea-a0bb-a7688032448a
+
+Thanks :)
+
+2010/11/14 David Drummond-Murray &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drummer130779 at googlemail.com</A>&gt;
+
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> i have gone for hosting the groups my self but im very stuck and need some
+</I>&gt;<i> serious help on this!! Does anybody have step by step instructions on this?
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Nov 12, 2010 at 9:03 PM, Teravus Ovares &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> It depends really.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you are connecting with an already existing groups implementation, such
+</I>&gt;&gt;<i> as the one provided by mcortez, then you simply need to configure it in
+</I>&gt;&gt;<i> OpenSim.ini.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you are hosting the groups yourself then you need a flotsam compatible
+</I>&gt;&gt;<i> groups implementation set-up and installed.
+</I>&gt;&gt;<i> <A HREF="http://code.google.com/p/flotsam/">http://code.google.com/p/flotsam/</A> &lt;-- Look here
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Teravus
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Fri, Nov 12, 2010 at 6:32 AM, David Drummond-Murray &lt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drummer130779 at googlemail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hi,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I am running opensim in grid mode with robust services and MySQL. Opensim
+</I>&gt;&gt;&gt;<i> version is 0.7.0.2. I now want to enable groups but im not sure how to go
+</I>&gt;&gt;&gt;<i> about this? Do I just enable in the opensim.ini file or is there more to it
+</I>&gt;&gt;&gt;<i> than this?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101114/350b2298/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101114/350b2298/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006118.html">[Opensim-users] Implementing Groups
+</A></li>
+	<LI>Next message: <A HREF="006121.html">[Opensim-users] Implementing Groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6119">[ date ]</a>
+              <a href="thread.html#6119">[ thread ]</a>
+              <a href="subject.html#6119">[ subject ]</a>
+              <a href="author.html#6119">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

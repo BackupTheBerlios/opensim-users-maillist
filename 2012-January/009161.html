@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] FreeBSD libODE issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20FreeBSD%20libODE%20issue&In-Reply-To=%3C4F1DDCCB.9080009%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009148.html">
+   <LINK REL="Next"  HREF="009166.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] FreeBSD libODE issue</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20FreeBSD%20libODE%20issue&In-Reply-To=%3C4F1DDCCB.9080009%40googlemail.com%3E"
+       TITLE="[Opensim-users] FreeBSD libODE issue">jjustincc at googlemail.com
+       </A><BR>
+    <I>Mon Jan 23 23:18:51 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009148.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+        <LI>Next message: <A HREF="009166.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9161">[ date ]</a>
+              <a href="thread.html#9161">[ thread ]</a>
+              <a href="subject.html#9161">[ subject ]</a>
+              <a href="author.html#9161">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The error log indicates that OpenSim cannot find the require ode library (System.DllNotFoundException: libode).
+
+OpenSim won't pick up a system installed ode library, only those in its own bin directory.  It only ships with compiled 
+libraries for linux (32 and 64 bit), Windows (32 bit only currently, for various reasons) and Mac OSX.
+
+Compiling ODE for BSD and replacing the existing libode.so (32 bit) or libode-x86_64.so (64 bit) might work since these 
+are used when the platform is not windows or mac, but this is not guaranteed.
+
+I updated the build instructions but I can't test them for accuracy.
+
+On 22/01/12 22:51, Gudule Lapointe wrote:
+&gt;<i> Hello
+</I>&gt;<i>
+</I>&gt;<i> I try to install OpenSim on a FreeBSD server. Whatever approach I try, I get the same kind of error.
+</I>&gt;<i>
+</I>&gt;<i> I tried
+</I>&gt;<i> 	- from last release
+</I>&gt;<i> 	- from current snapshot (well, tried on several ones)
+</I>&gt;<i> 	- from osgrid and diva distributions.
+</I>&gt;<i>
+</I>&gt;<i> I also tried the build instructions on <A HREF="http://opensimulator.org/wiki/Build_Instructions#FreeBSD">http://opensimulator.org/wiki/Build_Instructions#FreeBSD</A>
+</I>&gt;<i> but the part concerning ODE Physics is out of date. It mentions opensim-libs/unmanaged/OpenDynamicsEngine2, which doesn't exists, and there are two related folders: OpenDynamicsEngine-0.10.1 and OpenDynamicsEngine-r1755 . I tried both, with same error.
+</I>&gt;<i>
+</I>&gt;<i> Here is my config:
+</I>&gt;<i>
+</I>&gt;<i> 	FreeBSD 8.2-RELEASE-p5 #2: Wed Dec 28 16:51:23 CET 2011
+</I>&gt;<i> 	Opensim version (last try): 24b20f6 r17847 2012-01-22 15:35:14 +0000
+</I>&gt;<i> 	Mono JIT compiler version 2.10.6 (tarball Wed Nov 16 19:42:09 CET 2011)
+</I>&gt;<i>
+</I>&gt;<i> And below is the error log.
+</I>&gt;<i>
+</I>&gt;<i> BTW: I installed successfully OpenSim on Ubuntu and MacOS X Lion. So the problem is not related to &quot;global&quot; understanding of the installation process. ;-)
+</I>&gt;<i> Now I need to have it working on a production server, which runs FreeBSD (and I can't change that)
+</I>&gt;<i>
+</I>&gt;<i> If anyone has an idea, it would be greatly appreciated.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 23:28:06 - [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.DllNotFoundException: libode
+</I>&gt;<i>    at (wrapper managed-to-native) Ode.NET.d:InitODE ()
+</I>&gt;<i>    at OpenSim.Region.Physics.OdePlugin.OdePlugin.GetScene (System.String sceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Region.Physics.Manager.PhysicsPluginManager.GetPhysicsScene (System.String physEngineName, System.String meshEngineName, IConfigSource config, System.String regionName) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Region.ClientStack.RegionApplicationBase.GetPhysicsScene (System.String engine, System.String meshEngine, IConfigSource config, System.String osSceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.GetPhysicsScene (System.String osSceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo regionInfo, Int32 proxyOffset, IConfigSource configSource, IClientNetworkServer&amp;  clientServer) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp;  mscene) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp;  scene) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSim.StartupSpecific () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Application.Main (System.String[] args) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>&gt;<i> [ERROR] FATAL UNHANDLED EXCEPTION: System.DllNotFoundException: libode
+</I>&gt;<i>    at (wrapper managed-to-native) Ode.NET.d:InitODE ()
+</I>&gt;<i>    at OpenSim.Region.Physics.OdePlugin.OdePlugin.GetScene (System.String sceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Region.Physics.Manager.PhysicsPluginManager.GetPhysicsScene (System.String physEngineName, System.String meshEngineName, IConfigSource config, System.String regionName) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Region.ClientStack.RegionApplicationBase.GetPhysicsScene (System.String engine, System.String meshEngine, IConfigSource config, System.String osSceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.GetPhysicsScene (System.String osSceneIdentifier) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo regionInfo, Int32 proxyOffset, IConfigSource configSource, IClientNetworkServer&amp;  clientServer) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp;  mscene) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp;  scene) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.OpenSim.StartupSpecific () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>    at OpenSim.Application.Main (System.String[] args) [0x00000] in&lt;filename unknown&gt;:0
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009148.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+	<LI>Next message: <A HREF="009166.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9161">[ date ]</a>
+              <a href="thread.html#9161">[ thread ]</a>
+              <a href="subject.html#9161">[ subject ]</a>
+              <a href="author.html#9161">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

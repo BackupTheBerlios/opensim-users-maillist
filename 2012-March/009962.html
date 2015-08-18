@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Can I rely on consistent UUIDs for things imported from different grids using IAR/OAR files?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Can%20I%20rely%20on%20consistent%20UUIDs%20for%20things%0A%20imported%20from%20different%20grids%20using%20IAR/OAR%20files%3F&In-Reply-To=%3Cp06240803cb976a9f2750%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009951.html">
+   <LINK REL="Next"  HREF="009954.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Can I rely on consistent UUIDs for things imported from different grids using IAR/OAR files?</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Can%20I%20rely%20on%20consistent%20UUIDs%20for%20things%0A%20imported%20from%20different%20grids%20using%20IAR/OAR%20files%3F&In-Reply-To=%3Cp06240803cb976a9f2750%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] Can I rely on consistent UUIDs for things imported from different grids using IAR/OAR files?">opensim at pescadoo.net
+       </A><BR>
+    <I>Tue Mar 27 16:13:50 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009951.html">[Opensim-users] Can I rely on consistent UUIDs for things imported from different grids using IAR/OAR files?
+</A></li>
+        <LI>Next message: <A HREF="009954.html">[Opensim-users] Is management of OS regions/estates the same as in	Second Life?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9962">[ date ]</a>
+              <a href="thread.html#9962">[ thread ]</a>
+              <a href="subject.html#9962">[ subject ]</a>
+              <a href="author.html#9962">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>At 2:49 AM +0100 3/27/12, Edmund Edgar wrote:
+
+&gt;&gt;<i> FontTexture = llGetInventoryKey(texture_name);
+</I>&gt;&gt;<i>
+</I>&gt;<i> Thanks Jeff, that was my fallback plan.
+</I>&gt;<i>
+</I>&gt;<i> But I'd rather use the UUIDs if I can do it reliably because:
+</I>&gt;<i> 1) It makes the script simpler.
+</I>&gt;<i> 2) If more than one of the object is rezzed on the same grid, I'm
+</I>&gt;<i> hoping using the same UUIDs for all of them will allow the textures to
+</I>&gt;<i> be cached in the viewer, so they'll load faster the second time a user
+</I>&gt;<i> encounters the object.
+</I>
+
+With llGetInventoryKey, you are actually using UUID. Except you do not have
+to know it in advance, instead you use an inventory entry to retrieve it.
+It is &quot;soft coded&quot; rather than &quot;hard coded&quot;.
+
+If more than one of the object is rezed on the same grid, the asset is not
+duplicated and the result of llGetInventoryKey will be the same for each
+object. Remember, an inventory entry is just a *pointer* to an asset.
+
+When you export an object, textures are exported as uuid.jp2 (not
+name.jp2). When importing again, we expect the viewer NOT to upload the
+texture if it already exists on the grid. Actually, the re-imported object
+has the same texture(s) UUID(s).
+
+In theory, if we take care to preserve UUIDs over all export formats, there
+should never be asset duplication, even inter-grid (hope i am right here).
+Asset duplication occurs only when the same file is uploaded multiple times.
+
+
+-- 
+Jean-Yves Bernier
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009951.html">[Opensim-users] Can I rely on consistent UUIDs for things imported from different grids using IAR/OAR files?
+</A></li>
+	<LI>Next message: <A HREF="009954.html">[Opensim-users] Is management of OS regions/estates the same as in	Second Life?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9962">[ date ]</a>
+              <a href="thread.html#9962">[ thread ]</a>
+              <a href="subject.html#9962">[ subject ]</a>
+              <a href="author.html#9962">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

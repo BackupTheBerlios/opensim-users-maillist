@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Question out of curiosity Re:Prim Data Formats
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20out%20of%20curiosity%20Re%3APrim%20Data%20Formats&In-Reply-To=%3C200912231150.17034.laeming%40exemail.com.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003362.html">
+   <LINK REL="Next"  HREF="003371.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Question out of curiosity Re:Prim Data Formats</H1>
+    <B>LaeMing</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20out%20of%20curiosity%20Re%3APrim%20Data%20Formats&In-Reply-To=%3C200912231150.17034.laeming%40exemail.com.au%3E"
+       TITLE="[Opensim-users] Question out of curiosity Re:Prim Data Formats">laeming at exemail.com.au
+       </A><BR>
+    <I>Wed Dec 23 01:50:16 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003362.html">[Opensim-users] Question out of curiosity Re:Prim Data Formats
+</A></li>
+        <LI>Next message: <A HREF="003371.html">[Opensim-users] OpenSim 0.6.8 source packages now available for	download
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3366">[ date ]</a>
+              <a href="thread.html#3366">[ thread ]</a>
+              <a href="subject.html#3366">[ subject ]</a>
+              <a href="author.html#3366">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Having just gone through all that (and keeping in mind I am much more a 
+content creator than a programmer, though I have done some simple C, Java and 
+SmallTalk in my time). I must say: WOW - good things looking ahead!
+
+Again, thanx for the links.
+
+Lae.
+
+On Wednesday December 23 2009 10:41:03 Toni Alatalo wrote:
+&gt;<i> LaeMing kirjoitti:
+</I>&gt;<i> &gt; I am curious about the format of prim attribute data, particularly
+</I>&gt;<i> &gt; whether it is fixed length, or if there is potential to expand the types
+</I>&gt;<i> &gt; of prims and/or attributes for existing prims. Obviously this would
+</I>&gt;<i> &gt; require expanding the
+</I>&gt;<i> 
+</I>&gt;<i> The data as it is in the sludp protocol is declared in the message
+</I>&gt;<i> template,
+</I>&gt;<i> <A HREF="http://secondlife.com/app/message_template/master_message_template.msg">http://secondlife.com/app/message_template/master_message_template.msg</A>
+</I>&gt;<i> (that is not viewer source, i think used in the server as well, reading
+</I>&gt;<i> that is not in violation of the opensim contributors agreement).
+</I>&gt;<i> 
+</I>&gt;<i> Search for &quot;ObjectUpdate - Sent by objects from the simulator to the
+</I>&gt;<i> viewer&quot; there to see the data.
+</I>&gt;<i> 
+</I>&gt;<i> It is pretty hardcoded for the SL features and not really extensible, at
+</I>&gt;<i> the protocol level - in the server code you can do things.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; mesher server-side and the renderer (and edit tools) client-side, but I
+</I>&gt;<i> &gt; am more interested here in whether the database entries themselves can be
+</I>&gt;<i> &gt; expanded this way without breaking the defined storage/transmission
+</I>&gt;<i> &gt; formats.
+</I>&gt;<i> 
+</I>&gt;<i> At least you can have additional storage where store your own
+</I>&gt;<i> information about objects, I think many modules that people have written
+</I>&gt;<i> for their applications do that. I guess that's done both by just having
+</I>&gt;<i> separate data that is somehow connected to the prims, and also by
+</I>&gt;<i> subclassing/extending it to have more (like Diva mentioned recently here
+</I>&gt;<i> that their stuff subclasses SceneObjectPart, right?)
+</I>&gt;<i> 
+</I>&gt;<i> In the realXtend project we've extended the data model in opensim to
+</I>&gt;<i> have data like meshes and materials, that is implemented in a module
+</I>&gt;<i> where the data is in a object properties class - see
+</I>&gt;<i> <A HREF="http://forge.opensimulator.org/gf/project/modrex/scmsvn/?action=browse&amp;path">http://forge.opensimulator.org/gf/project/modrex/scmsvn/?action=browse&amp;path</A>
+</I>&gt;<i> =%2Ftrunk%2FModularRex%2FRexFramework%2FRexObjectProperties.cs&amp;view=markup
+</I>&gt;<i> 
+</I>&gt;<i> I actually haven't touched the server much 'cause have been so busy with
+</I>&gt;<i> the new viewer, so was just reading a bit there now. Adam Frisby and
+</I>&gt;<i> Mikko Pallari know all about that example, and the code seemed to
+</I>&gt;<i> explain itself pretty nicely as well.
+</I>&gt;<i> 
+</I>&gt;<i> In the networking we've so far used the GenericMessage packet that SLUDP
+</I>&gt;<i> provides for arbitrary data.
+</I>&gt;<i> 
+</I>&gt;<i> You should also note that Adam is just about to start a major
+</I>&gt;<i> refactoring in opensim to change exactly this area: how scene objects
+</I>&gt;<i> are in the code, and how data to them is attached. The goal of the new
+</I>&gt;<i> model is exactly to allow apps to add any kind of custom data to scene.
+</I>&gt;<i> <A HREF="https://lists.berlios.de/pipermail/opensim-dev/2009-December/008095.html">https://lists.berlios.de/pipermail/opensim-dev/2009-December/008095.html</A>
+</I>&gt;<i> is his post about it, and the plan was attached there, &quot;Components and
+</I>&gt;<i> SceneObject.pdf&quot;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/pipermail/opensim-dev/attachments/20091211/6e190ca">https://lists.berlios.de/pipermail/opensim-dev/attachments/20091211/6e190ca</A>
+</I>&gt;<i> 7/attachment-0001.pdf
+</I>&gt;<i> 
+</I>&gt;<i> Cheers,
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Lae
+</I>&gt;<i> 
+</I>&gt;<i> ~Toni
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003362.html">[Opensim-users] Question out of curiosity Re:Prim Data Formats
+</A></li>
+	<LI>Next message: <A HREF="003371.html">[Opensim-users] OpenSim 0.6.8 source packages now available for	download
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3366">[ date ]</a>
+              <a href="thread.html#3366">[ thread ]</a>
+              <a href="subject.html#3366">[ subject ]</a>
+              <a href="author.html#3366">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

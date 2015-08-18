@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mucking%20around%20with%20IAR%20asset%20UUIDs%20outside%0A%20OpenSim%3A%20Will%20anything%20bad%20happen%3F&In-Reply-To=%3C4FED586E.8040706%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010601.html">
+   <LINK REL="Next"  HREF="010610.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mucking%20around%20with%20IAR%20asset%20UUIDs%20outside%0A%20OpenSim%3A%20Will%20anything%20bad%20happen%3F&In-Reply-To=%3C4FED586E.8040706%40gmail.com%3E"
+       TITLE="[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Fri Jun 29 09:25:34 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010601.html">[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+</A></li>
+        <LI>Next message: <A HREF="010610.html">[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10602">[ date ]</a>
+              <a href="thread.html#10602">[ thread ]</a>
+              <a href="subject.html#10602">[ subject ]</a>
+              <a href="author.html#10602">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I believe this is happening due to a semi-recent change to how IARs 
+handle asset loading. The new way of doing it is to not overwrite 
+existing assets if the asset to be loaded shares the same UUID with an 
+asset that already exists in the database (please correct me on this if 
+I am wrong).
+
+As for manually changing ID's in the IAR itself, I can't attest for the 
+safeness of doing it that way. But I would imagine it would be 
+relatively safe provided that the ID's are changed in all the spots that 
+they are referenced since the IAR loader should be rejecting duplicate 
+UUID load attempts if the situation should arise. Opensim devs, please 
+correct me on this as well if I am incorrect =) I would be curious 
+myself to know if this is a safe thing to do.
+
+
+On 6/29/2012 1:43 AM, Edmund Edgar wrote:
+&gt;<i> I have some situations where I want to export an object as an IAR,
+</I>&gt;<i> faff with the LSL code, and reimport it.
+</I>&gt;<i>
+</I>&gt;<i> This is working fine, except that sometimes the UUIDs of the scripts
+</I>&gt;<i> I've faffed with already exist in OpenSim, resulting in the new
+</I>&gt;<i> version not being imported.
+</I>&gt;<i> (I'm pretty sure that's what's happening - I've tried clearing the
+</I>&gt;<i> viewer cache and deleting stuff under bin/ScriptEngines and so forth.)
+</I>&gt;<i>
+</I>&gt;<i> To avoid this, I want to change the UUIDs of the scripts I've faffed
+</I>&gt;<i> with in my IAR every time I make a change to their content. I've tried
+</I>&gt;<i> this and it seems to work, but I as I don't understand the internals
+</I>&gt;<i> of this stuff I just wanted to check if there's some important thing
+</I>&gt;<i> I'm overlooking that will cause death and devastation to rain down on
+</I>&gt;<i> me and the unlucky people who use my IAR.
+</I>&gt;<i>
+</I>&gt;<i> Specifically what I do is:
+</I>&gt;<i> 1) Export IAR, untar it.
+</I>&gt;<i> 2) Faff with scripts.
+</I>&gt;<i> 3) For each script that's changed, make a new UUID by taking the md5
+</I>&gt;<i> sum of the contents, and sticking in some hyphens where they appear to
+</I>&gt;<i> belong.
+</I>&gt;<i> 4) Rename the &lt;old UUID&gt;_script.lsl under assets/ to use the new UUID.
+</I>&gt;<i> 4) Run sed on anything called &quot;.xml&quot; in the archive to change any
+</I>&gt;<i> reference to the old UUID to the new UUID.
+</I>&gt;<i> 5) Retar the IAR.
+</I>&gt;<i> 6) Reimport.
+</I>&gt;<i>
+</I>&gt;<i> This is the script I run to do it:
+</I>&gt;<i> <A HREF="https://github.com/sloodle/sloodle_development_tools/blob/master/opensim_sync/fixuuid.sh">https://github.com/sloodle/sloodle_development_tools/blob/master/opensim_sync/fixuuid.sh</A>
+</I>&gt;<i>
+</I>&gt;<i> This seems to be working OK, but can anyone think of anything bad
+</I>&gt;<i> that's going to happen?
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 9 Region Standalone on 0.7.4 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.11
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010601.html">[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+</A></li>
+	<LI>Next message: <A HREF="010610.html">[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10602">[ date ]</a>
+              <a href="thread.html#10602">[ thread ]</a>
+              <a href="subject.html#10602">[ subject ]</a>
+              <a href="author.html#10602">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Prims and CPU usage?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Prims%20and%20CPU%20usage%3F&In-Reply-To=%3C4A0EBDE0.9020502%40pseudospace.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002157.html">
+   <LINK REL="Next"  HREF="002151.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Prims and CPU usage?</H1>
+    <B>John Sheridan</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Prims%20and%20CPU%20usage%3F&In-Reply-To=%3C4A0EBDE0.9020502%40pseudospace.net%3E"
+       TITLE="[Opensim-users] Prims and CPU usage?">john at pseudospace.net
+       </A><BR>
+    <I>Sat May 16 15:21:36 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002157.html">[Opensim-users] Remote Admin - save oar
+</A></li>
+        <LI>Next message: <A HREF="002151.html">[Opensim-users] Prims and CPU usage?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2150">[ date ]</a>
+              <a href="thread.html#2150">[ thread ]</a>
+              <a href="subject.html#2150">[ subject ]</a>
+              <a href="author.html#2150">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Gang,
+    After trying a few of the higher prim oar files I've seen fly 
+through here I've begun to notice a rather curious trend, although I'm 
+unsure if its to do with my configuration or if others have seen this as 
+well.  After trying Nebadon's Art City oar on a local standalone (Mono 
+2.0.1 / SQLite, Basic Physics on Linux Ubuntu) I found that after 
+everything loaded and committed to the database (which on its own took a 
+good hour and a half probably due to SQLite) upon restarting OpenSim cpu 
+use for the OpenSim process was pinned at 30% when idle. 
+
+  Oddly enough, since I started building my Ravenport sims (Mono 2.0.1 / 
+MySql, ODE / ZeroMesh on Ubuntu) I've as well noticed a steady increase 
+in cpu use as the build progressed, however until now I thought this was 
+due to scripts or possibly a few rogue physical prims that may have sunk 
+under ground or flown off the sim edge.  Currently when idle the 
+Ravenport server is using 25% of the cpu at ~13,000 prims where a month 
+ago it bordered around 10 to 15% at roughly 7,000 prims.  Out of 
+curiosity I saved the sims out to an oar and began dissecting them on 
+the same local configuration I tested the Art City  oar on.  
+Surprisingly after removing all scripted objects there was no change in 
+cpu use - it was still at 25%.  It wasn't until I began deleting the 
+buildings that I began to notice a change where as the sims emptied out 
+the cpu use decreased down to between 1 and 2% once all prims were 
+deleted. 
+
+  To verify, I decided to try again this time with a clean OpenSim 
+instance of the same config where I had set a scripted prim to create a 
+grid of default .5x.5x.5 cubes.  The first round was with a grid of 
+13,000 prims which upon persisting and rebooting pinned the cpu at 30%, 
+the second test I added another 13,000 which brought it up to 40%.  
+After adding another 13,000 (39,000 total) the cpu was pinned at a solid 
+100% after a fresh restart. 
+
+  I have to admit, I do find this to be quite baffling.  In all I'd 
+expect the sim to use more memory with a higher prim count but the cpu 
+should remain about the same, especially given that my test environment  
+was using basic physics where all prims were rendered as phantom. 
+
+  The oar for the 39,000 prim sim is located at 
+<A HREF="http://www.pseudospace.net/primzilla.oar">http://www.pseudospace.net/primzilla.oar</A> if anyone else would like to 
+test it on their own configuration.
+
+Thanks, :)
+
+ - John / Orion Pseudo
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002157.html">[Opensim-users] Remote Admin - save oar
+</A></li>
+	<LI>Next message: <A HREF="002151.html">[Opensim-users] Prims and CPU usage?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2150">[ date ]</a>
+              <a href="thread.html#2150">[ thread ]</a>
+              <a href="subject.html#2150">[ subject ]</a>
+              <a href="author.html#2150">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

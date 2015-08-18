@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Save oar on 0.6.0.7629??
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Save%20oar%20on%200.6.0.7629%3F%3F&In-Reply-To=%3C5bbc9b080903181751r42f218c6k4bba4a40e6805552%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001703.html">
+   <LINK REL="Next"  HREF="001708.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Save oar on 0.6.0.7629??</H1>
+    <B>Tasman Perth</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Save%20oar%20on%200.6.0.7629%3F%3F&In-Reply-To=%3C5bbc9b080903181751r42f218c6k4bba4a40e6805552%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Save oar on 0.6.0.7629??">tasman.perth at gmail.com
+       </A><BR>
+    <I>Thu Mar 19 01:51:13 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001703.html">[Opensim-users] Save oar on 0.6.0.7629??
+</A></li>
+        <LI>Next message: <A HREF="001708.html">[Opensim-users] Save oar on 0.6.0.7629??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1707">[ date ]</a>
+              <a href="thread.html#1707">[ thread ]</a>
+              <a href="subject.html#1707">[ subject ]</a>
+              <a href="author.html#1707">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i>That is an unexpected error.  If the archive doesn't contain anything commercially
+</I>&gt;<i> sensitive or confidential, then the easiest thing would be if you could make it available to
+</I>&gt;<i> me somehow (e.g. by e-mail if it's small enough).  Then I can
+</I>&gt;<i> take a look directly.
+</I>
+&gt;<i> If that's not possible then we can work out some other way to proceed (possibly moving  &gt;  this discussion to a Mantis).  On
+</I>&gt;<i> the surface, it looks like somehow the terrain data wasn't saved out properly.
+</I>
+Thanks for the reply!!
+Armed with that little tidbit of info, I opened the gzip package with
+7zip, and sure enough
+the terrain r32 file (which was not even the right one in use on my
+current sandbox config) was a zero byte file. Just for fun, I pulled a
+copy of the correct r32 file, and placed it in the terrains folder and
+removed the zero byte one, and re-gzipped the tar and tried loading it
+again.. This time I get the following:
+
+00:37:58 - [ARCHIVER]: Error loading oar file. Exception was:
+System.ArgumentOutOfRangeException: Argument is out of range.
+Parameter name: count is less than 0
+  at System.IO.BinaryReader.ReadBytes (Int32 count) [0x00000]
+  at OpenSim.Region.CoreModules.World.Archiver.TarArchiveReader.ReadEntry
+(System.String&amp; filePath,
+OpenSim.Region.CoreModules.World.Archiver.TarEntryType&amp; entryType)
+[0x00000]
+  at OpenSim.Region.CoreModules.World.Archiver.ArchiveReadRequest.DearchiveRegion0DotStar
+() [0x00000]
+Region (OpenSim Test) #
+
+The scene_oar.tar.gz in question is only a bit over 5mb and has nada
+commercial stuff
+in it, just some of my sandbox dabbling... I can email it to you, if
+you'd like...
+
+Tas
+
+
+
+
+
+
+On 3/18/09, Tasman Perth &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tasman.perth at gmail.com</A>&gt; wrote:
+&gt;<i> Thanks Justin!!
+</I>&gt;<i> When I do a 'help' on the running 7629 server, I dont see any listing of
+</I>&gt;<i> &quot;save-oar&quot;, but none the less, it worked, created a &quot;scene_oar.tar.gz&quot;
+</I>&gt;<i> which I moved over to the new sim, and did a &quot;load oar scene_oar.tar.gz&quot;,
+</I>&gt;<i> and immediately got exceptions as follows:
+</I>&gt;<i>
+</I>&gt;<i> Region (OpenSim Test) # load oar scene_oar.tar.gz
+</I>&gt;<i> 12:39:10 - [ARCHIVER]: Loading archive to region OpenSim Test from
+</I>&gt;<i> scene_oar.tar.gz
+</I>&gt;<i> 12:39:10 - [ARCHIVER]: Error loading oar file. Exception was:
+</I>&gt;<i> System.IO.EndOfStreamException: Failed to read past end of stream.
+</I>&gt;<i>   at System.IO.BinaryReader.FillBuffer (Int32 bytes) [0x00000]
+</I>&gt;<i>   at System.IO.BinaryReader.ReadSingle () [0x00000]
+</I>&gt;<i>   at OpenSim.Region.CoreModules.World.Terrain.FileLoaders.RAW32.LoadStream
+</I>&gt;<i> (System.IO.Stream s) [0x00000]
+</I>&gt;<i>   at OpenSim.Region.CoreModules.World.Terrain.TerrainModule.LoadFromStream
+</I>&gt;<i> (System.String filename, System.IO.Stream stream) [0x00000]
+</I>&gt;<i>   at
+</I>&gt;<i> OpenSim.Region.CoreModules.World.Archiver.ArchiveReadRequest.LoadTerrain
+</I>&gt;<i> (System.String terrainPath, System.Byte[] data) [0x00000]
+</I>&gt;<i>   at
+</I>&gt;<i> OpenSim.Region.CoreModules.World.Archiver.ArchiveReadRequest.DearchiveRegion0DotStar
+</I>&gt;<i> () [0x00000]
+</I>&gt;<i>
+</I>&gt;<i> I tried recreating the oar on the old sim again, and retried, same
+</I>&gt;<i> errors...
+</I>&gt;<i> Help!!
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i> Tas
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001703.html">[Opensim-users] Save oar on 0.6.0.7629??
+</A></li>
+	<LI>Next message: <A HREF="001708.html">[Opensim-users] Save oar on 0.6.0.7629??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1707">[ date ]</a>
+              <a href="thread.html#1707">[ thread ]</a>
+              <a href="subject.html#1707">[ subject ]</a>
+              <a href="author.html#1707">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

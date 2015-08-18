@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Uniqueness in MySQL 'useraccounts'
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Uniqueness%20in%20MySQL%20%27useraccounts%27&In-Reply-To=%3C4F54E54F.3090001%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009674.html">
+   <LINK REL="Next"  HREF="009686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Uniqueness in MySQL 'useraccounts'</H1>
+    <B>Karen Palen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Uniqueness%20in%20MySQL%20%27useraccounts%27&In-Reply-To=%3C4F54E54F.3090001%40gmail.com%3E"
+       TITLE="[Opensim-users] Uniqueness in MySQL 'useraccounts'">karenpalensl at gmail.com
+       </A><BR>
+    <I>Mon Mar  5 17:09:51 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009674.html">[Opensim-users] Uniqueness in MySQL 'useraccounts'
+</A></li>
+        <LI>Next message: <A HREF="009686.html">[Opensim-users] Uniqueness in MySQL 'useraccounts'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9683">[ date ]</a>
+              <a href="thread.html#9683">[ thread ]</a>
+              <a href="subject.html#9683">[ subject ]</a>
+              <a href="author.html#9683">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I suspect the answer is that you need more information than just those
+two fields.
+
+I am thinking of the fairly common case in Hypergrid usage where two
+avatars have the same name, distinguished only by the field that tells
+their host system.
+
+I have used this for testing on many occasions.
+
+Karen
+
+On 03/05/2012 04:45 AM, Kevin Buckley wrote:
+&gt;<i> Hi - Thanks for the quick response.
+</I>&gt;<i>
+</I>&gt;<i> I understand the reasons why PrincipalID is the Primary Key and hence should
+</I>&gt;<i> be unique (and I now realise my original question was malformed).
+</I>&gt;<i>
+</I>&gt;<i> The actual question is: Why isn't 'Name' (the composite key including
+</I>&gt;<i> FirstName and LastName) defined as Unique?
+</I>&gt;<i>
+</I>&gt;<i> Defining it as Unique certainly works and causes MySQL to throw Error 1062
+</I>&gt;<i> in response to an attempt to create  a duplicate FirstName/LastName entry
+</I>&gt;<i> which is the (my) required behaviour.
+</I>&gt;<i>
+</I>&gt;<i> So I am wondering why 'Name' isn't defined as Unique when the database
+</I>&gt;<i> tables are created (or upgraded) by Opensim, given that it goes to the
+</I>&gt;<i> trouble of defining it in the first place!
+</I>&gt;<i>
+</I>&gt;<i> Thanks.
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of M.E. Verhagen
+</I>&gt;<i> Sent: 04 March 2012 23:42
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] Uniqueness in MySQL 'useraccounts'
+</I>&gt;<i>
+</I>&gt;<i> the PrincipalID field is already the primary key.
+</I>&gt;<i>
+</I>&gt;<i> There can be only one primary key.
+</I>&gt;<i>
+</I>&gt;<i> This uuid key is the unique identifier on wich an avatar is idenified.
+</I>&gt;<i>
+</I>&gt;<i> When you write you own member system with direct database manipulation
+</I>&gt;<i> than you should check if the avatar is unique or else you will end up
+</I>&gt;<i> with more than one avatar name attached to an uuid.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2012/3/4, Kevin Buckley &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt;:
+</I>&gt;&gt;<i> I hope this is not covering old ground.  I'm playing with a member system
+</I>&gt;&gt;<i> for standalone OpenSim and I'm trying to decide the best way to deal with
+</I>&gt;&gt;<i> the FirstName/LastName uniqueness issue (as my sign-up process allows
+</I>&gt;&gt;<i> multiple, concurrent users).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I notice that the default useraccounts table has a composite key called
+</I>&gt;<i> Name
+</I>&gt;&gt;<i> (which consists of FirstName and LastName).  But it isn't defined as a
+</I>&gt;&gt;<i> primary key.  So duplicate name inserts are not trapped as a result of
+</I>&gt;<i> that
+</I>&gt;&gt;<i> (I believe that is the reason, anyway).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Does anyone know if there is a reason 'Name' is not defined as a primary
+</I>&gt;&gt;<i> key?  Is there a problem with making it so?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have other ways I can deal with this but trapping it at the useraccounts
+</I>&gt;&gt;<i> table insert would be the best way.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009674.html">[Opensim-users] Uniqueness in MySQL 'useraccounts'
+</A></li>
+	<LI>Next message: <A HREF="009686.html">[Opensim-users] Uniqueness in MySQL 'useraccounts'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9683">[ date ]</a>
+              <a href="thread.html#9683">[ thread ]</a>
+              <a href="subject.html#9683">[ subject ]</a>
+              <a href="author.html#9683">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

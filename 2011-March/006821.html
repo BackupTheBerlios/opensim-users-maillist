@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] SQL error or connection string configuration	error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SQL%20error%20or%20connection%20string%20configuration%0A%09error&In-Reply-To=%3C4CA68919-5954-407F-8A36-6BE3CE1C0E26%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006820.html">
+   <LINK REL="Next"  HREF="006824.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] SQL error or connection string configuration	error</H1>
+    <B>Jeff Mao</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SQL%20error%20or%20connection%20string%20configuration%0A%09error&In-Reply-To=%3C4CA68919-5954-407F-8A36-6BE3CE1C0E26%40gmail.com%3E"
+       TITLE="[Opensim-users] SQL error or connection string configuration	error">chefmao at gmail.com
+       </A><BR>
+    <I>Sat Mar 19 04:48:24 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006820.html">[Opensim-users] SQL error or connection string configuration	error
+</A></li>
+        <LI>Next message: <A HREF="006824.html">[Opensim-users] SQL error or connection string	configurationerror
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6821">[ date ]</a>
+              <a href="thread.html#6821">[ thread ]</a>
+              <a href="subject.html#6821">[ subject ]</a>
+              <a href="author.html#6821">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've just downloaded opensim 0.7.0.2 and mysql 5.1.56. I've set up mysql, and I can connect to the server, do things to the opensim db that I created, etc. So mysql seems happy. When I try and start up the opensim server, it runs through its set routine including lots of notes about &quot;migrating&quot;. In all that output there are a number of places where it complains that tables already exist or that it can't find a table called users (ie opensim.users) doesn't exist. It eventually gets to the prompt about joining an existing estate. When I give the default answer of No it then errors out with lots of stuff about mysql (below).
+
+I can see in mysql that opensim is talking to the server because it has created 25 tables. So it isn't a db connection issue, but clearly there are some assumptions being made in the set up that are not valid...ie there are create table commands being issued when tables already exist, or alterations to tables that don't exist or trying to access data from a table called 'users' that doesn't exist.
+
+I can re-run some of the table creation commands and such by manually dropping tables, then re-running the commands to re-create those tables using the output from the set up process...but in instances where it is seeking data from a table that doesn't exist, I don't know what to do. For example:
+
+23:23:58 - [MIGRATIONS]: Cmd was Table 'opensim.users' doesn't exist in SQL: BEGIN; INSERT INTO auth (UUID, passwordHash, passwordSalt, webLoginKey) SELECT `UUID` AS UUID, `passwordHash` AS passwordHash, `passwordSalt` AS passwordSalt, `webLoginKey` AS webLoginKey FROM users; COMMIT; 
+
+Is there a place to simply download the entire database schema needed that I can just load into mysql myself?
+
+I'm running on my MacBook Pro 10.6.6, 3.06ghz Intel Core 2 Duo. I'm just trying to set up a standalone server so I can play around, build things, etc. and also let my kids play around in a &quot;walled garden&quot;
+
+thanks
+Jeff
+
+
+
+23:24:06 - [APPLICATION]: 
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: MySql.Data.MySqlClient.MySqlException: Invalid attempt to access a field before calling Read()
+  at MySql.Data.MySqlClient.MySqlDataReader.GetFieldValue (Int32 index, Boolean checkNull) [0x00000] in &lt;filename unknown&gt;:0 
+  at MySql.Data.MySqlClient.MySqlDataReader.GetValue (Int32 i) [0x00000] in &lt;filename unknown&gt;:0 
+  at MySql.Data.MySqlClient.MySqlDataReader.get_Item (Int32 i) [0x00000] in &lt;filename unknown&gt;:0 
+  at MySql.Data.MySqlClient.MySqlDataReader.get_Item (System.String name) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Data.MySQL.MySQLEstateStore.DoLoad (MySql.Data.MySqlClient.MySqlCommand cmd, UUID regionID, Boolean create) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Data.MySQL.MySQLEstateStore.LoadEstateSettings (UUID regionID, Boolean create) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Region.Framework.Scenes.Scene..ctor (OpenSim.Framework.RegionInfo regInfo, OpenSim.Framework.AgentCircuitManager authen, OpenSim.Region.Framework.Scenes.SceneCommunicationService sceneGridService, OpenSim.Region.Framework.StorageManager storeManager, OpenSim.Region.Framework.ModuleLoader moduleLoader, Boolean dumpAssetsToFile, Boolean physicalPrim, Boolean SeeIntoRegionFromNeighbor, IConfigSource config, System.String simulatorVersion) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.CreateScene (OpenSim.Framework.RegionInfo regionInfo, OpenSim.Region.Framework.StorageManager storageManager, OpenSim.Framework.AgentCircuitManager circuitManager) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo regionInfo, Int32 proxyOffset, IConfigSource configSource, IClientNetworkServer&amp; clientServer) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp; mscene) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSim.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename unknown&gt;:0 
+
+Application is terminating: True
+
+
+
+
+On Mar 18, 2011, at 10:10 PM, paul emery wrote:
+
+&gt;<i> Dont know if your problem really requires switching to mySQL since you say
+</I>&gt;<i> the installation had been running but here is info on installing mySQL for
+</I>&gt;<i> opensim.
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://github.com/diva/d2/wiki/MySql">https://github.com/diva/d2/wiki/MySql</A>
+</I>&gt;<i> 
+</I>&gt;<i> To do it you first need to download and install mySQL after which you use
+</I>&gt;<i> the above instructions which will create a data container called opensim in
+</I>&gt;<i> mySQL
+</I>&gt;<i> Then before running opensim you change sections in the opensim.ini to tell
+</I>&gt;<i> opensim to use mySQL rather then lite.
+</I>&gt;<i> Then you do run opensim to do the INITIAL INSTALL which will create tables
+</I>&gt;<i> in the database (which you already set up) and opensim will continue to
+</I>&gt;<i> start up using these new data files. 
+</I>&gt;<i> 
+</I>&gt;<i> If you have objects in the lite datafiles i am not sure how you migrate them
+</I>&gt;<i> to the mySQL container.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/SQL-error-or-connection-string-configuration-error-tp6176396p6186721.html">http://opensim-users.2152040.n2.nabble.com/SQL-error-or-connection-string-configuration-error-tp6176396p6186721.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006820.html">[Opensim-users] SQL error or connection string configuration	error
+</A></li>
+	<LI>Next message: <A HREF="006824.html">[Opensim-users] SQL error or connection string	configurationerror
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6821">[ date ]</a>
+              <a href="thread.html#6821">[ thread ]</a>
+              <a href="subject.html#6821">[ subject ]</a>
+              <a href="author.html#6821">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] invisible/invalid regions from remote client
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20invisible/invalid%20regions%20from%20remote%20client&In-Reply-To=%3C91064F07-A4E8-4DD2-B8E3-E2AA18BF582F%40indiana.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009489.html">
+   <LINK REL="Next"  HREF="009493.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] invisible/invalid regions from remote client</H1>
+    <B>Steven Salter</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20invisible/invalid%20regions%20from%20remote%20client&In-Reply-To=%3C91064F07-A4E8-4DD2-B8E3-E2AA18BF582F%40indiana.edu%3E"
+       TITLE="[Opensim-users] invisible/invalid regions from remote client">ssalter at indiana.edu
+       </A><BR>
+    <I>Sat Feb 25 23:35:56 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009489.html">[Opensim-users] HELP: OpenSim Crashing
+</A></li>
+        <LI>Next message: <A HREF="009493.html">[Opensim-users] invisible/invalid regions from remote client
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9492">[ date ]</a>
+              <a href="thread.html#9492">[ thread ]</a>
+              <a href="subject.html#9492">[ subject ]</a>
+              <a href="author.html#9492">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Diva Canto diva at metaverseink.com 
+Sat Feb 25 04:35:16 CET 2012
+
+said:
+
+&gt;<i>The Diva distro is configured to use mega regions. There are some 
+</I>&gt;<i>constraints for sequencing megaregions in the RegionsConfig.ini file. 
+</I>&gt;<i>They need to be S-&gt;N, W-&gt;E
+</I>
+(Sorry, I got this in a digest and couldn't see how to reply directly. I changed from digest so I get separate posts now.)
+
+The region numbering was certainly part of the problem.
+
+I renumbered the regions precisely as noted below but still no joy. I remembered reading about problems with existing terrain so I removed my MySql database, recreated it, ran the Diva Configure, and the same result. Local login I see everything. Remote login and see  nothing but the starting point.
+
+
+[region1]
+Location = 6000,6000
+
+[region2]
+Location = 6001,6000
+
+[region3]
+Location = 6002,6000
+
+[region4]
+Location = 6000,6001
+
+[region5]
+Location = 6001,6001
+
+[region6]
+Location = 6002,6001
+
+[region7]
+Location = 6000,6002
+
+[region8]
+Location = 6001,6002
+
+[region9]
+Location = 6002,6002
+
+[region10]
+Location = 6000,6003
+
+[region11]
+Location = 6001,6003
+
+[region12]
+Location = 6002,6003
+
+*sigh*  
+
+So, I'm going to try once more from scratch. 
+-Zapped the opensim database. 
+-Zapped my Diva directory while saving off a couple files for reference. 
+-Recreated 'opensim' in MySql. 
+-Re-installed original Diva dist. 
+-Modified RegionConfig.ini for ExternalHost to point to public machine name but that was all. Didn't touch MyWorld.ini.
+
+Same results. Local is fine, remote is not.  The remote I'm using is a Mac running Imprudence, that shouldn't matter.
+
+Added  &quot;CombineContiguousRegions =  false&quot;  to MyWorld.ini.
+
+Restarted OpenSim...and STILL the local is fine but remote is not. 
+
+I noted that the Diva dist doesn't number regions &quot;properly&quot; according to OpenSim page &quot;<A HREF="http://opensimulator.org/wiki/Setting_Up_Mega-Regions">http://opensimulator.org/wiki/Setting_Up_Mega-Regions</A>&quot;, ie: sw -&gt; ne.  I renumbered them, added unique UUIDs, removed my CombineContiguousRegions=false statement from myworld.ini and restarted.
+
+Still no go...final attempt for today. 
+Zapped MySql.
+added CombineContiguousRegions=false.
+Ran Configure and for the heck of it I put in the static IP in lieu of the public machine name. 
+Started...same results.
+
+I see the &quot;mounds&quot; of the four regions on the map and can even teleport to them but I'm apparently standing on water...from a remote connection.
+
+ports are open, megaregions disabled, unique UUIDs, regions located in proper numerical sequence although that shouldn't matter with megaregions turned off...
+
+I'm baffled...wish I was a drinking man.
+
+;)
+Steve
+
+
+
+
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120225/56ba59bd/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120225/56ba59bd/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009489.html">[Opensim-users] HELP: OpenSim Crashing
+</A></li>
+	<LI>Next message: <A HREF="009493.html">[Opensim-users] invisible/invalid regions from remote client
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9492">[ date ]</a>
+              <a href="thread.html#9492">[ thread ]</a>
+              <a href="subject.html#9492">[ subject ]</a>
+              <a href="author.html#9492">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

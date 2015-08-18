@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NPC and internal Animations
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20and%20internal%20Animations&In-Reply-To=%3C4F56C634.6070801%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009715.html">
+   <LINK REL="Next"  HREF="009730.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NPC and internal Animations</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20and%20internal%20Animations&In-Reply-To=%3C4F56C634.6070801%40googlemail.com%3E"
+       TITLE="[Opensim-users] NPC and internal Animations">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Mar  7 03:21:40 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009715.html">[Opensim-users] NPC and internal Animations
+</A></li>
+        <LI>Next message: <A HREF="009730.html">[Opensim-users] NPC and internal Animations
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9718">[ date ]</a>
+              <a href="thread.html#9718">[ thread ]</a>
+              <a href="subject.html#9718">[ subject ]</a>
+              <a href="author.html#9718">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi satguru,  This was not done deliberately.  If you could post a patch to Mantis with the hack that would be much 
+appreciated.  I would probably end up refactoring the code so that both LLClientView and NPCAvatar call a single method 
+but you don't need to do that yourself (unless you want to :).
+
+On 07/03/12 01:10, satguru p srivastava wrote:
+&gt;<i> Ok, I downloaded and checked the source.
+</I>&gt;<i> After some digging around I was able to see what was happening.
+</I>&gt;<i> Made some quick and dirty changes and was able to make the NPC play internal animations!! How about that !!
+</I>&gt;<i>
+</I>&gt;<i> Before I explain what I found let me first state that I was pleasantly surprised by how smooth the whole process of
+</I>&gt;<i> setting up and building the project was.
+</I>&gt;<i> I was dreading a complicated setup and a large build time.
+</I>&gt;<i> The setup was simple and the build pretty fast, usually less than a minute.
+</I>&gt;<i> Thank you developers for making this so easy.
+</I>&gt;<i>
+</I>&gt;<i> Anyway here is what I found.
+</I>&gt;<i> If the animation specified in an animation function does not exist in the prim then the server checks to see if there is
+</I>&gt;<i> an internal animation with that name.
+</I>&gt;<i> If it finds one then it passes its UUID to the client else it passes UUID.Zero.
+</I>&gt;<i>
+</I>&gt;<i> For normal avatar this is done, I think, by class &quot;OpenSim.Region.ClientStack.lindenUDP.LLClientView&quot; method
+</I>&gt;<i> GetDefaultAnimation(string name)
+</I>&gt;<i> This basically checks against the animations listed in the &quot;data/avataranimations.xml&quot; file
+</I>&gt;<i>
+</I>&gt;<i> For NPC this is done by &quot;OpenSim.region.OptionalModules.World.NPCAvatar&quot; method GetDefaultAnimation(string name)
+</I>&gt;<i> For some reason this does not perform any check and always returns UUID.Zero.
+</I>&gt;<i>
+</I>&gt;<i> I copied the method code from LLClientview to NPCAvatar and was able to make the NPC Avatar play internal animations.
+</I>&gt;<i>
+</I>&gt;<i> Now I am not sure if the code was intentionally written this way and if not then if the hack which I did was the proper
+</I>&gt;<i> way to solve this.
+</I>&gt;<i> Hope some developer helps out with this.
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i> Sat
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 3/5/2012 9:41 PM, satguru p srivastava wrote:
+</I>&gt;&gt;<i> I think I will download the source code and have a go at it.
+</I>&gt;&gt;<i> Thanks
+</I>&gt;&gt;<i> Sat
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 3/5/2012 9:08 PM, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;<i> I am not quite sure about the detailed protocol between server and client for animation, so I would be happy if
+</I>&gt;&gt;&gt;<i> someone smarter on this field can confirm or correct...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> What I am sure is
+</I>&gt;&gt;&gt;<i> - client can play the animation if it's included in the client software or sent by the server
+</I>&gt;&gt;&gt;<i> - script can send the animation only if it's inside the prim where the script resides.
+</I>&gt;&gt;&gt;<i> That is: first steps needed to animate an avatar
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> After the avatar has confirmed and accepted the animation, there is a protocol, which is certainly more complicate,
+</I>&gt;&gt;&gt;<i> to deploy this animation to other viewers, (exchange of UUID / animations, updates on moves, whatever&#8230;). But it would
+</I>&gt;&gt;&gt;<i> occur only once the avatar has confirmed it can handle the animation
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So, it sounds logical to me that the avatar can be animated only if it's own client owns the animation.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;&gt;&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;&gt;&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Le 6 mars 2012 &#224; 03:46, satguru p srivastava a &#233;crit :
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I guess I must be dense :(
+</I>&gt;&gt;&gt;&gt;<i> I still do not get it.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Below is how I think the animation system works.
+</I>&gt;&gt;&gt;&gt;<i> Let me know where I am wrong.
+</I>&gt;&gt;&gt;&gt;<i> I have a Avatar or a NPC with an attachment.
+</I>&gt;&gt;&gt;&gt;<i> The attachment has script which plays an animation using an animation function like llStartAnimation().
+</I>&gt;&gt;&gt;&gt;<i> Now like any other script, the script when triggered, will run on the server side. (Right ?)
+</I>&gt;&gt;&gt;&gt;<i> When the server encounters the animation function the server will send a message to the client asking it to play an
+</I>&gt;&gt;&gt;&gt;<i> animation with that UUID
+</I>&gt;&gt;&gt;&gt;<i> If the client has an animation with that UUID it will animate the Avatar or NPC with that animation else it will ask
+</I>&gt;&gt;&gt;&gt;<i> the server to send the animation and will animate when it receives it.
+</I>&gt;&gt;&gt;&gt;<i> If the animation is internal animation and if it is, as you say, part of the client then the client already has it
+</I>&gt;&gt;&gt;&gt;<i> and should be able to animate the Avatar/NPC
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Sorry to belabor this but it seems I am obviously missing a major concept and would like to figure out what :))
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks
+</I>&gt;&gt;&gt;&gt;<i> Sat
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 3/5/2012 7:55 PM, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> Obviously, everything runs on client side, that's the point of a client ;-)
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I think what was meant is that internal animations are part of the client, not loaded from server.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> As your NPC is not controlled by a client, it doesn't have these animations at disposal, unless you put them in
+</I>&gt;&gt;&gt;&gt;&gt;<i> your script's prim.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Le 6 mars 2012 &#224; 02:48, satguru p srivastava a &#233;crit :
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Garmin,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Thanks for pointing out the BVH files.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> 121 files!!
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> A bit of a pain uploading them :)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> You also loose the per bone priorites which you get with internal/default animations.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Also I am assuming that user loaded animations are not as efficient as internal ones. Right?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I am still curious why the internal animations do not play.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> As far as I know all animations run on client side.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> The triggers for animation can come from client side (example when a users presses a key to make the avatar walk)
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> or from server side (example when if it is being called from script).
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> NPCs animations are triggered from scripts.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> How is this different from Avatar animations being triggered from scripts ?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Thanks
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Sat
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> On 3/5/2012 5:34 AM, Garmin Kawaguichi wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> True, Trinity! User Playable Internal Animations are serverside; you cannot use them with NPCs but...
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> ... the BVH files corresponding to the Internal Animation are at :
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://static-secondlife-com.s3.amazonaws.com/downloads/avatar/bvh_files.zip">http://static-secondlife-com.s3.amazonaws.com/downloads/avatar/bvh_files.zip</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> as it is specified in the SL Wiki : <A HREF="http://wiki.secondlife.com/wiki/Internal_Animations">http://wiki.secondlife.com/wiki/Internal_Animations</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> GCI
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>     ----- Original Message -----
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>     *From:* Trinity &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">trinity93 at gmail.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>     *Sent:* Monday, March 05, 2012 6:58 AM
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>     *Subject:* Re: [Opensim-users] NPC and internal Animations
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>     Because some animations are built into the viewer and npcs dont use a viewer and perhaps for security
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>     reasons. Im not really completely sure to be honest.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009715.html">[Opensim-users] NPC and internal Animations
+</A></li>
+	<LI>Next message: <A HREF="009730.html">[Opensim-users] NPC and internal Animations
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9718">[ date ]</a>
+              <a href="thread.html#9718">[ thread ]</a>
+              <a href="subject.html#9718">[ subject ]</a>
+              <a href="author.html#9718">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

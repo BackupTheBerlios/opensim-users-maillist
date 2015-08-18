@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Out of memory exception on logout r/17830
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Out%20of%20memory%20exception%20on%20logout%20r/17830&In-Reply-To=%3C4F17D225.1030301%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009083.html">
+   <LINK REL="Next"  HREF="009102.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Out of memory exception on logout r/17830</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Out%20of%20memory%20exception%20on%20logout%20r/17830&In-Reply-To=%3C4F17D225.1030301%40cox.net%3E"
+       TITLE="[Opensim-users] Out of memory exception on logout r/17830">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Thu Jan 19 09:19:49 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009083.html">[Opensim-users] Out of memory exception on logout r/17830
+</A></li>
+        <LI>Next message: <A HREF="009102.html">[Opensim-users] Out of memory exception on logout r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9092">[ date ]</a>
+              <a href="thread.html#9092">[ thread ]</a>
+              <a href="subject.html#9092">[ subject ]</a>
+              <a href="author.html#9092">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I will also sometimes get a HandleRequest() OoM exception on login. Then 
+will be returned to the login screen with the &quot;Despite our best 
+efforts... could not log in&quot; message:
+
+2012-01-19 02:16:13,218 ERROR - 
+OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP SERVER]: 
+HandleRequest() threw System.OutOfMemoryException: Exception of type 
+'System.OutOfMemoryException' was thrown.
+    at System.String.ToCharArray()
+    at System.Text.Encoding.GetBytes(String s)
+    at 
+OpenSim.Framework.Servers.HttpServer.BaseHttpServer.HandleXmlRpcRequests(OSHttpRequest 
+request, OSHttpResponse response) in c:\Documents and 
+Settings\admin\Desktop\opensim-e7619f7\OpenSim\Framework\Servers\HttpServer\BaseHttpServer.cs:line 
+942
+    at 
+OpenSim.Framework.Servers.HttpServer.BaseHttpServer.HandleRequest(OSHttpRequest 
+request, OSHttpResponse response) in c:\Documents and 
+Settings\admin\Desktop\opensim-e7619f7\OpenSim\Framework\Servers\HttpServer\BaseHttpServer.cs:line 
+647
+
+On 1/18/2012 8:39 AM, admin wrote:
+&gt;<i> Hello all,
+</I>&gt;<i>
+</I>&gt;<i> On git r/17830, I am getting an out of memory exception when ever I 
+</I>&gt;<i> try to detach a scripted object or on logout. I also have to tell the 
+</I>&gt;<i> viewer to detach the attachments sometimes as many as 5 times in a row 
+</I>&gt;<i> before it will actually detach (Seems to affect non scripted objects 
+</I>&gt;<i> as well). I've tried deleting the contents of my ScriptsEngine folder 
+</I>&gt;<i> as well as my assetcache folder to no avail. Sometimes the exception 
+</I>&gt;<i> triggers and sometimes it doesn't (about every other detach attempt or 
+</I>&gt;<i> logout attempt).
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> *Exceptions:
+</I>&gt;<i> On log out:
+</I>&gt;<i> ==========
+</I>&gt;<i> *
+</I>&gt;<i> 2012-01-18 07:47:12,281 ERROR - 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView [LLCLIENTVIEW]: 
+</I>&gt;<i> Caught exception while processing 
+</I>&gt;<i> OpenMetaverse.Packets.LogoutRequestPacket for mewtwo0641 Alito, 
+</I>&gt;<i> Exception of type 'System.OutOfMemoryException' was thrown.    at 
+</I>&gt;<i> System.String.ToCharArray()
+</I>&gt;<i>    at System.Text.Encoding.GetBytes(String s)
+</I>&gt;<i>    at OpenMetaverse.Utils.StringToBytes(String str)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.UpdateKnownItem(IScenePresence 
+</I>&gt;<i> sp, SceneObjectGroup grp) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 486
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.SaveChangedAttachments(IScenePresence 
+</I>&gt;<i> sp) in c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 164
+</I>&gt;<i>    at OpenSim.Region.Framework.Scenes.Scene.RemoveClient(UUID agentID, 
+</I>&gt;<i> Boolean closeChildAgents) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\Framework\Scenes\Scene.cs:line 3122
+</I>&gt;<i>    at OpenSim.Region.ClientStack.LindenUDP.LLClientView.Close() in 
+</I>&gt;<i> c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\ClientStack\Linden\UDP\LLClientView.cs:line 
+</I>&gt;<i> 517
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.RemoveClient(LLUDPClient 
+</I>&gt;<i> udpClient) in c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\ClientStack\Linden\UDP\LLUDPServer.cs:line 
+</I>&gt;<i> 1033
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.LogoutHandler(IClientAPI 
+</I>&gt;<i> client) in c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\ClientStack\Linden\UDP\LLUDPServer.cs:line 
+</I>&gt;<i> 1340
+</I>&gt;<i>    at System.Action`1.Invoke(T obj)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView.Logout(IClientAPI 
+</I>&gt;<i> client) in c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\ClientStack\Linden\UDP\LLClientView.cs:line 
+</I>&gt;<i> 11217
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView.HandleLogout(IClientAPI 
+</I>&gt;<i> client, Packet packet) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\ClientStack\Linden\UDP\LLClientView.cs:line 
+</I>&gt;<i> 11201
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView.ProcessSpecificPacketAsync(Object 
+</I>&gt;<i> state) in c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\ClientStack\Linden\UDP\LLClientView.cs:line 
+</I>&gt;<i> 683
+</I>&gt;<i>
+</I>&gt;<i> *On manual attachment detach:
+</I>&gt;<i> ==========================*
+</I>&gt;<i>
+</I>&gt;<i> 2012-01-18 07:53:04,156 ERROR - 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView [LLCLIENTVIEW]: 
+</I>&gt;<i> Caught exception while processing 
+</I>&gt;<i> OpenMetaverse.Packets.ObjectDetachPacket for mewtwo0641 Alito, 
+</I>&gt;<i> Exception of type 'System.OutOfMemoryException' was thrown.    at 
+</I>&gt;<i> System.String.Concat(String str0, String str1)
+</I>&gt;<i>    at OpenMetaverse.Utils.StringToBytes(String str)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.UpdateKnownItem(IScenePresence 
+</I>&gt;<i> sp, SceneObjectGroup grp) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 486
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.DetachSingleAttachmentToInvInternal(IScenePresence 
+</I>&gt;<i> sp, UUID itemID) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 699
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.DetachSingleAttachmentToInv(IScenePresence 
+</I>&gt;<i> sp, UUID itemID) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 401
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.Client_OnObjectDetach(UInt32 
+</I>&gt;<i> objectLocalID, IClientAPI remoteClient) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 917
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView.HandleObjectDetach(IClientAPI 
+</I>&gt;<i> sender, Packet Pack) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\ClientStack\Linden\UDP\LLClientView.cs:line 
+</I>&gt;<i> 6170
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.ClientStack.LindenUDP.LLClientView.ProcessSpecificPacketAsync(Object 
+</I>&gt;<i> state) in c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\ClientStack\Linden\UDP\LLClientView.cs:line 
+</I>&gt;<i> 683
+</I>&gt;<i>
+</I>&gt;<i> *
+</I>&gt;<i> If I log in after OoM Exception is thrown:
+</I>&gt;<i> ==================================*
+</I>&gt;<i>
+</I>&gt;<i> 2012-01-18 08:02:35,687 ERROR - 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule 
+</I>&gt;<i> [ATTACHMENTS MODULE]: Unable to rez attachment: Exception of type 
+</I>&gt;<i> 'System.OutOfMemoryException' was thrown.   at 
+</I>&gt;<i> System.String.CreateStringFromEncoding(Byte* bytes, Int32 byteLength, 
+</I>&gt;<i> Encoding encoding)
+</I>&gt;<i>    at System.Text.UTF8Encoding.GetString(Byte[] bytes, Int32 index, 
+</I>&gt;<i> Int32 count)
+</I>&gt;<i>    at OpenMetaverse.Utils.BytesToString(Byte[] bytes)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Framework.InventoryAccess.BasicInventoryAccessModule.RezObject(IClientAPI 
+</I>&gt;<i> remoteClient, InventoryItemBase item, UUID assetID, Vector3 RayEnd, 
+</I>&gt;<i> Vector3 RayStart, UUID RayTargetID, Byte BypassRayCast, Boolean 
+</I>&gt;<i> RayEndIsIntersection, Boolean RezSelected, Boolean RemoveItem, UUID 
+</I>&gt;<i> fromTaskID, Boolean attachment) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Framework\InventoryAccess\InventoryAccessModule.cs:line 
+</I>&gt;<i> 725
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Framework.InventoryAccess.BasicInventoryAccessModule.RezObject(IClientAPI 
+</I>&gt;<i> remoteClient, UUID itemID, Vector3 RayEnd, Vector3 RayStart, UUID 
+</I>&gt;<i> RayTargetID, Byte BypassRayCast, Boolean RayEndIsIntersection, Boolean 
+</I>&gt;<i> RezSelected, Boolean RemoveItem, UUID fromTaskID, Boolean attachment) 
+</I>&gt;<i> in c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Framework\InventoryAccess\InventoryAccessModule.cs:line 
+</I>&gt;<i> 692
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.RezSingleAttachmentFromInventoryInternal(IScenePresence 
+</I>&gt;<i> sp, UUID itemID, UUID assetID, UInt32 attachmentPt) in c:\Documents 
+</I>&gt;<i> and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 720
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.RezSingleAttachmentFromInventory(IScenePresence 
+</I>&gt;<i> sp, UUID itemID, UInt32 AttachmentPt) in c:\Documents and 
+</I>&gt;<i> Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 308
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.Region.CoreModules.Avatar.Attachments.AttachmentsModule.RezAttachments(IScenePresence 
+</I>&gt;<i> sp) in c:\Documents and Settings\admin\Desktop\opensim-e7619f7 
+</I>&gt;<i> r17830\opensim-e7619f7\OpenSim\Region\CoreModules\Avatar\Attachments\AttachmentsModule.cs:line 
+</I>&gt;<i> 142
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> OpenSim: 9 Region Standalone on 0.7.3 Dev
+</I>&gt;<i> Physics: Open Dynamics Engine
+</I>&gt;<i> OS: Windows XP 32 Bit
+</I>&gt;<i> CPU: AMD Phenom II X4 840 3.2 GHz
+</I>&gt;<i> Memory: 3 GB DDR3
+</I>&gt;<i> Database: MySQL 5.1.11
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+OpenSim: 9 Region Standalone on 0.7.3 Dev
+Physics: Open Dynamics Engine
+OS: Windows XP 32 Bit
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 3 GB DDR3
+Database: MySQL 5.1.11
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120119/f6062170/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120119/f6062170/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009083.html">[Opensim-users] Out of memory exception on logout r/17830
+</A></li>
+	<LI>Next message: <A HREF="009102.html">[Opensim-users] Out of memory exception on logout r/17830
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9092">[ date ]</a>
+              <a href="thread.html#9092">[ thread ]</a>
+              <a href="subject.html#9092">[ subject ]</a>
+              <a href="author.html#9092">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

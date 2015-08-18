@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] r7930 breaks comms with older versions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20r7930%20breaks%20comms%20with%20older%20versions&In-Reply-To=%3C495FB735.8070501%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000967.html">
+   <LINK REL="Next"  HREF="000970.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] r7930 breaks comms with older versions</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20r7930%20breaks%20comms%20with%20older%20versions&In-Reply-To=%3C495FB735.8070501%40googlemail.com%3E"
+       TITLE="[Opensim-users] r7930 breaks comms with older versions">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Jan  3 20:06:29 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000967.html">[Opensim-users] r7930 breaks comms with older versions
+</A></li>
+        <LI>Next message: <A HREF="000970.html">[Opensim-users] r7930 breaks comms with older versions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#968">[ date ]</a>
+              <a href="thread.html#968">[ thread ]</a>
+              <a href="subject.html#968">[ subject ]</a>
+              <a href="author.html#968">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Diva Canto wrote:
+&gt;<i> Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> tl;dr.  So maybe the single monolithic current interface version number should be split into 3
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Grid comms interface version
+</I>&gt;&gt;<i> Region neighbour comms interface version
+</I>&gt;&gt;<i> Region teleport comms interface version
+</I>&gt;&gt;<i>   
+</I>&gt;<i> The neighbors and teleports can be made the same, because they use the 
+</I>&gt;<i> exact same set of interregion comms. And I think that the right thing to 
+</I>&gt;<i> do is to add the protocol version number in the messages themselves, 
+</I>&gt;<i> just like lots of other protocols do. I should have thought about this 
+</I>&gt;<i> before. I'll add it next week.
+</I>
+I guess I was thinking of some future situation where neighbour and teleport comms could vary.  Though right now the 
+pragmatic thing could well be just to combine the two.
+
+You have a point about embedding version numbers in all messages, but is this precisely the same kind of situation? 
+Unlike HTTP (one protocol which always sends a version number, I believe), we don't have a single interaction but a 
+continuous series of interactions between two regions.  The code could check the version number on each message but 
+would could also just do it when the neighbour initially appears.
+
+Even so, I imagine this would still probably be a good thing to do.  One could do the same thing with grid comms, though 
+maybe not with viewer comms since small message size is much more crucial there (?)
+
+&gt;<i> 
+</I>&gt;<i> So if a region comes up and tries to engage with a neighbor that's 
+</I>&gt;<i> running an older/incompatible version of the interregion protocol, that 
+</I>&gt;<i> neighbor should essentially be made invisible, and vice-versa. And if 
+</I>&gt;<i> you try to TP to a region running older/incompatible interregion comms, 
+</I>&gt;<i> the TP will fail with a meaningful message, but nobody will crash.
+</I>&gt;<i> 
+</I>&gt;<i> What do you think?
+</I>
+I think the invisibility thing is an interesting idea.  Do you think that this would make things more confusing for 
+people? (the map says there's a region here but I can't see it!).
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000967.html">[Opensim-users] r7930 breaks comms with older versions
+</A></li>
+	<LI>Next message: <A HREF="000970.html">[Opensim-users] r7930 breaks comms with older versions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#968">[ date ]</a>
+              <a href="thread.html#968">[ thread ]</a>
+              <a href="subject.html#968">[ subject ]</a>
+              <a href="author.html#968">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

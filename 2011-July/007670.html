@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Autopilot and osNPC bugs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Autopilot%20and%20osNPC%20bugs&In-Reply-To=%3CCABsLVMuow5uSogPpmxnzpjVodsyoeZEc7fDgRzysyg%3DSTX9buQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007669.html">
+   <LINK REL="Next"  HREF="007666.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Autopilot and osNPC bugs</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Autopilot%20and%20osNPC%20bugs&In-Reply-To=%3CCABsLVMuow5uSogPpmxnzpjVodsyoeZEc7fDgRzysyg%3DSTX9buQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Autopilot and osNPC bugs">teravus at gmail.com
+       </A><BR>
+    <I>Wed Jul 13 04:29:26 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007669.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+        <LI>Next message: <A HREF="007666.html">[Opensim-users] Thread errors, how can i tweak them out....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7670">[ date ]</a>
+              <a href="thread.html#7670">[ thread ]</a>
+              <a href="subject.html#7670">[ subject ]</a>
+              <a href="author.html#7670">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A while a go, I wrote something that took advantage of exactly what I'm
+talking about..
+
+I added my own character class called, 'Character',  to manage some internal
+data like way-points...   but that's not required.
+
+Should be something like:
+
+public class Character : IClientAPI
+&gt;&gt;<i>        internal void AutoPilot(Vector3 vector3, uint localid)
+</I>&gt;&gt;<i>        {
+</I>&gt;&gt;<i>            UpdateVector ap = OnAutoPilotGo;
+</I>&gt;&gt;<i>            if (ap != null)
+</I>&gt;&gt;<i>                ap(localid, vector3, this);
+</I>&gt;&gt;<i>        }
+</I>&gt;&gt;<i>
+</I>&gt;<i> In the script engine there would be a timer or some other time based
+</I>trigger..   like the EventManager OnFrame event.
+
+private Quaternion fourtyFiveDegreeAngle = new
+&gt;<i> Quaternion(0,0,-0.70711f,0.70711f);
+</I>&gt;<i> void EventManager_OnFrame()
+</I>&gt;<i>        {
+</I>&gt;<i>            m_frame++;
+</I>&gt;<i>            if ((m_frame % m_agentupdatepump) == 0)
+</I>&gt;<i>            {
+</I>&gt;<i>                PumpAgentUpdate();
+</I>&gt;<i>            }
+</I>&gt;<i>            if (m_frame &gt;= (int.MaxValue - 1))
+</I>&gt;<i>            {
+</I>&gt;<i>                m_frame = 0;
+</I>&gt;<i>            }
+</I>&gt;<i>        }
+</I>&gt;<i> void PumpAgentUpdate()
+</I>&gt;<i>        {
+</I>&gt;<i>            foreach (Character c in ActiveCharacters)
+</I>&gt;<i>           {
+</I>&gt;<i>           ScenePresence cSP = m_scene.GetScenePresence(c.AgentId);
+</I>&gt;<i>           PumpAgentUpdate(c, cSP);
+</I>&gt;<i>           }
+</I>&gt;<i>        }
+</I>&gt;<i>
+</I>&gt;<i> // NOTE HERE how we're doing a bit of math to figure out our appropriate
+</I>&gt;<i> rotation! to feed back to the agent update method
+</I>&gt;<i> void PumpAgentUpdate(Character pC, ScenePresence pSP)
+</I>&gt;<i>        {
+</I>&gt;<i>            AgentUpdateArgs updateargs = new AgentUpdateArgs();
+</I>&gt;<i>            updateargs.AgentID = pC.AgentId;
+</I>&gt;<i>            updateargs.BodyRotation = Vector3.RotationBetween(Vector3.UnitX,
+</I>&gt;<i> Vector3.Normalize(pC.m_lastTarget - pSP.AbsolutePosition));
+</I>&gt;<i>            if (pC.ClientSideOrientation == fourtyFiveDegreeAngle)
+</I>&gt;<i>                pC.ClientSideOrientation = Quaternion.Identity;
+</I>&gt;<i>            updateargs.CameraAtAxis = Vector3.Zero;
+</I>&gt;<i>            updateargs.CameraCenter = new Vector3(pSP.AbsolutePosition  -
+</I>&gt;<i> (new Vector3(0,0,1) * updateargs.BodyRotation));
+</I>&gt;<i>            updateargs.CameraLeftAxis = Vector3.Zero;
+</I>&gt;<i>            updateargs.CameraUpAxis = Vector3.Zero;
+</I>&gt;<i>            updateargs.ControlFlags = uint.MinValue;//
+</I>&gt;<i> +(uint)OpenMetaverse.AgentManager.ControlFlags.AGENT_CONTROL_FLY;
+</I>&gt;<i>            updateargs.Far = 128f;
+</I>&gt;<i>            updateargs.Flags = byte.MinValue;
+</I>&gt;<i>            updateargs.HeadRotation = Quaternion.Identity;
+</I>&gt;<i>            updateargs.SessionID = pC.SessionId;
+</I>&gt;<i>            updateargs.State = byte.MinValue;
+</I>&gt;<i>
+</I>&gt;<i>            pSP.HandleAgentUpdate(pC,updateargs);
+</I>&gt;<i>        }
+</I>
+
+
+Note that last method call.   That's probably the minimum AgentUpdateArgs
+that you can construct.
+
+Anyway, if we're using the NPC character in the script engine, then this
+type of stuff should probably be handled in the Async area of the Script
+engine.  Hopefully this helps.
+
+-Teravus
+
+On Tue, Jul 12, 2011 at 10:02 PM, Teravus Ovares &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>&gt; wrote:
+&gt;<i> In order to fix the autopilot, the script engine needs to feed the
+</I>&gt;<i> ScenePresence minimal position/rotation updates.   There's an event
+</I>&gt;<i> handler in ScenePresence that handles AvatarUpdates and is the proper
+</I>&gt;<i> method for the script engine to call.   Last I checked, the server
+</I>&gt;<i> side autopilot code is IN that event handler, so, unless something has
+</I>&gt;<i> significantly changed, it just needs to be wired up.
+</I>&gt;<i>
+</I>&gt;<i> Teravus
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jul 12, 2011 at 8:55 PM, Justin Clark-Casey
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> On 12/07/11 14:53, David Burden wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  From my experience and what I've read elsewhere both the LibOMV
+</I>Autopilot
+&gt;&gt;&gt;<i> function in OpenSim and the osNPC
+</I>&gt;&gt;&gt;<i> functionality are broken in the latest versions of OpenSim. Since one of
+</I>&gt;&gt;&gt;<i> my favourite uses for virtual worlds is playing
+</I>&gt;&gt;&gt;<i> around autonomous avatars this is a real pain. Has anyone got any idea
+</I>of
+&gt;&gt;&gt;<i> the amount of effort needed to fix one or both
+</I>&gt;&gt;&gt;<i> of these, as if it's reasonable and practical we might be able to find
+</I>&gt;&gt;&gt;<i> some resource to help fix them.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi David.  As it happens, I've started to look at osNPC*() functions in
+</I>the
+&gt;&gt;<i> last couple of weeks (e.g. commits 22f25fa, ed12e38) with a view to
+</I>&gt;&gt;<i> eventually restoring the original functionality and buttressing it with
+</I>some
+&gt;&gt;<i> automated regression tests.  I would also love to see the code in a state
+</I>&gt;&gt;<i> where NPCs would work without a client object attached.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> At the moment in git master, say, create and delete work, though
+</I>appearance
+&gt;&gt;<i> and autopilot are broken.  For an experienced OpenSim developer fixing
+</I>&gt;&gt;<i> appearance shouldn't be too hard - I think it's a case of digging around
+</I>to
+&gt;&gt;<i> find out why the copied avatar baked textures aren't being used properly
+</I>on
+&gt;&gt;<i> the NPC.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Fixing autopilot is more difficult.  In principle, it should use much the
+</I>&gt;&gt;<i> same code paths as sit and &quot;go here&quot; on version 1 viewers, though &quot;go
+</I>here&quot;
+&gt;&gt;<i> itself doesn't appear to be working consistently.  It's probably a case
+</I>of
+&gt;&gt;<i> fixing go and then reusing the code for npc autopilot.  This would be
+</I>&gt;&gt;<i> somewhat involved, more so than fixing appearance.  Fixing autopilot of
+</I>NPCs
+&gt;&gt;<i> should also fix it for client-side bots.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any resource to help fix these would be very welcome.  I have to confess,
+</I>&gt;&gt;<i> they are low down on my priority list right now.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110712/538c2f9f/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110712/538c2f9f/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007669.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+	<LI>Next message: <A HREF="007666.html">[Opensim-users] Thread errors, how can i tweak them out....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7670">[ date ]</a>
+              <a href="thread.html#7670">[ thread ]</a>
+              <a href="subject.html#7670">[ subject ]</a>
+              <a href="author.html#7670">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

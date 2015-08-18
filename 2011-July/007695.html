@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Installing OpenSim 7.1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Installing%20OpenSim%207.1.1&In-Reply-To=%3C4E1FA27C.2070300%40pawzgroup.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007694.html">
+   <LINK REL="Next"  HREF="007702.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Installing OpenSim 7.1.1</H1>
+    <B>Loralai Aya</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Installing%20OpenSim%207.1.1&In-Reply-To=%3C4E1FA27C.2070300%40pawzgroup.com%3E"
+       TITLE="[Opensim-users] Installing OpenSim 7.1.1">loralai.aya at pawzgroup.com
+       </A><BR>
+    <I>Fri Jul 15 04:14:20 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007694.html">[Opensim-users] Installing OpenSim 7.1.1
+</A></li>
+        <LI>Next message: <A HREF="007702.html">[Opensim-users] Installing OpenSim 7.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7695">[ date ]</a>
+              <a href="thread.html#7695">[ thread ]</a>
+              <a href="subject.html#7695">[ subject ]</a>
+              <a href="author.html#7695">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 7/14/2011 6:22 PM, Justin Clark-Casey wrote:
+&gt;<i> My first guess would be that you're actually still using sqlite for 
+</I>&gt;<i> the region data.  I suggest checking your config files.
+</I>&gt;<i>
+</I>&gt;<i> If that's not the case, then please post the output of &quot;config show&quot; 
+</I>&gt;<i> here.
+</I>&gt;<i>
+</I>&gt;<i> On 14/07/11 14:01, Loralai Aya wrote:
+</I>&gt;&gt;<i> Hi all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have been recently having an issue with the new update of OpenSim. 
+</I>&gt;&gt;<i> Let me start here:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I use my server to host regions only, and the region databases are 
+</I>&gt;&gt;<i> stored on my server, we connect to a different grid
+</I>&gt;&gt;<i> server where all the user assets and data is stored.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The problem I am having is this. The region server side will appear 
+</I>&gt;&gt;<i> to be up and running, however it is not populating
+</I>&gt;&gt;<i> my region database (mysql). I have edited the GridCommon.ini file 
+</I>&gt;&gt;<i> with the database and connection information to both
+</I>&gt;&gt;<i> my database and the grid servers. Any Idea what I might be doing 
+</I>&gt;&gt;<i> wrong? I have inclosed my server info below:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> CPU GenuineIntel, Intel(R) Xeon(R)CPU E5520 @ 2.27GHz
+</I>&gt;&gt;<i> OS Linux 2.6.18-028stab070.3
+</I>&gt;&gt;<i> Version Parallels Plesk Panel v10.1.1_build1010110120.18 os_SuSE 10.3
+</I>&gt;&gt;<i> php5.2.11-0.1
+</I>&gt;&gt;<i> mysql5.0.45-22.5
+</I>&gt;&gt;<i> mono 2.4.3
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Loralai
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>I actually found the log file this is what is displayed when it starts 
+loading the DB
+
+2011-07-15 01:56:06,041 INFO- OpenSim.Data.SQLite.SQLiteSimulationData 
+[SQLITE REGION DB]: Sqlite - connecting: 
+URI=file:OpenSim.db,version=3,UseUTF16Encoding=True
+
+2011-07-15 01:56:06,100 DEBUG - OpenSim.Data.Migration [MIGRATIONS]: 
+RegionStore data tables already up to date at revision 21
+
+2011-07-15 01:56:06,348 INFO- OpenSim.Data.SQLite.SQLiteEstateStore 
+[ESTATE DB]: Sqlite - connecting: 
+URI=file:OpenSim.db,version=3,UseUTF16Encoding=True
+
+2011-07-15 01:56:06,351 DEBUG - OpenSim.Data.Migration [MIGRATIONS]: 
+EstateStore data tables already up to date at revision 8
+
+2011-07-15 01:56:06,353 INFO- 
+OpenSim.Region.ClientStack.ClientStackManager [CLIENTSTACK]: Attempting 
+to load OpenSim.Region.ClientStack.LindenUDP.dll
+
+2011-07-15 01:56:06,434 INFO- 
+OpenSim.Region.ClientStack.ClientStackManager [CLIENTSTACK]: Added 
+IClientNetworkServer Interface
+
+But this is what I have set up in the GirdCommon.ini (forgive me but I 
+have replaced some data with ***** for security reasons)
+
+[DatabaseService]
+     ;
+     ; ### Choose the DB
+     ;
+
+     ; SQLite
+     ;Include-Storage = &quot;config-include/storage/SQLiteStandalone.ini&quot;;
+
+     ; MySql
+     ; Uncomment these lines if you want to use mysql storage
+     ; Change the connection string to your db details
+     StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+     storage_connection_string=&quot;Data 
+Source=localhost;Database=*****;User ID=******;Password=*******;&quot;
+     ; Uncomment this line if you are using MySQL and want to use a 
+different database for estates
+     ;EstateConnectionString = &quot;Data 
+Source=localhost;Database=opensim;User ID=opensim;Password=***;&quot;
+
+[AssetService]
+
+     DefaultAssetLoader = &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+     AssetLoaderArgs = &quot;assets/AssetSets.xml&quot;
+
+     ;
+     ; change this to your grid-wide asset server
+     ;
+     AssetServerURI = &quot;*******&quot;
+
+[InventoryService]
+     ;
+     ; change this to your grid-wide inventory server
+     ;
+     InventoryServerURI = &quot;**********&quot;
+
+[GridService]
+     ;
+     ; change this to your grid-wide grid server
+     ;
+     GridServerURI = &quot;*******&quot;
+     ;AllowHypergridMapSearch = true
+
+     ;; Directory for map tile images of linked regions
+     ; MapTileDirectory = &quot;./maptiles&quot;
+
+     ; === HG ONLY ===
+     ;; change this to the address of your Gatekeeper service
+     ;; (usually bundled with the rest of the services in one
+     ;; Robust server in port 8002, but not always)
+     Gatekeeper=&quot;********&quot;
+
+[AvatarService]
+     ;
+     ; change this to your grid-wide grid server
+     ;
+     AvatarServerURI = &quot;********&quot;
+
+[PresenceService]
+     ;
+     ; change this to your grid-wide presence server
+     ;
+     PresenceServerURI = &quot;*******&quot;
+
+[UserAccountService]
+     ;
+     ; change this to your grid-wide user accounts server
+     ;
+     UserAccountServerURI = &quot;*******&quot;
+
+[GridUserService]
+     ;
+     ; change this to your grid-wide user accounts server
+     ;
+     GridUserServerURI = &quot;*******&quot;
+
+[AuthenticationService]
+     ;
+     ; change this to your grid-wide authentication server
+     ;
+     AuthenticationServerURI = &quot;********&quot;
+
+[FriendsService]
+     ;
+     ; change this to your grid-wide friends server
+     ;
+     FriendsServerURI = &quot;********&quot;
+
+[HGInventoryAccessModule]
+     ;
+     ; === HG ONLY ===
+     ; Change this to your profile server
+     ; accessible from other grids
+     ;
+     ProfileServerURI = &quot;<A HREF="http://mygridserver.com:8002/user">http://mygridserver.com:8002/user</A>&quot;
+     ;; If you want to protect your assets from being copied by foreign 
+visitors
+     ;; uncomment the next line. You may want to do this on sims that 
+have licensed content.
+     ; OutboundPermission = False
+
+
+[Modules]
+     ;; Choose 0 or 1 cache modules, and the corresponding config file, 
+if it exists.
+     ;; Copy the config .example file into your own .ini file and change 
+configs there
+
+     AssetCaching = &quot;FlotsamAssetCache&quot;
+     Include-FlotsamCache = &quot;config-include/FlotsamCache.ini&quot;
+
+     ;AssetCaching = &quot;CenomeMemoryAssetCache&quot;
+     ;Include-CenomeCache = &quot;config-include/CenomeCache.ini&quot;
+
+     ;AssetCaching = &quot;GlynnTuckerAssetCache&quot;
+
+     ;; Optionally, the port for the LLProxyLoginModule module can be 
+changed
+
+     ;Setup_LLProxyLoginModule = &quot;9090/&quot;
+
+     ;; Authorization is not on by default, as it depends on external php
+     ;AuthorizationServices = &quot;RemoteAuthorizationServicesConnector&quot;
+
+
+-- 
+Loralai Aya
+President
+Pawz Group
+<A HREF="http://Pawzgroup.com">http://Pawzgroup.com</A>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110714/d8403ea8/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110714/d8403ea8/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007694.html">[Opensim-users] Installing OpenSim 7.1.1
+</A></li>
+	<LI>Next message: <A HREF="007702.html">[Opensim-users] Installing OpenSim 7.1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7695">[ date ]</a>
+              <a href="thread.html#7695">[ thread ]</a>
+              <a href="subject.html#7695">[ subject ]</a>
+              <a href="author.html#7695">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

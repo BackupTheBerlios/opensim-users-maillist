@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Matching, mapping user UUIDs between servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Matching%2C%20mapping%20user%20UUIDs%20between%20servers&In-Reply-To=%3CCA%2Bsu7OV%3DBha3pekT8DjAbwRN6roBe_2pjhPL%2B%3D3H%3D9Wpn9NfYQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012307.html">
+   <LINK REL="Next"  HREF="012309.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Matching, mapping user UUIDs between servers</H1>
+    <B>Edmund Edgar</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Matching%2C%20mapping%20user%20UUIDs%20between%20servers&In-Reply-To=%3CCA%2Bsu7OV%3DBha3pekT8DjAbwRN6roBe_2pjhPL%2B%3D3H%3D9Wpn9NfYQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Matching, mapping user UUIDs between servers">ed at avatarclassroom.com
+       </A><BR>
+    <I>Tue May 28 03:40:31 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012307.html">[Opensim-users] Matching, mapping user UUIDs between servers
+</A></li>
+        <LI>Next message: <A HREF="012309.html">[Opensim-users] Matching, mapping user UUIDs between servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12308">[ date ]</a>
+              <a href="thread.html#12308">[ thread ]</a>
+              <a href="subject.html#12308">[ subject ]</a>
+              <a href="author.html#12308">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Rick.
+
+I haven't worked with avatar data before, but you may also need to find
+files with the name 7bf01a6a-b906-42a3-a6ab-8bc20e840a4d_whatever in the
+filename and rename them 6f500ef7-fafe-4909-94d6-057fb4e3cada/_whatever.
+
+For reference, this is the script I use horse around with LSL script UUIDs
+- we run this after we generate IAR files from the scripts we have in Git
+to make sure they're all consistent. There's both a sed command and a mv
+command involved.
+<A HREF="https://github.com/sloodle/sloodle_development_tools/blob/master/opensim_sync/fixuuid.sh">https://github.com/sloodle/sloodle_development_tools/blob/master/opensim_sync/fixuuid.sh</A>
+
+When we need to rebuild the IAR, we do:
+tar zcvf /tmp/sloodle.iar archive.xml inventory/* assets/*
+
+I think it would be the same with OARs. Beyond that I don't think there
+should be any particular voodoo involved in rebuilding it.
+
+HTH, let us know how you get on.
+
+
+On 28 May 2013 10:10, Rick Anderson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rianders at docs.rutgers.edu</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I tried doing this manually:
+</I>&gt;<i> Get UUID from old system, get UUID from new system
+</I>&gt;<i> save oar from original server &quot;general1.oar&quot;
+</I>&gt;<i> move oar to new server
+</I>&gt;<i> $mkdir tmp
+</I>&gt;<i> $cd tmp
+</I>&gt;<i> $tar xvzf ../general1.oar
+</I>&gt;<i>
+</I>&gt;<i> $ grep -rl 7bf01a6a-b906-42a3-a6ab-8bc20e840a4d . | wc
+</I>&gt;<i>
+</I>&gt;<i>    2052    8815  183917
+</I>&gt;<i>
+</I>&gt;<i> $ find .  -iname &quot;*.xml&quot; -exec  sed -i
+</I>&gt;<i>  's/7bf01a6a-b906-42a3-a6ab-8bc20e840a4d/6f500ef7-fafe-4909-94d6-057fb4e3cada/g'
+</I>&gt;<i> {} +
+</I>&gt;<i>
+</I>&gt;<i> $ find .  -iname &quot;*.txt&quot; -exec  sed -i
+</I>&gt;<i>  's/7bf01a6a-b906-42a3-a6ab-8bc20e840a4d/6f500ef7-fafe-4909-94d6-057fb4e3cada/g'
+</I>&gt;<i> {} +
+</I>&gt;<i>
+</I>&gt;<i> $ grep -rl 7bf01a6a-b906-42a3-a6ab-8bc20e840a4d . | wc
+</I>&gt;<i>
+</I>&gt;<i>       0       0       0
+</I>&gt;<i> $tar cvzf ../general1u.oar  archive.xml .
+</I>&gt;<i>
+</I>&gt;<i> It turns out that archive.xml has to be first in the archive. But even
+</I>&gt;<i> with that fix the updated OAR file won't find all it's contents. Does the
+</I>&gt;<i> OAR file have to signed or ordered even more than that to repack and use?
+</I>&gt;<i>
+</I>&gt;<i> --Rick
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, May 27, 2013 at 6:33 PM, Rick Anderson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rianders at docs.rutgers.edu</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've been moving and creating some new servers by migrating the OAR data.
+</I>&gt;&gt;<i> Even, if the OAR backup has the correct user permissions it's for my old
+</I>&gt;&gt;<i> grid and not the new one.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there a way to migrate that creator/owner user to a new system and
+</I>&gt;&gt;<i> keep their UUID?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Or should I look up the UUID for the new version of the user and use
+</I>&gt;&gt;<i> script to update the UUID in the OAR files before importing the UUID?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there a third better way? Maybe, if the own Hypergrids there is there
+</I>&gt;&gt;<i> a record of them as user to refer to?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i> --Rick
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Rick Anderson
+</I>&gt;&gt;<i> Director of Virtual Worlds
+</I>&gt;&gt;<i> Division of Continuing Studies (DoCS)
+</I>&gt;&gt;<i> Rutgers University
+</I>&gt;&gt;<i> (732) 586-3265
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Rick Anderson
+</I>&gt;<i> Director of Virtual Worlds
+</I>&gt;<i> Division of Continuing Studies (DoCS)
+</I>&gt;<i> Rutgers University
+</I>&gt;<i> (732) 586-3265
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Edmund Edgar
+Avatar Classroom
+Your classroom, on the web, in a virtual world.
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ed at avatarclassroom.com</A>
++81 090 3912 3380
+Skype: edmundedgar
+Second Life: Edmund Earp
+Linked In: edmundedgar
+Twitter: @edmundedgar
+<A HREF="http://www.avatarclassroom.com">http://www.avatarclassroom.com</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130528/97b9899a/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130528/97b9899a/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012307.html">[Opensim-users] Matching, mapping user UUIDs between servers
+</A></li>
+	<LI>Next message: <A HREF="012309.html">[Opensim-users] Matching, mapping user UUIDs between servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12308">[ date ]</a>
+              <a href="thread.html#12308">[ thread ]</a>
+              <a href="subject.html#12308">[ subject ]</a>
+              <a href="author.html#12308">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

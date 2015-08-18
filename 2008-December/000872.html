@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Collada
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Collada&In-Reply-To=%3C494F6194.8020806%40kyperjokki.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000871.html">
+   <LINK REL="Next"  HREF="000873.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Collada</H1>
+    <B>Toni Alatalo</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Collada&In-Reply-To=%3C494F6194.8020806%40kyperjokki.fi%3E"
+       TITLE="[Opensim-users] Collada">antont at kyperjokki.fi
+       </A><BR>
+    <I>Mon Dec 22 10:44:52 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000871.html">[Opensim-users] Collada
+</A></li>
+        <LI>Next message: <A HREF="000873.html">[Opensim-users] Collada
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#872">[ date ]</a>
+              <a href="thread.html#872">[ thread ]</a>
+              <a href="subject.html#872">[ subject ]</a>
+              <a href="author.html#872">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dzonatas kirjoitti:
+&gt;<i> Collada is an excellent system to collaborate on objects between 
+</I>&gt;<i> applications. One note to not overlook is that the 
+</I>
+Just a little note to make sure: that's done via the typical export &amp; 
+import -loop, with pretty big xml files too, so we are not talking about 
+realtime collaboration (which was talked about here earlier when someone 
+asked about Verse, which is a real-time protocol) but interoperability 
+between applications by supporting a common format. Which has been of 
+course a dire need which Collada (i.e. Sony..) has since a few years 
+solved for some game developers at least.
+
+&gt;<i> unable to directly connect a grid to each other, but they need to move 
+</I>&gt;<i> assets from one world to the other to get a job done. One business can 
+</I>&gt;<i> export all the objects to ship into a collada files. The other 
+</I>&gt;<i> business then imports the objects from the collada files to its world. 
+</I>&gt;<i> Here, the transfer of objects occurred outside of the virtual world of
+</I>
+When talking about OpenSim for SL compatibility, I'm unsure if Collada 
+can be used at all though: does it support prims? In games there usually 
+are just meshes. Well the spec does seem to support splines nicely, so 
+perhaps you could reproduce prims as beziers or something. Or are they 
+even for just 2d curves? I'm pretty sure it has no mechanism for 
+anything like sculpties. Also it does not know about other SL specific 
+asset data like permissions or scripts, but that's perhaps ok when you 
+transfer modelling work that you've done.
+
+&gt;<i> On that last example, to expand and simplify upon a contract I have 
+</I>&gt;<i> had, imagine you get a contract for a job and they hand you the 
+</I>&gt;<i> collada files. You then do the work locally to the files and hand back 
+</I>&gt;<i> the new collada files.
+</I>&gt;<i> The collada processor is what needs to be programmed more than the 
+</I>&gt;<i> import/exporter here. The processor may do more than just adjust a few 
+</I>&gt;<i> data types to a new type, as it may need to resolve url and combine 
+</I>&gt;<i> data, or it may need to separate and distribute data to various servers.
+</I>Aren't people already using the save-oar &amp; load-oar  tools for this .. 
+oh that seems to be for full regions.
+
+Anyhow right now we are closer to having such files to save &amp; distribute 
+with the OpenSim specific xml serializing. I know Mikko Pallari in the 
+Realxtend project (I'm now doing work for them too) was working on a new 
+version of a serializer last week, with Adam Frisby - 
+<A HREF="http://opensimulator.org/wiki/Xml_Objects_Format">http://opensimulator.org/wiki/Xml_Objects_Format</A> is the format sketch we 
+looked at when starting the work .. Mikko showed some code last week put 
+I don't know yet where he put it before leaving for holidays (am just 
+catching up after the weekend myself..)
+
+The goal in that new serializer work is to have the serialization 
+independent of changes in the SOG/SOP code (i.e. how the prim/object 
+groups and parts are in the internals), so that the format would not 
+change with new versions of OpenSim.
+
+As you see in that older draft already, many things in SL are totally 
+different from Collada - in a Collada doc you don't see RootPosition and 
+Parts, nor Shape with a Circle face and Straight Extrusion etc.
+
+Might be still interesting to look at how things are in Collada, and how 
+those Collada processors you mention work etc., but I don't see how 
+Collada could work for storing SL like assets.
+
+Verse might be able, as it is based on the notion of 'perfect data', 
+like prims: a sphere is a sphere (though in Verse everything is somehow 
+also a subdiv surface iirc? don't know how the details are.). And Sony 
+paid Eskil a couple of years ago to write Collada support for Verse 
+(import / export), as they started thinking it is perhaps the next good 
+things after Collada, but that I guess is another story ;)
+
+And of course in Realxtend where we support meshes too Collada is more 
+relevant, was also discussed a while ago in 
+<A HREF="http://groups.google.com/group/realxtend/browse_thread/thread/3c56de585b71cf91">http://groups.google.com/group/realxtend/browse_thread/thread/3c56de585b71cf91</A> 
+(the situation basically is that Rex currently supports just the ogre 
+format - something more interoperable would be nice but no one is 
+developing that now). But also there we'd still need something that 
+support prims too, and like said that's right now going to be the new 
+version of the existing OpenSim xml serialization.
+
+~Toni
+
+&gt;<i> Ralf Haifisch wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi there,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As a few maybe know, there is a 3D standard for decribing objects.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://www.collada.org/">http://www.collada.org/</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Some bigger systems use it (like google, twinity..) and if you look 
+</I>&gt;&gt;<i> over their website, there are several apps that can produce collada 
+</I>&gt;&gt;<i> output files.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Seems to be the only standard that is industry accepted right now.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The baisic idea is, to have a common format &#8211; so you are able to 
+</I>&gt;&gt;<i> create content offline or export/import it, even cross-3D-platform.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There is a JIRA on it, if someone thinks about Lindens side:&#65533; 
+</I>&gt;&gt;<i> <A HREF="http://jira.secondlife.com/browse/MISC-830">http://jira.secondlife.com/browse/MISC-830</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you have a look at Mantis:&#65533; 
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=2827">http://opensimulator.org/mantis/view.php?id=2827</A> &#8211; I was requested to 
+</I>&gt;&gt;<i> search for PRO/CON and a Dev in the maillinglist.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So, here it is.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What is you opinon on Collada implementation ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Do you think we need more a server-side (mass import) interface, or 
+</I>&gt;&gt;<i> client side ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cheers
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ralf
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>   
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000871.html">[Opensim-users] Collada
+</A></li>
+	<LI>Next message: <A HREF="000873.html">[Opensim-users] Collada
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#872">[ date ]</a>
+              <a href="thread.html#872">[ thread ]</a>
+              <a href="subject.html#872">[ subject ]</a>
+              <a href="author.html#872">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

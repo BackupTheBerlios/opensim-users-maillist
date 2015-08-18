@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database clean up
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20clean%20up&In-Reply-To=%3C985D7240-3669-4F38-838A-0C80C34CE6F1%40spekuloos.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010046.html">
+   <LINK REL="Next"  HREF="010052.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database clean up</H1>
+    <B>Gudule Lapointe</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20clean%20up&In-Reply-To=%3C985D7240-3669-4F38-838A-0C80C34CE6F1%40spekuloos.be%3E"
+       TITLE="[Opensim-users] Database clean up">gudule at spekuloos.be
+       </A><BR>
+    <I>Fri Apr  6 19:53:57 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010046.html">[Opensim-users] OpenSim viewer on a Windows tablet
+</A></li>
+        <LI>Next message: <A HREF="010052.html">[Opensim-users] Database clean up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10047">[ date ]</a>
+              <a href="thread.html#10047">[ thread ]</a>
+              <a href="subject.html#10047">[ subject ]</a>
+              <a href="author.html#10047">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I experience lot of timeout problems. I checked every side of the installation, and I suspect the database to be the bottleneck.
+
+The main question is: how can I clean up the database? Detail description below&#8230;
+Any advice on any part of the problem is welcome.
+
+
+
+Current setup comes from an initial test installation, and changed a lot before going to prod (versions changes, server changes, oar save and load, etc).
+However it has been working quite fine for more than 3 months, since latest big change.
+
+	- version: 0.7.3-post-fixes
+	- robust server, with 7 simulators, for a total of 56 regions
+	- From these region, I would say 15 &#224; 20 are really active, others are placeholders, without content.
+	- About 20 registered users. Usually 3 or 4 concurrent users
+	- Each region has it's own mysql database, and robust uses a single one.
+
+Since around 5 days, I get continuous timeout, access to inventory or assets errors and sometimes region crashes.
+
+Though they were no recent change on the set up when the problems began. Hence my suspicions on the database.
+
+(CPU, memory and disk usage don't show any overload)
+
+Regions database are fairly light (~20MB)
+Robust database is huge: 2.6 GB
+I am not sure such a big database is common for setup like ours.
+
+So it looks obvious that I should clean up the database, which may  contain a lot of outdated items.
+Fair enough. How can I do?
+
+I would like to know 
+	- which tables I can empty without losses, at all
+	- which tables I can empty after having made a successful oar save of my regions
+	- how can I clean up the inventory and assets server, without having my users loosing their inventory?
+	- and any advise on how to optimize mysql server for this usage is welcome
+
+Another clue is to split robust inventory and/or assets servers, so, in this case
+	- which tables do I have to split?
+	- are there risks of losses if the address/port of inventory and assets server change?
+
+And, last but not least, monitoring sql show warning of lot of queries are made on non-indexes fields of mysql tables. Which is not harmful for marginal queries, but is a big problem for recurring ones. I can't imagine parsing the whole code to guess where there are such recurring queries. Any idea on how to track guilty queries? A clue: it seems to be happening mostly when accessing foreign content (content taken on HG regions, or content used by HG visitor).
+
+--
+<A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+<A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+Speculoos, the belgian cookie-flavored metaverse
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120406/faa318e8/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120406/faa318e8/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010046.html">[Opensim-users] OpenSim viewer on a Windows tablet
+</A></li>
+	<LI>Next message: <A HREF="010052.html">[Opensim-users] Database clean up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10047">[ date ]</a>
+              <a href="thread.html#10047">[ thread ]</a>
+              <a href="subject.html#10047">[ subject ]</a>
+              <a href="author.html#10047">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

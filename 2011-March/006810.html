@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Floating text not going away
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Floating%20text%20not%20going%20away&In-Reply-To=%3C1300290461306-6177053.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006825.html">
+   <LINK REL="Next"  HREF="006811.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Floating text not going away</H1>
+    <B>Robert Klein</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Floating%20text%20not%20going%20away&In-Reply-To=%3C1300290461306-6177053.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Floating text not going away">rtkwebman at gmail.com
+       </A><BR>
+    <I>Wed Mar 16 16:47:41 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006825.html">[Opensim-users] SQL error or connection string	configurationerror
+</A></li>
+        <LI>Next message: <A HREF="006811.html">[Opensim-users] Floating text not going away
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6810">[ date ]</a>
+              <a href="thread.html#6810">[ thread ]</a>
+              <a href="subject.html#6810">[ subject ]</a>
+              <a href="author.html#6810">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have a script that puts the current time floating above an object. When I
+remove the script from the object contents the text still remains floating
+above the object showing the time from when the script was removed. The time
+does not continue to update but it will not go away. Anyone else have this
+problem and if so how did you get the text to go away without deleting the
+object and starting over?
+
+Here is the script:
+
+// HoverText Clock Script
+// By Ben Linden
+//
+// Drop on an object to make it display the PST time.
+//
+// If you are interested in scripting, check out
+// the Script Help under the help menu.
+
+// The double slash means these lines are comments
+// and ignored by the computer.
+
+
+
+
+// Global Variables
+// a string is a collection of characters.
+string smin; // Represents minutes
+string sseconds; //Represens seconds
+
+// All scripts have a default state, this will be
+// the first code executed.
+default
+{
+    // state_entry() is an event handler, it executes
+    // whenever a state is entered.
+    state_entry()
+    {
+        // llSetTimerEvent() is a function that sets 
+        // up a timer event in seconds.
+        llSetTimerEvent(2.0);  // call a timer event 
+                               // every 2 seconds.
+    }
+    
+    
+    // timer() is an event handler, it executes on an
+    // interval defined by llSetTimerEvent()
+    timer()
+    {
+       // llFloor is a function that rounds down all numbers.
+       // llGetWallClock is a function that returns the time 
+       // of day in seconds, on a 24 hour clock.
+       integer seconds =  llFloor(llGetWallclock());
+       // Convert the total number of seconds into a integer (whole number)
+       integer min = llFloor(seconds/60);
+       // Figure out how many minutes that is
+       seconds = seconds - (min*60);
+       //Work out the remaining number of seconds
+       integer hour = llFloor(min/60);
+       // figure out how many hours it represents.
+       min = min - (hour*60);
+       // figure out the number of minutes remaining
+       
+       // if is a conditional statement, it will only execute if the
+conditions are met. 
+       if(hour &gt; 12) {hour = hour - 12;} // if the hours are greater than
+12, convert to 12 hour time
+       string shour = (string)hour; //convert the number into a string
+       if(min &lt; 10) {smin = &quot;0&quot;+(string)min;} // if less than 10 minutes,
+put a 0 in the minute string
+       else { smin = (string)min;} 
+       if(seconds &lt; 10) { sseconds = &quot;0&quot;+(string)seconds;} // if less than
+10 sec, put a 0 in the second string
+       else {sseconds = (string)seconds;}
+       
+       
+       string time = shour + &quot;:&quot; + smin; // build the seperate strings into
+a complete string, with colons
+       
+       // llSetText is a function that displays a string over the object.
+       llSetText(time, ZERO_VECTOR, 1.0); //Display the string in solid
+black.
+    }
+
+}
+
+
+Thanks,
+
+Robert
+
+--
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Floating-text-not-going-away-tp6177053p6177053.html">http://opensim-users.2152040.n2.nabble.com/Floating-text-not-going-away-tp6177053p6177053.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006825.html">[Opensim-users] SQL error or connection string	configurationerror
+</A></li>
+	<LI>Next message: <A HREF="006811.html">[Opensim-users] Floating text not going away
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6810">[ date ]</a>
+              <a href="thread.html#6810">[ thread ]</a>
+              <a href="subject.html#6810">[ subject ]</a>
+              <a href="author.html#6810">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Upgrading problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Upgrading%20problem&In-Reply-To=%3CAANLkTinDSHUZTamBtVPJ8rX8gN%3DE5K3c7ZbQ-zgXuiJy%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005553.html">
+   <LINK REL="Next"  HREF="005554.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Upgrading problem</H1>
+    <B>Matthew Sable</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Upgrading%20problem&In-Reply-To=%3CAANLkTinDSHUZTamBtVPJ8rX8gN%3DE5K3c7ZbQ-zgXuiJy%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Upgrading problem">mdsable at umd.umich.edu
+       </A><BR>
+    <I>Tue Sep 21 22:56:08 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005553.html">[Opensim-users] Upgrading problem
+</A></li>
+        <LI>Next message: <A HREF="005554.html">[Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5573">[ date ]</a>
+              <a href="thread.html#5573">[ thread ]</a>
+              <a href="subject.html#5573">[ subject ]</a>
+              <a href="author.html#5573">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, today I tried simply editing the new &quot;OpenSim.ini&quot; file and
+changing the storage_plugin and storage_connection_string.  I copy
+Regions.ini over and the same result:  I load OpenSim32bitLaunch.exe
+and it works fine until it starts to print out a laundry list of red
+lines that all start with [PRIM_INVENTORY].  Regardless, it still
+doesn't allow me log in.  I figure even without prims, it should still
+be linked to the DB and log me in.  According to the guy that set up
+the DB, MySQL is just managing the UUID of the assets.  The assets
+themselves should probably still be in a &quot;.oar&quot; file.  As I said, I
+still can't log in with it so I have no idea.
+
+On Fri, Sep 17, 2010 at 10:09 PM, Justin Clark-Casey
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+&gt;<i> On 17/09/10 20:24, Matthew Sable wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm attempting to upgrade our OpenSIM server from version 0.68 to
+</I>&gt;&gt;<i> 0.72. &#160;First, I've followed instructions on how to backup and restore
+</I>&gt;&gt;<i> resources from here:
+</I>&gt;&gt;<i> <A HREF="http://www.osgrid.org/forums/viewtopic.php?f=5&amp;t=1791">http://www.osgrid.org/forums/viewtopic.php?f=5&amp;t=1791</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've made modified scripts that essentially do the same job. &#160;I then
+</I>&gt;&gt;<i> copy my &quot;Regions.ini&quot; file to the new version and either copy my old
+</I>&gt;&gt;<i> &quot;Opensim.ini&quot; file in OR add the following lines in the database
+</I>&gt;&gt;<i> section (commenting out the SQLlite versions):
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> torage_plugin=&quot;OpenSim.Data.MySQL.dll&quot;
+</I>&gt;&gt;<i> &#160; &#160; storage_connection_string=&quot;Data
+</I>&gt;&gt;<i> Source=localhost;Database=opensim;User
+</I>&gt;&gt;<i> ID=*****;Password=****************;&quot;;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When I first run Opensim, it then throws a fit because all of the
+</I>&gt;&gt;<i> prims are missing. &#160;I then run the &quot;restore.txt&quot; script to restore the
+</I>&gt;&gt;<i> assets. &#160;The problem is I can't log in. &#160;I check MySQL and the
+</I>&gt;&gt;<i> database is still there with the user table, but I don't think the new
+</I>&gt;&gt;<i> version of OpenSim is accessing it. &#160;My current form of &quot;backup&quot; is to
+</I>&gt;&gt;<i> simply copy the entire island folder but that doesn't allow for
+</I>&gt;&gt;<i> upgrading the core software. &#160;In that way, I still have a functional
+</I>&gt;&gt;<i> version of the island in 0.68 but I'd like to know if I'm missing
+</I>&gt;&gt;<i> something in making the transition to a newer version. &#160;Thanks.
+</I>&gt;<i>
+</I>&gt;<i> Assuming that you mean OpenSim 0.7.0.2, if you're migrating against your
+</I>&gt;<i> existing database, all you need to do is point the new installation at the
+</I>&gt;<i> existing database via the changes you're already making to storage_plugin
+</I>&gt;<i> and connection string - there's no need to backup and restore terrain or
+</I>&gt;<i> oars.
+</I>&gt;<i>
+</I>&gt;<i> The only other thing you need to do is move your Regions.ini, as you have,
+</I>&gt;<i> and change OpenSim.ini. &#160;We suggest copying the OpenSim.ini.example in the
+</I>&gt;<i> new distribution and editing that instead, since there can be problems using
+</I>&gt;<i> an old OpenSim.ini due to new configuration parameters in later versions of
+</I>&gt;<i> OpenSim.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Matthew Sable
+Adjunct Lecturer
+Office: &#160;206 CIS
+Computer and Information Science Department
+University of Michigan - Dearborn
+(313) 279-0259 (Cell)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005553.html">[Opensim-users] Upgrading problem
+</A></li>
+	<LI>Next message: <A HREF="005554.html">[Opensim-users] an other glitch, sorry - Configuration file is missing the [SimulationDataStore] section
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5573">[ date ]</a>
+              <a href="thread.html#5573">[ thread ]</a>
+              <a href="subject.html#5573">[ subject ]</a>
+              <a href="author.html#5573">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

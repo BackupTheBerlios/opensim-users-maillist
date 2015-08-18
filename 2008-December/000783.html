@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] opensim migration strategy
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20opensim%20migration%20strategy&In-Reply-To=%3C493A7093.2090408%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000782.html">
+   <LINK REL="Next"  HREF="000784.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] opensim migration strategy</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20opensim%20migration%20strategy&In-Reply-To=%3C493A7093.2090408%40googlemail.com%3E"
+       TITLE="[Opensim-users] opensim migration strategy">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Dec  6 13:31:15 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000782.html">[Opensim-users] opensim migration strategy
+</A></li>
+        <LI>Next message: <A HREF="000784.html">[Opensim-users] Permissions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#783">[ date ]</a>
+              <a href="thread.html#783">[ thread ]</a>
+              <a href="subject.html#783">[ subject ]</a>
+              <a href="author.html#783">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>John Hopkin wrote:
+&gt;<i> Justin Clark-Casey wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Ai Austin wrote:
+</I>&gt;&gt;&gt;<i> Thanks for the up to date upgrading notes. Its an important topic to 
+</I>&gt;&gt;&gt;<i> document well.  Will you add this to the Upgrading Wiki page?
+</I>&gt;&gt;<i> It would be great if people could update the wiki page with this info.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> METHOD 1: If Using SQLite in StandAlone Mode
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> 1. Build the latest version from source (or download the binaries)
+</I>&gt;&gt;&gt;&gt;<i> 2. Put this new installation in a new folder
+</I>&gt;&gt;&gt;&gt;<i> 3. Copy the following files from the old \bin to the new \bin
+</I>&gt;&gt;&gt;&gt;<i>    3a. All *.db files
+</I>&gt;&gt;&gt;&gt;<i>    3b. The opensim.ini file
+</I>&gt;&gt;&gt;&gt;<i>    3c. The \bin\regions XML files
+</I>&gt;&gt;&gt;&gt;<i> 4. Launch the new opensim.exe
+</I>&gt;&gt;&gt;<i> I see from my own previous upgrading notes that I also copy 
+</I>&gt;&gt;&gt;<i> over   &quot;estate_settings.xml&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Is this necessary, or will that be created automatically by 
+</I>&gt;&gt;&gt;<i> Opensim.exe and retain all the relevant information, previous region 
+</I>&gt;&gt;&gt;<i> UUIDs, etc?
+</I>&gt;&gt;<i> Ah you're right - estate_settings.xml should go across as well.
+</I>&gt;&gt;&gt;<i> Perhaps someone could also check if &quot;estate_settings.xml&quot; is 
+</I>&gt;&gt;&gt;<i> necessary when using MYSQL in StandAlone and/or Grid modes too?
+</I>&gt;<i> 
+</I>&gt;<i> Curious.  I'm using MySQL in grid mode, and as far as I can tell
+</I>&gt;<i> estate_settings.xml not been modified by anything I've done since
+</I>&gt;<i> installation, yet its modification date/time is from around the time
+</I>&gt;<i> last night when I was changing terrain texturing details on one of the
+</I>&gt;<i> four regions. The height data associated with terrain textures,
+</I>&gt;<i> however, looks to be the default.
+</I>&gt;<i> 
+</I>&gt;<i> I've migrated the regions before, including a full reinstall when my
+</I>&gt;<i> HDD failed, and only copied the following:
+</I>&gt;<i> 
+</I>&gt;<i> - OpenSim.ini
+</I>&gt;<i> - Regions/*.xml
+</I>&gt;<i> - OAR backup (through save-oar)
+</I>&gt;<i> - MySQL backup (of opensim schema)
+</I>&gt;<i> 
+</I>&gt;<i> That went fine, and the regions were as I'd last had them, at least as
+</I>&gt;<i> far as I know.  The UGAIM servers are OSGrid's, the platform Ubuntu
+</I>&gt;<i> Linux 8.10.
+</I>
+Ah, yes there is a further wrinkle to this.  Back in r5525, Melanie put the actual estate data in the database (in the 
+estate_settings table).  The estate_settings.xml now just provides default values if it's present (and should probably 
+be renamed to something like estate_settings_default.xml).
+
+Thanks for the correction.
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000782.html">[Opensim-users] opensim migration strategy
+</A></li>
+	<LI>Next message: <A HREF="000784.html">[Opensim-users] Permissions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#783">[ date ]</a>
+              <a href="thread.html#783">[ thread ]</a>
+              <a href="subject.html#783">[ subject ]</a>
+              <a href="author.html#783">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

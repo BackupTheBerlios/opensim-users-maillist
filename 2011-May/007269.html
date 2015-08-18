@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mumble/Murmur%20not%20working%20in%20Diva%0A%20r15402/Opensim%200.7.1&In-Reply-To=%3C4DC83959.2040406%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007266.html">
+   <LINK REL="Next"  HREF="007267.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1</H1>
+    <B>Diva Canto</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mumble/Murmur%20not%20working%20in%20Diva%0A%20r15402/Opensim%200.7.1&In-Reply-To=%3C4DC83959.2040406%40metaverseink.com%3E"
+       TITLE="[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1">diva at metaverseink.com
+       </A><BR>
+    <I>Mon May  9 20:58:33 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007266.html">[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1
+</A></li>
+        <LI>Next message: <A HREF="007267.html">[Opensim-users] Mesh Upload on 7.1 Diva?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7269">[ date ]</a>
+              <a href="thread.html#7269">[ thread ]</a>
+              <a href="subject.html#7269">[ subject ]</a>
+              <a href="author.html#7269">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 5/9/2011 6:16 AM, Ai Austin wrote:
+&gt;<i>
+</I>&gt;<i> a) Will FreeSwitch already work with the 0.7.2 dev versions in the 
+</I>&gt;<i> Master branch.. or has the capabilities ref for that module not 
+</I>&gt;<i> altered yet?  I get a message saying that the viewer is having trouble 
+</I>&gt;<i> connecting to the voice server.  Which I have not seen until I tried 
+</I>&gt;<i> 0.7.2 dev master this morning.
+</I>
+It compiles. I don't know if it works, I was never able to make 
+Freeswitch work myself. The refactoring shouldn't have changed anything 
+in its functioning -- I didn't touch the optional modules.
+
+&gt;<i> b) Is any change needed to run Wifi 0.7.1 b with 0.7.2 dev master?
+</I>
+If wifi-0.7.1 runs on 0.7.2-dev, it's pure coincidence! It will break 
+eventually. Here's how .NET works:
+
+Executables can have any number of dynamic linked libraries (DLLs), but 
+if those DLLs' public interfaces change since the executable (and the 
+other DLLs) were produced, then they can't be loaded anymore. In other 
+words, if some OpenSim core DLL that Wifi depends upon changes its 
+public interface, then the Wifi DLLs can't be loaded.
+
+That's the reason why I have been putting the release number on the wifi 
+package, so that there is no question about which executable and 
+collection of DLLs it is compatible with.
+
+If ppl want to use Wifi with current master head, best shot is to 
+compile it against that code base. Obviously, I am not going to maintain 
+binary versions of Wifi for every single commit in master branch. If 
+someone cares to do it -- be my guest.
+
+&gt;<i> While I am asking about Wifi I noted a small change to the 
+</I>&gt;<i> Wifi.ini.example for the [DatabaseService] section in case you use 
+</I>&gt;<i> Diva.Data.MySQL.dll. I previously had StorageProvider = 
+</I>&gt;<i> Diva.Data.MySQL.dll references in a number of other sections 
+</I>&gt;<i> (GridService, UserAccounService, GridUserService)  in my Robust.HG.ini 
+</I>&gt;<i> file.  can those all be removed now if the StorageProvider in 
+</I>&gt;<i> [DatabaseService] is altered?   I commented the other three instances 
+</I>&gt;<i> out and it seems to work, but just wanted to be sure as I am aware 
+</I>&gt;<i> most things work without the Diva.Data version.
+</I>Yes, it works.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007266.html">[Opensim-users] Mumble/Murmur not working in Diva r15402/Opensim 0.7.1
+</A></li>
+	<LI>Next message: <A HREF="007267.html">[Opensim-users] Mesh Upload on 7.1 Diva?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7269">[ date ]</a>
+              <a href="thread.html#7269">[ thread ]</a>
+              <a href="subject.html#7269">[ subject ]</a>
+              <a href="author.html#7269">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

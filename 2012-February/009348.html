@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Firestorm-Release%20and%20adding%20custom%20OpenSim%0A%09servers&In-Reply-To=%3CCA%2BRcaTSmLTx7Oo1POKwAH%2BQEWC8AOQcKvULZFY_H_T7MsL48_Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009345.html">
+   <LINK REL="Next"  HREF="009351.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Firestorm-Release and adding custom OpenSim	servers</H1>
+    <B>M.E. Verhagen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Firestorm-Release%20and%20adding%20custom%20OpenSim%0A%09servers&In-Reply-To=%3CCA%2BRcaTSmLTx7Oo1POKwAH%2BQEWC8AOQcKvULZFY_H_T7MsL48_Q%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Firestorm-Release and adding custom OpenSim	servers">marceled9 at gmail.com
+       </A><BR>
+    <I>Sat Feb 11 10:09:40 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009345.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+        <LI>Next message: <A HREF="009351.html">[Opensim-users] MSSQL Grid - Error updating Regions table Invalid column name 'parcelMapTexture'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9348">[ date ]</a>
+              <a href="thread.html#9348">[ thread ]</a>
+              <a href="subject.html#9348">[ subject ]</a>
+              <a href="author.html#9348">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ctrl+shift+g , select the local grid and fill out the login uri. the grid
+is then automaticly added to the xml file. unfortunately it does not update
+when the gridinfo changes.
+
+Op zaterdag 11 februari 2012 schreef Chris (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at cox.net</A>) het
+volgende:
+&gt;<i> Oh yes... forgot to add... for those having trouble with Singularity as
+</I>well. Add in your grid to singularity as usual, apply the settings. Then
+close out Singularity. then find the grids_sg2.xml file in
+.\SecondLife\user_settings wherever your application data folder may be.
+I'm on Win 7 so my grids_sg2.xml file is in
+C:\Users\&lt;username&gt;\AppData\Roaming\SecondLife\user_settings
+&gt;<i>
+</I>&gt;<i> Your newly created grid entry should be at the bottom. It may be named
+</I>&quot;the lost continent of hippo&quot; in the gridname section. Change that name to
+whatever you want your gridname to be in the grid manager. Then where it
+says
+&gt;<i>
+</I>&gt;<i> &lt;key&gt;loginuri&lt;/key&gt;
+</I>&gt;<i> &lt;string&gt;<A HREF="http://127.0.0.1:9000/&lt;/string">http://127.0.0.1:9000/&lt;/string</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> Change 127.0.0.1 to your IP or FQDN
+</I>&gt;<i>
+</I>&gt;<i> Save it and reload Singularity. Should be able to pick your renamed grid
+</I>and connect to it =)
+&gt;<i>
+</I>&gt;<i> The first time i did this it reverted my entry back to lost continent and
+</I>127.0.0.1 so; you may have to do this one more time to make the info stick
+(mileage may vary lol), just be sure Singularity is shut down before making
+the changes. If all else fails and it doesn't seem to want to keep the
+info, could always make the file read-only.
+&gt;<i>
+</I>&gt;<i> Hope this helps!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 2/10/2012 4:45 PM, Chris wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Aha! That did the trick. Apparently when using the grid manager to add
+</I>in the grid, for some reason, it wants to change the loginuri to localhost
+in the xml file. The heck =/? lol
+&gt;&gt;<i>
+</I>&gt;&gt;<i> In any event, I found the grids.user.xml file and saw the problem
+</I>immediately in the section for my os instance:
+&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;key&gt;loginuri&lt;/key&gt;
+</I>&gt;&gt;<i> &lt;array&gt;
+</I>&gt;&gt;<i> &lt;string&gt;<A HREF="http://127.0.0.1:9000/&lt;/string">http://127.0.0.1:9000/&lt;/string</A>&gt;
+</I>&gt;&gt;<i> &lt;/array&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Changed localhost to my IP address and works like a charm.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you so much Wade! =)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 2/10/2012 4:27 PM, Wade Schuette wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Chris, I had written the Firestorm developers to find out about this
+</I>myself, as to how to get to the JokaydiaGrid.
+&gt;&gt;&gt;<i> Here's their reply: (Jan 20, 2012) which worked for me on Windows XP,
+</I>but I could find no way to do the same sort of thing on a Mac.   If you try
+it, let us know (or me know) if it worked for you!
+&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Obviously, replace &quot;jokadia...&quot; with your ow desired grids &quot;loginuri&quot;.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>  A grid manager is on our list for addition. There is no ETA.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>  The workarounds are:
+</I>&gt;&gt;&gt;&gt;&gt;<i>  - Modify grids.user.xml, which is located in your user settings
+</I>folder.
+&gt;&gt;&gt;&gt;&gt;<i>  - Modify the shortcut/launcher to add {noformat}--<A HREF="loginurihttp://">loginurihttp://</A>
+</I>jokadia.metaverseworlds.com:8002/{noformat}&gt;&gt;  to the exec/target line.
+&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Wade
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 2/10/12 1:52 PM, Chris wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Hello all,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I was wondering if anyone is having issues with the last 2 latest
+</I>releases of Firestorm and connecting to their own OpenSim grid? I can
+connect to one of the pre-configured grids in the list just fine after
+enabling all the proper options to allow me to connect to other grids...
+but I am unable to specify my own custom os server to connect to whether it
+be by command line options, grid manager, or editing the grids xml file to
+manually include it. I get a message stating that it cannot resolve the DNS
+name and my console output doesn't even record an attempt for viewer
+login... I get the same issue on the latest Singularity viewer as well
+actually.
+&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Following the same procedure to add in a custom grid; I don't have any
+</I>issues with the older viewers and they connect just fine. Would any one
+happen to know if it is possible to get these viewers working again on
+OpenSim?
+&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> OpenSim: 9 Region Standalone on 0.7.3 Dev
+</I>&gt;<i> Physics: Open Dynamics Engine
+</I>&gt;<i> OS: Windows 7 (x64)
+</I>&gt;<i> CPU: AMD Phenom II X4 840 3.2 GHz
+</I>&gt;<i> Memory: 11 GB DDR3
+</I>&gt;<i> Database: MySQL 5.1.11
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120211/a4a2ba25/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120211/a4a2ba25/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009345.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+	<LI>Next message: <A HREF="009351.html">[Opensim-users] MSSQL Grid - Error updating Regions table Invalid column name 'parcelMapTexture'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9348">[ date ]</a>
+              <a href="thread.html#9348">[ thread ]</a>
+              <a href="subject.html#9348">[ subject ]</a>
+              <a href="author.html#9348">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

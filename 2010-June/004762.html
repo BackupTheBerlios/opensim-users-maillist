@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] A groups Question on Opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20groups%20Question%20on%20Opensim&In-Reply-To=%3C4C21E099.9040108%40nexgo.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004786.html">
+   <LINK REL="Next"  HREF="004765.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] A groups Question on Opensim</H1>
+    <B>Marck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20groups%20Question%20on%20Opensim&In-Reply-To=%3C4C21E099.9040108%40nexgo.de%3E"
+       TITLE="[Opensim-users] A groups Question on Opensim">marck00 at nexgo.de
+       </A><BR>
+    <I>Wed Jun 23 12:23:21 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004786.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+        <LI>Next message: <A HREF="004765.html">[Opensim-users] A groups Question on Opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4762">[ date ]</a>
+              <a href="thread.html#4762">[ thread ]</a>
+              <a href="subject.html#4762">[ subject ]</a>
+              <a href="author.html#4762">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>InuYasha Meiji wrote:
+&gt;<i> I wanted to know before I continue to pull my on hair out, if a
+</I>&gt;<i> standlone can even get groups to work?  I have been trying for a while
+</I>&gt;<i> now. I am sorry if I seem dumb, but I think I am missing something.  I
+</I>&gt;<i> get my precompiled version of opensim 6.9 pre-fixed) from OSGrid, with
+</I>&gt;<i> no intentions of connecting to it.  My personal project lets personal
+</I>&gt;<i> friends of mine come and enjoy a tour of Shuri Castle during the time of
+</I>&gt;<i> King Sho nei.
+</I>
+Yes, groups do work with a standalone. Just yesterday, I have set up the flotsam XmlRpcGroups implementation for my standalone which also uses a OpenSim 0.6.9 binary distribution provided by OSGrid.
+
+&gt;<i> Ok, I don't seem to have any other troubles, my friends log in fine and
+</I>&gt;<i> so do I.  I don't loose anything but between shutting down and coming
+</I>&gt;<i> back up some worn items have to be reattached.  I logged into flotsom
+</I>&gt;<i> and downloaded what I thought I needed from them the php files and all
+</I>&gt;<i> that.  But once I get how I think they tell me to set it up done, I turn
+</I>&gt;<i> on the group in the opensim.ini and all I get are errors, and even after
+</I>&gt;<i> pointing to my own xmlrpc.php in my xampp/htdocs/groups dir via http
+</I>&gt;<i> address one of the errors I get say it is trying to use something to do
+</I>&gt;<i> with OSGrid.  Oh and quits while apparently trying to find the user in
+</I>&gt;<i> the user database.
+</I>
+Have you followed the installation instructions at <A HREF="http://code.google.com/p/flotsam/wiki/XmlRpcGroups?">http://code.google.com/p/flotsam/wiki/XmlRpcGroups?</A> You do not need to care about the OpenSim module because it is already part of the OpenSim distribution.
+
+&gt;<i> So it started making me think before I continue maybe I misunderstood
+</I>&gt;<i> with all these people running with many configurations, should I be
+</I>&gt;<i> running in Gridmode, not connected to OSGrid but should I need to run my
+</I>&gt;<i> opensim in grid mode using all those external files to run the user
+</I>&gt;<i> server so it will find the users.  Or did I do something else wrong.
+</I>&gt;<i>
+</I>&gt;<i> But if someone could just help me configure groups in a more detailed
+</I>&gt;<i> way for a standalone that would be nice too.
+</I>
+Follow the link given in step 1) of the installation instructions and use the &quot;Download Source&quot; button in the upper right of that page to download a ZIP archive with everything you need (and some more).
+
+Inside this ZIP archive, you'll find a subdirectory &quot;XmlRpcGroupsServer&quot;. The contents of that directory are what you actually need to copy to your xampp/htdocs/groups directory. Your Apache web server must be able to run PHP scripts in this directory (since you are using XAMPP, I take it that this is  already the case).
+
+Step 2) tells you to copy config.php.example to config.php and to edit it appropriately. Make sure that you provide the correct settings for the database (see next step). You can keep the default values for the &quot;Group security&quot; settings. (Once you have groups successfully running, you may want to change both $groupRequireAgentAuthForWrite and $groupEnforceGroupPerms to TRUE; they work fine in my setup.)
+
+Step 3) requires you to add some tables to the MySQL database. You can add these tables to the same database that you are using for your standalone, or use a separate one. I added the tables to my existing standalone database with this command:
+    mysql -u root -p standalone &lt; groups.sql
+&quot;standalone&quot; is the name of my database, and groups.sql is a file in the directory that you copied in step 1).  You will be asked for the database server's root password.
+
+Now, in step 4), you can enable the settings in the [Groups] section in OpenSim.ini. Make sure that the GroupsServerURI is correct and that the other settings correspond to those you made in step 2. For example, the ReadKey and WriteKey must match in both OpenSim.ini and config.php.
+
+Don't forget to restart your standalone after making these adjustments.
+
+Please let us know if you still have problems with the setup.
+
+&gt;<i> I use windows 7 64bit using 32bitlaunch.  Running on 8 gig of ram and
+</I>&gt;<i> 1720 gig drive space.  Quad core.
+</I>&gt;<i> I use MySql data base.  DSL 5.5 kbps and use DynDNS providing my
+</I>&gt;<i> personal web address.
+</I>&gt;<i> MY web page runs fine from my machine.  I used XAMPP to install apache,
+</I>&gt;<i> mysql I downloaded and installed separately first.
+</I>&gt;<i>
+</I>&gt;<i> I am not a networking expert and might have gone wrong from the start.
+</I>&gt;<i> I had to change the port in which opensim runs.  because windows 7 was
+</I>&gt;<i> using 9000 for its own use, I tell opensim to use port 9030 and could on
+</I>&gt;<i> from there for regions.  Not sure if that was the way to go.  Could I
+</I>&gt;<i> have done that another way?  I do use a router.  The D-Link 4500 with
+</I>&gt;<i> Game fuel turned off.
+</I>&gt;<i>
+</I>&gt;<i> Any help appreciated, thanks.
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004786.html">[Opensim-users] SYSTEMIP and a repeated UseCircuitCode
+</A></li>
+	<LI>Next message: <A HREF="004765.html">[Opensim-users] A groups Question on Opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4762">[ date ]</a>
+              <a href="thread.html#4762">[ thread ]</a>
+              <a href="subject.html#4762">[ subject ]</a>
+              <a href="author.html#4762">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

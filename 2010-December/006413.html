@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] How to move the gatekeeper service to it's own	port?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20move%20the%20gatekeeper%20service%20to%20it%27s%20own%0A%09port%3F&In-Reply-To=%3C201012162126.36901.j.veenvan%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006412.html">
+   <LINK REL="Next"  HREF="006414.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] How to move the gatekeeper service to it's own	port?</H1>
+    <B>Jeroen van Veen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20move%20the%20gatekeeper%20service%20to%20it%27s%20own%0A%09port%3F&In-Reply-To=%3C201012162126.36901.j.veenvan%40gmail.com%3E"
+       TITLE="[Opensim-users] How to move the gatekeeper service to it's own	port?">j.veenvan at gmail.com
+       </A><BR>
+    <I>Thu Dec 16 22:26:36 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006412.html">[Opensim-users] How to move the gatekeeper service to it's own port?
+</A></li>
+        <LI>Next message: <A HREF="006414.html">[Opensim-users] Google Earth for the Human Body
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6413">[ date ]</a>
+              <a href="thread.html#6413">[ thread ]</a>
+              <a href="subject.html#6413">[ subject ]</a>
+              <a href="author.html#6413">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Diva,
+
+Thanks for the explanation. I'll study it tomorrow. I kinda got it working now 
+with the following configuration and a simple iptables script like:
+
+ [Startup]
+ 8004/OpenSim.Server.Handlers.dll:GatekeeperServiceInConnector
+
+ [GridInfoService]
+ HomeURI = &quot;<A HREF="http://my-grid.org:8004">http://my-grid.org:8004</A>&quot;
+ GatekeeperURI = &quot;my-grid.org:8004&quot;
+
+ [GatekeeperService]
+ ExternalName = &quot;<A HREF="http://my-grid.org:8004">http://my-grid.org:8004</A>&quot;
+
+hg_wall.sh
+[[File:Firewall_menu.jpeg|thumb|right|300px|U kunt het toegangsbeheer via het 
+script-menu instellen...]]
+
+#!/bin/bash
+#              
+DEELNEMERS=( 1.2.3.4 5.6.7.8 9.10.11.12.13 )
+DIALOG=dialog
+VERSION=0.6
+
+function mainmenu {
+unset m; i=0
+options=(&quot;1. Niemand&quot; &quot;2. deelnemers&quot; &quot;3. Iedereen&quot;)
+        for o in &quot;${options[@]}&quot;; do
+        m[i++]=$o; m[i++]=&quot;&quot;
+        done
+mainmenu=$($DIALOG --title &quot;Main menu&quot; --backtitle &quot;$backtitle&quot; --keep-window 
+--ok-label &quot;Select&quot; --cancel-label &quot;Quit&quot; \
+--aspect 70 --menu &quot;Sta hypergrid teleports toe van...&quot; 0 0 0 &quot;${m[@]}&quot; 2&gt;&amp;1 
+&gt;<i>/dev/tty)
+</I>        case $mainmenu in
+        &quot;&quot;)
+        clear
+        exit 0
+        ;;
+        ${options[0]})
+        clean
+        allow_none
+        dialog --infobox &quot;Gatekeeper service is nu afgesloten voor externe 
+toegang...&quot; 4 45 ; sleep 1
+        ;;
+        ${options[1]})
+        clean
+        allow_deelnemers
+        dialog --infobox &quot;deelnemers hebben nu toegang tot de gatekeeper 
+service...&quot; 4 45 ; sleep 1
+        ;;
+        ${options[2]})
+        clean
+        dialog --infobox &quot;De gatekeeper service is nu zonder restricties 
+toegankelijk...&quot; 4 45 ; sleep 1
+        ;;
+        esac
+}
+
+
+function allow_deelnemers
+{
+for deelnemer in ${DEELNEMERS[@]}
+do
+iptables -A INPUT -p tcp -s $deelnemer --dport 8004 -j ACCEPT
+done
+iptables -A INPUT -p tcp --dport 8004 -j DROP
+}
+
+function allow_none  
+{         
+iptables -A INPUT -p tcp --dport 8004 -j DROP
+}         
+         
+function clean
+{
+iptables -X  
+iptables -F
+}
+    
+# No parameters were given. Use menu-driven options
+while [ &quot;$#&quot; -eq &quot;0&quot; ]
+do
+        backtitle=$&quot;Hypergrid-blocker versie $VERSION&quot;
+        mainmenu
+done
+
+
+kind regards, 
+
+Jeroen
+
+On Thursday, December 16, 2010 08:10:22 pm Diva Canto wrote:
+&gt;<i> In my dreams, I get to have one week to document this whole
+</I>&gt;<i> configuration mechanism... In reality, I don't have that time, so let me
+</I>&gt;<i> briefly explain the main idea.
+</I>&gt;<i> 
+</I>&gt;<i> We have split the resources that OpenSim uses into a bunch of little
+</I>&gt;<i> services that, in turn, access the persistent storage backend. Because
+</I>&gt;<i> people have all kinds of scalability requirements for their virtual
+</I>&gt;<i> worlds, these little services can either run in the same process as the
+</I>&gt;<i> simulator itself (the smallest possible configuration, aka standalone)
+</I>&gt;<i> or they can run in other processes on the same machine or even on other
+</I>&gt;<i> machines. They're all splittable and &quot;aggregable&quot; with configuration
+</I>&gt;<i> switches.
+</I>&gt;<i> 
+</I>&gt;<i> Some services &quot;talk&quot; to others. For example, the Login service doesn't
+</I>&gt;<i> even have any storage associated with it, it's simply an aggregation of
+</I>&gt;<i> other services; the UserAccount service needs to access Auth, Presence,
+</I>&gt;<i> Grid and Inventory in order to create new accounts; the Gatekeeper and
+</I>&gt;<i> the UserAgents talk to each other; etc.
+</I>&gt;<i> 
+</I>&gt;<i> So in the configuration sections we need to specify how a given service
+</I>&gt;<i> accesses the other services. If they are in the same process, we simply
+</I>&gt;<i> instantiate the service objects directly, so things in
+</I>&gt;<i> OpenSim.Services.&lt;some service&gt;.dll; if, however, the services a
+</I>&gt;<i> specific service needs run on a separate process/machine, then we need
+</I>&gt;<i> to specify a network connector for them, so stuff in
+</I>&gt;<i> OpenSim.Connectors.dll, and then we need to provide an ServerURI that
+</I>&gt;<i> each of those connectors will use to find the right process.
+</I>&gt;<i> 
+</I>&gt;<i> I know this is not the ultimate reference guide, but I hope this helps
+</I>&gt;<i> shed some light for the possibilities...
+</I>&gt;<i> 
+</I>&gt;<i> On 12/16/2010 11:38 AM, Diva Canto wrote:
+</I>&gt;<i> &gt; Sorry, and also the other way around. Gatekeeper and UserAgents talk
+</I>&gt;<i> &gt; to each other at various points.
+</I>&gt;<i> &gt; Unfortunately, I'm looking at the code and I see that I haven't
+</I>&gt;<i> &gt; completed the init code of the Gatekeeper connector for this to work...
+</I>&gt;<i> &gt; Please file a mantis so that I don't forget to finish it.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; What you can do right now is to pull out both the Gatekeeper and the
+</I>&gt;<i> &gt; UserAgents to another process running on port 8004. In this case, you
+</I>&gt;<i> &gt; need to change the LoginService config, since the Login service talks
+</I>&gt;<i> &gt; to the UserAgents service:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; [LoginService]
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;       UserAgentService =
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &quot;OpenSim.Services.Connectors.dll:UserAgentServiceConnector&quot;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; You need to change all the ServiceURLs to use 8004, and make sure you
+</I>&gt;<i> &gt; don't have the old URLs of port 8002 in the useraccounts table.
+</I>&gt;<i> &gt; And then,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; [UserAgentService]
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;   ...
+</I>&gt;<i> &gt;   UserAgentServerURI = &quot;<A HREF="http://mygrid.org:8004/">http://mygrid.org:8004/</A>&quot;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; On 12/16/2010 11:24 AM, Diva Canto wrote:
+</I>&gt;<i> &gt;&gt; Separating the UserAgents service from the Gatekeeper service
+</I>&gt;<i> &gt;&gt; requires an additional change in one of the connectors of the
+</I>&gt;<i> &gt;&gt; Gatekeeper:
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; It is:
+</I>&gt;<i> &gt;&gt; [GatekeeperService]
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt;   ...
+</I>&gt;<i> &gt;&gt;   UserAgentService =
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; &quot;OpenSim.Services.HypergridService.dll:UserAgentService&quot;
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; It should use the connector instead:
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; [GatekeeperService]
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt;   ...
+</I>&gt;<i> &gt;&gt;   
+</I>&gt;<i> &gt;&gt;    UserAgentService =
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; &quot;OpenSim.Services.Connectors.dll:UserAgentServiceConnector&quot;
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; Which in turn requires you to provide a URI for it, so that the
+</I>&gt;<i> &gt;&gt; Gatekeeper can properly talk to the UserAgents service on the other
+</I>&gt;<i> &gt;&gt; process:
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; [UserAgentService]
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt;   ...
+</I>&gt;<i> &gt;&gt;   UserAgentServerURI = &quot;<A HREF="http://mygrid.org:8002/">http://mygrid.org:8002/</A>&quot;
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; (Make sure to add the '/ at the end... buglet)
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; I haven't tried this particular combination, but it ought to work.
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; On 12/16/2010 10:11 AM, Jeroen van Veen wrote:
+</I>&gt;<i> &gt;&gt;&gt; Thank you for your reply. I don't necessarily need to run it in it's
+</I>&gt;<i> &gt;&gt;&gt; own
+</I>&gt;<i> &gt;&gt;&gt; robust shell. Say i want to run the gatekeeper service on port 8004
+</I>&gt;<i> &gt;&gt;&gt; within the
+</I>&gt;<i> &gt;&gt;&gt; same robust instace. What i have tried is changing in Robust.HG.ini:
+</I>&gt;<i> &gt;&gt;&gt; 8002/OpenSim.Server.Handlers.dll:GatekeeperServiceInConnector to
+</I>&gt;<i> &gt;&gt;&gt; 8004/OpenSim.Server.Handlers.dll:GatekeeperServiceInConnector
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; [LoginService]
+</I>&gt;<i> &gt;&gt;&gt; GatekeeperURI = &quot;<A HREF="http://mygrid.org:8004">http://mygrid.org:8004</A>&quot;
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; [GatekeeperService]
+</I>&gt;<i> &gt;&gt;&gt; ExternalName = &quot;<A HREF="http://mygrid.org::8004">http://mygrid.org::8004</A>&quot;
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; == Result ==
+</I>&gt;<i> &gt;&gt;&gt; robust console =&gt;  request to link to region_foo (nothing more)
+</I>&gt;<i> &gt;&gt;&gt; client =&gt;  Could not teleport. Problem at destionation
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; Maybe i must run it in its own instance for some reason?
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; On Thursday, December 16, 2010 04:38:08 pm Dave Coyle wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt; On 12/16/10 12:27 PM, Jeroen van Veen wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; I was wondering whether it's possible to seperate the gatekeeper
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; service
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; from the default port 8002 so it runs on it's own on say...port 8004.
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; The reason i want to do this, is that i'm hoping to restrict
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; hypergrid
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; access with iptables.
+</I>&gt;<i> &gt;&gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt;&gt; Yes.  Robust.HG.ini.example shows how to have different services
+</I>&gt;<i> &gt;&gt;&gt;&gt; listening on different ports (8002 vs. 8003 in the example).
+</I>&gt;<i> &gt;&gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt;&gt; If you want to run only HG-related services in their own Robust
+</I>&gt;<i> &gt;&gt;&gt;&gt; instance, make sure you've also included the UserAgentService
+</I>&gt;<i> &gt;&gt;&gt;&gt; alongside
+</I>&gt;<i> &gt;&gt;&gt;&gt; GatekeeperService.
+</I>&gt;<i> &gt;&gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt;&gt; -coyled
+</I>&gt;<i> &gt;&gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;&gt;&gt; 
+</I>&gt;<i> &gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;&gt; 
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006412.html">[Opensim-users] How to move the gatekeeper service to it's own port?
+</A></li>
+	<LI>Next message: <A HREF="006414.html">[Opensim-users] Google Earth for the Human Body
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6413">[ date ]</a>
+              <a href="thread.html#6413">[ thread ]</a>
+              <a href="subject.html#6413">[ subject ]</a>
+              <a href="author.html#6413">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

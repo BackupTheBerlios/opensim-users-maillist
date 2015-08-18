@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Problem with Port not being found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problem%20with%20Port%20not%20being%20found&In-Reply-To=%3Ccb14b4b11001140953j69eb40d1xeb8ebfc70bef148b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003506.html">
+   <LINK REL="Next"  HREF="003500.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Problem with Port not being found</H1>
+    <B>Jane Foxclaw</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problem%20with%20Port%20not%20being%20found&In-Reply-To=%3Ccb14b4b11001140953j69eb40d1xeb8ebfc70bef148b%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Problem with Port not being found">janefoxclaw at gmail.com
+       </A><BR>
+    <I>Thu Jan 14 18:53:14 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003506.html">[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</A></li>
+        <LI>Next message: <A HREF="003500.html">[Opensim-users] Problem with Port not being found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3494">[ date ]</a>
+              <a href="thread.html#3494">[ thread ]</a>
+              <a href="subject.html#3494">[ subject ]</a>
+              <a href="author.html#3494">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok, I am submitting this to see what you all think, because I am trying to
+run it in Grid Mode, with HyperGrid so that I can log other regions into it.
+Its on Linux and all ports are open. We have tested stand alone and it works
+fine. but now we are trying to solve this when we started over from scratch
+on how to get the UserServer to be seen by the MessagingServer.
+
+THE ERROR
+----------------------------------------------
+20:18:12 - [SERVER]: Unable to connect to server
+<A HREF="http://173.212.195.224:8002/">http://173.212.195.224:8002/</A> for registration. User service not running?
+ Exception Error: ConnectFailure   at
+System.Net.HttpWebRequest.EndGetRequestStream (IAsyncResult asyncResult)
+[0x00000]
+  at System.Net.HttpWebRequest.GetRequestStream () [0x00000]
+  at Nwc.XmlRpc.XmlRpcRequest.Send (System.String url, Int32 timeout)
+[0x00000]
+  at Nwc.XmlRpc.XmlRpcRequest.Invoke (System.String url) [0x00000]
+  at
+OpenSim.Grid.MessagingServer.Modules.InterMessageUserServerModule.registerWithUserServer
+() [0x00000]
+----------------------------------------------
+
+OpenSim.ini file port settings
+----------------------------------------------
+[Network]
+    ConsoleUser = &quot;Test&quot;
+    ConsolePass = &quot;secret&quot;
+    http_listener_port = 9000
+    default_location_x = 1000
+    default_location_y = 1000
+
+    ; ssl config: Experimental!  The auto https config only really works
+definately on windows XP now
+    ; you need a Cert Request/Signed pair installed in the MY store with the
+CN specified below
+    ; you can use https on other platforms, but you'll need to configure the
+httpapi yourself for now
+    http_listener_ssl = false ; Also create a SSL server
+    http_listener_cn = &quot;localhost&quot; ; Use the cert with the common name
+    http_listener_sslport = 9001 ; Use this port for SSL connections
+    http_listener_ssl_cert = &quot;&quot; ; Currently unused, but will be used for
+OSHttpServer
+
+    ; Hostname to use in llRequestURL/llRequestSecureURL
+    ; if not defined - default machine name is being used
+    ; (on Windows this mean NETBIOS name - useably only inside local
+network)
+    ; ExternalHostNameForLSL=127.0.0.1
+    ; Uncomment below to enable llRemoteData/remote channels
+    ; remoteDataPort = 20800
+
+    grid_server_url = &quot;<A HREF="http://173.212.195.224:8003">http://173.212.195.224:8003</A>&quot;
+    grid_send_key = &quot;1234&quot;
+    grid_recv_key = &quot;1234&quot;
+
+    user_server_url = &quot;<A HREF="http://173.212.195.224:8002">http://173.212.195.224:8002</A>&quot;
+    user_send_key = &quot;1234&quot;
+    user_recv_key = &quot;1234&quot;
+
+    asset_server_url = &quot;<A HREF="http://173.212.195.224:8003">http://173.212.195.224:8003</A>&quot;
+
+    inventory_server_url = &quot;<A HREF="http://173.212.195.224:8003">http://173.212.195.224:8003</A>&quot;
+
+    ; The MessagingServer is a companion of the UserServer. It uses
+    ; user_send_key and user_recv_key, too
+    messaging_server_url = &quot;<A HREF="http://173.212.195.224:8006">http://173.212.195.224:8006</A>&quot;
+
+    ; What is reported as the &quot;X-Secondlife-Shard&quot;
+    ; Defaults to the user server url if not set
+    ; The old default is &quot;OpenSim&quot;, set here fro compatibility
+    shard = &quot;OpenSim&quot;
+------------------------------------------------------
+
+OpenSim.Server.ini settings
+------------------------------------------------------
+; * The startup section lists all the connectors to start up in this server
+; * instance. This may be only one, or it may be the entire server suite.
+; * Multiple connectors should be seaprated by commas.
+; *
+; * These are the IN connectors the server uses, the in connectors
+; * read this config file and load the needed OUT and database connectors
+; *
+; * Add &quot;OpenSim.Server.Handlers.dll:AuthenticationServiceConnector&quot; to
+; * enable the experimental authentication service
+; *
+[Startup]
+ServiceConnectors =
+&quot;OpenSim.Server.Handlers.dll:AssetServiceConnector,OpenSim.Server.Handlers.dll:InventoryServiceInConnector,OpenSim.Server.Handlers.dll:FreeswitchServerConnector,OpenSim.Server.Handlers.dll:GridServiceConnector&quot;
+
+; * This is common for all services, it's the network setup for the entire
+; * server instance
+; *
+[Network]
+port = 8003
+
+; * The following are for the remote console
+; * They have no effect for the local or basic console types
+; * Leave commented to diable logins to the console
+;ConsoleUser = Test
+;ConsolePass = secret
+
+; * As an example, the below configuration precisely mimicks the legacy
+; * asset server. It is read by the asset IN connector (defined above)
+; * and it then loads the OUT connector (a local database module). That,
+; * in turn, reads the asset loader and database connection information
+; *
+[AssetService]
+LocalServiceModule = &quot;OpenSim.Services.AssetService.dll:AssetService&quot;
+DefaultAssetLoader = &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+AssetLoaderArgs = &quot;assets/AssetSets.xml&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+ConnectionString =&quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=I have put one here;&quot;;
+
+; * This configuration loads the inventory server modules. It duplicates
+; * the function of the legacy inventory server
+; *
+[InventoryService]
+LocalServiceModule =
+&quot;OpenSim.Services.InventoryService.dll:InventoryService&quot;
+UserServerURI = &quot;<A HREF="http://173.212.195.224:8002">http://173.212.195.224:8002</A>&quot;
+SessionAuthentication = &quot;true&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+ConnectionString =&quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=I have put one here;&quot;;
+
+; * This is the configuration for the freeswitch server in grid mode
+[FreeswitchService]
+LocalServiceModule =
+&quot;OpenSim.Services.FreeswitchService.dll:FreeswitchService&quot;
+
+; * This is the new style authentication service. Currently, only MySQL
+; * is implemented. &quot;Realm&quot; is the table that is used for user lookup.
+; * By setting it to &quot;users&quot;, you can use the old style users table
+; * as an authentication source.
+; *
+[AuthenticationService]
+AuthenticationServiceModule =
+&quot;OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+ConnectionString =&quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=I have put one here;&quot;;
+; Realm = &quot;users&quot;
+
+; * This is the new style user service.
+; * &quot;Realm&quot; is the table that is used for user lookup.
+; * It defaults to &quot;users&quot;, which uses the legacy tables
+; *
+[UserAccountService]
+AuthenticationServiceModule =
+&quot;OpenSim.Services.UserService.dll:UserAccountService&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+ConnectionString =&quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=I have put one here;&quot;;
+; Realm = &quot;users&quot;
+
+; * This is the new style grid service.
+; * &quot;Realm&quot; is the table that is used for user lookup.
+; * It defaults to &quot;regions&quot;, which uses the legacy tables
+; *
+[GridService]
+LocalServiceModule = &quot;OpenSim.Services.GridService.dll:GridService&quot;
+StorageProvider = &quot;OpenSim.Data.MySQL.dll:MySqlRegionData&quot;
+ConnectionString =&quot;Data Source=localhost;Database=opensim;User
+ID=root;Password=I have put one here;&quot;;
+Realm = &quot;regions&quot;
+----------------------------------------------------
+
+GridCommon.ini settings
+--------------------------------------------------
+[AssetService]
+
+    DefaultAssetLoader = &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+    AssetLoaderArgs = &quot;assets/AssetSets.xml&quot;
+
+    ;
+    ; change this to your grid-wide asset server
+    ;
+    AssetServerURI = &quot;<A HREF="http://173.212.195.224:8003">http://173.212.195.224:8003</A>&quot;
+
+
+[InventoryService]
+    ;
+    ; change this to your grid-wide inventory server
+    ;
+    InventoryServerURI = &quot;<A HREF="http://173.212.195.224:8003">http://173.212.195.224:8003</A>&quot;
+
+[GridService]
+    ;
+    ; change this to your grid-wide grid server
+    ;
+    GridServerURI = &quot;<A HREF="http://173.212.195.224:8003">http://173.212.195.224:8003</A>&quot;
+
+[Modules]
+    ;; Choose 0 or 1 cache modules, and the corresponding config file, if it
+exists.
+    ;; Copy the config .example file into your own .ini file and change
+configs there
+
+    AssetCaching = &quot;FlotsamAssetCache&quot;
+    Include-FlotsamCache = &quot;config-include/FlotsamCache.ini&quot;
+
+    ;AssetCaching = &quot;CenomeMemoryAssetCache&quot;
+    ;Include-CenomeCache = &quot;config-include/CenomeCache.ini&quot;
+
+    ;AssetCaching = &quot;GlynnTuckerAssetCache&quot;
+
+    ;; Optionally, the port for the LLProxyLoginModule module can be changed
+
+    ;Setup_LLProxyLoginModule = &quot;9090/&quot;
+------------------------------------------------------------------------
+
+I have set this up according to the OpenSimulator Grid tutorials. but they
+are not finished it seems. Any ideas ?
+
+Sonya
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100114/247c0d04/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100114/247c0d04/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003506.html">[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</A></li>
+	<LI>Next message: <A HREF="003500.html">[Opensim-users] Problem with Port not being found
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3494">[ date ]</a>
+              <a href="thread.html#3494">[ thread ]</a>
+              <a href="subject.html#3494">[ subject ]</a>
+              <a href="author.html#3494">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Matching, mapping user UUIDs between servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Matching%2C%20mapping%20user%20UUIDs%20between%20servers&In-Reply-To=%3CCADCqwr2NWV9nSStaN3LLVnQ1izdQ9Kt95xyU92a8rQQvtNrEjQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012306.html">
+   <LINK REL="Next"  HREF="012308.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Matching, mapping user UUIDs between servers</H1>
+    <B>Rick Anderson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Matching%2C%20mapping%20user%20UUIDs%20between%20servers&In-Reply-To=%3CCADCqwr2NWV9nSStaN3LLVnQ1izdQ9Kt95xyU92a8rQQvtNrEjQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Matching, mapping user UUIDs between servers">rianders at docs.rutgers.edu
+       </A><BR>
+    <I>Tue May 28 03:10:25 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012306.html">[Opensim-users] Matching, mapping user UUIDs between servers
+</A></li>
+        <LI>Next message: <A HREF="012308.html">[Opensim-users] Matching, mapping user UUIDs between servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12307">[ date ]</a>
+              <a href="thread.html#12307">[ thread ]</a>
+              <a href="subject.html#12307">[ subject ]</a>
+              <a href="author.html#12307">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I tried doing this manually:
+Get UUID from old system, get UUID from new system
+save oar from original server &quot;general1.oar&quot;
+move oar to new server
+$mkdir tmp
+$cd tmp
+$tar xvzf ../general1.oar
+
+$ grep -rl 7bf01a6a-b906-42a3-a6ab-8bc20e840a4d . | wc
+
+   2052    8815  183917
+
+$ find .  -iname &quot;*.xml&quot; -exec  sed -i
+ 's/7bf01a6a-b906-42a3-a6ab-8bc20e840a4d/6f500ef7-fafe-4909-94d6-057fb4e3cada/g'
+{} +
+
+$ find .  -iname &quot;*.txt&quot; -exec  sed -i
+ 's/7bf01a6a-b906-42a3-a6ab-8bc20e840a4d/6f500ef7-fafe-4909-94d6-057fb4e3cada/g'
+{} +
+
+$ grep -rl 7bf01a6a-b906-42a3-a6ab-8bc20e840a4d . | wc
+
+      0       0       0
+$tar cvzf ../general1u.oar  archive.xml .
+
+It turns out that archive.xml has to be first in the archive. But even with
+that fix the updated OAR file won't find all it's contents. Does the OAR
+file have to signed or ordered even more than that to repack and use?
+
+--Rick
+
+
+
+On Mon, May 27, 2013 at 6:33 PM, Rick Anderson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rianders at docs.rutgers.edu</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> I've been moving and creating some new servers by migrating the OAR data.
+</I>&gt;<i> Even, if the OAR backup has the correct user permissions it's for my old
+</I>&gt;<i> grid and not the new one.
+</I>&gt;<i>
+</I>&gt;<i> Is there a way to migrate that creator/owner user to a new system and keep
+</I>&gt;<i> their UUID?
+</I>&gt;<i>
+</I>&gt;<i> Or should I look up the UUID for the new version of the user and use
+</I>&gt;<i> script to update the UUID in the OAR files before importing the UUID?
+</I>&gt;<i>
+</I>&gt;<i> Is there a third better way? Maybe, if the own Hypergrids there is there a
+</I>&gt;<i> record of them as user to refer to?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> --Rick
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Rick Anderson
+</I>&gt;<i> Director of Virtual Worlds
+</I>&gt;<i> Division of Continuing Studies (DoCS)
+</I>&gt;<i> Rutgers University
+</I>&gt;<i> (732) 586-3265
+</I>&gt;<i>
+</I>
+
+
+-- 
+Rick Anderson
+Director of Virtual Worlds
+Division of Continuing Studies (DoCS)
+Rutgers University
+(732) 586-3265
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130527/24e0c37e/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130527/24e0c37e/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012306.html">[Opensim-users] Matching, mapping user UUIDs between servers
+</A></li>
+	<LI>Next message: <A HREF="012308.html">[Opensim-users] Matching, mapping user UUIDs between servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12307">[ date ]</a>
+              <a href="thread.html#12307">[ thread ]</a>
+              <a href="subject.html#12307">[ subject ]</a>
+              <a href="author.html#12307">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

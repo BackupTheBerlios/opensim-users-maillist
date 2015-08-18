@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] lsl differences for vehicles on bulletsim vs	ODE engines
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20lsl%20differences%20for%20vehicles%20on%20bulletsim%20vs%0A%09ODE%20engines&In-Reply-To=%3CCAHi41xJMtAHcAhrR1Y9-RtMYFNyvsjp3%2Bo7RTm-o%2Bh-QnHaexw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011850.html">
+   <LINK REL="Next"  HREF="011852.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] lsl differences for vehicles on bulletsim vs	ODE engines</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20lsl%20differences%20for%20vehicles%20on%20bulletsim%20vs%0A%09ODE%20engines&In-Reply-To=%3CCAHi41xJMtAHcAhrR1Y9-RtMYFNyvsjp3%2Bo7RTm-o%2Bh-QnHaexw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] lsl differences for vehicles on bulletsim vs	ODE engines">r.ramloll at gmail.com
+       </A><BR>
+    <I>Sat Mar  2 17:27:59 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011850.html">[Opensim-users] lsl differences for vehicles on bulletsim vs	ODE engines
+</A></li>
+        <LI>Next message: <A HREF="011852.html">[Opensim-users] lsl differences for vehicles on bulletsim vs	ODE engines
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11851">[ date ]</a>
+              <a href="thread.html#11851">[ thread ]</a>
+              <a href="subject.html#11851">[ subject ]</a>
+              <a href="author.html#11851">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for replying Mister. If I understand correct, I might be better off
+starting with an ODE vehicle code and evolve it so that it works on
+BulletSim, rather than starting with an SL vehicle code and try to make it
+work on BulletSim. The path from ODE vehicle to BulletSim vehicle is
+shorter than the path from SL vehicle code to BulletSim code. Let me know
+If my understanding is correct. With scaling of parameters differing etc..
+and not knowing what these differences are, I think it will be difficult
+for me to debug based on visible behavior alone (possible but am not the
+sharpest tool in the box).
+
+On Sat, Mar 2, 2013 at 12:59 AM, Mister Blue &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">misterblue at misterblue.com</A>&gt;wrote:
+
+&gt;<i> [[Full disclosure... I'm the author of BulletSim. :-) ]]
+</I>&gt;<i> The LSL commands for the vehicles are the same for both ODE and BulletSim
+</I>&gt;<i> -- that is, they implement the LSL functions and simple vehicle model
+</I>&gt;<i> defined in SL[1]. That said, which functions are actually implemented
+</I>&gt;<i> differ and the scaling of parameters differ.
+</I>&gt;<i>
+</I>&gt;<i> BulletSim has been working at calibrating its actions to be similar to SL.
+</I>&gt;<i> ODE had some differences from SL and thus vehicle scripts that worked in SL
+</I>&gt;<i> didn't work the same with ODE[2]. BulletSim is trying to change that. The
+</I>&gt;<i> os function osGetPhysicsEngineType() was added to help script writers if
+</I>&gt;<i> they wanted to have vehicles that worked with either physics engine.
+</I>&gt;<i>
+</I>&gt;<i> The current BulletSim vehicle functions is being tracked at
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/BulletSim/Functionality/.">http://opensimulator.org/wiki/BulletSim/Functionality/.</A>
+</I>&gt;<i>
+</I>&gt;<i> BulletSim is under active development and, if there are vehicles functions
+</I>&gt;<i> that are wrong or need different tuning, send me a note.
+</I>&gt;<i>
+</I>&gt;<i> -- mb
+</I>&gt;<i>
+</I>&gt;<i> [1] <A HREF="http://wiki.secondlife.com/wiki/Linden_Vehicle_Tutorial">http://wiki.secondlife.com/wiki/Linden_Vehicle_Tutorial</A>
+</I>&gt;<i> [2] For instance, turning force in ODE is about 10 times smaller than in
+</I>&gt;<i> SL so a reasonable turning value for SL would barely turn a vehicle under
+</I>&gt;<i> ODE.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Feb 27, 2013 at 6:38 AM, Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hello,
+</I>&gt;&gt;<i> I was thinking that before I invest too much time in vehicles, I should
+</I>&gt;&gt;<i> learn from the community about lsl differences for vehicle control on the
+</I>&gt;&gt;<i> two different engines, bulletsim vs ODE.
+</I>&gt;&gt;<i> Is it perhaps better to wait for Bulletsim to get the green light before
+</I>&gt;&gt;<i> investing time in vehicle coding?
+</I>&gt;&gt;<i> Thanks
+</I>&gt;&gt;<i> R
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;&gt;<i> *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+</I>&gt;&gt;<i> Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+</I>&gt;&gt;<i> 208-240-0040
+</I>&gt;&gt;<i> Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+</I>&gt;&gt;<i> , DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+*Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+208-240-0040
+Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;,
+LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+, DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+
+profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130302/88a122c7/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130302/88a122c7/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011850.html">[Opensim-users] lsl differences for vehicles on bulletsim vs	ODE engines
+</A></li>
+	<LI>Next message: <A HREF="011852.html">[Opensim-users] lsl differences for vehicles on bulletsim vs	ODE engines
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11851">[ date ]</a>
+              <a href="thread.html#11851">[ thread ]</a>
+              <a href="subject.html#11851">[ subject ]</a>
+              <a href="author.html#11851">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

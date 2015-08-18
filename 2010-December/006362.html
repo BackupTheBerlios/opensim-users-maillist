@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow LSL timers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3CAANLkTik1smNWNdV5%3D6%2BOV85Gm2s_qoNXAmP%3DCOktjjmv%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006361.html">
+   <LINK REL="Next"  HREF="006367.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow LSL timers</H1>
+    <B>Jorge Lima</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3CAANLkTik1smNWNdV5%3D6%2BOV85Gm2s_qoNXAmP%3DCOktjjmv%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Slow LSL timers">jorge.manuel at gmail.com
+       </A><BR>
+    <I>Mon Dec  6 17:42:11 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006361.html">[Opensim-users] Slow LSL timers
+</A></li>
+        <LI>Next message: <A HREF="006367.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6362">[ date ]</a>
+              <a href="thread.html#6362">[ thread ]</a>
+              <a href="subject.html#6362">[ subject ]</a>
+              <a href="author.html#6362">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, the question here is, are we aiming for full LSL compatibility some day?
+It seems wise - given the vast amount of content produced for the SL
+platform over the past 7-8 years, a future version of OpenSim would
+have much to gain from being 100% compatible.
+
+Now, going back to the issue of timers, in the pre-mono days they
+certainly used to be a little slow, and you couldn't safely go below
+0.2-0.3 seconds.
+Mono is much faster though - and I'm sure filling up the queue with
+timers is impossible, since a new timer is only scheduled after the
+current one has finished processing.
+
+If you schedule a (0.0001) timer or something, what should happen is
+that you effectively have a timer scheduled to &quot;as fast as the event
+handler can be run&quot;, assuming you have some bounded and deterministic.
+If you change the timer within the event handler, you are simply
+changing the timer's rate of fire. If set to zero, you disable it.
+
+I haven't done any thorough testing to validate these assertions, but
+they seem to match what it says in the LSL wiki.
+
+Actually, in spite of the global timer manager, it seems that my
+previous data shows that by scheduling timers at 0.5 seconds or below
+it always takes the same 59 seconds to run them.
+
+The wiki states that C# scripting is &quot;black magic&quot; and there's only
+one example of it on the internet, so for the time being I will see if
+I can stick to LSL, and maybe later I'll try to figure it out :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006361.html">[Opensim-users] Slow LSL timers
+</A></li>
+	<LI>Next message: <A HREF="006367.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6362">[ date ]</a>
+              <a href="thread.html#6362">[ thread ]</a>
+              <a href="subject.html#6362">[ subject ]</a>
+              <a href="author.html#6362">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] web-on-a-prim, osSetDynamicTextureUR is very slow
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20web-on-a-prim%2C%0A%20osSetDynamicTextureUR%20is%20very%20slow&In-Reply-To=%3C4D02BB9E.7050800%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006392.html">
+   <LINK REL="Next"  HREF="006403.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] web-on-a-prim, osSetDynamicTextureUR is very slow</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20web-on-a-prim%2C%0A%20osSetDynamicTextureUR%20is%20very%20slow&In-Reply-To=%3C4D02BB9E.7050800%40googlemail.com%3E"
+       TITLE="[Opensim-users] web-on-a-prim, osSetDynamicTextureUR is very slow">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Dec 11 00:45:34 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006392.html">[Opensim-users] web-on-a-prim,	osSetDynamicTextureUR is very slow
+</A></li>
+        <LI>Next message: <A HREF="006403.html">[Opensim-users] web-on-a-prim,	osSetDynamicTextureUR is very slow
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6394">[ date ]</a>
+              <a href="thread.html#6394">[ thread ]</a>
+              <a href="subject.html#6394">[ subject ]</a>
+              <a href="author.html#6394">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 10/12/10 16:50, Hao Liu wrote:
+&gt;<i> Hi all,
+</I>&gt;<i>
+</I>&gt;<i> to load an image on a prim with osSetDynamicTextureURL takes up to
+</I>&gt;<i> 60/100 sec to completely render the image!
+</I>&gt;<i> However using ParcelMediaCommands works really fast, even retreaving
+</I>&gt;<i> textures from external URIs.
+</I>&gt;<i>
+</I>&gt;<i> Anybody know how to solve this problem? I need to use
+</I>&gt;<i> osSetDynamicTextureURL because I need to show multiple media. Thanks.
+</I>
+osSetDynamicTextureURL and ParcelMediaCommands with URIs use completely different mechanisms.  osSetDynamicTextureURL 
+gets the image from the url and encodes it into jpeg2000 on the server, before it gets transmitted to the viewer.
+
+Parcel media sends the url to the viewer and the viewer fetches the image directly from the url.  This is vastly quicker.
+
+Having said that, osSetDynamicTextureURL shouldn't take 60-100 seconds.  Which version of OpenSim are you using?  afair, 
+due to various bugs 0.6.9 took a long time until the client fully received a texture.  Subsequent releases are much better.
+
+If you're using Viewer 2 (unlikely) you could also try using media on a prim instead, which uses the same direct 
+approach as parcel media and allows you to show multiple media.
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006392.html">[Opensim-users] web-on-a-prim,	osSetDynamicTextureUR is very slow
+</A></li>
+	<LI>Next message: <A HREF="006403.html">[Opensim-users] web-on-a-prim,	osSetDynamicTextureUR is very slow
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6394">[ date ]</a>
+              <a href="thread.html#6394">[ thread ]</a>
+              <a href="subject.html#6394">[ subject ]</a>
+              <a href="author.html#6394">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Intermittent crashing -	System.OutofMemoryException
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Intermittent%20crashing%20-%0A%09System.OutofMemoryException&In-Reply-To=%3CCAG6z%2BU5aoFQGCP13QP0%3DjF1%3DgFrZXYxCOzSduwAZKa4QtGs67A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009425.html">
+   <LINK REL="Next"  HREF="009443.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Intermittent crashing -	System.OutofMemoryException</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Intermittent%20crashing%20-%0A%09System.OutofMemoryException&In-Reply-To=%3CCAG6z%2BU5aoFQGCP13QP0%3DjF1%3DgFrZXYxCOzSduwAZKa4QtGs67A%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Intermittent crashing -	System.OutofMemoryException">fleep513 at gmail.com
+       </A><BR>
+    <I>Mon Feb 20 12:34:06 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009425.html">[Opensim-users] Intermittent crashing	-	System.OutofMemoryException
+</A></li>
+        <LI>Next message: <A HREF="009443.html">[Opensim-users] Intermittent crashing	-	System.OutofMemoryException
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9442">[ date ]</a>
+              <a href="thread.html#9442">[ thread ]</a>
+              <a href="subject.html#9442">[ subject ]</a>
+              <a href="author.html#9442">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm worried that you may be right about that and it's just a matter of time
+before adding more content becomes a problem, in which case it sounds like
+perhaps instead of running all the regions on a single opensim instance I
+should split them up across several as Gary mentioned above?
+
+I'm not sure exactly how that works, I guess, and I'm trying to understand
+how that would use less memory instead of more..  Would I simply copy the
+contents of the opensim directory to multiple locations and break the
+regions up in the regions.ini file or..?
+
+I'd like to experiment with it on FleepGrid first before I hose our campus
+install, but the HGAC group is coming for a visit in a couple days so if
+anyone has pointers about how to do that splitting up process before I
+break anything, I'm all ears.  :)
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+
+
+On Thu, Feb 16, 2012 at 10:19 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> I would actually be rather surprised if errors during the OAR import were
+</I>&gt;<i> related to your memory problems.  I think that it's more likely that the
+</I>&gt;<i> content of the OAR in some way pushed you beyond memory boundaries and
+</I>&gt;<i> wiping it has reset things.
+</I>&gt;<i>
+</I>&gt;<i> Still, if the problem is solved then that's what matters :)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 16/02/12 22:50, Fleep Tuque wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> After going through the log files and trying to figure out what changed
+</I>&gt;&gt;<i> in the time period when the out of memory errors
+</I>&gt;&gt;<i> began, we traced it back to an OAR file import. (Thanks to whoever
+</I>&gt;&gt;<i> suggested that might be an issue earlier in this
+</I>&gt;&gt;<i> thread!)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'd ported over a copy of the FleepGrid Plaza region so my students could
+</I>&gt;&gt;<i> easily grab some of the freebies I'd created,
+</I>&gt;&gt;<i> and it looks like something got horked during the import to the UCSIM
+</I>&gt;&gt;<i> grid:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 012-02-07 09:12:05,991 ERROR - Flotsam.RegionModules.**AssetCache.FlotsamAssetCache
+</I>&gt;&gt;<i> [FLOTSAM ASSET CACHE]: Failed to
+</I>&gt;&gt;<i> update cache for asset 3d0b3a52-40e5-48fe-8595-**b72e163917fa.
+</I>&gt;&gt;<i>  Exception The process cannot access the file
+</I>&gt;&gt;<i> 'c:\Opensim\bin\assetcache\**3d0\3d0b3a52-40e5-48fe-8595-**b72e163917fa'
+</I>&gt;&gt;<i> because it is being used by another process.    at
+</I>&gt;&gt;<i> System.IO.__Error.WinIOError(**Int32 errorCode, String maybeFullPath)
+</I>&gt;&gt;<i>    at System.IO.FileStream.Init(**String path, FileMode mode, FileAccess
+</I>&gt;&gt;<i> access, Int32 rights, Boolean useRights,
+</I>&gt;&gt;<i> FileShare share, Int32 bufferSize, FileOptions options,
+</I>&gt;&gt;<i> SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy)
+</I>&gt;&gt;<i>    at System.IO.FileStream..ctor(**String path, FileMode mode,
+</I>&gt;&gt;<i> FileAccess access, FileShare share, Int32 bufferSize)
+</I>&gt;&gt;<i>    at System.IO.File.OpenFile(String path, FileAccess access,
+</I>&gt;&gt;<i> SafeFileHandle&amp; handle)
+</I>&gt;&gt;<i>    at System.IO.File.**SetLastAccessTimeUtc(String path, DateTime
+</I>&gt;&gt;<i> lastAccessTimeUtc)
+</I>&gt;&gt;<i>    at Flotsam.RegionModules.**AssetCache.FlotsamAssetCache.**UpdateFileCache(String
+</I>&gt;&gt;<i> key, AssetBase asset)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Shortly after that, we begin to see the first out of memory errors..
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-02-07 09:15:17,453 DEBUG - OpenSim.Region.ScriptEngine.**XEngine.XEngine
+</I>&gt;&gt;<i> [XEngine] Loaded script LK-Stool-Sit
+</I>&gt;&gt;<i> #2.poseball-zero-lag, script UUID e73e1114-297a-43a7-b4b8-**dd423cd83b95,
+</I>&gt;&gt;<i> prim UUID 2ae59628-943d-49ec-9673-**ee3465bd0242 @
+</I>&gt;&gt;<i> &lt;168.1464, 156.7953, 26.90887&gt;.UCSIM Staff 1
+</I>&gt;&gt;<i> 2012-02-07 09:15:17,984 ERROR - OpenSim.Region.ScriptEngine.**XEngine.XEngine
+</I>&gt;&gt;<i> [XEngine] Exception creating app domain:
+</I>&gt;&gt;<i>  System.OutOfMemoryException: Exception of type
+</I>&gt;&gt;<i> 'System.OutOfMemoryException' was thrown.
+</I>&gt;&gt;<i>    at System.AppDomain.**nCreateDomain(String friendlyName,
+</I>&gt;&gt;<i> AppDomainSetup setup, Evidence providedSecurityInfo, Evidence
+</I>&gt;&gt;<i> creatorsSecurityInfo, IntPtr parentSecurityDescriptor)
+</I>&gt;&gt;<i>    at System.AppDomain.CreateDomain(**String friendlyName, Evidence
+</I>&gt;&gt;<i> securityInfo, AppDomainSetup info)
+</I>&gt;&gt;<i>    at OpenSim.Region.ScriptEngine.**XEngine.XEngine.DoOnRezScript(**Object[]
+</I>&gt;&gt;<i> parms)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And we see those out of memory errors stack up until eventually the
+</I>&gt;&gt;<i> application crashed..
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When we realized it was probably the OAR file that was the source of the
+</I>&gt;&gt;<i> issue, I wiped the region by importing a fresh
+</I>&gt;&gt;<i> &quot;blank&quot; OAR and we haven't had the out of memory exception since.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Looks like the problem is resolved and super thanks again to everyone who
+</I>&gt;&gt;<i> helped with pointers and info in this thread -
+</I>&gt;&gt;<i> much appreciated!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Chris/Fleep
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;&gt;<i> University of Cincinnati
+</I>&gt;&gt;<i> 406A Zimmer Hall
+</I>&gt;&gt;<i> 315 College Drive
+</I>&gt;&gt;<i> PO BOX 210088
+</I>&gt;&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+</I>&gt;&gt;<i> (513) 556-3018
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Feb 16, 2012 at 2:16 PM, R.Gunther &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A> &lt;mailto:
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    There's a 3e option. Munin.
+</I>&gt;&gt;<i>    <A HREF="http://munin-monitoring.org/">http://munin-monitoring.org/</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    On 2012-02-16 16:49, BlueWall wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        The rrdtools is very good for storing and organizing the data for
+</I>&gt;&gt;<i> statistics and it will also produce graphs
+</I>&gt;&gt;<i>        from that data. It relies on external scripts to collect the data
+</I>&gt;&gt;<i> - that's where Cacti comes in. It has the
+</I>&gt;&gt;<i>        scripts and templates to graph your system (and snmp devices) in
+</I>&gt;&gt;<i> the distribution. I have done it on Linux and
+</I>&gt;&gt;<i>        they claim to work on Windows too.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        You could also write scripts and templates to graph OpenSim. I
+</I>&gt;&gt;<i> haven't tried that, though. There is
+</I>&gt;&gt;<i>        documentation included in the distro, and scattered across the
+</I>&gt;&gt;<i> Cacti user forums.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        -BlueWall
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>        On 02/16/2012 09:55 AM, Rick Anderson wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>            One question about Cacti, and RDDTools. The sites describe
+</I>&gt;&gt;<i> them as
+</I>&gt;&gt;<i>            general purpose graphing tools. Is there any documentation or
+</I>&gt;&gt;<i> tutorial
+</I>&gt;&gt;<i>            for configuring them to monitor system status. Maybe, it's
+</I>&gt;&gt;<i> really
+</I>&gt;&gt;<i>            simple, and I'm over complicating it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>            -_Rick
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    ______________________________**___________________
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Opensim-users mailing list
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.</A>**
+</I>&gt;&gt;<i> berlios.de &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/__**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/__mailman/listinfo/opensim-users</A>&gt;&lt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i> **&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120220/a27315e6/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120220/a27315e6/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009425.html">[Opensim-users] Intermittent crashing	-	System.OutofMemoryException
+</A></li>
+	<LI>Next message: <A HREF="009443.html">[Opensim-users] Intermittent crashing	-	System.OutofMemoryException
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9442">[ date ]</a>
+              <a href="thread.html#9442">[ thread ]</a>
+              <a href="subject.html#9442">[ subject ]</a>
+              <a href="author.html#9442">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

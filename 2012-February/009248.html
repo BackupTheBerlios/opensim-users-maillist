@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] creating bots at negative elevation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20creating%20bots%20at%20negative%20elevation&In-Reply-To=%3C4F288922.3090302%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="009251.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] creating bots at negative elevation</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20creating%20bots%20at%20negative%20elevation&In-Reply-To=%3C4F288922.3090302%40googlemail.com%3E"
+       TITLE="[Opensim-users] creating bots at negative elevation">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Feb  1 01:36:50 CET 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="009251.html">[Opensim-users] creating bots at negative elevation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9248">[ date ]</a>
+              <a href="thread.html#9248">[ thread ]</a>
+              <a href="subject.html#9248">[ subject ]</a>
+              <a href="author.html#9248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>By negative elevation, I presume that you mean below some arbitrary plane, rather than below ground? 
+ScenePresence.CompleteMovement(), which is how the NPC (and any avatar) enters a scene does have code to prevent 
+attempted rezzing below ground.  This is just using a 1.5f constant.  It's possible that if you're very near the ground 
+then you would have a problem.
+
+On 31/01/12 20:56, paul emery wrote:
+&gt;<i> I need to create some bots in our model of titanic which is underwater AND in
+</I>&gt;<i> fact is at negative elevation. My trigger object has a notecard with the bot
+</I>&gt;<i> information in it and a script with a touch_start event handler.
+</I>&gt;<i> In the touch event are these lines of code.
+</I>&gt;<i>
+</I>&gt;<i> vector npcPos = llGetPos()+&lt;.5,0,0&gt;;
+</I>&gt;<i> pc = osNpcCreate(&quot;Mr.&quot;, &quot;Bot&quot;, npcPos, &quot;mycard&quot;);
+</I>&gt;<i>
+</I>&gt;<i> What i find is that if the object is at zero elevation or above the bot is
+</I>&gt;<i> created half a meter from the object's position. However, if the object is
+</I>&gt;<i> at a negative elevation the bot is created at zero elevation and falls down
+</I>&gt;<i> to the elevation of the trigger object. This is interesting. Note that if
+</I>&gt;<i> the trigger object is up at any positive elevation the bot is created at
+</I>&gt;<i> that elevation.
+</I>&gt;<i>
+</I>&gt;<i> The problem is that if i try to create a bot at a negative elevation in a
+</I>&gt;<i> room below deck i.e. that has a non-phantom roof the bot never can fall all
+</I>&gt;<i> the way down because they are not able to fall through the roof.
+</I>&gt;<i>
+</I>&gt;<i> Any body got any ideas on how do deal with this. It does seem like expected
+</I>&gt;<i> behavior would be to allow npcPos() to include negative elevation.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/creating-bots-at-negative-elevation-tp7241166p7241166.html">http://opensim-users.2152040.n2.nabble.com/creating-bots-at-negative-elevation-tp7241166p7241166.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="009251.html">[Opensim-users] creating bots at negative elevation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9248">[ date ]</a>
+              <a href="thread.html#9248">[ thread ]</a>
+              <a href="subject.html#9248">[ subject ]</a>
+              <a href="author.html#9248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

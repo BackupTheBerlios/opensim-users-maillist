@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NAT and standalone opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%3D%3Futf-8%3Fq%3FNAT_and_standalone_opensim%3F%3D&In-Reply-To=%3C20080408075622.EF460136092%40mail.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000207.html">
+   <LINK REL="Next"  HREF="000209.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NAT and standalone opensim</H1>
+    <B>ursula.matova at klintcentral.net</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%3D%3Futf-8%3Fq%3FNAT_and_standalone_opensim%3F%3D&In-Reply-To=%3C20080408075622.EF460136092%40mail.berlios.de%3E"
+       TITLE="[Opensim-users] NAT and standalone opensim">ursula.matova at klintcentral.net
+       </A><BR>
+    <I>Tue Apr  8 09:54:30 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000207.html">[Opensim-users] NAT and standalone opensim
+</A></li>
+        <LI>Next message: <A HREF="000209.html">[Opensim-users] NAT and standalone opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#208">[ date ]</a>
+              <a href="thread.html#208">[ thread ]</a>
+              <a href="subject.html#208">[ subject ]</a>
+              <a href="author.html#208">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Thomas,
+
+I use that at Home, Standalone OpenSim, behind my &quot;home made&quot; firewall.
+I'm not at home for now. But I'll try to remind my configuration and to give you some informations. ( And I'll check this evening if needed ).
+
+First, I have created a dyndns entry, ( myserver.dyndns.org ) that refers to my public IP ( my Firewall public IP ),
+
+Then, when I setup my Regions XML files : I use &quot;server.dyndns.org&quot; for the external IP address, and your local IP ( the one of your opensim server ) for the internal IP address.
+In OpenSim.ini also update URL for ports 8001, 8002, ... 8004 to &quot;server.dyndns.org&quot;.
+
+Once done, 
+
+You have to setup Firewall Rules and NAT.
+
+My Firewall is NetBSD using IPF/IPNat.
+
+In my IPNat config file, you have to &quot;RDR&quot; incoming packets from any outside to your local opensim server. Do that for ports 8000 TCP , 8001 TCP , 8002 TCP , .... 8004, 9000 UDP &amp; TCP and for your external network card.
+
+In order to be able to connect to your OpenSim from &quot;Inside&quot;, you also have to add a similar line for your internal network card.
+
+Then, you also have to add some rules for these ports in your firewall rules.
+
+Restart everything and should work.
+
+Sorry, it's not very clear and my english is bad this morning. :)
+
+Let me know if it works.
+
+Regards,
+
+Ursula.
+
+Mekota, Thomas (NSN - DE/Muenich) &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">thomas.mekota at nsn.com</A>&gt; a &#233;crit :
+
+&gt;<i> Hello everybody,
+</I>&gt;<i> 
+</I>&gt;<i> I'm still struggling with my standalone OpenSim and NAT.
+</I>&gt;<i> 
+</I>&gt;<i> As long as I put the external IP address in the regions file everything works fine and I can access the region.
+</I>&gt;<i> 
+</I>&gt;<i> As soon as I put in the host name (DNS entries exist) in the region file, the client starts up normally, but
+</I>&gt;<i> 
+</I>&gt;<i> stops at the 'region handshake' and tells me after the timeout unable to connect &#8230;
+</I>&gt;<i> 
+</I>&gt;<i> Within Wireshark I can see a lot of packets going back and forth until the region handshake starts.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I feel very stupid right now, but does anybody have an idea where my mistake is?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Mit freundlichem Gru&#223; / Best regards 
+</I>&gt;<i> 
+</I>&gt;<i> Thomas Mekota
+</I>
+___________________________________
+NOCC, <A HREF="http://nocc.sourceforge.net">http://nocc.sourceforge.net</A>
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000207.html">[Opensim-users] NAT and standalone opensim
+</A></li>
+	<LI>Next message: <A HREF="000209.html">[Opensim-users] NAT and standalone opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#208">[ date ]</a>
+              <a href="thread.html#208">[ thread ]</a>
+              <a href="subject.html#208">[ subject ]</a>
+              <a href="author.html#208">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

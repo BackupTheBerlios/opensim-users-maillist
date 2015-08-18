@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Using ssl in OpenSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Using%20ssl%20in%20OpenSim&In-Reply-To=%3C4DC3583A.3060504%40bluewallgroup.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007245.html">
+   <LINK REL="Next"  HREF="007250.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Using ssl in OpenSim</H1>
+    <B>James Hughes</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Using%20ssl%20in%20OpenSim&In-Reply-To=%3C4DC3583A.3060504%40bluewallgroup.com%3E"
+       TITLE="[Opensim-users] Using ssl in OpenSim">jamesh at bluewallgroup.com
+       </A><BR>
+    <I>Fri May  6 04:08:58 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007245.html">[Opensim-users] Reques about ini opensimrc1 to opensim
+</A></li>
+        <LI>Next message: <A HREF="007250.html">[Opensim-users] OpenSim 0.7.1 upgrade
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7248">[ date ]</a>
+              <a href="thread.html#7248">[ thread ]</a>
+              <a href="subject.html#7248">[ subject ]</a>
+              <a href="author.html#7248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>SSL support for &quot;out of band&quot; applications is added in OpenSim commit
+8ca793875318efc8db3339b25bf7fa5ddeeac218 . I have tested the region
+server with the remote-admin plugin and also completed the lsl function
+- llRequestSecureURL(). In Robust, I tested using a custom service to
+expose a service that gets user information over https. I will post the
+code for that soon as an example.
+
+*Certificates
+To use it, you will need a certificate in the PFX/PKCS12 format. These
+may be certs purchased from someone like VeriSign,  Thawte or others
+providing CA services. You may also use a self signed cert for testing.
+If you are using Mono, see <A HREF="http://www.mono-project.com/FAQ:_Security">http://www.mono-project.com/FAQ:_Security</A> and
+page down to &quot;Can I make my own certificates ? &quot;,  and Windows users,
+here: <A HREF="http://blogs.technet.com/b/jhoward/archive/2005/02/02/365323.aspx">http://blogs.technet.com/b/jhoward/archive/2005/02/02/365323.aspx</A>
+for instructions. If you have an existing cert that is not in the PFX
+format, such as *.crt - you may use openssl to copy it into the proper
+format. See
+<A HREF="http://security.ncsa.illinois.edu/research/grid-howtos/usefulopenssl.html">http://security.ncsa.illinois.edu/research/grid-howtos/usefulopenssl.html</A> for
+some background information for using openssl to create certs or convert
+between formats.
+
+*Configuration
+The region server may use ssl as an auxiliary port. The options are in
+the OpenSimDefaults.ini. Copy them to your OpenSim.ini and adjust the
+settings to your setup...
+
+[Network]
+http_listener_port = 9000
+
+https_listener = True
+https_port = 9080
+cert_path = &quot;/home/opensim/etc/os_server.p12&quot;
+cert_pass = &quot;mypassword&quot;
+
+[RemoteAdmin]
+enabled = true
+port = 9080
+access_password = &quot;woohooo&quot;
+
+Then, set your remote-admin client to use the port and make the calls
+using https. I used code from
+<A HREF="http://xyzzyxyzzy.net/2008/01/23/using-pythons-xmlrpclib-with-opensim/">http://xyzzyxyzzy.net/2008/01/23/using-pythons-xmlrpclib-with-opensim/</A>
+to test the remote-admin. Modifying it to use my port and https.
+
+For applications in Robust, you have a couple of options. First, you can
+add an auxiliary port, as in the region server. But, in-case you want to
+split out your https application to a separate Robust server, you can
+make the main listener talk on https. Same options as the region server
+with one addition - the https_main option. Set that one to True to get
+your Robust main listener on https. Or set it to False to add an
+auxiliary https port to the main server. Then, in your application, set
+the port in your ServiceConnectors line to tell your application to use
+it...
+
+[Startup]
+ServiceConnectors = &quot;8114/WxService.dll:WxServiceConnector&quot;
+;                    ^^^^  &lt;-- Here
+[Network]
+    port = 8113
+    ;;     ^^^^ &lt;-- Main listener
+    https_main = False
+    ;; Create http listener true / false
+    https_listener = True
+    ;; Set our listener to this port
+    https_port = 8114
+    ;;           ^^^^  &lt;-- And Here
+    ;; Path to X.509 cert
+    cert_path = &quot;/home/opensim/etc/os_server.p12&quot;
+    ;; Password for cert
+    cert_pass = &quot;mypassword&quot;
+
+
+Have fun!
+BlueWall
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007245.html">[Opensim-users] Reques about ini opensimrc1 to opensim
+</A></li>
+	<LI>Next message: <A HREF="007250.html">[Opensim-users] OpenSim 0.7.1 upgrade
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7248">[ date ]</a>
+              <a href="thread.html#7248">[ thread ]</a>
+              <a href="subject.html#7248">[ subject ]</a>
+              <a href="author.html#7248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

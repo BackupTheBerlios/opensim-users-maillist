@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] collision detection for attachments
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3CCAME74xGsVM2a7XNmN2qpBnAJKvgUwOx7FCcrN%2BHcYBKna8JF5g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012437.html">
+   <LINK REL="Next"  HREF="012449.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] collision detection for attachments</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3CCAME74xGsVM2a7XNmN2qpBnAJKvgUwOx7FCcrN%2BHcYBKna8JF5g%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] collision detection for attachments">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Wed Jul 10 03:06:58 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012437.html">[Opensim-users] collision detection for attachments
+</A></li>
+        <LI>Next message: <A HREF="012449.html">[Opensim-users] collision detection for attachments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12438">[ date ]</a>
+              <a href="thread.html#12438">[ thread ]</a>
+              <a href="subject.html#12438">[ subject ]</a>
+              <a href="author.html#12438">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi dz,
+
+My apologies for misquoting you :) It wasn't intended hehe... my point was
+only that this functionality is supposed to be standard in SL, and, as
+such, there is no reason for OpenSim not to implement it as SL does. I
+mean, the collision data is being sent to the viewer... there are special
+communications packets for that (I'm assuming that the viewer needs to know
+when avatars collide with things!), but not to the LSL VM, at least not
+when an object is attached. Why? I can understand it can be for performance
+reasons, of course... One idea I had was to grab the collision
+communications on libopenmetaverse instead of doing it in LSL. It's a
+possibility (there are certainly classes to add callbacks for those special
+packets), but it will mean changing a lot of logic in the whole
+architecture of the application &#8212; and I have no idea if all those
+collisions are really communicated back to the viewer, and under which
+circumstances they are not...
+
+As said, in my case, I cannot script all the objects in the scene, but
+definitely need to know when 'bots collide with them :) I *can* script a
+*few* objects (and, in fact, some special objects work that way, to let
+bots know they have reached their goal), but these are insignificant
+exceptions, compared to the rest of the 15,000 prims in the scene...
+
+So I guess I have no other way but to change OpenSim's code and add the
+missing functionality :) I just hope it doesn't take me too many months to
+do so. We'll see. I would rather prefer not to do it, because that would
+mean that only my own grid would work (as well as SL) and no one else's,
+and I need to make sure all my code is portable across all grids... I'm not
+only not a core developer, but I'm a very sloppy programmer too &#8212; I have no
+time to do professional code up to the standards :) All I can do are quick
+fixes and hope that someone might improve them later.
+
+Thanks for the tip on BulletPhysics; I'm now going to experiment with it :)
+Who knows, maybe it's easier to get collision events on attachments under
+BulletPhysics. I'm sure I'll quickly find out :) If not, well, since this
+has to work on all OpenSim grids, it means sticking to ODE. I'm counting on
+a certain amount of physics engine &quot;transparency&quot;, but since this is an
+area of the OpenSim code which I never took a look at, I have no idea what
+I'll find!
+
+Cheers,
+
+    - Gwyn
+
+
+On 9 July 2013 17:16, dz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dz at bitzend.net</A>&gt; wrote:
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> From: Gwyneth Llewelyn &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gwyneth.llewelyn at gwynethllewelyn.net</A>&gt;
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] collision detection for attachments
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> First, I'm trying to make my solution compatible across SL and OpenSim,
+</I>&gt;&gt;<i> while developing most of the code in OpenSim: the theory is that if it
+</I>&gt;&gt;<i> works in OpenSim, it should work even better in SL (based on the theory
+</I>&gt;&gt;<i> that OpenSim only implements a subset of LSL ? except for OS-specific
+</I>&gt;&gt;<i> functions, of course). So, keeping things simple, and making them work in
+</I>&gt;&gt;<i> OpenSim, should ensure compatibility with SL later on. That's the first
+</I>&gt;&gt;<i> assumption.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The second one is that llCastRay() is, at best, tricky to find things,
+</I>&gt;&gt;<i> and,
+</I>&gt;&gt;<i> at worst, useless. Here, neither SL nor OpenSim are &quot;perfect&quot;. SL's
+</I>&gt;&gt;<i> llCastRay() seems to give slightly better results, but they're &quot;not as
+</I>&gt;&gt;<i> good
+</I>&gt;&gt;<i> as advertised&quot; ? when the ray is being cast from a moving avatar, i.e.
+</I>&gt;&gt;<i> from
+</I>&gt;&gt;<i> inside an attachment. (The alternative, using sensors, can be often worse
+</I>&gt;&gt;<i> and has all the other known limitations).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The third assumption is that the world is full of unscripted objects, and
+</I>&gt;&gt;<i> the scripts will have to deal with them all to have minimally accurate
+</I>&gt;&gt;<i> &quot;vision&quot;. So I cannot use dz's approach, which is to drop a script inside
+</I>&gt;&gt;<i> each and every object in a 15,000-prim area (yes, my scripts need to
+</I>&gt;&gt;<i> navigate across all that), and expect them to send collision events via
+</I>&gt;&gt;<i> llSay(). It's simply unfeasible. There is an old Indian Buddhist saying
+</I>&gt;&gt;<i> that goes, &quot;If the roads hurt your feet, the solution is not to wrap the
+</I>&gt;&gt;<i> whole world with leather to make all surfaces soft, because that's
+</I>&gt;&gt;<i> impossible; instead, wrap just a little bit of leather across your feet,
+</I>&gt;&gt;<i> and you can walk all roads without hurting yourself&quot;. A very good
+</I>&gt;&gt;<i> similarity applies to this case, IMHO: it's a bit pointless to make sure
+</I>&gt;&gt;<i> *all* the world is scripted for collisions, when you just need to test
+</I>&gt;&gt;<i> collisions on one's attachments.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So what I'm doing is a mixed approach. First, I cast a ray, to get a list
+</I>&gt;&gt;<i> of what OpenSim (or SL) _thinks_ is ahead of the avatar. But sometimes the
+</I>&gt;&gt;<i> ray will just send back wrong/incomplete information, and the avatar ? in
+</I>&gt;&gt;<i> the case where no human is behind it, of course ? hits a wall. In that
+</I>&gt;&gt;<i> case, I wish the attachment to detect the collision and report back to the
+</I>&gt;&gt;<i> system, and flag an exception ? we thought the way was clear, but it
+</I>&gt;&gt;<i> isn't.
+</I>&gt;&gt;<i> Also, this approach means that the script doesn't need to be sending rays
+</I>&gt;&gt;<i> in very short time frames ? just once in a while, assuming most of the
+</I>&gt;&gt;<i> environment will remain static, and deal with exceptions (or cast new
+</I>&gt;&gt;<i> rays!) if it starts bumping into things.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This works well enough in SL, but apparently not in OpenSim: apparently,
+</I>&gt;&gt;<i> without any special tricks, it seems impossible to get collision events in
+</I>&gt;&gt;<i> an attachment to work (at least on 0.7.5 Dev). Why?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If there are any special tricks to get this working, what are they?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Will switching to 0.7.6 Dev make any difference? (As far as I can see on
+</I>&gt;&gt;<i> the Mantis and/or searching via Google, nobody seems to be mentioning
+</I>&gt;&gt;<i> this). Will this be implemented in BulletPhysics? (I'm not even sure if
+</I>&gt;&gt;<i> BulletPhysics already works under Linux these days...)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    - Gwyn
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Just to clarify..
+</I>&gt;<i> I never suggested that scripting all of the objects in a scene is a
+</I>&gt;<i> workable solution &lt;winks&gt;..
+</I>&gt;<i>
+</I>&gt;<i> My solution was just the most reliable way I found to deal with all of the
+</I>&gt;<i> things that did not work the way I expected when I tried to automate my
+</I>&gt;<i> libOMV testclient based bots, and later the NPC bots available in
+</I>&gt;<i> OpenSim.   I don't script every object..   I use a couple dozen scripted
+</I>&gt;<i> objects in strategic locations (intersections) to detect and redirect the
+</I>&gt;<i> bots that need to move around the sim.  I have secondary collision
+</I>&gt;<i> detectors in places where the bots MIGHT wander ( but arent intended to)
+</I>&gt;<i> that simply redirect the bot to the nearest &quot;correct&quot; intersection.
+</I>&gt;<i> Intersections take a percentage of the bots that pass through and direct
+</I>&gt;<i> them to sit on  local &quot;normal&quot; scripted objects that implement the
+</I>&gt;<i> non-movement related animations.
+</I>&gt;<i>
+</I>&gt;<i> I spent a while using path generators, but the results were unacceptable
+</I>&gt;<i> given the difficulties with getting an avatar to actually move to a
+</I>&gt;<i> specific (exact) location, and sim performance affected the ability to
+</I>&gt;<i> determine if the bot had arrived. My bots moved, but to the wrong spots,
+</I>&gt;<i> and then often never stopped.
+</I>&gt;<i>
+</I>&gt;<i> I spent a long time trying to get segregated attachments to handle the
+</I>&gt;<i> collisions like others wanted, but the only consistent collisions I was
+</I>&gt;<i> able to detect were avatar capsules  ( and even those are less reliable
+</I>&gt;<i> than I expected).  I had it explained to me  WHY it is unreasonable to
+</I>&gt;<i> expect the sim to know where my avatar hand is when I use an animation to
+</I>&gt;<i> stick it in front of me. The config files in OpenSim at least let me modify
+</I>&gt;<i> the size of the avatar capsule somewhat, so I can prevent/react to some
+</I>&gt;<i> situations where bots just look wrong.  I recently revisited these tests
+</I>&gt;<i> using a rigged mesh design, but the results were no better.
+</I>&gt;<i>
+</I>&gt;<i> When CastRay became available, I attempted to implement solutions based on
+</I>&gt;<i> that functionality, I have since filed at least one MANTIS on the incorrect
+</I>&gt;<i> responses you mentioned.  But really.. I currently can't modify the
+</I>&gt;<i> position of a seated avatar to implement even the 'semi-borked&quot; SL
+</I>&gt;<i> animation standards, so I expect it will be a while before some of these
+</I>&gt;<i> newer features get tested enough to be reliable and efficient.
+</I>&gt;<i>
+</I>&gt;<i> My current implementation wasn't my first, second,  or even third,
+</I>&gt;<i> solution  and it isn't the right solution for many other sim designs / bot
+</I>&gt;<i> implementations,  It is, in my experience, the one that works most reliably
+</I>&gt;<i> in the widest variety of design and performance situations.  On 7.6
+</I>&gt;<i> standalone, this design allows me to generate 100 NPC bots and have them
+</I>&gt;<i> move about and perform background activities while maintaining reasonable
+</I>&gt;<i> sim performance.  I have generated as many as 400 bots, let them wander for
+</I>&gt;<i> 4-6 hours, and then logged them all out without having the sim crash.   I
+</I>&gt;<i> would never expect that to be possible if every one of the NPC's was using
+</I>&gt;<i> RayCast to feed an on-board scripted direction finder,  or if the physics
+</I>&gt;<i> engine had to calculate the &quot;REALTIME&quot; position of everyones
+</I>&gt;<i> hands/feet/heads...
+</I>&gt;<i>
+</I>&gt;<i> Ultimately, I think I will wind up offloading the bot movement/navigation
+</I>&gt;<i> to a region module.  I know that isn't a &quot;portable&quot; solution if you intend
+</I>&gt;<i> to migrate back to SL,  but it seems the only rational way to plan for
+</I>&gt;<i> OpenSim regions with 30-60,000 objects.
+</I>&gt;<i>
+</I>&gt;<i>  Finally..  the new physics engine IS working in linux, and having the
+</I>&gt;<i> opportunity to multi-thread physics interactions IS a huge step forward to
+</I>&gt;<i> having the performance required to support the kinds of &quot;enhanced&quot;
+</I>&gt;<i> collision detections you desire.
+</I>&gt;<i>
+</I>&gt;<i> dz
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+&quot;I'm not building a game. I'm building a new country.&quot;
+  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130710/43618e85/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130710/43618e85/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012437.html">[Opensim-users] collision detection for attachments
+</A></li>
+	<LI>Next message: <A HREF="012449.html">[Opensim-users] collision detection for attachments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12438">[ date ]</a>
+              <a href="thread.html#12438">[ thread ]</a>
+              <a href="subject.html#12438">[ subject ]</a>
+              <a href="author.html#12438">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

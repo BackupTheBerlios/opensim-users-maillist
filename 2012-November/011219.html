@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Announcement%20of%20inventory%20tool%20%28MyInventory%29%2C%0A%20mostly%20of%20interest%20to%20grid%20operators/grid%20nauts&In-Reply-To=%3CCAMvcWdhfmAU8UUwKzuhHoDFtSXnksMEB3QMuU0wQQ0LGxMEXuA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011291.html">
+   <LINK REL="Next"  HREF="011220.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts</H1>
+    <B>Snowcrash Short</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Announcement%20of%20inventory%20tool%20%28MyInventory%29%2C%0A%20mostly%20of%20interest%20to%20grid%20operators/grid%20nauts&In-Reply-To=%3CCAMvcWdhfmAU8UUwKzuhHoDFtSXnksMEB3QMuU0wQQ0LGxMEXuA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts">snowcrash.short at gmail.com
+       </A><BR>
+    <I>Thu Nov 15 10:44:03 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011291.html">[Opensim-users] OpenSim Configuration
+</A></li>
+        <LI>Next message: <A HREF="011220.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11219">[ date ]</a>
+              <a href="thread.html#11219">[ thread ]</a>
+              <a href="subject.html#11219">[ subject ]</a>
+              <a href="author.html#11219">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+I've been working on a client side tool for decentralizing user
+inventories, which I will release as an open source tool in two weeks, some
+of the features may be relevant to grid operators.
+
+The basic premise of the tool is that the inventory and the backing assets
+of the inventory items really should be controlled by the user. The tool is
+born out of a frustration of having visited a number of grids. Each visit
+to a new grid presents me with an empty inventory, and I can then spend
+time searching for suitable item, clothing, attachments and
+other accessories.
+
+For this purpose I have created a tool which will allow me to backup my
+inventory to a local cache and then upload the contents to another grid.
+
+If my tool becomes popular, both the upload and download mechanisms may
+have some impact on the grid-operators, hence this email to serve as a
+notice.
+
+The basic architecture is pretty simple, consisting of a number of import
+agents, which can import the users inventory and backing assets to a local
+database, and a number of upload agents which can upload inventory content
+to a specific account.
+
+Backup/Import
+There are two import agents, one which will import .iar files and one which
+works very much like I believe &quot;Stored Inventory&quot; works, which can backup
+the inventory of an avatars inventory. Avatar backup/Import is governed by
+a policy. Currently there are two policies, one complying with a very
+restrictive interpretation of the Linden Labs policy on backups, and a
+completely unrestricted policy, where anything that can be downloaded will
+be downloaded.
+
+When a new account is registered in MyInventory it checks if the account is
+for a Linden Lab grid and limits the choices of policies to policies
+suitable for LL's TOS, I cannot and do not know if other grids have similar
+policies, I can well imagine that Avination has a similar restrictions, and
+would like similar logic implemented to restrict the download. Any grid
+operator which would like to have backup governed by a more restrictive
+policy are invited to notify me and I will attempt to implement the policy
+prior to the first release of the source code. or supply patches at a later
+time.
+
+Upload/Export
+MyInventory supports two mechanisms for uploading inventory
+content, traditional upload using UDP/CAPS and direct access to the
+inventory and asset web-services.
+Due to limitations in the UDP/CAPS protocol each upload will create new
+assets, and as of my latest read of the Open Simulator code the asset store
+does not support &quot;single instance assets&quot;, i.e. it does not use a checksum
+to verify if the asset already exists, for this reason MyInventory prefers
+to upload using direct access to asset and inventory web-services.
+
+I would propose that the grids which chooses to support MyInventory augment
+their &quot;GridInfoService&quot; entries with the url's for the asset and inventory
+web-services, e.g.
+
+[GridInfoService]
+    assets = <A HREF="http://assets.osgrid.org">http://assets.osgrid.org</A>
+    inventory = <A HREF="http://inventory.osgrid.org">http://inventory.osgrid.org</A>
+
+Best regards
+Snowcrash
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121115/3161e8fc/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20121115/3161e8fc/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011291.html">[Opensim-users] OpenSim Configuration
+</A></li>
+	<LI>Next message: <A HREF="011220.html">[Opensim-users] Announcement of inventory tool (MyInventory), mostly of interest to grid operators/grid nauts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11219">[ date ]</a>
+              <a href="thread.html#11219">[ thread ]</a>
+              <a href="subject.html#11219">[ subject ]</a>
+              <a href="author.html#11219">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

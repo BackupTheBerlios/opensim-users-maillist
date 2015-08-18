@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] How to create a full backup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20create%20a%20full%20backup&In-Reply-To=%3C20090624142250.GI16368%40predator.kicks-ass.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002314.html">
+   <LINK REL="Next"  HREF="002316.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] How to create a full backup</H1>
+    <B>Torrid Luna</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20create%20a%20full%20backup&In-Reply-To=%3C20090624142250.GI16368%40predator.kicks-ass.net%3E"
+       TITLE="[Opensim-users] How to create a full backup">torrid at primforge.com
+       </A><BR>
+    <I>Wed Jun 24 16:22:50 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002314.html">[Opensim-users] How to create a full backup
+</A></li>
+        <LI>Next message: <A HREF="002316.html">[Opensim-users] trying to improve OpenSim performance under heavy	load
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2315">[ date ]</a>
+              <a href="thread.html#2315">[ thread ]</a>
+              <a href="subject.html#2315">[ subject ]</a>
+              <a href="author.html#2315">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Olli, hi @all,
+
+Also sprach Olli Aro (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">olli_aro at yahoo.co.uk</A>):
+
+&gt;<i> My version does not have bin directory or _Config.xml files. I assume they
+</I>&gt;<i> have been removed in later versions?
+</I>
+You don't have (or need) the *_Config.xml if you don't run your own
+UGAIM-Server. Also, if your Opensim runs from a precompiled / downloaded
+snapshot, the bin-Directory usually is your opensim-Directory (where you
+find the Opensim.exe). 
+
+Here's a snippet from my current update script:
+
+BCKPFILES=&quot;config-include/ *Server_Config.xml estate_settings.xml
+AssetInventoryServer.ini Hypergrid/ Regions/ *\.db OpenSim.ini
+startup_commands.txt mysql_connection.ini&quot;
+
+&gt;<i> Also, I noticed that some of the data such as inventory is stored in XML.
+</I>
+There are currently 4 useful ways to backup Sim content: XML, OAR,
+dumping the database content into SQL, or saving the DB binaries
+directly. (Note, this is only the data, not the configuration files, see
+above.)
+
+For the virtyou MetaGrid we run nightly snapshots via OAR and PNG, and
+weekly sql dumps of the MySQL databases. All config files are backupped
+before each version update of the Opensim binaries. 
+
+&gt;<i> So, if I backup all XML files, opensim.ini and the database, would that be
+</I>&gt;<i> enough to restore?
+</I>
+No. ;-) At least you need to add the config-include/ directory, for
+current installations. Also I decided to refrain from doing binary DB
+copies, since this is virtyoually unparsable in case of an error.
+Instead we mirror all databases to another server and do plain (and
+slow) SQL dumps there.
+
+
+Cheers,
+Torrid
+-- 
+Excerpts of &quot;10000 Shell Scripts&quot; -- today: monkeytypewriter
+$ cat /dev/random | strings | fmt | less
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002314.html">[Opensim-users] How to create a full backup
+</A></li>
+	<LI>Next message: <A HREF="002316.html">[Opensim-users] trying to improve OpenSim performance under heavy	load
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2315">[ date ]</a>
+              <a href="thread.html#2315">[ thread ]</a>
+              <a href="subject.html#2315">[ subject ]</a>
+              <a href="author.html#2315">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

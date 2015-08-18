@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim and VirWox
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20and%20VirWox&In-Reply-To=%3Ca044b791ec85dbf50589d4bf89ae125b.squirrel%40webmail.exetel.com.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011011.html">
+   <LINK REL="Next"  HREF="011010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim and VirWox</H1>
+    <B>dogwomble at exemail.com.au</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20and%20VirWox&In-Reply-To=%3Ca044b791ec85dbf50589d4bf89ae125b.squirrel%40webmail.exetel.com.au%3E"
+       TITLE="[Opensim-users] OpenSim and VirWox">dogwomble at exemail.com.au
+       </A><BR>
+    <I>Wed Oct  3 13:20:21 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011011.html">[Opensim-users] (no subject)
+</A></li>
+        <LI>Next message: <A HREF="011010.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11009">[ date ]</a>
+              <a href="thread.html#11009">[ thread ]</a>
+              <a href="subject.html#11009">[ subject ]</a>
+              <a href="author.html#11009">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi guys,
+
+I know this is venturing into somewhat unsupported territory but I thought
+I'd ask anyways.
+
+At the moment, I'm experimenting with OpenSim 0.7.4 and want to try and
+get VirWox working.  This is currently set up on a Windows 2003 Server box
+in grid mode.  I've _almost_ got it working but I'm not quite there - I'm
+sure I've missed something obvious but I can't quite work out what.
+
+As per the VirWox instructions
+(<A HREF="https://www.virwox.com:419/OSMoneyGateway/4.0.3/Public/index.php/OMHelp">https://www.virwox.com:419/OSMoneyGateway/4.0.3/Public/index.php/OMHelp</A>)
+I have added the appropriate DLL files (I used the binary versions for
+convenience).  I have placed the following into all my OpenSim.ini files:
+
+[OpenMetaverseEconomy]
+  OMEconomyInitialize =   
+&quot;<A HREF="https://www.virwox.com:419/OSMoneyGateway/init.php">https://www.virwox.com:419/OSMoneyGateway/init.php</A>&quot;
+  GridShortName =          &quot;TestingOnly&quot;
+  OMBaseEnvironment =      &quot;TEST&quot;
+  OMCurrencyEnvironment =  &quot;TEST&quot;
+
+The following shows in the logs, which seems to indicate that it is
+loading correctly.
+
+2012-10-02 22:00:47,280 DEBUG - OMEconomy.OMBase.CommunicationHelpers
+[OMECONOMY] Request:
+<A HREF="https://www.virwox.com:419/OSMoneyGateway/TEST/4.0.3/API/Simulator.php?method=initializeRegion&amp;regionIP=http://192.168.1.67:9004/&amp;regionName=Newton&amp;regionUUID=591ee37b-2e00-4278-aae2-6db86937bc5b&amp;simulatorVersion=OpenSim">https://www.virwox.com:419/OSMoneyGateway/TEST/4.0.3/API/Simulator.php?method=initializeRegion&amp;regionIP=http://192.168.1.67:9004/&amp;regionName=Newton&amp;regionUUID=591ee37b-2e00-4278-aae2-6db86937bc5b&amp;simulatorVersion=OpenSim</A>
+0.7.4 Release     
+&amp;moduleVersion=4.0.5&amp;gridShortName=TestingOnly&amp;gridURL=<A HREF="http://192.168.1.67:8003">http://192.168.1.67:8003</A>
+2012-10-02 22:00:47,998 DEBUG - OMEconomy.OMBase.CommunicationHelpers
+[OMECONOMY] Response: {&quot;success&quot;:&quot;true&quot;,&quot;regionSecret&quot;:&quot;removed&quot;}
+2012-10-02 22:00:48,014 INFO  - OMEconomy.OMBase.OMBaseModule [OMBASE]:
+The Service is Available
+
+The terminal has been successfully brought in and a test account created
+and verified - so all good so far.
+
+However, whenever I try and &quot;Pay&quot; an object or avatar, I start getting
+problems.  Because I have $OS0, it wants me to purcahse some currency -
+which is expected.  However, at the stage of it &quot;Getting data&quot;, I receive
+the error: &quot;Despite our best efforts, something unexpected has gone
+wrong&quot;.
+
+I have added the appropriate Helper URI to my client settings, as well as
+place the Helper files as part of my web server.  My Apache log seems to
+indicate they are being loaded successfully:
+
+192.168.1.66 - - [03/Oct/2012:21:15:03 +1000] &quot;POST
+/grid/helper/currency.php HTTP/1.1&quot; 200 122
+
+The only odd thing I'm noticing is this in my OpenSim.log:
+
+2012-10-02 22:06:23,014 ERROR -
+OpenSim.Region.Framework.Scenes.EventManager [EVENT MANAGER]: Delegate for
+TriggerOnMakeRootAgent failed - continuing.  Method not found:
+'System.Net.EndPoint OpenSim.Framework.IClientAPI.GetClientEP()'.    at
+OMEconomy.OMBase.OMBaseModule.AddAvatar(ScenePresence avatar)
+   at
+OpenSim.Region.Framework.Scenes.EventManager.TriggerOnMakeRootAgent(ScenePresence
+presence)
+
+This seems to correlate with me loggin in, and I can't for the life of me
+work out what's happening here, even with the help of Google.
+
+I'm sure I'm missing something obvious and it's staring me in the face - I
+just can't see it so any help (and I know I'm verging on tl;dr) would be
+appreciated!
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011011.html">[Opensim-users] (no subject)
+</A></li>
+	<LI>Next message: <A HREF="011010.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11009">[ date ]</a>
+              <a href="thread.html#11009">[ thread ]</a>
+              <a href="subject.html#11009">[ subject ]</a>
+              <a href="author.html#11009">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

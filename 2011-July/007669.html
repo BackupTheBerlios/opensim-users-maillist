@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Autopilot and osNPC bugs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Autopilot%20and%20osNPC%20bugs&In-Reply-To=%3CCABsLVMvzs%3D1o-gi3_22oTBaKu0rnXj2CX3e2%2BspFemdorUA8%3Dg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007668.html">
+   <LINK REL="Next"  HREF="007670.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Autopilot and osNPC bugs</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Autopilot%20and%20osNPC%20bugs&In-Reply-To=%3CCABsLVMvzs%3D1o-gi3_22oTBaKu0rnXj2CX3e2%2BspFemdorUA8%3Dg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Autopilot and osNPC bugs">teravus at gmail.com
+       </A><BR>
+    <I>Wed Jul 13 04:02:01 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007668.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+        <LI>Next message: <A HREF="007670.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7669">[ date ]</a>
+              <a href="thread.html#7669">[ thread ]</a>
+              <a href="subject.html#7669">[ subject ]</a>
+              <a href="author.html#7669">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In order to fix the autopilot, the script engine needs to feed the
+ScenePresence minimal position/rotation updates.   There's an event
+handler in ScenePresence that handles AvatarUpdates and is the proper
+method for the script engine to call.   Last I checked, the server
+side autopilot code is IN that event handler, so, unless something has
+significantly changed, it just needs to be wired up.
+
+Teravus
+
+On Tue, Jul 12, 2011 at 8:55 PM, Justin Clark-Casey
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+&gt;<i> On 12/07/11 14:53, David Burden wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &#160;From my experience and what I've read elsewhere both the LibOMV Autopilot
+</I>&gt;&gt;<i> function in OpenSim and the osNPC
+</I>&gt;&gt;<i> functionality are broken in the latest versions of OpenSim. Since one of
+</I>&gt;&gt;<i> my favourite uses for virtual worlds is playing
+</I>&gt;&gt;<i> around autonomous avatars this is a real pain. Has anyone got any idea of
+</I>&gt;&gt;<i> the amount of effort needed to fix one or both
+</I>&gt;&gt;<i> of these, as if it's reasonable and practical we might be able to find
+</I>&gt;&gt;<i> some resource to help fix them.
+</I>&gt;<i>
+</I>&gt;<i> Hi David. &#160;As it happens, I've started to look at osNPC*() functions in the
+</I>&gt;<i> last couple of weeks (e.g. commits 22f25fa, ed12e38) with a view to
+</I>&gt;<i> eventually restoring the original functionality and buttressing it with some
+</I>&gt;<i> automated regression tests. &#160;I would also love to see the code in a state
+</I>&gt;<i> where NPCs would work without a client object attached.
+</I>&gt;<i>
+</I>&gt;<i> At the moment in git master, say, create and delete work, though appearance
+</I>&gt;<i> and autopilot are broken. &#160;For an experienced OpenSim developer fixing
+</I>&gt;<i> appearance shouldn't be too hard - I think it's a case of digging around to
+</I>&gt;<i> find out why the copied avatar baked textures aren't being used properly on
+</I>&gt;<i> the NPC.
+</I>&gt;<i>
+</I>&gt;<i> Fixing autopilot is more difficult. &#160;In principle, it should use much the
+</I>&gt;<i> same code paths as sit and &quot;go here&quot; on version 1 viewers, though &quot;go here&quot;
+</I>&gt;<i> itself doesn't appear to be working consistently. &#160;It's probably a case of
+</I>&gt;<i> fixing go and then reusing the code for npc autopilot. &#160;This would be
+</I>&gt;<i> somewhat involved, more so than fixing appearance. &#160;Fixing autopilot of NPCs
+</I>&gt;<i> should also fix it for client-side bots.
+</I>&gt;<i>
+</I>&gt;<i> Any resource to help fix these would be very welcome. &#160;I have to confess,
+</I>&gt;<i> they are low down on my priority list right now.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007668.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+	<LI>Next message: <A HREF="007670.html">[Opensim-users] Autopilot and osNPC bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7669">[ date ]</a>
+              <a href="thread.html#7669">[ thread ]</a>
+              <a href="subject.html#7669">[ subject ]</a>
+              <a href="author.html#7669">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

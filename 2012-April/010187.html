@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Setting directory fee
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Setting%20directory%20fee&In-Reply-To=%3C520EE289-1D4F-47FC-A8EC-BEFDF72B113B%40spekuloos.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010186.html">
+   <LINK REL="Next"  HREF="010190.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Setting directory fee</H1>
+    <B>Gudule Lapointe</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Setting%20directory%20fee&In-Reply-To=%3C520EE289-1D4F-47FC-A8EC-BEFDF72B113B%40spekuloos.be%3E"
+       TITLE="[Opensim-users] Setting directory fee">gudule at spekuloos.be
+       </A><BR>
+    <I>Wed Apr 25 16:09:38 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010186.html">[Opensim-users] Setting directory fee
+</A></li>
+        <LI>Next message: <A HREF="010190.html">[Opensim-users] Setting directory fee
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10187">[ date ]</a>
+              <a href="thread.html#10187">[ thread ]</a>
+              <a href="subject.html#10187">[ subject ]</a>
+              <a href="author.html#10187">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On the other hand, in found (in Singularity code)
+
+./indra/newview/llstartup.cpp
+   	tmp = LLUserAuth::getInstance()-&gt;getResponse(&quot;directory_fee&quot;);
+	if (!tmp.empty()) gHippoGridManager-&gt;getConnectedGrid()-&gt;setDirectoryFee(atoi(tmp.c_str()));
+along with other login-transmitted values
+
+But I don't know if this really specific to sing or hippo
+
+I was about to try to add a custom value in OpenSim/Services/LLLoginService/LLLoginResponse.cs
+
+    public class LLLoginResponse : OpenSim.Services.Interfaces.LoginResponse
+    {
+	(&#8230;)
+        public override Hashtable ToHashtable() { 
+		(&#8230;)
+		responseData[&quot;directory_fee&quot;] = ...;
+
+
+Le 25 avr. 2012 &#224; 14:23, James Hughes a &#233;crit :
+
+--
+<A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+<A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+Speculoos, the belgian cookie-flavored metaverse
+
+&gt;<i> I am still working on it - but on the web server/OpenSim side of things atm...
+</I>&gt;<i> 
+</I>&gt;<i> It looks like this label is hard coded in V3 ...
+</I>&gt;<i> ./indra/newview/skins/default/xui/en/floater_about_land.xml
+</I>&gt;<i>             label=&quot;Show Place in Search (L$30/week)&quot;
+</I>&gt;<i> 
+</I>&gt;<i> Would need to dig to see how the charges are determined and applied. I'm guessing the user's account would be charged from the search application. I will look into that next time I dive into the viewer code.
+</I>&gt;<i> 
+</I>&gt;<i> -BlueWall
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On 04/24/2012 07:56 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> I would guess this is going to be implemented in an external search
+</I>&gt;&gt;<i> module if it is.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I don't believe there is currently any way to override the default
+</I>&gt;&gt;<i> search in v3. BlueWall was working on a viewer patch though I don't know
+</I>&gt;&gt;<i> how far he got with it. He was even hoping to get it into the official
+</I>&gt;&gt;<i> viewer.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> On 24/04/12 19:28, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;<i> Search is working fine on v1 viewers with ossearch module.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> I would still love to know a way to override the default search page
+</I>&gt;&gt;&gt;<i> in v3 viewers, which seems to be hardcoded in viewer?
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;&gt;&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;&gt;&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Le 24 avr. 2012 &#224; 19:00, InuYasha Meiji a &#233;crit :
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> Just a quick Question: you have search working to put a land to show
+</I>&gt;&gt;&gt;&gt;<i> up in? Must be on a special version or something.
+</I>&gt;&gt;&gt;&gt;<i> Seems to me search no longer works since all the viewers I have tried
+</I>&gt;&gt;&gt;&gt;<i> wants to load the SL search web site.
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> InuYasha.
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> On 4/24/2012 11:48 AM, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> Is there a way to set (more precisely to unset) the 30L$ price for
+</I>&gt;&gt;&gt;&gt;&gt;<i> &quot;Show this place in search results&quot;?
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> Actually, there is no fee applied, though L$30 / week fee appears in
+</I>&gt;&gt;&gt;&gt;&gt;<i> the land option. So users would avoid checking
+</I>&gt;&gt;&gt;&gt;&gt;<i> the option, thinking they would be billed for that.
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> I looked in source code and didn't find any place where this price
+</I>&gt;&gt;&gt;&gt;&gt;<i> is set.
+</I>&gt;&gt;&gt;&gt;&gt;<i> I found a corresponding variable, DIRECTORY_FEE, in viewer code, but
+</I>&gt;&gt;&gt;&gt;&gt;<i> I didn't find where it is set.
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;<i> ________________________________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim User: Standalone Grid on Version 0.7.3.1 with 56 Regions
+</I>&gt;&gt;&gt;&gt;<i> on Windows 7, 64-bit. Phenom 9500 2.2 ghz Quad Core, Terabyte Hard
+</I>&gt;&gt;&gt;&gt;<i> Drive, 8gig DDR2 RAM. Used XAMPP to load PHP Version 5.3.0, Apache
+</I>&gt;&gt;&gt;&gt;<i> and MySQL 5.1.41-community edition. Groups, Profiles, Voice and
+</I>&gt;&gt;&gt;&gt;<i> Offline Mesages all working. (Not yet Public, 6 users allowed Now).
+</I>&gt;&gt;&gt;&gt;<i> ________________________________________________________________
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120425/54ef31fc/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120425/54ef31fc/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010186.html">[Opensim-users] Setting directory fee
+</A></li>
+	<LI>Next message: <A HREF="010190.html">[Opensim-users] Setting directory fee
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10187">[ date ]</a>
+              <a href="thread.html#10187">[ thread ]</a>
+              <a href="subject.html#10187">[ subject ]</a>
+              <a href="author.html#10187">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

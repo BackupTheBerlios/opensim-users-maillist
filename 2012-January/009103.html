@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sensors are not detecting NPC avatars on git	r/17830
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%09r/17830&In-Reply-To=%3CCADyQTWoqqmnernky6TNXZsvcbsMwrrOsb4CNZrA2FWNtVLv5Hg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009100.html">
+   <LINK REL="Next"  HREF="009104.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sensors are not detecting NPC avatars on git	r/17830</H1>
+    <B>dz</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sensors%20are%20not%20detecting%20NPC%20avatars%20on%20git%0A%09r/17830&In-Reply-To=%3CCADyQTWoqqmnernky6TNXZsvcbsMwrrOsb4CNZrA2FWNtVLv5Hg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Sensors are not detecting NPC avatars on git	r/17830">dz at bitzend.net
+       </A><BR>
+    <I>Fri Jan 20 03:29:11 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009100.html">[Opensim-users] Texture Loading
+</A></li>
+        <LI>Next message: <A HREF="009104.html">[Opensim-users] Texture Loading
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9103">[ date ]</a>
+              <a href="thread.html#9103">[ thread ]</a>
+              <a href="subject.html#9103">[ subject ]</a>
+              <a href="author.html#9103">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i>
+</I>&gt;<i> ---------- Forwarded message ----------
+</I>&gt;<i> From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Cc:
+</I>&gt;<i> Date: Thu, 19 Jan 2012 23:57:15 +0000
+</I>&gt;<i> Subject: Re: [Opensim-users] Sensors are not detecting NPC avatars on git
+</I>&gt;<i> r/17830
+</I>&gt;<i> ...
+</I>&gt;<i>
+</I>&gt;<i> One reason for doing this is because the sensor limit is 16 and one
+</I>&gt;<i> doesn't want the return to be overwhelmed by NPCs. It means that sensor
+</I>&gt;<i> using scripts not designed with NPCs in mind (both in the past and the
+</I>&gt;<i> future) won't work with NPCs without alteration.  It strikes me that
+</I>&gt;<i> sometimes this is a disadvantage (e.g. a light that should come on when it
+</I>&gt;<i> detects any presence) but for other items an advantage (e.g. non-NPC aware
+</I>&gt;<i> radars that wouldn't be designed to pick them up anyway).
+</I>&gt;<i>
+</I>&gt;<i> So one option is to change the default so that AGENT will pick up NPCs.
+</I>&gt;<i>  However, this is a problem with the 16 avatar sensor limit.  Even if this
+</I>&gt;<i> is turned up, it might then cause script problems (e.g. ones designed to
+</I>&gt;<i> work with only 16 avatars).
+</I>&gt;<i>
+</I>&gt;<i> Another slightly messy option is to provide something like an
+</I>&gt;<i> OS_NPC_SHOW_AS_AGENT option to osNpcCreate() that will show such NPCs as
+</I>&gt;<i> agents.  I'm favouring this option right now.
+</I>&gt;<i>
+</I>&gt;<i> Either way, what is missing at the moment is a way to actually tell if a
+</I>&gt;<i> particular agent is an NPC.  One possibility is to make llGetOwnerKey()
+</I>&gt;<i> return an owned NPC's owner.  For an unowned NPC, this would need to return
+</I>&gt;<i> UUID.Zero - I'm not sure if there's a problem disambiguating between an
+</I>&gt;<i> unowned NPC and a situation where no entity with the ID is found.
+</I>&gt;<i>
+</I>&gt;<i> I'm interested if people have any thoughts about this.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>Justin,
+
+IMO    The best answer is to treat NPC's as an agent.
+
+To me it makes no sense to artificially inflate the complexity of future
+scripting of simple objects meant to react to a &quot;presence&quot;.
+Using your example of the light...  How un-natural would it seem to walk
+into a room, have the light come on, and then find 6 NPC avatars already
+there??
+
+Since there is a config variable that allows you to reset the # of sensor
+detections, the scripts that are hard-coded to enforce the limit of 16
+agents are already &quot;wrong&quot; and shouldn't be considered as the correct
+design template to support ...  I'm guessing there are considerably more
+&quot;agent information&quot; functions involved than just the filtering of sensor
+returns, so this doesn't seem like the one that would be the determining
+factor.
+
+I would suggest that SecondLife already suffers from the inability to
+discern between agent types, and that devoting the effort to a &quot;rational
+design&quot; that gives grid operators/scripters a simple way to identify
+HGUsers/LocalUsers/Bots/NPC's  and react to them differently is worth the
+effort.
+
+Just my $0.02
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120119/cc92c38b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120119/cc92c38b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009100.html">[Opensim-users] Texture Loading
+</A></li>
+	<LI>Next message: <A HREF="009104.html">[Opensim-users] Texture Loading
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9103">[ date ]</a>
+              <a href="thread.html#9103">[ thread ]</a>
+              <a href="subject.html#9103">[ subject ]</a>
+              <a href="author.html#9103">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

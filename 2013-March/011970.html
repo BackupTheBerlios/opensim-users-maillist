@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] AutoBackupModule configuration
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20AutoBackupModule%20configuration&In-Reply-To=%3C5154FBF0.9090301%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011966.html">
+   <LINK REL="Next"  HREF="011971.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] AutoBackupModule configuration</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20AutoBackupModule%20configuration&In-Reply-To=%3C5154FBF0.9090301%40googlemail.com%3E"
+       TITLE="[Opensim-users] AutoBackupModule configuration">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Mar 29 03:26:56 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011966.html">[Opensim-users] AutoBackupModule configuration
+</A></li>
+        <LI>Next message: <A HREF="011971.html">[Opensim-users] AutoBackupModule configuration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11970">[ date ]</a>
+              <a href="thread.html#11970">[ thread ]</a>
+              <a href="subject.html#11970">[ subject ]</a>
+              <a href="author.html#11970">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This code was donated a while ago but I'm not sure if it works, and no fixes have been submitted.
+
+To be honest, though I originally put it in, I'm not sure now whether it's appropriate for core, as any backups taken by 
+this method except at extremely long intervals are quickly going to be enormous (unless one keeps deleting the old ones, 
+which would kind of negate the whole point).
+
+I would be interested to know people's thoughts on this.
+
+On 28/03/13 07:56, Per Mint wrote:
+&gt;<i> Thanks InuYasha.
+</I>&gt;<i>
+</I>&gt;<i> The timer is indeed in minutes as stated in mantis :
+</I>&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=5440">http://opensimulator.org/mantis/view.php?id=5440</A>
+</I>&gt;<i>
+</I>&gt;<i> &quot;* The default time (in minutes) between backups is 1440.&quot;
+</I>&gt;<i>
+</I>&gt;<i> Also in the OpenSim log file I checked that the autobackupmodule timer is displayed to be fired every 21600000
+</I>&gt;<i> milliseconds = 360 minutes = 6 hours.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2013/3/28 InuYasha Meiji &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">inuyasha.meiji at gmail.com</A>&gt;&gt;
+</I>&gt;<i>
+</I>&gt;<i>     My first thought would be is the 360 you entered supposed to be in Seconds, Minutes or hours.  It might be in
+</I>&gt;<i>     seconds since you can set up a timer to make maps, but it is in seconds.  Maybe 360 is too short of a time and
+</I>&gt;<i>     Opensim is ignoring your request for OARs every 360 seconds.  Or it is in hours and 360 hours haven't passed.  I
+</I>&gt;<i>     don't really know, I am still worried about upgrading to 7.5 since I have been hearing so many issues lately about
+</I>&gt;<i>     attachments and so on.  I don't compile my own and have been thinking twice about getting the binary for 7.5.  I use
+</I>&gt;<i>     modules to access PHP to run my offline IMs and my groups.  Worried I will loose their functionality in 7.5 if I
+</I>&gt;<i>     instal that version now.
+</I>&gt;<i>
+</I>&gt;<i>     InuYasha.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     On 3/28/2013 3:16 AM, Per Mint wrote:
+</I>&gt;<i>
+</I>&gt;<i>         Hello,
+</I>&gt;<i>
+</I>&gt;<i>         I can see that the AutoBackupModule is implemented and configuration options examples are in the source code and
+</I>&gt;<i>         in OpenSim mantis. So I tried to cnofigure it in OpenSimDefaults.ini :
+</I>&gt;<i>
+</I>&gt;<i>         [AutoBackupModule]
+</I>&gt;<i>
+</I>&gt;<i>         AutoBackupModuleEnabled = true
+</I>&gt;<i>         AutoBackup = true
+</I>&gt;<i>         AutoBackupInterval =360
+</I>&gt;<i>         AutoBackupBusyCheck =false
+</I>&gt;<i>         AutoBackupNaming =&quot;Time&quot;
+</I>&gt;<i>         AutoBackupDir =&quot;D:\Backups\OARs&quot;
+</I>&gt;<i>         AutoBackupDilationThreshold =0.5
+</I>&gt;<i>         AutoBackupAgentThreshold =10
+</I>&gt;<i>
+</I>&gt;<i>         I started the region more than 6 hours (360 minutes) ago, so I should have an OAR in the specified backup dir.
+</I>&gt;<i>         But there's nothing yet.
+</I>&gt;<i>
+</I>&gt;<i>         Any thoughts on what I may have done wrong ?
+</I>&gt;<i>
+</I>&gt;<i>         Thanks !
+</I>&gt;<i>         Per.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         _________________________________________________
+</I>&gt;<i>         Opensim-users mailing list
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>         <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     ____________________________________________________________________________
+</I>&gt;<i>     Opensim User: In Gridmode  on Version 0.7.4. Nine Instances with 56 Regions. on Windows 7, 64-bit. Phenom 9500 2.2
+</I>&gt;<i>     GHz Quad Core, Terabyte Hard Drive, 8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+</I>&gt;<i>     and MySQL 5.1.41-community edition.  Groups, Profiles, Vivox Voice and
+</I>&gt;<i>     Offline Messages all working. (Not yet Public, 10 user accounts so far).
+</I>&gt;<i>     ____________________________________________________________________________
+</I>&gt;<i>
+</I>&gt;<i>     _________________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011966.html">[Opensim-users] AutoBackupModule configuration
+</A></li>
+	<LI>Next message: <A HREF="011971.html">[Opensim-users] AutoBackupModule configuration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11970">[ date ]</a>
+              <a href="thread.html#11970">[ thread ]</a>
+              <a href="subject.html#11970">[ subject ]</a>
+              <a href="author.html#11970">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

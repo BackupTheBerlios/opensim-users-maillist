@@ -1,0 +1,489 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] grid operation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20grid%20operation&In-Reply-To=%3C6b9359640812041254i55dd6eddi5ffa2f1f886d10d7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000765.html">
+   <LINK REL="Next"  HREF="000766.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] grid operation</H1>
+    <B>Kyle Hamilton</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20grid%20operation&In-Reply-To=%3C6b9359640812041254i55dd6eddi5ffa2f1f886d10d7%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] grid operation">aerowolf at gmail.com
+       </A><BR>
+    <I>Thu Dec  4 21:54:54 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000765.html">[Opensim-users] grid operation
+</A></li>
+        <LI>Next message: <A HREF="000766.html">[Opensim-users] grid operation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#761">[ date ]</a>
+              <a href="thread.html#761">[ thread ]</a>
+              <a href="subject.html#761">[ subject ]</a>
+              <a href="author.html#761">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>(cross-posting to opensim-dev for discussion, since this question and
+my answer are much more developer-oriented than the original on the
+-users list.  For more information on the precise item that this
+question is about, please see
+<A HREF="http://opensimulator.org/wiki/OpenSim:Introduction_and_Definitions">http://opensimulator.org/wiki/OpenSim:Introduction_and_Definitions</A>)
+
+Remember the audience for this original post.  The OP (on -users) was
+trying to figure out if his local assetserver would copy from the grid
+assetserver, and if he could redirect his local sim to its own
+assetserver as primary, passing requests for UUIDs that it doesn't
+know about to the grid.  The consensus of the -users list was that the
+only 'copying' that the region-local asset store does in grid mode is
+a not-greater-than-24-hour caching, with no permanent copies.  That's
+the gist of what I tried to get across in the initial wiki entry.
+
+As for grid versus standalone... my way of looking at it is this: when
+I'm browsing the web, I have (currently) 5 separate tabs open.  Often
+I have more than 40.  I'm going to claim utter and absolute
+selfishness here and state that I cannot see any situation under which
+I would have only 1 location open in the 3D web.  I can't see how I
+could get any work done in that way, at all.  Others may see how they
+can exist in that limit, but since the server is still being developed
+I'd like to ensure that my use-case is at least identified and
+reasoned about (even if it's never implemented in the core).  So, yes,
+each server has one instance -- but the server protocol either must
+not care at all about whereever else I'm connected to (my preferred
+state), or must at least allow for multiple grids and multiple sims to
+deal with the same user simultaneously.  There cannot be locks, cannot
+be any kind of avatar-access mutex, there cannot be any limit (other
+than my authenticator's policy -- be it openID, X.509 certificate,
+username/password, biometric fingerprint validator, whathaveyou -- but
+that should be implemented by simply failing authentication rather
+than anything OpenSim does) that OpenSim hard-codes in protocol.
+
+For the purpose of &quot;easily getting things set up&quot;, standalone is all
+but useless in its initial state.  It's certainly easier to get set
+up, but it's also much more limited.
+
+Grid mode is perhaps a bit more difficult to set up -- but the default
+in the configuration file is for the Null storage plugin to be used
+under standalone mode.  This makes things... difficult... when trying
+to explain how to get modifications to the environment saved.  Because
+first, you have to explain how to configure the storage for the other
+modules (again, for standalone).  Then, you have to explain how
+everything done up to the point is completely useless because now we
+need to set up the grid, and the grid doesn't use all those modules or
+datastores that we just set up.
+
+Which is, it appears, the point of friction that the OP had.
+
+Also, I've been following the posts on the topic of the HyperGrid.  I
+need more information on this: will it work for any of the minigrids
+to be in standalone mode when they try to connect with the HG?  My gut
+feeling says no... and my reason for promoting grid over standalone is
+simply this: the HyperGrid is much closer to what the web is --
+multiple administrative domains that all work together to pass traffic
+between them.  I don't view HG as being the final evolution, but I do
+view it as being a very good start.
+
+(And thank you, as always, for your time. :))
+
+-Kyle H
+
+On Thu, Dec 4, 2008 at 12:02 PM, Diva Canto &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+&gt;<i> Very nice beginning!
+</I>&gt;<i>
+</I>&gt;<i> I would take off judgment about the good-ness/bad-ness of specific
+</I>&gt;<i> configurations (standalone vs. grid). In fact, I have a different opinion of
+</I>&gt;<i> what's written there; there's the easy&amp;right way (standalone, similar to
+</I>&gt;<i> apache server, but for 3D VWs) and the hard-but-bigger way (grid). So let's
+</I>&gt;<i> just not make judgments :-)
+</I>&gt;<i>
+</I>&gt;<i> Before I take the scissors out, I thought I'd raise this issue here, to make
+</I>&gt;<i> sure there isn't anything deeper going on... Is standalone being considered
+</I>&gt;<i> &quot;not right&quot; officially?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Kyle Hamilton wrote:
+</I>&gt;<i>
+</I>&gt;<i> Could someone please read
+</I>&gt;<i> <A HREF="http://opensimulator.org/index.php?title=OpenSim:Introduction_and_Definitions">http://opensimulator.org/index.php?title=OpenSim:Introduction_and_Definitions</A>
+</I>&gt;<i> and fix any glaring errors or omissions I may have made?  There's a
+</I>&gt;<i> couple of TODO items therein (at least one needs examination by people
+</I>&gt;<i> familiar with Assets, Inventory, and how they're managed), and I'd
+</I>&gt;<i> like to solicit feedback on how I can write these kinds of things
+</I>&gt;<i> better.
+</I>&gt;<i>
+</I>&gt;<i> -Kyle H
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Dec 1, 2008 at 12:42 AM, Stefan Andersson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">stefan at tribalmedia.se</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Really, if somebody would be so excellent as to take this whole thread, and
+</I>&gt;<i> out of the questions and answers on it, make a wiki page, called
+</I>&gt;<i> 'OpenSim:Introduction and Definitions' or something, that would be SO
+</I>&gt;<i> golden.
+</I>&gt;<i>
+</I>&gt;<i> You seldom get these opportunities to learn from noob confusion. This is an
+</I>&gt;<i> excellent thread.
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i> Stefan Andersson
+</I>&gt;<i> Tribal Media AB
+</I>&gt;<i>
+</I>&gt;<i> Join the 3d web revolution : <A HREF="http://tribalnet.se/">http://tribalnet.se/</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> Date: Sun, 30 Nov 2008 13:16:35 -0800
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] grid operation
+</I>&gt;<i>
+</I>&gt;<i> Yes, those are all functions of the 3D space service currently. Scripting
+</I>&gt;<i> and backend modules provide programmable behavior for the objects and agents
+</I>&gt;<i> in the 3D environment.
+</I>&gt;<i> The scripts are stored in the asset server, just like all other assets. They
+</I>&gt;<i> are brought in to the region when the region starts and run on the same
+</I>&gt;<i> process that runs the region. When you create a new script in a region, that
+</I>&gt;<i> script is cached in that region's asset cache (in memory), and is sent to
+</I>&gt;<i> the asset server for persistent storage.
+</I>&gt;<i>
+</I>&gt;<i> This is the current architecture. I remember vaguely someone suggesting to
+</I>&gt;<i> move the script engine(s) to a different server, as an alternative physical
+</I>&gt;<i> architecture. In that case, the region wouldn't cache the scripts, they
+</I>&gt;<i> would go to that other server; only the effects of the scripts would be seen
+</I>&gt;<i> inworld. Not sure how far that idea went.
+</I>&gt;<i>
+</I>&gt;<i> This thread is making suspect that many people might be under the wrong
+</I>&gt;<i> impression that just because they have their own region server connected to
+</I>&gt;<i> someone's grid, they have 100% control over the assets in the region and
+</I>&gt;<i> even in their inventories. That is not correct. The persistent storage of
+</I>&gt;<i> everything is done in the grid-level servers, therefore under the control of
+</I>&gt;<i> whoever runs those servers. If the asset server kaputs, and there were no
+</I>&gt;<i> backups, you will loose just about everything you have in your region and in
+</I>&gt;<i> your inventory. (This is true independent of who has the control over the
+</I>&gt;<i> asset server, so maybe it's a good thing to have them on someone else's
+</I>&gt;<i> asset server, you can blame someone else :-)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Dickson, Mike (ISS Software) wrote:
+</I>&gt;<i>
+</I>&gt;<i> Well, it's running scripts for prims in the region also isn't it&#8230;  And
+</I>&gt;<i> physics for physical items in the scene the region is managing. (These are
+</I>&gt;<i> assumptions, feel free to clarify, like Paul I'm trying to learn.)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Mike
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Diva Canto
+</I>&gt;<i> Sent: Sunday, November 30, 2008 11:36 AM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] grid operation
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Right.
+</I>&gt;<i> When your region is connected to a physical grid, your region is *just* a 3D
+</I>&gt;<i> space server, nothing else.
+</I>&gt;<i> All assets belong to the asset server, all inventories belong to the
+</I>&gt;<i> inventory server, all users belong to the user server.
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;<i>
+</I>&gt;<i> Got it. So, the data are stored on the asset server. If this is
+</I>&gt;<i>
+</I>&gt;<i> so, it doesn't seem that my region server (the opensim instance
+</I>&gt;<i>
+</I>&gt;<i> I might run as part of someone's grid) is doing much of
+</I>&gt;<i>
+</I>&gt;<i> anything since any change in prim or agent attribute must be
+</I>&gt;<i>
+</I>&gt;<i> conveyed back to the grid's asset server.
+</I>&gt;<i>
+</I>&gt;<i> -p
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Diva Canto wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> By &quot;assets&quot; I mean the data itself, the blobs/text/etc.
+</I>&gt;<i>
+</I>&gt;<i> The region prims/primitems storage holds only references to that data.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Look inside OpenSim.db. There is no &quot;data&quot; there, only meta data and
+</I>&gt;<i>
+</I>&gt;<i> references to the data (by UUID) stored on the asset server.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> When you say the prims and primitems are not assets, I am confused.
+</I>&gt;<i>
+</I>&gt;<i> My understanding was that all items are assets, identified by their unique
+</I>&gt;<i>
+</I>&gt;<i> UUIDs. If I follow the point about the asset server, the asset servers
+</I>&gt;<i>
+</I>&gt;<i> stores all asset UUID references by region, but that the specific asset
+</I>&gt;<i>
+</I>&gt;<i> attributes (i.e., position of an object, or its texture) are stored by UUID
+</I>&gt;<i>
+</I>&gt;<i> in the region's DB?
+</I>&gt;<i>
+</I>&gt;<i> -p
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Diva Canto wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The asset server holds the assets for the entire collection of regions
+</I>&gt;<i>
+</I>&gt;<i> on that physical grid. For example, when you create an object inworld,
+</I>&gt;<i>
+</I>&gt;<i> the asset corresponding to that object is stored on the asset server.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The region caches some assets in memory. For example, in that creation
+</I>&gt;<i>
+</I>&gt;<i> scenario, the asset would be on the cache of the region too.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The region also has a database storing &quot;prims&quot; and &quot;primitems&quot;. These
+</I>&gt;<i>
+</I>&gt;<i> are not assets; they are the prims that are inworld at any given time.
+</I>&gt;<i>
+</I>&gt;<i> The prims refer to assets (by UUID) that are stored on the asset
+</I>&gt;<i>
+</I>&gt;<i> server. Which, as the previous sentence says, may be cached in memory
+</I>&gt;<i>
+</I>&gt;<i> of the region.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Right. But what, exactly, are these servers doing?  I guess I am trying
+</I>&gt;<i>
+</I>&gt;<i> to get at more of the architectural details of what types of messages are
+</I>&gt;<i>
+</I>&gt;<i> sent among servers (over the network and to the database(s)). For
+</I>&gt;<i>
+</I>&gt;<i> example, there are the UGAIM servers in grid mode. Does the grid's &quot;A&quot;
+</I>&gt;<i>
+</I>&gt;<i> server hold all of the assets on your region that  you plugged into the
+</I>&gt;<i>
+</I>&gt;<i> grid? Or does your region database (on the same computer as your
+</I>&gt;<i>
+</I>&gt;<i> opensim.instance) take care of that?
+</I>&gt;<i>
+</I>&gt;<i> -paul
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Ideia Boa wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> If you run 1 region in a grid, you only run OpenSim server, the others
+</I>&gt;<i>
+</I>&gt;<i> servers (User, Grid, Asset, Inventory and Message) are running on the
+</I>&gt;<i>
+</I>&gt;<i> Grid servers with the grid OpenSim server.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> If one hooks a region to a grid, what functions does the
+</I>&gt;<i>
+</I>&gt;<i> region server (operating on your computer) perform? The
+</I>&gt;<i>
+</I>&gt;<i> Grid servers are running asset and inventory management,
+</I>&gt;<i>
+</I>&gt;<i> so does this mean that the grid A and I machines handle
+</I>&gt;<i>
+</I>&gt;<i> the assets and inventory or is that the function of the region
+</I>&gt;<i>
+</I>&gt;<i> server that connects to the grid?
+</I>&gt;<i>
+</I>&gt;<i> -p
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000765.html">[Opensim-users] grid operation
+</A></li>
+	<LI>Next message: <A HREF="000766.html">[Opensim-users] grid operation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#761">[ date ]</a>
+              <a href="thread.html#761">[ thread ]</a>
+              <a href="subject.html#761">[ subject ]</a>
+              <a href="author.html#761">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

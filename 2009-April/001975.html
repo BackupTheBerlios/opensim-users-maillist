@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] networking gremlin?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20networking%20gremlin%3F&In-Reply-To=%3C34cc66250904101807ye2350d3uf3961488ee25fc9f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001974.html">
+   <LINK REL="Next"  HREF="001977.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] networking gremlin?</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20networking%20gremlin%3F&In-Reply-To=%3C34cc66250904101807ye2350d3uf3961488ee25fc9f%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] networking gremlin?">teravus at gmail.com
+       </A><BR>
+    <I>Sat Apr 11 03:07:17 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001974.html">[Opensim-users] networking gremlin?
+</A></li>
+        <LI>Next message: <A HREF="001977.html">[Opensim-users] networking gremlin?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1975">[ date ]</a>
+              <a href="thread.html#1975">[ thread ]</a>
+              <a href="subject.html#1975">[ subject ]</a>
+              <a href="author.html#1975">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The following message:
+&quot;In the OpenSim console I get zillions of errors that look ilke this:
+14:45:41 - [CLIENT]: Dropped Malformed Packet due to
+MalformedDataException:   at OpenMetaverse.Packets.AgentUpdatePacket
++AgentDataBlock.FromBytes (System.Byte[] bytes, System.Int32&amp; i)
+[0x00000]
+  at OpenMetaverse.Packets.AgentUpdatePacket.FromBytes (System.Byte
+[] bytes, System.Int32&amp; i, System.Int32&amp; packetEnd, System.Byte[]
+zeroBuffer) [0x00000]
+  at OpenSim.Framework.PacketPool.GetPacket (System.Byte[] bytes,
+System.Int32&amp; packetEnd, System.Byte[] zeroBuffer) [0x00000]
+  at OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.OnReceivedData
+(IAsyncResult result) [0x00000]
+&quot;
+seems to be a result of some endian issues (libOMV) in a library that
+we use to process packets on the UDP connection.
+
+Best Regards
+
+Teravus
+
+
+On 4/10/09, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">me at timberwoof.com</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">me at timberwoof.com</A>&gt; wrote:
+&gt;<i> Hello!
+</I>&gt;<i>
+</I>&gt;<i> My name is Michael Roeder; I'm a software QA engineer and a former
+</I>&gt;<i> Linden. I've been poking at getting OpenSim running, and I've hit a
+</I>&gt;<i> snag. (Oh, dear, oh, dear, oh, dear! What will we do?!)
+</I>&gt;<i>
+</I>&gt;<i> I set up a build environment on a 1.42GHz Mac G4 DP running OS X
+</I>&gt;<i> 10.4.11; I'm running the Second Life viewer on a 2GHz Mac G5 DP
+</I>&gt;<i> running OS X 10.5.6. They talk to each other on a gigabit ethernet
+</I>&gt;<i> network. The network works; I as I was too cheap to buy another
+</I>&gt;<i> monitor when I bought the G5, the G4 is running headless and I talk
+</I>&gt;<i> to it over SSH, VNC, AppleShare, HTTP, and OpenSim (mostly).
+</I>&gt;<i>
+</I>&gt;<i> I set the storage to use MySQL. When I look directly at the resulting
+</I>&gt;<i> database, tables and data that look okay are there.
+</I>&gt;<i>
+</I>&gt;<i> First the (mostly) good news. OpenSim seems to be (mostly) running.
+</I>&gt;<i> Here's what SL Help says...
+</I>&gt;<i>
+</I>&gt;<i> Second Life 1.22.11 (113976) Mar  6 2009 15:34:47 (Second Life
+</I>&gt;<i> Release Candidate)
+</I>&gt;<i> Release Notes
+</I>&gt;<i> You are at 256128.0, 256128.0, 25.0 in Infernosoft located at
+</I>&gt;<i> vroomvroom.inside.infernosoft.com (10.1.4.10:9000)
+</I>&gt;<i> OpenSimulator Server  0.6.4.9075  (OS ) ChilTasks:True PhysPrim:True
+</I>&gt;<i> Release Notes
+</I>&gt;<i>
+</I>&gt;<i> I can create and see all the basic shapes. Objects persist across log-
+</I>&gt;<i> ins. Objects persist across server restarts.
+</I>&gt;<i> Ambient sounds play.
+</I>&gt;<i> I can take a snapshot and save it to disk, but I cannot save it to
+</I>&gt;<i> inventory. ( see <A HREF="http://web.timberwoof.com/images/Snapshot_001.jpg">http://web.timberwoof.com/images/Snapshot_001.jpg</A> )
+</I>&gt;<i> (IF I try to save it to inventory, an icon shows up, but it does not
+</I>&gt;<i> load when I double click it.)
+</I>&gt;<i> I can create and manipulate objects but the only textures I can apply
+</I>&gt;<i> are plywood, blank, transparent, and the terrains. I can save them to
+</I>&gt;<i> my inventory and retrieve them from the inventory.
+</I>&gt;<i>
+</I>&gt;<i> Now the bad news.
+</I>&gt;<i> My avatar is a cloud. It cannot move forward or backward; it cannot fly.
+</I>&gt;<i> I cannot read the Welcome note or the Example Notecard: I double
+</I>&gt;<i> click the note in the inventory. The note window opens up but it only
+</I>&gt;<i> syas &quot;Loading...&quot;
+</I>&gt;<i> I cannot open any textures (except plywood, blank, transparent
+</I>&gt;<i> texture, and the terrains): when I double click a texture in the
+</I>&gt;<i> Inventory window, the texture window opens and displays &quot;Dimensions 0x0&quot;
+</I>&gt;<i> When I try to upload an image, everything &quot;works&quot; except that
+</I>&gt;<i> displaying the image results in a 0x0 image.
+</I>&gt;<i> I cannot edit terrain. Nothing happens to the terrain when I try.
+</I>&gt;<i> I cannot edit scripts in objects. Clicking &quot;New Script&quot; causes a
+</I>&gt;<i> script icon to appear in the object contents. But doubeclicking the
+</I>&gt;<i> script only results in a script wndow that says &quot;Loading...&quot;. If I
+</I>&gt;<i> click &quot;Reset&quot;, the object says &quot;Primitive: Script running&quot;.
+</I>&gt;<i>
+</I>&gt;<i> In the OpenSim console I get zillions of errors that look ilke this:
+</I>&gt;<i> 14:45:41 - [CLIENT]: Dropped Malformed Packet due to
+</I>&gt;<i> MalformedDataException:   at OpenMetaverse.Packets.AgentUpdatePacket
+</I>&gt;<i> +AgentDataBlock.FromBytes (System.Byte[] bytes, System.Int32&amp; i)
+</I>&gt;<i> [0x00000]
+</I>&gt;<i>   at OpenMetaverse.Packets.AgentUpdatePacket.FromBytes (System.Byte
+</I>&gt;<i> [] bytes, System.Int32&amp; i, System.Int32&amp; packetEnd, System.Byte[]
+</I>&gt;<i> zeroBuffer) [0x00000]
+</I>&gt;<i>   at OpenSim.Framework.PacketPool.GetPacket (System.Byte[] bytes,
+</I>&gt;<i> System.Int32&amp; packetEnd, System.Byte[] zeroBuffer) [0x00000]
+</I>&gt;<i>   at OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.OnReceivedData
+</I>&gt;<i> (IAsyncResult result) [0x00000]
+</I>&gt;<i>
+</I>&gt;<i> So somebody important is not talking to somebody else important.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I tried RTFM but didn't get very far,
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/">http://opensimulator.org/wiki/</A>
+</I>&gt;<i> Troubleshooting#Networking_and_config_issues
+</I>&gt;<i> &quot;If the client connects but the avatar can only spin in place and not
+</I>&gt;<i> move, then the sim is not correctly configured. It completed the
+</I>&gt;<i> initial login function, but packets are not being exchanged between
+</I>&gt;<i> the client and the sim, probably due to a network configuration error
+</I>&gt;<i> on the sim. &quot;
+</I>&gt;<i> See OpenSim: Configuration
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/OpenSim:Configuration">http://opensimulator.org/wiki/OpenSim:Configuration</A>
+</I>&gt;<i> &quot;There is currently no text in this page, you can search for this
+</I>&gt;<i> page title in other pages or edit this page.&quot;
+</I>&gt;<i> (I guess I need to RTFC and then WTFM myself.)
+</I>&gt;<i>
+</I>&gt;<i> Here's my OpenSim.ini network configuration:
+</I>&gt;<i> [Network]
+</I>&gt;<i>     http_listener_port = 9000
+</I>&gt;<i>     remoting_listener_port = 8895
+</I>&gt;<i>     default_location_x = 1000
+</I>&gt;<i>     default_location_y = 1000
+</I>&gt;<i>
+</I>&gt;<i>     ; ssl config: Experimental!  The auto https config only really
+</I>&gt;<i> works definately on windows XP now
+</I>&gt;<i>     ; you need a Cert Request/Signed pair installed in the MY store
+</I>&gt;<i> with the CN specified below
+</I>&gt;<i>     ; you can use https on other platforms, but you'll need to
+</I>&gt;<i> configure the httpapi yourself for now
+</I>&gt;<i>     http_listener_ssl = false ; Also create a SSL server
+</I>&gt;<i>     http_listener_cn = &quot;localhost&quot; ; Use the cert with the common name
+</I>&gt;<i>     http_listener_sslport = 9001 ; Use this port for SSL connections
+</I>&gt;<i>     http_listener_ssl_cert = &quot;&quot; ; Currently unused, but will be used
+</I>&gt;<i> for OSHttpServer
+</I>&gt;<i>
+</I>&gt;<i>     ; Uncomment below to enable llRemoteData/remote channels
+</I>&gt;<i>     ; remoteDataPort = 20800
+</I>&gt;<i>
+</I>&gt;<i>     grid_server_url = &quot;<A HREF="http://127.0.0.1:8001">http://127.0.0.1:8001</A>&quot; ; ***
+</I>&gt;<i>     grid_send_key = &quot;null&quot;
+</I>&gt;<i>     grid_recv_key = &quot;null&quot;
+</I>&gt;<i>
+</I>&gt;<i>     user_server_url = &quot;<A HREF="http://127.0.0.1:8002">http://127.0.0.1:8002</A>&quot; ; ***
+</I>&gt;<i>     user_send_key = &quot;null&quot;
+</I>&gt;<i>     user_recv_key = &quot;null&quot;
+</I>&gt;<i>
+</I>&gt;<i>     asset_server_url = &quot;<A HREF="http://127.0.0.1:8003">http://127.0.0.1:8003</A>&quot; ; ***
+</I>&gt;<i>
+</I>&gt;<i>     inventory_server_url = &quot;<A HREF="http://127.0.0.1:8004">http://127.0.0.1:8004</A>&quot; ; ***
+</I>&gt;<i>
+</I>&gt;<i>     ; The MessagingServer is a companion of the UserServer. It uses
+</I>&gt;<i>     ; user_send_key and user_recv_key, too
+</I>&gt;<i>     messaging_server_url = &quot;<A HREF="http://127.0.0.1:8006">http://127.0.0.1:8006</A>&quot; ; ***
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Here's my /bin/Regions/default.xml
+</I>&gt;<i> &lt;Root&gt;
+</I>&gt;<i>   &lt;Config sim_UUID=&quot;830a8b94-d212-4708-a498-fa6947ffb0d5&quot;
+</I>&gt;<i> sim_name=&quot;Infernosoft&quot; sim_location_x=&quot;1000&quot; sim_location_y=&quot;1000&quot;
+</I>&gt;<i> internal_ip_address=&quot;10.1.4.10&quot; internal_ip_port=&quot;9000&quot;
+</I>&gt;<i> allow_alternate_ports=&quot;false&quot; external_host_name=&quot;10.1.4.10&quot;
+</I>&gt;<i> master_avatar_uuid=&quot;00000000-0000-0000-0000-000000000000&quot;
+</I>&gt;<i> master_avatar_first=&quot;Timberwoof&quot; master_avatar_last=&quot;Infernosoft&quot;
+</I>&gt;<i> master_avatar_pass=&quot;********&quot;
+</I>&gt;<i> lastmap_uuid=&quot;00000000-0000-0000-0000-000000000000&quot;
+</I>&gt;<i> lastmap_refresh=&quot;1239300206&quot; nonphysical_prim_max=&quot;0&quot;
+</I>&gt;<i> physical_prim_max=&quot;0&quot; clamp_prim_size=&quot;false&quot; object_capacity=&quot;0&quot; /&gt;
+</I>&gt;<i> &lt;/Root&gt;
+</I>&gt;<i>
+</I>&gt;<i> I tried changing this file's internal_ip_address=&quot;0.0.0.0&quot; but the
+</I>&gt;<i> behavior is identical.
+</I>&gt;<i>
+</I>&gt;<i> I looked for files on the OpenSim server that would correspond to
+</I>&gt;<i> textures and a sound I &quot;uploaded&quot;, but I could not find any. Where
+</I>&gt;<i> are they stored? (I found the assets folder, but that's not it.)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001974.html">[Opensim-users] networking gremlin?
+</A></li>
+	<LI>Next message: <A HREF="001977.html">[Opensim-users] networking gremlin?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1975">[ date ]</a>
+              <a href="thread.html#1975">[ thread ]</a>
+              <a href="subject.html#1975">[ subject ]</a>
+              <a href="author.html#1975">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

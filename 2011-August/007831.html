@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Rezzing Scripts in Prims from Region Modules (part	2)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Rezzing%20Scripts%20in%20Prims%20from%20Region%20Modules%0A%20%28part%092%29&In-Reply-To=%3C4E3A051B.9030506%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007818.html">
+   <LINK REL="Next"  HREF="007819.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Rezzing Scripts in Prims from Region Modules (part	2)</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Rezzing%20Scripts%20in%20Prims%20from%20Region%20Modules%0A%20%28part%092%29&In-Reply-To=%3C4E3A051B.9030506%40googlemail.com%3E"
+       TITLE="[Opensim-users] Rezzing Scripts in Prims from Region Modules (part	2)">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Aug  4 04:34:03 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007818.html">[Opensim-users] Rezzing Scripts in Prims from Region Modules (part	2)
+</A></li>
+        <LI>Next message: <A HREF="007819.html">[Opensim-users] Profiles
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7831">[ date ]</a>
+              <a href="thread.html#7831">[ thread ]</a>
+              <a href="subject.html#7831">[ subject ]</a>
+              <a href="author.html#7831">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You'll need to create the asset for the script before you add it as part of an item.
+
+The test helper method in OpenSim/Tests/Common/Helpers/TaskInventoryHelpers.AddNotecard() is one example of this where a 
+notecard asset is created then associated with the TaskInventoryItem before it is added the prim's inventory (task is a 
+synonym for prim here).
+
+For the script, you'll also need to start it.  The code as the bottom of scene.RezScript() I'm guessing should work for this
+
+                 part.Inventory.CreateScriptInstance(taskItem, 0, false, DefaultScriptEngine, 0);
+                 part.ParentGroup.ResumeScripts();
+
+I see you're already played with ResumeScripts().
+
+On 03/08/11 15:56, Chris Stevens wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Thanks to JCC for his initial advice, i've now got something that looks roughly like this:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   //TEST ADD SCRIPT
+</I>&gt;<i>          private static void AddTouchScript(SceneObjectGroup parts)
+</I>&gt;<i>          {
+</I>&gt;<i>              SceneObjectPart part = parts.RootPart;
+</I>&gt;<i>              Scene scene = rmDataCube.m_scene;
+</I>&gt;<i>
+</I>&gt;<i>              //TaskInventoryItem t = new TaskInventoryItem();
+</I>&gt;<i>              //part.Inventory.AddInventoryItem(
+</I>&gt;<i>
+</I>&gt;<i>              InventoryItemBase b = new InventoryItemBase(UUID.Zero);
+</I>&gt;<i>              parts.AddInventoryItem(null, part.LocalId, b, new UUID());
+</I>&gt;<i>              scene.RezScript(null,b,new UUID(),part.LocalId);
+</I>&gt;<i>              //parts.ResumeScripts();
+</I>&gt;<i>
+</I>&gt;<i>          }
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately scene.RezScript has the following slightly problematic issue:
+</I>&gt;<i>
+</I>&gt;<i> if (!Permissions.CanCreateObjectInventory(
+</I>&gt;<i>                      itemBase.InvType, part.UUID, remoteClient.AgentId))
+</I>&gt;<i>                      return;
+</I>&gt;<i>
+</I>&gt;<i> So it's not even returning an error report, I think it's dying silently since as a region module call has a remoteClient
+</I>&gt;<i> of null (This is part of my query, is there a way to spoof a remoteClient?)
+</I>&gt;<i>
+</I>&gt;<i> Does anyone have an idea how to get a Prim to just rez itself a nice, unowned blank script without modifying Scene.cs to
+</I>&gt;<i> not silently die if I try and call RezScript without a client?
+</I>&gt;<i>
+</I>&gt;<i> Going to try altering Scene.cs though...
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Chris.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Chris Stevens
+</I>&gt;<i> Lead Programmer
+</I>&gt;<i> Daden Limited
+</I>&gt;<i>
+</I>&gt;<i> t: +44 (0)121 250 5678
+</I>&gt;<i> e: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.stevens at daden.co.uk</A>&gt;
+</I>&gt;<i> w: www.daden.co.uk &lt;<A HREF="http://www.daden.co.uk">http://www.daden.co.uk</A>&gt;
+</I>&gt;<i> skype: christopher.michael.stevens
+</I>&gt;<i> sl: <A HREF="http://www.slurl.com/secondlife/daden%20prime/160/184/26">http://www.slurl.com/secondlife/daden%20prime/160/184/26</A>
+</I>&gt;<i> sl IM: Chris Taselian
+</I>&gt;<i>
+</I>&gt;<i> Daden specialise in immersive learning &amp; training systems, built environment visualisations, and creating interactive
+</I>&gt;<i> virtual personalities (chatbots).
+</I>&gt;<i>
+</I>&gt;<i> Daden are a Linden Lab Gold Solution Provider for Second Life.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007818.html">[Opensim-users] Rezzing Scripts in Prims from Region Modules (part	2)
+</A></li>
+	<LI>Next message: <A HREF="007819.html">[Opensim-users] Profiles
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7831">[ date ]</a>
+              <a href="thread.html#7831">[ thread ]</a>
+              <a href="subject.html#7831">[ subject ]</a>
+              <a href="author.html#7831">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

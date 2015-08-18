@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] grid operation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20grid%20operation&In-Reply-To=%3CBLU134-W2024DE782CC65A95554085D5010%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000717.html">
+   <LINK REL="Next"  HREF="000754.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] grid operation</H1>
+    <B>Stefan Andersson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20grid%20operation&In-Reply-To=%3CBLU134-W2024DE782CC65A95554085D5010%40phx.gbl%3E"
+       TITLE="[Opensim-users] grid operation">stefan at tribalmedia.se
+       </A><BR>
+    <I>Mon Dec  1 09:42:42 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000717.html">[Opensim-users] grid operation
+</A></li>
+        <LI>Next message: <A HREF="000754.html">[Opensim-users] grid operation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#718">[ date ]</a>
+              <a href="thread.html#718">[ thread ]</a>
+              <a href="subject.html#718">[ subject ]</a>
+              <a href="author.html#718">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Really, if somebody would be so excellent as to take this whole thread, and out of the questions and answers on it, make a wiki page, called 'OpenSim:Introduction and Definitions' or something, that would be SO golden.
+ 
+You seldom get these opportunities to learn from noob confusion. This is an excellent thread.Best regards,Stefan AnderssonTribal Media AB Join the 3d web revolution : <A HREF="http://tribalnet.se/">http://tribalnet.se/</A> 
+
+
+
+Date: Sun, 30 Nov 2008 13:16:35 -0800From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.comTo</A>: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.deSubject</A>: Re: [Opensim-users] grid operationYes, those are all functions of the 3D space service currently. Scripting and backend modules provide programmable behavior for the objects and agents in the 3D environment.The scripts are stored in the asset server, just like all other assets. They are brought in to the region when the region starts and run on the same process that runs the region. When you create a new script in a region, that script is cached in that region's asset cache (in memory), and is sent to the asset server for persistent storage.This is the current architecture. I remember vaguely someone suggesting to move the script engine(s) to a different server, as an alternative physical architecture. In that case, the region wouldn't cache the scripts, they would go to that other server; only the effects of the scripts would be seen inworld. Not sure how far that idea went.This thread is making suspect that many people might be under the wrong impression that just because they have their own region server connected to someone's grid, they have 100% control over the assets in the region and even in their inventories. That is not correct. The persistent storage of everything is done in the grid-level servers, therefore under the control of whoever runs those servers. If the asset server kaputs, and there were no backups, you will loose just about everything you have in your region and in your inventory. (This is true independent of who has the control over the asset server, so maybe it's a good thing to have them on someone else's asset server, you can blame someone else :-)Dickson, Mike (ISS Software) wrote: 
+
+
+
+
+Well, it&#8217;s running scripts for prims in the region also isn&#8217;t it&#8230;  And physics for physical items in the scene the region is managing. (These are assumptions, feel free to clarify, like Paul I&#8217;m trying to learn.)
+ 
+Mike
+ 
+
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Diva CantoSent: Sunday, November 30, 2008 11:36 AMTo: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.deSubject</A>: Re: [Opensim-users] grid operation
+ 
+Right.When your region is connected to a physical grid, your region is *just* a 3D space server, nothing else.All assets belong to the asset server, all inventories belong to the inventory server, all users belong to the user server.Paul Fishwick wrote: Got it. So, the data are stored on the asset server. If this isso, it doesn't seem that my region server (the opensim instanceI might run as part of someone's grid) is doing much ofanything since any change in prim or agent attribute must beconveyed back to the grid's asset server.-p Diva Canto wrote:  
+By &quot;assets&quot; I mean the data itself, the blobs/text/etc.The region prims/primitems storage holds only references to that data. Look inside OpenSim.db. There is no &quot;data&quot; there, only meta data and references to the data (by UUID) stored on the asset server. Paul Fishwick wrote:    
+When you say the prims and primitems are not assets, I am confused.My understanding was that all items are assets, identified by their uniqueUUIDs. If I follow the point about the asset server, the asset serversstores all asset UUID references by region, but that the specific assetattributes (i.e., position of an object, or its texture) are stored by UUIDin the region's DB?-p  Diva Canto wrote:        
+The asset server holds the assets for the entire collection of regions on that physical grid. For example, when you create an object inworld, the asset corresponding to that object is stored on the asset server. The region caches some assets in memory. For example, in that creation scenario, the asset would be on the cache of the region too. The region also has a database storing &quot;prims&quot; and &quot;primitems&quot;. These are not assets; they are the prims that are inworld at any given time. The prims refer to assets (by UUID) that are stored on the asset server. Which, as the previous sentence says, may be cached in memory of the region. Paul Fishwick wrote:            
+Right. But what, exactly, are these servers doing?  I guess I am tryingto get at more of the architectural details of what types of messages aresent among servers (over the network and to the database(s)). Forexample, there are the UGAIM servers in grid mode. Does the grid's &quot;A&quot;server hold all of the assets on your region that  you plugged into thegrid? Or does your region database (on the same computer as youropensim.instance) take care of that?-paul  Ideia Boa wrote:                  
+If you run 1 region in a grid, you only run OpenSim server, the others servers (User, Grid, Asset, Inventory and Message) are running on the Grid servers with the grid OpenSim server.   Paul Fishwick wrote:                          
+If one hooks a region to a grid, what functions does theregion server (operating on your computer) perform? TheGrid servers are running asset and inventory management,so does this mean that the grid A and I machines handlethe assets and inventory or is that the function of the regionserver that connects to the grid?-p                                                                                 ------------------------------------------------------------------------ _______________________________________________Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users                       ------------------------------------------------------------------------ _______________________________________________Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users          
+ 
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+  
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20081201/1e265133/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20081201/1e265133/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000717.html">[Opensim-users] grid operation
+</A></li>
+	<LI>Next message: <A HREF="000754.html">[Opensim-users] grid operation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#718">[ date ]</a>
+              <a href="thread.html#718">[ thread ]</a>
+              <a href="subject.html#718">[ subject ]</a>
+              <a href="author.html#718">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

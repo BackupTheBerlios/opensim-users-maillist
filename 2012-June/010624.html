@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Exception
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Exception&In-Reply-To=%3CF0AF5A74-288B-488F-B59D-100E291531E3%40gwynethllewelyn.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010623.html">
+   <LINK REL="Next"  HREF="010601.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Exception</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Exception&In-Reply-To=%3CF0AF5A74-288B-488F-B59D-100E291531E3%40gwynethllewelyn.net%3E"
+       TITLE="[Opensim-users] Exception">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Sat Jun 30 23:48:06 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010623.html">[Opensim-users] Exception
+</A></li>
+        <LI>Next message: <A HREF="010601.html">[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10624">[ date ]</a>
+              <a href="thread.html#10624">[ thread ]</a>
+              <a href="subject.html#10624">[ subject ]</a>
+              <a href="author.html#10624">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm afraid I really have no clue; I haven't used Windows in over a dozen years :)
+
+You might be better off following SignpostMarv's instructions for Windows Server 2008: <A HREF="http://signpostmarv.name/2011/02/10/deploying-opensim-on-windows-server-2008/">http://signpostmarv.name/2011/02/10/deploying-opensim-on-windows-server-2008/</A>
+
+Also check Fleep Tuque's notes: <A HREF="http://fleep.wikispaces.com/">http://fleep.wikispaces.com/</A> &#8212; she's running Windows, too.
+
+&quot;screen&quot; is a quiet, nice little Unix application that allows a virtual console to remain attached to a running application in the background. I'm pretty sure it's not available under Windows except if you use CygWin, and would probably not be much useful anyway (you can keep all the OpenSim instances simply running, each one on its cmd.exe shell, all open). On the other hand, and this is just an opinion, going through the pains of installing CygWin on top of a Windows server is a bit overkill these days. 
+
+So you can just launch your instances with 
+
+	mono OpenSim.exe -hypergrid=true -inidirectory=&quot;./grid/instanceXX&quot;
+
+or even leave -hypergrid=true if you don't want to provide HyperGird teleporting functionality to visiting users.
+
+It looks like &quot;monit&quot; is really a Unix-only application (<A HREF="http://lists.gnu.org/archive/html/monit-general/2006-06/msg00048.html">http://lists.gnu.org/archive/html/monit-general/2006-06/msg00048.html</A>) but which can apparently also run under CygWin. I've tried to look for a Windows replacement to &quot;monit&quot; but couldn't find anything which is as lightweight as &quot;monit&quot; and provides similar functionality, but I'm sure there are other tools allowing you to check for running processes in Windows 7 somehow (there are tons of them for Unix; monit is just very simple and convenient, and easy to configure) and restart them when they reach certain thresholds.
+
+If you have OpenSim.exe running as a 64-bit process under Windows 7, I'm sure Robust will do so, too :)
+
+Good luck,
+
+	- Gwyn
+
+
+On 2012/06/30, at 21:31, InuYasha Meiji wrote:
+
+&gt;<i> Yeah it does, and Gwyn, I just read over your page. Very informative. I will give it a try soon. Right now it is Hot over 80f and to humid to sit at my desk today. I do have a question. Most of your page is geared to Lynix and MAC, I can convert most of it and know what I am doing. I do want to be more positive on this line:
+</I>&gt;<i> 
+</I>&gt;<i> cd &lt;path to your opensim install&gt;/bin
+</I>&gt;<i> screen -S instanceXX-d -m -l mono OpenSim.exe -hypergrid=true -inidirectory=&quot;./grid/instanceXX&quot;
+</I>&gt;<i> 
+</I>&gt;<i> What would that be for Windows?  I have no idea what the screen -s command dose...
+</I>&gt;<i> 
+</I>&gt;<i> The rest is very clear to me.  Hoping there is a monit for Windows 7 64bit also.
+</I>&gt;<i> 
+</I>&gt;<i> As it is everything I run including my apache and MySQL are 64 bit.  I hope so is Robust.
+</I>&gt;<i> 
+</I>&gt;<i> All my best to you and thanks again
+</I>&gt;<i> InuYasha
+</I>&gt;<i> 
+</I>
+--
+&quot;I'm not building a game. I'm building a new country.&quot;
+  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010623.html">[Opensim-users] Exception
+</A></li>
+	<LI>Next message: <A HREF="010601.html">[Opensim-users] Mucking around with IAR asset UUIDs outside OpenSim: Will anything bad happen?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10624">[ date ]</a>
+              <a href="thread.html#10624">[ thread ]</a>
+              <a href="subject.html#10624">[ subject ]</a>
+              <a href="author.html#10624">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

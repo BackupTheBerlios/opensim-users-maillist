@@ -1,0 +1,269 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Vehicle script stops after about 5 secs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Vehicle%20script%20stops%20after%20about%205%20secs&In-Reply-To=%3Cec3a963f0912090325j322918a4k40c7f07d4755f0a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003231.html">
+   <LINK REL="Next"  HREF="003246.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Vehicle script stops after about 5 secs</H1>
+    <B>marcel verhagen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Vehicle%20script%20stops%20after%20about%205%20secs&In-Reply-To=%3Cec3a963f0912090325j322918a4k40c7f07d4755f0a%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Vehicle script stops after about 5 secs">marceled9 at gmail.com
+       </A><BR>
+    <I>Wed Dec  9 12:25:38 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003231.html">[Opensim-users] Vehicle script stops after about 5 secs
+</A></li>
+        <LI>Next message: <A HREF="003246.html">[Opensim-users] Vehicle script stops after about 5 secs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3245">[ date ]</a>
+              <a href="thread.html#3245">[ thread ]</a>
+              <a href="subject.html#3245">[ subject ]</a>
+              <a href="author.html#3245">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>could it be the sleep function ?
+
+2009/12/8 Marco Otte &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">m.otte at camera.vu.nl</A>&gt;
+
+&gt;<i>  Hi everyone,
+</I>&gt;<i>
+</I>&gt;<i> I've got a simple car (works fine in SL).
+</I>&gt;<i> I've created a small LSL script (see below) that listens to channel 9 for
+</I>&gt;<i> information about speed and direction. The script inputs this into the
+</I>&gt;<i> standard physics commands to move and turn the car.
+</I>&gt;<i> Because I want outside (of OpenSIM) control of the car, I've created a
+</I>&gt;<i> small C# program that simply types the speed and direction into the chat box
+</I>&gt;<i> (/9 speed_direction). This because a HTTPrequest from LSL is limited to
+</I>&gt;<i> about 1 call per second and that is too slow.
+</I>&gt;<i> The whole setup seems to work. The car moves and turns smoothly, BUT after
+</I>&gt;<i> about 5 secs (give or take) moving the script stops responding and the
+</I>&gt;<i> vehicle stops. After StandUp-Sit it resumes for another 5 secs.
+</I>&gt;<i> If the vehicle does not move, the script keeps running.
+</I>&gt;<i> ----- script -----
+</I>&gt;<i> //This car uses a C# program that send keypresses containing the speed and
+</I>&gt;<i> direction.
+</I>&gt;<i> //A Listen() event picks up these numbers and pushes these into the VEHICLE
+</I>&gt;<i> string sit_message = &quot;Ride&quot;; //Sit message
+</I>&gt;<i> string not_owner_message = &quot;You are not the owner of this vehicle ...&quot;;
+</I>&gt;<i> //Not owner message
+</I>&gt;<i> key requestid; //Used for the HTTPREQUEST
+</I>&gt;<i> float SpeedSet = 0; //Translated speed from bike speed
+</I>&gt;<i> float TurnRatioSet = 0; //Calculated turn adjustment
+</I>&gt;<i> integer TurnLeftThreshold = 1070; //Upper bound for straight ahead from
+</I>&gt;<i> bike
+</I>&gt;<i> integer TurnRightThreshold = 1050; //Lower bound for straight ahead from
+</I>&gt;<i> bike
+</I>&gt;<i> integer TurnLeftMax = 1243; //Maximum value from bike at full left steering
+</I>&gt;<i> integer TurnRightMin = 809; //Minimum value from bike at full right
+</I>&gt;<i> steering
+</I>&gt;<i> integer Handle = 0;
+</I>&gt;<i>
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     state_entry()
+</I>&gt;<i>     {
+</I>&gt;<i>         llSetSitText(sit_message);
+</I>&gt;<i>         llSitTarget(&lt;0.2,0.2,0.5&gt;, ZERO_ROTATION ); //
+</I>&gt;<i> forward-back,left-right,updown, ZERO_ROTATION
+</I>&gt;<i>
+</I>&gt;<i>         llSetCameraEyeOffset(&lt;-0.2, 0.0, 1.0&gt;);
+</I>&gt;<i>         llSetCameraAtOffset(&lt;5.0, 0.0, 0.0&gt;);
+</I>&gt;<i>
+</I>&gt;<i>         //car
+</I>&gt;<i>         llSetVehicleType(VEHICLE_TYPE_CAR);
+</I>&gt;<i>
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_LINEAR_DEFLECTION_EFFICIENCY,
+</I>&gt;<i> 0.8);//0.8
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_LINEAR_DEFLECTION_TIMESCALE,
+</I>&gt;<i> 0.10);//0.1
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_LINEAR_MOTOR_TIMESCALE, 0.1);//1.0
+</I>&gt;<i> Lower is more responsive
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_LINEAR_MOTOR_DECAY_TIMESCALE,
+</I>&gt;<i> 0.1);//0.2
+</I>&gt;<i>         llSetVehicleVectorParam(VEHICLE_LINEAR_FRICTION_TIMESCALE, &lt;20.0,
+</I>&gt;<i> 20.0, 10.0&gt;);//1000,2,1000
+</I>&gt;<i>
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_ANGULAR_DEFLECTION_EFFICIENCY,
+</I>&gt;<i> 0.2);//0.2 - not much difference on its own
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_ANGULAR_DEFLECTION_TIMESCALE,
+</I>&gt;<i> 0.10);//0.1
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_ANGULAR_MOTOR_TIMESCALE, 0.1);//0.1
+</I>&gt;<i> Low is better, less after turning
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_ANGULAR_MOTOR_DECAY_TIMESCALE,
+</I>&gt;<i> 0.1);//0.5
+</I>&gt;<i>         llSetVehicleVectorParam(VEHICLE_ANGULAR_FRICTION_TIMESCALE, &lt;20.0,
+</I>&gt;<i> 20.0, 20.0&gt;);//20,20,1000
+</I>&gt;<i>
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_VERTICAL_ATTRACTION_EFFICIENCY,
+</I>&gt;<i> 0.10);//0.5
+</I>&gt;<i>         llSetVehicleFloatParam(VEHICLE_VERTICAL_ATTRACTION_TIMESCALE,
+</I>&gt;<i> 0.50);//0.5
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     changed(integer change)
+</I>&gt;<i>     {
+</I>&gt;<i>         if (change &amp; CHANGED_LINK)
+</I>&gt;<i>         {
+</I>&gt;<i>             key agent = llAvatarOnSitTarget();
+</I>&gt;<i>             if (llKey2Name(agent) == &quot;Blithe Crosswater&quot;)
+</I>&gt;<i>             {
+</I>&gt;<i>                 if (agent != llGetOwner())
+</I>&gt;<i>                 {
+</I>&gt;<i>                     llSay(0, not_owner_message);
+</I>&gt;<i>                     llUnSit(agent);
+</I>&gt;<i>                     llPushObject(agent, &lt;0,0,50&gt;, ZERO_VECTOR, FALSE);
+</I>&gt;<i>                 }
+</I>&gt;<i>                 else
+</I>&gt;<i>                 {
+</I>&gt;<i>                     llListenRemove(Handle);
+</I>&gt;<i>                     llSetStatus(STATUS_PHYSICS, TRUE);
+</I>&gt;<i>                     llSleep(.1);
+</I>&gt;<i>                     llListen(9,&quot;&quot;,&quot;&quot;,&quot;&quot;);
+</I>&gt;<i>                     requestid = llHTTPRequest(&quot;
+</I>&gt;<i> <A HREF="http://127.0.0.1:8002/?1">http://127.0.0.1:8002/?1</A>&quot;,[HTTP_METHOD,&quot;GET&quot;],&quot;&quot;);&lt;<A HREF="http://127.0.0.1:8002/?1%22,%5BHTTP_METHOD,%22GET%22%5D,%22%22%29;">http://127.0.0.1:8002/?1%22,%5BHTTP_METHOD,%22GET%22%5D,%22%22%29;</A>&gt;[
+</I>&gt;<i> ^ &lt;<A HREF="http://127.0.0.1:8002/?1%22,%5BHTTP_METHOD,%22GET%22%5D,%22%22%29;">http://127.0.0.1:8002/?1%22,%5BHTTP_METHOD,%22GET%22%5D,%22%22%29;</A>&gt;]
+</I>&gt;<i> //This is to start the C# program inputting Speed and Direction
+</I>&gt;<i>                     llSleep(.4);
+</I>&gt;<i>                 }
+</I>&gt;<i>             }
+</I>&gt;<i>             else
+</I>&gt;<i>             {
+</I>&gt;<i>                 llListenRemove(Handle);
+</I>&gt;<i>                 llSetStatus(STATUS_PHYSICS, FALSE);
+</I>&gt;<i>                 llSleep(.4);
+</I>&gt;<i>                 llTargetOmega(&lt;0,0,0&gt;,PI,0);
+</I>&gt;<i>                 requestid = llHTTPRequest(&quot;
+</I>&gt;<i> <A HREF="http://127.0.0.1:8002/?0">http://127.0.0.1:8002/?0</A>&quot;,[HTTP_METHOD,&quot;GET&quot;],&quot;&quot;);&lt;<A HREF="http://127.0.0.1:8002/?0%22,%5BHTTP_METHOD,%22GET%22%5D,%22%22%29;">http://127.0.0.1:8002/?0%22,%5BHTTP_METHOD,%22GET%22%5D,%22%22%29;</A>&gt;[
+</I>&gt;<i> ^ &lt;<A HREF="http://127.0.0.1:8002/?0%22,%5BHTTP_METHOD,%22GET%22%5D,%22%22%29;">http://127.0.0.1:8002/?0%22,%5BHTTP_METHOD,%22GET%22%5D,%22%22%29;</A>&gt;]
+</I>&gt;<i> //Stops the C# program
+</I>&gt;<i>                 llResetScript();
+</I>&gt;<i>             }
+</I>&gt;<i>         }
+</I>&gt;<i>
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     http_response(key request_id, integer status, list metadata, string
+</I>&gt;<i> body)
+</I>&gt;<i>     {
+</I>&gt;<i>         //Catch the response of the C# program, a dummy method
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     listen(integer chan, string name, key id, string message)
+</I>&gt;<i>     {
+</I>&gt;<i>         //llSay(0,message);
+</I>&gt;<i>         integer Separator = llSubStringIndex(message,&quot;-&quot;);
+</I>&gt;<i>         float speed = llGetSubString(message, 0, Separator - 1); //Extract
+</I>&gt;<i> speed
+</I>&gt;<i>         float direction = llGetSubString(message, Separator + 1,
+</I>&gt;<i> llStringLength(message)); //Extract DIRECTION
+</I>&gt;<i>
+</I>&gt;<i>             SpeedSet = (30 * speed) / 7000; //Transform to [0-30] range
+</I>&gt;<i>
+</I>&gt;<i>             if (direction &gt; TurnRightThreshold &amp;&amp; direction &lt;
+</I>&gt;<i> TurnLeftThreshold) //Is steering in the middle?
+</I>&gt;<i>             {
+</I>&gt;<i>                 //Straight ahead
+</I>&gt;<i>                 TurnRatioSet = 0;
+</I>&gt;<i>             }
+</I>&gt;<i>             if (direction &gt; TurnLeftThreshold) //Steering left?
+</I>&gt;<i>             {
+</I>&gt;<i>                 //Set steering in VR to [0-1.65]
+</I>&gt;<i>                 TurnRatioSet = (direction - TurnLeftThreshold) /
+</I>&gt;<i> ((TurnLeftMax - TurnLeftThreshold)/1.65);
+</I>&gt;<i>             }
+</I>&gt;<i>             if (direction &lt; TurnRightThreshold) //Steering right?
+</I>&gt;<i>             {
+</I>&gt;<i>                 TurnRatioSet = (TurnRightThreshold - direction) /
+</I>&gt;<i> ((TurnRightThreshold - TurnRightMin)/1.65);
+</I>&gt;<i>             }
+</I>&gt;<i>
+</I>&gt;<i>             if(SpeedSet &lt; 0.5) {TurnRatioSet = 0;} //Low speed then no
+</I>&gt;<i> steering
+</I>&gt;<i>
+</I>&gt;<i>             vector angular_motor; //use vector
+</I>&gt;<i>
+</I>&gt;<i>             llSetVehicleVectorParam(VEHICLE_LINEAR_MOTOR_DIRECTION,
+</I>&gt;<i> &lt;SpeedSet,0,0&gt;); //Set speed
+</I>&gt;<i>
+</I>&gt;<i>             if (direction &gt; TurnLeftThreshold) //If left
+</I>&gt;<i>             {
+</I>&gt;<i>                 angular_motor.z += TurnRatioSet; //then increase rotation
+</I>&gt;<i> angle
+</I>&gt;<i>             }
+</I>&gt;<i>             if (direction &lt; TurnRightThreshold) //If right
+</I>&gt;<i>             {
+</I>&gt;<i>                 angular_motor.z -= TurnRatioSet; //decrease rotation angle
+</I>&gt;<i>             }
+</I>&gt;<i>
+</I>&gt;<i>             //llSay(0,(string)SpeedSet + &quot; --- &quot; +
+</I>&gt;<i> (string)angular_motor.z); //Diagnostic
+</I>&gt;<i>
+</I>&gt;<i>             llSetVehicleVectorParam(VEHICLE_ANGULAR_MOTOR_DIRECTION,
+</I>&gt;<i> angular_motor); //Set rotation
+</I>&gt;<i>     }
+</I>&gt;<i> ---- end script ---
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> With kind regards,
+</I>&gt;<i>
+</I>&gt;<i> Marco Otte
+</I>&gt;<i> CAMeRA @ VU University Amsterdam
+</I>&gt;<i> De Boelelaan 1081
+</I>&gt;<i> 1081 HV  AMSTERDAM
+</I>&gt;<i> Netherlands
+</I>&gt;<i>
+</I>&gt;<i> Visiting address:
+</I>&gt;<i> Metropolitan Building
+</I>&gt;<i> Buitenveldertselaan 3
+</I>&gt;<i> 1082 VA Amsterdam (room Z539)
+</I>&gt;<i> T +31 (0)20 598 6807
+</I>&gt;<i> M +31 (0)6 46025037
+</I>&gt;<i> E <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">m.otte at camera.vu.nl</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091209/efe2775a/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091209/efe2775a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003231.html">[Opensim-users] Vehicle script stops after about 5 secs
+</A></li>
+	<LI>Next message: <A HREF="003246.html">[Opensim-users] Vehicle script stops after about 5 secs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3245">[ date ]</a>
+              <a href="thread.html#3245">[ thread ]</a>
+              <a href="subject.html#3245">[ subject ]</a>
+              <a href="author.html#3245">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

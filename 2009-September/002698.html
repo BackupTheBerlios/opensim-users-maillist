@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [opensim-users] UGRM, FreeSwitch centralisation with R.O.B.U.S.T?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bopensim-users%5D%20UGRM%2C%0A%20FreeSwitch%20centralisation%20with%20R.O.B.U.S.T%3F&In-Reply-To=%3C4ABD5ABA.4050303%40atomicit.com.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002694.html">
+   <LINK REL="Next"  HREF="002699.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [opensim-users] UGRM, FreeSwitch centralisation with R.O.B.U.S.T?</H1>
+    <B>Roger BUCK</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bopensim-users%5D%20UGRM%2C%0A%20FreeSwitch%20centralisation%20with%20R.O.B.U.S.T%3F&In-Reply-To=%3C4ABD5ABA.4050303%40atomicit.com.au%3E"
+       TITLE="[Opensim-users] [opensim-users] UGRM, FreeSwitch centralisation with R.O.B.U.S.T?">rbuck at atomicit.com.au
+       </A><BR>
+    <I>Sat Sep 26 02:05:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002694.html">[Opensim-users] [opensim-users] UGRM,	FreeSwitch centralisation with R.O.B.U.S.T?
+</A></li>
+        <LI>Next message: <A HREF="002699.html">[Opensim-users] [opensim-users] UGRM,	FreeSwitch centralisation 	with R.O.B.U.S.T?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2698">[ date ]</a>
+              <a href="thread.html#2698">[ thread ]</a>
+              <a href="subject.html#2698">[ subject ]</a>
+              <a href="author.html#2698">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Christophe, Jean-Charles Narbonne wrote:
+ &gt; Hi I've seen Robust can handle freeswitch... but no
+ &gt; documentation at all on this subject...
+ &gt; do anybody use this feature? How?
+
+I am currently playing with freeswitch - so far I have broken more than 
+I have fixed...
+
+Example: Freeswitch install will probably break yum on CentOS/Fedora
+
+<A HREF="http://www.groundworkopensource.com/community/forums/viewtopic.php?p=4479">http://www.groundworkopensource.com/community/forums/viewtopic.php?p=4479</A>
+
+The purpose of the script (below) is to &quot;add /lib and /usr/lib to the 
+top of the file&quot; - It does the following:
+   1) renames ld.so.conf to ld.so.conf-temp
+   2) creates a new file called ld.so.conf and puts the lines /lib and 
+/usr/lib into it
+   3) appends the contents of ld.so.conf-temp to the end of the new 
+ld.so.conf file
+   4) deletes the temp file
+   5) run ldconfig
+
+cat script:
+# ldconfig suckage
+mv /etc/ld.so.conf /etc/ld.so.conf-temp
+cat &lt;&lt;EOF&gt; /etc/ld.so.conf
+/lib
+/usr/lib
+EOF
+cat /etc/ld.so.conf-temp &gt;&gt; /etc/ld.so.conf
+yes | rm /etc/ld.so.conf-temp
+ldconfig
+---
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002694.html">[Opensim-users] [opensim-users] UGRM,	FreeSwitch centralisation with R.O.B.U.S.T?
+</A></li>
+	<LI>Next message: <A HREF="002699.html">[Opensim-users] [opensim-users] UGRM,	FreeSwitch centralisation 	with R.O.B.U.S.T?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2698">[ date ]</a>
+              <a href="thread.html#2698">[ thread ]</a>
+              <a href="subject.html#2698">[ subject ]</a>
+              <a href="author.html#2698">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

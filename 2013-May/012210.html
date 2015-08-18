@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripts sometimes do not load on start up?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripts%20sometimes%20do%20not%20load%20on%20start%20up%3F&In-Reply-To=%3C518DB7C4.2010102%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012225.html">
+   <LINK REL="Next"  HREF="012234.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripts sometimes do not load on start up?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripts%20sometimes%20do%20not%20load%20on%20start%20up%3F&In-Reply-To=%3C518DB7C4.2010102%40gmail.com%3E"
+       TITLE="[Opensim-users] Scripts sometimes do not load on start up?">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Sat May 11 05:15:16 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012225.html">[Opensim-users] list subscription question Attn: list mod
+</A></li>
+        <LI>Next message: <A HREF="012234.html">[Opensim-users] Scripts sometimes do not load on start up?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12210">[ date ]</a>
+              <a href="thread.html#12210">[ thread ]</a>
+              <a href="subject.html#12210">[ subject ]</a>
+              <a href="author.html#12210">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I was noticing while testing master that sometimes when starting OpenSim 
+up that it is refusing to load scripts for some or all regions at start 
+up. Once every thing is loaded up and the console is ready, running the 
+'login status' command it shows that some regions are enabled login, and 
+some aren't. In order to login the 'login enable' command must be ran 
+first. Once logged in it seems that no script will run on the regions 
+that have not had their scripts loaded at start up, including 
+attachments, or newly rezzed objects. Had a closer look at the console 
+out put and was noticing that there are a lot of warnings dealing with 
+objects I have rezzed in world that are mesh similar to below:
+
+WARN  - OpenSim.Region.Physics.Meshing.Meshmerizer [MESH]: No recognized 
+physics mesh found in mesh asset for 
+chair/c861affd-17b4-4b3c-9535-f1986ab394a9
+
+I found that if I tracked these objects down and removed them from the 
+region and then restarted OpenSim, there's a bit better chance for 
+scripts to be loaded properly. If I put the objects back out again and 
+restart OpenSim then it starts to randomly not want to load scripts in 
+random regions at start up. Setting DeleteScriptsOnStartup = true in 
+OpenSim.ini or deleteing the ScriptEngines folder prior to start up also 
+seems to give better success at having scripts load properly. It might 
+be just my imagination and coincidence that it is working in this way 
+but it is my observation.
+
+Noticed that the console seems to hang for a bit (a couple seconds) 
+before outputting warnings on these objects with high CPU use. I'm just 
+speculating on this since I'm not entirely knowledgeable on how things 
+work but... could there possibly be some kind of race condition 
+somewhere preventing scripts from loading properly in this case?
+
+A couple of my regions have 0 scripts on them; not sure if it matters or 
+not.
+
+I normally run OpenSim with these script related settings:
+AppDomainLoading = false
+DeleteScriptsOnStartup = false
+EventLimit = 500
+ScriptDelayFactor = 0.0
+AllowScriptCrossing = true
+TrustBinaries = true
+
+Is anyone else seeing this?
+
+Thanks!
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012225.html">[Opensim-users] list subscription question Attn: list mod
+</A></li>
+	<LI>Next message: <A HREF="012234.html">[Opensim-users] Scripts sometimes do not load on start up?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12210">[ date ]</a>
+              <a href="thread.html#12210">[ thread ]</a>
+              <a href="subject.html#12210">[ subject ]</a>
+              <a href="author.html#12210">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

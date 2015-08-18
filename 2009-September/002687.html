@@ -1,0 +1,277 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim Crashes when running a small Vehicle	Script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20Crashes%20when%20running%20a%20small%20Vehicle%0A%09Script&In-Reply-To=%3C170fa1780909240707o1ce62ee2m48f51561f2f42d96%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002663.html">
+   <LINK REL="Next"  HREF="002668.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim Crashes when running a small Vehicle	Script</H1>
+    <B>James Stallings II</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20Crashes%20when%20running%20a%20small%20Vehicle%0A%09Script&In-Reply-To=%3C170fa1780909240707o1ce62ee2m48f51561f2f42d96%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] OpenSim Crashes when running a small Vehicle	Script">james.stallings at gmail.com
+       </A><BR>
+    <I>Thu Sep 24 16:07:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002663.html">[Opensim-users] OpenSim Crashes when running a small Vehicle Script
+</A></li>
+        <LI>Next message: <A HREF="002668.html">[Opensim-users] Why is my OSSEARCH Parser not longer running after the installation of 0.6.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2687">[ date ]</a>
+              <a href="thread.html#2687">[ thread ]</a>
+              <a href="subject.html#2687">[ subject ]</a>
+              <a href="author.html#2687">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OpenSim support for vehicles using LSL is in its very early stages, and has
+not yet been completely implemented.
+
+For information on bleeding edge work with LSL vehicles on OpenSim, see
+<A HREF="http://osgrid.org/forums/viewtopic.php?f=19&amp;t=1747&amp;sid=d1081fc8fdba4dae622abb8783a97d02">http://osgrid.org/forums/viewtopic.php?f=19&amp;t=1747&amp;sid=d1081fc8fdba4dae622abb8783a97d02</A>
+
+Cheers
+James/Hiro
+
+
+On Mon, Sep 21, 2009 at 5:31 PM, Thomas Seuring &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Thomas at seuring.com</A>&gt; wrote:
+
+&gt;<i>  I've wrote a small, very easy Script to drive a Vehicle. But everytime I
+</I>&gt;<i> get and like to drive, OpenSim crashes.
+</I>&gt;<i>
+</I>&gt;<i> Any ideas?
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i>
+</I>&gt;<i> Tom
+</I>&gt;<i>
+</I>&gt;<i> BELOW: Crash and Code:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The crash is:
+</I>&gt;<i>
+</I>&gt;<i> Region (root) # Stacktrace:
+</I>&gt;<i>
+</I>&gt;<i>   at (wrapper managed-to-native) Ode.NET.d.JointSetLMotorAxis
+</I>&gt;<i> (intptr,int,int,single,single,single) &lt;0x00004&gt;
+</I>&gt;<i>   at (wrapper managed-to-native) Ode.NET.d.JointSetLMotorAxis
+</I>&gt;<i> (intptr,int,int,single,single,single) &lt;0xffffffff&gt;
+</I>&gt;<i>   at
+</I>&gt;<i> OpenSim.Region.Physics.OdePlugin.ODEVehicleSettings.SetLinearMotorProperties
+</I>&gt;<i> () &lt;0x001e6&gt;
+</I>&gt;<i>   at OpenSim.Region.Physics.OdePlugin.ODEVehicleSettings.LinearMotor
+</I>&gt;<i> (single) &lt;0x004aa&gt;
+</I>&gt;<i>   at OpenSim.Region.Physics.OdePlugin.ODEVehicleSettings.Step (single)
+</I>&gt;<i> &lt;0x0009b&gt;
+</I>&gt;<i>   at OpenSim.Region.Physics.OdePlugin.OdePrim.Move (single) &lt;0x00b20&gt;
+</I>&gt;<i>   at OpenSim.Region.Physics.OdePlugin.OdeScene.Simulate (single) &lt;0x0155f&gt;
+</I>&gt;<i>   at OpenSim.Region.Framework.Scenes.SceneGraph.UpdatePhysics (double)
+</I>&gt;<i> &lt;0x0003c&gt;
+</I>&gt;<i>   at OpenSim.Region.Framework.Scenes.Scene.Update () &lt;0x004d5&gt;
+</I>&gt;<i>   at OpenSim.Region.Framework.Scenes.Scene.Heartbeat (object) &lt;0x00018&gt;
+</I>&gt;<i>   at (wrapper runtime-invoke) object.runtime_invoke_void__this___object
+</I>&gt;<i> (object,intptr,intptr,intptr) &lt;0xffffffff&gt;
+</I>&gt;<i> Abort trap
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The Script is:
+</I>&gt;<i> // set the vehicle parameters
+</I>&gt;<i> setupVehicle()
+</I>&gt;<i> {
+</I>&gt;<i>     llSetStatus(STATUS_PHYSICS, TRUE);
+</I>&gt;<i>     llSetVehicleType(VEHICLE_TYPE_CAR);
+</I>&gt;<i>
+</I>&gt;<i>     // The vehicle will get up to full speed in 1 second
+</I>&gt;<i>     llSetVehicleFloatParam(VEHICLE_LINEAR_MOTOR_TIMESCALE, 1.0);
+</I>&gt;<i>
+</I>&gt;<i>     // The motor will become ineffective after 3 seconds.
+</I>&gt;<i>     llSetVehicleFloatParam(VEHICLE_LINEAR_MOTOR_DECAY_TIMESCALE, 3.0);
+</I>&gt;<i>
+</I>&gt;<i>     // Turn off angular and linear deflection
+</I>&gt;<i>     llSetVehicleFloatParam(VEHICLE_ANGULAR_DEFLECTION_EFFICIENCY, 0.0);
+</I>&gt;<i>     llSetVehicleFloatParam(VEHICLE_LINEAR_DEFLECTION_EFFICIENCY, 0.0);
+</I>&gt;<i>
+</I>&gt;<i>     // Set low linear friction, equal in all directions
+</I>&gt;<i>     llSetVehicleFloatParam(VEHICLE_LINEAR_FRICTION_TIMESCALE, 5000.0);
+</I>&gt;<i>
+</I>&gt;<i>     // Set very high angular friction, this vehicle does not
+</I>&gt;<i>     // like to turn
+</I>&gt;<i>     llSetVehicleFloatParam(VEHICLE_ANGULAR_FRICTION_TIMESCALE, 0.1);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> // stop this object from being a vehicle
+</I>&gt;<i> noVehicle()
+</I>&gt;<i> {
+</I>&gt;<i>     // Turn off physics and vehicle params
+</I>&gt;<i>     llSetVehicleType(VEHICLE_TYPE_NONE);
+</I>&gt;<i>     llSetStatus(STATUS_PHYSICS, FALSE);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> // give this prim a wedge shape and set it to about avatar size
+</I>&gt;<i> setupObject()
+</I>&gt;<i> {
+</I>&gt;<i>     llSetPrimitiveParams([
+</I>&gt;<i>     PRIM_TYPE,
+</I>&gt;<i>         PRIM_TYPE_BOX,
+</I>&gt;<i>         PRIM_HOLE_DEFAULT,
+</I>&gt;<i>         &lt;0.75, 1.0, 0.0&gt;,
+</I>&gt;<i>         0.0,
+</I>&gt;<i>         &lt;0.0, 0.0, 0.0&gt;,
+</I>&gt;<i>         &lt;1.0, 1.0, 0.0&gt;,
+</I>&gt;<i>         &lt;0.0, 0.0, 0.0&gt;,
+</I>&gt;<i>     PRIM_SIZE,
+</I>&gt;<i>         &lt;4.0, 1.5, 0.5&gt;
+</I>&gt;<i>         ]);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> // default state, not a vehicle
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     state_entry()
+</I>&gt;<i>     {
+</I>&gt;<i>         noVehicle();
+</I>&gt;<i>         setupObject();
+</I>&gt;<i>
+</I>&gt;<i>         // Set the location avatars will sit
+</I>&gt;<i>         llSitTarget(&lt;-1.0, 0.0, 0.5&gt;, ZERO_ROTATION);
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     changed(integer change)
+</I>&gt;<i>     {
+</I>&gt;<i>         if (change &amp; CHANGED_LINK)
+</I>&gt;<i>         {
+</I>&gt;<i>             if (llAvatarOnSitTarget() != NULL_KEY)
+</I>&gt;<i>             {
+</I>&gt;<i>                 // someone is sitting on the object; request permission
+</I>&gt;<i>                 // to take controls
+</I>&gt;<i>                 llRequestPermissions(
+</I>&gt;<i>                     llAvatarOnSitTarget(),
+</I>&gt;<i>                     PERMISSION_TAKE_CONTROLS);
+</I>&gt;<i>             }
+</I>&gt;<i>         }
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     run_time_permissions(integer perm)
+</I>&gt;<i>     {
+</I>&gt;<i>         // the run time permissions have changed; if script can
+</I>&gt;<i>         // take controls, do that and go to the vehicle state
+</I>&gt;<i>         if (perm &amp; PERMISSION_TAKE_CONTROLS)
+</I>&gt;<i>         {
+</I>&gt;<i>             llTakeControls(
+</I>&gt;<i>                 CONTROL_FWD | CONTROL_BACK |
+</I>&gt;<i>                 CONTROL_LEFT | CONTROL_RIGHT |
+</I>&gt;<i>                 CONTROL_ROT_LEFT |CONTROL_ROT_RIGHT,
+</I>&gt;<i>                 TRUE, FALSE);
+</I>&gt;<i>             state vehicle;
+</I>&gt;<i>         }
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> state vehicle
+</I>&gt;<i> {
+</I>&gt;<i>     state_entry()
+</I>&gt;<i>     {
+</I>&gt;<i>         setupVehicle();
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     changed(integer change)
+</I>&gt;<i>     {
+</I>&gt;<i>         // If the avatar sitting on this object gets up, stop
+</I>&gt;<i>         // being a vehicle
+</I>&gt;<i>         if (change &amp; CHANGED_LINK)
+</I>&gt;<i>         {
+</I>&gt;<i>             if (llAvatarOnSitTarget() == NULL_KEY)
+</I>&gt;<i>             {
+</I>&gt;<i>                 // no one is sitting on the object; stop
+</I>&gt;<i>                 // being a vehicle
+</I>&gt;<i>                 llReleaseControls();
+</I>&gt;<i>                 state default;
+</I>&gt;<i>             }
+</I>&gt;<i>         }
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     control(key from, integer level, integer edge)
+</I>&gt;<i>     {
+</I>&gt;<i>         integer pressed = (level &amp; edge);
+</I>&gt;<i>         vector velocity = ZERO_VECTOR;
+</I>&gt;<i>         float speed = 15.0;
+</I>&gt;<i>
+</I>&gt;<i>         if (pressed &amp; CONTROL_FWD)
+</I>&gt;<i>         {
+</I>&gt;<i>             velocity = &lt;1.0, 0.0, 0.0&gt;;
+</I>&gt;<i>         }
+</I>&gt;<i>         else if (pressed &amp; CONTROL_BACK)
+</I>&gt;<i>         {
+</I>&gt;<i>             velocity = &lt;-1.0, 0.0, 0.0&gt;;
+</I>&gt;<i>         }
+</I>&gt;<i>         else if (pressed &amp; CONTROL_LEFT ||
+</I>&gt;<i>                  pressed &amp; CONTROL_ROT_LEFT)
+</I>&gt;<i>         {
+</I>&gt;<i>             velocity = &lt;0.0, 1.0, 0.0&gt;;
+</I>&gt;<i>         }
+</I>&gt;<i>         else if (pressed &amp; CONTROL_RIGHT ||
+</I>&gt;<i>                  pressed &amp; CONTROL_ROT_RIGHT)
+</I>&gt;<i>         {
+</I>&gt;<i>             velocity = &lt;0.0, -1.0, 0.0&gt;;
+</I>&gt;<i>         }
+</I>&gt;<i>         if (velocity != ZERO_VECTOR)
+</I>&gt;<i>         {
+</I>&gt;<i>             velocity = velocity * speed;
+</I>&gt;<i>             llSetVehicleVectorParam(
+</I>&gt;<i>                 VEHICLE_LINEAR_MOTOR_DIRECTION,
+</I>&gt;<i>                 velocity);
+</I>&gt;<i>         }
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+===================================
+<A HREF="http://osgrid.org">http://osgrid.org</A>
+<A HREF="http://del.icio.us/SPQR">http://del.icio.us/SPQR</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090924/e518de15/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090924/e518de15/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002663.html">[Opensim-users] OpenSim Crashes when running a small Vehicle Script
+</A></li>
+	<LI>Next message: <A HREF="002668.html">[Opensim-users] Why is my OSSEARCH Parser not longer running after the installation of 0.6.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2687">[ date ]</a>
+              <a href="thread.html#2687">[ thread ]</a>
+              <a href="subject.html#2687">[ subject ]</a>
+              <a href="author.html#2687">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

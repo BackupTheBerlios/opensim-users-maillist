@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Call to discussion: code environment [Was: recent secondlife client versions don't support OSSL functions]
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Call%20to%20discussion%3A%20code%20environment%20%5BWas%3A%0A%20recent%20secondlife%20client%20versions%20don%27t%20support%20OSSL%20functions%5D&In-Reply-To=%3C48DE4E1D.1040103%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000471.html">
+   <LINK REL="Next"  HREF="000470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Call to discussion: code environment [Was: recent secondlife client versions don't support OSSL functions]</H1>
+    <B>Diva Canto</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Call%20to%20discussion%3A%20code%20environment%20%5BWas%3A%0A%20recent%20secondlife%20client%20versions%20don%27t%20support%20OSSL%20functions%5D&In-Reply-To=%3C48DE4E1D.1040103%40metaverseink.com%3E"
+       TITLE="[Opensim-users] Call to discussion: code environment [Was: recent secondlife client versions don't support OSSL functions]">diva at metaverseink.com
+       </A><BR>
+    <I>Sat Sep 27 17:15:41 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000471.html">[Opensim-users] Call to discussion: code environment [Was: recent secondlife client versions don't support OSSL functions]
+</A></li>
+        <LI>Next message: <A HREF="000470.html">[Opensim-users] Call to discussion: code environment [Was: recent secondlife client versions don't support OSSL functions]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#472">[ date ]</a>
+              <a href="thread.html#472">[ thread ]</a>
+              <a href="subject.html#472">[ subject ]</a>
+              <a href="author.html#472">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I guess we all agree. This started with me hypothesizing that the 
+client-side API checks had something to do with security -- an 
+hypothesis that is all but solid! Stefan offered another explanation 
+having to do with minimizing round trips by catching errors at the 
+client. Who knows why they did it... (does anybody know for sure why 
+they did this? people in the architecture working group?)
+
+But it does introduce a strong contract between the client and the 
+server wrt the code that is allowed to run, and such contract is a bit 
+puzzling at this time. In other words, I wish it had something to do 
+with security! :-)
+
+dr scofield wrote:
+&gt;<i> John Ward wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Dr Scofield wrote:
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i> Diva Canto wrote:
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;<i> Seriously, my group here has been experimenting with all sorts of
+</I>&gt;&gt;&gt;&gt;<i> completely different clients to get/post all sorts of different things
+</I>&gt;&gt;&gt;&gt;<i> from/into the world. Once the Http server was made accessible to region
+</I>&gt;&gt;&gt;&gt;<i> modules, there's no limit to what can be done, really... But for this to
+</I>&gt;&gt;&gt;&gt;<i> scale beyond experimentation, we need to figure out trust.
+</I>&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;<i> no. we need to have clear protocol specs and our grids need to be coded in such
+</I>&gt;&gt;&gt;<i> a way that they guard themselves.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> trust comes in at much higher level (for example, do i trust that grid to adhere
+</I>&gt;&gt;&gt;<i> to the licenses i attach to my objects?). trust should never replace caution and
+</I>&gt;&gt;&gt;<i> self-defense.
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;<i> Trust is the inseparable heart of any permissions based system.  One 
+</I>&gt;&gt;<i> needs ways to establish trust to set appropriate permissions at what 
+</I>&gt;&gt;<i> ever level they come up.   One might have their system codified to 
+</I>&gt;&gt;<i> control all actions, but that's often not the case or necessarily the 
+</I>&gt;&gt;<i> goal.  If I want someone to participate I may have to allow them 
+</I>&gt;&gt;<i> potentially negative actions to participate.  Sometime you can't code 
+</I>&gt;&gt;<i> around that.  Without some tools for building trust I will likely need 
+</I>&gt;&gt;<i> to caution and defend others from participation.  Trust can be a more 
+</I>&gt;&gt;<i> powerful tool then caution and defense.
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;<i>     
+</I>&gt;<i> i'm not arguing against trust. the discussion started with the
+</I>&gt;<i> observation that 1.21 series clients do client side vetting of scripts
+</I>&gt;<i> --- and then we got into discussing whether an explicit trust
+</I>&gt;<i> relationship would somehow help.
+</I>&gt;<i>
+</I>&gt;<i> my points are:
+</I>&gt;<i>
+</I>&gt;<i>     * to build a robust internet connected system we cannot assume
+</I>&gt;<i>       benign clients (even if they present a certificate), we have to
+</I>&gt;<i>       build our servers such that they are able to defend themselves;
+</I>&gt;<i>       for example, assuming (and relying on  that assumption) that the
+</I>&gt;<i>       client is only going to present vetted code to me as a server, is
+</I>&gt;<i>       very bad design
+</I>&gt;<i>     * trust relationships come in at a different level; for example, at
+</I>&gt;<i>       the permission level.
+</I>&gt;<i>
+</I>&gt;<i>     dr scofield
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20080927/8853403f/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20080927/8853403f/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000471.html">[Opensim-users] Call to discussion: code environment [Was: recent secondlife client versions don't support OSSL functions]
+</A></li>
+	<LI>Next message: <A HREF="000470.html">[Opensim-users] Call to discussion: code environment [Was: recent secondlife client versions don't support OSSL functions]
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#472">[ date ]</a>
+              <a href="thread.html#472">[ thread ]</a>
+              <a href="subject.html#472">[ subject ]</a>
+              <a href="author.html#472">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] IAR loading causes weirdness in the inventory on master?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20IAR%20loading%20causes%20weirdness%20in%20the%20inventory%0A%20on%20master%3F&In-Reply-To=%3C503F5BE1.1000008%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010826.html">
+   <LINK REL="Next"  HREF="010828.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] IAR loading causes weirdness in the inventory on master?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20IAR%20loading%20causes%20weirdness%20in%20the%20inventory%0A%20on%20master%3F&In-Reply-To=%3C503F5BE1.1000008%40gmail.com%3E"
+       TITLE="[Opensim-users] IAR loading causes weirdness in the inventory on master?">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Thu Aug 30 14:26:09 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010826.html">[Opensim-users] IAR loading causes weirdness in the inventory on master?
+</A></li>
+        <LI>Next message: <A HREF="010828.html">[Opensim-users] Blender Export to OpenSim - Arrrgh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10834">[ date ]</a>
+              <a href="thread.html#10834">[ thread ]</a>
+              <a href="subject.html#10834">[ subject ]</a>
+              <a href="author.html#10834">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Just tested 7ea832d and it looks like IAR loading is functioning again =)
+
+Thank you very much Justin and BlueWall!
+
+On 8/28/2012 8:06 PM, Justin Clark-Casey wrote:
+&gt;<i> Yes, I introduced this regression in the early hours of last Saturday. 
+</I>&gt;<i> Give git master 7ea832d a shot and please report if there are further 
+</I>&gt;<i> issues.
+</I>&gt;<i>
+</I>&gt;<i> Thanks very much for testing and reporting this, it's really helpful.
+</I>&gt;<i>
+</I>&gt;<i> On 28/08/12 22:27, James Hughes wrote:
+</I>&gt;&gt;<i> Watch for some inventory fixes from Justin then give it another shot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --BlueWall
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 08/28/2012 02:07 PM, Chris wrote:
+</I>&gt;&gt;&gt;<i> I've recently compiled master a couple days ago (r/20170) and am
+</I>&gt;&gt;&gt;<i> noticing some strangeness when attempting to load IAR files.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Once the IAR is set up to be loaded it will give an error message
+</I>&gt;&gt;&gt;<i> saying: &quot;[XINVENTORY]: System folder of type -1 already exists when
+</I>&gt;&gt;&gt;<i> tried to add &lt;folder name here&gt; to 7a4aa304-f63b-4724-a697-f1b3edb5e105
+</I>&gt;&gt;&gt;<i> for 3557bf78-5e34-4e6c-b37c-2a5a8527e3e2&quot; and then proceed to load the
+</I>&gt;&gt;&gt;<i> directory structure and assets.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Once this happens if I try to create a new folder it will give me this
+</I>&gt;&gt;&gt;<i> message in the console: &quot;[AGENT INVENTORY]: Failed to create folder for
+</I>&gt;&gt;&gt;<i> user mewtwo0641 Alito 3557bf78-5e34-4e6c-b37c-2a5a8527e3e2&quot; and an
+</I>&gt;&gt;&gt;<i> attempt to delete the folder will result in a message saying &quot;[AGENT
+</I>&gt;&gt;&gt;<i> INVENTORY]: request to move folder 7e4317db-fbe0-a960-a92a-f259cd4c85d0
+</I>&gt;&gt;&gt;<i> but folder not found&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Upon relog, the folders that the IAR should have created are not there,
+</I>&gt;&gt;&gt;<i> and instead random folders and their content from the IAR file are now
+</I>&gt;&gt;&gt;<i> located outside of the My Inventory folder. So I'd end up with 
+</I>&gt;&gt;&gt;<i> something
+</I>&gt;&gt;&gt;<i> resembling this at the very top directory:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Some random folder 1
+</I>&gt;&gt;&gt;<i> Some random folder 2
+</I>&gt;&gt;&gt;<i> My Inventory
+</I>&gt;&gt;&gt;<i> -- Some of the IAR load could be here or might not be
+</I>&gt;&gt;&gt;<i> OpenSim Library
+</I>&gt;&gt;&gt;<i> Some random folder 3
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> At this point the inventory seems partially corrupted and I am no 
+</I>&gt;&gt;&gt;<i> longer
+</I>&gt;&gt;&gt;<i> able to make any new folders without receiving the errors that the
+</I>&gt;&gt;&gt;<i> folder can't be found, or get rid of the folders that appear outside of
+</I>&gt;&gt;&gt;<i> My Inventory. Cache clears (both SL cache and /bin cache folders),
+</I>&gt;&gt;&gt;<i> relogging, and server restarts didn't seem to make the issue go away.
+</I>&gt;&gt;&gt;<i> Only way I could see to fix it was to restore from a recent database
+</I>&gt;&gt;&gt;<i> backup.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> To test it, I restored my database backup and decided to try loading a
+</I>&gt;&gt;&gt;<i> different known working IAR and got the same results. After which, I
+</I>&gt;&gt;&gt;<i> restored my database again and reverted to a slightly older OpenSim
+</I>&gt;&gt;&gt;<i> commit (r/20019) and the IARs load fine with no errors and no inventory
+</I>&gt;&gt;&gt;<i> weirdness.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Is anyone else experiencing this?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.4 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010826.html">[Opensim-users] IAR loading causes weirdness in the inventory on master?
+</A></li>
+	<LI>Next message: <A HREF="010828.html">[Opensim-users] Blender Export to OpenSim - Arrrgh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10834">[ date ]</a>
+              <a href="thread.html#10834">[ thread ]</a>
+              <a href="subject.html#10834">[ subject ]</a>
+              <a href="author.html#10834">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

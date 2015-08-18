@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] User Server issues with 8236
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20User%20Server%20issues%20with%208236&In-Reply-To=%3C49960F94.9080609%40pseudospace.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001448.html">
+   <LINK REL="Next"  HREF="001452.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] User Server issues with 8236</H1>
+    <B>John Sheridan</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20User%20Server%20issues%20with%208236&In-Reply-To=%3C49960F94.9080609%40pseudospace.net%3E"
+       TITLE="[Opensim-users] User Server issues with 8236">john at pseudospace.net
+       </A><BR>
+    <I>Sat Feb 14 01:25:56 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001448.html">[Opensim-users] User Server issues with 8236
+</A></li>
+        <LI>Next message: <A HREF="001452.html">[Opensim-users] User Server issues with 8236
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1450">[ date ]</a>
+              <a href="thread.html#1450">[ thread ]</a>
+              <a href="subject.html#1450">[ subject ]</a>
+              <a href="author.html#1450">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Phoenix - I had a similar problem Sunday night when I ran my update.  
+There were a few other xml files that I think came from a prior build 
+that I had to delete.  I think your best bet is to copy production 
+OpenSim folder over to a backup, create a new one, then rebuild OpenSim 
+with a fresh install in that new folder.  From there you can copy only 
+your AssetServer_config.xml, GridServer_Config.xml, 
+InventoryServer_Config.xml, MessagingServer_config.xml, 
+UserServer_Config.xml, and OpenSim.ini back into your clean folder. 
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">lordofpleasure at pleasureplanet.net</A> wrote:
+&gt;<i> I tried a full build letting the OS regenerate the XML and I did a copy 
+</I>&gt;<i> paste with the xml files. No good either way. It seems to just not be 
+</I>&gt;<i> executing the connection to the Mysql database.
+</I>&gt;<i> Here's what I get when I run the 8236 user server
+</I>&gt;<i>
+</I>&gt;<i> 10:07:04 - Launching UserServer...
+</I>&gt;<i> 10:07:04 - [STARTUP]: Beginning startup processing
+</I>&gt;<i> 10:07:04 - [STARTUP]: Version: OpenSimulator Server  0.6.2.8236
+</I>&gt;<i> 10:07:04 - [STARTUP]: Establishing data connection
+</I>&gt;<i> 10:07:04 - [PLUGINS]: Initializing addin manager
+</I>&gt;<i> 10:07:06 - [PLUGINS]: Loading extension point /OpenSim/UserData
+</I>&gt;<i> 10:07:06 - [GridInfoService]: Grid info service initialized with 11 keys
+</I>&gt;<i> 10:07:06 - [LIBRARY INVENTORY]: Loading library control file 
+</I>&gt;<i> .\inventory\Librari
+</I>&gt;<i> es.xml
+</I>&gt;<i> 10:07:06 - [STARTUP]: Starting HTTP process
+</I>&gt;<i> 10:07:06 - [GRID]: Login Level set to 0
+</I>&gt;<i> 10:07:06 - [HTTPD]: Starting up HTTP Server
+</I>&gt;<i> 10:07:06 - [HTTPD]: Spawned main thread OK
+</I>&gt;<i> 10:07:06 - [STARTUP]: Startup took 0m 1s
+</I>&gt;<i> Enter help for a list of commands
+</I>&gt;<i>
+</I>&gt;<i> User# :
+</I>&gt;<i>
+</I>&gt;<i> Here's what I get when I run the 8131 User Server
+</I>&gt;<i>
+</I>&gt;<i> 10:08:54 - Launching UserServer...
+</I>&gt;<i> 10:08:54 - [STARTUP]: Beginning startup processing
+</I>&gt;<i> 10:08:54 - [STARTUP]: Version: OpenSimulator Server  0.6.2.8131
+</I>&gt;<i> 10:08:54 - [STARTUP]: Establishing data connection
+</I>&gt;<i> 10:08:54 - [PLUGINS]: Initializing addin manager
+</I>&gt;<i> 10:08:57 - [PLUGINS]: Loading extension point /OpenSim/UserData
+</I>&gt;<i> 10:08:57 - [PLUGINS]: Trying plugin /OpenSim/UserData/NHibernateUserData
+</I>&gt;<i> 10:08:57 - [PLUGINS]: Trying plugin /OpenSim/UserData/SQLiteUserData
+</I>&gt;<i> 10:08:57 - [PLUGINS]: Trying plugin /OpenSim/UserData/MySQLUserData
+</I>&gt;<i> 10:08:57 - [PLUGINS]: Plugin Loaded: OpenSim.Data.MySQL
+</I>&gt;<i> 10:08:57 - [PLUGINS]: Trying plugin /OpenSim/UserData/MSSQLUserData
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Creating 10 DB connections...
+</I>&gt;<i> 10:08:58 - Connecting to DB... [0]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [1]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [2]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [3]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [4]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [5]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [6]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [7]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [8]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - Connecting to DB... [9]:
+</I>&gt;<i> 10:08:58 - [MYSQL]: Connection established
+</I>&gt;<i> 10:08:58 - [REGION DB]: Connection wait timeout 28860 seconds
+</I>&gt;<i> 10:08:58 - [MIGRATIONS]: UserStore up to date, no migrations to apply
+</I>&gt;<i> 10:08:58 - [GridInfoService]: Grid info service initialized with 11 keys
+</I>&gt;<i> 10:08:58 - [LIBRARY INVENTORY]: Loading library control file 
+</I>&gt;<i> .\inventory\Librari
+</I>&gt;<i> es.xml
+</I>&gt;<i> 10:08:58 - [STARTUP]: Starting HTTP process
+</I>&gt;<i> 10:08:58 - [GRID]: Login Level set to 0
+</I>&gt;<i> 10:08:58 - [HTTPD]: Starting up HTTP Server
+</I>&gt;<i> 10:08:58 - [HTTPD]: Spawned main thread OK
+</I>&gt;<i> 10:08:58 - [STARTUP]: Startup took 0m 4s
+</I>&gt;<i> Enter help for a list of commands
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> For some reason it seems the MySql connection just isn't being called.
+</I>&gt;<i> Here's the .xml for the user server.
+</I>&gt;<i>
+</I>&gt;<i> &lt;Root&gt;
+</I>&gt;<i>   &lt;Config default_startup_message=&quot;Welcome to Pleasure Planet&quot; 
+</I>&gt;<i> default_grid_server=&quot;<A HREF="http://64.150.177.108:8001/">http://64.150.177.108:8001/</A>&quot; grid_send_key=&quot;1234&quot; 
+</I>&gt;<i> grid_recv_key=&quot;1234&quot; default_inventory_server=&quot;<A HREF="http://64.150.177.108:8004/">http://64.150.177.108:8004/</A>&quot; 
+</I>&gt;<i> library_location=&quot;.\inventory\Libraries.xml&quot; 
+</I>&gt;<i> database_provider=&quot;OpenSim.Data.MySQL.dll&quot; database_connect=&quot;Data 
+</I>&gt;<i> Source=localhost;Database=opensim;User ID=root;Password=removed&quot; 
+</I>&gt;<i> http_port=&quot;8002&quot; http_ssl=&quot;False&quot; default_X=&quot;1000&quot; default_Y=&quot;1000&quot; 
+</I>&gt;<i> enable_llsd_login=&quot;True&quot; default_loginLevel=&quot;0&quot; /&gt;
+</I>&gt;<i> &lt;/Root&gt;
+</I>&gt;<i>
+</I>&gt;<i> Pretty sure this is something on my end and not worthy of an actual Mantis 
+</I>&gt;<i> bug post.
+</I>&gt;<i> Phoenix Blaze 
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>   
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001448.html">[Opensim-users] User Server issues with 8236
+</A></li>
+	<LI>Next message: <A HREF="001452.html">[Opensim-users] User Server issues with 8236
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1450">[ date ]</a>
+              <a href="thread.html#1450">[ thread ]</a>
+              <a href="subject.html#1450">[ subject ]</a>
+              <a href="author.html#1450">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

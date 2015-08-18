@@ -1,0 +1,656 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MySQL on seperate server?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20on%20seperate%20server%3F&In-Reply-To=%3C050801cab0af%247c220490%2474660db0%24%40net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003866.html">
+   <LINK REL="Next"  HREF="003874.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MySQL on seperate server?</H1>
+    <B>Tedd Hansen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20on%20seperate%20server%3F&In-Reply-To=%3C050801cab0af%247c220490%2474660db0%24%40net%3E"
+       TITLE="[Opensim-users] MySQL on seperate server?">tedd at konge.net
+       </A><BR>
+    <I>Thu Feb 18 16:31:47 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003866.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+        <LI>Next message: <A HREF="003874.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3870">[ date ]</a>
+              <a href="thread.html#3870">[ thread ]</a>
+              <a href="subject.html#3870">[ subject ]</a>
+              <a href="author.html#3870">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+NTFS filesystem does have all the features of ext3/ext4 + much more (except maybe live resize of fs), and have had it for at least 10 years. NTFS has been way ahead of its time for well over a decade. The journal is the part that keeps your data safe (introduced in ext3) in event of a crash. BOTH filesystems have pre-allocation of space when you open a file for write, which combats fragmentation as long as you have a fair amount of free space on your disk. But Windows 2008 also has prioritized IO and background defragmenting which allows it to organize things in the background without affecting the services you are running. Anyway you should have enough memory to not care too much about fragmentation, it doesn't cost much and gives a good boost.
+
+When that is said, the kernel does not matter that much anymore. That is a 90's discussion. Threading, memory handling, disk IO, all are competitive on all platforms today. Some advances are made now and then, but all the others are quick to follow.
+
+I highly recommend the book &quot;Modern Operating Systems&quot; for anyone who wants to dig in deep in OS' in general.
+
+Considerations to be made (from the top of my head):
+1) Of course; how much memory, memory speed/bandwidth(bridge) and how many MHz's do you pack...
+2) How much L2-cache do you have (quite important)?
+3) How many physical CPU's do you have (cores share L2 cache)?
+4) How many memory channels do you have (simultaneous memory access)?
+5) How are these channels mapped to the CPU's?
+6) Do the software you run know how to utilize the CPU2PhysicalMem(data) mapping correctly (MS-SQL does, MySQL does not afaik)?
+7) Are you forcing many CPU-intensive components to share memory bandwith (regions, several db components, etc)? Remember that CPU-intensive tasks usually involve modifying some amount of memory.
+8) What other tasks are you doing on this computer which affects #7.
+
+Because of the fact that OpenSim is a CPU intensive package which uses a lot of code and memory you can run out of L2-cache on larger setups, hence you get a trashing behavior on treads.
+So splitting OpenSim over multiple machines (regions, databases, etc) will yield better performance. Putting too much on the same machine will after a certain point cause an exponential decrease in speed (trashing behavior).
+
+The exact point at where your installation will start trashing is highly dependent on hardware and number of objects ... but some general experience in this area would be very interesting.
+OpenSim/3D worlds are hw-intensive applications, and squeezing the most out of them will be an issue for anyone who plan to have more than a handful of users. (What is the TCO of 1k visitors, 10k, 100k, etc.)
+
+For kernel hackers...
+If you have a dedicated OpenSim-server you could try to change the default Hz of the kernel. Currently it's at 250, optimized for multimedia such as video display.
+Linus in e-mail explained it as &quot;1kHz is also good in that it makes it easy to convert both to USER_HZ and to ms/ns. But maybe something like 250Hz would be better - still high enough that things like multimedia (which really wants higher frequencies in order to be able to sleep for fractional video-frames) should be happy, low enough that we use less CPU.&quot;
+You can set this to 100 to avoid an additional 150 task switches and MMU-reprograms per second. This would allow each thread to work longer on the data it has retrieved from memory before a switch occurs.
+This can be done for Windows as well with a simple registry change and reboot.
+Linux: <A HREF="http://kerneltrap.org/node/5411">http://kerneltrap.org/node/5411</A>
+Windows: <A HREF="http://doc.sch130.nsc.ru/www.sysinternals.com/ntw2k/freeware/frob.shtml">http://doc.sch130.nsc.ru/www.sysinternals.com/ntw2k/freeware/frob.shtml</A>
+
+Definition of trashing = <A HREF="http://en.wikipedia.org/wiki/Thrash_(computer_science">http://en.wikipedia.org/wiki/Thrash_(computer_science</A>)
+
+BR,
+ Tedd
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Karen Palen
+Sent: 18. februar 2010 15:21
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] MySQL on seperate server?
+
+Zonja did not specify, but I am guessing that he is using Windows since he needed to de-fragment his HD. The Linux ext3/4 file system takes care of that automatically in the journalling.
+
+Inevitably there will be many differences between a Windows based system and a Linux based one, if only because the two OSes are so different in their kernals.
+
+If you haven't already tried it, you should ge the best efficiency with one of the Linux server distros.
+
+I have played with Ubuntu server and it is much &quot;leaner&quot; than the desktop version. The Kernel is optimised for database type applications rather than giving a responsive GUI.
+
+I would assume that the other Linux server versions are similar, but I really don't know enough about them to compare. Any of them should come with all of the basic tools (LAMP, MySQL support etc) so it should boil down to which one fits your needs the best.
+
+There are hundreds of &quot;standard&quot; tests for performance, but as far as I know there is nothing yet that is oriented to OpenSim. One of the MySQL benchmarks should give you some good insight though.
+
+Karen
+
+--- On Thu, 2/18/10, Impalah Shenzhou &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A>&gt; wrote:
+
+&gt;<i> From: Impalah Shenzhou &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A>&gt;
+</I>&gt;<i> Subject: Re: [Opensim-users] MySQL on seperate server?
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Date: Thursday, February 18, 2010, 5:02 AM
+</I>&gt;<i> Then the problem are in my computers
+</I>&gt;<i> :-P or in the tests we both did.
+</I>&gt;<i>
+</I>&gt;<i> I got better performance separating db from
+</I>&gt;<i> opensim servers, but I don't know if prim
+</I>&gt;<i> size/modifications/colors/texturing/scripting have some
+</I>&gt;<i> influence in the results we both got.
+</I>&gt;<i>
+</I>&gt;<i> Any standard test for performance?
+</I>&gt;<i> 2010/2/18 Zonja Capalini
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">zonja.capalini at gmail.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> I'm
+</I>&gt;<i> using a Quad Core Q6600 @ 2.40 GHz with 3 GB of RAM and two
+</I>&gt;<i> 372 GB HDsfor Condensation Land. Condensation runs two
+</I>&gt;<i> Opensim instances (8 and 3 sims respectively)
+</I>&gt;<i> in a serverless grid configuration AND the MySQL
+</I>&gt;<i> database. I have the OS in one HD and MySQL
+</I>&gt;<i> and Opensim in the other HD, and my startup times are
+</I>&gt;<i> &lt; 2 mins even if I havesims with &gt; 10000
+</I>&gt;<i> prims. When I log in with 512 m draw distance, I experience
+</I>&gt;<i> some lagfor 15 seconds or so (on a 10 Mb ADSL
+</I>&gt;<i> line) while everything is downloaded,
+</I>&gt;<i>
+</I>&gt;<i> then no lag. Tried it with four avatars, no
+</I>&gt;<i> lag.
+</I>&gt;<i> Defragmenting the HDs every so often does *a
+</I>&gt;<i> lot* to improve performance.
+</I>&gt;<i> ymmv
+</I>&gt;<i>
+</I>&gt;<i>   /Zonja
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Feb 18, 2010 at 11:26 AM,
+</I>&gt;<i> Impalah Shenzhou &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I arrive late, as usual :-)
+</I>&gt;<i>
+</I>&gt;<i> When a region has around 12000 primitives, with
+</I>&gt;<i> a db server on the same machine you will have hell on earth
+</I>&gt;<i> or something like that.
+</I>&gt;<i> Boot up time is around 10 minutes and is
+</I>&gt;<i> impossible to do anything but using zoom. Impossible to
+</I>&gt;<i> move.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have tested this with 3 machines (4Gb ram,
+</I>&gt;<i> 500Gb hd RAID, Intel Core Duo 1,73, Intel Core duo 2,3 and
+</I>&gt;<i> amd64) running windows XP, Vista and Windows 7-64
+</I>&gt;<i> bits.
+</I>&gt;<i> I was using grid mode (grid server on separate
+</I>&gt;<i> computer... no ROBUST or UGAIM, it uses a PHP ugaim
+</I>&gt;<i> system).
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Separating Mysql to another machine on the same
+</I>&gt;<i> local network (100 Mbps nc) I could move, build, and even
+</I>&gt;<i> another avatar could enter.
+</I>&gt;<i> Exporting db and running it on separate server
+</I>&gt;<i> with Linux (ubuntu server 9.04) I could fill the region with
+</I>&gt;<i> 5000 more prims and 2 avatars could work smooth.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Running opensim on Linux (amd64, 4gb ram, ubuntu
+</I>&gt;<i> server 9.04 64 bits) and db on separate linux server 2
+</I>&gt;<i> avatars could work smoothly and filling the region with
+</I>&gt;<i> 25000 prims (no simple prims, but different sizes,
+</I>&gt;<i> texturized and scripted).
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Anyway, that were my &quot;home&quot;
+</I>&gt;<i> experiences... My conclusion: separate db, don't use
+</I>&gt;<i> windows.
+</I>&gt;<i> Greetings
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2010/2/16 Steve &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">steveamigauk at yahoo.co.uk</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thank you, although this doesn't tie in to my bandwidth
+</I>&gt;<i> usage reports :/
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have 60Gig peak, 240 Gig off peak allowance with my
+</I>&gt;<i> provider
+</I>&gt;<i> download. No limit upload. I have had the sim up and
+</I>&gt;<i> running for a week
+</I>&gt;<i> 24/7 (one region  only - and 24/7 apart from a
+</I>&gt;<i> OpenSimulator version
+</I>&gt;<i> upgrade and the odd restart), using my net connection as
+</I>&gt;<i> normal on my
+</I>&gt;<i> main PC.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> My usage for 1 - 15 Feb is 11.78 Gig D/L (which includes 3
+</I>&gt;<i> Gig HD vid
+</I>&gt;<i> from BBC iPlayer) and 2 Gig upload.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I was interested in the OP question because I have a SQL
+</I>&gt;<i> server sat on
+</I>&gt;<i> my web hosts servers doing nada, but it looks like I will
+</I>&gt;<i> gain neither
+</I>&gt;<i> performance nor speed by trying to use it, nor will I save
+</I>&gt;<i> any
+</I>&gt;<i> bandwidth.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This is a real learning experience.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Steve
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 16/02/2010 8:15 PM, John Mieske wrote:
+</I>&gt;<i> Oh I might add, that is 20 -
+</I>&gt;<i> 40KBytes Upload one way and
+</I>&gt;<i> 20 - 80 KB download one way. I thought I would meantion
+</I>&gt;<i> that.
+</I>&gt;<i>   John
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   On Tue, Feb 16, 2010 at 3:14 PM,
+</I>&gt;<i> John Mieske
+</I>&gt;<i>   &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">johnmieske at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>   here
+</I>&gt;<i> is an example of what happened to me on a few Grids I have
+</I>&gt;<i> tested. Per
+</I>&gt;<i> AV I am uploading / downloading roughly 40KBytes a second.
+</I>&gt;<i> Not kBits.
+</I>&gt;<i> That is full load with everything going on. So I am giving
+</I>&gt;<i> the most I
+</I>&gt;<i> have seen in this case. That is roughly 320 KBit upload and
+</I>&gt;<i> download
+</I>&gt;<i> just for one avatar. So in theory, you should be able to
+</I>&gt;<i> push less then
+</I>&gt;<i> 40K IF your avatars are not really doing all of what they
+</I>&gt;<i> want them to.
+</I>&gt;<i> Example : Voice.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     So with a 1 Meg upload, your looking at around 3
+</I>&gt;<i> Avatars
+</I>&gt;<i> smoothly. If your going to go with 2 Meg Upload which some
+</I>&gt;<i> of us have,
+</I>&gt;<i> then your could go to about 7 Avatars smoothly. Again, this
+</I>&gt;<i> is all
+</I>&gt;<i> dependant on what your USERS are doing. If all are building
+</I>&gt;<i> and in
+</I>&gt;<i> Voice all at once, then 1 Meg = 3 Avatars smoothly.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Keep in mind, this is a test I did myself on 5
+</I>&gt;<i> Grids I have
+</I>&gt;<i> tested. Each with different ISPs. So if your going to run a
+</I>&gt;<i> Grid you
+</I>&gt;<i> also have to account that the region that ties into your
+</I>&gt;<i> main region
+</I>&gt;<i> ALSO has to accomodate for the extra communication between
+</I>&gt;<i> each region
+</I>&gt;<i> that is not on the same computer / ISP. AND they are
+</I>&gt;<i> constantly 24 / 7
+</I>&gt;<i> communicating. So if you have a bandwidth limit, you could
+</I>&gt;<i> be in
+</I>&gt;<i> trouble. At a Previous version of Sim world, we had 500
+</I>&gt;<i> Megabytes
+</I>&gt;<i> transfer for about a weeks worth of time. And that is with
+</I>&gt;<i> only 8
+</I>&gt;<i> regions and VERY little activity. The limit ?  1
+</I>&gt;<i> Terribyte. So in one
+</I>&gt;<i> week, we ate up half our bandwidth limit. ( Thats all the
+</I>&gt;<i> HOST allowed
+</I>&gt;<i> at the time )
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Bottom line, you MUST do the math to see if this
+</I>&gt;<i> is even
+</I>&gt;<i> possible to keep running before spending a lot of
+</I>&gt;<i> money.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     John
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     On Tue, Feb 16, 2010 at 2:41
+</I>&gt;<i> PM, Steve &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">steveamigauk at yahoo.co.uk</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So out of interest, what are the upload limits per avatar
+</I>&gt;<i> for example.
+</I>&gt;<i> I have just shy of 1 Mb upload speed, and have happily
+</I>&gt;<i> accommodated 8
+</I>&gt;<i> Avatars (after one in particular who was throwing up masses
+</I>&gt;<i> of errors
+</I>&gt;<i> left). How far could I, in theory, push it?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Steve
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 15/02/2010 11:00 PM, Ken G. wrote:
+</I>&gt;<i>       Alright, thanks Daz for
+</I>&gt;<i> answering my
+</I>&gt;<i> question and thanks
+</I>&gt;<i> to John and Master_Mirage for the input. I am just a hobby
+</I>&gt;<i> user of
+</I>&gt;<i> opensim, connected to OSGrid, hoping that maybe there was a
+</I>&gt;<i> way to
+</I>&gt;<i> improve my mediocre connection :)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Ken aka Key
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>         On Mon, Feb 15, 2010 at
+</I>&gt;<i> 3:00 PM, John
+</I>&gt;<i> Mieske &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">johnmieske at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>         I
+</I>&gt;<i> have
+</I>&gt;<i> to agree with Darren here. If your doing this at home, you
+</I>&gt;<i> might
+</I>&gt;<i> as well have both on the same computer. Your internet in
+</I>&gt;<i> general will
+</I>&gt;<i> dictate what you can do. So if your running this at home,
+</I>&gt;<i> hang up the
+</I>&gt;<i> idea of two computer region serving because no one will see
+</I>&gt;<i> a
+</I>&gt;<i> difference when they already bogg down from a slow internet
+</I>&gt;<i> connection
+</I>&gt;<i> to your region. I have seen some Regions who run them at
+</I>&gt;<i> home with the
+</I>&gt;<i> best of intentions only shut down days later because they
+</I>&gt;<i> realize their
+</I>&gt;<i> internet only allowed 2 avatars to run smoothly. When they
+</I>&gt;<i> got to 3,
+</I>&gt;<i> their sim started to crash. It is all about your upload
+</I>&gt;<i> speed. However,
+</I>&gt;<i> if you got a FAT PIPE ( not to smoke hahaha ) then yea you
+</I>&gt;<i> definitely
+</I>&gt;<i> might want to try the way I suggested. Again everything in
+</I>&gt;<i> OpenSim is
+</I>&gt;<i> based on HOW you run your Grid / Regions. Nothing is 100%
+</I>&gt;<i> set one way.
+</I>&gt;<i> I only offered a suggestion to those who could use this
+</I>&gt;<i> benefit. And
+</I>&gt;<i> there are already some servers that has been setup this way
+</I>&gt;<i> and they
+</I>&gt;<i> are smooth.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>           John
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>           On Mon, Feb 15, 2010 at 3:39 PM, Darren
+</I>&gt;<i> Williams &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">darren at dmmhosting.co.uk</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>             Ken G asked:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>             Dumb question from a
+</I>&gt;<i> casual opensim
+</I>&gt;<i> user who
+</I>&gt;<i> is not fully
+</I>&gt;<i> clued in on it's workings, that popped into my head
+</I>&gt;<i> after reading John
+</I>&gt;<i> Mieske's
+</I>&gt;<i> Space Grid Station post:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Is it feasible and sensible while running opensim on a home
+</I>&gt;<i> PC
+</I>&gt;<i> connection to be
+</I>&gt;<i> able to use a MySQL database on a shared web hosting
+</I>&gt;<i> server, such as
+</I>&gt;<i> Hostgator
+</I>&gt;<i> for example? If possible, would this type of setup improve
+</I>&gt;<i> performance
+</I>&gt;<i> of a
+</I>&gt;<i> lightly used standalone or grid-connected sim?
+</I>&gt;<i>
+</I>&gt;<i> I haven't put much thought into this idea, just wanted
+</I>&gt;<i> to blurt it out
+</I>&gt;<i> and see
+</I>&gt;<i> if it's worth pursuing.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>             Ken,
+</I>&gt;<i>
+</I>&gt;<i>             You
+</I>&gt;<i> shouldn&#8217;t
+</I>&gt;<i> receive any benefit at all doing the above.
+</I>&gt;<i> In fact it will probably make things worse.
+</I>&gt;<i>
+</I>&gt;<i>             If I&#8217;m
+</I>&gt;<i> reading this
+</I>&gt;<i> right then the region server which you
+</I>&gt;<i> have running locally would then be pulling/pushing the data
+</I>&gt;<i> from across
+</I>&gt;<i> the net
+</I>&gt;<i> on the mysql server, back to your machine. It would
+</I>&gt;<i> probably run worse.
+</I>&gt;<i>
+</I>&gt;<i>             Daz
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i>             <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i>             <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i>
+</I>&gt;<i> John Mieske / Winword Exonar
+</I>&gt;<i>
+</I>&gt;<i>           <A HREF="http://johnmieske.org">http://johnmieske.org</A>
+</I>&gt;<i>
+</I>&gt;<i> Space Grid Station
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i>           <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i>           <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i>       <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i>       <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i>
+</I>&gt;<i> John Mieske / Winword Exonar
+</I>&gt;<i>
+</I>&gt;<i>     <A HREF="http://johnmieske.org">http://johnmieske.org</A>
+</I>&gt;<i>
+</I>&gt;<i> Space Grid Station
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i>
+</I>&gt;<i> John Mieske / Winword Exonar
+</I>&gt;<i>
+</I>&gt;<i>   <A HREF="http://johnmieske.org">http://johnmieske.org</A>
+</I>&gt;<i>
+</I>&gt;<i> Space Grid Station
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----Inline Attachment Follows-----
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003866.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+	<LI>Next message: <A HREF="003874.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3870">[ date ]</a>
+              <a href="thread.html#3870">[ thread ]</a>
+              <a href="subject.html#3870">[ subject ]</a>
+              <a href="author.html#3870">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

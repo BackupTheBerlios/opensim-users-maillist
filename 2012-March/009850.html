@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sim size limits
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3C1331927902.2762.89.camel%40pulkka%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009849.html">
+   <LINK REL="Next"  HREF="009852.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sim size limits</H1>
+    <B>Toni Alatalo</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3C1331927902.2762.89.camel%40pulkka%3E"
+       TITLE="[Opensim-users] Sim size limits">toni at playsign.net
+       </A><BR>
+    <I>Fri Mar 16 20:58:22 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009849.html">[Opensim-users] Sim size limits
+</A></li>
+        <LI>Next message: <A HREF="009852.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9850">[ date ]</a>
+              <a href="thread.html#9850">[ thread ]</a>
+              <a href="subject.html#9850">[ subject ]</a>
+              <a href="author.html#9850">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, 2012-03-16 at 11:36 +0000, David Burden wrote:
+&gt;<i> 
+</I>&gt;<i> At the risk of opening a real can of worms, what is the potential in
+</I>&gt;<i> the future of changing the 256m x 256m limit on sim size, and even
+</I>&gt;<i> moving to a single, near limitless sim. 
+</I>
+It has actually been configurable for ages, a compile time constant
+called RegionSize or so.
+
+Not everything works though if you change it, but basics do. Less worked
+in 0.6 but with 0.7 it became somewhat usable.
+
+I made a quick simple test back in Oct 2010 -- changed the size to 1024,
+and could succesfully add objects to all of the area and move there and
+see them all with the Naali viewer,
+<A HREF="http://www.youtube.com/watch?v=MOE_WNX05W0">http://www.youtube.com/watch?v=MOE_WNX05W0</A>
+
+Terrain is only visible in one of the corners of the big region, though.
+Note: this is not a megaregion setup, but just a single normal region.
+
+When I logged in to that same scene with SLviewer, it did not show
+objects from outside the 256x256 corner. But folks said that at least
+some slviewer based viewers do happily show objects from any
+coordinates. Dunno if the Aurora folks have needed to modify viewer side
+too, or whether it just worked.
+
+IIRC the size has to be a multiple of 16 for the physics engine to not
+bork. And when I tried to run a 10km * 10km region first it didn't work
+out well, something ran out of memory or so :p
+
+&gt;<i> aspirations just getting to 1/2/3km sims would make a huge difference,
+</I>&gt;<i> even if we had to stick with existing prim limits.
+</I>
+Why don't you just pretend that 1m == 10m or so? Then the default region
+size would be 2,5 * 2,5 km :) The avatars become giants? Can you perhaps
+make them smaller?-)
+
+&gt;<i> I think that RealXTend Tundra has removed the limitation, and Vastpark
+</I>&gt;<i> (which also has some OpenSim heritage) has. Are we ever likely to see 
+</I>
+Yep the Naali viewer never had articificial region size limitations,
+which I got to very and test by changing that Opensim constant. With
+Tundra the same code is used for the server, I've made tests with a
+100km long region actually (with the 'infinite drive' scene in tundra1
+examples which automatically generates road ahead of you as you drive
+forward .. just used the editor to jump 100km and i think the code then
+generated the road all the way there, and i could then drive back etc :)
+
+&gt;<i> a change in OpenSim (and if it's &quot;just&quot; a case of money, then how much
+</I>&gt;<i> effort?)
+</I>
+Depends what you need working. If you don't need the normal linden style
+terrain, and perhaps can skip physics too, then it might work already.
+Unless things have broken since 2010. We sometimes do terrain / ground /
+environment just with meshes.
+
+&gt;<i> David
+</I>
+~Toni
+
+&gt;<i> t: +44 (0)121 250 5677
+</I>&gt;<i> m: 07811 266 199
+</I>&gt;<i> e: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">david.burden at daden.co.uk</A>
+</I>&gt;<i> w: www.daden.co.uk
+</I>&gt;<i> skype: daden5
+</I>&gt;<i> twitter: www.twitter.com/davidburden
+</I>&gt;<i> sl IM: Corro Moseley
+</I>&gt;<i> 
+</I>&gt;<i> Daden specialise in creating immersive learning &amp; visualisation
+</I>&gt;<i> systems, and interactive virtual agents. 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009849.html">[Opensim-users] Sim size limits
+</A></li>
+	<LI>Next message: <A HREF="009852.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9850">[ date ]</a>
+              <a href="thread.html#9850">[ thread ]</a>
+              <a href="subject.html#9850">[ subject ]</a>
+              <a href="author.html#9850">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

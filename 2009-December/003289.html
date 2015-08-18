@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] SLoodle in OpenSim: Email module
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SLoodle%20in%20OpenSim%3A%20Email%20module&In-Reply-To=%3C810E8201-01B9-4CB1-A36C-E5285F3D6F87%40bessacarr.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003265.html">
+   <LINK REL="Next"  HREF="003291.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] SLoodle in OpenSim: Email module</H1>
+    <B>Tom Willans</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SLoodle%20in%20OpenSim%3A%20Email%20module&In-Reply-To=%3C810E8201-01B9-4CB1-A36C-E5285F3D6F87%40bessacarr.com%3E"
+       TITLE="[Opensim-users] SLoodle in OpenSim: Email module">tom.willans at bessacarr.com
+       </A><BR>
+    <I>Fri Dec 11 09:17:18 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003265.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+        <LI>Next message: <A HREF="003291.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3289">[ date ]</a>
+              <a href="thread.html#3289">[ thread ]</a>
+              <a href="subject.html#3289">[ subject ]</a>
+              <a href="author.html#3289">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Adelle,
+
+This is useful advice, and a good reminder to look at security issues  
+in general. It is my understanding that you can still use an external  
+ISP if you are doing it via a local SMTP server whose security you can  
+manage at your end. Presumably it is also less of a risk, provided you  
+can ensure only trusted individuals have access to your region as may  
+be the case for private development uses. Any views welcome.
+
+Tom
+
+
+Can I clarify that if you use your own smtp server and that then uses  
+an external public ISP you should also be OK. By running
+On 10 Dec 2009, at 13:40, Adelle Fitzgerald wrote:
+
+&gt;<i> Please be aware of the risks of enabling e-mail on your region and  
+</I>&gt;<i> that it could be used for spam purposes. It would be very easy for  
+</I>&gt;<i> someone to write a simple LSL script to fetch a whole bunch of e- 
+</I>&gt;<i> mail addresses from an external database/website and then loop  
+</I>&gt;<i> sending each one a spam message. IMHO, enabling SMTP on a region  
+</I>&gt;<i> should only be done if you can control the flow of mail at your SMTP  
+</I>&gt;<i> server, and do not use a public or ISP SMTP server as you have no  
+</I>&gt;<i> control over it.
+</I>&gt;<i>
+</I>&gt;<i> My suggestion if you do have access to your own SMTP server is to  
+</I>&gt;<i> create a rule where the sending domain can only be sent to  
+</I>&gt;<i> destination domain, and no other. By doing that it will minimise the  
+</I>&gt;<i> risk of spam messages. The first thing spammers do is see if a relay  
+</I>&gt;<i> is open before they flood it with spam. If they try and get no  
+</I>&gt;<i> message through, they will move on to their next target.  
+</I>&gt;<i> Alternatively, running an SMTP server in a closed environment with  
+</I>&gt;<i> no external access would be ok.
+</I>&gt;<i>
+</I>&gt;<i> Adelle.
+</I>&gt;<i>
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> 
+</I>&gt;<i> ] On Behalf Of Andy Konstandinidis
+</I>&gt;<i> Sent: 10 December 2009 09:56
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] SLoodle in OpenSim: Email module
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the prompt reply! I will try this and get back to you!
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Dec 10, 2009 at 11:50 AM, Olish Newman  
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">olish at newworldgrid.com</A>&gt; wrote:
+</I>&gt;<i> Hi Andy,
+</I>&gt;<i>
+</I>&gt;<i> In order to get emails working through the llEmail() LSL function,  
+</I>&gt;<i> you need to configure the following section in your OpenSim.ini file :
+</I>&gt;<i>
+</I>&gt;<i> [SMTP]
+</I>&gt;<i>     enabled = true
+</I>&gt;<i>     internal_object_host = lsl.opensim.local
+</I>&gt;<i>     host_domain_header_from = 127.0.0.1
+</I>&gt;<i>     SMTP_SERVER_HOSTNAME = smtp.yourdomain.com
+</I>&gt;<i>     SMTP_SERVER_PORT = 25
+</I>&gt;<i>     SMTP_SERVER_LOGIN = smtp_user
+</I>&gt;<i>     SMTP_SERVER_PASSWORD = smtp_password
+</I>&gt;<i>
+</I>&gt;<i> Replace your current SMTP section in the OpenSim.ini by the code  
+</I>&gt;<i> above. You need to provide your own SMTP server information and it  
+</I>&gt;<i> should work.
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i> Olish.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2009/12/10 Andy Konstandinidis &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">knave84 at gmail.com</A>&gt;
+</I>&gt;<i> Hello! I'm trying to use SLoodle in Opensim! I have setup my Opensim  
+</I>&gt;<i> server and it is working fine. I have also loaded the .oar file of  
+</I>&gt;<i> the Sloodle set. Yet when I try to configure the sloodle set to  
+</I>&gt;<i> connect to the moodle site (by touching it in the 3D world) I get an  
+</I>&gt;<i> error:
+</I>&gt;<i> SLOODLE Set 0.9 (RC1) -- COMPLETE (Fix 1.0): llGetNextEmail: email  
+</I>&gt;<i> module not configured
+</I>&gt;<i>
+</I>&gt;<i> Anyone know how this issue can be resolved? Thanks!
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Andreas Konstantinidis
+</I>&gt;<i>
+</I>&gt;<i> Research Assistant, SEERC (South- East European Research Center)
+</I>&gt;<i> PhD Candidate, Informatics Dept., A.U.TH.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Andreas Konstantinidis
+</I>&gt;<i>
+</I>&gt;<i> Research Assistant, SEERC (South- East European Research Center)
+</I>&gt;<i> PhD Candidate, Informatics Dept., A.U.TH.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+Tom Willans
+Managing Director
+Bessacarr Publications Ltd
+3 Highfield, Hatton Park, Warwick, CV35 7TQ
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tom.willans at bessacarr.com</A>
++44 (0) 1926 402055   +44 (0) 121 288 0281
+Registered in England and Wales at the above address.  Company No:  
+4925067. VAT No:GB 823 9317 24.
+
+This e-mail is confidential and intended solely for the use of the  
+individual to whom it is addressed. Any views or opinions presented  
+are solely those of the author and do not necessarily represent those  
+of Bessacarr Publications Ltd. If you are not the intended recipient  
+you have received this e-mail in error and that any use,  
+dissemination, forwarding, printing or copying of this e-mail is  
+strictly prohibited. Please return it to the sender immediately. The  
+contents of this message may be legally privileged.
+
+
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091211/82336959/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091211/82336959/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003265.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+	<LI>Next message: <A HREF="003291.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3289">[ date ]</a>
+              <a href="thread.html#3289">[ thread ]</a>
+              <a href="subject.html#3289">[ subject ]</a>
+              <a href="author.html#3289">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

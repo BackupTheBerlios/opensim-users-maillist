@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripting: 10x speed boost with C#
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3Cp06240800c9d855511e90%40%5B192.168.0.21%5D%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007155.html">
+   <LINK REL="Next"  HREF="007165.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripting: 10x speed boost with C#</H1>
+    <B>Jeff Kelley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3Cp06240800c9d855511e90%40%5B192.168.0.21%5D%3E"
+       TITLE="[Opensim-users] Scripting: 10x speed boost with C#">opensim at pescadoo.net
+       </A><BR>
+    <I>Sat Apr 23 12:20:01 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007155.html">[Opensim-users] OpenSim release candidate packages now listed on download wiki page. Also, config pages overhauled.
+</A></li>
+        <LI>Next message: <A HREF="007165.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7156">[ date ]</a>
+              <a href="thread.html#7156">[ thread ]</a>
+              <a href="subject.html#7156">[ subject ]</a>
+              <a href="author.html#7156">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I like physics. And I like colors.
+
+I scripted a blackbody spectrum in LSL for a science sim. It was reasonably
+fast, 1.8s for a 400 points spectrum (380 to 780 nm) including Planck's law
+computation, CIE to RGB colorspace mapping with gamma correction, display
+with osDynamicTexture.
+
+That was fast, but not enough in my mind. Real-time interaction should be
+in the 1/10s range, not the second.
+
+So I rewrote the thing in C#. The key was to get rid of all llFunctions,
+LSL lists and string handling functions, math functions, even building
+manually the drawlist instead of calling osDraw routines. Execution time is
+now in the 0.1-0.2s range.
+
+Running Opensim 0.7.0.2 + MONO on a MacMini server, 2.53GHz Core Duo, 4GB.
+
+LSL code:	<A HREF="http://pastebin.com/MxsivsKS">http://pastebin.com/MxsivsKS</A>
+C# code:	<A HREF="http://pastebin.com/UR2gsnU7">http://pastebin.com/UR2gsnU7</A>
+
+Nice!
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007155.html">[Opensim-users] OpenSim release candidate packages now listed on download wiki page. Also, config pages overhauled.
+</A></li>
+	<LI>Next message: <A HREF="007165.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7156">[ date ]</a>
+              <a href="thread.html#7156">[ thread ]</a>
+              <a href="subject.html#7156">[ subject ]</a>
+              <a href="author.html#7156">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

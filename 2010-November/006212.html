@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] trying to set up freeswitch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAEtfgb7vfWVHi5VSZMgjobnCgAAAEAAAAANLB5KBhSdEmR8iDczKNS8BAAAAAA%3D%3D%40yahoo.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006224.html">
+   <LINK REL="Next"  HREF="006207.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] trying to set up freeswitch</H1>
+    <B>Olli Aro</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAEtfgb7vfWVHi5VSZMgjobnCgAAAEAAAAANLB5KBhSdEmR8iDczKNS8BAAAAAA%3D%3D%40yahoo.co.uk%3E"
+       TITLE="[Opensim-users] trying to set up freeswitch">olli_aro at yahoo.co.uk
+       </A><BR>
+    <I>Sat Nov 20 21:20:39 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006224.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+        <LI>Next message: <A HREF="006207.html">[Opensim-users] NPC Movement: Success!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6212">[ date ]</a>
+              <a href="thread.html#6212">[ thread ]</a>
+              <a href="subject.html#6212">[ subject ]</a>
+              <a href="author.html#6212">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Aah, meant to add to my previous email...
+
+I was under understanding that OpenSim and Freeswitch communicate directly
+as well as with the client software. Hence if you behind a NAT the following
+will happen:
+
+
+- If you put the public IP address to the config files OpenSim and
+Freeswitch cannot communicate
+- If you put the private IP address to the config files Freeswitch and the
+client software cannot communicate
+
+But maybe I am wrong?
+
+Regards,
+
+Olli
+
+-----Original Message-----
+From: Olli Aro [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">olli_aro at yahoo.co.uk</A>] 
+Sent: 20 November 2010 20:16
+To: '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>'
+Subject: RE: [Opensim-users] trying to set up freeswitch
+
+Ok, the reason I am asking is because we have Windows systems with public IP
+that work fine.
+
+However, now I am trying to create a working Amazon EC2 instance and cannot
+decide if I have problems because Amazon instances are behind NAT or because
+I am using Linux.
+
+But I will do some further testing based on your notes below and let you
+know.
+
+Regards,
+
+Olli
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Ai Austin
+Sent: 20 November 2010 00:17
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] trying to set up freeswitch
+
+
+&gt;<i>Olli wrote:
+</I>&gt;<i>So according to your notes Freeswitch will not work if your server is 
+</I>&gt;<i>behind NAT, is that correct?
+</I>&gt;<i>
+</I>&gt;<i>In other words, if you wish to have an internet accessible OpenSim 
+</I>&gt;<i>instance with Freeswitch you must ensure that it is on DMZ with the public
+</I>IP as its'
+&gt;<i>&quot;local&quot; IP address and not behind a router carrying out the address 
+</I>&gt;<i>translation between public and private IP?
+</I>
+
+I cannot be sure on that Olli.  But any port forwarding or translation
+method should work, so long as the external address is used consistently in
+the config files on both the FreeSwitch and OpenSim sides I think.
+
+Make sure your firewall ports for H.323 call initiation and for the or used
+for the type of call made is also open.. that's covered already in the
+Freeswitch wiki page firewall section. Its configurable. Basically open
+ports 1720 and 5060, and maybe 50505 must be open for listening for the
+default setup indicated in OpenSim.ini (for 0.7.1 dev master its in
+OpenSimDefaults.ini and must be copied to OpenSim.ini remember. Dynamically
+assigned ports are used for specific call traffic. The usual H.323 and SIP
+traffic dynamic port handling on modern firewalls usually enable this.
+
+I added some more notes on the wiki for advanced users who want to change
+the behaviour when joining calls, single user on hold music turn off etc. We
+turn all that off in the freeswitch config file for our usage.
+
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006224.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+	<LI>Next message: <A HREF="006207.html">[Opensim-users] NPC Movement: Success!!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6212">[ date ]</a>
+              <a href="thread.html#6212">[ thread ]</a>
+              <a href="subject.html#6212">[ subject ]</a>
+              <a href="author.html#6212">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

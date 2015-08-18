@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Weird freeswitch problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Weird%20freeswitch%20problem&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAJvPto8dXaJNqufVsxzMG9DCgAAAEAAAAICZczVETK5MtPB58XkxmEUBAAAAAA%3D%3D%40yahoo.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003326.html">
+   <LINK REL="Next"  HREF="003355.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Weird freeswitch problem</H1>
+    <B>Olli Aro</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Weird%20freeswitch%20problem&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAJvPto8dXaJNqufVsxzMG9DCgAAAEAAAAICZczVETK5MtPB58XkxmEUBAAAAAA%3D%3D%40yahoo.co.uk%3E"
+       TITLE="[Opensim-users] Weird freeswitch problem">olli_aro at yahoo.co.uk
+       </A><BR>
+    <I>Wed Dec 16 16:56:39 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003326.html">[Opensim-users] Weird freeswitch problem
+</A></li>
+        <LI>Next message: <A HREF="003355.html">[Opensim-users] Weird freeswitch problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3328">[ date ]</a>
+              <a href="thread.html#3328">[ thread ]</a>
+              <a href="subject.html#3328">[ subject ]</a>
+              <a href="author.html#3328">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Got it working after two days of solid testing and experimenting. I had to
+enable port 5060 in the firewall, but also for some reason it did not want
+to work if I commented out enter-sound from the FreeSwitch conference
+settings. I am sure I have had it working commented out with other servers
+before... 
+
+Anyway, what I had to do instead was to create a really short sound when
+people entered and that then gives a kick for the voice functionality so
+that works. Here is the line in case anyone else has the same problem:
+
+&lt;param name=&quot;enter-sound&quot; value=&quot;tone_<A HREF="stream://%(1,0,500,600,7000">stream://%(1,0,500,600,7000</A>)&quot;/&gt;
+
+Regards,
+
+Olli
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:opensim-users-
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>] On Behalf Of Robert Klein
+</I>&gt;<i> Sent: 16 December 2009 15:34
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] Weird freeswitch problem
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I really hope we figure out a better, more intuitive method for
+</I>&gt;<i> implementing
+</I>&gt;<i> voice features. I have seen some conversations on the OpenSim-devs area
+</I>&gt;<i> at
+</I>&gt;<i> this link <A HREF="http://n2.nabble.com/Mumble-Voice-td4112610.html#a4112610">http://n2.nabble.com/Mumble-Voice-td4112610.html#a4112610</A> and
+</I>&gt;<i> maybe something will be finalized over the next six months.
+</I>&gt;<i> 
+</I>&gt;<i> -Robert
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Olli Aro wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hi all,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have a funny freeswitch problem on a server I have been trying to
+</I>&gt;<i> setup.
+</I>&gt;<i> &gt; I
+</I>&gt;<i> &gt; have configured everything as described in various articles around,
+</I>&gt;<i> can
+</I>&gt;<i> &gt; see
+</I>&gt;<i> &gt; traffic in both OpenSim and Freeswitch console when people login.
+</I>&gt;<i> Even
+</I>&gt;<i> &gt; further each avatar will see the talk indicator at the top of their
+</I>&gt;<i> own
+</I>&gt;<i> &gt; avatar, but not for the other avatars. Also, if I do IM call between
+</I>&gt;<i> &gt; avatars
+</I>&gt;<i> &gt; it is possible to answer the call, but neither party can't hear
+</I>&gt;<i> anything.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I do get an error in Freeswitch console, but not sure if it is
+</I>&gt;<i> &gt; significant.
+</I>&gt;<i> &gt; Anyway I have copied the error below in case.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Anyone have any ideas what could be causing this? Could it be e.g.
+</I>&gt;<i> the
+</I>&gt;<i> &gt; local
+</I>&gt;<i> &gt; firewall blocking some communications?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Both OpenSim and Freeswitch are installed on the same box.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Regards,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; [ERR] mod_xml_curl.c:292 Received HTTP error 404 tryi
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ng to fetch <A HREF="http://192.168.0.26:9000/api/freeswitch-config">http://192.168.0.26:9000/api/freeswitch-config</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; data:
+</I>&gt;<i> &gt;
+</I>&gt;<i> [hostname=vm3466&amp;section=directory&amp;tag_name=domain&amp;key_name=name&amp;key_va
+</I>&gt;<i> lue
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; =192.168.0.26&amp;Event-Name=GENERAL&amp;Core-UUID=bf72c5f9-b88f-1946-8fe4-
+</I>&gt;<i> 1ba692f01
+</I>&gt;<i> &gt; 3a5&amp;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; FreeSWITCH-Hostname=vm3466&amp;FreeSWITCH-IPv4=192.168.0.26&amp;FreeSWITCH-
+</I>&gt;<i> IPv6=2002
+</I>&gt;<i> &gt; %3A5
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; fac%3A121a%3A%3A5fac%3A121a&amp;Event-Date-Local=2009-12-
+</I>&gt;<i> 14%2016%3A30%3A00&amp;Event
+</I>&gt;<i> &gt; -Dat
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; e-GMT=Mon,%2014%20Dec%202009%2016%3A30%3A00%20GMT&amp;Event-Date-
+</I>&gt;<i> Timestamp=12608
+</I>&gt;<i> &gt; 0820
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 0119786&amp;Event-Calling-File=mod_voicemail.c&amp;Event-Calling-
+</I>&gt;<i> Function=resolve_id
+</I>&gt;<i> &gt; &amp;Eve
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; nt-Calling-Line-Number=1270&amp;action=message-
+</I>&gt;<i> count&amp;key=id&amp;user=xPU0p1vcQQ8GMKq
+</I>&gt;<i> &gt; kAZe
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Wn5g%3D%3D&amp;domain=192.168.0.26
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://n2.nabble.com/Weird-freeswitch-">http://n2.nabble.com/Weird-freeswitch-</A>
+</I>&gt;<i> problem-tp4165222p4176132.html
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003326.html">[Opensim-users] Weird freeswitch problem
+</A></li>
+	<LI>Next message: <A HREF="003355.html">[Opensim-users] Weird freeswitch problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3328">[ date ]</a>
+              <a href="thread.html#3328">[ thread ]</a>
+              <a href="subject.html#3328">[ subject ]</a>
+              <a href="author.html#3328">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

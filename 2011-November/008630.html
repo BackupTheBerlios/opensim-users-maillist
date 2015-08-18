@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Region not part of an estate
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20not%20part%20of%20an%20estate&In-Reply-To=%3CCAFowWBiuku8nVg_tXuF%2BMhsawTDEnmhndHg42A6zHiem%2BGbkJA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008605.html">
+   <LINK REL="Next"  HREF="008632.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Region not part of an estate</H1>
+    <B>Wayne</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20not%20part%20of%20an%20estate&In-Reply-To=%3CCAFowWBiuku8nVg_tXuF%2BMhsawTDEnmhndHg42A6zHiem%2BGbkJA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Region not part of an estate">lppwayne at gmail.com
+       </A><BR>
+    <I>Sun Nov 20 15:42:04 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008605.html">[Opensim-users] Region not part of an estate
+</A></li>
+        <LI>Next message: <A HREF="008632.html">[Opensim-users] Region not part of an estate
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8630">[ date ]</a>
+              <a href="thread.html#8630">[ thread ]</a>
+              <a href="subject.html#8630">[ subject ]</a>
+              <a href="author.html#8630">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK.  Finally got opensim to ask the question: &quot;Would you like to create a
+new Estate&quot;.
+
+I uninstalled MySql, deleted the MYSql folder and all db files then
+reinstalled. Then I realized I was skipping a step - I was never granting
+permissions to <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">localhost at opensim.</A> After doing that, the server loaded. (but
+soon crashed)
+
+Now the new problem:
+
+opensim server starts, loads regions and everything looks fine until 5
+seconds later when the following appears and opensim crashes:
+
+2011-11-19 21:11:56,557 ERROR - OpenSim.Application [APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+Exception: System.UriFormatException: Invalid URI: The hostname could not
+be parsed.
+Server stack trace:
+   at System.Uri.CreateThis(String uri, Boolean dontEscape, UriKind uriKind)
+   at System.Uri..ctor(String uriString)
+   at System.Net.WebRequest.Create(String requestUriString)
+   at
+OpenSim.Services.Connectors.NeighbourServicesConnector.DoHelloNeighbourCall(GridRegion
+region, RegionInfo thisRegion) in d:\OSGRID\OSGRID 0.7
+RELEASES\opensim-ff36a1b\OpenSim\Services\Connectors\Neighbour\NeighbourServiceConnector.cs:line
+92
+   at
+OpenSim.Services.Connectors.NeighbourServicesConnector.HelloNeighbour(UInt64
+regionHandle, RegionInfo thisRegion) in d:\OSGRID\OSGRID 0.7
+RELEASES\opensim-ff36a1b\OpenSim\Services\Connectors\Neighbour\NeighbourServiceConnector.cs:line
+78
+   at
+OpenSim.Region.CoreModules.ServiceConnectorsOut.Neighbour.RemoteNeighbourServicesConnector.HelloNeighbour(UInt64
+regionHandle, RegionInfo thisRegion) in d:\OSGRID\OSGRID 0.7
+RELEASES\opensim-ff36a1b\OpenSim\Region\CoreModules\ServiceConnectorsOut\Neighbour\RemoteNeighourServiceConnector.cs:line
+150
+   at
+OpenSim.Region.Framework.Scenes.SceneCommunicationService.InformNeighboursThatRegionIsUpAsync(INeighbourService
+neighbourService, RegionInfo region, UInt64 regionhandle) in
+d:\OSGRID\OSGRID 0.7
+RELEASES\opensim-ff36a1b\OpenSim\Region\Framework\Scenes\SceneCommunicationService.cs:line
+161
+   at
+System.Runtime.Remoting.Messaging.StackBuilderSink._PrivateProcessMessage(IntPtr
+md, Object[] args, Object server, Int32 methodPtr, Boolean
+fExecuteInContext, Object[]&amp; outArgs)
+   at
+System.Runtime.Remoting.Messaging.StackBuilderSink.PrivateProcessMessage(RuntimeMethodHandle
+md, Object[] args, Object server, Int32 methodPtr, Boolean
+fExecuteInContext, Object[]&amp; outArgs)
+   at
+System.Runtime.Remoting.Messaging.StackBuilderSink.AsyncProcessMessage(IMessage
+msg, IMessageSink replySink)
+Exception rethrown at [0]:
+   at System.Runtime.Remoting.Proxies.RealProxy.EndInvokeHelper(Message
+reqMsg, Boolean bProxyCase)
+   at System.Runtime.Remoting.Proxies.RemotingProxy.Invoke(Object NotUsed,
+MessageData&amp; msgData)
+   at
+OpenSim.Region.Framework.Scenes.SceneCommunicationService.InformNeighbourThatRegionUpDelegate.EndInvoke(IAsyncResult
+result)
+   at
+OpenSim.Region.Framework.Scenes.SceneCommunicationService.InformNeighborsThatRegionisUpCompleted(IAsyncResult
+iar) in d:\OSGRID\OSGRID 0.7
+RELEASES\opensim-ff36a1b\OpenSim\Region\Framework\Scenes\SceneCommunicationService.cs:line
+146
+   at
+System.Runtime.Remoting.Messaging.AsyncResult.SyncProcessMessage(IMessage
+msg)
+   at
+System.Runtime.Remoting.Messaging.StackBuilderSink.AsyncProcessMessage(IMessage
+msg, IMessageSink replySink)
+   at System.Runtime.Remoting.Proxies.AgileAsyncWorkerItem.DoAsyncCall()
+   at
+System.Runtime.Remoting.Proxies.AgileAsyncWorkerItem.ThreadPoolCallBack(Object
+o)
+   at System.Threading._ThreadPoolWaitCallback.WaitCallback_Context(Object
+state)
+   at System.Threading.ExecutionContext.Run(ExecutionContext
+executionContext, ContextCallback callback, Object state)
+   at
+System.Threading._ThreadPoolWaitCallback.PerformWaitCallbackInternal(_ThreadPoolWaitCallback
+tpWaitCallBack)
+   at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback(Object
+state)
+Application is terminating: True
+
+Any ideas?
+
+Thanks,
+Wayne
+
+
+
+
+On Wed, Nov 16, 2011 at 5:50 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> At this stage it starts to sound more like a config issue than anything
+</I>&gt;<i> else.
+</I>&gt;<i>
+</I>&gt;<i> Are you using an old config or adapting one from the release?  If you are
+</I>&gt;<i> using an old config I recommend you try starting from fresh .example files
+</I>&gt;<i> - reusing old configs is known to cause problems in some situations.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 16/11/11 19:29, Wayne wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Thank you Fleep and Gwyn for your time in helping me out.
+</I>&gt;&gt;<i> To date, I've tried everything short of reformatting the hard drive -
+</I>&gt;&gt;<i> nothing seems to work. When I start the simulator,
+</I>&gt;&gt;<i> it totally skips the message to create an estate. Then, if I try to
+</I>&gt;&gt;<i> create a region, it crashes saying that the region
+</I>&gt;&gt;<i> does not belong to an estate. A very frustrating &quot;catch 22&quot; experience.
+</I>&gt;&gt;<i> If I get a solution, I will be sure to post for others who may run into
+</I>&gt;&gt;<i> this in the future.
+</I>&gt;&gt;<i> Wayne
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Nov 16, 2011 at 7:04 AM, Gwyneth Llewelyn &lt;gwyneth.llewelyn@**
+</I>&gt;&gt;<i> gwynethllewelyn.net &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gwyneth.llewelyn at gwynethllewelyn.net</A>&gt;
+</I>&gt;&gt;<i>  &lt;mailto:gwyneth.llewelyn@**gwynethllewelyn.net&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gwyneth.llewelyn at gwynethllewelyn.net</A>&gt;&gt;&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Dear Wayne,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    I get this error when launching a home-based region to connect with a
+</I>&gt;&gt;<i> server-based grid. The home-based region is
+</I>&gt;&gt;<i>    connecting to an external MySQL database, and I get this error
+</I>&gt;&gt;<i> sometimes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Why? Apparently what happens is that DynDNS is sometimes slow in
+</I>&gt;&gt;<i> updating the IP address for my home connection.
+</I>&gt;&gt;<i>    When that happens, the MySQL database, which is configured to accept
+</I>&gt;&gt;<i> connections from a very limited number of
+</I>&gt;&gt;<i>    hosts, will reject the connection. I get this &quot;Region XXX is not part
+</I>&gt;&gt;<i> of an estate&quot; when that happens: the
+</I>&gt;&gt;<i>    regions.ini file gets launched, but the first connection call to MySQL
+</I>&gt;&gt;<i> is to check if that region is part of an
+</I>&gt;&gt;<i>    Estate, and when that request fails, OpenSim crashes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    I'm not sure if that's the same problem you have, but it could jusy be
+</I>&gt;&gt;<i> related to that: your OpenSim is not being
+</I>&gt;&gt;<i>    able to connect to the database. Check the login, the password, the
+</I>&gt;&gt;<i> database name, and if your IP address is allowed
+</I>&gt;&gt;<i>    to connect to MySQL (even if everything is run locally on your
+</I>&gt;&gt;<i> machine, it still requires permission to connect to
+</I>&gt;&gt;<i>    &quot;localhost&quot;).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    - Gwyn
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    On 2011/11/15, at 13:34, Wayne wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>      Hello Everyone,
+</I>&gt;&gt;&gt;<i>    I recently fired up opensim again after being shutdown for a move to
+</I>&gt;&gt;&gt;<i> another state. The problem I'm having is that
+</I>&gt;&gt;&gt;<i>    each time I try to create a new region or load the regions from my
+</I>&gt;&gt;&gt;<i> regions.ini file, opensim crashes with the
+</I>&gt;&gt;&gt;<i>    message: &quot;Region .... is not part of an estate.&quot;
+</I>&gt;&gt;&gt;<i>    How can I reset this process or get my set-up back in sync?
+</I>&gt;&gt;&gt;<i>    I've tried deleting MySql DB's and recreating but somewhere it is
+</I>&gt;&gt;&gt;<i> holding on to an existing estate and never gives
+</I>&gt;&gt;&gt;<i>    me the option to create a new estate.
+</I>&gt;&gt;&gt;<i>    Thanks for the help.
+</I>&gt;&gt;&gt;<i>    Wayne
+</I>&gt;&gt;&gt;<i>    ______________________________**_________________
+</I>&gt;&gt;&gt;<i>    Opensim-users mailing list
+</I>&gt;&gt;&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.</A>**
+</I>&gt;&gt;&gt;<i> berlios.de &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;&gt;&gt;<i>    <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    --
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    &quot;I'm not building a game. I'm building a new country.&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    ______________________________**_________________
+</I>&gt;&gt;<i>    Opensim-users mailing list
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.</A>**
+</I>&gt;&gt;<i> berlios.de &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;&gt;
+</I>&gt;&gt;<i>    <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111120/ad61e20f/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20111120/ad61e20f/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008605.html">[Opensim-users] Region not part of an estate
+</A></li>
+	<LI>Next message: <A HREF="008632.html">[Opensim-users] Region not part of an estate
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8630">[ date ]</a>
+              <a href="thread.html#8630">[ thread ]</a>
+              <a href="subject.html#8630">[ subject ]</a>
+              <a href="author.html#8630">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

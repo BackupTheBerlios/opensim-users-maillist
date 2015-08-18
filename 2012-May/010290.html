@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] _wapi_handle_unref error messages
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20_wapi_handle_unref%20error%20messages&In-Reply-To=%3C4FA98349.5060103%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010289.html">
+   <LINK REL="Next"  HREF="010293.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] _wapi_handle_unref error messages</H1>
+    <B>Marcus Llewellyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20_wapi_handle_unref%20error%20messages&In-Reply-To=%3C4FA98349.5060103%40gmail.com%3E"
+       TITLE="[Opensim-users] _wapi_handle_unref error messages">marcus.llewellyn at gmail.com
+       </A><BR>
+    <I>Tue May  8 22:34:17 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010289.html">[Opensim-users] _wapi_handle_unref error messages
+</A></li>
+        <LI>Next message: <A HREF="010293.html">[Opensim-users] _wapi_handle_unref error messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10290">[ date ]</a>
+              <a href="thread.html#10290">[ thread ]</a>
+              <a href="subject.html#10290">[ subject ]</a>
+              <a href="author.html#10290">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It is possible that it's Mono that's glitching here, and not OpenSim. I 
+ran into wapi error a long time ago. I don't remember specifics at this 
+point, and I don't know if what worked for me will solve your problem, 
+but you can give it a whirl.
+
+Mono's wapi uses actual files to keep track of the file handles. These 
+are typically stored in $HOME/.wapi and on rare occasions a file in 
+there can misbehave. So long as you make sure you're not currently 
+running any Mono applications that may be using that .wapi directory, it 
+is safe to go in there and simply delete all of the contents. Taking 
+that action cleared up the wapi errors I encountered.
+
+Marcus
+
+
+On 5/7/2012 6:26 PM, Gudule Lapointe wrote:
+&gt;<i> Well of course I googled too. What I don't understand is where is the 
+</I>&gt;<i> difference between both configs, the one where it works and the one 
+</I>&gt;<i> where it doesn't.
+</I>&gt;<i> Giving scripts always worked on the good ones (one of the &quot;twin&quot; 
+</I>&gt;<i> debian, one freebsd and one ubuntu), and always didn't in the bad one 
+</I>&gt;<i> (the other twin debian).
+</I>&gt;<i>
+</I>&gt;<i> Now I have another clue: could this happen when system memory is 
+</I>&gt;<i> overloaded?
+</I>&gt;<i> Actually my two &quot;twin&quot; servers do not have same charge:
+</I>&gt;<i> - the good twin is loaded with a lighter region.
+</I>&gt;<i> - the &quot;bad&quot; twin seems to work fine when only loaded with a light region.
+</I>&gt;<i> - the &quot;heavy&quot; region works fine on the other systems, and these have 
+</I>&gt;<i> more RAM.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;<i>
+</I>&gt;<i> Le 7 mai 2012 &#224; 19:48, Justin Clark-Casey a &#233;crit :
+</I>&gt;<i>
+</I>&gt;&gt;<i> A quick google [1] seems to indicate that these are due to attempts 
+</I>&gt;&gt;<i> to close the same (file?) handle twice.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In theory, this shouldn't cause any problem, but maybe there is 
+</I>&gt;&gt;<i> another cause of this error that is less benign.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> One thing to try is cleaning out existing *.dll files in 
+</I>&gt;&gt;<i> ScriptEngines (or deleting the whole directory if you don't mind 
+</I>&gt;&gt;<i> losing script state) and see if that makes any difference.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If there's a script that persistently does not work then you could 
+</I>&gt;&gt;<i> post it on the mantis (though this is less helpful if it works in an 
+</I>&gt;&gt;<i> identical build, which I think is what you're saying?)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If this has only suddenly started happening then the most helpful 
+</I>&gt;&gt;<i> thing to do would be to git bisect the code to identify the exact 
+</I>&gt;&gt;<i> commit which triggered this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [1] 
+</I>&gt;&gt;<i> <A HREF="http://mono.1490590.n4.nabble.com/wapi-handle-unref-what-does-it-mean-td1521963.html">http://mono.1490590.n4.nabble.com/wapi-handle-unref-what-does-it-mean-td1521963.html</A>
+</I>&gt;&gt;<i> On 07/05/12 15:29, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;<i> When installing a new server, I get these new obscure messages in 
+</I>&gt;&gt;&gt;<i> the log:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> ** (OpenSim.exe:13445): WARNING **: _wapi_handle_unref: Attempting 
+</I>&gt;&gt;&gt;<i> to unref unused handle 0xe
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I don't understand well, as this server is the exact replication of 
+</I>&gt;&gt;&gt;<i> another one, same OS version, same packages
+</I>&gt;&gt;&gt;<i> installed, same opensim build... And even same region.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It seems related to some scripts, and the ones I identified were not 
+</I>&gt;&gt;&gt;<i> launching. I have no clue of the other ones, I
+</I>&gt;&gt;&gt;<i> can't see for now what they could have in common. The two I 
+</I>&gt;&gt;&gt;<i> identified were an NPC script, and hyper gate gateway (less
+</I>&gt;&gt;&gt;<i> in common).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I tried to launch these scripts in an empty region too, same result.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Anyone has a clue on where to look?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;&gt;&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;&gt;&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120508/05ba9790/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120508/05ba9790/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010289.html">[Opensim-users] _wapi_handle_unref error messages
+</A></li>
+	<LI>Next message: <A HREF="010293.html">[Opensim-users] _wapi_handle_unref error messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10290">[ date ]</a>
+              <a href="thread.html#10290">[ thread ]</a>
+              <a href="subject.html#10290">[ subject ]</a>
+              <a href="author.html#10290">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

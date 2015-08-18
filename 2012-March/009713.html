@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Uniqueness in MySQL 'useraccounts'
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Uniqueness%20in%20MySQL%20%27useraccounts%27&In-Reply-To=%3C035f01ccfba0%24b7224f80%242566ee80%24%40freeserve.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009709.html">
+   <LINK REL="Next"  HREF="009717.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Uniqueness in MySQL 'useraccounts'</H1>
+    <B>Kevin Buckley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Uniqueness%20in%20MySQL%20%27useraccounts%27&In-Reply-To=%3C035f01ccfba0%24b7224f80%242566ee80%24%40freeserve.co.uk%3E"
+       TITLE="[Opensim-users] Uniqueness in MySQL 'useraccounts'">kevin at buckley70.freeserve.co.uk
+       </A><BR>
+    <I>Tue Mar  6 14:54:57 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009709.html">[Opensim-users] Uniqueness in MySQL 'useraccounts'
+</A></li>
+        <LI>Next message: <A HREF="009717.html">[Opensim-users] Uniqueness in MySQL 'useraccounts'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9713">[ date ]</a>
+              <a href="thread.html#9713">[ thread ]</a>
+              <a href="subject.html#9713">[ subject ]</a>
+              <a href="author.html#9713">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The original question was whether there was an issue with giving the
+composite key 'Name' (in useraccounts) the UNIQUE attribute as that is
+useful when implementing a concurrent sign-up system.
+
+And I guess the next question would be: is it possible to make 'Name' UNIQUE
+by default in the Opensim release?
+
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Diva Canto
+Sent: 06 March 2012 03:31
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Uniqueness in MySQL 'useraccounts'
+
+Users are uniquely identified with UUIDs. If you search out there, 
+you'll find the probability of UUID collisions, which is very small. But 
+that mathematical probability doesn't really matter compared to the high 
+probability that *people* will do all sorts of weird things regarding 
+UUID reuse, some by accident, some maliciously.
+
+The Hypergrid has security in place for dealing with collisions of user 
+UUIDs. Basically if an HG visitor with a certain UUID comes into a grid 
+where there is a local user with the same UUID, that visitor is denied 
+entry.
+
+On 3/5/2012 12:26 PM, Karen Palen wrote:
+&gt;<i> As was pointed out, hypergrid avatar names are not stored in the
+</I>&gt;<i> database, however this is only one possible source of confusion or
+</I>&gt;<i> duplication if only FirstName + LastName are used.
+</I>&gt;<i>
+</I>&gt;<i> As far as I know, the only reliable identifier of an avatar is the UUID
+</I>&gt;<i> in the database, but that is entirely local! The UUID for example is
+</I>&gt;<i> used to identify the Creator and Owner of objects for permissions.
+</I>&gt;<i>
+</I>&gt;<i> My understanding is that you are correct in identifying unique hypergrid
+</I>&gt;<i> IDs, but uniquely identifying a hypergrid visitor is an area where much
+</I>&gt;<i> work is being done. This is important when assigning permissions to
+</I>&gt;<i> objects created/owned by a visiting Avatar for example.
+</I>&gt;<i>
+</I>&gt;<i> I have not looked at this for nearly a year now (i.e. several OpenSim
+</I>&gt;<i> revisions!) so there are almost certainly things that are different now.
+</I>&gt;<i>
+</I>&gt;<i> I have always found that a few test cases combined with inspection of
+</I>&gt;<i> associated the database entries via an SQL manager  package is the
+</I>&gt;<i> easiest and fastest way to nail down exactly what is happening (as a
+</I>&gt;<i> Linux hacker I like MYSQL Admin, but it is only one of many). This
+</I>&gt;<i> process is aided greatly by using a Diva distro to create a &quot;one of&quot;
+</I>&gt;<i> grid with only the database entries of interest.
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i> On 03/05/2012 09:54 AM, Kevin Buckley wrote:
+</I>&gt;&gt;<i> Hi Karen
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As far as I understand (or can guess!), the concept is that the AV UID
+</I>&gt;&gt;<i> (PrincipalID) and asset UID's are created by using a timestamp variant of
+</I>&gt;&gt;<i> UUID (so I'm using the one provided conveniently by MySQL which provides
+</I>&gt;&gt;<i> temporal separation plus 48 bit random, spatial separation).  So that
+</I>takes
+&gt;&gt;<i> care of the nuts and bolts.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And yes I can see that, in the hypergrid case, there is the issue of
+</I>names
+&gt;&gt;<i> which are unique within each OS implementation (which I'm trying to deal
+</I>&gt;&gt;<i> with now) but not able to be guaranteed unique everywhere as they are
+</I>chosen
+&gt;&gt;<i> by people who are not known for their randomness.  I am assuming that the
+</I>&gt;&gt;<i> combination of locally enforced, unique FirstName+LastName plus host ID,
+</I>&gt;&gt;<i> provides a globally unique name scheme even in the hypergrid scenario.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is that correct?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is the host ID you referred to, the ServiceURL field in the same table
+</I>&gt;&gt;<i> (useraccounts)?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Kevin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Karen Palen
+</I>&gt;&gt;<i> Sent: 05 March 2012 16:10
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] Uniqueness in MySQL 'useraccounts'
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I suspect the answer is that you need more information than just those
+</I>&gt;&gt;<i> two fields.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am thinking of the fairly common case in Hypergrid usage where two
+</I>&gt;&gt;<i> avatars have the same name, distinguished only by the field that tells
+</I>&gt;&gt;<i> their host system.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have used this for testing on many occasions.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Karen
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 03/05/2012 04:45 AM, Kevin Buckley wrote:
+</I>&gt;&gt;&gt;<i> Hi - Thanks for the quick response.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I understand the reasons why PrincipalID is the Primary Key and hence
+</I>&gt;&gt;<i> should
+</I>&gt;&gt;&gt;<i> be unique (and I now realise my original question was malformed).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The actual question is: Why isn't 'Name' (the composite key including
+</I>&gt;&gt;&gt;<i> FirstName and LastName) defined as Unique?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Defining it as Unique certainly works and causes MySQL to throw Error
+</I>1062
+&gt;&gt;&gt;<i> in response to an attempt to create  a duplicate FirstName/LastName
+</I>entry
+&gt;&gt;&gt;<i> which is the (my) required behaviour.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So I am wondering why 'Name' isn't defined as Unique when the database
+</I>&gt;&gt;&gt;<i> tables are created (or upgraded) by Opensim, given that it goes to the
+</I>&gt;&gt;&gt;<i> trouble of defining it in the first place!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of M.E.
+</I>Verhagen
+&gt;&gt;&gt;<i> Sent: 04 March 2012 23:42
+</I>&gt;&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> Subject: Re: [Opensim-users] Uniqueness in MySQL 'useraccounts'
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> the PrincipalID field is already the primary key.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> There can be only one primary key.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> This uuid key is the unique identifier on wich an avatar is idenified.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> When you write you own member system with direct database manipulation
+</I>&gt;&gt;&gt;<i> than you should check if the avatar is unique or else you will end up
+</I>&gt;&gt;&gt;<i> with more than one avatar name attached to an uuid.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 2012/3/4, Kevin Buckley&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt;:
+</I>&gt;&gt;&gt;&gt;<i> I hope this is not covering old ground.  I'm playing with a member
+</I>system
+&gt;&gt;&gt;&gt;<i> for standalone OpenSim and I'm trying to decide the best way to deal
+</I>with
+&gt;&gt;&gt;&gt;<i> the FirstName/LastName uniqueness issue (as my sign-up process allows
+</I>&gt;&gt;&gt;&gt;<i> multiple, concurrent users).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I notice that the default useraccounts table has a composite key called
+</I>&gt;&gt;&gt;<i> Name
+</I>&gt;&gt;&gt;&gt;<i> (which consists of FirstName and LastName).  But it isn't defined as a
+</I>&gt;&gt;&gt;&gt;<i> primary key.  So duplicate name inserts are not trapped as a result of
+</I>&gt;&gt;&gt;<i> that
+</I>&gt;&gt;&gt;&gt;<i> (I believe that is the reason, anyway).
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Does anyone know if there is a reason 'Name' is not defined as a
+</I>primary
+&gt;&gt;&gt;&gt;<i> key?  Is there a problem with making it so?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I have other ways I can deal with this but trapping it at the
+</I>&gt;&gt;<i> useraccounts
+</I>&gt;&gt;&gt;&gt;<i> table insert would be the best way.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009709.html">[Opensim-users] Uniqueness in MySQL 'useraccounts'
+</A></li>
+	<LI>Next message: <A HREF="009717.html">[Opensim-users] Uniqueness in MySQL 'useraccounts'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9713">[ date ]</a>
+              <a href="thread.html#9713">[ thread ]</a>
+              <a href="subject.html#9713">[ subject ]</a>
+              <a href="author.html#9713">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

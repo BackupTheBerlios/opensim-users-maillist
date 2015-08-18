@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Combat HUD help :P
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Combat%20HUD%20help%20%3AP&In-Reply-To=%3C4D5BBCF7.70201%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006620.html">
+   <LINK REL="Next"  HREF="006622.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Combat HUD help :P</H1>
+    <B>InuYasha Meiji</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Combat%20HUD%20help%20%3AP&In-Reply-To=%3C4D5BBCF7.70201%40gmail.com%3E"
+       TITLE="[Opensim-users] Combat HUD help :P">inuyasha.meiji at gmail.com
+       </A><BR>
+    <I>Wed Feb 16 13:03:03 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006620.html">[Opensim-users] Combat HUD help :P
+</A></li>
+        <LI>Next message: <A HREF="006622.html">[Opensim-users] Combat HUD help :P
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6621">[ date ]</a>
+              <a href="thread.html#6621">[ thread ]</a>
+              <a href="subject.html#6621">[ subject ]</a>
+              <a href="author.html#6621">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 2/16/2011 6:09 AM, Jawa Lunk wrote:
+&gt;<i> Thanks for the script, it only works when the object is placed on the ground
+</I>&gt;<i> though.
+</I>&gt;<i>
+</I>&gt;<i> Here is something strange though...I turned land damage &quot;on&quot;, and shot my
+</I>&gt;<i> gun at another avatar, and the gun DID DAMAGE...but to me!  LOL
+</I>&gt;<i>
+</I>&gt;<i> Every time I shoot it does damage to me...now if I can just figure out &quot;how&quot;
+</I>&gt;<i> I may be able to get guns to work in OpenSim.
+</I>&gt;<i>
+</I>&gt;<i> here is the script I am using;
+</I>&gt;<i>
+</I>&gt;<i> // Gun script
+</I>&gt;<i> // John Linden
+</I>&gt;<i>
+</I>&gt;<i> // where the gun attaches itself if you click on it
+</I>&gt;<i> // switch this to ATTACH_LHAND if you are left-handed
+</I>&gt;<i> integer gAttachPart = ATTACH_RHAND;
+</I>&gt;<i>
+</I>&gt;<i> string  INSTR_HELD_1 = &quot;Enter Mouselook (press 'M') to shoot me.&quot;;
+</I>&gt;<i> string  INSTR_HELD_2 = &quot;Right-click and choose 'Detach' to take me off.&quot;;
+</I>&gt;<i>
+</I>&gt;<i> string  INSTR_NOT_HELD_1 = &quot;To wear and use me, right click and choose&quot;;
+</I>&gt;<i> string  INSTR_NOT_HELD_2 = &quot;Acquire -&gt;  Attach -&gt;  Right Hand.&quot;;
+</I>&gt;<i>
+</I>&gt;<i> string  INSTR_NOT_OWNER_1 = &quot;To use this gun, take it (right-click and
+</I>&gt;<i> choose 'Take'.)&quot;;
+</I>&gt;<i> string  INSTR_NOT_OWNER_2 = &quot;Then, drag it from your inventory onto
+</I>&gt;<i> yourself.&quot;;
+</I>&gt;<i>
+</I>&gt;<i> // this is a permission combination we check for many times
+</I>&gt;<i> // I define it here so we don't have to keep typing it
+</I>&gt;<i> // guns need to take controls, attach themselves, and possibly
+</I>&gt;<i> // trigger animations
+</I>&gt;<i> // NOTE: since I can't initialize to an expression (even if it is
+</I>&gt;<i> // all constants), this moved to default { state_entry() }
+</I>&gt;<i> integer gDesiredPerm;
+</I>&gt;<i> //  Indicates whether wearer has yet given permission
+</I>&gt;<i> integer gHavePermissions;
+</I>&gt;<i>
+</I>&gt;<i> // Bullet travel speed
+</I>&gt;<i> float   gBulletSpeed = 45.0;
+</I>&gt;<i>
+</I>&gt;<i> // when we last fired a shot
+</I>&gt;<i> float   gLastFireTime = 0;
+</I>&gt;<i> // how long it takes to reload when tapping
+</I>&gt;<i> float   gTapReloadTime = 0.05;
+</I>&gt;<i> // how long it takes to reload when holding
+</I>&gt;<i> float   gHoldReloadTime = 1.0;
+</I>&gt;<i> // how long it takes when we're out of ammo
+</I>&gt;<i> float   gOutOfAmmoReloadTime = 1.4;
+</I>&gt;<i> // how many shots before reload is necessary
+</I>&gt;<i> integer gAmmoClipSize = 6;
+</I>&gt;<i> // how much ammo we have right now
+</I>&gt;<i> integer gAmmo;
+</I>&gt;<i>
+</I>&gt;<i> // HACK: how far away the eye is from the avatar's center (approximately)
+</I>&gt;<i> vector  gEyeOffset =&lt;0.0, 0.0, 0.84&gt;;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> say(string msg)
+</I>&gt;<i> {
+</I>&gt;<i>      llSay(0, msg);
+</I>&gt;<i> }
+</I>&gt;<i> debug(string msg)
+</I>&gt;<i> {
+</I>&gt;<i> //    llSay(0, msg);
+</I>&gt;<i> }
+</I>&gt;<i> func_debug(string msg)
+</I>&gt;<i> {
+</I>&gt;<i> //    llSay(0, msg);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> // the gun has only one state
+</I>&gt;<i>
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>      on_rez(integer start_param)
+</I>&gt;<i>      {
+</I>&gt;<i>          func_debug(&quot;on_rez&quot;);
+</I>&gt;<i>          // HACK: try to compensate for height of avatar
+</I>&gt;<i>          // by changing firing position appropriately
+</I>&gt;<i>          vector size = llGetAgentSize(llGetOwner());
+</I>&gt;<i>          gEyeOffset.z = gEyeOffset.z * (size.z / 2.0);
+</I>&gt;<i>
+</I>&gt;<i>          llWhisper(0,&quot;Press 'M' to enter mouslook and the mouse button to
+</I>&gt;<i> fire&quot;);
+</I>&gt;<i>
+</I>&gt;<i>          // NOTE: can't do this if we want to attach by dragging from
+</I>&gt;<i>          // inventory onto the av, because the llResetScript(); clears
+</I>&gt;<i>          // all the callbacks, including attach()
+</I>&gt;<i> //        llResetScript();
+</I>&gt;<i>
+</I>&gt;<i>          // NOTE 2: This can be uncommented in 1.1 because you won't have
+</I>&gt;<i>          // to ask for permissions, you can just take them.  But for now
+</I>&gt;<i>          // it pops up two dialog boxes if you drag onto the av, so I'll
+</I>&gt;<i>          // leave it out.
+</I>&gt;<i>          // Try to attach to the rezzer
+</I>&gt;<i> //        if ( !gHavePermissions )
+</I>&gt;<i> //        {
+</I>&gt;<i> //            llRequestPermissions(llGetOwner(), gDesiredPerm);
+</I>&gt;<i> //        }
+</I>&gt;<i>      }
+</I>&gt;<i>
+</I>&gt;<i>      state_entry()
+</I>&gt;<i>      {
+</I>&gt;<i>          func_debug(&quot;default state_entry&quot;);
+</I>&gt;<i>          gHavePermissions = FALSE;
+</I>&gt;<i>          // this should be initialized directly with the variable
+</I>&gt;<i>          // but I can't do that due to a bug
+</I>&gt;<i>          gDesiredPerm = (PERMISSION_TAKE_CONTROLS
+</I>&gt;<i>                          | PERMISSION_TRIGGER_ANIMATION);
+</I>&gt;<i>          // Start with a full clip
+</I>&gt;<i>          gAmmo = gAmmoClipSize;
+</I>&gt;<i>          llResetTime();
+</I>&gt;<i>      }
+</I>&gt;<i>
+</I>&gt;<i>      // the player has touched us (left-clicked)
+</I>&gt;<i>      // give directions
+</I>&gt;<i>      touch_start(integer tnum)
+</I>&gt;<i>      {
+</I>&gt;<i>          func_debug(&quot;touch_start&quot;);
+</I>&gt;<i>
+</I>&gt;<i>          // Guns only work for their owner
+</I>&gt;<i>          if ( llDetectedKey(0) == llGetOwner() )
+</I>&gt;<i>          {
+</I>&gt;<i>              if ( gHavePermissions )
+</I>&gt;<i>              {
+</I>&gt;<i>                  llWhisper(0, INSTR_HELD_1);
+</I>&gt;<i>                  llWhisper(0, INSTR_HELD_2);
+</I>&gt;<i>              } else
+</I>&gt;<i>              {
+</I>&gt;<i>                  llWhisper(0, INSTR_NOT_HELD_1);
+</I>&gt;<i>                  llWhisper(0, INSTR_NOT_HELD_2);
+</I>&gt;<i>              }
+</I>&gt;<i>          } else
+</I>&gt;<i>          {
+</I>&gt;<i>              // Not the owner
+</I>&gt;<i>              llWhisper(0, INSTR_NOT_OWNER_1);
+</I>&gt;<i>              llWhisper(0, INSTR_NOT_OWNER_2);
+</I>&gt;<i>          }
+</I>&gt;<i>      }
+</I>&gt;<i>
+</I>&gt;<i>      // Player attaches us, either by dragging onto self or from pie menu
+</I>&gt;<i>      attach(key av_key)
+</I>&gt;<i>      {
+</I>&gt;<i>          func_debug(&quot;attach&quot;);
+</I>&gt;<i>
+</I>&gt;<i>          if (av_key != NULL_KEY)
+</I>&gt;<i>          {
+</I>&gt;<i>              // Can't attach if we don't own it
+</I>&gt;<i>              if ( av_key != llGetOwner() )
+</I>&gt;<i>              {
+</I>&gt;<i>                  llWhisper(0, INSTR_NOT_OWNER_1);
+</I>&gt;<i>                  llWhisper(0, INSTR_NOT_OWNER_2);
+</I>&gt;<i>                  return;
+</I>&gt;<i>              }
+</I>&gt;<i>
+</I>&gt;<i>              //
+</I>&gt;<i>              //  Always request permissions on attach, as we may be
+</I>&gt;<i> re-rezzing on login
+</I>&gt;<i>              llRequestPermissions(av_key, gDesiredPerm);
+</I>&gt;<i>
+</I>&gt;<i>              // run_time_permissions() is executed after this call
+</I>&gt;<i>          } else
+</I>&gt;<i>          {
+</I>&gt;<i>              func_debug(&quot;  detach&quot;);
+</I>&gt;<i>
+</I>&gt;<i>              if ( gHavePermissions )
+</I>&gt;<i>              {
+</I>&gt;<i>                  // we are being detached
+</I>&gt;<i>                  llStopAnimation(&quot;hold_r_handgun&quot;);
+</I>&gt;<i>                  llStopAnimation(&quot;hold_r_handgun&quot;);
+</I>&gt;<i>                  llStopAnimation(&quot;aim_r_handgun&quot;);
+</I>&gt;<i>                  llReleaseControls();
+</I>&gt;<i>                  //llSetRot(&lt;0.0, 0.0, 0.0, 1.0&gt;);
+</I>&gt;<i>                  gHavePermissions = FALSE;
+</I>&gt;<i>              }
+</I>&gt;<i>          }
+</I>&gt;<i>      }
+</I>&gt;<i>
+</I>&gt;<i>      // this is called whenever llRequestPermissions() returns
+</I>&gt;<i>      // i.e. the user has responded or dismissed the dialog
+</I>&gt;<i>      // perm is the permissions we now have
+</I>&gt;<i>      run_time_permissions(integer perm)
+</I>&gt;<i>      {
+</I>&gt;<i>          func_debug(&quot;run_time_permissions&quot;);
+</I>&gt;<i>
+</I>&gt;<i>          // see if we now have the permissions we need
+</I>&gt;<i>          if ( (perm&amp;  gDesiredPerm) == gDesiredPerm )
+</I>&gt;<i>          {
+</I>&gt;<i>              func_debug(&quot;  got perms&quot;);
+</I>&gt;<i>
+</I>&gt;<i>              // we got the permissions we asked for
+</I>&gt;<i>              gHavePermissions = TRUE;
+</I>&gt;<i>              llTakeControls(CONTROL_ML_LBUTTON, TRUE, FALSE);
+</I>&gt;<i>              llStartAnimation(&quot;aim_r_handgun&quot;);
+</I>&gt;<i>          } else
+</I>&gt;<i>          {
+</I>&gt;<i>              func_debug(&quot;  didn't get perms&quot;);
+</I>&gt;<i>
+</I>&gt;<i>              // we didn't get them, kill ourselves
+</I>&gt;<i>              llDie();
+</I>&gt;<i>          }
+</I>&gt;<i>      }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>      // the player has used the controls, process them
+</I>&gt;<i>      control(key owner, integer level, integer edge)
+</I>&gt;<i>      {
+</I>&gt;<i>          func_debug(&quot;control&quot;);
+</I>&gt;<i>
+</I>&gt;<i>          // has our gun reloaded?
+</I>&gt;<i>          float time = llGetTime();
+</I>&gt;<i>
+</I>&gt;<i>          // see if av has fired
+</I>&gt;<i>          // (edge&amp;  level) == down edges, (edge&amp;  !level) == up edges
+</I>&gt;<i>          // repeat rate is faster for tapping than holding
+</I>&gt;<i>          if ( ( ((edge&amp;  level)&amp;  CONTROL_ML_LBUTTON)
+</I>&gt;<i>                  &amp;&amp;  (time&gt;  gTapReloadTime) )
+</I>&gt;<i>             || ( (time&gt;  gHoldReloadTime)
+</I>&gt;<i>                 &amp;&amp;  (level&amp;  CONTROL_ML_LBUTTON) ) )
+</I>&gt;<i>          {
+</I>&gt;<i>              // if player is out of ammo, must wait for reload
+</I>&gt;<i>              if ( (gAmmo&gt;= 1) || (time&gt;  gOutOfAmmoReloadTime) )
+</I>&gt;<i>              {
+</I>&gt;<i>                  // bang!
+</I>&gt;<i>                  llTriggerSound(&quot;45shoot&quot;, 2.0);
+</I>&gt;<i>
+</I>&gt;<i>            llParticleSystem([ PSYS_PART_MAX_AGE,1.9,
+</I>&gt;<i>     PSYS_PART_FLAGS,1,
+</I>&gt;<i>     PSYS_PART_START_COLOR,&lt;1,1,1&gt;,
+</I>&gt;<i>     PSYS_PART_END_COLOR,&lt;1,1,1&gt;,
+</I>&gt;<i>     PSYS_PART_START_SCALE,&lt;0.6,0.6,0.6&gt;,
+</I>&gt;<i>     PSYS_PART_END_SCALE,&lt;1.5,1.5,1.5&gt;,
+</I>&gt;<i>     PSYS_SRC_PATTERN, PSYS_SRC_PATTERN_EXPLODE,
+</I>&gt;<i>     PSYS_SRC_BURST_RATE,0.1,
+</I>&gt;<i>     PSYS_SRC_ACCEL, 0.8 * llRot2Fwd(llGetRot()),
+</I>&gt;<i>     PSYS_SRC_BURST_PART_COUNT,10,
+</I>&gt;<i>     PSYS_SRC_BURST_RADIUS,0.02,
+</I>&gt;<i>     PSYS_SRC_BURST_SPEED_MIN,0.0,
+</I>&gt;<i>     PSYS_SRC_BURST_SPEED_MAX,0.9,
+</I>&gt;<i>     PSYS_SRC_TARGET_KEY,llGetOwner(),
+</I>&gt;<i>     PSYS_SRC_ANGLE_BEGIN,0.0,
+</I>&gt;<i>     PSYS_SRC_ANGLE_END,0.0,
+</I>&gt;<i>     PSYS_SRC_OMEGA,&lt;0.5,0.5,0.5&gt;,
+</I>&gt;<i>     PSYS_SRC_MAX_AGE, 0.6,
+</I>&gt;<i>     // PSYS_SRC_TEXTURE, &quot;8146459e-47a2-47ce-93d6-bac9359afa84&quot;,
+</I>&gt;<i>     PSYS_SRC_TEXTURE, &quot;poof&quot;,
+</I>&gt;<i>     PSYS_PART_START_ALPHA, 0.3,
+</I>&gt;<i>     PSYS_PART_END_ALPHA, 0.0
+</I>&gt;<i>     ]);
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>                  llResetTime();  // we fired, set timer back to 0
+</I>&gt;<i>
+</I>&gt;<i>                  // HACK: gun shoots from gun pos, mouselook looks
+</I>&gt;<i>                  // from player's eye, so we try to move the gun
+</I>&gt;<i>                  // up to the eye.  but we really don't
+</I>&gt;<i>                  // know where it is, so we guess (see gEyeOffset)
+</I>&gt;<i>                  vector      my_pos = llGetPos() + gEyeOffset;
+</I>&gt;<i>                  rotation    my_rot = llGetRot();
+</I>&gt;<i>                  vector      my_fwd = llRot2Fwd(my_rot);
+</I>&gt;<i>
+</I>&gt;<i>                  // Rez a bullet!
+</I>&gt;<i>                  llRezObject(&quot;Bullet&quot;,
+</I>&gt;<i>                      my_pos,
+</I>&gt;<i>                      my_fwd * gBulletSpeed,
+</I>&gt;<i>                      my_rot,
+</I>&gt;<i>                      1);
+</I>&gt;<i>
+</I>&gt;<i>                  // decrease ammo count
+</I>&gt;<i>                  --gAmmo;
+</I>&gt;<i>                  if ( gAmmo&gt;  0 )
+</I>&gt;<i>                  {
+</I>&gt;<i>                      // still bullets left
+</I>&gt;<i>                  }
+</I>&gt;<i>                  else if ( gAmmo == 0 )
+</I>&gt;<i>                  {
+</I>&gt;<i>                      // we just ran out of shots
+</I>&gt;<i>                      // play reload sound here after a delay
+</I>&gt;<i>                      llTriggerSound(&quot;45reload&quot;, 2.0);
+</I>&gt;<i>                  }
+</I>&gt;<i>                  else // gAmmo&lt;  0
+</I>&gt;<i>                  {
+</I>&gt;<i>                      // we've just fired first round of new clip
+</I>&gt;<i>                      gAmmo = gAmmoClipSize - 1;
+</I>&gt;<i>                  }
+</I>&gt;<i>              } else
+</I>&gt;<i>              {
+</I>&gt;<i>                  debug(&quot;Can't shoot, reloading...&quot;);
+</I>&gt;<i>              }
+</I>&gt;<i>          }
+</I>&gt;<i>
+</I>&gt;<i>      } // control
+</I>&gt;<i>
+</I>&gt;<i> } // default state
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I modified it to have smoke when I shoot, so I wonder why it does damage to
+</I>&gt;<i> me when I shoot and how I can make it damage the other avatar instead?
+</I>&gt;<i>
+</I>&gt;<i> any suggestions?
+</I>Tryt to make sure the bullet is rezzed just beyond the barrel tip of the 
+gun.  I don't know for sure, but I once made a cannon in SL, with 
+exploding shells.  I made that mistake once, and the shot was rezzing 
+within the lenght of the barrel and blowing up right on the tip.  So you 
+own bullet might be making contact with the gun and score a hit on you.
+
+Just an idea.
+
+Hope that helped,..
+InuYasha
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110216/d12bfa69/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110216/d12bfa69/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006620.html">[Opensim-users] Combat HUD help :P
+</A></li>
+	<LI>Next message: <A HREF="006622.html">[Opensim-users] Combat HUD help :P
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6621">[ date ]</a>
+              <a href="thread.html#6621">[ thread ]</a>
+              <a href="subject.html#6621">[ subject ]</a>
+              <a href="author.html#6621">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

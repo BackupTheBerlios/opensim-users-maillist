@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Template string for RemoteAdmin control
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Template%20string%20for%20RemoteAdmin%20control&In-Reply-To=%3C4EC4425B.9000702%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008599.html">
+   <LINK REL="Next"  HREF="008597.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Template string for RemoteAdmin control</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Template%20string%20for%20RemoteAdmin%20control&In-Reply-To=%3C4EC4425B.9000702%40googlemail.com%3E"
+       TITLE="[Opensim-users] Template string for RemoteAdmin control">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Nov 17 00:08:11 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008599.html">[Opensim-users] Template string for RemoteAdmin control
+</A></li>
+        <LI>Next message: <A HREF="008597.html">[Opensim-users] Region not part of an estate
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8606">[ date ]</a>
+              <a href="thread.html#8606">[ thread ]</a>
+              <a href="subject.html#8606">[ subject ]</a>
+              <a href="author.html#8606">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It would be great if you could add this information to [1], Chris, so the next poor soul has a shoulder to stand on :)
+
+[1] <A HREF="http://opensimulator.org/wiki/RemoteAdmin">http://opensimulator.org/wiki/RemoteAdmin</A>
+
+On 15/11/11 15:58, Ovi Chris Rouly wrote:
+&gt;<i> Folks,
+</I>&gt;<i> What follows may be of no use to anyone. But, this week I needed it and couldn't find one like it (or anything even
+</I>&gt;<i> close to it). What it is is a simple example of the input required by OpenSim 0.7.2 through its [Remote Admin] control
+</I>&gt;<i> port in order to control, for example, the &quot;create a new user&quot; function.
+</I>&gt;<i> Shown below is a plain text string that OpenSim 0.7.2 will accept through the remoteAdmin control port. Some of you may
+</I>&gt;<i> know and understand the implications of using an XML-based remote procedure calling (RPC) service to control an external
+</I>&gt;<i> application via a few key control tokens, an available network connection, and the former's transmission through that
+</I>&gt;<i> connection. Others may not. So, to be brief, I'll just say that the remoteAdmin port provides such a functionality. And,
+</I>&gt;<i> in order to take advantage of OpenSim's remote admin facility, I &quot;knitted&quot; together some C# source that produced the
+</I>&gt;<i> remoteAdmin control port's required HTTP/1.0 protocol stream with its embedded data tokens. The example that follows is
+</I>&gt;<i> that plain text control/data stream output. I have found that this string will cause OpenSim to &quot;create a new user&quot; on
+</I>&gt;<i> my box with its StandAlone 0.7.2 instance.
+</I>&gt;<i> Maybe I'm wrong, but since I had to work fairly hard to gain this &quot;template string&quot; (and its implications for all the
+</I>&gt;<i> other remoteAdmin functions), I thought maybe it might have value for someone else in the group. Thus, may I offer to
+</I>&gt;<i> toss it out to the OpenSim Users Group. The web site (see the reference below) has other more language-specific,
+</I>&gt;<i> abstract, yet &quot;vital&quot; resources. In particular, the C# methods were *INVALUABLE* as were Justin's helpful words.
+</I>&gt;<i> Respectfully,
+</I>&gt;<i> Chris
+</I>&gt;<i> ref: <A HREF="http://opensimulator.org/wiki/RemoteAdmin">http://opensimulator.org/wiki/RemoteAdmin</A>
+</I>&gt;<i>  &gt;&gt;&gt;&gt;&gt;&gt;EXAMPLE FOLLOWS&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+</I>&gt;<i>
+</I>&gt;<i> POST admin_create_user HTTP/1.0
+</I>&gt;<i> Host: <A HREF="http://10.0.0.12:16384/">http://10.0.0.12:16384/</A>
+</I>&gt;<i> Content-type: text/xml
+</I>&gt;<i> Content-Length: 993
+</I>&gt;<i>
+</I>&gt;<i> &lt;?xml version=&quot;1.0&quot;?&gt;
+</I>&gt;<i> &lt;methodCall&gt;
+</I>&gt;<i> &lt;methodName&gt;admin_create_user&lt;/methodName&gt;
+</I>&gt;<i> &lt;params&gt;
+</I>&gt;<i> &lt;param&gt;
+</I>&gt;<i> &lt;value&gt;
+</I>&gt;<i> &lt;struct&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;password&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;password&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;user_firstname&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;male&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;user_lastname&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;9999&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;user_password&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;password&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;user_email&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;string&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">none at email.com</A>&lt;/string&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;start_region_x&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;int&gt;128&lt;/int&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;member&gt;
+</I>&gt;<i> &lt;name&gt;start_region_y&lt;/name&gt;
+</I>&gt;<i> &lt;value&gt;&lt;int&gt;128&lt;/int&gt;&lt;/value&gt;
+</I>&gt;<i> &lt;/member&gt;
+</I>&gt;<i> &lt;/struct&gt;
+</I>&gt;<i> &lt;/value&gt;
+</I>&gt;<i> &lt;/param&gt;
+</I>&gt;<i> &lt;/params&gt;
+</I>&gt;<i> &lt;/methodCall&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008599.html">[Opensim-users] Template string for RemoteAdmin control
+</A></li>
+	<LI>Next message: <A HREF="008597.html">[Opensim-users] Region not part of an estate
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8606">[ date ]</a>
+              <a href="thread.html#8606">[ thread ]</a>
+              <a href="subject.html#8606">[ subject ]</a>
+              <a href="author.html#8606">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

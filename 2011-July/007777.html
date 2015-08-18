@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] strReplace not functioning in OpenSim?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20strReplace%20not%20functioning%20in%20OpenSim%3F&In-Reply-To=%3CCAC4YQqEoq8pY9RikMMv1i76254j8g9O9wQ5_nm6rBr9ChSv3gA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007776.html">
+   <LINK REL="Next"  HREF="007778.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] strReplace not functioning in OpenSim?</H1>
+    <B>Neil Canham</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20strReplace%20not%20functioning%20in%20OpenSim%3F&In-Reply-To=%3CCAC4YQqEoq8pY9RikMMv1i76254j8g9O9wQ5_nm6rBr9ChSv3gA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] strReplace not functioning in OpenSim?">neil at knowsense.co.uk
+       </A><BR>
+    <I>Wed Jul 27 19:00:09 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007776.html">[Opensim-users] strReplace not functioning in OpenSim?
+</A></li>
+        <LI>Next message: <A HREF="007778.html">[Opensim-users] strReplace not functioning in OpenSim?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7777">[ date ]</a>
+              <a href="thread.html#7777">[ thread ]</a>
+              <a href="subject.html#7777">[ subject ]</a>
+              <a href="author.html#7777">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The issue seems to be the (str = &quot;&quot;) in strReplace - not sure what that
+does, maybe some kind of SL-specific memory optimisation?  Removing that
+made it work for me.
+
+Neil Canham
+CTO vComm Solutions GmbH
+
+On Wed, Jul 27, 2011 at 5:17 PM, Ai Austin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at gmail.com</A>&gt; wrote:
+
+&gt;<i> I seem to be having a problem with some utility functions in LSL in a
+</I>&gt;<i> script I am trying to bringing over from a Second Life display screen...
+</I>&gt;<i> This strReplace function from <A HREF="http://wiki.secondlife.com/**">http://wiki.secondlife.com/**</A>
+</I>&gt;<i> wiki/Combined_Library &lt;<A HREF="http://wiki.secondlife.com/wiki/Combined_Library">http://wiki.secondlife.com/wiki/Combined_Library</A>&gt;which we have used seems to be the problem:
+</I>&gt;<i>
+</I>&gt;<i> I wonder if someone knows the problem, as the two routines used are
+</I>&gt;<i> indicated as implemented in OpenSim.
+</I>&gt;<i>
+</I>&gt;<i> For these tests I was using OpenSim 0.7.1.1 and 0.7.2 dev master and
+</I>&gt;<i> Imprudence and SL 2.8.0 viewers, so I think its not a specifuc version or
+</I>&gt;<i> viewer issue.
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------**-----------
+</I>&gt;<i>
+</I>&gt;<i> string strReplace(string str, string search, string replace) {
+</I>&gt;<i>    return llDumpList2String(**llParseStringKeepNulls((str = &quot;&quot;) + str,
+</I>&gt;<i> [search], []), replace);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> default {
+</I>&gt;<i>    touch_start(integer num){
+</I>&gt;<i>       llSay(0,&quot;avatar=&quot;+**llDetectedName(0));
+</I>&gt;<i>       llSay(0,&quot;avatar_mod=&quot;+**strReplace(llDetectedName(0),&quot; &quot;,&quot;_&quot;));
+</I>&gt;<i>    }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------**------------------
+</I>&gt;<i> The first line works, the second just lists when touched by an avatar with
+</I>&gt;<i> a name like &quot;Ai Austin&quot; it is meant to be able to replace the spaces with
+</I>&gt;<i> underscores and produce &quot;Ai_Austin&quot; but it actually seems to return the null
+</I>&gt;<i> string in OpenSim 0.7.2 dev master r/16364 anyway.
+</I>&gt;<i>
+</I>&gt;<i> avatar=Ai Austin
+</I>&gt;<i> avatar_mod=
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110727/b49772a4/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110727/b49772a4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007776.html">[Opensim-users] strReplace not functioning in OpenSim?
+</A></li>
+	<LI>Next message: <A HREF="007778.html">[Opensim-users] strReplace not functioning in OpenSim?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7777">[ date ]</a>
+              <a href="thread.html#7777">[ thread ]</a>
+              <a href="subject.html#7777">[ subject ]</a>
+              <a href="author.html#7777">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

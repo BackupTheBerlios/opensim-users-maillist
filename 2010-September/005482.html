@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] upgrading to latest release (migration issue)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20upgrading%20to%20latest%20release%20%28migration%20issue%29&In-Reply-To=%3C4C890E34.7080809%40cise.ufl.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005481.html">
+   <LINK REL="Next"  HREF="005494.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] upgrading to latest release (migration issue)</H1>
+    <B>Paul Fishwick</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20upgrading%20to%20latest%20release%20%28migration%20issue%29&In-Reply-To=%3C4C890E34.7080809%40cise.ufl.edu%3E"
+       TITLE="[Opensim-users] upgrading to latest release (migration issue)">fishwick at cise.ufl.edu
+       </A><BR>
+    <I>Thu Sep  9 18:41:24 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005481.html">[Opensim-users] upgrading to latest release (migration issue)
+</A></li>
+        <LI>Next message: <A HREF="005494.html">[Opensim-users] 0.7.0.2 release
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5482">[ date ]</a>
+              <a href="thread.html#5482">[ thread ]</a>
+              <a href="subject.html#5482">[ subject ]</a>
+              <a href="author.html#5482">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>  Good point - I'll probably wait for 0.7.0.2 to emerge. In the mean 
+time, I installed
+0.6.9-rc2 from May and that seems fine.
+-p
+
+On 9/9/2010 11:57 AM, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A> wrote:
+&gt;<i> Yes.
+</I>&gt;<i> The MySql driver that is currently in the master branch is... a 
+</I>&gt;<i> challenge. We have it there because it's the newest one and supposedly 
+</I>&gt;<i> will allow for some future stored procedure optimizations. But it 
+</I>&gt;<i> doesn't work well for normal schema updates. It's a pain in the neck.
+</I>&gt;<i>
+</I>&gt;<i> OpenSim official tagged releases will not have this driver, they will 
+</I>&gt;<i> have the older one, until someone figures out what's wrong with this 
+</I>&gt;<i> newer one. But the master branch has it, because it's the branch that 
+</I>&gt;<i> is trying to push things forward.
+</I>&gt;<i>
+</I>&gt;<i> Bottom line: if you're using developer's code (master head) you're in 
+</I>&gt;<i> for a bumpy ride with this driver. You basically need to do all the 
+</I>&gt;<i> migrations manually. :-/
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> System: Ubuntu 10.04 (64 bit). Mono version 2.4.4
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Has any one encountered this problem when taking a 0.6.9 MySQL database
+</I>&gt;&gt;<i> and trying to run 0.7.1 ? I seem to recall some discussion about 
+</I>&gt;&gt;<i> increasing
+</I>&gt;&gt;<i> the timeout for MySQL, but not sure whether that is the problem. Running
+</I>&gt;&gt;<i> mono OpenSim.exe causes a problem (below) and then hangs at:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [SMTP]: module disabled in configuration
+</I>&gt;&gt;<i> ....shell hangs....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ..................trace of where errors begin................
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 11:01:55 - [MIGRATIONS]: Upgrading AssetStore to latest revision 8.
+</I>&gt;&gt;<i> 11:01:55 - [MIGRATIONS]: NOTE - this may take a while, don't 
+</I>&gt;&gt;<i> interrupt this process!
+</I>&gt;&gt;<i> 11:01:55 - [MIGRATIONS]: Cmd was Duplicate column name 'asset_flags' 
+</I>&gt;&gt;<i> in SQL: ALTER TABLE assets ADD COLUMN asset_flags INTEGER NOT NULL 
+</I>&gt;&gt;<i> DEFAULT 0;
+</I>&gt;&gt;<i> 11:01:55 - [MIGRATIONS]: An error has occurred in the migration. This 
+</I>&gt;&gt;<i> may mean you could see errors trying to run OpenSim. If you see 
+</I>&gt;&gt;<i> database related errors, you will need to fix the issue manually. 
+</I>&gt;&gt;<i> Continuing.
+</I>&gt;&gt;<i> 11:01:55 - [MIGRATIONS]: Updating AssetStore to version 7
+</I>&gt;&gt;<i> 11:02:37 - [MIGRATIONS]: Cmd was Timeout expired.  The timeout period 
+</I>&gt;&gt;<i> elapsed prior to completion of the operation or the server is not 
+</I>&gt;&gt;<i> responding. in SQL: ALTER TABLE assets ADD COLUMN CreatorID 
+</I>&gt;&gt;<i> varchar(128) NOT NULL DEFAULT '';
+</I>&gt;&gt;<i> 11:02:37 - [MIGRATIONS]: An error has occurred in the migration. This 
+</I>&gt;&gt;<i> may mean you could see errors trying to run OpenSim. If you see 
+</I>&gt;&gt;<i> database related errors, you will need to fix the issue manually. 
+</I>&gt;&gt;<i> Continuing.
+</I>&gt;&gt;<i> 11:02:37 - Error loading plugin from 
+</I>&gt;&gt;<i> OpenSim.Services.AssetService.dll, exception System.Exception: 
+</I>&gt;&gt;<i> Connection must be valid and open. in SQL: ROLLBACK;
+</I>&gt;&gt;<i>   at OpenSim.Data.Migration.ExecuteScript 
+</I>&gt;&gt;<i> (System.Data.Common.DbConnection conn, System.String[] script) [0x00000]
+</I>&gt;&gt;<i>   at OpenSim.Data.Migration.ExecuteScript 
+</I>&gt;&gt;<i> (System.Data.Common.DbConnection conn, System.String sql) [0x00000]
+</I>&gt;&gt;<i>   at OpenSim.Data.Migration.ExecuteScript (System.String sql) [0x00000]
+</I>&gt;&gt;<i>   at OpenSim.Data.Migration.Update () [0x00000]
+</I>&gt;&gt;<i>   at OpenSim.Data.MySQL.MySQLAssetData.Initialise (System.String 
+</I>&gt;&gt;<i> connect) [0x00000]
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Paul Fishwick, PhD
+Professor
+University of Florida
+CISE Department, CSE 301
+Gainesville, FL 32611
+Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005481.html">[Opensim-users] upgrading to latest release (migration issue)
+</A></li>
+	<LI>Next message: <A HREF="005494.html">[Opensim-users] 0.7.0.2 release
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5482">[ date ]</a>
+              <a href="thread.html#5482">[ thread ]</a>
+              <a href="subject.html#5482">[ subject ]</a>
+              <a href="author.html#5482">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

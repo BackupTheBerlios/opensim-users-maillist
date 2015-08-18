@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] 7.1 Diva Mesh Upload error?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%207.1%20Diva%20Mesh%20Upload%20error%3F&In-Reply-To=%3CCAO8WpXDSQHQddRu%3DmQk4zuCsH%2BKHVPLziiBgvd6if4HfGcBA4w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007671.html">
+   <LINK REL="Next"  HREF="007677.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] 7.1 Diva Mesh Upload error?</H1>
+    <B>Caia Naxos</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%207.1%20Diva%20Mesh%20Upload%20error%3F&In-Reply-To=%3CCAO8WpXDSQHQddRu%3DmQk4zuCsH%2BKHVPLziiBgvd6if4HfGcBA4w%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] 7.1 Diva Mesh Upload error?">caia.naxos at gmail.com
+       </A><BR>
+    <I>Thu Jul 14 03:43:50 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007671.html">[Opensim-users] Virtual Worlds in Online and Distance Education - Call for book chapter proposals (final reminder)
+</A></li>
+        <LI>Next message: <A HREF="007677.html">[Opensim-users] Introduction
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7674">[ date ]</a>
+              <a href="thread.html#7674">[ thread ]</a>
+              <a href="subject.html#7674">[ subject ]</a>
+              <a href="author.html#7674">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I realize this is a rather old post that I am replying on, but it's the same
+issue.  We just spotted a new detail.  When I attempted to create a new
+avatar, that seems to be when the creator ID field is not being filled - the
+following error appears:
+
+02:21:10 -  UserActivateGetRequest 674f1194-c415-4f0d-8c0b-fa4075258a83
+02:21:11 - [AUTHENTICATION DB]: Set password for principalID
+674f1194-c415-4f0d- 8c0b-fa4075258a83
+02:21:11 - Creating Erin.jpg avatar (account Erin Avatar)
+02:21:11 - [BASE HTTP SERVER]: HandleRequest() threw
+System.NullReferenceExcepti on: [MYSQL GENERIC TABLE HANDLER]: Trying to
+store field creatorID for OpenSim.Data.XInventoryItem which is unexpectedly
+null
+
+Previously the problem was appearing at login, but this was at the time of
+creating a new avatar.  Just wanted to bring that up as it's a new (to us)
+development post-0.7.1.1 update.
+
+
+
+On Tue, May 17, 2011 at 6:51 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> It looks like there might be an opensim bug where the creator id field is
+</I>&gt;<i> not always being filled out, making the db upset later on.  This does need
+</I>&gt;<i> to be fixed.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 16/05/11 14:31, Caia Naxos wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Been continuing to look at this. Noticed it's not really a mesh upload
+</I>&gt;&gt;<i> error - it happens at login. Error again is this:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [LLCLIENTVIEW]: Caught exception while processing OpenMetaverse.Packe
+</I>&gt;&gt;<i> ts.UpdateInventoryItemPacket for xxxxxx xxxxxxxxx,
+</I>&gt;&gt;<i> [MYSQL GENERIC TABLE HANDLER]: Trying to store field creatorID for
+</I>&gt;&gt;<i> OpenSim.Data.XInventoryItem which is unexpectedly
+</I>&gt;&gt;<i> null at OpenSim.Data.MySQL.MySQLGenericTableHandler`1.Store(T row)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Looked at the database and saw a number of rows with null creatorID.
+</I>&gt;&gt;<i>  Tried replacing nulls with zeros, then logged in
+</I>&gt;&gt;<i> again, and the console did not complain anymore.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I don't know that this is a good solution.  Any suggestions?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, May 14, 2011 at 9:53 AM, Caia Naxos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">caia.naxos at gmail.com</A>&lt;mailto:
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">caia.naxos at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    After upgrading from 7.0.2 to 7.1, we left our Diva installation
+</I>&gt;&gt;<i> running a few hours and on checking it this morning
+</I>&gt;&gt;<i>    it had crashed. We restarted OpenSim and tried to replicate the crash.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Thinking it had something to do with uploading mesh, we looked and
+</I>&gt;&gt;<i> found some extra prims lying about according to
+</I>&gt;&gt;<i>    the mini-map, but even after returning all, there were still 3 or 4
+</I>&gt;&gt;<i> objects obstinately remaining.  We're thinking
+</I>&gt;&gt;<i>    those might have been from vehicle scripts we'd tested that had gone
+</I>&gt;&gt;<i> off the sim's edge.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    When we used the Phoenix viewer, we got the following error in red on
+</I>&gt;&gt;<i> the console:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    [LLCLIENTVIEW]: Caught exception while processing OpenMetaverse.Packe
+</I>&gt;&gt;<i> ts.UpdateInventoryItemPacket for xxxxxx
+</I>&gt;&gt;<i>    xxxxxxxxx,
+</I>&gt;&gt;<i>    [MYSQL GENERIC TABLE HANDLER]: Trying to store field creatorID for
+</I>&gt;&gt;<i> OpenSim.Data.XInventoryItem which is unexpectedly
+</I>&gt;&gt;<i>    null at OpenSim.Data.MySQL.MySQLGenericTableHandler`1.Store(T row)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    It didn't crash the sim, but we thought it strange to be complaining
+</I>&gt;&gt;<i> about a null creatorID.  We got the same error
+</I>&gt;&gt;<i>    using Kirsten's viewer; and while this time the error didn't come up in
+</I>&gt;&gt;<i> red, it still appeared on the console and
+</I>&gt;&gt;<i>    did not seem to cause a crash.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Another interesting note - when uploading mesh using Kirsten's Viewer,
+</I>&gt;&gt;<i> the object comes in at the sim's edge at zero
+</I>&gt;&gt;<i>    altitude (z=0).  The SL Mesh Project Viewer does this as well. It
+</I>&gt;&gt;<i> doesn't upload into inventory; it rezzes inworld.
+</I>&gt;&gt;<i>      Do we need to have a completely empty region with no water, for
+</I>&gt;&gt;<i> bringing in mesh?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    So. how do we address this null creatorID problem?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    --
+</I>&gt;&gt;<i>    Caia
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Caia
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Caia
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110713/f59a973d/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110713/f59a973d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007671.html">[Opensim-users] Virtual Worlds in Online and Distance Education - Call for book chapter proposals (final reminder)
+</A></li>
+	<LI>Next message: <A HREF="007677.html">[Opensim-users] Introduction
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7674">[ date ]</a>
+              <a href="thread.html#7674">[ thread ]</a>
+              <a href="subject.html#7674">[ subject ]</a>
+              <a href="author.html#7674">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

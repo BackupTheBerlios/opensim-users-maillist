@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Automating shutdown of an OS Server for Grid	Setup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Automating%20shutdown%20of%20an%20OS%20Server%20for%20Grid%0A%09Setup&In-Reply-To=%3C8779be340901160505r1d3d980clf1adcc57d95d312c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001043.html">
+   <LINK REL="Next"  HREF="001044.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Automating shutdown of an OS Server for Grid	Setup</H1>
+    <B>Rhian</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Automating%20shutdown%20of%20an%20OS%20Server%20for%20Grid%0A%09Setup&In-Reply-To=%3C8779be340901160505r1d3d980clf1adcc57d95d312c%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Automating shutdown of an OS Server for Grid	Setup">dutchy.rhian at gmail.com
+       </A><BR>
+    <I>Fri Jan 16 14:05:22 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001043.html">[Opensim-users] Automating shutdown of an OS Server for Grid Setup
+</A></li>
+        <LI>Next message: <A HREF="001044.html">[Opensim-users] Location of -loginuri web page contents?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1049">[ date ]</a>
+              <a href="thread.html#1049">[ thread ]</a>
+              <a href="subject.html#1049">[ subject ]</a>
+              <a href="author.html#1049">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I've tried several ways to send a shutdown to my screen sessions running on
+my grid server, with mixed results.
+
+screen -S $sessname -X eval &quot;stuff shutdown^M&quot;
+
+Works best for me, (I also have a regions-service running), I check if the
+region went down with the above, if not:
+
+screen -S $sessname -r -m  -X quit
+
+And a final sweep kills the process if it still hangs after that (which
+happened a lot around r7000 or so).
+
+Once the region is down, rinse and repeat for the UGAIMs... :-)
+
+My scripting is really horrible, since it calls other scripts and nothing is
+really defined/documented, but it works for me. I hope these bits help a
+little?
+
+Rhian
+
+On Thu, Jan 15, 2009 at 8:51 PM, Ai Austin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at googlemail.com</A>&gt;wrote:
+
+&gt;<i> I have just started to get edgy about the way I am shutting down our
+</I>&gt;<i> UGAIM and opensim.exe region servers.... I am using the script from
+</I>&gt;<i>
+</I>&gt;<i>      <A HREF="http://opensimulator.org/wiki/Automating_Tasks">http://opensimulator.org/wiki/Automating_Tasks</A>
+</I>&gt;<i>
+</I>&gt;<i> But this just task kills the process... so no shutdown command is
+</I>&gt;<i> given to Opensim.exe or the UGAIM servers... and they are I assume
+</I>&gt;<i> just &quot;crashed&quot;... that might not be nice, even though I check if any
+</I>&gt;<i> users are logged on and make sure they are not before I shutdown.  I
+</I>&gt;<i> don't want to corrupt the database and I want to ensure any
+</I>&gt;<i> housekeeping necessary on server shutdown is properly done.
+</I>&gt;<i>
+</I>&gt;<i> Is the Wiki recommended script for automating shut down task safe?
+</I>&gt;<i>
+</I>&gt;<i> P.S. this page might be a good one to post a script for clearing out
+</I>&gt;<i> the asset data base server of unreachable assets in certain service
+</I>&gt;<i> situations?
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090116/e8d6a01a/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090116/e8d6a01a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001043.html">[Opensim-users] Automating shutdown of an OS Server for Grid Setup
+</A></li>
+	<LI>Next message: <A HREF="001044.html">[Opensim-users] Location of -loginuri web page contents?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1049">[ date ]</a>
+              <a href="thread.html#1049">[ thread ]</a>
+              <a href="subject.html#1049">[ subject ]</a>
+              <a href="author.html#1049">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

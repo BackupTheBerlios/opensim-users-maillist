@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] MySQL on seperate server?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20on%20seperate%20server%3F&In-Reply-To=%3C1266262442547-4576547.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003819.html">
+   <LINK REL="Next"  HREF="003822.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] MySQL on seperate server?</H1>
+    <B>Master_Mirage</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20MySQL%20on%20seperate%20server%3F&In-Reply-To=%3C1266262442547-4576547.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] MySQL on seperate server?">mirage123 at verizon.net
+       </A><BR>
+    <I>Mon Feb 15 20:34:02 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003819.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+        <LI>Next message: <A HREF="003822.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3821">[ date ]</a>
+              <a href="thread.html#3821">[ thread ]</a>
+              <a href="subject.html#3821">[ subject ]</a>
+              <a href="author.html#3821">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Ahhh my bad, i dident see you were talking about going over the internet, i
+was reffering to local LAN. All our servers are on the same lan not remote.
+Still evan at wire speeds there is a notable diff. in latency that would
+tend to be amplifyed over the internet for the same resions.
+Opensimulator dosent really care where the mysql server is and its settings
+are flexable for that reasion.
+In that case i would go the extra step and add in a local slave replicator
+for safety. It will not add the same impact that the master did. It tracks
+the master dataserver giving you a clone of all of it in small bursts.
+Should say something happen to the master the slave can now kick in as
+needed. For us we had other resions for doing that. I might also point out a
+toy called mysql proxy. It makes Failover quite painless but its also verry
+alpha too.
+I made use of it allready and lets me quickly switch the proxy port to a
+slave so that downtime of the grid is minor. B4 it we would be offline all
+day.
+
+
+John Mieske wrote:
+&gt;<i> 
+</I>&gt;<i> you get it :)
+</I>&gt;<i> 
+</I>&gt;<i> Also the latency IS an issue..  but keep in mind this is about the
+</I>&gt;<i> internet
+</I>&gt;<i> connection at this time. There is one other point I would like to bring
+</I>&gt;<i> up.
+</I>&gt;<i> The Cache system in the OpenSim servers ALSO accommodate for the latency.
+</I>&gt;<i> So
+</I>&gt;<i> in a sense you shouldn't have to worry about it too much. The Cache setup
+</I>&gt;<i> is
+</I>&gt;<i> where this can &quot;buffer&quot; your interactions with the sim. But yes that is
+</I>&gt;<i> correct that it CAN be a problem with your bandwidth ISP. But you'll
+</I>&gt;<i> always
+</I>&gt;<i> have that risk.
+</I>&gt;<i> 
+</I>&gt;<i> John
+</I>&gt;<i> 
+</I>&gt;<i> On Mon, Feb 15, 2010 at 12:58 PM, Master_Mirage
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mirage123 at verizon.net</A>&gt;wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Theres things to think about here. If your just running a small amout of
+</I>&gt;&gt;<i> regions you prob wount see mutch of a differance. On the other hand
+</I>&gt;&gt;<i> having
+</I>&gt;&gt;<i> mysql on its own dedicated server allows more ram free to the region
+</I>&gt;&gt;<i> servers, far less stress on the processor as thats handled by the other
+</I>&gt;&gt;<i> box.
+</I>&gt;&gt;<i> U have allways run my servers in that way. The down side is your adding
+</I>&gt;&gt;<i> in
+</I>&gt;&gt;<i> latency as your having togo accrost lan type connections that can actualy
+</I>&gt;&gt;<i> make things slower.  In my case we run many servers and it was the best
+</I>&gt;&gt;<i> balance possable given the amount of data ect. Another resion you may way
+</I>&gt;&gt;<i> to
+</I>&gt;&gt;<i> consider it, is your ini for all your instances will be the same
+</I>&gt;&gt;<i> connection
+</I>&gt;&gt;<i> string (makes changing things alot easyer). It also tends to add a tad
+</I>&gt;&gt;<i> bit
+</I>&gt;&gt;<i> more security as your not exposing the Mysql server to the outside world
+</I>&gt;&gt;<i> and
+</I>&gt;&gt;<i> it dosent exist on the same servers that have tobe exposed.
+</I>&gt;&gt;<i> I found it qute flexable and stable no matter what we throw at it. The
+</I>&gt;&gt;<i> other
+</I>&gt;&gt;<i> thing is main tasks are also sep. from the server running the regions. It
+</I>&gt;&gt;<i> can now have its own set of events that dont bother mutch.
+</I>&gt;&gt;<i> Its not hard to set it up like that but you do have to install mysql to
+</I>&gt;&gt;<i> allow remote lan connections.
+</I>&gt;&gt;<i> Other things i found was we needed mysql replication because our data
+</I>&gt;&gt;<i> base
+</I>&gt;&gt;<i> became so large that it was an all day thing to deal with. Alot of this
+</I>&gt;&gt;<i> most
+</I>&gt;&gt;<i> wount need for along time. It took well over a year to get to a point
+</I>&gt;&gt;<i> where
+</I>&gt;&gt;<i> it all mattered.
+</I>&gt;&gt;<i> MySql eats memory and adds to the overhead of the cpu and i/o.
+</I>&gt;&gt;<i> If you have the equipment and plan on expanding over time, its prob a
+</I>&gt;&gt;<i> good
+</I>&gt;&gt;<i> idea to set it up like that now.
+</I>&gt;&gt;<i> If you never plan on more than a few regions you prob dont need to set it
+</I>&gt;&gt;<i> up
+</I>&gt;&gt;<i> like that.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> :working:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ken Grunke wrote:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Dumb question from a casual opensim user who is not fully clued in on
+</I>&gt;&gt;<i> it's
+</I>&gt;&gt;<i> &gt; workings, that popped into my head after reading John Mieske's Space
+</I>&gt;&gt;<i> Grid
+</I>&gt;&gt;<i> &gt; Station post:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Is it feasible and sensible while running opensim on a home PC
+</I>&gt;&gt;<i> connection
+</I>&gt;&gt;<i> &gt; to
+</I>&gt;&gt;<i> &gt; be able to use a MySQL database on a shared web hosting server, such as
+</I>&gt;&gt;<i> &gt; Hostgator for example? If possible, would this type of setup improve
+</I>&gt;&gt;<i> &gt; performance of a lightly used standalone or grid-connected sim?
+</I>&gt;&gt;<i> &gt; I haven't put much thought into this idea, just wanted to blurt it out
+</I>&gt;&gt;<i> and
+</I>&gt;&gt;<i> &gt; see if it's worth pursuing.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> View this message in context:
+</I>&gt;&gt;<i> <A HREF="http://n2.nabble.com/MySQL-on-seperate-server-tp4575740p4575964.html">http://n2.nabble.com/MySQL-on-seperate-server-tp4575740p4575964.html</A>
+</I>&gt;&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> John Mieske / Winword Exonar
+</I>&gt;<i> <A HREF="http://johnmieske.org">http://johnmieske.org</A>
+</I>&gt;<i> Space Grid Station
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+-- 
+View this message in context: <A HREF="http://n2.nabble.com/MySQL-on-seperate-server-tp4575740p4576547.html">http://n2.nabble.com/MySQL-on-seperate-server-tp4575740p4576547.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003819.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+	<LI>Next message: <A HREF="003822.html">[Opensim-users] MySQL on seperate server?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3821">[ date ]</a>
+              <a href="thread.html#3821">[ thread ]</a>
+              <a href="subject.html#3821">[ subject ]</a>
+              <a href="author.html#3821">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

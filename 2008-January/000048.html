@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Custom Assets Folders
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Custom%20Assets%20Folders&In-Reply-To=%3C6E5D0BAD-D1D7-4EE2-910D-ABBFA6D04212%40klintcentral.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000047.html">
+   <LINK REL="Next"  HREF="000049.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Custom Assets Folders</H1>
+    <B>Ursula MATOVA</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Custom%20Assets%20Folders&In-Reply-To=%3C6E5D0BAD-D1D7-4EE2-910D-ABBFA6D04212%40klintcentral.net%3E"
+       TITLE="[Opensim-users] Custom Assets Folders">ursula.matova at klintcentral.net
+       </A><BR>
+    <I>Tue Jan  1 19:47:26 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000047.html">[Opensim-users] Custom Assets Folders
+</A></li>
+        <LI>Next message: <A HREF="000049.html">[Opensim-users] Custom Assets Folders
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#48">[ date ]</a>
+              <a href="thread.html#48">[ thread ]</a>
+              <a href="subject.html#48">[ subject ]</a>
+              <a href="author.html#48">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Justin,
+
+Yes, I saw the inventory/Libraries.xml but haven't tested it yet :)  
+I'll do that in a few minutes :)
+Thanks again for you great job ... And if you allow me, i'll post an  
+entry in the OpenSimulator Wiki about that ...
+
+I'll also try to contact melanie about JP2 ...
+
+Thanks again,
+
+Happy new year,
+
+Ursula.
+
+
+Le 1 janv. 08 &#224; 19:31, Justin Clark-Casey a &#233;crit :
+
+&gt;<i> Hi Ursula,
+</I>&gt;<i>
+</I>&gt;<i> Thanks for writing that - hopefully this will prove useful to anybody
+</I>&gt;<i> wanting to use this functionality.  A couple of points
+</I>&gt;<i>
+</I>&gt;<i> * Shortly after you wrote this, I added an inventory/Libraries.xml
+</I>&gt;<i> file.  This allows you to create your own library folders and items
+</I>&gt;<i> files without having to edit the OpenSimLibrary ones.  More details in
+</I>&gt;<i> the README.txt in the inventory directory.  This is the last change I
+</I>&gt;<i> personally anticipate doing for a while in this area (except for bug  
+</I>&gt;<i> fixes).
+</I>&gt;<i>
+</I>&gt;<i> * It should be possible to create two folders of the same type (e.g.  
+</I>&gt;<i> two
+</I>&gt;<i> texture folders).  I have done this successfully in testing.
+</I>&gt;<i>
+</I>&gt;<i> * As you saw, this works in standalone mode.  It also works in grid
+</I>&gt;<i> mode, as long as all the regions also have the same inventory
+</I>&gt;<i> configuration.  If a region doesn't have the same configuration, the
+</I>&gt;<i> library items it doesn't have will not be openable or rezzable (I  
+</I>&gt;<i> think
+</I>&gt;<i> - I haven't actually tested this).  This is because item information  
+</I>&gt;<i> for
+</I>&gt;<i> regions is being loaded from the local filesystem and not from the
+</I>&gt;<i> inventory server.  The reasons for this are largely historical and can
+</I>&gt;<i> be lifted in the future.  However, personally I will be turning my
+</I>&gt;<i> attention to other areas for now.
+</I>&gt;<i>
+</I>&gt;<i> * Adding extra assets will increase startup time since we currently
+</I>&gt;<i> reload all assets sets on startup (even if they already exist in the
+</I>&gt;<i> asset db).  This probably isn't necessary and is another thing that  
+</I>&gt;<i> can
+</I>&gt;<i> be changed in the future.
+</I>&gt;<i>
+</I>&gt;<i> * I also tried using Kakedu to fix some broken jp2 files without
+</I>&gt;<i> success.  melanie_t on irc may well know how to do this (since she
+</I>&gt;<i> recently created the Plywood texture which does work in OpenSim).
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> justincc
+</I>&gt;<i> Justin Clark-Casey
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Ursula MATOVA wrote:
+</I>&gt;&gt;<i> Hi All,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is some informations for using the new &quot;custom assets folders&quot;
+</I>&gt;&gt;<i> function ( Thanks a lot Justincc ) :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ( Tested in Standalone mode )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You have to consider the following files &amp; folders :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> * bin/inventory/OpenSimLibrary/OpenSimLibraryFolders.xml
+</I>&gt;&gt;<i> * bin/inventory/OpenSimLibrary/OpenSimLibrary.xml
+</I>&gt;&gt;<i> * bin/assets/AssetSets.xml
+</I>&gt;&gt;<i> * bin/assets/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Step #1 : Define a new Folder
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Edit the bin/inventory/OpenSimLibrary/OpenSimLibraryFolders.xml and
+</I>&gt;&gt;<i> add a new section :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;Section Name=&quot;My Folder&quot;&gt;
+</I>&gt;&gt;<i>   &lt;Key Name=&quot;folderID&quot; Value=&quot;80000112-000f-0000-0000-000100bba001&quot;/&gt;
+</I>&gt;&gt;<i>   &lt;Key Name=&quot;parentFolderID&quot;
+</I>&gt;&gt;<i> Value=&quot;00000112-000f-0000-0000-000100bba000&quot;/&gt;
+</I>&gt;&gt;<i>   &lt;Key Name=&quot;name&quot; Value=&quot;My Folder&quot;/&gt;
+</I>&gt;&gt;<i>   &lt;Key Name=&quot;type&quot; Value=&quot;13&quot;/&gt;
+</I>&gt;&gt;<i> &lt;/Section&gt;
+</I>&gt;&gt;<i> This should create a new folder named &quot;My Folder&quot; in the &quot;OpenSim
+</I>&gt;&gt;<i> Library&quot; tree.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Remark : One important thing to know is that you cannot have more  
+</I>&gt;&gt;<i> that
+</I>&gt;&gt;<i> 1 Folder per type. ie if you want to create a new folder containing
+</I>&gt;&gt;<i> some new textures, you cannot simply add a section like this :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;Section Name=&quot;My Textures&quot;&gt;
+</I>&gt;&gt;<i>   &lt;Key Name=&quot;folderID&quot; Value=&quot;80000112-000f-0000-0000-000100bba001&quot;/&gt;
+</I>&gt;&gt;<i>   &lt;Key Name=&quot;parentFolderID&quot;
+</I>&gt;&gt;<i> Value=&quot;00000112-000f-0000-0000-000100bba000&quot;/&gt;
+</I>&gt;&gt;<i>   &lt;Key Name=&quot;name&quot; Value=&quot;My Textures&quot;/&gt;
+</I>&gt;&gt;<i>   &lt;Key Name=&quot;type&quot; Value=&quot;0&quot;/&gt;
+</I>&gt;&gt;<i> &lt;/Section&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But you MUST create a subfolder of the existing &quot;Texture Library&quot;
+</I>&gt;&gt;<i> folder, something like this :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;Section Name=&quot;My Textures&quot;&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;folderID&quot;  
+</I>&gt;&gt;<i> Value=&quot;40000112-000f-0000-0000-000100bba001&quot;/&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;parentFolderID&quot;
+</I>&gt;&gt;<i> Value=&quot;00000112-000f-0000-0000-000100bba001&quot;/&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;name&quot; Value=&quot;My Textures&quot;/&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;type&quot; Value=&quot;0&quot;/&gt;
+</I>&gt;&gt;<i>   &lt;/Section&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The &quot;parentFolderID&quot; should have the value of the &quot;folderID&quot; from the
+</I>&gt;&gt;<i> &quot;Textures Library&quot; folder ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here are the different TYPE you could use :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Accessories : 8
+</I>&gt;&gt;<i> Animations : 20
+</I>&gt;&gt;<i> BodyParts : 13
+</I>&gt;&gt;<i> Clothing : 5
+</I>&gt;&gt;<i> Gestures : 21
+</I>&gt;&gt;<i> Landmarks : 3
+</I>&gt;&gt;<i> Notecards : 7
+</I>&gt;&gt;<i> Objects : 6
+</I>&gt;&gt;<i> Photo Album : 15
+</I>&gt;&gt;<i> Scripts : 10
+</I>&gt;&gt;<i> Sounds : 1
+</I>&gt;&gt;<i> Textures : 0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have only tested textures folders/subfolders ... But should work
+</I>&gt;&gt;<i> with other types ( but don't know how to push contents in them yet ).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Step #2 : Define Asset Items for this folder :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Well, we now have the Textures Subfolder : &quot;My Textures&quot; with  
+</I>&gt;&gt;<i> folderID
+</I>&gt;&gt;<i> = 40000112-000f-0000-0000-000100bba001 let's fill it with some custom
+</I>&gt;&gt;<i> textures :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> go to &quot;bin/assets/&quot; directory and edit the &quot;AssetSets.xml&quot; file by
+</I>&gt;&gt;<i> adding the following section :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;Section Name=&quot;My Asset Set&quot;&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;file&quot; Value=&quot;MyAssetSet/MyAssetSet.xml&quot;/&gt;
+</I>&gt;&gt;<i>   &lt;/Section&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> now create the coresponding directory :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> bin/assets/MyAssetSet
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> move to that directory and create a new XML file : MyAssetSet.xml
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> this one should have the same structure than the default one ( bin/
+</I>&gt;&gt;<i> assets/OpenSimAssetSet/OpenSimAssetSet.xml ) ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is one for a sample texture :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;Nini&gt;
+</I>&gt;&gt;<i>   &lt;Section Name=&quot;sample Texture&quot;&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;assetID&quot;  
+</I>&gt;&gt;<i> Value=&quot;40000000-0000-2222-3333-100000000001&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;name&quot; Value=&quot;sample&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;assetType&quot; Value=&quot;0&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;inventoryType&quot; Value=&quot;0&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;fileName&quot; Value=&quot;sample.jp2&quot; /&gt;
+</I>&gt;&gt;<i>   &lt;/Section&gt;
+</I>&gt;&gt;<i> &lt;/Nini&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> copy your &quot;sample.jp2&quot; file to that directory.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> then, go back to the &quot;bin/inventory/OpenSimLibrary&quot; directory and add
+</I>&gt;&gt;<i> the following section to the &quot;OpenSimLibrary.xml&quot; file :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   &lt;Section Name=&quot;sample Texture&quot;&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;inventoryID&quot;
+</I>&gt;&gt;<i> Value=&quot;40000000-0000-2222-4444-100000000001&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;assetID&quot;  
+</I>&gt;&gt;<i> Value=&quot;40000000-0000-2222-3333-100000000001&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;folderID&quot;  
+</I>&gt;&gt;<i> Value=&quot;40000112-000f-0000-0000-000100bba001&quot;/&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;description&quot; Value=&quot;sample texture&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;name&quot; Value=&quot;sample&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;assetType&quot; Value=&quot;0&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;inventoryType&quot; Value=&quot;0&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;currentPermissions&quot; Value=&quot;2147483647&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;nextPermissions&quot; Value=&quot;2147483647&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;everyonePermissions&quot; Value=&quot;2147483647&quot; /&gt;
+</I>&gt;&gt;<i>     &lt;Key Name=&quot;basePermissions&quot; Value=&quot;2147483647&quot; /&gt;
+</I>&gt;&gt;<i>   &lt;/Section&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That's done ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> You should now be able to see the new Texture Subfolder and the  
+</I>&gt;&gt;<i> Sample
+</I>&gt;&gt;<i> texture in your inventory.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Be very carefull with folderID / inventoryID / assetID ... and
+</I>&gt;&gt;<i> types ... It's very sensitive. :D
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now : the question is : How to produce JP2 files for OpenSIM ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have used the following tools under UNIX to produce some JP2 files
+</I>&gt;&gt;<i> from BMP ... But the resulting files doesn't display yet ... Sure I
+</I>&gt;&gt;<i> have not used the right convert options ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have used the Kakadu JPEG2000 SDK from here : <A HREF="http://www.kakadusoftware.com/Downloads.html">http://www.kakadusoftware.com/Downloads.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # ./kdu_compress -i sample.bmp -o sample.jp2 -full -rate 1.0,0.5 -
+</I>&gt;&gt;<i> no_weights
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Generated 1 tile-part(s) for a total of 1 tile(s).
+</I>&gt;&gt;<i> Code-stream bytes (excluding any file format) = 124927 = 0.999416  
+</I>&gt;&gt;<i> bits/
+</I>&gt;&gt;<i> pel.
+</I>&gt;&gt;<i> Layer bit-rates (possibly inexact if tiles are divided across tile-
+</I>&gt;&gt;<i> parts):
+</I>&gt;&gt;<i>         0.496832, 0.999416
+</I>&gt;&gt;<i> Layer thresholds:
+</I>&gt;&gt;<i>         52206, 52026
+</I>&gt;&gt;<i> Processed using the multi-threaded environment, with
+</I>&gt;&gt;<i>     2 parallel threads of execution (see `-num_threads')
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But this one doesn't want to load ... at all ... :S
+</I>&gt;&gt;<i> ( I also tried to use GraphicConverter on my Mac for that )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Please if some of you find a way to produce JP2 Textures that will be
+</I>&gt;&gt;<i> great :D
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Regards, Ursula.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> End of Opensim-users Digest, Vol 5, Issue 1
+</I>&gt;&gt;<i> *******************************************
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000047.html">[Opensim-users] Custom Assets Folders
+</A></li>
+	<LI>Next message: <A HREF="000049.html">[Opensim-users] Custom Assets Folders
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#48">[ date ]</a>
+              <a href="thread.html#48">[ thread ]</a>
+              <a href="subject.html#48">[ subject ]</a>
+              <a href="author.html#48">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

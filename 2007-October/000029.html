@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Hosting OPENSIM behind a firewall
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2007-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hosting%20OPENSIM%20behind%20a%20firewall&In-Reply-To=%3CBF2EC1AE-B7BC-4CAA-8F2D-A014A438A63F%40klintcentral.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000011.html">
+   <LINK REL="Next"  HREF="000012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Hosting OPENSIM behind a firewall</H1>
+    <B>Ursula MATOVA</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hosting%20OPENSIM%20behind%20a%20firewall&In-Reply-To=%3CBF2EC1AE-B7BC-4CAA-8F2D-A014A438A63F%40klintcentral.net%3E"
+       TITLE="[Opensim-users] Hosting OPENSIM behind a firewall">ursula.matova at klintcentral.net
+       </A><BR>
+    <I>Sun Oct 28 18:08:58 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000011.html">[Opensim-users] Hosting OPENSIM behind a firewall
+</A></li>
+        <LI>Next message: <A HREF="000012.html">[Opensim-users] Hosting OPENSIM behind a firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Greetings all,
+
+Sorry, I had not the possibility to test the following till today ... :S
+
+(( So, Tedd, I understood that it will be difficult to access OpenSim  
+from both LAN &amp; Internet at the same time ... ))
+
+But, before trying to find a solution to my primary posted question,  
+I'd like to be able to run a Grid that could be reached from the  
+internet.
+I spent the whole day testing many many different configurations with  
+a friend, located in UK... But no success ...
+
+Here are what I did :
+
+First, adding an entry in my DNS ( both in the internal one, and in  
+the public one ). So, when somebody try to reach my server from  
+internet, he get my External Public IP, and when I try the same from  
+my LAN, I get the internal IP ( also on the same sub-network ).
+
+Second, I have configured my IPF/IPNAT NetBSD based firewall as follow :
+
+(( 192.168.5.91 is the internal IP of my server running OpenSIM ))
+
+IPF.CONF
+
+pass in quick log on fxp0 proto tcp from any to any port 8000 &gt;&lt; 8005  
+flags S keep state
+pass in quick log on fxp0 proto tcp from any to any port 9000 &gt;&lt; 9015  
+flags S keep state
+pass in quick log on fxp0 proto udp from any to any port 9000 &gt;&lt; 9015  
+keep state
+pass in quick log on fxp0 proto tcp from any to any port = 8895 flags  
+S keep state
+
+
+IPNAT.CONF :
+map fxp0 192.168.0.0/16 -&gt; 0/32 portmap tcp/udp 8000:65000
+map fxp0 192.168.0.0/16 -&gt; 0/32
+.../...
+rdr fxp0 0/0 port 8000 -&gt; 192.168.5.91 port 8000 tcp
+rdr fxp0 0/0 port 8001 -&gt; 192.168.5.91 port 8001 tcp
+rdr fxp0 0/0 port 8002 -&gt; 192.168.5.91 port 8002 tcp
+rdr fxp0 0/0 port 8003 -&gt; 192.168.5.91 port 8003 tcp
+rdr fxp0 0/0 port 8004 -&gt; 192.168.5.91 port 8004 tcp
+rdr fxp0 0/0 port 8005 -&gt; 192.168.5.91 port 8005 tcp
+rdr fxp0 0/0 port 8895 -&gt; 192.168.5.91 port 8895 tcp
+rdr fxp0 0/0 port 9000 -&gt; 192.168.5.91 port 9000 tcp
+rdr fxp0 0/0 port 9001 -&gt; 192.168.5.91 port 9001 tcp
+rdr fxp0 0/0 port 9001 -&gt; 192.168.5.91 port 9000 udp
+rdr fxp0 0/0 port 9001 -&gt; 192.168.5.91 port 9001 udp
+.../...
+rdr fxp0 0/0 port 9001 -&gt; 192.168.5.91 port 9015 tcp
+rdr fxp0 0/0 port 9001 -&gt; 192.168.5.91 port 9015 udp
+
+
+Here is now the configuration I use for Opensim :
+
+GridServer_Config.xml has the following network parameters :
+* default_asset_server=&quot;<A HREF="http://opensim.klintcentral.net:8003/">http://opensim.klintcentral.net:8003/</A>&quot;
+* default_user_server=&quot;<A HREF="http://opensim.klintcentral.net:8002/">http://opensim.klintcentral.net:8002/</A>&quot;
+
+UserServer_Config.xml has the following network parameters :
+* default_grid_server=&quot;<A HREF="http://opensim.klintcentral.net:8001/">http://opensim.klintcentral.net:8001/</A>&quot;
+
+OpenSIM.ini :
+grid_server_url = &quot;<A HREF="http://opensim.klintcentral.net:8001">http://opensim.klintcentral.net:8001</A>&quot;
+user_server_url=&quot;<A HREF="http://opensim.klintcentral.net:8002">http://opensim.klintcentral.net:8002</A>&quot;
+asset_server_url=&quot;<A HREF="http://opensim.klintcentral.net:8003">http://opensim.klintcentral.net:8003</A>&quot;
+
+Regions/1000_1000.xml : ( and others )
+internal_id_address=&quot;0.0.0.0&quot;
+external_host_name=&quot;opensim.klintcentral.net&quot;
+
+
+Then, after starting opensim, as usual, in grid mode ...
+I ask my friend to try to connect to my server using the following  
+parameters :
+
+-loginuri <A HREF="http://opensim.klintcentral.net:8002/">http://opensim.klintcentral.net:8002/</A>
+
+Results :
+
+The communication on port 8002 seems to be OK, the user_server  
+receive the request and I can trace the communication into my ipf logs :
+
+.../...
+28/10/2007 16:55:58.926658 fxp0 @0:9 p 89.156.163.xx,8002 -&gt;  
+86.29.160.xxx,50442 PR tcp len 20 1454 -A K-S OUT NAT
+28/10/2007 16:55:58.926765 ex1 @0:9 p 192.168.5.91,8002 -&gt;  
+86.29.160.xxx,50442 PR tcp len 20 1454 -A K-S IN
+28/10/2007 16:55:58.926897 fxp0 @0:9 p 89.156.163.xx,8002 -&gt;  
+86.29.160.xxx,50442 PR tcp len 20 1454 -A K-S OUT NAT
+28/10/2007 16:55:58.927002 ex1 @0:9 p 192.168.5.91,8002 -&gt;  
+86.29.160.xxx,50442 PR tcp len 20 1454 -A K-S IN
+28/10/2007 16:55:58.927125 fxp0 @0:9 p 89.156.163.xx,8002 -&gt;  
+86.29.160.xxx,50442 PR tcp len 20 1454 -A K-S OUT NAT
+.../...
+
+But I never see any communication on the 900x UDP ports :S
+
+And S/L Client fails with the following error :
+
+On the UserServer console I can read the following :
+
+Notifying OpenSim Test ( <A HREF="http://192.168.5.91:9000">http://192.168.5.91:9000</A> )
+Informing Region --&gt; <A HREF="http://192.168.5.91:9000/">http://192.168.5.91:9000/</A>
+
+On the OpenSIM Console I can read the following :
+
+ExpectUser() - Welcoming new user ...
+
+On the GridServer Console I can read the following :
+
+requesting data for region xxxxxxxxxxxxxxxxxxxxxxxxx
+found region
+
+But the S/L client fails with the following error :
+
+Unable to connect. Login packet never received by login server.
+
+************************************************************************ 
+**********************************************************
+
+Does somebody have an idea about that problem ?
+What did I do wrong ?
+
+Many thanks in advance for your help,
+
+Regards.
+
+
+Le 14 oct. 07 &#224; 01:11, Tedd Hansen a &#233;crit :
+
+&gt;<i> Te short answer is that you can't.
+</I>&gt;<i>
+</I>&gt;<i> You can not be on same LAN as OpenSim and at the same time allow  
+</I>&gt;<i> remote access. This because of two reasons:
+</I>&gt;<i> * First the IP reported would be your external IP, this is not  
+</I>&gt;<i> necessarily a showstopper if your router is good.
+</I>&gt;<i> * Second because the -REPLY- UDP packets from the OpenSim server  
+</I>&gt;<i> would be sent directly to you, not via the router. (Because source  
+</I>&gt;<i> IP is not set when replying UDP packets, so server chooses &quot;best  
+</I>&gt;<i> suited interface&quot;, which would be dropping it directly to LAN  
+</I>&gt;<i> without sending it through NAT router back to you.)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Solution (you need an additional NAT router, like a wireless router  
+</I>&gt;<i> or something): Set OpenSim server behind NAT inside your already  
+</I>&gt;<i> NAT'ed network. Tell it to use official IP. Do all necessary port  
+</I>&gt;<i> portforwarding on both NAT routers. And your external NAT router  
+</I>&gt;<i> needs to support NAT'ing packets coming from LAN to its external  
+</I>&gt;<i> interface in the same manner it would NAT external packets.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I hope you followed me on that one... ;)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Sincerely,
+</I>&gt;<i>  Tedd
+</I>&gt;<i>
+</I>&gt;<i> -----Opprinnelig melding-----
+</I>&gt;<i> Fra: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:opensim-users- 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bounces at lists.berlios.de</A>] P&#229; vegne av Ursula MATOVA
+</I>&gt;<i> Sendt: 14. oktober 2007 00:52
+</I>&gt;<i> Til: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Emne: [Opensim-users] Hosting OPENSIM behind a firewall
+</I>&gt;<i>
+</I>&gt;<i> Greetings All,
+</I>&gt;<i>
+</I>&gt;<i> Well, I'm trying to get some informations and help to be able to run
+</I>&gt;<i> my own grid at home and to be able to share it with some of my  
+</I>&gt;<i> friends.
+</I>&gt;<i>
+</I>&gt;<i> The only documentation I found on internet is the following : <A HREF="http://">http://</A>
+</I>&gt;<i> opensimulator.org/wiki/
+</I>&gt;<i> OpenSim:Network_settings#Issues_with_NAT_and_Port_Forwarding
+</I>&gt;<i>
+</I>&gt;<i> I have tried to set it up a few weeks ago, without success ...
+</I>&gt;<i>
+</I>&gt;<i> Could somebody point me to some more &quot;howto&quot; or giving me some
+</I>&gt;<i> informations / tips ?
+</I>&gt;<i>
+</I>&gt;<i> For your informations,
+</I>&gt;<i>
+</I>&gt;<i> I'm running a 4x4 sims grid under windows ( for now, I'll move to
+</I>&gt;<i> linux asap ).
+</I>&gt;<i>
+</I>&gt;<i> I'm using a home made firewall using NetBSD ( IPF / IPNAT ) and have
+</I>&gt;<i> my Own DNS Server for my internals servers ...
+</I>&gt;<i>
+</I>&gt;<i> I also have a static external IP address, and I can manage the DNS
+</I>&gt;<i> entries for my domain name.
+</I>&gt;<i>
+</I>&gt;<i> Any help will be very appreciated,
+</I>&gt;<i>
+</I>&gt;<i> Many thanks in advance,
+</I>&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Ursula.
+</I>&gt;<i>
+</I>&gt;<i> (( Sorry about my english ... But sometimes, it's really bad ))
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000011.html">[Opensim-users] Hosting OPENSIM behind a firewall
+</A></li>
+	<LI>Next message: <A HREF="000012.html">[Opensim-users] Hosting OPENSIM behind a firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

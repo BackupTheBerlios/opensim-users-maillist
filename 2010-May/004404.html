@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim crashing why?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20crashing%20why%3F&In-Reply-To=%3Ch2h62a72a691005040056z1951e9b3ra4917cfac0e8e271%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004402.html">
+   <LINK REL="Next"  HREF="004405.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim crashing why?</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20crashing%20why%3F&In-Reply-To=%3Ch2h62a72a691005040056z1951e9b3ra4917cfac0e8e271%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] OpenSim crashing why?">cliveg at gmail.com
+       </A><BR>
+    <I>Tue May  4 09:56:37 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004402.html">[Opensim-users] Region crossings crashing the grid.
+</A></li>
+        <LI>Next message: <A HREF="004405.html">[Opensim-users] Opensim-users Digest, Vol 33, Issue 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4404">[ date ]</a>
+              <a href="thread.html#4404">[ thread ]</a>
+              <a href="subject.html#4404">[ subject ]</a>
+              <a href="author.html#4404">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+The Linux command that finally did the trick was:
+
+netstat -anput
+
+Hi
+
+This showed that OpenSim was maintaining over 900 connections to the
+remote IP 94.169.170.24
+
+[<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at vleinternal</A> ~]$ host 94.169.170.24
+24.170.169.94.in-addr.arpa domain name pointer
+cpc3-croy18-2-0-cust535.croy.cable.virginmedia.com.
+
+By restarting OpenSim and blocking 94.169.170.24 in /etc/hosts.deny
+these connections, which I suspect were crashing the simulator
+periodically, have gone away.
+
+Does anyone know what could cause all these open connections???
+
+Thanks for all the help and advice
+
+Clive
+
+
+
+
+On Mon, May 3, 2010 at 8:25 PM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>&gt; wrote:
+&gt;<i> Send Opensim-users mailing list submissions to
+</I>&gt;<i> &#160; &#160; &#160; &#160;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 4
+</I>&gt;<i> Date: Mon, 3 May 2010 21:25:34 +0200
+</I>&gt;<i> From: &quot;Tedd Hansen&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tedd at konge.net</A>&gt;
+</I>&gt;<i> To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> Subject: Re: [Opensim-users] OpenSim crashing why?
+</I>&gt;<i> Message-ID: &lt;004901caeaf6$691ea1b0$3b5be510$@net&gt;
+</I>&gt;<i> Content-Type: text/plain; &#160; &#160; &#160; charset=&quot;us-ascii&quot;
+</I>&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> netstat command will do that for you.
+</I>&gt;<i> Linux: netstat -nlap | less
+</I>&gt;<i> Windows: netstat -anb | more
+</I>&gt;<i>
+</I>&gt;<i> debian5:~# netstat -nlap | grep tcp | grep :8002
+</I>&gt;<i> tcp &#160; &#160; &#160; &#160;0 &#160; &#160; &#160;0 0.0.0.0:8002 &#160; &#160; &#160; &#160; &#160; &#160;0.0.0.0:* &#160; &#160; &#160; &#160; &#160; &#160; &#160; LISTEN
+</I>&gt;<i> 13841/mono
+</I>&gt;<i>
+</I>&gt;<i> Br,
+</I>&gt;<i> &#160;Tedd
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Clive Gould
+</I>&gt;<i> Sent: 3. mai 2010 21:22
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] OpenSim crashing why?
+</I>&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Justin wrote: &quot;By the look of it, something in OpenSim is failing to
+</I>&gt;<i> close connections. &#160;After 24 hours, the HttpServer embedded in OpenSim
+</I>&gt;<i> eventually finds that it runs out of sockets to play with.&quot;
+</I>&gt;<i>
+</I>&gt;<i> OpenSim is still crashing periodically.
+</I>&gt;<i>
+</I>&gt;<i> Any idea how I can find out how many connections the HTTP Server
+</I>&gt;<i> embedded in OpenSim thinks it has open at any one time?
+</I>&gt;<i>
+</I>&gt;<i> Is there a command from the Linux command line that will show this?
+</I>&gt;<i> (I've tried ps and netstat without success)
+</I>&gt;<i>
+</I>&gt;<i> Thanks very much
+</I>&gt;<i>
+</I>&gt;<i> Clive
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Message: 2
+</I>&gt;&gt;<i> Date: Thu, 29 Apr 2010 23:38:49 +0100
+</I>&gt;&gt;<i> From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;&gt;<i> Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] OpenSim crashing why?
+</I>&gt;&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">4BDA0A79.5020105 at googlemail.com</A>&gt;
+</I>&gt;&gt;<i> Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Clive Gould wrote:
+</I>&gt;&gt;&gt;<i> Hi
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> We're successfully using OpenSim for student project work at Bromley
+</I>&gt;<i> College.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> OpenSim 0.6.8 standalone has just started crashing on us every 24 hours
+</I>&gt;<i> or so.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Logins are disabled and the OpenSim.log file fills up the CentOS home
+</I>&gt;&gt;&gt;<i> partition very quickly with error messages.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Killing all processes owned by the opensim user, deleting the
+</I>&gt;&gt;&gt;<i> OpenSim.log file, restarting the vnc session and the opensim
+</I>&gt;&gt;&gt;<i> application cures the problem, until the next time.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I append relevent excerpts from the error log to this message.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Does anyone have any idea what may be causing this??
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> By the look of it, something in OpenSim is failing to close connections.
+</I>&gt;<i> After 24 hours, the HttpServer embedded in OpenSim eventually finds that it
+</I>&gt;<i> runs out of sockets to play with.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm surprised to see this in standalone mode. &#160;Are you doing something
+</I>&gt;<i> with OpenSim in standalone mode that requires outbound connections (e.g.
+</I>&gt;<i> remote database, groups, etc.), or perhaps a script that regularly
+</I>&gt;<i> establishes an outbound connection?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If this has just started crashing after being fine before then it suggests
+</I>&gt;<i> that something has changed locally to reveal a bug in OpenSim.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- Justin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Clive
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 2010-04-29 16:55:47,776 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+</I>&gt;&gt;&gt;<i> [Scene] Adding new agent India Airie to scene Rookery_NW
+</I>&gt;&gt;&gt;<i> 2010-04-29 16:55:47,777 DEBUG - OpenSim.Region.Framework.Scenes.Scene
+</I>&gt;&gt;&gt;<i> [APPEARANCE]: Appearance not found in Rookery_NW, returning default
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 2010-04-29 16:55:55,132 DEBUG -
+</I>&gt;&gt;&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing
+</I>&gt;&gt;&gt;<i> Primitive, 204f5d0d-a994-4d61-8fb1-4b8d3af433fd in Rookery_
+</I>&gt;&gt;&gt;<i> SW
+</I>&gt;&gt;&gt;<i> 2010-04-29 16:56:14,262 DEBUG -
+</I>&gt;&gt;&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing
+</I>&gt;&gt;&gt;<i> Primitive, 9b4c39ad-eebe-4417-9fd9-12a3994f17bc in Rookery_
+</I>&gt;&gt;&gt;<i> SW
+</I>&gt;&gt;&gt;<i> 2010-04-29 16:57:30,449 DEBUG -
+</I>&gt;&gt;&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing
+</I>&gt;&gt;&gt;<i> Primitive, 88551bb8-3fa2-4bd9-a2fb-78c74bf45f55 in Rookery_
+</I>&gt;&gt;&gt;<i> SW
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 2010-04-29 17:16:15,070 DEBUG -
+</I>&gt;&gt;&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing
+</I>&gt;&gt;&gt;<i> Primitive, 9b4c39ad-eebe-4417-9fd9-12a3994f17bc in Rookery SW
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 2010-04-29 17:17:11,209 ERROR -
+</I>&gt;&gt;&gt;<i> OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP
+</I>&gt;&gt;&gt;<i> SERVER]: HttpServer.HttpListener had an exception
+</I>&gt;&gt;&gt;<i> System.Net.Sockets.SocketException: Too many open files
+</I>&gt;&gt;&gt;<i> &#160; at System.Net.Sockets.Socket.Accept () [0x00000]
+</I>&gt;&gt;&gt;<i> &#160; at System.Net.Sockets.Socket+Worker.Accept () [0x00000]
+</I>&gt;&gt;&gt;<i> 2010-04-29 17:17:11,255 ERROR -
+</I>&gt;&gt;&gt;<i> OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP
+</I>&gt;&gt;&gt;<i> SERVER]: HttpServer.HttpListener had an exception
+</I>&gt;&gt;&gt;<i> System.Net.Sockets.SocketException: Too many open files
+</I>&gt;&gt;&gt;<i> &#160; at System.Net.Sockets.Socket.Accept () [0x00000]
+</I>&gt;&gt;&gt;<i> &#160; at System.Net.Sockets.Socket+Worker.Accept () [0x00000]
+</I>&gt;&gt;&gt;<i> 2010-04-29 17:17:11,273 ERROR -
+</I>&gt;&gt;&gt;<i> OpenSim.Framework.Servers.HttpServer.BaseHttpServer [BASE HTTP
+</I>&gt;&gt;&gt;<i> SERVER]: HttpServer.HttpListener had an exception
+</I>&gt;&gt;&gt;<i> System.Net.Sockets.SocketException: Too many open files
+</I>&gt;&gt;&gt;<i> &#160; at System.Net.Sockets.Socket.Accept () [0x00000]
+</I>&gt;&gt;&gt;<i> &#160; at System.Net.Sockets.Socket+Worker.Accept () [0x00000]
+</I>&gt;&gt;&gt;<i> ockets.SocketException: Too many open files
+</I>&gt;&gt;&gt;<i> &#160; at System.Net.Sockets.Socket.Accept () [0x00000]
+</I>&gt;&gt;&gt;<i> &#160; at System.Net.Sockets.Socket+Worker.Accept () [0x00000]
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004402.html">[Opensim-users] Region crossings crashing the grid.
+</A></li>
+	<LI>Next message: <A HREF="004405.html">[Opensim-users] Opensim-users Digest, Vol 33, Issue 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4404">[ date ]</a>
+              <a href="thread.html#4404">[ thread ]</a>
+              <a href="subject.html#4404">[ subject ]</a>
+              <a href="author.html#4404">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

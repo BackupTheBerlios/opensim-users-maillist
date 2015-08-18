@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Firestorm-Release%20and%20adding%20custom%20OpenSim%0A%09servers&In-Reply-To=%3C4F35A543.8020603%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009344.html">
+   <LINK REL="Next"  HREF="009348.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Firestorm-Release and adding custom OpenSim	servers</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Firestorm-Release%20and%20adding%20custom%20OpenSim%0A%09servers&In-Reply-To=%3C4F35A543.8020603%40cox.net%3E"
+       TITLE="[Opensim-users] Firestorm-Release and adding custom OpenSim	servers">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Sat Feb 11 00:16:19 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009344.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+        <LI>Next message: <A HREF="009348.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9345">[ date ]</a>
+              <a href="thread.html#9345">[ thread ]</a>
+              <a href="subject.html#9345">[ subject ]</a>
+              <a href="author.html#9345">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oh yes... forgot to add... for those having trouble with Singularity as 
+well. Add in your grid to singularity as usual, apply the settings. Then 
+close out Singularity. then find the grids_sg2.xml file in 
+.\SecondLife\user_settings wherever your application data folder may be. 
+I'm on Win 7 so my grids_sg2.xml file is in 
+C:\Users\&lt;username&gt;\AppData\Roaming\SecondLife\user_settings
+
+Your newly created grid entry should be at the bottom. It may be named 
+&quot;the lost continent of hippo&quot; in the gridname section. Change that name 
+to whatever you want your gridname to be in the grid manager. Then where 
+it says
+
+&lt;key&gt;loginuri&lt;/key&gt;
+&lt;string&gt;<A HREF="http://127.0.0.1:9000/&lt;/string">http://127.0.0.1:9000/&lt;/string</A>&gt;
+
+Change 127.0.0.1 to your IP or FQDN
+
+Save it and reload Singularity. Should be able to pick your renamed grid 
+and connect to it =)
+
+The first time i did this it reverted my entry back to lost continent 
+and 127.0.0.1 so; you may have to do this one more time to make the info 
+stick (mileage may vary lol), just be sure Singularity is shut down 
+before making the changes. If all else fails and it doesn't seem to want 
+to keep the info, could always make the file read-only.
+
+Hope this helps!
+
+
+On 2/10/2012 4:45 PM, Chris wrote:
+&gt;<i> Aha! That did the trick. Apparently when using the grid manager to add 
+</I>&gt;<i> in the grid, for some reason, it wants to change the loginuri to 
+</I>&gt;<i> localhost in the xml file. The heck =/? lol
+</I>&gt;<i>
+</I>&gt;<i> In any event, I found the grids.user.xml file and saw the problem 
+</I>&gt;<i> immediately in the section for my os instance:
+</I>&gt;<i>
+</I>&gt;<i> &lt;key&gt;loginuri&lt;/key&gt;
+</I>&gt;<i> &lt;array&gt;
+</I>&gt;<i> &lt;string&gt;<A HREF="http://127.0.0.1:9000/&lt;/string">http://127.0.0.1:9000/&lt;/string</A>&gt;
+</I>&gt;<i> &lt;/array&gt;
+</I>&gt;<i>
+</I>&gt;<i> Changed localhost to my IP address and works like a charm.
+</I>&gt;<i>
+</I>&gt;<i> Thank you so much Wade! =)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 2/10/2012 4:27 PM, Wade Schuette wrote:
+</I>&gt;&gt;<i> Chris, I had written the Firestorm developers to find out about this 
+</I>&gt;&gt;<i> myself, as to how to get to the JokaydiaGrid.
+</I>&gt;&gt;<i> Here's their reply: (Jan 20, 2012) which worked for me on Windows XP, 
+</I>&gt;&gt;<i> but I could find no way to do the same sort of thing on a Mac.   If 
+</I>&gt;&gt;<i> you try it, let us know (or me know) if it worked for you!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Obviously, replace &quot;jokadia...&quot; with your ow desired grids &quot;loginuri&quot;.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  A grid manager is on our list for addition. There is no ETA.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>  The workarounds are:
+</I>&gt;&gt;&gt;&gt;<i>  - Modify grids.user.xml, which is located in your user settings 
+</I>&gt;&gt;&gt;&gt;<i> folder.
+</I>&gt;&gt;&gt;&gt;<i>  - Modify the shortcut/launcher to add 
+</I>&gt;&gt;&gt;&gt;<i> {noformat}--<A HREF="loginurihttp://jokadia.metaverseworlds.com:8002/{noformat">loginurihttp://jokadia.metaverseworlds.com:8002/{noformat</A>}&gt;&gt;  
+</I>&gt;&gt;&gt;&gt;<i> to the exec/target line.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Wade
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 2/10/12 1:52 PM, Chris wrote:
+</I>&gt;&gt;&gt;<i> Hello all,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I was wondering if anyone is having issues with the last 2 latest 
+</I>&gt;&gt;&gt;<i> releases of Firestorm and connecting to their own OpenSim grid? I 
+</I>&gt;&gt;&gt;<i> can connect to one of the pre-configured grids in the list just fine 
+</I>&gt;&gt;&gt;<i> after enabling all the proper options to allow me to connect to 
+</I>&gt;&gt;&gt;<i> other grids... but I am unable to specify my own custom os server to 
+</I>&gt;&gt;&gt;<i> connect to whether it be by command line options, grid manager, or 
+</I>&gt;&gt;&gt;<i> editing the grids xml file to manually include it. I get a message 
+</I>&gt;&gt;&gt;<i> stating that it cannot resolve the DNS name and my console output 
+</I>&gt;&gt;&gt;<i> doesn't even record an attempt for viewer login... I get the same 
+</I>&gt;&gt;&gt;<i> issue on the latest Singularity viewer as well actually.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Following the same procedure to add in a custom grid; I don't have 
+</I>&gt;&gt;&gt;<i> any issues with the older viewers and they connect just fine. Would 
+</I>&gt;&gt;&gt;<i> any one happen to know if it is possible to get these viewers 
+</I>&gt;&gt;&gt;<i> working again on OpenSim?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 9 Region Standalone on 0.7.3 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.11
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009344.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+	<LI>Next message: <A HREF="009348.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9345">[ date ]</a>
+              <a href="thread.html#9345">[ thread ]</a>
+              <a href="subject.html#9345">[ subject ]</a>
+              <a href="author.html#9345">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim Crashes when running a small Vehicle Script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20Crashes%20when%20running%20a%20small%20Vehicle%20Script&In-Reply-To=%3CC6DDCB5B.211CB%25Thomas%40seuring.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002664.html">
+   <LINK REL="Next"  HREF="002687.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim Crashes when running a small Vehicle Script</H1>
+    <B>Thomas Seuring</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20Crashes%20when%20running%20a%20small%20Vehicle%20Script&In-Reply-To=%3CC6DDCB5B.211CB%25Thomas%40seuring.com%3E"
+       TITLE="[Opensim-users] OpenSim Crashes when running a small Vehicle Script">Thomas at seuring.com
+       </A><BR>
+    <I>Tue Sep 22 00:31:23 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002664.html">[Opensim-users] How to delete Prim crossed error
+</A></li>
+        <LI>Next message: <A HREF="002687.html">[Opensim-users] OpenSim Crashes when running a small Vehicle	Script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2663">[ date ]</a>
+              <a href="thread.html#2663">[ thread ]</a>
+              <a href="subject.html#2663">[ subject ]</a>
+              <a href="author.html#2663">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've wrote a small, very easy Script to drive a Vehicle. But everytime I get
+and like to drive, OpenSim crashes.
+
+Any ideas?
+
+Thanks
+
+Tom
+
+BELOW: Crash and Code:
+
+
+The crash is:
+
+Region (root) # Stacktrace:
+
+  at (wrapper managed-to-native) Ode.NET.d.JointSetLMotorAxis
+(intptr,int,int,single,single,single) &lt;0x00004&gt;
+  at (wrapper managed-to-native) Ode.NET.d.JointSetLMotorAxis
+(intptr,int,int,single,single,single) &lt;0xffffffff&gt;
+  at 
+OpenSim.Region.Physics.OdePlugin.ODEVehicleSettings.SetLinearMotorProperties
+() &lt;0x001e6&gt;
+  at OpenSim.Region.Physics.OdePlugin.ODEVehicleSettings.LinearMotor
+(single) &lt;0x004aa&gt;
+  at OpenSim.Region.Physics.OdePlugin.ODEVehicleSettings.Step (single)
+&lt;0x0009b&gt;
+  at OpenSim.Region.Physics.OdePlugin.OdePrim.Move (single) &lt;0x00b20&gt;
+  at OpenSim.Region.Physics.OdePlugin.OdeScene.Simulate (single) &lt;0x0155f&gt;
+  at OpenSim.Region.Framework.Scenes.SceneGraph.UpdatePhysics (double)
+&lt;0x0003c&gt;
+  at OpenSim.Region.Framework.Scenes.Scene.Update () &lt;0x004d5&gt;
+  at OpenSim.Region.Framework.Scenes.Scene.Heartbeat (object) &lt;0x00018&gt;
+  at (wrapper runtime-invoke) object.runtime_invoke_void__this___object
+(object,intptr,intptr,intptr) &lt;0xffffffff&gt;
+Abort trap
+
+
+The Script is:
+// set the vehicle parameters
+setupVehicle()
+{
+    llSetStatus(STATUS_PHYSICS, TRUE);
+    llSetVehicleType(VEHICLE_TYPE_CAR);
+    
+    // The vehicle will get up to full speed in 1 second
+    llSetVehicleFloatParam(VEHICLE_LINEAR_MOTOR_TIMESCALE, 1.0);
+    
+    // The motor will become ineffective after 3 seconds.
+    llSetVehicleFloatParam(VEHICLE_LINEAR_MOTOR_DECAY_TIMESCALE, 3.0);
+    
+    // Turn off angular and linear deflection
+    llSetVehicleFloatParam(VEHICLE_ANGULAR_DEFLECTION_EFFICIENCY, 0.0);
+    llSetVehicleFloatParam(VEHICLE_LINEAR_DEFLECTION_EFFICIENCY, 0.0);
+
+    // Set low linear friction, equal in all directions
+    llSetVehicleFloatParam(VEHICLE_LINEAR_FRICTION_TIMESCALE, 5000.0);
+    
+    // Set very high angular friction, this vehicle does not
+    // like to turn
+    llSetVehicleFloatParam(VEHICLE_ANGULAR_FRICTION_TIMESCALE, 0.1);
+}
+
+// stop this object from being a vehicle
+noVehicle()
+{
+    // Turn off physics and vehicle params
+    llSetVehicleType(VEHICLE_TYPE_NONE);
+    llSetStatus(STATUS_PHYSICS, FALSE);
+}
+
+// give this prim a wedge shape and set it to about avatar size
+setupObject()
+{
+    llSetPrimitiveParams([
+    PRIM_TYPE, 
+        PRIM_TYPE_BOX,
+        PRIM_HOLE_DEFAULT,
+        &lt;0.75, 1.0, 0.0&gt;,
+        0.0,
+        &lt;0.0, 0.0, 0.0&gt;,
+        &lt;1.0, 1.0, 0.0&gt;,
+        &lt;0.0, 0.0, 0.0&gt;,
+    PRIM_SIZE,
+        &lt;4.0, 1.5, 0.5&gt;
+        ]);
+}
+
+// default state, not a vehicle
+default
+{
+    state_entry()
+    {
+        noVehicle();
+        setupObject();
+                
+        // Set the location avatars will sit
+        llSitTarget(&lt;-1.0, 0.0, 0.5&gt;, ZERO_ROTATION);
+    }
+    
+    changed(integer change)
+    {
+        if (change &amp; CHANGED_LINK)
+        {
+            if (llAvatarOnSitTarget() != NULL_KEY)
+            {
+                // someone is sitting on the object; request permission
+                // to take controls
+                llRequestPermissions(
+                    llAvatarOnSitTarget(),
+                    PERMISSION_TAKE_CONTROLS);
+            }
+        }
+    }
+    
+    run_time_permissions(integer perm)
+    {
+        // the run time permissions have changed; if script can
+        // take controls, do that and go to the vehicle state
+        if (perm &amp; PERMISSION_TAKE_CONTROLS)
+        {
+            llTakeControls(
+                CONTROL_FWD | CONTROL_BACK |
+                CONTROL_LEFT | CONTROL_RIGHT |
+                CONTROL_ROT_LEFT |CONTROL_ROT_RIGHT,
+                TRUE, FALSE);
+            state vehicle;
+        }
+    }
+}
+
+state vehicle
+{
+    state_entry()
+    {
+        setupVehicle();
+    }
+        
+    changed(integer change)
+    {
+        // If the avatar sitting on this object gets up, stop
+        // being a vehicle
+        if (change &amp; CHANGED_LINK)
+        {
+            if (llAvatarOnSitTarget() == NULL_KEY)
+            {
+                // no one is sitting on the object; stop
+                // being a vehicle
+                llReleaseControls();
+                state default;
+            }
+        }
+    }
+    
+    control(key from, integer level, integer edge)
+    {
+        integer pressed = (level &amp; edge);
+        vector velocity = ZERO_VECTOR;
+        float speed = 15.0;
+        
+        if (pressed &amp; CONTROL_FWD)
+        {
+            velocity = &lt;1.0, 0.0, 0.0&gt;;
+        }
+        else if (pressed &amp; CONTROL_BACK)
+        {
+            velocity = &lt;-1.0, 0.0, 0.0&gt;;
+        } 
+        else if (pressed &amp; CONTROL_LEFT ||
+                 pressed &amp; CONTROL_ROT_LEFT)
+        {
+            velocity = &lt;0.0, 1.0, 0.0&gt;;
+        }
+        else if (pressed &amp; CONTROL_RIGHT ||
+                 pressed &amp; CONTROL_ROT_RIGHT)
+        {
+            velocity = &lt;0.0, -1.0, 0.0&gt;;
+        }
+        if (velocity != ZERO_VECTOR)
+        {
+            velocity = velocity * speed;
+            llSetVehicleVectorParam(
+                VEHICLE_LINEAR_MOTOR_DIRECTION,
+                velocity);
+        } 
+    }
+}
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090922/9b2c0099/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090922/9b2c0099/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002664.html">[Opensim-users] How to delete Prim crossed error
+</A></li>
+	<LI>Next message: <A HREF="002687.html">[Opensim-users] OpenSim Crashes when running a small Vehicle	Script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2663">[ date ]</a>
+              <a href="thread.html#2663">[ thread ]</a>
+              <a href="subject.html#2663">[ subject ]</a>
+              <a href="author.html#2663">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] ProfileServerURL and OpenIDServerURL
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20ProfileServerURL%20and%20OpenIDServerURL&In-Reply-To=%3C4FDC6C06.2040303%40bluewallgroup.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010531.html">
+   <LINK REL="Next"  HREF="010532.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] ProfileServerURL and OpenIDServerURL</H1>
+    <B>James Hughes</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20ProfileServerURL%20and%20OpenIDServerURL&In-Reply-To=%3C4FDC6C06.2040303%40bluewallgroup.com%3E"
+       TITLE="[Opensim-users] ProfileServerURL and OpenIDServerURL">jamesh at bluewallgroup.com
+       </A><BR>
+    <I>Sat Jun 16 13:20:38 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010531.html">[Opensim-users] ProfileServerURL and OpenIDServerURL
+</A></li>
+        <LI>Next message: <A HREF="010532.html">[Opensim-users] OpenSimulator Meetup Frankfurt
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10533">[ date ]</a>
+              <a href="thread.html#10533">[ thread ]</a>
+              <a href="subject.html#10533">[ subject ]</a>
+              <a href="author.html#10533">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Ai,
+
+I made an adjustment on the 2 ini to make it more clear about the status 
+of these settings. Some notes...
+
+These are a work in progress and need a patched V3 viewer to use them. 
+The [Agent_Name] is part of a macro-language in the viewer that it uses 
+to talk to the external service and it needs to be in the url. The 
+viewer will parse that and give the result 'firstname.lastname' of the 
+authenticated user, so it should look something like this...
+
+	Robust.ini entry
+	ProfileServerURL = <A HREF="https://my.bluewallvirtual.net/[AGENT_NAME">https://my.bluewallvirtual.net/[AGENT_NAME</A>]
+	
+	Viewer parsed result
+	<A HREF="https://my.bluewallvirtual.net/bluewall.slade">https://my.bluewallvirtual.net/bluewall.slade</A>
+
+OpenIDServerURL is for the url of your website that the viewer needs to 
+authenticate against to be able to get a session cookie for access. Our 
+OpenID service isn't used in this process. These things will make sense 
+as work is completed on the other components.
+
+Hope that explains things a bit better...
+
+Thanks
+-BlueWall
+
+On 06/16/2012 05:49 AM, Ai Austin wrote:
+&gt;<i> I am doing a clean up of .ini files on the Openvue grid... and spiottign
+</I>&gt;<i> a few thongs that are not configured according to the latest .example
+</I>&gt;<i> files in 07.4 dev master.
+</I>&gt;<i>
+</I>&gt;<i> In Robust.ini.example I see some entries for v2/3 propfile and web app
+</I>&gt;<i> handling that I don't have in my setup, and I assume they should be..
+</I>&gt;<i>
+</I>&gt;<i> ; For V2 map
+</I>&gt;<i> MapTileURL = &quot;<A HREF="http://127.0.0.1:8002">http://127.0.0.1:8002</A>&quot;;
+</I>&gt;<i>
+</I>&gt;<i> ; For V2/3 Web Profiles
+</I>&gt;<i> ProfileServerURL = &quot;<A HREF="http://127.0.0.1/profiles/[AGENT_NAME">http://127.0.0.1/profiles/[AGENT_NAME</A>]&quot;
+</I>&gt;<i>
+</I>&gt;<i> ; For V2/V3 webapp authentication SSO
+</I>&gt;<i> OpenIDServerURL = &quot;<A HREF="http://127.0.0.1/openid/openidserver/">http://127.0.0.1/openid/openidserver/</A>&quot;
+</I>&gt;<i>
+</I>&gt;<i> I had the first entry in fine for MapTileURL set to
+</I>&gt;<i> <A HREF="http://virtual.aiai.ed.ac.uk:8002">http://virtual.aiai.ed.ac.uk:8002</A> and map tiles are working in v2/3.
+</I>&gt;<i>
+</I>&gt;<i> What surprises me is that the examples for ProfileServerURL and
+</I>&gt;<i> OpenIDServerURL do not have the :8002 port. is the example correct, and
+</I>&gt;<i> should :8002 be added?
+</I>&gt;<i>
+</I>&gt;<i> But in the Robust.HG.ini my service connectors have the default
+</I>&gt;<i> OpenSim.Server.Handlers.dll:OpenIdServerConnector,8003 so I am not at
+</I>&gt;<i> all sure how the host and port are used in this case.
+</I>&gt;<i>
+</I>&gt;<i> Can someone also let me know what an example URL would be for an avatar
+</I>&gt;<i> with name &quot;Test User&quot; for example. Is the space converted to an &quot;_&quot;? and
+</I>&gt;<i> do the [..] stay in? I.e. as a test would I use something like#
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://virtual.aiai.wed.ac.uk:8002/profiles/[Test_User">http://virtual.aiai.wed.ac.uk:8002/profiles/[Test_User</A>]
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010531.html">[Opensim-users] ProfileServerURL and OpenIDServerURL
+</A></li>
+	<LI>Next message: <A HREF="010532.html">[Opensim-users] OpenSimulator Meetup Frankfurt
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10533">[ date ]</a>
+              <a href="thread.html#10533">[ thread ]</a>
+              <a href="subject.html#10533">[ subject ]</a>
+              <a href="author.html#10533">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

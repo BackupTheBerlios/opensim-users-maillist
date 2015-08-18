@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NAT &amp; Corporate Firewall
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3CA77FC42E0E5743689C435663D855F18B%40GABPC%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006962.html">
+   <LINK REL="Next"  HREF="006970.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NAT &amp; Corporate Firewall</H1>
+    <B>Gary Beck</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3CA77FC42E0E5743689C435663D855F18B%40GABPC%3E"
+       TITLE="[Opensim-users] NAT &amp; Corporate Firewall">gab4gab at gmail.com
+       </A><BR>
+    <I>Tue Apr  5 06:23:32 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006962.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+        <LI>Next message: <A HREF="006970.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6963">[ date ]</a>
+              <a href="thread.html#6963">[ thread ]</a>
+              <a href="subject.html#6963">[ subject ]</a>
+              <a href="author.html#6963">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Diva Canto wrote:
+&gt;<i> DNS resolution is made by the client. The server simply passes the name 
+</I>&gt;<i> over. Make sure to use domain names consistently in all configuration 
+</I>&gt;<i> files.
+</I>----------------------------------------------------------------------
+My testing seems to show the IP address rather than domain name is passed to 
+the client for region/UDP.
+
+I have one region using ExternalHostName=SYSTEMIP and the others using 
+ExternalHostName=something.dyndns-mail.com
+I run Opensim 0.7.0.2 on a VISTA system, stand alone mode, client access 
+both local and external, NAT loopback on.
+All that works fine.
+
+To test I added a HOSTS file entry on the server PC using 127.0.0.1 for 
+something.dyndns-mail.com.
+With that change I was able to login a client on the server PC without 
+issues.
+Logging in from a local non-server PC I cannot start at or TP to a region 
+that has ExternalHostName=something.dyndns-mail.com.  Login fails at the 
+handshake step.  However, I can login on that PC starting at the region with 
+ExternalHostName=SYSTEMIP.   Handshake works.
+
+I interpret all that to mean the server is sending the IP address to the 
+client for the UPD communication.  If the server was passing the domain name 
+I would expect no Client issues on my non-server PC.  I'm only changing the 
+IP address of my ...dyndns... domain name on the server PC for this test. 
+In fact, I can remove the HOSTS entry while the server continues to run. 
+After that I can again login on a local/non-server PC with no problems.
+
+One other item I found that suggests IP addresses are being passes rather 
+than domain names is the Entity Transfer Module entries in the server log
+2011-04-04 22:24:53,759 INFO  - 
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule 
+[ENTITY TRANSFER MODULE]: Starting to inform client about neighbour 999, 
+999(174.124.181.36:9009)
+
+Network isn't my specialty so I may have misinterpreted things.  I welcome 
+other explanations.
+
+(Multimedia seems to be handled by passing the domain name - but that's 
+another story.) 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006962.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+	<LI>Next message: <A HREF="006970.html">[Opensim-users] NAT &amp; Corporate Firewall
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6963">[ date ]</a>
+              <a href="thread.html#6963">[ thread ]</a>
+              <a href="subject.html#6963">[ subject ]</a>
+              <a href="author.html#6963">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

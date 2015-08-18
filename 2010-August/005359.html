@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Windlight and LightShare in Opensim 0.7
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Windlight%20and%20LightShare%20in%20Opensim%200.7&In-Reply-To=%3CAANLkTi%3DNRYvLV1eBoqyruZPrwz2uaJ7qE%2BV%3D4E%3DZQ2ZS%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005358.html">
+   <LINK REL="Next"  HREF="005362.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Windlight and LightShare in Opensim 0.7</H1>
+    <B>James Stallings II</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Windlight%20and%20LightShare%20in%20Opensim%200.7&In-Reply-To=%3CAANLkTi%3DNRYvLV1eBoqyruZPrwz2uaJ7qE%2BV%3D4E%3DZQ2ZS%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Windlight and LightShare in Opensim 0.7">james.stallings at gmail.com
+       </A><BR>
+    <I>Thu Aug 26 18:46:44 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005358.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+        <LI>Next message: <A HREF="005362.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5359">[ date ]</a>
+              <a href="thread.html#5359">[ thread ]</a>
+              <a href="subject.html#5359">[ subject ]</a>
+              <a href="author.html#5359">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Ai,
+
+The functions were renamed and are prefixed 'ls' instead of 'cm'. Also the
+module is in core, but the databases aren't; you'll need to run a sql script
+to create the tablespaces for you. Here's that script:
+
+
+
+-- MySQL dump 10.13  Distrib 5.1.42, for Win32 (ia32)
+--
+-- Host: localhost    Database: osg2
+-- ------------------------------------------------------
+-- Server version       5.1.42-community
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS,
+FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `regionwindlight`
+--
+
+DROP TABLE IF EXISTS `regionwindlight`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `regionwindlight` (
+  `region_id` varchar(36) NOT NULL DEFAULT '000000-0000-0000-000000000000',
+  `water_color_r` float(9,6) unsigned NOT NULL DEFAULT '4.000000',
+  `water_color_g` float(9,6) unsigned NOT NULL DEFAULT '38.000000',
+  `water_color_b` float(9,6) unsigned NOT NULL DEFAULT '64.000000',
+  `water_fog_density_exponent` float(3,1) unsigned NOT NULL DEFAULT '4.0',
+  `underwater_fog_modifier` float(3,2) unsigned NOT NULL DEFAULT '0.25',
+  `reflection_wavelet_scale_1` float(3,1) unsigned NOT NULL DEFAULT '2.0',
+  `reflection_wavelet_scale_2` float(3,1) unsigned NOT NULL DEFAULT '2.0',
+  `reflection_wavelet_scale_3` float(3,1) unsigned NOT NULL DEFAULT '2.0',
+  `fresnel_scale` float(3,2) unsigned NOT NULL DEFAULT '0.40',
+  `fresnel_offset` float(3,2) unsigned NOT NULL DEFAULT '0.50',
+  `refract_scale_above` float(3,2) unsigned NOT NULL DEFAULT '0.03',
+  `refract_scale_below` float(3,2) unsigned NOT NULL DEFAULT '0.20',
+  `blur_multiplier` float(4,3) unsigned NOT NULL DEFAULT '0.040',
+  `big_wave_direction_x` float(3,2) NOT NULL DEFAULT '1.05',
+  `big_wave_direction_y` float(3,2) NOT NULL DEFAULT '-0.42',
+  `little_wave_direction_x` float(3,2) NOT NULL DEFAULT '1.11',
+  `little_wave_direction_y` float(3,2) NOT NULL DEFAULT '-1.16',
+  `normal_map_texture` varchar(36) NOT NULL DEFAULT
+'822ded49-9a6c-f61c-cb89-6df54f42cdf4',
+  `horizon_r` float(3,2) unsigned NOT NULL DEFAULT '0.25',
+  `horizon_g` float(3,2) unsigned NOT NULL DEFAULT '0.25',
+  `horizon_b` float(3,2) unsigned NOT NULL DEFAULT '0.32',
+  `horizon_i` float(3,2) unsigned NOT NULL DEFAULT '0.32',
+  `haze_horizon` float(3,2) unsigned NOT NULL DEFAULT '0.19',
+  `blue_density_r` float(3,2) unsigned NOT NULL DEFAULT '0.12',
+  `blue_density_g` float(3,2) unsigned NOT NULL DEFAULT '0.22',
+  `blue_density_b` float(3,2) unsigned NOT NULL DEFAULT '0.38',
+  `blue_density_i` float(3,2) unsigned NOT NULL DEFAULT '0.38',
+  `haze_density` float(3,2) unsigned NOT NULL DEFAULT '0.70',
+  `density_multiplier` float(3,2) unsigned NOT NULL DEFAULT '0.18',
+  `distance_multiplier` float(4,1) unsigned NOT NULL DEFAULT '0.8',
+  `max_altitude` int(4) unsigned NOT NULL DEFAULT '1605',
+  `sun_moon_color_r` float(3,2) unsigned NOT NULL DEFAULT '0.24',
+  `sun_moon_color_g` float(3,2) unsigned NOT NULL DEFAULT '0.26',
+  `sun_moon_color_b` float(3,2) unsigned NOT NULL DEFAULT '0.30',
+  `sun_moon_color_i` float(3,2) unsigned NOT NULL DEFAULT '0.30',
+  `sun_moon_position` float(4,3) unsigned NOT NULL DEFAULT '0.317',
+  `ambient_r` float(3,2) unsigned NOT NULL DEFAULT '0.35',
+  `ambient_g` float(3,2) unsigned NOT NULL DEFAULT '0.35',
+  `ambient_b` float(3,2) unsigned NOT NULL DEFAULT '0.35',
+  `ambient_i` float(3,2) unsigned NOT NULL DEFAULT '0.35',
+  `east_angle` float(3,2) unsigned NOT NULL DEFAULT '0.00',
+  `sun_glow_focus` float(3,2) unsigned NOT NULL DEFAULT '0.10',
+  `sun_glow_size` float(3,2) unsigned NOT NULL DEFAULT '1.75',
+  `scene_gamma` float(4,2) unsigned NOT NULL DEFAULT '1.00',
+  `star_brightness` float(3,2) unsigned NOT NULL DEFAULT '0.00',
+  `cloud_color_r` float(3,2) unsigned NOT NULL DEFAULT '0.41',
+  `cloud_color_g` float(3,2) unsigned NOT NULL DEFAULT '0.41',
+  `cloud_color_b` float(3,2) unsigned NOT NULL DEFAULT '0.41',
+  `cloud_color_i` float(3,2) unsigned NOT NULL DEFAULT '0.41',
+  `cloud_x` float(3,2) unsigned NOT NULL DEFAULT '1.00',
+  `cloud_y` float(3,2) unsigned NOT NULL DEFAULT '0.53',
+  `cloud_density` float(3,2) unsigned NOT NULL DEFAULT '1.00',
+  `cloud_coverage` float(3,2) unsigned NOT NULL DEFAULT '0.27',
+  `cloud_scale` float(3,2) unsigned NOT NULL DEFAULT '0.42',
+  `cloud_detail_x` float(3,2) unsigned NOT NULL DEFAULT '1.00',
+  `cloud_detail_y` float(3,2) unsigned NOT NULL DEFAULT '0.53',
+  `cloud_detail_density` float(3,2) unsigned NOT NULL DEFAULT '0.12',
+  `cloud_scroll_x` float(4,2) NOT NULL DEFAULT '0.20',
+  `cloud_scroll_x_lock` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `cloud_scroll_y` float(4,2) NOT NULL DEFAULT '0.01',
+  `cloud_scroll_y_lock` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `draw_classic_clouds` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`region_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `regionwindlight`
+--
+
+LOCK TABLES `regionwindlight` WRITE;
+/*!40000 ALTER TABLE `regionwindlight` DISABLE KEYS */;
+/*!40000 ALTER TABLE `regionwindlight` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2010-06-17 21:18:04
+
+
+
+
+
+Hope that helps :)
+James/Hiro Protagonist
+SimHost.com
+
+
+On Thu, Aug 26, 2010 at 11:35 AM, Ai Austin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at gmail.com</A>&gt; wrote:
+
+&gt;<i> I have been reading about Windlight settings and how they can be broadcast
+</I>&gt;<i> from a region to a suitable viewer such as Imprudence.
+</I>&gt;<i>
+</I>&gt;<i> Is this enabled in the current release versions 0.7.0.1 or just in the
+</I>&gt;<i> development/master builds?
+</I>&gt;<i>
+</I>&gt;<i> I ask as I tried enabling lightshare on an Opensim.exe as it is included in
+</I>&gt;<i> Opensim.ini.example... and the tried to compile a test script that is
+</I>&gt;<i> provided by the Meta7 folks.  But I get a compile errors saying that the 3
+</I>&gt;<i> functions which can get and set the region settings - &quot;The name
+</I>&gt;<i> 'cmSetWindlightScene' does not exist in the current context&quot;
+</I>&gt;<i>
+</I>&gt;<i> cmGetWindlightScene
+</I>&gt;<i> cmSetWindlightScene
+</I>&gt;<i> cmSetWindlightScenetargeted
+</I>&gt;<i>
+</I>&gt;<i> Or possibly these functions were renamed when incorporated into opensim as
+</I>&gt;<i> a module?
+</I>&gt;<i>
+</I>&gt;<i> I found Wiki pages here and there, but not a proper intro on the OpenSim
+</I>&gt;<i> wiki. E.g.
+</I>&gt;<i>     <A HREF="http://imprudenceviewer.org/wiki/LightShare">http://imprudenceviewer.org/wiki/LightShare</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+===================================
+<A HREF="http://osgrid.org">http://osgrid.org</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100826/28e72809/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100826/28e72809/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005358.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+	<LI>Next message: <A HREF="005362.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5359">[ date ]</a>
+              <a href="thread.html#5359">[ thread ]</a>
+              <a href="subject.html#5359">[ subject ]</a>
+              <a href="author.html#5359">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

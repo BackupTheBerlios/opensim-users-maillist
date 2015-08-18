@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Combat HUD help :P
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Combat%20HUD%20help%20%3AP&In-Reply-To=%3CAANLkTi%3D%3DpKkCsD4Chw_DbLyaNesaEyRGPx7xtNOm_QRO%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006616.html">
+   <LINK REL="Next"  HREF="006620.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Combat HUD help :P</H1>
+    <B>Jor3l Boa</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Combat%20HUD%20help%20%3AP&In-Reply-To=%3CAANLkTi%3D%3DpKkCsD4Chw_DbLyaNesaEyRGPx7xtNOm_QRO%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Combat HUD help :P">jor3l at foravatars.com
+       </A><BR>
+    <I>Tue Feb 15 19:22:09 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006616.html">[Opensim-users] Combat HUD help :P
+</A></li>
+        <LI>Next message: <A HREF="006620.html">[Opensim-users] Combat HUD help :P
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6617">[ date ]</a>
+              <a href="thread.html#6617">[ thread ]</a>
+              <a href="subject.html#6617">[ subject ]</a>
+              <a href="author.html#6617">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry, 0.7.02 and 'get fixed' :)
+
+2011/2/15 Jor3l Boa &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jor3l at foravatars.com</A>&gt;
+
+&gt;<i> Well, is an OpenSim problem, tested with last official release (0.7.2) and
+</I>&gt;<i> SL (a simple collision detection), OpenSim detects nothing but SecondLie do
+</I>&gt;<i> work, try with the following script:
+</I>&gt;<i>
+</I>&gt;<i> --------------------------------------
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     collision_start(integer i)
+</I>&gt;<i>     {
+</I>&gt;<i>         integer _type = llDetectedType(0);
+</I>&gt;<i>         if(!(_type == ACTIVE &amp;&amp; _type != AGENT))
+</I>&gt;<i>              llOwnerSay(llDetectedName(0) + &quot; bumped you with his
+</I>&gt;<i> avatar.&quot;);
+</I>&gt;<i>         else {
+</I>&gt;<i>             float vel = llVecMag(llDetectedVel(0));
+</I>&gt;<i>             string name = llDetectedName(0);
+</I>&gt;<i>             string owner = llKey2Name(llDetectedOwner(0));
+</I>&gt;<i>             llOwnerSay(&quot;An object named '&quot; + name + &quot;' from &quot; + owner + &quot;
+</I>&gt;<i> collided with you. (Velocity: &quot; + (string)vel + &quot;)&quot;);
+</I>&gt;<i>         }
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i> -------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Only thing you can do is use sensors to simulate a shot until this got
+</I>&gt;<i> fixed, and report to mantis :)
+</I>&gt;<i>
+</I>&gt;<i> 2011/2/15 Jawa Lunk &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jawalunk at gmail.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Very good idea!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I just tried it, and OpenSim makes HUD attachments phantom as well...not
+</I>&gt;&gt;<i> sure if that even matters though...the HUD is simply displaying
+</I>&gt;&gt;<i> information
+</I>&gt;&gt;<i> it receives from the meter the avatar wears.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There has to be a way to link up with the avatar collision, because it is
+</I>&gt;&gt;<i> obviously working to some degree, we don't walk through walls...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> its frustrating...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There has to be something that triggers when an object comes in contact
+</I>&gt;&gt;<i> with
+</I>&gt;&gt;<i> an avatar.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I even tried writing a script and placing it inside of the objects making
+</I>&gt;&gt;<i> phantom false LOL  no good...ha ha ha
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm getting desperate LOL
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have a beautiful 25 region sim filled with 100's of buildings and props
+</I>&gt;&gt;<i> I
+</I>&gt;&gt;<i> have built over the years in SecondLife, just waiting for us ha ha ha
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It's a wasteland that is being wasted :P
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Does anyone have any other ideas for something that may work for combat?
+</I>&gt;&gt;<i> Really, it seems there has to be something that I can use in place of the
+</I>&gt;&gt;<i> detect collision that would trigger the script to remove health from the
+</I>&gt;&gt;<i> avatar?
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> View this message in context:
+</I>&gt;&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/Combat-HUD-help-P-tp6011882p6028630.html">http://opensim-users.2152040.n2.nabble.com/Combat-HUD-help-P-tp6011882p6028630.html</A>
+</I>&gt;&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110215/32811377/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110215/32811377/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006616.html">[Opensim-users] Combat HUD help :P
+</A></li>
+	<LI>Next message: <A HREF="006620.html">[Opensim-users] Combat HUD help :P
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6617">[ date ]</a>
+              <a href="thread.html#6617">[ thread ]</a>
+              <a href="subject.html#6617">[ subject ]</a>
+              <a href="author.html#6617">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

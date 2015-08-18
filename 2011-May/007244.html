@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim.Region.Physics.OdePlugin.OdeScene
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim.Region.Physics.OdePlugin.OdeScene&In-Reply-To=%3CBANLkTimJFJ4kSi%2BGN%2BJ06txAR7MSiij9iA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007243.html">
+   <LINK REL="Next"  HREF="007245.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim.Region.Physics.OdePlugin.OdeScene</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim.Region.Physics.OdePlugin.OdeScene&In-Reply-To=%3CBANLkTimJFJ4kSi%2BGN%2BJ06txAR7MSiij9iA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] OpenSim.Region.Physics.OdePlugin.OdeScene">teravus at gmail.com
+       </A><BR>
+    <I>Fri May  6 01:01:05 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007243.html">[Opensim-users] OpenSim.Region.Physics.OdePlugin.OdeScene
+</A></li>
+        <LI>Next message: <A HREF="007245.html">[Opensim-users] Reques about ini opensimrc1 to opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7244">[ date ]</a>
+              <a href="thread.html#7244">[ thread ]</a>
+              <a href="subject.html#7244">[ subject ]</a>
+              <a href="author.html#7244">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sounds to me like there was an error that caused memory corruption.
+Unfortunately, memory corruption like that isn't recoverable.    The
+restart is an attempt to manage the situation and, the visible issue
+occurred during JointDestroy in the ODE bindings called from
+OdePlugin.OdeCharacter.ProcessTaints which means that it was trying to
+remove the avatar's physics proxy.
+
+Teravus
+
+
+
+On Thu, May 5, 2011 at 4:46 PM, James &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">j_jamesk at hotmail.com</A>&gt; wrote:
+&gt;<i> Hi Folks
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I had loaded an OAR file which was a load of buildings from openvce then I
+</I>&gt;<i> delinked a building and set the parts to physical so that the building would
+</I>&gt;<i> fall apart, within about a minute of this happening I was kicked out of the
+</I>&gt;<i> region with the default &#8220;the region is restarted&#8221; and then I saw the
+</I>&gt;<i> following in the opensim console being repeats many times:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-05 21:36:37,822 DEBUG -
+</I>&gt;<i> OpenSim.Region.Physics.OdePlugin.OdeScene.james [PHYSICS]: unable to collide
+</I>&gt;<i> test active prim against space.&#160; The space was zero, the geom was zero or it
+</I>&gt;<i> was in the process of being removed.&#160; Removed it from the active prim list.
+</I>&gt;<i> This needs to be fixed!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The followed by:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2011-05-05 21:36:37,894 ERROR -
+</I>&gt;<i> OpenSim.Region.Physics.OdePlugin.OdeScene.james [PHYSICS]: Attempted to read
+</I>&gt;<i> or write protected memory. This is often an indication that other memory is
+</I>&gt;<i> corrupt., Void JointDestroy(IntPtr), System.AccessViolationException:
+</I>&gt;<i> Attempted to read or write protected memory. This is often an indication
+</I>&gt;<i> that other memory is corrupt.
+</I>&gt;<i>
+</I>&gt;<i> &#160;&#160; at Ode.NET.d.JointDestroy(IntPtr j)
+</I>&gt;<i>
+</I>&gt;<i> &#160;&#160; at OpenSim.Region.Physics.OdePlugin.OdeCharacter.ProcessTaints(Single
+</I>&gt;<i> timestep)
+</I>&gt;<i>
+</I>&gt;<i> &#160;&#160; at OpenSim.Region.Physics.OdePlugin.OdeScene.Simulate(Single timeStep)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Is this normal?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Regards
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> James
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007243.html">[Opensim-users] OpenSim.Region.Physics.OdePlugin.OdeScene
+</A></li>
+	<LI>Next message: <A HREF="007245.html">[Opensim-users] Reques about ini opensimrc1 to opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7244">[ date ]</a>
+              <a href="thread.html#7244">[ thread ]</a>
+              <a href="subject.html#7244">[ subject ]</a>
+              <a href="author.html#7244">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

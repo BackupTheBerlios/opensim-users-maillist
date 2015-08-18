@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Building%20and%20running%20newly%20tagged%200.6.5-release%0A%20%28downloaded%20as%20SVN%20r9667%29&In-Reply-To=%3C72E0F8F2-D1E8-4F5C-80CB-4850E8771F09%40mac.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002189.html">
+   <LINK REL="Next"  HREF="002192.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)</H1>
+    <B>Brent Seidel</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Building%20and%20running%20newly%20tagged%200.6.5-release%0A%20%28downloaded%20as%20SVN%20r9667%29&In-Reply-To=%3C72E0F8F2-D1E8-4F5C-80CB-4850E8771F09%40mac.com%3E"
+       TITLE="[Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)">brentseidel at mac.com
+       </A><BR>
+    <I>Mon May 25 20:03:20 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002189.html">[Opensim-users] poll:favorite virtual world platform
+</A></li>
+        <LI>Next message: <A HREF="002192.html">[Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2190">[ date ]</a>
+              <a href="thread.html#2190">[ thread ]</a>
+              <a href="subject.html#2190">[ subject ]</a>
+              <a href="author.html#2190">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I downloaded and built the newly tagged 0.6.5-release.  The build was  
+successful.  After migrating my .ini settings over to the new .ini  
+files, I tried running it.  Part way through startup, it crashed with  
+the following in the log:
+
+&lt;bunch of stuff deleted&gt;
+2009-05-25 10:45:56,808 INFO  - OpenSim.Framework.PluginLoader`1 
+[[OpenSim.IApplicationPlugin, OpenSim, Version=0.0.0.0, Culture=neut
+ral, PublicKeyToken=null]] [PLUGINS]: Plugin Loaded:  
+OpenSim.Region.OptionalModules
+2009-05-25 10:45:56,809 DEBUG -  
+OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControll 
+erPlugin [REGIONMODULES]: Fo
+und non-shared region module IRCBridge, class  
+OpenSim.Region.OptionalModules.Avatar.Chat.IRCBridgeModule
+2009-05-25 10:45:56,810 DEBUG -  
+OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControll 
+erPlugin [REGIONMODULES]: Fo
+und shared region module Concierge, class  
+OpenSim.Region.OptionalModules.Avatar.Concierge.ConciergeModule
+2009-05-25 10:45:56,811 DEBUG -  
+OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControll 
+erPlugin [REGIONMODULES]: Fo
+und shared region module XmlRpcGroups, class  
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsModule
+2009-05-25 10:45:56,812 DEBUG -  
+OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControll 
+erPlugin [REGIONMODULES]: Fo
+und shared region module XmlRpcGroupsMessaging, class  
+OpenSim.Region.OptionalModules.Avatar.XmlRpcGroups.XmlRpcGroupsMessaging
+2009-05-25 10:45:56,813 INFO  - OpenSim.Framework.PluginLoader`1 
+[[OpenSim.IApplicationPlugin, OpenSim, Version=0.0.0.0, Culture=neut
+ral, PublicKeyToken=null]] [PLUGINS]: Plugin Loaded:  
+OpenSim.Region.CoreModules
+2009-05-25 10:45:56,816 ERROR - OpenSim.Application [APPLICATION]:
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.InvalidOperationException: Type  
+'OpenSim.Region.CoreModules.Agent.Capability.CapabilitiesModule' not  
+found in add-
+in 'OpenSim.Region.CoreModules,0.2'
+   at Mono.Addins.RuntimeAddin.GetType (System.String typeName,  
+Boolean throwIfNotFound) [0x00000]
+   at Mono.Addins.TypeExtensionNode.get_Type () [0x00000]
+   at  
+OpenSim.ApplicationPlugins.RegionModulesController.RegionModulesControll 
+erPlugin.Initialise (OpenSim.OpenSimBase openSim) [0x00
+000]
+   at OpenSim.ApplicationPluginInitialiser.Initialise (IPlugin  
+plugin) [0x00000]
+   at OpenSim.Framework.PluginLoader`1 
+[OpenSim.IApplicationPlugin].Load () [0x00000]
+   at OpenSim.Framework.PluginLoader`1 
+[OpenSim.IApplicationPlugin].Load (System.String extpoint) [0x00000]
+   at OpenSim.OpenSimBase.LoadPlugins () [0x00000]
+   at OpenSim.OpenSimBase.StartupSpecific () [0x00000]
+   at OpenSim.OpenSim.StartupSpecific () [0x00000]
+   at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000]
+   at OpenSim.Application.Main (System.String[] args) [0x00000]
+
+Application is terminating: True
+
+
+I grepped for &quot;CapabilitiesModule&quot; and it seems to appear in  
+the ...CoreModules.dll.  I also grepped for &quot;CoreModules,0.2&quot; and the  
+only place it showed up is in the log file.
+
+I'm assuming that I missed something somewhere, but can't figure out  
+what it was.  Any ideas?
+
+thanks,
+brent
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002189.html">[Opensim-users] poll:favorite virtual world platform
+</A></li>
+	<LI>Next message: <A HREF="002192.html">[Opensim-users] Building and running newly tagged 0.6.5-release (downloaded as SVN r9667)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2190">[ date ]</a>
+              <a href="thread.html#2190">[ thread ]</a>
+              <a href="subject.html#2190">[ subject ]</a>
+              <a href="author.html#2190">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

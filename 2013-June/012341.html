@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Animating NPCs without osNpcPlayAnimation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animating%20NPCs%20without%20osNpcPlayAnimation&In-Reply-To=%3CCAHi41xK9JpSQBjE9nrNWw4g%3DB_PM8edwjuVUSL58k%2BNpw0duDw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012340.html">
+   <LINK REL="Next"  HREF="012342.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Animating NPCs without osNpcPlayAnimation</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animating%20NPCs%20without%20osNpcPlayAnimation&In-Reply-To=%3CCAHi41xK9JpSQBjE9nrNWw4g%3DB_PM8edwjuVUSL58k%2BNpw0duDw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Animating NPCs without osNpcPlayAnimation">r.ramloll at gmail.com
+       </A><BR>
+    <I>Tue Jun  4 05:18:02 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012340.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+        <LI>Next message: <A HREF="012342.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12341">[ date ]</a>
+              <a href="thread.html#12341">[ thread ]</a>
+              <a href="subject.html#12341">[ subject ]</a>
+              <a href="author.html#12341">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Justin, Thanks so much for the clarification.
+
+On Mon, Jun 3, 2013 at 6:32 PM, Justin Clark-Casey
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+&gt;<i> On 03/06/13 22:19, Dr Ramesh Ramloll wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hello
+</I>&gt;&gt;<i> I was a surprised to see that I could animate an NPC without using the
+</I>&gt;&gt;<i> osNpcPlayAnimation OSSL command.
+</I>&gt;&gt;<i> For e.g. if you create a prim and set it to animate an avatar who sits
+</I>&gt;&gt;<i> on it, then you could use something like
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>      run_time_permissions(integer perm)
+</I>&gt;&gt;<i>      {
+</I>&gt;&gt;<i>          if (perm &amp; PERMISSION_TRIGGER_ANIMATION)
+</I>&gt;&gt;<i>          {
+</I>&gt;&gt;<i>                  animation=llGetInventoryName(INVENTORY_ANIMATION,0);
+</I>&gt;&gt;<i>                  llStartAnimation(animation);
+</I>&gt;&gt;<i>          }
+</I>&gt;&gt;<i>      }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> that gets triggered when sitting is detected.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However, if you get an NPC to sit on the same prim, you would not
+</I>&gt;&gt;<i> expect it to animate as well because the osNpcPlayAnimation command is
+</I>&gt;&gt;<i> not there. It's not that I do not like it, it's just that I do not
+</I>&gt;&gt;<i> understand it. And I am wondering if this is a bug. if this is fixed,
+</I>&gt;&gt;<i> then I may have to debug my scripts for all my seats at a later stage.
+</I>&gt;&gt;<i> Since my application deals with hundreds of such situations, that
+</I>&gt;&gt;<i> would be hard work in the future ... because as we well know updating
+</I>&gt;&gt;<i> code for complex stuff in opensim is so inefficient because there are
+</I>&gt;&gt;<i> no way to propagate changes for scripts that are used often in
+</I>&gt;&gt;<i> different objects.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The effective interpretation of llStartAnimation() is that it applies to all
+</I>&gt;<i> avatars, which includes both client controlled avatars and NPCs.
+</I>&gt;<i> osNpcPlayAnimation() does have overlapping functionality but is more general
+</I>&gt;<i> since you can play animations given an NPC id, not just those which have
+</I>&gt;<i> granted PERMISSION_TRIGGER_ANIMATION.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> on a side note, how does one efficiently update scripts for many
+</I>&gt;&gt;<i> objects that use them at once. It would be great if each script
+</I>&gt;&gt;<i> element in every prim is actually a pointer to some script in
+</I>&gt;&gt;<i> inventory, so that when we change the script in the inventory, then
+</I>&gt;&gt;<i> all scripts would know about the change. Is this something way too
+</I>&gt;&gt;<i> hard to implement?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I think this is a hard thing to do since the system just isn't designed to
+</I>&gt;<i> treat separate objects as clones of a master object.  The two solutions that
+</I>&gt;<i> come to mind are
+</I>&gt;<i>
+</I>&gt;<i> 1) Have a manual script controlled system that can llDie() all the clones on
+</I>&gt;<i> command and reinstantiate them with the next script from a master object (a
+</I>&gt;<i> complex and approach).  I think this is what commands such as
+</I>&gt;<i> llRemoteLoadScriptPin() may be for but I haven't done that sufficient script
+</I>&gt;<i> work to know.
+</I>&gt;<i>
+</I>&gt;<i> 2) Directly edit the script asset in the database to incorporate the
+</I>&gt;<i> changes.  This will only work if you want to change all instances and you
+</I>&gt;<i> know for sure that all objects are using the same script asset (which is
+</I>&gt;<i> hard to guarantee if a de-duplicating asset database isn't used).  You would
+</I>&gt;<i> also need to clear the simulator's asset cache after this is done (a complex
+</I>&gt;<i> and fragile approach).
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ramesh
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;&gt;<i> Rameshsharma Ramloll PhD, CEO CTO DeepSemaphore LLC, Affiliate
+</I>&gt;&gt;<i> Research Associate Professor, Idaho State University, Pocatello, ID
+</I>&gt;&gt;<i> 83209 Tel: 208-240-0040
+</I>&gt;&gt;<i> Blog, LinkedIn, DeepSemaphore LLC, Google+ profile
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> OSVW Consulting
+</I>&gt;<i> <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+Rameshsharma Ramloll PhD, CEO CTO DeepSemaphore LLC, Affiliate
+Research Associate Professor, Idaho State University, Pocatello, ID
+83209 Tel: 208-240-0040
+Blog, LinkedIn, DeepSemaphore LLC, Google+ profile
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012340.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+	<LI>Next message: <A HREF="012342.html">[Opensim-users] Animating NPCs without osNpcPlayAnimation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12341">[ date ]</a>
+              <a href="thread.html#12341">[ thread ]</a>
+              <a href="subject.html#12341">[ subject ]</a>
+              <a href="author.html#12341">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

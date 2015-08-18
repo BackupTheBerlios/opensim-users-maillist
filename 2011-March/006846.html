@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Phoenix viewer corrupting MySQL database.	Anyone else?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Phoenix%20viewer%20corrupting%20MySQL%20database.%0A%09Anyone%20else%3F&In-Reply-To=%3C1300827076388-6197901.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006844.html">
+   <LINK REL="Next"  HREF="006848.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Phoenix viewer corrupting MySQL database.	Anyone else?</H1>
+    <B>Luisillo Contepomi</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Phoenix%20viewer%20corrupting%20MySQL%20database.%0A%09Anyone%20else%3F&In-Reply-To=%3C1300827076388-6197901.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Phoenix viewer corrupting MySQL database.	Anyone else?">luisillocontepomi at gmail.com
+       </A><BR>
+    <I>Tue Mar 22 21:51:16 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006844.html">[Opensim-users] HELP with creating Humanoid Robot avatar
+</A></li>
+        <LI>Next message: <A HREF="006848.html">[Opensim-users] Phoenix viewer corrupting MySQL database.	Anyone else?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6846">[ date ]</a>
+              <a href="thread.html#6846">[ thread ]</a>
+              <a href="subject.html#6846">[ subject ]</a>
+              <a href="author.html#6846">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>First in spanish language im sorry now im translating.
+
+Problema con los puntos de attachment en OpenSim.
+
+La base de datos de OpenSim no &quot;se corrompe&quot; como he leido por ah&#237;. Solo
+almacena distintos datos y lo hace &#250;nicamente con la ropa que te has
+vestido con otro visualizador. Te &quot;estropea&quot; para ser visto con Hippo
+unicamente lo que te has vestido con el nuevo visualizador. Si entras con
+hippo y lo anexas otra vez
+queda solucionado el problema al escribir los valores antiguos en
+opensim.avatars.
+
+Por si no quieres seguir leyendo el problema no es de opensim sino de la
+parte cliente, concretamente el  problema lo tiene Hippo y los
+visualizadores ant&#237;guos. 
+
+La causa es, como el visualizador del que tiene el problema, interpreta los
+valores que el servidor
+le entrega para &quot;dibujar&quot; el avatar que est&#225; viendo.
+
+Soluci&#243;n que todos los usuarios utilicen el mismo visualizador en opensim.
+Todos entregan el mismo valor y  todos saben donde dibujar cada cosa. Todos
+&quot;hablan&quot; el mismo idioma.
+
+Si un usuario utiliza el viewer2 o un visualizador moderno y otros usuarios
+utilizan otros... aparece el problema al verse entre ellos. 
+
+
+El visualizador SLV2 no tienen este problema.
+
+Ahora la explicaci&#243;n larga.
+
+Origen del problema, antecedentes:
+
+He observado como aterriza gente en la regi&#243;n y sus attachments, adornos
+pelo se quedaba en el punto de aterrizaje a la altura de la pelvis, mientras
+el avatar 
+recorr&#237;a la regi&#243;n. 
+
+Al irse el avatar sus attachments desaparec&#237;an. El avatar se ve a s&#237; mismo
+en todo momento correctamente y sin que le faltara algo de su atuendo.
+
+Preguntando a los usuarios a los que le suced&#237;a esto qu&#233; visualizador
+utilizaban, normalmente utilizaban el Emerald, Phoenix, ascent y otros. Yo
+los observaba con Hippo.
+
+Extra&#241;ado, me par&#233; a pensar qu&#233; podr&#237;a estar pasando y me fu&#237; a mi Grid de
+pruebas para observar tratar de reproducir el problema y ver en directo el
+di&#225;logo cliente-servidor.
+
+
+Pruebas
+-------
+
+Utilic&#233; dos visualizadores uno para el avatar &quot;observador&quot; y otro para el
+avatar &quot;pruebas&quot;.
+
+El avatar observador utilic&#233; el Hippo OpenSim Viewer 0.6.3 
+El avatar pruebas utilic&#233;: 
+
+Phoenix  1.5.2. (818)
+Second Life 2.5.2 (223426) Mar 10 2011 17:38:45 
+Hippo OpenSim Viewer 0.6.3
+
+No utilic&#233; otros porque no fue necesario para mi investigaci&#243;n al quedar
+claro el problema.
+ 
+
+Los puntos de attachment que Hippo y slv2 entregan al servidor para escribir
+en la tabla &quot;opensim.avatars&quot; son diferentes.
+
+Hippo:
+
+Los mismos valores num&#233;ricos que se utilizan en la funci&#243;n
+&quot;llAttachToAvatar&quot;
+
+ <A HREF="http://wiki.secondlife.com/wiki/LlAttachToAvatar">http://wiki.secondlife.com/wiki/LlAttachToAvatar</A>
+
+
+
+&quot;_ap_1&quot;     chest/sternum
+&quot;_ap_2&quot;     head
+&quot;_ap_3&quot;     left shoulder
+&quot;_ap_4&quot;     right shoulder
+&quot;_ap_5&quot;     left hand
+&quot;_ap_6&quot;     right hand
+&quot;_ap_7&quot;     left foot
+&quot;_ap_8&quot;     right foot
+&quot;_ap_9&quot;     back
+&quot;_ap_10&quot;     pelvis
+&quot;_ap_11&quot;     mouth
+&quot;_ap_12&quot;     chin
+&quot;_ap_13&quot;     left ear
+&quot;_ap_14&quot;     right ear
+&quot;_ap_15&quot;     left eye
+&quot;_ap_16&quot;     right eye
+&quot;_ap_17&quot;     nose
+&quot;_ap_18&quot;     right upper arm
+&quot;_ap_19&quot;     right lower arm
+&quot;_ap_20&quot;     left upper arm
+&quot;_ap_21&quot;     left lower arm
+&quot;_ap_22&quot;     right hip
+&quot;_ap_23&quot;     right upper leg
+&quot;_ap_24&quot;     right lower leg
+&quot;_ap_25&quot;     left hip
+&quot;_ap_26&quot;     left upper leg
+&quot;_ap_27&quot;     left lower leg
+&quot;_ap_28&quot;     belly/stomach/tummy
+&quot;_ap_29&quot;     left pectoral
+&quot;_ap_30&quot;     right pectoral
+&quot;_ap_31&quot;     HUD Center 2
+&quot;_ap_32&quot;     HUD Top Right
+&quot;_ap_33&quot;     HUD Top
+&quot;_ap_34&quot;     HUD Top Left
+&quot;_ap_35&quot;     HUD Center
+&quot;_ap_36&quot;     HUD Bottom Left
+&quot;_ap_37&quot;     HUD Bottom
+&quot;_ap_38&quot;     HUD Bottom Right 
+
+
+Los visualizadores modernos escriben en la misma tabla otros valores para
+los mismos puntos:
+
+
+&quot;_ap_129&quot;     chest/sternum
+&quot;_ap_130&quot;     head
+&quot;_ap_131&quot;     left shoulder
+&quot;_ap_132&quot;     right shoulder
+&quot;_ap_133&quot;     left hand
+&quot;_ap_134&quot;     right hand
+&quot;_ap_135&quot;     left foot
+&quot;_ap_136&quot;     right foot
+&quot;_ap_137&quot;     back
+&quot;_ap_138&quot;     pelvis
+&quot;_ap_139&quot;     mouth
+&quot;_ap_140&quot;     chin
+&quot;_ap_141&quot;     left ear
+&quot;_ap_142&quot;     right ear
+&quot;_ap_143&quot;     left eye
+&quot;_ap_144&quot;     right eye
+&quot;_ap_145&quot;     nose
+&quot;_ap_146&quot;     right upper arm
+&quot;_ap_147&quot;     right lower arm
+&quot;_ap_148&quot;     left upper arm
+&quot;_ap_149&quot;     left lower arm
+&quot;_ap_150&quot;     right hip
+&quot;_ap_151&quot;     right upper leg
+&quot;_ap_152&quot;     right lower leg
+&quot;_ap_153&quot;     left hip
+&quot;_ap_154&quot;     left upper leg
+&quot;_ap_155&quot;     left lower leg
+&quot;_ap_156&quot;     belly/stomach/tummy
+&quot;_ap_157&quot;     left pectoral
+&quot;_ap_158&quot;     right pectoral
+&quot;_ap_159&quot;     HUD Center 2
+&quot;_ap_160&quot;     HUD Top Right
+&quot;_ap_161&quot;     HUD Top
+&quot;_ap_162&quot;     HUD Top Left
+&quot;_ap_163&quot;     HUD Center
+&quot;_ap_164&quot;     HUD Bottom Left
+&quot;_ap_165&quot;     HUD Bottom
+&quot;_ap_166&quot;     HUD Bottom Right 
+
+ 	 	
+As&#237; cuando el usuario que tiene Hippo le pide al servidor los datos de lo
+que lleva el avatar que est&#225; renderizando, 
+&quot;no comprende&quot; esos puntos de attachment as&#237; que por defecto lo dibuja todo
+en chest (_ap_1). 
+
+Como por otra parte no puede estar todo anexado en el mismo punto, para el
+observador, los objetos se quedan en la posici&#243;n local donde han sido
+cargados por el avatar de prueba y no se desplazan con quien supuestamente
+los tiene vestidos.
+
+SL2 &quot;habla&quot; los dos idiomas.
+
+Es decir que el visualizador Second Life V2 S&#237; interpreta correctamente
+tanto los valores antiguos como los nuevos. Supongo que por aquello de la
+&quot;compatibilidad&quot; con la 1.23 y anteriores.
+
+La base de datos de OpenSim no &quot;se corrompe&quot;. Solo almacena distintos datos
+y lo hace &#250;nicamente con la ropa que te has vestido con otro visualizador.
+Te &quot;estropea&quot; para ser visto con Hippo unicamente lo que te has vestido con
+el nuevo visualizador. 
+
+Si entras con Hippo y en lugar de &quot;vestir&quot; lo anexas otra vez
+queda solucionado el problema al escribir los valores antiguos en
+opensim.avatars.
+
+Resumen para solucionar el problema, hasta que los desarrolladores de
+visualizadores de Hippo programen ambos sistemas de codificaci&#243;n de los
+puntos de attachment hay que utilizar siempre un &#250;nico visualizador y todos
+el mismo. O todos Hippo o todos uno de los nuevos.
+
+Perd&#243;n por la extensi&#243;n del post.
+(In some minutes english version.)
+
+--
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Phoenix-viewer-corrupting-MySQL-database-Anyone-else-tp5998337p6197901.html">http://opensim-users.2152040.n2.nabble.com/Phoenix-viewer-corrupting-MySQL-database-Anyone-else-tp5998337p6197901.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006844.html">[Opensim-users] HELP with creating Humanoid Robot avatar
+</A></li>
+	<LI>Next message: <A HREF="006848.html">[Opensim-users] Phoenix viewer corrupting MySQL database.	Anyone else?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6846">[ date ]</a>
+              <a href="thread.html#6846">[ thread ]</a>
+              <a href="subject.html#6846">[ subject ]</a>
+              <a href="author.html#6846">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

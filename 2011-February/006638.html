@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Loading oar files crashes opensim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20oar%20files%20crashes%20opensim&In-Reply-To=%3CAANLkTinSt80qoG%2B2qFZbMvc0nFCpkw-ABP%3DZZd3%3DKVDr%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006637.html">
+   <LINK REL="Next"  HREF="006639.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Loading oar files crashes opensim</H1>
+    <B>Robin Turner</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Loading%20oar%20files%20crashes%20opensim&In-Reply-To=%3CAANLkTinSt80qoG%2B2qFZbMvc0nFCpkw-ABP%3DZZd3%3DKVDr%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Loading oar files crashes opensim">robin at bilkent.edu.tr
+       </A><BR>
+    <I>Sat Feb 19 19:43:19 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006637.html">[Opensim-users] Loading oar files crashes opensim
+</A></li>
+        <LI>Next message: <A HREF="006639.html">[Opensim-users] Loading oar files crashes opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6638">[ date ]</a>
+              <a href="thread.html#6638">[ thread ]</a>
+              <a href="subject.html#6638">[ subject ]</a>
+              <a href="author.html#6638">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 19 February 2011 10:14, Ric Moore &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">wayward4now at gmail.com</A>&gt; wrote:
+&gt;<i> On Thu, 2011-02-17 at 23:12 +0200, Robin Turner wrote:
+</I>&gt;&gt;<i> On 17 February 2011 20:54, DutchGlory &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">info at verwijs-pc.nl</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; hummm... &#160; strange, i use the same and i have no problems with oar &#160;i use the
+</I>&gt;&gt;<i> &gt; latest git. &#160;Compiled with mono and NAnt 0.91 Alpha 2 &#160;(this work VERY
+</I>&gt;&gt;<i> &gt; perfectly.!!)
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; - What version of opensim are you using? &#160;(git repository) or binaries
+</I>&gt;&gt;<i> &gt; (already compiled)
+</I>&gt;&gt;<i> &gt; - what kind of setup (grid or hypergrid, refers to inventory..)
+</I>&gt;&gt;<i> &gt; - What database mysqlite or MySQL (how asset data is being stored)
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; yes a lot of question, but each setup can effect the performance of opensim.
+</I>&gt;&gt;<i> &gt; Maybe run some additional tests, just put stuff in a folder and backup with
+</I>&gt;&gt;<i> &gt; oar, see what happens, to find out where exactly opensim crashes..
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Version - latest binary from Diva, though I've had the same problem in
+</I>&gt;&gt;<i> the standard version. Not tried compiling myself yet, though this
+</I>&gt;&gt;<i> would be the next step to take.
+</I>&gt;&gt;<i> Setup - standalone, hypergrid enabled.
+</I>&gt;&gt;<i> Database: MySQL
+</I>&gt;<i>
+</I>&gt;<i> Robin, I use the build, just like with Wonderland. Works like a charm.
+</I>&gt;<i> Ric
+</I>
+I built Mono from source and can now sometimes load oars, but at the
+cost of reducing the number of regions on the server drastically. Even
+then, it still crashes from time to time. Here are some examples of
+error messages ...
+
+[oar not loading - lots of stuf along the following lines]
+System.InvalidOperationException: Standard output has not been
+redirected or process has not been started.
+  at System.Diagnostics.Process.CancelErrorRead () [0x00000] in
+&lt;filename unknown&gt;:0
+  at (wrapper remoting-invoke-with-check)
+System.Diagnostics.Process:CancelErrorRead ()
+  at Mono.CSharp.CSharpCodeCompiler.CompileFromFileBatch
+(System.CodeDom.Compiler.CompilerParameters options, System.String[]
+fileNames) [0x00000] in &lt;filename unknown&gt;:0
+  at Mono.CSharp.CSharpCodeCompiler.CompileAssemblyFromFileBatch
+(System.CodeDom.Compiler.CompilerParameters options, System.String[]
+fileNames) [0x00000] in &lt;filename unknown&gt;:0
+  at Mono.CSharp.CSharpCodeCompiler.CompileAssemblyFromFile
+(System.CodeDom.Compiler.CompilerParameters options, System.String
+fileName) [0x00000] in &lt;filename unknown&gt;:0
+
+[oar loaded, but system is getting ready for a crash]
+(OpenSim.exe:27140): WARNING **: _wapi_handle_unref: Attempting to
+unref unused handle 0x6
+
+The latter is a known Mono problem: to quote someone in a Mono forum:
+&quot;It means something in the runtime has lost track of its handles and
+is
+attempting to CloseHandle more times than the handle was opened.&quot; That
+means very little to me, of course ;-)
+
+Robin
+
+
+-- 
+&quot;This 'telephone' has too many shortcomings to be seriously considered
+as a means of communication. The device is inherently of no value to
+us.&#8221; ~ WesternUnion,1876
+
+Robin Turner
+IDMYO
+Bilkent &#220;niversitesi
+Ankara, Turkey
+
+<A HREF="http://www.bilkent.edu.tr/~robin">http://www.bilkent.edu.tr/~robin</A>
+<A HREF="http://solri.livejournal.com">http://solri.livejournal.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006637.html">[Opensim-users] Loading oar files crashes opensim
+</A></li>
+	<LI>Next message: <A HREF="006639.html">[Opensim-users] Loading oar files crashes opensim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6638">[ date ]</a>
+              <a href="thread.html#6638">[ thread ]</a>
+              <a href="subject.html#6638">[ subject ]</a>
+              <a href="author.html#6638">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

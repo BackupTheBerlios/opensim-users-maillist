@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Cannont teleport back home to grid issue: 5134
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Cannont%20teleport%20back%20home%20to%20grid%20issue%3A%205134&In-Reply-To=%3CCADCqwr1LSMF_z%2B7G7TSBbjzNXFKhNzmEdZ4ij05%2BFwJE%2BqHgfA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009209.html">
+   <LINK REL="Next"  HREF="009214.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Cannont teleport back home to grid issue: 5134</H1>
+    <B>Rick Anderson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Cannont%20teleport%20back%20home%20to%20grid%20issue%3A%205134&In-Reply-To=%3CCADCqwr1LSMF_z%2B7G7TSBbjzNXFKhNzmEdZ4ij05%2BFwJE%2BqHgfA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Cannont teleport back home to grid issue: 5134">rianders at docs.rutgers.edu
+       </A><BR>
+    <I>Thu Jan 26 20:33:49 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009209.html">[Opensim-users] Cannont teleport back home to grid issue: 5134
+</A></li>
+        <LI>Next message: <A HREF="009214.html">[Opensim-users] Cannont teleport back home to grid issue: 5134
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9213">[ date ]</a>
+              <a href="thread.html#9213">[ thread ]</a>
+              <a href="subject.html#9213">[ subject ]</a>
+              <a href="author.html#9213">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I think I found the problem comparison:
+ Verifying <A HREF="http://174.129.197.43:8002">http://174.129.197.43:8002</A> against <A HREF="http://rugrid.rutgers.edu:8002">http://rugrid.rutgers.edu:8002</A>
+
+The IP addresses are the same but the comparison does not include a DNS lookup.
+
+rugrid.rutgers.edu == 174.129.197.43
+
+--Rick
+
+Here's the complete log of what happens:
+19:30:10 - [GATEKEEPER SERVICE]: Request to get hyperlink region
+6edb4e46-82b7-454d-be53-dc6909389013
+19:30:10 - [HOME AGENT HANDLER]: Unauthorized machine 184.162.51.100
+tried to set client ip to 165.230.192.41
+19:30:10 - [AGENTCIRCUITDATA]:
+agentid=ac397397-e69b-42b4-ac65-767951d8aacf, child=True,
+startpos=&lt;128, 128, 30.53734&gt;
+19:30:10 - [AGENTCIRCUITDATA]: unpacked appearance
+19:30:10 - [USER AGENT SERVICE]: Request to login user Rick.Anderson
+@rugrid.rutgers.edu (@stored IP) to grid <A HREF="http://174.129.197.43:8002/">http://174.129.197.43:8002/</A>
+19:30:10 - [USER AGENT SERVICE]: this grid:
+<A HREF="http://rugrid.rutgers.edu:8002/,">http://rugrid.rutgers.edu:8002/,</A> desired grid:
+<A HREF="http://174.129.197.43:8002/">http://174.129.197.43:8002/</A>
+19:30:10 - [AGENTCIRCUITDATA]:
+agentid=ac397397-e69b-42b4-ac65-767951d8aacf, child=True,
+startpos=&lt;128, 128, 30.53734&gt;
+19:30:10 - [AGENTCIRCUITDATA]: unpacked appearance
+19:30:10 - [GATEKEEPER SERVICE]: Login request for Rick.Anderson
+@rugrid.rutgers.edu @ <A HREF="http://rugrid.rutgers.edu:8002/">http://rugrid.rutgers.edu:8002/</A>
+(ac397397-e69b-42b4-ac65-767951d8aacf) at JumpNexus0 using viewer
+Second Life Release 3.2.6.248086, channel Second Life Release, IP
+165.230.192.41, Mac 3bb974300b81b292f953727e3cf33574, Id0
+6468c4a3c3a6f5fa9e55986a1017e0f0
+19:30:10 - [GATEKEEPER SERVICE]: Verifying <A HREF="http://174.129.197.43:8002">http://174.129.197.43:8002</A>
+against <A HREF="http://rugrid.rutgers.edu:8002">http://rugrid.rutgers.edu:8002</A>
+19:30:10 - [GATEKEEPER SERVICE]: Unable to verify identity of agent
+Rick.Anderson @rugrid.rutgers.edu. Refusing service.
+19:30:10 - [USER AGENT SERVICE]: Unable to login user Rick.Anderson
+@rugrid.rutgers.edu to grid <A HREF="http://174.129.197.43:8002/,">http://174.129.197.43:8002/,</A> reason:
+Unable to verify identity
+
+On Wed, Jan 25, 2012 at 3:12 PM, Rick Anderson
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rianders at docs.rutgers.edu</A>&gt; wrote:
+&gt;<i> For the error you're experience what is the external ip set to? I had
+</I>&gt;<i> problems in the past because the viewer doesn't do DNS lookup, the
+</I>&gt;<i> server basically gives the ip to the client. So I was giving the world
+</I>&gt;<i> a private non routable IP instead of the public one.
+</I>&gt;<i>
+</I>&gt;<i> --Rick
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Jan 25, 2012 at 3:00 PM, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> I'm not sure if this is related to the same problem I have, basically I
+</I>&gt;&gt;<i> can't HG teleport to or from my own grid from inside my home network. &#160;That
+</I>&gt;&gt;<i> is, if I log into the viewer on the server machine (static IP), I can HG
+</I>&gt;&gt;<i> jump just fine, but if I log into a different PC in my home network (main
+</I>&gt;&gt;<i> desktop) and try to HG jump, it fails. &#160;Same if I log into another HG
+</I>&gt;&gt;<i> enabled grid from my desktop and try to HG jump back to FleepGrid, it fails.
+</I>&gt;&gt;<i> &#160;For the longest time I thought my HG was broken but&#160;others can jump to and
+</I>&gt;&gt;<i> from FleepGrid with no problem, so it seems it's related to the internal IP
+</I>&gt;&gt;<i> address of my desktop being different than the external IP address seen by
+</I>&gt;&gt;<i> the destination machine (or vice versa).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It's extremely annoying and frustrating and the last time I asked about it,
+</I>&gt;&gt;<i> it didn't seem like there was any solution. :(
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Chris/Fleep
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;&gt;<i> University of Cincinnati
+</I>&gt;&gt;<i> 406A Zimmer Hall
+</I>&gt;&gt;<i> 315 College Drive
+</I>&gt;&gt;<i> PO BOX 210088
+</I>&gt;&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;&gt;<i> (513) 556-3018
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Jan 25, 2012 at 2:37 PM, Rick Anderson &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rianders at docs.rutgers.edu</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'm running 0.7.2 post fixes, and I have a user who cannot get back to
+</I>&gt;&gt;&gt;<i> the rugrid via teleport. The symptoms are similar to issue 5134:
+</I>&gt;&gt;&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=5134">http://opensimulator.org/mantis/view.php?id=5134</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [HOME AGENT HANDLER]: Unauthorized machine 64.121.136.190 tried to set
+</I>&gt;&gt;&gt;<i> client ip to 165.230.192.21
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Is there a work around?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --Rick
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Rick Anderson
+</I>&gt;&gt;&gt;<i> Director of Virtual Worlds
+</I>&gt;&gt;&gt;<i> Division of Continuing Studies (DoCS)
+</I>&gt;&gt;&gt;<i> Rutgers University
+</I>&gt;&gt;&gt;<i> (732) 586-3265
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Rick Anderson
+</I>&gt;<i> Director of Virtual Worlds
+</I>&gt;<i> Division of Continuing Studies (DoCS)
+</I>&gt;<i> Rutgers University
+</I>&gt;<i> (732) 586-3265
+</I>
+
+
+-- 
+Rick Anderson
+Director of Virtual Worlds
+Division of Continuing Studies (DoCS)
+Rutgers University
+(732) 586-3265
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009209.html">[Opensim-users] Cannont teleport back home to grid issue: 5134
+</A></li>
+	<LI>Next message: <A HREF="009214.html">[Opensim-users] Cannont teleport back home to grid issue: 5134
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9213">[ date ]</a>
+              <a href="thread.html#9213">[ thread ]</a>
+              <a href="subject.html#9213">[ subject ]</a>
+              <a href="author.html#9213">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

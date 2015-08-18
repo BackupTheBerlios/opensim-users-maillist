@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Waiting for Region Handshake
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Waiting%20for%20Region%20Handshake&In-Reply-To=%3CCAKFNdiGZyGJckC6dgGK%2BHCLjDBs8TZwDYHcsx8mGyEDswv%3DwoA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012257.html">
+   <LINK REL="Next"  HREF="012270.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Waiting for Region Handshake</H1>
+    <B>Paul Rayner</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Waiting%20for%20Region%20Handshake&In-Reply-To=%3CCAKFNdiGZyGJckC6dgGK%2BHCLjDBs8TZwDYHcsx8mGyEDswv%3DwoA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Waiting for Region Handshake">prayner.basil at gmail.com
+       </A><BR>
+    <I>Wed May 22 08:28:00 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012257.html">[Opensim-users] Waiting for Region Handshake
+</A></li>
+        <LI>Next message: <A HREF="012270.html">[Opensim-users] Waiting for Region Handshake
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12269">[ date ]</a>
+              <a href="thread.html#12269">[ thread ]</a>
+              <a href="subject.html#12269">[ subject ]</a>
+              <a href="author.html#12269">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>My frustration's at an all time high. I understand this MUST be operator
+error, but that doesn't get me any closer to resolving it.
+
+I have enabled DMZ (and I have had a static IP throughout). As a last
+resort, I even turned off my firewall on the server (Ubuntu).
+
+The internal IP is 0.0.0.0 and the external IP is my static IP (not domain
+name). It seems to hand forever on &quot;logging in&quot; before an error message
+about not being able to log in.
+
+Any advice at all would be very welcome
+
+
+
+On Sat, May 18, 2013 at 9:38 PM, Gary Beck &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gab4gab at gmail.com</A>&gt; wrote:
+
+&gt;<i> **
+</I>&gt;<i> Paul,
+</I>&gt;<i>     The values in standaloinecommon.ini may need changing to support other
+</I>&gt;<i> things.  Waiting for region handshake is caused by the regions.ini setting
+</I>&gt;<i> as mentioned by Fleep Tuque.  The ExternalHostName is resolved by the
+</I>&gt;<i> server to an address.  The server passes that address along with the port
+</I>&gt;<i> number (InternalPort) to the viewer.  If the address passed is a local LAN
+</I>&gt;<i> address rather than your external IP address then you will stall 'waiting
+</I>&gt;<i> for region handshake' when logging in from outside the LAN.  Hope that
+</I>&gt;<i> helps.
+</I>&gt;<i> - Gary Beck
+</I>&gt;<i>
+</I>&gt;<i> ----- Original Message -----
+</I>&gt;<i> *From:* Paul Rayner &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">prayner.basil at gmail.com</A>&gt;
+</I>&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Sent:* Saturday, May 18, 2013 3:08 AM
+</I>&gt;<i> *Subject:* Re: [Opensim-users] Waiting for Region Handshake
+</I>&gt;<i>
+</I>&gt;<i> In trying to resolve this, I followed the advice Fleep provided.
+</I>&gt;<i> I believe I can satisfy all of the suggestions made.
+</I>&gt;<i> Checking my standalonecommon.ini, I found many instances of 127.0.0.1 -
+</I>&gt;<i> lines 68,76,78-83,155,271,274,290,291,309....should they all be changed to
+</I>&gt;<i> my external IP address?
+</I>&gt;<i> With attachment this time
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, May 16, 2013 at 9:24 PM, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi Paul,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  This is a fairly common question that can have a number of different
+</I>&gt;&gt;<i> root causes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It might be helpful to go over the details of exactly what happens when
+</I>&gt;&gt;<i> you try to log in.  Based on previous posts from Justin, Diva and others,
+</I>&gt;&gt;<i> this is my understanding of how it works:  When you start up the client and
+</I>&gt;&gt;<i> enter your name/password, it sends those details to the OpenSim login
+</I>&gt;&gt;<i> service. If your password is correct, it tells the region simulator that
+</I>&gt;&gt;<i> you're coming.  The login service then sends back to your client the IP
+</I>&gt;&gt;<i> address and port to use to enter that region based on the information in
+</I>&gt;&gt;<i> the regions.ini configuration file.  Your client then connects to the
+</I>&gt;&gt;<i> region using those details.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you are stuck at &quot;Connecting to Region..&quot; or &quot;Waiting for region
+</I>&gt;&gt;<i> handshake...&quot; then your client successfully connected to the Opensim login
+</I>&gt;&gt;<i> service, but the information it is using to try to connect to the region
+</I>&gt;&gt;<i> (IP address and port number) is not allowing the connection.  This can be
+</I>&gt;&gt;<i> any number of issues related to your networking setup.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1)  Check to make sure you have the correct ports open on your router and
+</I>&gt;&gt;<i> firewall by reviewing the Opensim Network Settings page and Firewall
+</I>&gt;&gt;<i> settings page.  You can verify this by using 3rd party port checker
+</I>&gt;&gt;<i> software, I've used this successfully:
+</I>&gt;&gt;<i> <A HREF="http://portforward.com/help/portcheck.htm">http://portforward.com/help/portcheck.htm</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2)  If you are on a home network, make sure your router supports NAT
+</I>&gt;&gt;<i> Loopback, per the instructions on the Opensim wiki:
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/wiki/NAT_Loopback_Routers">http://opensimulator.org/wiki/NAT_Loopback_Routers</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3)  If you do not have a router that supports NAT Loopback, or are on a
+</I>&gt;&gt;<i> corporate or campus network with 1-to-1 NATing, you will need to have an
+</I>&gt;&gt;<i> external static IP address assigned to your server for users outside your
+</I>&gt;&gt;<i> network to connect.  See this thread for more information:
+</I>&gt;&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/NAT-amp-Corporate-Firewall-td6223654.html">http://opensim-users.2152040.n2.nabble.com/NAT-amp-Corporate-Firewall-td6223654.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I run FleepGrid from home and since my router didn't support NAT
+</I>&gt;&gt;<i> Loopback, I got a static IP address from my ISP and that resolved all my
+</I>&gt;&gt;<i> issues with people not being able to connect from outside my home network.
+</I>&gt;&gt;<i>  I had to do the same thing at work for the university grid, having it
+</I>&gt;&gt;<i> placed in the DMZ and assigned an external only static IP.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hope this info is helpful.  Good luck and let us know how it goes!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Chris/Fleep
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM)
+</I>&gt;&gt;<i> UCIT Instructional &amp; Research Computing
+</I>&gt;&gt;<i> University of Cincinnati
+</I>&gt;&gt;<i> 406A Zimmer Hall
+</I>&gt;&gt;<i> 315 College Drive
+</I>&gt;&gt;<i> PO BOX 210088
+</I>&gt;&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;&gt;<i> (513) 556-3018
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  On Thu, May 16, 2013 at 5:39 AM, Paul Rayner &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">prayner.basil at gmail.com</A>&gt;wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  Hi
+</I>&gt;&gt;&gt;<i> I'm hosting a standalone OpenSim 0.7.5 at home, on Ubuntu 11.10 64bit.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I need/want it for school, and when I try and connect from school I get
+</I>&gt;&gt;&gt;<i> a &quot;Waiting for Region Handshake&quot; error when trying to connect with
+</I>&gt;&gt;&gt;<i> Imprudence viewer.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I believe I've ascertained the school firewall is open - I used
+</I>&gt;&gt;&gt;<i> <A HREF="http://124.254.81.40:9000/simstatus">http://124.254.81.40:9000/simstatus</A> and got the required OK.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> My router is a Billion Bipac 7300A. In reading OpenSim documentation, I
+</I>&gt;&gt;&gt;<i> only found at last week I need reverse NAT (or something to that effect). I
+</I>&gt;&gt;&gt;<i> had never seen it in any system requirements. After checking the web, I
+</I>&gt;&gt;&gt;<i> believe the router does support it.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I can connect fine from my LAN.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'd appreciate ANY advice I can get to have it up and running. I'd
+</I>&gt;&gt;&gt;<i> dearly love to have it working ASAP - after a long wait to have the port
+</I>&gt;&gt;&gt;<i> open at school. I'm now behind the 8ball timewise.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Paul
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i>  To subscribe to the ITS mailing list, go to
+</I>&gt;&gt;&gt;<i> <A HREF="http://lists.otn.edu.au/mailman/listinfo/qsite-its.">http://lists.otn.edu.au/mailman/listinfo/qsite-its.</A>
+</I>&gt;&gt;&gt;<i> To email the list, use  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">qsite-its at lists.otn.edu.au</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> QISTE Moodle - <A HREF="http://qsite.netspot.com.au/login/index.php">http://qsite.netspot.com.au/login/index.php</A>
+</I>&gt;&gt;&gt;<i> An ITS repository for sharing of resources.  Contact me for the enroll
+</I>&gt;&gt;&gt;<i> key.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="http://rightintoit.com/wordpress/">http://rightintoit.com/wordpress/</A> *A blog examining how new
+</I>&gt;&gt;&gt;<i> technologies can assist in the classroom*
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i>  To subscribe to the ITS mailing list, go to
+</I>&gt;<i> <A HREF="http://lists.otn.edu.au/mailman/listinfo/qsite-its.">http://lists.otn.edu.au/mailman/listinfo/qsite-its.</A>
+</I>&gt;<i> To email the list, use  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">qsite-its at lists.otn.edu.au</A>
+</I>&gt;<i>
+</I>&gt;<i> QISTE Moodle - <A HREF="http://qsite.netspot.com.au/login/index.php">http://qsite.netspot.com.au/login/index.php</A>
+</I>&gt;<i> An ITS repository for sharing of resources.  Contact me for the enroll key.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://rightintoit.com/wordpress/">http://rightintoit.com/wordpress/</A> *A blog examining how new technologies
+</I>&gt;<i> can assist in the classroom*
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+To subscribe to the ITS mailing list, go to
+<A HREF="http://lists.otn.edu.au/mailman/listinfo/qsite-its.">http://lists.otn.edu.au/mailman/listinfo/qsite-its.</A>
+To email the list, use  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">qsite-its at lists.otn.edu.au</A>
+
+QISTE Moodle - <A HREF="http://qsite.netspot.com.au/login/index.php">http://qsite.netspot.com.au/login/index.php</A>
+An ITS repository for sharing of resources.  Contact me for the enrol key.
+
+<A HREF="http://rightintoit.com/wordpress/">http://rightintoit.com/wordpress/</A> *A blog examining how new technologies
+can assist in the classroom*
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130522/766fc8ce/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130522/766fc8ce/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012257.html">[Opensim-users] Waiting for Region Handshake
+</A></li>
+	<LI>Next message: <A HREF="012270.html">[Opensim-users] Waiting for Region Handshake
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12269">[ date ]</a>
+              <a href="thread.html#12269">[ thread ]</a>
+              <a href="subject.html#12269">[ subject ]</a>
+              <a href="author.html#12269">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Moving Script Recipes from SL to OpenSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Moving%20Script%20Recipes%20from%20SL%20to%20OpenSim&In-Reply-To=%3CAANLkTin2_oFrwb1XXrc_MW11bumZjYPbt%3D4LBTiP0wMo%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006252.html">
+   <LINK REL="Next"  HREF="006255.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Moving Script Recipes from SL to OpenSim</H1>
+    <B>Kay McLennan</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Moving%20Script%20Recipes%20from%20SL%20to%20OpenSim&In-Reply-To=%3CAANLkTin2_oFrwb1XXrc_MW11bumZjYPbt%3D4LBTiP0wMo%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Moving Script Recipes from SL to OpenSim">mclennan.kay at gmail.com
+       </A><BR>
+    <I>Thu Nov 25 17:42:33 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006252.html">[Opensim-users] Moving Script Recipes from SL to OpenSim
+</A></li>
+        <LI>Next message: <A HREF="006255.html">[Opensim-users] Diva Distro cant validate avatar, (but wifi can)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6253">[ date ]</a>
+              <a href="thread.html#6253">[ thread ]</a>
+              <a href="subject.html#6253">[ subject ]</a>
+              <a href="author.html#6253">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thank you BlueWall!  Your suggestion pointed me in the right direction.
+That is, by removing the &quot;from  llLoadURL(llDetectedKey(0),message, URL&quot;
+line, I was able to save the script and the desired hoover text appeared.
+Still, in order to get the object to simultaneously open the web page, I
+ended up combining my original SL script with a script from:
+<A HREF="http://sl4calico.pbworks.com/w/page/5099146/LSL:-Linden-Scripting-Language">http://sl4calico.pbworks.com/w/page/5099146/LSL:-Linden-Scripting-Language</A> (see
+below)
+
+//replace the URL immediately below with your own.
+
+string Url = &quot;<A HREF="http://www.scs.tulane.edu/">http://www.scs.tulane.edu/</A>&quot;;
+
+default {
+    state_entry()
+    {
+        llSetText(llGetObjectName(), &lt;1.0, 1.0, 1.0&gt;, 1.0);
+    }
+on_rez(integer start_param) {
+llResetScript();
+}
+touch_start(integer total_number) {
+llLoadURL(llDetectedKey(0), &quot;Click to go to url&quot;, Url);
+}
+dataserver(key queryid, string data) {
+Url = &quot;<A HREF="http://www.scs.tulane.edu/">http://www.scs.tulane.edu/</A>&quot; + llEscapeURL(data);
+}
+}
+
+Needless-to-say, I need to &quot;bite the bullet&quot; and actually learn the LSL
+fundamentals!
+
+Again, thank you for your reply.
+
+Best,
+Kay
+
+
+On Thu, Nov 25, 2010 at 8:46 AM, BlueWall &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jamesh at bluewallgroup.com</A>&gt; wrote:
+
+
+&gt;<i>   On 11/25/2010 09:09 AM, Kay McLennan wrote:
+</I>&gt;<i>
+</I>&gt;<i>   I am in the process of moving my educational builds, materials, etc.
+</I>&gt;<i> from SL to a hosted OpenSim VW.  In turn, I encountered a problem with a &quot;go
+</I>&gt;<i> to website&quot; script -- see the script below.  That is, the note card giver
+</I>&gt;<i> script I moved from SL to OpenSim works fine but the &quot;go to website&quot; script
+</I>&gt;<i> does not.  Any suggestions for what I need to do to fix the &quot;go to website&quot;
+</I>&gt;<i> script and/or an alternative &quot;go to website&quot; script?
+</I>&gt;<i>
+</I>&gt;<i> Note:  Even though it is likely quite obvious, the extent of my programming
+</I>&gt;<i> experience is limited to using and modifying LSL script recipes.
+</I>&gt;<i>
+</I>&gt;<i> string message=&quot;Touch to open the School of Continuing Studies web
+</I>&gt;<i> site...&quot;;  //Put your message for the Load URL window here
+</I>&gt;<i> string URL=&quot;<A HREF="http://www.scs.tulane.edu/">http://www.scs.tulane.edu/</A>&quot;;      //Put the URL you want to
+</I>&gt;<i> open here
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     state_entry()
+</I>&gt;<i>     {
+</I>&gt;<i>         llSetText(llGetObjectName(), &lt;1.0, 1.0, 1.0&gt;, 1.0);
+</I>&gt;<i>     }
+</I>&gt;<i>     touch_start(integer total_number)
+</I>&gt;<i>     {
+</I>&gt;<i>         llLoadURL(llDetectedKey(0),message, URL&quot;);
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> With the following error received:  (15, -1)  Unexpected EOF
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> remove the &quot; from  llLoadURL(llDetectedKey(0),message, URL&quot;);  and that
+</I>&gt;<i> will fix it.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101125/d4cbec02/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101125/d4cbec02/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006252.html">[Opensim-users] Moving Script Recipes from SL to OpenSim
+</A></li>
+	<LI>Next message: <A HREF="006255.html">[Opensim-users] Diva Distro cant validate avatar, (but wifi can)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6253">[ date ]</a>
+              <a href="thread.html#6253">[ thread ]</a>
+              <a href="subject.html#6253">[ subject ]</a>
+              <a href="author.html#6253">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

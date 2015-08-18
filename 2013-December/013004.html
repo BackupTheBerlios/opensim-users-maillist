@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Annoying Spammer on Openvue Grid - But why don't the objects show in abot land?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Annoying%20Spammer%20on%20Openvue%20Grid%20-%20But%20why%0A%20don%27t%20the%20objects%20show%20in%20abot%20land%3F&In-Reply-To=%3CCAJ%3DJWqwwOMTtJ%3DKbDameKUvafs7nTZnBdzS3vdWdeSJ4n9sV%3Dw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013003.html">
+   <LINK REL="Next"  HREF="013005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Annoying Spammer on Openvue Grid - But why don't the objects show in abot land?</H1>
+    <B>Mister Blue</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Annoying%20Spammer%20on%20Openvue%20Grid%20-%20But%20why%0A%20don%27t%20the%20objects%20show%20in%20abot%20land%3F&In-Reply-To=%3CCAJ%3DJWqwwOMTtJ%3DKbDameKUvafs7nTZnBdzS3vdWdeSJ4n9sV%3Dw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Annoying Spammer on Openvue Grid - But why don't the objects show in abot land?">misterblue at misterblue.com
+       </A><BR>
+    <I>Thu Dec 19 18:32:06 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013003.html">[Opensim-users] Annoying Spammer on Openvue Grid - But why don't the objects show in abot land?
+</A></li>
+        <LI>Next message: <A HREF="013005.html">[Opensim-users] Annoying Spammer on Openvue Grid - But why don't the objects show in abot land?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13004">[ date ]</a>
+              <a href="thread.html#13004">[ thread ]</a>
+              <a href="subject.html#13004">[ subject ]</a>
+              <a href="author.html#13004">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Not sure what the 'issue' is. You'd like to do something different than the
+objects just stopping outside the region?
+
+The logic has the simulator noticing the object has moved out of the
+current region which starts the crossing hand-off process. The hand-off
+code looks up the next region and sends the object/presence info to the
+destination region.
+
+If the destination region cannot be found, the object is moved back into
+the original region and simulation continues. If there are more than a
+certain number of crossing problems (default is 5 and not totally sure why
+this logic exists), the object 'fails' the crossing and it is made
+non-physical where ever it is. This usually means the object is stopped
+just outside the original region.
+
+If the object was moved into the region on crossing failure, you'd end up
+with exactly the same picture (lots of objects piled up at the region
+border) but the objects would be just inside the region rather than just
+outside. That seems like a small and un-useful change from what is
+happening now.
+
+
+
+On Thu, Dec 19, 2013 at 8:23 AM, BoneZ &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bonez at dogzhouse.com</A>&gt; wrote:
+
+&gt;<i>  Why not just place a statement which says...
+</I>&gt;<i>
+</I>&gt;<i> if no adjoining region exists....
+</I>&gt;<i>     if location &gt;256 then location = 256
+</I>&gt;<i>     if location &lt; 0 then location = 0
+</I>&gt;<i>
+</I>&gt;<i> Do this for both x and y coords.
+</I>&gt;<i>
+</I>&gt;<i> Wouldn't this effectively stop the issue?
+</I>&gt;<i>
+</I>&gt;<i> ~BoneZ
+</I>&gt;<i>
+</I>&gt;<i> I've made some simple vehicle scripts with this type of logic to keep them
+</I>&gt;<i> from trying to cross into another region.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 12/19/2013 10:57 AM, Mister Blue wrote:
+</I>&gt;<i>
+</I>&gt;<i> What should happen when an object moves off a region into an undefined
+</I>&gt;<i> neighbor? At the moment, BulletSim thinks the object is outside the region
+</I>&gt;<i> it is managing and it has handed off the object to the simulator to move
+</I>&gt;<i> the object to the adjoining region. Since the adjoining region doesn't
+</I>&gt;<i> exist, the object is left in limbo with the region still holding the object
+</I>&gt;<i> (since the region hand-off didn't happen) but outside the area the physics
+</I>&gt;<i> engine is operating on.
+</I>&gt;<i>
+</I>&gt;<i>  What should happen? Should there be an implicit DIE_AT_EDGE of there is
+</I>&gt;<i> no adjoining region? Should the object be moved back into the region it
+</I>&gt;<i> left?
+</I>&gt;<i>
+</I>&gt;<i>  -- mb
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Dec 19, 2013 at 1:48 AM, Ai Austin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ai.ai.austin at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I do have the griefer's UUID...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jack.Marioline @sanctuary.homelinux.org:8012
+</I>&gt;&gt;<i> fe7b0dfc-5629-4189-8fcb-e856db25f5ec
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> though I am sure that is one of many identities and will already be
+</I>&gt;&gt;<i> different now.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I think the objects must be coming from an emitter placed somewhere
+</I>&gt;&gt;<i> perhaps high... Then spawning physical objects at a high rate which
+</I>&gt;&gt;<i> themselves probably are also cloned emitters, and the physical objects roll
+</I>&gt;&gt;<i> over the terrain getting to low points.   That is why many end up at the
+</I>&gt;&gt;<i> edge.  But they do not seem to stop at the edge they go slightly over and
+</I>&gt;&gt;<i> that causes problems.  I am using BulletSim, so that would seem to be worth
+</I>&gt;&gt;<i> considering as a BulletSim bug.  BulletSim should never allow a movement
+</I>&gt;&gt;<i> that makes the object appear at an illegal location that is not considered
+</I>&gt;&gt;<i> in the region by viewers (though they are left in the object count of the
+</I>&gt;&gt;<i> region).  The objects pile up one on top of another at this edge.. See
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://www.aiai.ed.ac.uk/~bat/EXPORT/TEMP/OS/2013-12-17-Spammer-Jack-Marioline-Sanctuary-Homelinux.Org-Snapshot.jpg">http://www.aiai.ed.ac.uk/~bat/EXPORT/TEMP/OS/2013-12-17-Spammer-Jack-Marioline-Sanctuary-Homelinux.Org-Snapshot.jpg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://www.aiai.ed.ac.uk/~bat/EXPORT/TEMP/OS/2013-12-17-Spammer-Jack-Marioline-Sanctuary-Homelinux.Org-Map.jpg">http://www.aiai.ed.ac.uk/~bat/EXPORT/TEMP/OS/2013-12-17-Spammer-Jack-Marioline-Sanctuary-Homelinux.Org-Map.jpg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://www.aiai.ed.ac.uk/~bat/EXPORT/TEMP/OS/2013-12-17-Spammer-Jack-Marioline-Sanctuary-Homelinux.Org.jpg">http://www.aiai.ed.ac.uk/~bat/EXPORT/TEMP/OS/2013-12-17-Spammer-Jack-Marioline-Sanctuary-Homelinux.Org.jpg</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20131219/17ca9830/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20131219/17ca9830/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013003.html">[Opensim-users] Annoying Spammer on Openvue Grid - But why don't the objects show in abot land?
+</A></li>
+	<LI>Next message: <A HREF="013005.html">[Opensim-users] Annoying Spammer on Openvue Grid - But why don't the objects show in abot land?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13004">[ date ]</a>
+              <a href="thread.html#13004">[ thread ]</a>
+              <a href="subject.html#13004">[ subject ]</a>
+              <a href="author.html#13004">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

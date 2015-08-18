@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Implementing Groups
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Implementing%20Groups&In-Reply-To=%3CAANLkTim78LN%3DG%3Dj-QPWNQBJPgbLr2PjfPTrAQMKRaa8K%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006153.html">
+   <LINK REL="Next"  HREF="006155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Implementing Groups</H1>
+    <B>Harri Nyman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Implementing%20Groups&In-Reply-To=%3CAANLkTim78LN%3DG%3Dj-QPWNQBJPgbLr2PjfPTrAQMKRaa8K%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Implementing Groups">harri.nyman at shadecorp.net
+       </A><BR>
+    <I>Tue Nov 16 10:33:52 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006153.html">[Opensim-users] Implementing Groups
+</A></li>
+        <LI>Next message: <A HREF="006155.html">[Opensim-users] Implementing Groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6154">[ date ]</a>
+              <a href="thread.html#6154">[ thread ]</a>
+              <a href="subject.html#6154">[ subject ]</a>
+              <a href="author.html#6154">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm obiviously misconfiguring something and running my head around the
+problem... can you please post a copy of your groups setting? I can't even
+see any group-related messages on console *sigh*
+
+Harri
+
+
+On Tue, Nov 16, 2010 at 10:43 AM, Zane Legion &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">zanelegion at twistedsky.net</A>&gt;wrote:
+
+&gt;<i>   I&#8217;ve just spent several hours working what&#8217;s wrong with my
+</I>&gt;<i> implementation of groups. I&#8217;m running grid mode with 0.7.0.2 on
+</I>&gt;<i> Windows/IIS/MySQL/PHP (WIMP?).
+</I>&gt;<i>
+</I>&gt;<i> What I found was that when a group is created, the RoleMembersVisible bit
+</I>&gt;<i> is not being set on group powers, so no-one (including the group founder)
+</I>&gt;<i> can see any group members. This stops anyone from inviting a member to the
+</I>&gt;<i> group as well.
+</I>&gt;<i>
+</I>&gt;<i> From my limited understanding it seems that XMLRPC.php is expecting OpenSim
+</I>&gt;<i> to set the RoleMembersVisible bit when the createGroup function is called &#8211;
+</I>&gt;<i> but it doesn&#8217;t. So I override the group powers in createGroup with
+</I>&gt;<i> &#8220;$ownersPowers = 490382185988094;&#8221; just under the line that reads &#8220;// Create
+</I>&gt;<i> Owner Role&#8221;. This fixes group creation for me.
+</I>&gt;<i>
+</I>&gt;<i> It seems that at some point before 0.7.0.2, some OpenSim was created for
+</I>&gt;<i> selecting whether role members are visible in groups, but it wasn&#8217;t setting
+</I>&gt;<i> that option when a group was being created.
+</I>&gt;<i>
+</I>&gt;<i> Not sure if this relates to the problem at hand, but since we&#8217;re talking
+</I>&gt;<i> about flotsam groups and 0.7.0.2 I thought I&#8217;d mention it.
+</I>&gt;<i>
+</I>&gt;<i> *Zane Legion*
+</I>&gt;<i> Twisted Sky Grid
+</I>&gt;<i>   *From:* Jor3l Boa &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jor3l at foravatars.com</A>&gt;
+</I>&gt;<i> *Sent:* Tuesday, November 16, 2010 10:54 AM
+</I>&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Subject:* Re: [Opensim-users] Implementing Groups
+</I>&gt;<i>
+</I>&gt;<i> Back to robust I found the problem is in the xmlrpc.php file (git HEAD)
+</I>&gt;<i> with groups.getAgentGroupMemberships, even if it seems to work with the
+</I>&gt;<i> test.php your opensim will fail with XML error. Will look at git to find the
+</I>&gt;<i> change that breaks this file. :)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2010/11/15 Jor3l Boa &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jor3l at foravatars.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;&gt;<i> Well, I'm running Simian now and profiles, groups and search work :) now
+</I>&gt;&gt;<i> need to figure out how to migrate users to the new db
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010/11/15 Ric Moore &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">wayward4now at gmail.com</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   On Mon, 2010-11-15 at 20:35 +0200, Harri Nyman wrote:
+</I>&gt;&gt;&gt;<i> &gt; Could someone *please* come up with cookbook-level instructions how to
+</I>&gt;&gt;&gt;<i> &gt; get groups working? I've been hitting my head into stone wall for
+</I>&gt;&gt;&gt;<i> &gt; weeks with this, and I do have distinct feeling I'm not alone..
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; ....remember, to some of us even git is totally mythical creature...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Fact-of-life ...terrific coders are not necessarily terrific writers.
+</I>&gt;&gt;&gt;<i> But, I'd also love to see some step-by-step'ers. You are not alone. The
+</I>&gt;&gt;&gt;<i> Truth is out there. &lt;chuckles&gt; Ric
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> My father, Victor Moore (Vic) used to say:
+</I>&gt;&gt;&gt;<i> &quot;There are two Great Sins in the world...
+</I>&gt;&gt;&gt;<i> ..the Sin of Ignorance, and the Sin of Stupidity.
+</I>&gt;&gt;&gt;<i> Only the former may be overcome.&quot; R.I.P. Dad.
+</I>&gt;&gt;&gt;<i> Linux user# 44256
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>  ------------------------------
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> No virus found in this incoming message.
+</I>&gt;<i> Checked by AVG - www.avg.com
+</I>&gt;<i> Version: 9.0.869 / Virus Database: 271.1.1/3259 - Release Date: 11/16/10
+</I>&gt;<i> 06:34:00
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101116/33d1b832/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101116/33d1b832/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006153.html">[Opensim-users] Implementing Groups
+</A></li>
+	<LI>Next message: <A HREF="006155.html">[Opensim-users] Implementing Groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6154">[ date ]</a>
+              <a href="thread.html#6154">[ thread ]</a>
+              <a href="subject.html#6154">[ subject ]</a>
+              <a href="author.html#6154">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] one more Difference between opensim and SL	timers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20one%20more%20Difference%20between%20opensim%20and%20SL%0A%09timers&In-Reply-To=%3CCAHi41xJRe55JOtCJ7P8meN3u-qZqf3smKsYztbx9N4FhpN0d8Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010856.html">
+   <LINK REL="Next"  HREF="010858.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] one more Difference between opensim and SL	timers</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20one%20more%20Difference%20between%20opensim%20and%20SL%0A%09timers&In-Reply-To=%3CCAHi41xJRe55JOtCJ7P8meN3u-qZqf3smKsYztbx9N4FhpN0d8Q%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] one more Difference between opensim and SL	timers">r.ramloll at gmail.com
+       </A><BR>
+    <I>Sat Sep  1 14:07:34 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010856.html">[Opensim-users] one more Difference between opensim and SL	timers
+</A></li>
+        <LI>Next message: <A HREF="010858.html">[Opensim-users] one more Difference between opensim and SL	timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10857">[ date ]</a>
+              <a href="thread.html#10857">[ thread ]</a>
+              <a href="subject.html#10857">[ subject ]</a>
+              <a href="author.html#10857">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Correct Melanie. I just found that the code in my last post does work the
+same way.
+So the difference in timer behavior in my actual code must lie else where.
+Will try to find it.
+Ha and I thought I found the difference because when I explicitly stopped
+the timer on_entry
+in my actual code in opensim, that difference disappeared.
+
+On Sat, Sep 1, 2012 at 7:10 AM, Melanie &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">melanie at t-data.com</A>&gt; wrote:
+
+&gt;<i> This is correct behavior and also happens in SL. The timer is a
+</I>&gt;<i> property of the script and when you rez the prim again, on_rez fires
+</I>&gt;<i> but state_entry does NOT. This is correct and by design. It mirrors
+</I>&gt;<i> what SL does. The script is already in state default and the timer
+</I>&gt;<i> is still running from the touch before it was taken.
+</I>&gt;<i>
+</I>&gt;<i> Some people are user to OpenSim's ages-old behavior of resetting
+</I>&gt;<i> scrits on rez. That behavior has been gone for a long time now and
+</I>&gt;<i> we're correctly duplicating SL's state persistence behavior.
+</I>&gt;<i>
+</I>&gt;<i> Melanie
+</I>&gt;<i>
+</I>&gt;<i> On 01/09/2012 02:23, Dr Ramesh Ramloll wrote:
+</I>&gt;<i> &gt; Hey Justin,
+</I>&gt;<i> &gt; This can be reproduced with this script. Rez object, touch to start it,
+</I>&gt;<i> &gt; then take it back to inventory, then rez again. Counter will continue to
+</I>&gt;<i> be
+</I>&gt;<i> &gt; incremented and printed on screen. And I have to apologize here for not
+</I>&gt;<i> &gt; submitting a report. Too tired :) really, not an excuse or anything.
+</I>&gt;<i> Sorry.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; integer counter;
+</I>&gt;<i> &gt; default
+</I>&gt;<i> &gt; {
+</I>&gt;<i> &gt;     state_entry()
+</I>&gt;<i> &gt;     {
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;     }
+</I>&gt;<i> &gt;     touch_start(integer flag){
+</I>&gt;<i> &gt;         llSetTimerEvent(0.5);
+</I>&gt;<i> &gt;     }
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;     timer()
+</I>&gt;<i> &gt;     {
+</I>&gt;<i> &gt;        ++counter;
+</I>&gt;<i> &gt;        llSay(0,(string)counter);
+</I>&gt;<i> &gt;     }
+</I>&gt;<i> &gt; }
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Fri, Aug 31, 2012 at 7:39 PM, Justin Clark-Casey &lt;
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; That is surprising because the code does remove timer events when a
+</I>&gt;<i> script
+</I>&gt;<i> &gt;&gt; is removed.  The best course of action would be to file a bug with the
+</I>&gt;<i> &gt;&gt; exact steps to reproduce the problem.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On 31/08/12 21:01, Dr Ramesh Ramloll wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Just thought I put this out there. I just noticed that in opensim,
+</I>&gt;<i> timers
+</I>&gt;<i> &gt;&gt;&gt; in objects are not stopped when they are
+</I>&gt;<i> &gt;&gt;&gt; removed.  So I had to use llSetTimerEvent(0); in state_entry() to stop
+</I>&gt;<i> &gt;&gt;&gt; the clock ... explicitly on object's entry. Guess
+</I>&gt;<i> &gt;&gt;&gt; starting a timer in an object need to be viewed similar llSetText ...
+</I>&gt;<i> &gt;&gt;&gt; Rather unexpected.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; --
+</I>&gt;<i> &gt;&gt;&gt; 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i> &gt;&gt;&gt; *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate
+</I>&gt;<i> &gt;&gt;&gt; /Research Associate Professor/, Idaho State University,
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Pocatello, ID 83209 Tel: 208-240-0040
+</I>&gt;<i> &gt;&gt;&gt; Blog &lt;<A HREF="http://deepsemaphore.**posterous.com/&lt;">http://deepsemaphore.**posterous.com/&lt;</A>
+</I>&gt;<i> <A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;&gt;,
+</I>&gt;<i> &gt;&gt;&gt; LinkedIn &lt;<A HREF="http://www.linkedin.com/in/**rameshramloll&lt;">http://www.linkedin.com/in/**rameshramloll&lt;</A>
+</I>&gt;<i> <A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;&gt;,
+</I>&gt;<i> &gt;&gt;&gt; DeepSemaphore LLC
+</I>&gt;<i> &gt;&gt;&gt; &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;**, Google+ profile &lt;
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://plus.google.com/**103652369558830540272/about&lt;">https://plus.google.com/**103652369558830540272/about&lt;</A>
+</I>&gt;<i> <A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i> &gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; ______________________________**_________________
+</I>&gt;<i> &gt;&gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; Justin Clark-Casey (justincc)
+</I>&gt;<i> &gt;&gt; OSVW Consulting
+</I>&gt;<i> &gt;&gt; <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> &gt;&gt; <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> &gt;&gt; ______________________________**_________________
+</I>&gt;<i> &gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+*Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+208-240-0040
+Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;,
+LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+, DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+
+profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120901/6513a7d2/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120901/6513a7d2/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010856.html">[Opensim-users] one more Difference between opensim and SL	timers
+</A></li>
+	<LI>Next message: <A HREF="010858.html">[Opensim-users] one more Difference between opensim and SL	timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10857">[ date ]</a>
+              <a href="thread.html#10857">[ thread ]</a>
+              <a href="subject.html#10857">[ subject ]</a>
+              <a href="author.html#10857">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Collada
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Collada&In-Reply-To=%3C4952087B.5000006%40kyperjokki.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000884.html">
+   <LINK REL="Next"  HREF="000895.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Collada</H1>
+    <B>Toni Alatalo</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Collada&In-Reply-To=%3C4952087B.5000006%40kyperjokki.fi%3E"
+       TITLE="[Opensim-users] Collada">antont at kyperjokki.fi
+       </A><BR>
+    <I>Wed Dec 24 11:01:31 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000884.html">[Opensim-users] Collada &amp; arbitrary parametric prims
+</A></li>
+        <LI>Next message: <A HREF="000895.html">[Opensim-users] Collada
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#894">[ date ]</a>
+              <a href="thread.html#894">[ thread ]</a>
+              <a href="subject.html#894">[ subject ]</a>
+              <a href="author.html#894">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Dzonatas kirjoitti:
+&gt;<i> <A HREF="http://www.collada.org/mediawiki/index.php/Portal:Conditioners_directory">http://www.collada.org/mediawiki/index.php/Portal:Conditioners_directory</A>
+</I>&gt;<i> I'd imagine you wonder about how to go from a mesh to a parametric model 
+</I>&gt;<i> (if the external application doesn't support all the parametric data).
+</I>&gt;<i>   
+</I>
+and back. i don't think there is a sensible way for such a roundtrip, 
+e.g. for bringing SL data to vanilla Blender for editing. what good 
+would prims converted to meshes do you in a modelling app? i guess you 
+can get them today with the meshmerizer if you want. but that way you 
+won't be able to edit them for loading back to SL, so i see no use.
+
+&gt;<i> Blender could be extended to support the same parametric data that is 
+</I>&gt;<i> used in SL/opensim. <A HREF="http://www.google.com/search?q=blender+parametric">http://www.google.com/search?q=blender+parametric</A>
+</I>&gt;<i>   
+</I>
+that would be possible, if you really wanted to use Blender (or some 
+other app) for SL building, but not a small job.
+
+&gt;<i> For example, maybe include a script in the DAE file that generates the 
+</I>&gt;<i> mesh from the parametric data. The applications collada plug-in could 
+</I>&gt;<i> run the script any time the parametric data is modified to regenerate 
+</I>&gt;<i> the model. This is not too different of an idea from being able to store 
+</I>&gt;<i> shaders in the DAE file, which exists now.
+</I>&gt;<i>   
+</I>
+what would that script run against, and how would the parametric data be 
+modified?
+
+it would in principle possible to include e.g. Blender script code 
+there, and make a tool for Blender that could edit that data. the major 
+2.5 refactor that's well under way should make it easier to do such 
+custom tools soon. but this all would be Blender specific, and would 
+have basically nothing to do with Collada anymore. it would be possible 
+to include that data in a DAE file, but i don't see any benefit there 
+really, as it would be a custom solution for dealing with a specific 
+kind of data (SL prims) in a specific application (Blender).
+
+to summarize my understanding of these talks:
+
+1. someone wanted a way to store objects from OpenSim to a file, to be 
+able to send them to people etc. AFAIK that exists with the current 
+serialization that has been in place for as long as i know, i don't know 
+what the UI for it is but have seen the code :) .. and heard that people 
+use it to put prims on the web etc.
+
+2. Mikko Pallari and Adam Frisby have just now worked on a new version 
+of that serialization, that would not depend on versions of the OpenSim 
+code anymore (the previous code uses the automatic .net serialization so 
+changes in the code structure break backwards compatibility with old xml 
+files, but the new is made manually and decoupled from the code 
+structure so also old files should work with future versions of OpenSim. 
+i've been told that so far the code there hasn't been changed a lot 
+exactly to remain compatible with old data files).
+
+3. Collada does not support SL data. The scene hierarchy could probably 
+be converted ok. For prim geometry data you could define own extensions, 
+using the &lt;extra&gt; tags, for describing the modelling like the custom 
+OpenSim format does now. This might work for opensim-to-opensim 
+transfers, but so does the own custom format so there'd be no benefit. 
+No other application would out-of-the-box know anything about those. If 
+someone wants to use a modelling app to work on SL prims, they could add 
+support for such a format in some existing parametric modelling app -- 
+if it happens to be compatible enough with the SL model -- or add param 
+modelling / SL data support to e.g. Blender. But also here it might be 
+simpler to add support for the OpenSim format, than e.g. to modify the 
+Collada importer, to get SL support. Anyhow if someone does this kind of 
+work they are of course free to do as they see best. So far I don't see 
+anyone actually working on this, and it's not a small job either.
+
+Someone asked for my strategy for dealing with 3d data. Well for us at 
+Playsign it's pretty simple, we have models made for games and some 
+other things, and the plan has been to keep everything in Blender 
+trusting that we can import anything and export to everywhere from 
+there. I've participated in Blender development myself so it's easy to 
+trust it. So far have used mostly Soya3d and Ogre, for which there are 
+direct exporters, and looked at e.g. Papervision3d (that would use via 
+the Collada export). There is also an Ogre importer. We don't use SL, 
+but are looking at Rex and working on it 'cause might be able to use it.
+
+The SL prims and parametric modelling in general (procedural trees and 
+plants, but perhaps also cities and walls and whatnot) are interesting 
+though and there's very much potential for the richness of VWs there. I 
+don't know how good the SL model actually is, and hence how good it 
+would be have parametric modelling in Blender similar to that, or how 
+similar it is to whatever there is in existing procedural modelling 
+apps. Looking forward to learn more about that next year, but off for 
+holidays now! :)
+
+cheers,
+~Toni
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000884.html">[Opensim-users] Collada &amp; arbitrary parametric prims
+</A></li>
+	<LI>Next message: <A HREF="000895.html">[Opensim-users] Collada
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#894">[ date ]</a>
+              <a href="thread.html#894">[ thread ]</a>
+              <a href="subject.html#894">[ subject ]</a>
+              <a href="author.html#894">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

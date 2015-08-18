@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Script Engine Messages
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20Engine%20Messages&In-Reply-To=%3CCAOaG_2ZLnh9zEDXyjea3ZEyNokSkNFR3TzEjGBehDxXN5YM%2Byw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010598.html">
+   <LINK REL="Next"  HREF="010581.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Script Engine Messages</H1>
+    <B>James Stallings II</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Script%20Engine%20Messages&In-Reply-To=%3CCAOaG_2ZLnh9zEDXyjea3ZEyNokSkNFR3TzEjGBehDxXN5YM%2Byw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Script Engine Messages">james.stallings at gmail.com
+       </A><BR>
+    <I>Fri Jun 29 00:35:37 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010598.html">[Opensim-users] Script Engine Messages
+</A></li>
+        <LI>Next message: <A HREF="010581.html">[Opensim-users] Opensim 7.4 binaries coming soon??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10599">[ date ]</a>
+              <a href="thread.html#10599">[ thread ]</a>
+              <a href="subject.html#10599">[ subject ]</a>
+              <a href="author.html#10599">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Personally, I'm all for unix style bang notation/magic numbers. They start
+with a comment character so are ignored anywhere they aren't meaningful,
+and leave the door open to unanticpated future script engine shenanigans :)
+
+Just my 0.02$O
+
+Cheers
+James
+
+
+On Thu, Jun 28, 2012 at 4:42 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> I have made a refinement in commit 972b0b5 to still warn if no explicit
+</I>&gt;<i> language was set.  I believe the false positives will be lower here, since
+</I>&gt;<i> lines are less likely to end with colons for completely separate reasons.
+</I>&gt;<i>
+</I>&gt;<i> This is about balancing the known false positives against any use of this
+</I>&gt;<i> alternative engine specification facility. This problem (false positives
+</I>&gt;<i> because of : in the first line) has come up a lot in the past as well as
+</I>&gt;<i> now.  On the other hand. are you (or anybody else on this list) aware of
+</I>&gt;<i> any current cases of people using this ability to specify a different
+</I>&gt;<i> script engine?  I'm not currently aware of any.
+</I>&gt;<i>
+</I>&gt;<i> The only other current script engine implementations I'm aware of are
+</I>&gt;<i> apart from XEngine are DNE (long discarded from core), ForthMinus
+</I>&gt;<i> (abandoned by Alondira over 4 years ago), some other DNE derived engine
+</I>&gt;<i> that was long abandoned and your own proprietary engine.  I don't count
+</I>&gt;<i> engines running on forked codebases since they have moved away from
+</I>&gt;<i> OpenSimulator compatibility.
+</I>&gt;<i>
+</I>&gt;<i> To be honest, I think this is an over-specified feature that was only
+</I>&gt;<i> brought in originally to avoid making a decision about OpenSimulator's
+</I>&gt;<i> script engine.  I find it hard to believe that anyone would want to deal
+</I>&gt;<i> with the complexity of running some scripts in one engine and other scripts
+</I>&gt;<i> in another in the same simulator, just for some theoretical performance
+</I>&gt;<i> advantage.  I rather doubt you're running 2 engines for the same language
+</I>&gt;<i> since that would be a nightmare to explain to users (happy to be corrected
+</I>&gt;<i> on this point).
+</I>&gt;<i>
+</I>&gt;<i> Really, I think we should adopt a better way of specifying the script
+</I>&gt;<i> language/engine than looking for a : than be stuck with this issue forever.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 28/06/12 02:50, Melanie wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I'm afraid that can't be done this way. Selecting an engine without
+</I>&gt;&gt;<i> giving it an explicit language, e.g. // SCEngine: is legal.
+</I>&gt;&gt;<i> Therefore, with this patch, the defaulting to XEngine is no longer
+</I>&gt;&gt;<i> reported int these cases. Since the reporting was introduced to
+</I>&gt;&gt;<i> ensure that scripts are not run on engines with lesser
+</I>&gt;&gt;<i> functionality, the entire purpose of the message is completely
+</I>&gt;&gt;<i> defeated by this. With this patch, we might as well not notify users
+</I>&gt;&gt;<i> at all and just let them crash and burn.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Melanie
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 28/06/2012 02:49, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Okay Edmund, commit 25baa2d contains a change which should eliminate
+</I>&gt;&gt;&gt;<i> reporting of these false positives.  Please give it
+</I>&gt;&gt;&gt;<i> a whirl.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 26/06/12 01:38, Edmund Edgar wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 26 June 2012 08:58, Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I don't like the way script language/desired engine detection was done
+</I>&gt;&gt;&gt;&gt;&gt;<i> - a
+</I>&gt;&gt;&gt;&gt;&gt;<i> clash with existing scripts could have been avoided by requiring some
+</I>&gt;&gt;&gt;&gt;&gt;<i> special preceeding chracters rather than simple c#, lsl:DotNetEngine,
+</I>&gt;&gt;&gt;&gt;&gt;<i> etc
+</I>&gt;&gt;&gt;&gt;&gt;<i> (like #! in shell scripts, for instance).
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Agreed, but on the assumption that we're stuck with this convention
+</I>&gt;&gt;&gt;&gt;<i> now, would it be possible to tighten up the pattern matching a bit? It
+</I>&gt;&gt;&gt;&gt;<i> feels like the system should be able to tell the difference between
+</I>&gt;&gt;&gt;&gt;<i> //c#
+</I>&gt;&gt;&gt;&gt;<i> ...and
+</I>&gt;&gt;&gt;&gt;<i> // This is a comment consisting of multiple words. What it has to do
+</I>&gt;&gt;&gt;&gt;<i> with script engines: Nothing.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Just checking for a colon seems a bit broad. One of the mind-numbing
+</I>&gt;&gt;&gt;&gt;<i> busywork tasks on my TODO list this morning is cleaning up some
+</I>&gt;&gt;&gt;&gt;<i> scripts somebody checked in since I last fixed our iar. Their editor -
+</I>&gt;&gt;&gt;&gt;<i> I think it's the Eclipse plugin - has helpfully added:
+</I>&gt;&gt;&gt;&gt;<i> // LSL script generated:
+</I>&gt;&gt;&gt;&gt;<i> furniture-1.0.object_**definitions.presentation_**seating.lslp Sat Nov
+</I>&gt;&gt;&gt;&gt;<i> 19
+</I>&gt;&gt;&gt;&gt;<i> 14:36:29 Tokyo Standard Time 2011
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>  ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>
+
+
+-- 
+===================================
+<A HREF="http://simhost.com">http://simhost.com</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120628/096068d1/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120628/096068d1/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010598.html">[Opensim-users] Script Engine Messages
+</A></li>
+	<LI>Next message: <A HREF="010581.html">[Opensim-users] Opensim 7.4 binaries coming soon??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10599">[ date ]</a>
+              <a href="thread.html#10599">[ thread ]</a>
+              <a href="subject.html#10599">[ subject ]</a>
+              <a href="author.html#10599">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

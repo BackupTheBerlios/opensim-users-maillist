@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Fucntion to read a landmark
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Fucntion%20to%20read%20a%20landmark&In-Reply-To=%3CCA%2BRcaTQtHyCUhLMDUuy3gi5zLcxKYt_5%3D%2BVoEEc%2B2au0P3Ob-g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009783.html">
+   <LINK REL="Next"  HREF="009784.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Fucntion to read a landmark</H1>
+    <B>M.E. Verhagen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Fucntion%20to%20read%20a%20landmark&In-Reply-To=%3CCA%2BRcaTQtHyCUhLMDUuy3gi5zLcxKYt_5%3D%2BVoEEc%2B2au0P3Ob-g%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Fucntion to read a landmark">marceled9 at gmail.com
+       </A><BR>
+    <I>Sun Mar 11 12:48:26 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009783.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+        <LI>Next message: <A HREF="009784.html">[Opensim-users] Seeing other regions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9786">[ date ]</a>
+              <a href="thread.html#9786">[ thread ]</a>
+              <a href="subject.html#9786">[ subject ]</a>
+              <a href="author.html#9786">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ah that is cool, apparently hg landmarks are saved :)
+
+There seems to be no lsl function the get the description of an inventory
+object, so you can not get the hg adres out of the landmark.
+
+You have to recalculate the global to local coordinates. You can do that
+with some script like this:
+
+key requestid;
+string name;
+default
+{
+    state_entry()
+    {
+        //request the LM data
+        name = llGetInventoryName(INVENTORY_LANDMARK, 0);
+        requestid = llRequestInventoryData(name);
+    }
+    dataserver(key id, string data)
+    {
+        if (id == requestid)
+        {
+            vector dest = (vector)data;
+            float globalcoordx=dest.x;
+            integer localx = (integer)globalcoordx/256;
+            float localcoordx = globalcoordx - (localx*256);
+            float globalcoordy=dest.y;
+            integer localy = (integer)globalcoordy/256;
+            float localcoordy = globalcoordy - (localy*256);
+            llSay(0, &quot;Teleport to &quot; + name);
+            llSay(0, &quot;x coord &quot; +(string) localcoordx);
+            llSay(0, &quot;y coord &quot; +(string) localcoordy);
+            llSay(0, &quot;z coord &quot; +(string) dest.z);
+
+        }
+    }
+}
+
+2012/3/11 Gudule Lapointe &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>&gt;
+
+&gt;<i> Hum. If I am in another grid, and try to add a landmark
+</I>&gt;<i> - the landmark is created
+</I>&gt;<i> - the landmark works when I use it from my grid
+</I>&gt;<i> - it's name begins with &quot;HG&quot;&#8230;
+</I>&gt;<i>
+</I>&gt;<i> Particularly last point confirms that not only there are HG landmarks, but
+</I>&gt;<i> also that OpenSim handle them by design.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;<i> <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;<i>
+</I>&gt;<i> Le 11 mars 2012 &#224; 01:06, M.E. Verhagen a &#233;crit :
+</I>&gt;<i>
+</I>&gt;<i> there aren't hypergrid landmarks yet
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2012/3/10, Miller, Peter &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">pmiller at liverpool.ac.uk</A>&gt;:
+</I>&gt;<i>
+</I>&gt;<i> That wasn't the question you asked ;)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> You could manually encode the extra info in the landmark name and retrieve
+</I>&gt;<i>
+</I>&gt;<i> it using llGetInventoryName. Can't help beyond that.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Best wishes
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Peter
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i>
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> [<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] on behalf of Gudule Lapointe
+</I>&gt;<i>
+</I>&gt;<i> [<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>]
+</I>&gt;<i>
+</I>&gt;<i> Sent: 10 March 2012 18:57
+</I>&gt;<i>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> Subject: [Opensim-users] Fucntion to read a landmark
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Is there a way to read the coordinates of a landmark from within a script?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I made several flavors of blame gates and I would like to be able to drop a
+</I>&gt;<i>
+</I>&gt;<i> landmark in the prim instead of encoding the uri
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="secondlife://speculoos.net:8002/&lt;https://owa.liv.ac.uk/owa/UrlBlockedError.aspx">secondlife://speculoos.net:8002/&lt;https://owa.liv.ac.uk/owa/UrlBlockedError.aspx</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Groningen en Hannover Opensims:   <A HREF="secondlife://meverhagen.nl:8002:Hannover">secondlife://meverhagen.nl:8002:Hannover</A>
+</I>&gt;<i> ZW/
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+Groningen en Hannover Opensims:   <A HREF="secondlife://meverhagen.nl:8002:Hannover">secondlife://meverhagen.nl:8002:Hannover</A>
+ZW/
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120311/2e9236ee/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120311/2e9236ee/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009783.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+	<LI>Next message: <A HREF="009784.html">[Opensim-users] Seeing other regions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9786">[ date ]</a>
+              <a href="thread.html#9786">[ thread ]</a>
+              <a href="subject.html#9786">[ subject ]</a>
+              <a href="author.html#9786">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

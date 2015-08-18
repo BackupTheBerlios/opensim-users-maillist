@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] recent scripting script changes?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20recent%20scripting%20script%20changes%3F&In-Reply-To=%3C48900BDD.8050008%40dogzhouse.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000389.html">
+   <LINK REL="Next"  HREF="000391.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] recent scripting script changes?</H1>
+    <B>BoneZ</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20recent%20scripting%20script%20changes%3F&In-Reply-To=%3C48900BDD.8050008%40dogzhouse.com%3E"
+       TITLE="[Opensim-users] recent scripting script changes?">bonez at dogzhouse.com
+       </A><BR>
+    <I>Wed Jul 30 08:36:13 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000389.html">[Opensim-users] New LSL compiler has gone live
+</A></li>
+        <LI>Next message: <A HREF="000391.html">[Opensim-users] recent scripting script changes?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#390">[ date ]</a>
+              <a href="thread.html#390">[ thread ]</a>
+              <a href="subject.html#390">[ subject ]</a>
+              <a href="author.html#390">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Can anyone shed some light on what functions may have changed that are 
+affecting some poseball scripts which worked before, but will no longer 
+work on revision 5689?
+We had been using many and they worked fine, but not since updating to 
+this newer revision.
+
+Our &quot;OLD&quot; revision was 5668
+
+I have included a copy of the script below which was taken from a 
+&quot;Previously&quot; working poseball.
+
+Thanks!
+-BoneZ
+
+string TITLE=&quot;~SIT ON INNERTUBE~&quot;;            //This text will appear in the floating title above the ball
+string ANIMATION=&quot;innertubesit&quot;;             //Put the name of thepose/animation here!
+vector offset=&lt;0,0,0.3&gt;;            //You can play with these numbers to adjust how far the person sits from the ball. ( &lt;X,Y,Z&gt; )
+integer use_voice = FALSE;
+
+string  gNotecard = &quot;Pose ball - CONFIGURATION&quot;;
+integer gLine = 0;
+
+integer listenHandle = -1;
+integer masterswitch = TRUE;
+integer visible = TRUE;
+float base_alpha = 1.0;
+key avatar;
+
+key dataserver_key = NULL_KEY;
+
+show()
+{
+    visible = TRUE;
+    llSetText(TITLE, &lt;1,1,1&gt;,1);        
+    llSetAlpha(base_alpha, ALL_SIDES);
+}
+
+hide()
+{
+    visible = FALSE;
+    llSetText(&quot;&quot;, &lt;1,1,1&gt;,1);        
+    llSetAlpha(0, ALL_SIDES);
+}
+
+next_line()
+{
+    gLine++;
+    dataserver_key = llGetNotecardLine(gNotecard,gLine);
+}
+
+use_defaults()
+{
+    llSetSitText(&quot;Sit Here&quot;);
+    if(visible == FALSE)
+        llSetText(&quot;&quot;,&lt;1,1,1&gt;,1);
+    else
+        llSetText(TITLE,&lt;1,1,1&gt;,1);
+}
+
+init()
+{
+
+    if(llGetInventoryNumber(INVENTORY_ANIMATION) == 0)      //Make sure we actually got something to pose with.
+    {
+        llWhisper(0,&quot;Error: No animation found. Cannot pose.&quot;);
+        ANIMATION = &quot;sit&quot;;
+    }
+    else
+        ANIMATION = llGetInventoryName(INVENTORY_ANIMATION,0);
+
+    if(llGetInventoryNumber(INVENTORY_NOTECARD) != 0)       //If the notecard is present, use it for configuration.
+    {
+        integer i;
+        for(i=0;i&lt;llGetInventoryNumber(INVENTORY_NOTECARD);i++)
+            if(llGetInventoryName(INVENTORY_NOTECARD,i) == gNotecard)
+            {
+                gLine = 0;
+                dataserver_key = llGetNotecardLine(gNotecard, 0);
+                return;
+            }
+        use_defaults();
+    }
+    else            //No configuration notecard found... lets use the defaults.
+        use_defaults();
+}
+
+default
+{
+    state_entry()
+    {
+        llSetText(&quot;Starting up&quot;, &lt;1,1,1&gt;,1);
+        llSitTarget(offset,ZERO_ROTATION);
+        init();
+    }
+
+    link_message(integer sender_num, integer num, string str, key id)
+    {
+        if(num == 99)
+        {
+            if(str == &quot;show&quot;)
+            {
+                masterswitch = FALSE;
+                hide();
+                return;
+            }
+            
+            if(str == &quot;hide&quot;);
+            {
+                masterswitch = TRUE;
+                show();
+            }
+        }
+    }
+    
+    touch_start(integer detected)
+    {
+        if(use_voice == FALSE)
+        {
+            if(visible == TRUE)
+                hide();
+            else
+                show();
+        }
+        else
+            llSay(0,llDetectedName(0)+&quot;, say '/1 Hide' to hide me, or '/1 Show' to make me show. Or just right-click and sit on me to use me.&quot;);
+    }
+    
+    changed(integer change)
+    {
+        if(change == CHANGED_LINK)
+        {
+            avatar = llAvatarOnSitTarget();
+            if(avatar != NULL_KEY)
+            {
+                hide();
+                llRequestPermissions(avatar,PERMISSION_TRIGGER_ANIMATION);
+            }
+            else
+            {
+                if (llGetPermissionsKey() != NULL_KEY) 
+                    llStopAnimation(ANIMATION);
+                if(masterswitch == TRUE)
+                {
+                    llSetAlpha(base_alpha,ALL_SIDES);
+                    llSetText(TITLE,&lt;1,1,1&gt;,1);
+                }
+            }
+        }
+        
+        if(change == CHANGED_INVENTORY)
+        {
+            llSetText(&quot;Reloading configuration...&quot;,&lt;1,1,1&gt;,1);
+            init();
+        }
+    }
+    
+    run_time_permissions(integer perm)
+    {
+        if(perm == PERMISSION_TRIGGER_ANIMATION)
+        {
+            llStopAnimation(&quot;sit&quot;);
+            llStartAnimation(ANIMATION);
+            if(visible == TRUE)
+                base_alpha = llGetAlpha(ALL_SIDES);
+            else
+                base_alpha = 1.0;
+            llSetAlpha(0.0,ALL_SIDES);
+            llSetText(&quot;&quot;,&lt;1,1,1&gt;,1);
+        }
+    }
+    
+    listen(integer channel, string name, key id, string message)
+    {
+        if(llStringLength(message)!=4)
+            return;
+        
+        message = llToLower(message);
+        
+        if(message == &quot;show&quot;)
+        {
+            show();
+            return;
+        }
+        if(message == &quot;hide&quot;)
+            hide();
+    }
+    
+    dataserver(key queryid, string data)
+    {
+        if(queryid != dataserver_key)
+            return;
+        
+        if(data != EOF)
+        {
+            if(llGetSubString(data,0,0) != &quot;;&quot;)
+            {
+                if(llGetSubString(data,0,5) == &quot;title:&quot;)
+                {
+                    TITLE = llGetSubString(data,7,-1);
+                    next_line();
+                    return;
+                }
+                if(llGetSubString(data,0,6) == &quot;offset:&quot;)
+                {
+                    integer length = llStringLength(data);
+                    if(llGetSubString(data,8,8) != &quot;&lt;&quot; ||
+llGetSubString(data,length - 1,length) != &quot;&gt;&quot;)
+                    {
+                        llSay(0,&quot;Error: The numbers in the offset value lack the '&lt;' and '&gt;' signs. (Should be something like &lt;3,1,6&gt; )&quot;);
+                        offset = &lt;0,0,0.5&gt;;
+                    }
+                    else
+                        offset = (vector)llGetSubString(data,8,-1);
+                    
+                    if(offset == &lt;0,0,0&gt;)
+                        offset = &lt;0,0,0.01&gt;;
+                    llSitTarget(offset,ZERO_ROTATION);
+                    next_line();
+                    return;
+                }
+                if(llGetSubString(data,0,5) == &quot;voice:&quot;)
+                {
+                    string value = llGetSubString(data,7,-1);
+                    value = llToLower(value);
+                
+                    if(listenHandle != -1)
+                    {
+                        llListenRemove(listenHandle);
+                        listenHandle = -1;
+                    }
+                    
+                    if(value !=&quot;no&quot; &amp;&amp; value != &quot;yes&quot; &amp;&amp; value != &quot;true&quot; &amp;&amp; value != &quot;false&quot;)
+                        use_voice = FALSE;
+                    else
+                        if(value == &quot;no&quot; || value == &quot;false&quot;)
+                            use_voice = FALSE;
+                        else
+                        {
+                            use_voice = TRUE;
+                            listenHandle = llListen(1,&quot;&quot;,&quot;&quot;,&quot;&quot;);
+                        }
+                    next_line();
+                    return;
+                }
+                if(llGetSubString(data,0,10) == &quot;sit_button:&quot;)
+                {
+                    llSetSitText(llGetSubString(data,12,-1));
+                    next_line();
+                    return;
+                }
+                next_line();
+            }
+        }
+        else
+        {
+            if(visible == FALSE)
+                llSetText(&quot;&quot;,&lt;1,1,1&gt;,1);
+            else
+                llSetText(TITLE,&lt;1,1,1&gt;,1);
+        }
+    }
+}
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000389.html">[Opensim-users] New LSL compiler has gone live
+</A></li>
+	<LI>Next message: <A HREF="000391.html">[Opensim-users] recent scripting script changes?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#390">[ date ]</a>
+              <a href="thread.html#390">[ thread ]</a>
+              <a href="subject.html#390">[ subject ]</a>
+              <a href="author.html#390">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

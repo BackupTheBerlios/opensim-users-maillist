@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] SLoodle in OpenSim: Email module
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SLoodle%20in%20OpenSim%3A%20Email%20module&In-Reply-To=%3CF701CD3EA52BFF4084E313DA9B0274215615%40dt-svr-1.dreamtechnologies.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003262.html">
+   <LINK REL="Next"  HREF="003289.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] SLoodle in OpenSim: Email module</H1>
+    <B>Adelle Fitzgerald</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20SLoodle%20in%20OpenSim%3A%20Email%20module&In-Reply-To=%3CF701CD3EA52BFF4084E313DA9B0274215615%40dt-svr-1.dreamtechnologies.co.uk%3E"
+       TITLE="[Opensim-users] SLoodle in OpenSim: Email module">Adelle at DreamTechnologies.co.uk
+       </A><BR>
+    <I>Thu Dec 10 14:40:19 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003262.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+        <LI>Next message: <A HREF="003289.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3265">[ date ]</a>
+              <a href="thread.html#3265">[ thread ]</a>
+              <a href="subject.html#3265">[ subject ]</a>
+              <a href="author.html#3265">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Please be aware of the risks of enabling e-mail on your region and that
+it could be used for spam purposes. It would be very easy for someone to
+write a simple LSL script to fetch a whole bunch of e-mail addresses
+from an external database/website and then loop sending each one a spam
+message. IMHO, enabling SMTP on a region should only be done if you can
+control the flow of mail at your SMTP server, and do not use a public or
+ISP SMTP server as you have no control over it.
+
+ 
+
+My suggestion if you do have access to your own SMTP server is to create
+a rule where the sending domain can only be sent to destination domain,
+and no other. By doing that it will minimise the risk of spam messages.
+The first thing spammers do is see if a relay is open before they flood
+it with spam. If they try and get no message through, they will move on
+to their next target. Alternatively, running an SMTP server in a closed
+environment with no external access would be ok.
+
+ 
+
+Adelle.
+
+ 
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Andy
+Konstandinidis
+Sent: 10 December 2009 09:56
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] SLoodle in OpenSim: Email module
+
+ 
+
+Thanks for the prompt reply! I will try this and get back to you! 
+
+On Thu, Dec 10, 2009 at 11:50 AM, Olish Newman &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">olish at newworldgrid.com</A>&gt;
+wrote:
+
+Hi Andy,
+
+In order to get emails working through the llEmail() LSL function, you
+need to configure the following section in your OpenSim.ini file :
+
+[SMTP]
+    enabled = true
+    internal_object_host = lsl.opensim.local
+    host_domain_header_from = 127.0.0.1
+    SMTP_SERVER_HOSTNAME = smtp.yourdomain.com
+&lt;<A HREF="http://smtp.yourdomain.com/">http://smtp.yourdomain.com/</A>&gt; 
+    SMTP_SERVER_PORT = 25
+    SMTP_SERVER_LOGIN = smtp_user
+    SMTP_SERVER_PASSWORD = smtp_password
+
+Replace your current SMTP section in the OpenSim.ini by the code above.
+You need to provide your own SMTP server information and it should work.
+
+Regards,
+Olish.
+
+
+
+
+2009/12/10 Andy Konstandinidis &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">knave84 at gmail.com</A>&gt;
+
+Hello! I'm trying to use SLoodle in Opensim! I have setup my Opensim
+server and it is working fine. I have also loaded the .oar file of the
+Sloodle set. Yet when I try to configure the sloodle set to connect to
+the moodle site (by touching it in the 3D world) I get an error:
+
+SLOODLE Set 0.9 (RC1) -- COMPLETE (Fix 1.0): llGetNextEmail: email
+module not configured
+
+ 
+
+Anyone know how this issue can be resolved? Thanks! 
+
+-- 
+Andreas Konstantinidis  
+
+Research Assistant, SEERC (South- East European Research Center)
+PhD Candidate, Informatics Dept., A.U.TH &lt;<A HREF="http://a.u.th/">http://a.u.th/</A>&gt; .
+
+ 
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+-- 
+Andreas Konstantinidis  
+
+Research Assistant, SEERC (South- East European Research Center)
+PhD Candidate, Informatics Dept., A.U.TH.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091210/bb1c2ee7/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091210/bb1c2ee7/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003262.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+	<LI>Next message: <A HREF="003289.html">[Opensim-users] SLoodle in OpenSim: Email module
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3265">[ date ]</a>
+              <a href="thread.html#3265">[ thread ]</a>
+              <a href="subject.html#3265">[ subject ]</a>
+              <a href="author.html#3265">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Configuration file is missing the	[SimulationDataStore] section
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Configuration%20file%20is%20missing%0A%20the%09%5BSimulationDataStore%5D%20section&In-Reply-To=%3C4D6A0E58.6040000%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006703.html">
+   <LINK REL="Next"  HREF="006715.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Configuration file is missing the	[SimulationDataStore] section</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Configuration%20file%20is%20missing%0A%20the%09%5BSimulationDataStore%5D%20section&In-Reply-To=%3C4D6A0E58.6040000%40cox.net%3E"
+       TITLE="[Opensim-users] Configuration file is missing the	[SimulationDataStore] section">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Sun Feb 27 09:42:00 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006703.html">[Opensim-users] Configuration file is missing the	[SimulationDataStore] section
+</A></li>
+        <LI>Next message: <A HREF="006715.html">[Opensim-users] Configuration file is missing the	[SimulationDataStore] section
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6714">[ date ]</a>
+              <a href="thread.html#6714">[ thread ]</a>
+              <a href="subject.html#6714">[ subject ]</a>
+              <a href="author.html#6714">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 2/25/2011 7:44 PM, Punko wrote:
+&gt;<i> Before you all flame me, I checked the mailing list for previous posts of
+</I>&gt;<i> this error message and one existed, the solution was &quot;In fact, there are two
+</I>&gt;<i> sections missing from StandaloneHypergrid.ini,SimulationDataStore
+</I>&gt;<i> andEstateDataStore. Try to copy those sections from Standalone.ini:&quot;
+</I>&gt;<i>
+</I>&gt;<i> I have checked the file &quot;StandaloneHypergrid.ini&quot; and it has both of these
+</I>&gt;<i> sections....where else could it be missing from?
+</I>&gt;<i>
+</I>&gt;<i> Output below...all help appreciated thank you..(God I wish the software
+</I>&gt;<i> would tell u where it was actually missing from...that would be nice)
+</I>&gt;<i>
+</I>&gt;<i> 12:01:10 - [OPENSIM MAIN]: configured log4net using default
+</I>&gt;<i> OpenSim.exe.config
+</I>&gt;<i> 12:01:11 - [OPENSIM MAIN]: Runtime gave us 35 worker threads and 0 IOCP
+</I>&gt;<i> threads
+</I>&gt;<i> 12:01:11 - [OPENSIM MAIN]: Bumping up to 500 worker threads and 1000 IOCP
+</I>&gt;<i> threads
+</I>&gt;<i> 12:01:11 - Performing compatibility checks...
+</I>&gt;<i> 12:01:11 - Environment is compatible.
+</I>&gt;<i> 12:01:11 - [CONFIG]: Reading configuration settings
+</I>&gt;<i> 12:01:11 - [CONFIG]: Reading configuration file
+</I>&gt;<i> /home/opensim/var/opensim/bin/OpenSimDefaults.ini
+</I>&gt;<i> 12:01:11 - [CONFIG]: Reading configuration file
+</I>&gt;<i> /home/opensim/var/opensim/bin/OpenSim.ini
+</I>&gt;<i> 12:01:11 - [LOGGING]: Logging started to file
+</I>&gt;<i> /home/opensim/var/opensim/bin/OpenSim.log
+</I>&gt;<i> 12:01:11 - [OPENSIM MAIN]: Using async_call_method SmartThreadPool
+</I>&gt;<i> 12:01:11 - [STARTUP]: Beginning startup processing
+</I>&gt;<i> 12:01:11 - [STARTUP]: OpenSimulator version: OpenSim 0.7.1 Dev
+</I>&gt;<i> 12:01:11 - [STARTUP]: Operating system version: Unix 2.6.32.21
+</I>&gt;<i> 12:01:11 -
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 12:01:11 - ========================= STARTING OPENSIM
+</I>&gt;<i> =========================
+</I>&gt;<i> 12:01:11 -
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 12:01:11 - [OPENSIM MAIN]: Running
+</I>&gt;<i> 12:01:11 - [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.Exception: Configuration file is missing the
+</I>&gt;<i> [SimulationDataStore] section
+</I>&gt;<i>    at OpenSim.OpenSimBase.StartupSpecific () [0x00000]
+</I>&gt;<i>    at OpenSim.OpenSim.StartupSpecific () [0x00000]
+</I>&gt;<i>    at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000]
+</I>&gt;<i>    at OpenSim.Application.Main (System.String[] args) [0x00000]
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>
+I am having this problem as well. OS 0.7.1 Dev won't even attempt to 
+load unless these two sections:
+
+[SimulationDataStore]
+      LocalServiceModule = 
+&quot;OpenSim.Services.Connectors.dll:SimulationDataService&quot;
+
+[EstateDataStore]
+      LocalServiceModule = 
+&quot;OpenSim.Services.Connectors.dll:EstateDataService&quot;
+
+exist somewhere (I put them at the very end of the files) in both 
+StandaloneCommon.ini (in /bin/config-include) and also OpenSim.ini (in 
+/bin) and then it would load part way, and terminate with this error: 
+&quot;02:23:24 - [FRIENDS]: No Connector defined in section Friends, or 
+failed to load, cannot continue&quot;. I checked the friends section of 
+OpenSim.ini; it seems to be configured correctly and the friends dll 
+file exists.
+
+If I put this section in OpenSim.ini:
+
+[Friends]
+     ; The port the friendslist interregion comms will listen on
+     ; Defaults to the simulator's TCP port
+     ;Port = 0
+
+     ; Uncomment one of the lines below. Use FriendsService for local
+     ; operation, Connectors for remote operation
+      Connector = &quot;OpenSim.Services.FriendsService.dll&quot;
+     ;Connector = &quot;OpenSim.Services.Connectors.dll&quot;
+
+I end up with this error
+
+02:40:23 - Error loading plugin from 
+OpenSim.Services.FriendsService.dll, except
+ion System.Exception: No StorageProvider configured
+    at OpenSim.Services.Friends.FriendsServiceBase..ctor(IConfigSource 
+config) in
+  c:\Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 
+Dev\OpenSim\
+Services\Friends\FriendsServiceBase.cs:line 74
+    at OpenSim.Services.Friends.FriendsService..ctor(IConfigSource 
+config) in c:\
+Documents and Settings\Chris\Desktop\opensim-tree-6bd18eb 0.7.1 
+Dev\OpenSim\Serv
+ices\Friends\FriendsService.cs:line 42
+02:40:23 - [FRIENDS]: No Connector defined in section Friends, or failed 
+to load
+, cannot continue
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006703.html">[Opensim-users] Configuration file is missing the	[SimulationDataStore] section
+</A></li>
+	<LI>Next message: <A HREF="006715.html">[Opensim-users] Configuration file is missing the	[SimulationDataStore] section
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6714">[ date ]</a>
+              <a href="thread.html#6714">[ thread ]</a>
+              <a href="subject.html#6714">[ subject ]</a>
+              <a href="author.html#6714">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

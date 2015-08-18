@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Avatars never &quot;bake&quot; completely after	activating FlotsamCache
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Avatars%20never%20%22bake%22%20completely%20after%0A%09activating%20FlotsamCache&In-Reply-To=%3C81417145-19A2-4B3A-8162-8DDD33616FA5%40gwynethllewelyn.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008559.html">
+   <LINK REL="Next"  HREF="008563.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Avatars never &quot;bake&quot; completely after	activating FlotsamCache</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Avatars%20never%20%22bake%22%20completely%20after%0A%09activating%20FlotsamCache&In-Reply-To=%3C81417145-19A2-4B3A-8162-8DDD33616FA5%40gwynethllewelyn.net%3E"
+       TITLE="[Opensim-users] Avatars never &quot;bake&quot; completely after	activating FlotsamCache">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Thu Nov 10 11:10:05 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008559.html">[Opensim-users] Avatars never &quot;bake&quot; completely after activating	FlotsamCache
+</A></li>
+        <LI>Next message: <A HREF="008563.html">[Opensim-users] Avatars never &quot;bake&quot; completely after	activating FlotsamCache
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8560">[ date ]</a>
+              <a href="thread.html#8560">[ thread ]</a>
+              <a href="subject.html#8560">[ subject ]</a>
+              <a href="author.html#8560">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Replying to myself... by a stroke of luck, and tweaking with the settings, I noticed that I actually had memory cache turned on, but disk cache turned off under both CentOS 5.3 and Mac &#8212; even though I thought both were on! The Mac had no problem with that. But apparently CentOS 5.3 did!
+
+So I've confimed that both were on, and my problems disappeared on CentOS 5.3. As I suspected, this was just a configuration issue. Nevertheless, the FlotsamCache developers might find it interesting to see what causes the difference in behaviour between a Mac-based compilation and a CentOS 5.3-based compilation, because the Mac is clearly happy without a disk cache and handles baked textures well :) while CentOS 5.3 definitely requires the disk cache to be active.
+
+Note that nothing else but avatar texture rebaking was affected. FlotsamCache works nicely for everything else, either just in memory or with disk (or just from disk). It was just the rebaking that was getting on my nerves :)
+
+Well, another issue solved on my long list :)
+
+	- Gwyn
+
+P.S. That's why I'm so reluctant in upgrading OpenSim... it usually means a whole month of unstability until I can get everything working as before. But since SignpostMarv Martin warned me about some security issues with previous versions, I had no choice but to go ahead and upgrade to 0.7.2... and face the nightmare!
+
+On 2011/11/10, at 09:06, Gwyneth Llewelyn wrote:
+
+&gt;<i> Hello all,
+</I>&gt;<i> 
+</I>&gt;<i> When I upgraded my grid to 0.7.2, I forgot to activate FlotsamCache (which I had successfully used in the past). Once I corrected that mistake, something strange happened: now avatars are always flickering back and forth, refreshing their textures, and never fully bake. They might show up baked on the viewer, but other avatars in the region will always see them blank (&quot;white avatars&quot;).
+</I>&gt;<i> 
+</I>&gt;<i> Now this is not always consistent. On most sims of the grid, which run CentOS 5.3 (64 bits) and OpenSim 0.7.2 (release) was compiled with Mono 2.6.1, the problem started as soon as FlotsamCache was activated. On one &quot;test&quot; sim, running on my home Mac, with exactly the same options on OpenSim.ini etc. (but compiled under Mono 2.6.4), and FlotsamCache also active, there seems to be absolutely no problem.
+</I>&gt;<i> 
+</I>&gt;<i> There are a lot of possible reasons for the difference in behaviour, one of which is that I've added a few more debugging options on the CentOS 5.3 OpenSim source &#8212; I'm still trying to figure out the problems with XMLRPC requests &#8212; and these might have broken something. Or the compilation under Mono 2.6.1 (64 bits) might be slightly broken. Or the Mono compiler for the Mac might produce better code than the one for Linux (which would surprise me immensely!). Or I might be hitting a memory limit (I'm using FlotsamCache in memory *and* disk). Or, well, anything else could explain this behaviour. :-)
+</I>&gt;<i> 
+</I>&gt;<i> Since turning off FlotsamCache is not a good idea (and the alternatives, as warned on the OpenSimulator Wiki, are not as well maintained...), I filed an &quot;issue&quot; on Flotsam's page at Google Code &#8212; <A HREF="http://code.google.com/p/flotsam/issues/detail?id=54">http://code.google.com/p/flotsam/issues/detail?id=54</A> But so far I didn't get  reply, so I wonder if anyone in this group has seen this odd behaviour and managed to do a simple fix. The reported issue adds some more details and a log of the errors I get under CentOS.
+</I>&gt;<i> 
+</I>&gt;<i> If I hadn't tested OpenSim under the Mac (which runs only a single region, even though with dozens of thousands of prims), which works flawlessly, I'd attribute it as a bug :) Because it works well under the Mac, but not under Linux, I have to assume that the configuration is wrong somewhere. Since the configuration is exactly the same, it might mean that to properly support baking under CentOS 5.3 + FlotsamCache, I might have to flip a switch somewhere, which for some obscure reason is not needed under the Mac. So, suggestions are welcome!
+</I>&gt;<i> 
+</I>&gt;<i> Thanks in advance,
+</I>&gt;<i> 
+</I>&gt;<i> 	- Gwyn
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> &quot;I'm not building a game. I'm building a new country.&quot;
+</I>&gt;<i>  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008559.html">[Opensim-users] Avatars never &quot;bake&quot; completely after activating	FlotsamCache
+</A></li>
+	<LI>Next message: <A HREF="008563.html">[Opensim-users] Avatars never &quot;bake&quot; completely after	activating FlotsamCache
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8560">[ date ]</a>
+              <a href="thread.html#8560">[ thread ]</a>
+              <a href="subject.html#8560">[ subject ]</a>
+              <a href="author.html#8560">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

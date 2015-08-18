@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Strange error on master when using llHTTPRequest on master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Strange%20error%20on%20master%20when%20using%0A%20llHTTPRequest%20on%20master&In-Reply-To=%3C51DF70B0.807%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012436.html">
+   <LINK REL="Next"  HREF="012415.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Strange error on master when using llHTTPRequest on master</H1>
+    <B>Chris M</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Strange%20error%20on%20master%20when%20using%0A%20llHTTPRequest%20on%20master&In-Reply-To=%3C51DF70B0.807%40gmail.com%3E"
+       TITLE="[Opensim-users] Strange error on master when using llHTTPRequest on master">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Fri Jul 12 04:57:52 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012436.html">[Opensim-users] Strange error on master when using llHTTPRequest on master
+</A></li>
+        <LI>Next message: <A HREF="012415.html">[Opensim-users] Viewers and Windows 8 - Possible Skydrive problem?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12451">[ date ]</a>
+              <a href="thread.html#12451">[ thread ]</a>
+              <a href="subject.html#12451">[ subject ]</a>
+              <a href="author.html#12451">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tested with the latest master and it seems like the status and body is 
+working properly now.
+The script now runs correctly when there is no error and acts upon 
+status codes correctly if there is an error.
+
+Many thanks Justin! :)
+
+
+On 7/8/2013 9:50 PM, Chris M wrote:
+&gt;<i> Hi Justin, I ran git bisect and came up with these results:
+</I>&gt;<i>
+</I>&gt;<i> 831e4c38506140e9ece2db4b96b4f0960a0276a8 is the first bad commit
+</I>&gt;<i> commit 831e4c38506140e9ece2db4b96b4f0960a0276a8
+</I>&gt;<i> Author: Justin Clark-Casey (justincc) &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> Date:   Thu Apr 4 00:36:15 2013 +0100
+</I>&gt;<i>
+</I>&gt;<i>     Fix bug where outstanding llHTTPRequests for scripts were not 
+</I>&gt;<i> being aborted
+</I>&gt;<i> when they were deleted.
+</I>&gt;<i>
+</I>&gt;<i>     This was because AsyncCommandManager was handing an item ID to 
+</I>&gt;<i> IHttpRequestM
+</I>&gt;<i> odule.StopHttpRequest() rather than the expected request ID.
+</I>&gt;<i>     This commit also makes the http request asynchronous using 
+</I>&gt;<i> BeginGetResponse(
+</I>&gt;<i> ) rather than doing this by launching a new thread
+</I>&gt;<i>     so that we can more safely abort it via HttpWebRequest.Abort() 
+</I>&gt;<i> rather than a
+</I>&gt;<i> borting the thread itself.
+</I>&gt;<i>     This also renames StopHttpRequest() to StopHttpRequestsForScript() 
+</I>&gt;<i> since any
+</I>&gt;<i>  outstanding requests are now aborted and/or removed.
+</I>&gt;<i>
+</I>&gt;<i> :040000 040000 59b8f81dde66f9861e72ea7797e8e23237c106d5 
+</I>&gt;<i> 1fbf0bf11f4dff0e91df079e
+</I>&gt;<i> 912dbf539b9f8cbc M      OpenSim
+</I>&gt;<i>
+</I>&gt;<i> Also posted a mantis for it here 
+</I>&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=6704">http://opensimulator.org/mantis/view.php?id=6704</A> in case it was needed :)
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i>
+</I>&gt;<i> On 7/8/2013 5:15 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> Hi Chris.  This is very likely an unintentional regression.  I would 
+</I>&gt;&gt;<i> suspect an unintentional change in ScriptsHttpRequest.cs since that 
+</I>&gt;&gt;<i> introduces a 499 on certain exceptions, though on a quick look I 
+</I>&gt;&gt;<i> don't see anything obvious since it should be passing through genuine 
+</I>&gt;&gt;<i> protocol errors.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I should think this behaviour change was introduced later than 
+</I>&gt;&gt;<i> 3611d33 (Mon Mar 18 22:04:27 2013) since the immediately following 
+</I>&gt;&gt;<i> changes are unrelated to http (being attachment changes).  As ever, 
+</I>&gt;&gt;<i> bisecting this change to a specific commit would be extremely helpful.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 07/07/13 01:42, Chris M wrote:
+</I>&gt;&gt;&gt;<i> I believe I may have stumbled across the issue; it seems that in the 
+</I>&gt;&gt;&gt;<i> http_response(key id, integer status, list meta,
+</I>&gt;&gt;&gt;<i> string body) event, status always contains 499 and body always 
+</I>&gt;&gt;&gt;<i> contains &quot;The remote server returned an error: (status
+</I>&gt;&gt;&gt;<i> code) Some string&quot; instead of the actual status number and the 
+</I>&gt;&gt;&gt;<i> string sent back in body by the server I'm connecting to
+</I>&gt;&gt;&gt;<i> as expected on LL grid and on OS 0.7.5
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> For example, If I put llSay(0, (string)status + 
+</I>&gt;&gt;&gt;<i> llUnescapeURL(body)); in my script I see this: &quot;499 The remote server
+</I>&gt;&gt;&gt;<i> returned an error: (404) Not Found.&quot; instead of &quot;404 NOTFOUND: 
+</I>&gt;&gt;&gt;<i> Missing item name here&quot; &quot;NOTFOUND: Missing item name
+</I>&gt;&gt;&gt;<i> here&quot; is the string  in body from the database server.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I can parse the string to extract the the correct status code with 
+</I>&gt;&gt;&gt;<i> this:
+</I>&gt;&gt;&gt;<i> list temp = llParseString2List(llUnescapeURL(body), [&quot;The remote 
+</I>&gt;&gt;&gt;<i> server returned an error: &quot;, &quot;(&quot;, &quot;)&quot;], []);
+</I>&gt;&gt;&gt;<i> integer new_status = llList2Integer(temp, 0);
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> and proceed from there.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The &quot;NOTFOUND: Missing item name here&quot; string sent back in body by 
+</I>&gt;&gt;&gt;<i> the database server is lost though (whether I extract
+</I>&gt;&gt;&gt;<i> the status code from the string or not), and the script depends on 
+</I>&gt;&gt;&gt;<i> that information to determine what wasn't found, and
+</I>&gt;&gt;&gt;<i> act accordingly to it.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Was this change in how the status codes are handled intentional?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I apologize if the entire explanation seems confusing and/or long 
+</I>&gt;&gt;&gt;<i> winded; but this was a very confusing thing for me to
+</I>&gt;&gt;&gt;<i> try to write out :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 7/2/2013 8:53 PM, Chris M wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hello all, I have a roleplay HUD that I scripted that uses 
+</I>&gt;&gt;&gt;&gt;<i> llHTTPRequest to query an external database server for
+</I>&gt;&gt;&gt;&gt;<i> usernames and profiles and then use that data to configure the HUD 
+</I>&gt;&gt;&gt;&gt;<i> accordingly.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On the latest master I'm encountering a strange message in chat 
+</I>&gt;&gt;&gt;&gt;<i> that I'm not sure what to make of:
+</I>&gt;&gt;&gt;&gt;<i> 499 The remote server returned an error: (300) Ambiguous Redirect.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The database server console seems to be getting the request and 
+</I>&gt;&gt;&gt;&gt;<i> sending the data back... but no data seems to be
+</I>&gt;&gt;&gt;&gt;<i> received by the HUD and it fails to configure the HUD.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On commit 3611d33 (r/22387) it all works fine and as expected with 
+</I>&gt;&gt;&gt;&gt;<i> no errors.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Unfortunately that is all the info I can think of to give; but is 
+</I>&gt;&gt;&gt;&gt;<i> anyone seeing this as well?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012436.html">[Opensim-users] Strange error on master when using llHTTPRequest on master
+</A></li>
+	<LI>Next message: <A HREF="012415.html">[Opensim-users] Viewers and Windows 8 - Possible Skydrive problem?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12451">[ date ]</a>
+              <a href="thread.html#12451">[ thread ]</a>
+              <a href="subject.html#12451">[ subject ]</a>
+              <a href="author.html#12451">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

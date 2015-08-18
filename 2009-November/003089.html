@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Hypergrid: incompatible coordinates
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hypergrid%3A%20incompatible%20coordinates&In-Reply-To=%3C4AF9C665.2070600%40cise.ufl.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003087.html">
+   <LINK REL="Next"  HREF="003092.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Hypergrid: incompatible coordinates</H1>
+    <B>Paul Fishwick</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hypergrid%3A%20incompatible%20coordinates&In-Reply-To=%3C4AF9C665.2070600%40cise.ufl.edu%3E"
+       TITLE="[Opensim-users] Hypergrid: incompatible coordinates">fishwick at cise.ufl.edu
+       </A><BR>
+    <I>Tue Nov 10 21:00:37 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003087.html">[Opensim-users] Hypergrid: incompatible coordinates
+</A></li>
+        <LI>Next message: <A HREF="003092.html">[Opensim-users] opensim osx (10.5) binary hangs on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3089">[ date ]</a>
+              <a href="thread.html#3089">[ thread ]</a>
+              <a href="subject.html#3089">[ subject ]</a>
+              <a href="author.html#3089">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kevin
+ You are right - different modules are loaded when in HG mode and these 
+modules seem to
+contain code that correctly stores/distributes the avatar assets. The 
+normal standalone uses
+modules that may contain a bug of some sort at least with regard to 
+avatar appearance.
+ I made a note of this in mantis today:
+
+<A HREF="http://opensimulator.org/mantis/view.php?id=4224">http://opensimulator.org/mantis/view.php?id=4224</A>
+
+-p
+
+ 
+Kevin Buckley wrote:
+&gt;<i> That turned out to be my problem also (both using the default of 1000,
+</I>&gt;<i> 1000).  I changed one of them to 1100, 1100 and now it works just fine.
+</I>&gt;<i> Interestingly, the single change of going from standalone to HGstandalone,
+</I>&gt;<i> has also cured my grey AV, white hair/eyes problem.  I haven't tested this
+</I>&gt;<i> 'scientifically' but the single most likely change I made (apart from
+</I>&gt;<i> setting hypergrid to true!) was to change all the grid server settings in
+</I>&gt;<i> Opensim.ini from 127.0.0.1:800x to mydomain.com:xxxx (where xxxx is the port
+</I>&gt;<i> number of each grid). - Regards, Kevin
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>
+</I>&gt;<i> Sent: 10 November 2009 19:03
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] Hypergrid: incompatible coordinates
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Not sure if this is your situation, but you cannot link regions that are 
+</I>&gt;<i> on the exact same coordinates in different grids. The server better tell 
+</I>&gt;<i> you that, instead of letting you do it and then you ending up with a 
+</I>&gt;<i> client crash -- because the client gets all confused going from a 
+</I>&gt;<i> machine in 1000,1000 to another machine in 1000,1000.
+</I>&gt;<i>
+</I>&gt;<i> Paul Fishwick wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I haven't tried hypergrid in a while, but after several attempts, I am 
+</I>&gt;&gt;<i> running into a coordinates
+</I>&gt;&gt;<i> issue but it seems unrelated to the 4096 distance problem.  Here is the 
+</I>&gt;&gt;<i> setup: 64-bit Windows 7
+</I>&gt;&gt;<i> at home running opensim32bitlaunch and 64-bit Ubuntu at work. I am not 
+</I>&gt;&gt;<i> using the diva distribution,
+</I>&gt;&gt;<i> but hand-configured both home and work using the instructions:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/wiki/Installing_and_Running_Hypergrid">http://opensimulator.org/wiki/Installing_and_Running_Hypergrid</A>
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>  I successfully start up the home 2x2 opensim. Both home and work have 
+</I>&gt;&gt;<i> been configured as:
+</I>&gt;&gt;<i>  
+</I>&gt;&gt;<i>  1) [Network] variables configured to reflect the respective IPs
+</I>&gt;&gt;<i>  2) WorldMapModule = &quot;WorldMap&quot;, WorldMapModule = &quot;HGWorldMapModule&quot;,
+</I>&gt;&gt;<i>       and MapImageModule = &quot;MapImageModule&quot; are set
+</I>&gt;&gt;<i>  3) The [Architecture] is set to hypergrid standalone
+</I>&gt;&gt;<i>  4) 2x2 regions (with work being set as a megaregion)
+</I>&gt;&gt;<i>  5) the coordinates for both is 1000,1000 as the root
+</I>&gt;&gt;<i>  6) a home location (marker) is set in region 1000,1000 for both
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> the command from home is:   link-region 1004 1004 &lt;workhostname&gt; 9000
+</I>&gt;&gt;<i>     
+</I>&gt;<i> local
+</I>&gt;<i>   
+</I>&gt;&gt;<i> but other coordinates (such as 1010 1010) also have the same issue.....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> with the result:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [HGrid]: linking to &lt;workhostname&gt;:9000
+</I>&gt;&gt;<i> ....
+</I>&gt;&gt;<i> [HGrid]: successfully linked to region_uuid .....
+</I>&gt;&gt;<i> [HGrid]: failed getting/storing map image, because it is probably in the 
+</I>&gt;&gt;<i> cache
+</I>&gt;&gt;<i> [HGrid]: Unable to link, region has incompatible coordinates &lt;1000,1000&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Has anyone received the &quot;incompatible coordinates&quot; error? One thing I 
+</I>&gt;&gt;<i> noticed was that
+</I>&gt;&gt;<i> in the wiki instructions, different port numbers are used than the ones 
+</I>&gt;&gt;<i> found in OpenSim.ini.example.
+</I>&gt;&gt;<i> In OpenSim.ini.example, we have:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> grid_server_url uses 8003
+</I>&gt;&gt;<i> user_server_url uses 8002
+</I>&gt;&gt;<i> asset_server_url uses 8003
+</I>&gt;&gt;<i> inventory_server_url uses 8003
+</I>&gt;&gt;<i> messaging_server_url uses 8006
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and in the wiki instructions the ports are 8001, 8002, 8003, 8004, and
+</I>&gt;&gt;<i>     
+</I>&gt;<i> 8006.
+</I>&gt;<i>   
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -p
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+
+-- 
+Paul Fishwick, PhD
+Professor
+University of Florida
+CISE Department, CSE 301
+Gainesville, FL 32611
+Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003087.html">[Opensim-users] Hypergrid: incompatible coordinates
+</A></li>
+	<LI>Next message: <A HREF="003092.html">[Opensim-users] opensim osx (10.5) binary hangs on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3089">[ date ]</a>
+              <a href="thread.html#3089">[ thread ]</a>
+              <a href="subject.html#3089">[ subject ]</a>
+              <a href="author.html#3089">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

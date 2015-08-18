@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Ubuntu%20and%20magic%20mini-trampolines%20%28crash%0A%09problem%29&In-Reply-To=%3C7e8b2c180904271000p7a35bb92y61e58fccf2abe3b7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002042.html">
+   <LINK REL="Next"  HREF="002050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)</H1>
+    <B>Mic Bowman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Ubuntu%20and%20magic%20mini-trampolines%20%28crash%0A%09problem%29&In-Reply-To=%3C7e8b2c180904271000p7a35bb92y61e58fccf2abe3b7%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)">cmickeyb at gmail.com
+       </A><BR>
+    <I>Mon Apr 27 19:00:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002042.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+        <LI>Next message: <A HREF="002050.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2046">[ date ]</a>
+              <a href="thread.html#2046">[ thread ]</a>
+              <a href="subject.html#2046">[ subject ]</a>
+              <a href="author.html#2046">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have the same freeze at times. In my case there's a gdb process
+running that I can kill off to terminate the simulator.
+
+Regarding 9323... I just upgraded this morning and restarted my most
+script-rich region several times without the crash (using the patch I
+had posted on the mantis entry). Not that it actually means anything
+that I can't reproduce it today given the timing nature. If you are
+running your simulator in a screen process, turn on logging and post
+the mono error on the mantis. I'll take a look at it.
+
+--mic
+
+
+On Mon, Apr 27, 2009 at 6:33 AM, John Hopkin
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at jfhopkin.karoo.co.uk</A>&gt; wrote:
+&gt;<i> I'm still getting the problem in r9323, although OpenSim.exe now
+</I>&gt;<i> freezes rather than returning to the command line, and needs &quot;kill -9&quot;
+</I>&gt;<i> to terminate it.
+</I>&gt;<i>
+</I>&gt;<i> John Hopkin wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>Thanks, Mic. &#160;I've put a monitor on that mantis, and I'll upgrade when
+</I>&gt;&gt;<i>the patch comes through. &#160;It's not a killer problem - if I can get the
+</I>&gt;&gt;<i>sim up, which can take a couple of tries, it seems to stay up pretty
+</I>&gt;&gt;<i>well, with only one crash so far during normal running, which was
+</I>&gt;&gt;<i>during a border crossing.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>John
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>Mic Bowman wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>there is a mantis for this (3237)...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>i've been going through the various script engine calls to log4net and
+</I>&gt;&gt;&gt;<i>commenting them out to get rid of the problem. two in particular
+</I>&gt;&gt;&gt;<i>seemed to help. i'll put up another patch on that mantis in the next
+</I>&gt;&gt;&gt;<i>couple days.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>the problem comes and goes. i've tried various combinations of mono
+</I>&gt;&gt;&gt;<i>threads, debug/release builds, and even rebuilt log4net. the more
+</I>&gt;&gt;&gt;<i>scripts i have in a region that is restarting, the more likely the
+</I>&gt;&gt;&gt;<i>problem occurs. there is clearly a race condition somewhere in the
+</I>&gt;&gt;&gt;<i>mono 2.2 and 2.4 internals which opensim is tweaking.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>--mic
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>On Wed, Apr 22, 2009 at 6:09 PM, John Hopkin
+</I>&gt;&gt;&gt;<i>&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at jfhopkin.karoo.co.uk</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> Thanks. &#160;I'll try that. &#160;At the moment, it's working OK - it seems to
+</I>&gt;&gt;&gt;&gt;<i> be intermittent, whereas before it was during each bootup. &#160;If/when it
+</I>&gt;&gt;&gt;&gt;<i> happens again, I'll drop that value.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> John
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Snoopy Pfeffer wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>I have experienced the same when MONO_THREADS_PER_CPU is set to a very high number. 500 works for me.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> &#160;Snoopy Pfeffer
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i>From: John Hopkin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at jfhopkin.karoo.co.uk</A>&gt;
+</I>&gt;&gt;&gt;&gt;&gt;<i>To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>Sent: Thursday, April 23, 2009 1:50:37 AM
+</I>&gt;&gt;&gt;&gt;&gt;<i>Subject: [Opensim-users] Ubuntu and magic mini-trampolines (crash problem)
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>I've just upgraded Mono from 2.1 to 2.2 under Ubuntu Hardy, using Dr
+</I>&gt;&gt;&gt;&gt;&gt;<i>Scofield's script from here:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i><A HREF="http://xyzzyxyzzy.net/2009/02/17/updated-mono-build-script-mono-22/">http://xyzzyxyzzy.net/2009/02/17/updated-mono-build-script-mono-22/</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>and all went smoothly with that.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>But now, when I run OpenSim.exe, it loads OK at first, but then I get
+</I>&gt;&gt;&gt;&gt;&gt;<i>the error:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>&lt;start paste&gt;
+</I>&gt;&gt;&gt;&gt;&gt;<i>Region (root) # 0x18 0x0 0x0 0x55 0x8b 0xec 0x57 0x56 0x83 0xec 0x20
+</I>&gt;&gt;&gt;&gt;&gt;<i>0x8b 0x75 0x8 0x83 0xec 0x8 0x56 0x68 0x10 0x75 0xe8 0x9c 0x8b 0x5
+</I>&gt;&gt;&gt;&gt;&gt;<i>0x10 0x75 0xe8 0x9c 0xff 0x50 0x34
+</I>&gt;&gt;&gt;&gt;&gt;<i>**
+</I>&gt;&gt;&gt;&gt;&gt;<i>ERROR:mini-trampolines.c:122:mono_magic_trampoline: assertion failed:
+</I>&gt;&gt;&gt;&gt;&gt;<i>(vt)
+</I>&gt;&gt;&gt;&gt;&gt;<i>Stacktrace:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> &#160;at log4net.LogManager.WrapLogger (log4net.Core.ILogger) &lt;0xffffffff&gt;
+</I>&gt;&gt;&gt;&gt;&gt;<i> &#160;at log4net.LogManager.WrapLogger (log4net.Core.ILogger) &lt;0x0001d&gt;
+</I>&gt;&gt;&gt;&gt;&gt;<i>&lt;end paste&gt;
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>and a long stacktrace. &#160;The server crashes, of course. &#160;Presumably,
+</I>&gt;&gt;&gt;&gt;&gt;<i>the references to magic mini-trampolines are within the code; I don't
+</I>&gt;&gt;&gt;&gt;&gt;<i>have any scripts or objects that I'm aware of like that.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>Vital stats:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>* OpenSim revision 9205 (binary package from OSGrid)
+</I>&gt;&gt;&gt;&gt;&gt;<i>* Ubuntu Intrepid, kernel 2.6.27-11-generic
+</I>&gt;&gt;&gt;&gt;&gt;<i>* Mono run with MONO_THREADS_PER_CPU set to 2000
+</I>&gt;&gt;&gt;&gt;&gt;<i>* 7 regions run by one OpenSim.exe
+</I>&gt;&gt;&gt;&gt;&gt;<i>* &#160;P4/3.6GHz, 2GB RAM, more than adequate (or were under Mono 2.1)
+</I>&gt;&gt;&gt;&gt;&gt;<i>* UGAIM through OSGrid
+</I>&gt;&gt;&gt;&gt;&gt;<i>* MySQL 14.12
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>I'm completely at a loss as to what could be causing this. &#160;Does
+</I>&gt;&gt;&gt;&gt;&gt;<i>anyone have any ideas?
+</I>&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;<i> John Hopkin
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> John Hopkin
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002042.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+	<LI>Next message: <A HREF="002050.html">[Opensim-users] Ubuntu and magic mini-trampolines (crash	problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2046">[ date ]</a>
+              <a href="thread.html#2046">[ thread ]</a>
+              <a href="subject.html#2046">[ subject ]</a>
+              <a href="author.html#2046">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

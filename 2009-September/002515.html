@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Help: Opensim behind an ISA Firewall
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%3A%20Opensim%20behind%20an%20ISA%20Firewall&In-Reply-To=%3C34cc66250909050738j6f2ef87dl88af3fe5bf6fdccc%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002514.html">
+   <LINK REL="Next"  HREF="002516.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Help: Opensim behind an ISA Firewall</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Help%3A%20Opensim%20behind%20an%20ISA%20Firewall&In-Reply-To=%3C34cc66250909050738j6f2ef87dl88af3fe5bf6fdccc%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Help: Opensim behind an ISA Firewall">teravus at gmail.com
+       </A><BR>
+    <I>Sat Sep  5 16:38:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002514.html">[Opensim-users] Help: Opensim behind an ISA Firewall
+</A></li>
+        <LI>Next message: <A HREF="002516.html">[Opensim-users] Voice as input output mechanism
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2515">[ date ]</a>
+              <a href="thread.html#2515">[ thread ]</a>
+              <a href="subject.html#2515">[ subject ]</a>
+              <a href="author.html#2515">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I would suggest setting the internal IP to 0.0.0.0 or the main IP
+address of the respective network interface to listen on and suggest
+setting the external hostname to a hostname that refers to the IP
+address that you expect people to connect on.  (0.0.0.0 means listen
+on all interfaces, but it doesn't always work with multi-interface
+systems)
+
+You are also going to need a routing rule to forward requests from
+within your private IP space to the public if your router doesn't
+support NAT loopback directly.
+
+Regards
+
+Teravus
+
+
+
+On Sat, Sep 5, 2009 at 10:15 AM, Paul Fishwick&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt; wrote:
+&gt;<i> Clive:
+</I>&gt;<i> &#160;Have you tried setting the Internal IP to 0.0.0.0 &#160;?
+</I>&gt;<i> -p
+</I>&gt;<i>
+</I>&gt;<i> clive gould wrote:
+</I>&gt;&gt;<i> Hi
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've just installed OpenSim 0.66 on a CentOS 5.3 linux box on a class
+</I>&gt;&gt;<i> A subnet behind and insitutional ISA firewall.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Opensim is running fine in standalone mode but I cannot connect to it
+</I>&gt;&gt;<i> remotely using a Hippo client running under Windows Vista.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The server has a valid class C address on the Internet side of the ISA
+</I>&gt;&gt;<i> firewall/NATbox of 195.194.82.16
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The hippo client successfully connects to the server via TCP and will
+</I>&gt;&gt;<i> authenticate a user.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However connection fails when the client user login gets to the region
+</I>&gt;&gt;<i> handshake, which I presume uses UDP.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The problem comes down to the fact that Opensim is listening for UDP
+</I>&gt;&gt;<i> connections on port 9000 on the servers internal IP of 10.100.0.22
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've looked that the packets on the client machine and it appears that
+</I>&gt;&gt;<i> they're not getting delivered to the server as the client is using a
+</I>&gt;&gt;<i> destination IP of 10.100.0.22 for the UDP connection, which of course
+</I>&gt;&gt;<i> is not routable over the Internet.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there any way of getting the client to send the UDP packets to
+</I>&gt;&gt;<i> 195.194.82.16 instead of 10.100.0.22?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks in advance
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Clive
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Dr. Paul A. Fishwick &#160; &#160; &#160; &#160; &#160; E-Mail: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;<i> Dept. of Computer &amp; Info &#160; &#160; &#160; Phone &amp; FAX: (352) 392-1414
+</I>&gt;<i> &#160;Science and Engineering &#160; &#160; &#160; WWW: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;<i> University of Florida &#160; &#160; &#160; &#160; &#160;(PGP Key available at above WWW address)
+</I>&gt;<i> P. O. Box 116120
+</I>&gt;<i> 332 Bldg. CSE, Gainesville, FL 32611-6120
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002514.html">[Opensim-users] Help: Opensim behind an ISA Firewall
+</A></li>
+	<LI>Next message: <A HREF="002516.html">[Opensim-users] Voice as input output mechanism
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2515">[ date ]</a>
+              <a href="thread.html#2515">[ thread ]</a>
+              <a href="subject.html#2515">[ subject ]</a>
+              <a href="author.html#2515">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

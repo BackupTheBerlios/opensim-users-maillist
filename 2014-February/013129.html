@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Question about NPCs and attachments (Chris)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2014-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20about%20NPCs%20and%20attachments%20%28Chris%29&In-Reply-To=%3C52F2FF0E.3040707%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="013128.html">
+   <LINK REL="Next"  HREF="013130.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Question about NPCs and attachments (Chris)</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20about%20NPCs%20and%20attachments%20%28Chris%29&In-Reply-To=%3C52F2FF0E.3040707%40gmail.com%3E"
+       TITLE="[Opensim-users] Question about NPCs and attachments (Chris)">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Thu Feb  6 04:18:38 CET 2014</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="013128.html">[Opensim-users] Question about NPCs and attachments (Chris)
+</A></li>
+        <LI>Next message: <A HREF="013130.html">[Opensim-users] Question about NPCs and attachments (Chris)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13129">[ date ]</a>
+              <a href="thread.html#13129">[ thread ]</a>
+              <a href="subject.html#13129">[ subject ]</a>
+              <a href="author.html#13129">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>As far as I can tell the notecard is valid; I've also tested with a 
+direct clone using osNpcCreate(&quot;Test&quot;, &quot;NPC&quot;, llGetPos(), 
+cloners_UUID_here);
+
+On some further fiddling with it, it seems like the latest master is 
+having some slight issues with baking; where I can tell that sometimes I 
+end up with a completely white avatar after removing entire folder 
+contents that contain attachments, skin, shape, etc., or sometimes it 
+just won't bake correctly at all when I wear an entire folder (or 
+sometimes individual clothing items). I found that I had to force a 
+rebake a few times (ctrl alt R) before NPC creation in order to get the 
+NPC to not load as a cloud.
+
+I believe you may be right as far as NPC's not supporting multiple 
+attachments. That's a bummer as I've been wanting to experiment with 
+more and more complex NPCs and attachment scripting :)
+
+On 2/5/2014 2:40 PM, Fred Beckhusen wrote:
+&gt;<i> Do you have a valid appearance notecard?  This looks like the 
+</I>&gt;<i> appearance is corrupt.
+</I>&gt;<i>
+</I>&gt;<i> It is very likely that NPC's cannot take multiple attachments, as that 
+</I>&gt;<i> is both a viewer function ( to attach) and a server function ( to 
+</I>&gt;<i> report it),
+</I>&gt;<i> and NPC's are fairly old and thus pre-date multiple attachments.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --ooo------/\/\/\-----|(------ooo------/\/\/\-----|(------ooo----
+</I>&gt;<i> Fred K. Beckhusen
+</I>&gt;<i> President
+</I>&gt;<i> Micro Technology Services, Inc.
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fred.b at mitsi.com</A>       
+</I>&gt;<i> tel: (888) 230-MTSI Toll Free
+</I>&gt;<i> cel: (469) 951-7635
+</I>&gt;<i> <A HREF="http://www.mitsi.com">http://www.mitsi.com</A>
+</I>&gt;<i> On 2/5/2014 2:31 PM, Chris wrote:
+</I>&gt;&gt;<i> Hmm I can't tell now. On the latest master the NPC rezzes in as a 
+</I>&gt;&gt;<i> cloud and on the console I see this:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 14:06:35 - [NPC MODULE]: Created NPC 
+</I>&gt;&gt;<i> 8e0fd659-78a7-4e41-8187-d420d9d7e577 New NPC
+</I>&gt;&gt;<i> 14:06:40 - [AVFACTORY]: user 8e0fd659-78a7-4e41-8187-d420d9d7e577 has 
+</I>&gt;&gt;<i> no inventory, appearance isn't going to work
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It has been past experience though that it doesn't matter if I detach 
+</I>&gt;&gt;<i> every thing first then reattach.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have seen that if I make a change to an attachment and then create 
+</I>&gt;&gt;<i> an NPC that change won't be reflected on the NPC's version of the 
+</I>&gt;&gt;<i> attachment until I first detach the attachment(s) and then reattach. 
+</I>&gt;&gt;<i> But to my knowledge I've never been able to get an NPC to render 
+</I>&gt;&gt;<i> correctly if it had more than one attachment on the same attach point 
+</I>&gt;&gt;<i> (Such as Hair (skull), Hat (skull), Pants (Pelvis), Belt (Pelvis) ).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 2/5/2014 6:10 AM, Fred Beckhusen wrote:
+</I>&gt;&gt;&gt;<i> re Chris:   &quot;NPC won't render correctly&quot;   &quot;If the avatar is wearing 
+</I>&gt;&gt;&gt;<i> one attachment per attach point then it works
+</I>&gt;&gt;&gt;<i> as expected and everything renders properly.&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Does it still happen if you first put on the attachments, and then 
+</I>&gt;&gt;&gt;<i> take them off, and put them back on again?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I see your symptoms if that procedure is not followed, even for 
+</I>&gt;&gt;&gt;<i> single attachments, as Opens only saves the position when removed, 
+</I>&gt;&gt;&gt;<i> and not when attached.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Ferd Frederix/Fred Beckhusen
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20140205/33b2770e/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20140205/33b2770e/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="013128.html">[Opensim-users] Question about NPCs and attachments (Chris)
+</A></li>
+	<LI>Next message: <A HREF="013130.html">[Opensim-users] Question about NPCs and attachments (Chris)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#13129">[ date ]</a>
+              <a href="thread.html#13129">[ thread ]</a>
+              <a href="subject.html#13129">[ subject ]</a>
+              <a href="author.html#13129">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

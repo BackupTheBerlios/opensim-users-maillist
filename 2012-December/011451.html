@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Couple%20questions%20about%20master%20%28Unhandled%20Packet%0A%20AgentUpdate%2C%20and%20HTTP%20Inventory%29&In-Reply-To=%3C50CA69E5.6000802%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011446.html">
+   <LINK REL="Next"  HREF="011466.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Couple%20questions%20about%20master%20%28Unhandled%20Packet%0A%20AgentUpdate%2C%20and%20HTTP%20Inventory%29&In-Reply-To=%3C50CA69E5.6000802%40googlemail.com%3E"
+       TITLE="[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Dec 14 00:51:01 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011446.html">[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+</A></li>
+        <LI>Next message: <A HREF="011466.html">[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11451">[ date ]</a>
+              <a href="thread.html#11451">[ thread ]</a>
+              <a href="subject.html#11451">[ subject ]</a>
+              <a href="author.html#11451">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>How strange.  I inspected all the packet pool code again visually for possible race conditions or bugs and couldn't find 
+anything.  I also tested with 2 viewers, LL 3.3.4 and LL 1.2.3 (on different machines) on both mono 2.10.9 and Windows 
+with .net without seeing the issue.  This particularly aspect of packet pooling has been around since early October, afair.
+
+However, clearly you're having some kind of problem.  I added a tiny bit more logging in git master 0b93a68 to tell us 
+whether one or both viewers are having their AgentUpdate packets rejected and how these are interleaved.  Please could 
+you retest with this and open a Mantis with the OpenSim.log.  Thanks.
+
+On 13/12/12 04:57, Chris wrote:
+&gt;<i> Hi Justin,
+</I>&gt;<i>
+</I>&gt;<i> This started to happen just recently as soon as I started to use commit 905d7c4 (r/21385); although I am not sure
+</I>&gt;<i> exactly when this may have started as I made a bit of a jump (895d28f r/20917 to 905d7c4 r/21385)
+</I>&gt;<i>
+</I>&gt;<i> This appears to happen when there is more than one person logged in.
+</I>&gt;<i>
+</I>&gt;<i> Did some tests in a few different variations of connectivity configurations (As far as which computer(s) the viewers are
+</I>&gt;<i> running on):
+</I>&gt;<i>
+</I>&gt;<i> Have 2 Computers set up, 1 with OS and all related services running, the other does not have anything OS related
+</I>&gt;<i> running. Running a typical home network, 1 network, nothing fancy =)
+</I>&gt;<i>
+</I>&gt;<i> Results:
+</I>&gt;<i> 1 viewer running on the non OS computer: No apparent issues
+</I>&gt;<i> 1 viewer running on the OS computer: No apparent issues
+</I>&gt;<i>
+</I>&gt;<i> 2 (or more) viewers running on the non OS computer: Shows the AgentUpdate packet warnings from time to time
+</I>&gt;<i> 2 (or more) viewers running on the OS computer: Shows the AgentUpdate packet warnings although it is noticeably a bit
+</I>&gt;<i> spammier in this configuration
+</I>&gt;<i>
+</I>&gt;<i> 1 viewer running on OS computer and 1 viewer running on non OS computer: Shows the AgentUpdate packet warnings although
+</I>&gt;<i> it is noticeably a bit spammier in this configuration. The viewer on the OS computer tends to experience network lag
+</I>&gt;<i> quite a bit when walking (i.e. The avatar drifts off into space for a few seconds after every few steps) while the
+</I>&gt;<i> viewer on the non OS computer will be able to walk around just fine but the warnings will still pop up in both cases.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> If I set RecyclePackets = false in [PacketPool] then the issues seem to go away. I repeated the above tests and threw in
+</I>&gt;<i> a couple more viewer instances for good measure to check as well.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> For the HTTP Inventory question; I set:
+</I>&gt;<i>
+</I>&gt;<i> [ClientStack.LindenCaps]
+</I>&gt;<i>      Cap_FetchInventoryDescendents2 = &quot;&quot;
+</I>&gt;<i>      Cap_FetchInventory2 = &quot;&quot;
+</I>&gt;<i>
+</I>&gt;<i> And inventory seems to load now (very quickly I might add) for viewers with HTTP Inventory disabled in Debug Settings.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I did run into an exception along the way in my testing right after I made the changes in [ClientStack.LindenCaps]. The
+</I>&gt;<i> below stack trace came up (One exception per script in the item) when I detached one of my attachments. I am not certain
+</I>&gt;<i> if it is related to any of the above but I do recall that you wanted some more information on script state related
+</I>&gt;<i> issues so I thought this might be a good thing to add =)
+</I>&gt;<i>
+</I>&gt;<i> Thank you!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Exception:
+</I>&gt;<i>
+</I>&gt;<i> 2012-12-12 22:35:38,843 ERROR - OpenSim.Region.ScriptEngine.XEngine.XEngine [XEngine]: Failed to save state of script
+</I>&gt;<i> AOHUD.AO v4, item UUID 14eba70e-
+</I>&gt;<i>
+</I>&gt;<i> 0bf8-4b5e-92d2-382f20eb4117, prim UUID 74cf7aca-c5f7-4dd7-8373-9dd8620ef8af in Test Region 2.  Exception
+</I>&gt;<i> System.AppDomainUnloadedException: The target application domain has been unloaded.
+</I>&gt;<i>
+</I>&gt;<i> Server stack trace:
+</I>&gt;<i>     at System.Threading.Thread.InternalCrossContextCallback(Context ctx, IntPtr ctxID, Int32 appDomainID,
+</I>&gt;<i> InternalCrossContextDelegate ftnToCall, Object
+</I>&gt;<i>
+</I>&gt;<i> [] args)
+</I>&gt;<i>     at System.Runtime.Remoting.Channels.CrossAppDomainSink.DoTransitionDispatch(Byte[] reqStmBuff,
+</I>&gt;<i> SmuggledMethodCallMessage smuggledMcm,
+</I>&gt;<i>
+</I>&gt;<i> SmuggledMethodReturnMessage&amp; smuggledMrm)
+</I>&gt;<i>     at System.Runtime.Remoting.Channels.CrossAppDomainSink.SyncProcessMessage(IMessage reqMsg)
+</I>&gt;<i>
+</I>&gt;<i> Exception rethrown at [0]:
+</I>&gt;<i>     at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+</I>&gt;<i>     at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData&amp; msgData, Int32 type)
+</I>&gt;<i>     at OpenSim.Region.ScriptEngine.Shared.ScriptBase.IScript.GetVars()
+</I>&gt;<i>     at OpenSim.Region.ScriptEngine.Shared.Instance.ScriptInstance.GetVars() in
+</I>&gt;<i> c:\Users\admin\Desktop\opensim-905d7c4\OpenSim\Region\ScriptEngine\Shared
+</I>&gt;<i>
+</I>&gt;<i> \Instance\ScriptInstance.cs:line 919
+</I>&gt;<i>     at OpenSim.Region.ScriptEngine.Shared.Instance.ScriptSerializer.Serialize(ScriptInstance instance) in
+</I>&gt;<i> c:\Users\admin\Desktop\opensim-905d7c4\OpenSim
+</I>&gt;<i>
+</I>&gt;<i> \Region\ScriptEngine\Shared\Instance\ScriptSerializer.cs:line 80
+</I>&gt;<i>     at OpenSim.Region.ScriptEngine.Shared.Instance.ScriptInstance.SaveState(String assembly) in
+</I>&gt;<i> c:\Users\admin\Desktop\opensim-905d7c4\OpenSim\Region
+</I>&gt;<i>
+</I>&gt;<i> \ScriptEngine\Shared\Instance\ScriptInstance.cs:line 961
+</I>&gt;<i>     at OpenSim.Region.ScriptEngine.XEngine.XEngine.DoBackup(Object o) in
+</I>&gt;<i> c:\Users\admin\Desktop\opensim-905d7c4\OpenSim\Region\ScriptEngine\XEngine
+</I>&gt;<i>
+</I>&gt;<i> \XEngine.cs:line 753
+</I>&gt;<i> 2012-12-12 22:35:38,890 ERROR - OpenSim.Region.ScriptEngine.XEngine.XEngine [XEngine]: Failed to save state of script
+</I>&gt;<i> AOHUD.Menu v1.0, item UUID
+</I>&gt;<i>
+</I>&gt;<i> c8c29c17-048e-4abf-b650-8122f75eda26, prim UUID 74cf7aca-c5f7-4dd7-8373-9dd8620ef8af in Test Region 2.  Exception
+</I>&gt;<i> System.AppDomainUnloadedException: The target application domain has been unloaded.
+</I>&gt;<i>
+</I>&gt;<i> On 12/12/2012 5:37 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> On 11/12/12 22:28, Chris wrote:
+</I>&gt;&gt;&gt;<i> Hello every one, got a couple of questions about git master 905d7c4 (r/21385).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I recently downloaded and compiled master and am noticing a bunch of yellow text popping up (warnings?) saying [CLIENT]:
+</I>&gt;&gt;&gt;<i> unhandled packet AgentUpdate primarily when walking around but they do pop up on occasion when standing still. Is anyone
+</I>&gt;&gt;&gt;<i> else seeing this?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> AgentUpdates are extremely common messages.  If you do &quot;debug packet 255&quot; on the console you will see a constant
+</I>&gt;&gt;<i> stream of them come in since they tell the server about agent movements, head rotation, etc, even when you're standing
+</I>&gt;&gt;<i> completely still.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So this must only be happening on rare occasions.  In the current code this should only happen if an agent update
+</I>&gt;&gt;<i> message has somehow been sent to the client port from another source but with wrong session and agent IDs.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This seems very unlikely, so I think a stronger candidate is some packet pooling issue.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So in connection with this
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1) How recently did this start happening?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2) Does it happen when you are alone on a region with nobody in the same or in any neighbouring regions?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3) What happens if you set
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [PacketPool]
+</I>&gt;&gt;<i> RecyclePackets = false
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Also a quick question about HTTP inventory and more recent viewers (i.e. Firestorm, SL v3.3.x, and possibly v1.23 based
+</I>&gt;&gt;&gt;<i> viewers that support it (have not tested these though)); It seems that when I have HTTP Inventory disabled my inventory
+</I>&gt;&gt;&gt;<i> refuses to load up until HTTP Inventory is enabled. I prefer to keep it off because UDP inventory loads a lot quicker
+</I>&gt;&gt;&gt;<i> for me and having it disabled also seems to result in more stable teleports on LL grid. Is there anyway to fix this in
+</I>&gt;&gt;&gt;<i> the config files?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On the server side, UDP inventory is always available.  You could disable HTTP inventory on the server side with the
+</I>&gt;&gt;<i> instructions at [1] just to be sure.  But I think a viewer bug is more likely where fallback is not happening properly
+</I>&gt;&gt;<i> when HTTP inventory is disabled.  I don't know if there are any viewer config values which would help in this situation.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [1] <A HREF="http://opensimulator.org/mantis/view.php?id=6412">http://opensimulator.org/mantis/view.php?id=6412</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011446.html">[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+</A></li>
+	<LI>Next message: <A HREF="011466.html">[Opensim-users] Couple questions about master (Unhandled Packet AgentUpdate, and HTTP Inventory)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11451">[ date ]</a>
+              <a href="thread.html#11451">[ thread ]</a>
+              <a href="subject.html#11451">[ subject ]</a>
+              <a href="author.html#11451">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

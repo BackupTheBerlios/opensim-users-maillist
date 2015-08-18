@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Disappearing folders or items when declining inventory offer?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Disappearing%20folders%20or%20items%20when%20declining%0A%20inventory%20offer%3F&In-Reply-To=%3C517C18F9.9040902%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012127.html">
+   <LINK REL="Next"  HREF="012129.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Disappearing folders or items when declining inventory offer?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Disappearing%20folders%20or%20items%20when%20declining%0A%20inventory%20offer%3F&In-Reply-To=%3C517C18F9.9040902%40gmail.com%3E"
+       TITLE="[Opensim-users] Disappearing folders or items when declining inventory offer?">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Sat Apr 27 20:29:13 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012127.html">[Opensim-users] Disappearing folders or items when declining	inventory offer?
+</A></li>
+        <LI>Next message: <A HREF="012129.html">[Opensim-users] Disappearing folders or items when declining inventory offer?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12128">[ date ]</a>
+              <a href="thread.html#12128">[ thread ]</a>
+              <a href="subject.html#12128">[ subject ]</a>
+              <a href="author.html#12128">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Last night I tested with 2 avatars on the same machine OpenSim is 
+running on, one avatar on one machine and one avatar on a different 
+machine, and both avatars on a machine other than the one OpenSim is 
+running on.
+
+I repeated my tests today a bit more in depth and it would seem that the 
+issue does not depend so much on the viewer the person transferring the 
+item is using but more depends on what viewer the person on the 
+receiving end of the inventory transfer is running.
+
+Steps to reproduce:
+
+1. Offer an item transfer to another avatar that you aren't afraid to lose (Creating a new prim and taking it to inventory then offering that is sufficient)
+
+2. Decline the transfer on the other avatar and it should go to that avatar's trash folder.
+
+3. Empty that avatar's trash folder.
+
+4. Go back to the first avatar and try to rez, wear, or otherwise utilize the item that was to be transferred (In my case I attempted to rez the object).
+    a. Should notice that it won't have any effect
+    b. Look in the console and there should be errors to the effect of &quot;item not found&quot;
+
+    My error when attempting to rez the object:
+    16:11:48 - [INVENTORY ACCESS MODULE]: Could not find item 6d3689ee-5c06-478d-8c10-10870cc6e788 for Test User in RezObject()
+
+5. Relog the avatar you attempted item transfer from. The item will be missing from their inventory upon relog.
+
+Test results:
+(Format: Item Transfer -&gt; Viewer name of the person receiving item.)
+
+Item Transfer -&gt; Singularity (1.8.0) = Missing inventory item
+Item Transfer -&gt; Firestorm (4.4.0) = OK
+Item Transfer -&gt; Hippo OpenSim (0.6.3) = Missing inventory item
+Item Transfer -&gt; Imprudence (1.3.0) = Missing inventory item
+Item Transfer -&gt; Phoenix (1.6.0.1600) = Missing inventory item when 
+using normal Discard, OK when using (Discard) (Silent discard)
+Item Transfer -&gt; Radegast (2.12.1354) = Missing inventory item
+Item Transfer -&gt; Kokua (3.5.1.27984) = OK
+Item Transfer -&gt; CoolVL (1.26.8.1) = Missing inventory item
+
+It seems like if the issue triggers, there will be two copies of the 
+declined object that will show up in the receiver's trash folder. The 
+tests also apply to offering entire folders of items. It also looks like 
+on declining the transfer, If there are any other items directly under 
+neath it in the person transferring the item, those items will some how 
+wind up in the other person's lost and found folder. If the person 
+deletes those items from lost and found it will remove those items also 
+from the other persons inventory.
+
+As far as the viewer I use; I mainly swap between Phoenix, Imprudence, 
+and Singularity. As for other users on my install it could be any of the 
+ones listed in the tests (And possibly others, but these are the main 
+ones I was able to come up with).
+
+
+On 4/27/2013 10:47 AM, drWhiet wrote:
+&gt;<i> Chris, are you testing this with yourself e.g. With 2 Viewers running on the Same machine ? Or are you testing this behaviour with your avatar and a different users Avatar ? And by the way which Viewer do you (and the other user) use ??
+</I>&gt;<i>
+</I>&gt;<i> Best regards,
+</I>&gt;<i>
+</I>&gt;<i> Am 27.04.2013 um 03:37 schrieb Chris &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at gmail.com</A>&gt;:
+</I>
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130427/59315cf1/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130427/59315cf1/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012127.html">[Opensim-users] Disappearing folders or items when declining	inventory offer?
+</A></li>
+	<LI>Next message: <A HREF="012129.html">[Opensim-users] Disappearing folders or items when declining inventory offer?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12128">[ date ]</a>
+              <a href="thread.html#12128">[ thread ]</a>
+              <a href="subject.html#12128">[ subject ]</a>
+              <a href="author.html#12128">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Making A 30region clone to a 30 sector	Mega-region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Making%20A%2030region%20clone%20to%20a%2030%20sector%0A%09Mega-region&In-Reply-To=%3C1264914325353-4488372.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003638.html">
+   <LINK REL="Next"  HREF="003609.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Making A 30region clone to a 30 sector	Mega-region</H1>
+    <B>Master_Mirage</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Making%20A%2030region%20clone%20to%20a%2030%20sector%0A%09Mega-region&In-Reply-To=%3C1264914325353-4488372.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Making A 30region clone to a 30 sector	Mega-region">mirage123 at verizon.net
+       </A><BR>
+    <I>Sun Jan 31 06:05:25 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003638.html">[Opensim-users] Making A 30region clone to a 30 sector	Mega-region
+</A></li>
+        <LI>Next message: <A HREF="003609.html">[Opensim-users] Question about Groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3645">[ date ]</a>
+              <a href="thread.html#3645">[ thread ]</a>
+              <a href="subject.html#3645">[ subject ]</a>
+              <a href="author.html#3645">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Ok now that i have a good clone all things running and prims fixed, i noticed
+the way it was running. The 1st was something was causing bandwidth to be
+used up. Not alot but constant. In my case the clients bandwith meter was
+showing between 170 to 210kbps in consant use. As im at wire speed that
+seemed really odd. So i checked that by going to the same stuff on the
+sister grid and see if i had the same thing there and it wasent a problem.
+Time to get out the lugwrench!  Now normaly i run this in sync. mode as it
+worked best on the normal grid. Thinking that something is forming a loop
+and knowing async would by design not allow it i tryed this line Normaly its 
+'async_call_method = SmartThreadPool' but i changed it to this
+'async_call_method = BeginInvoke'. After rebooting and being use to this
+taking like 20min to reload again,now it took about 15min. Logged back in
+thinking that got it! but all it seemed to do was make it reload faster,
+bandwidth use was the same. Next line in the ini is usualy this
+'use_async_when_possible = false' i change this to 'use_async_when_possible
+= true' leaving the 1st line i changed 'async_call_method = BeginInvoke' as
+it seemed to help a bit as far as the time it took to load the instance.
+After another reload finnaly no more loop! Bandwidth showed 0kbps as it
+normaly did on the non-megaregion version of it.
+As i dident want to get into a bug hunt as to the why of it. I left it like
+that. 
+It seems to have caused no harm it also (other than the bandwidth problem)
+dident gain any better performance. not noticable at wire speeds anyway. Im
+shure it would impact web connected clients and if that happened for each
+client that is logged on would prob. end up as bad thing. 
+I am working on other tweeks but i thought that may be important to know
+should someone run into that. Why my changes may not be the best ones it did
+stop the loop.
+A side note: When it was looping, i tryed a few things and found for some
+resion when i sat in my car to drive around. the loop stoped untill i got
+out and it started again. I tryed sitting on other things but only sitting
+in the car broke the loop. Verry odd. After the changes, it dident matter
+ether way so ill leave it at that. BTW all of this testing is in 32bit mode
+and using the 32bit launcher not Opensim.exe.
+
+
+
+-- 
+View this message in context: <A HREF="http://n2.nabble.com/Making-A-30region-clone-to-a-30-sector-Mega-region-tp4478270p4488372.html">http://n2.nabble.com/Making-A-30region-clone-to-a-30-sector-Mega-region-tp4478270p4488372.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003638.html">[Opensim-users] Making A 30region clone to a 30 sector	Mega-region
+</A></li>
+	<LI>Next message: <A HREF="003609.html">[Opensim-users] Question about Groups
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3645">[ date ]</a>
+              <a href="thread.html#3645">[ thread ]</a>
+              <a href="subject.html#3645">[ subject ]</a>
+              <a href="author.html#3645">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripts sometimes do not load on start up?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripts%20sometimes%20do%20not%20load%20on%20start%20up%3F&In-Reply-To=%3C51A0421D.2010609%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012279.html">
+   <LINK REL="Next"  HREF="012213.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripts sometimes do not load on start up?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripts%20sometimes%20do%20not%20load%20on%20start%20up%3F&In-Reply-To=%3C51A0421D.2010609%40gmail.com%3E"
+       TITLE="[Opensim-users] Scripts sometimes do not load on start up?">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Sat May 25 06:46:21 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012279.html">[Opensim-users] Scripts sometimes do not load on start up?
+</A></li>
+        <LI>Next message: <A HREF="012213.html">[Opensim-users] How to find lost and misbehaving physics objects
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12302">[ date ]</a>
+              <a href="thread.html#12302">[ thread ]</a>
+              <a href="subject.html#12302">[ subject ]</a>
+              <a href="author.html#12302">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Alright, I posted a mantis along with the results of 'show threads' here
+
+<A HREF="http://opensimulator.org/mantis/view.php?id=6651">http://opensimulator.org/mantis/view.php?id=6651</A>
+
+Thanks Justin!
+
+On 5/22/2013 3:26 PM, Justin Clark-Casey wrote:
+&gt;<i> I think this would be worth opening a Mantis for.  In particular, I'd 
+</I>&gt;<i> be interested to see the results of &quot;show threads&quot; when this happens.  
+</I>&gt;<i> A VM thread dump would be ideal but that's a trickier proposition on 
+</I>&gt;<i> Windows.
+</I>&gt;<i>
+</I>&gt;<i> On 15/05/13 00:32, Chris wrote:
+</I>&gt;&gt;<i> Whoops... Hit the send button a bit too early :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In addition to the testing done in the previous post, I found that it 
+</I>&gt;&gt;<i> seems like the only option that seems to more
+</I>&gt;&gt;<i> consistently let all regions load their scripts is to set 
+</I>&gt;&gt;<i> DeleteScriptsOnStartup back to true; in this case both my
+</I>&gt;&gt;<i> systems load all scripts on their regions on both databases... But it 
+</I>&gt;&gt;<i> significantly slows down startup due to having to
+</I>&gt;&gt;<i> compile all the scripts which is the reason I usually set it to false.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 5/14/2013 6:13 PM, Chris wrote:
+</I>&gt;&gt;&gt;<i> Hi Justin,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'm running 11 regions in Standalone (No HG) configuration. 5 of 
+</I>&gt;&gt;&gt;<i> those regions do not have any scripts to be loaded on
+</I>&gt;&gt;&gt;<i> them and very few prims to load.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I disabled 5 regions, leaving 6 regions to load at start up, 
+</I>&gt;&gt;&gt;<i> restarted OpenSim a few times (I always shut OpenSim down
+</I>&gt;&gt;&gt;<i> completely and then restart it from the exe file rather than use the 
+</I>&gt;&gt;&gt;<i> restart command), but found that it doesn't seem
+</I>&gt;&gt;&gt;<i> to make a difference in script start up.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Set async_call_method = UnsafeQueueUserWorkItem in OpenSim.ini and 
+</I>&gt;&gt;&gt;<i> restarted OpenSim a few times. From what I can see,
+</I>&gt;&gt;&gt;<i> setting this seems to make the issue appear more frequently, and on 
+</I>&gt;&gt;&gt;<i> more regions than with using default setting;
+</I>&gt;&gt;&gt;<i> though this could just be coincidence as I set it back to 
+</I>&gt;&gt;&gt;<i> SmartThreadPool and tried again with similar results.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Set TrustBinaries = false with no noticable improvement.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Set ScriptDelayFactor = 1.0 with no noticable improvement.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I also tried one extra thing, setting AppDomainLoading = false, but 
+</I>&gt;&gt;&gt;<i> this didn't seem to have noticeable improvement.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The issue seems to show up randomly and will pick random region(s) 
+</I>&gt;&gt;&gt;<i> to not load scripts for on start up. It's a
+</I>&gt;&gt;&gt;<i> slightly older commit but I don't see the issue showing up in 
+</I>&gt;&gt;&gt;<i> 3611d33 (r/22387) with all my regions enabled and the
+</I>&gt;&gt;&gt;<i> script settings reported earlier set.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Ran these tests on two different machines with two different 
+</I>&gt;&gt;&gt;<i> databases with different content to load.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 5/14/2013 4:25 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;&gt;<i> I've not heard any other reports of this yet though this doesn't 
+</I>&gt;&gt;&gt;&gt;<i> necessarily mean anything.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> How many regions are we talking about here?  What happens if you 
+</I>&gt;&gt;&gt;&gt;<i> run fewer regions on one machine?  Does specifying
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> async_call_method = UnsafeQueueUserWorkItem
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> in [Startup] on OpenSim.ini make any difference? (this uses the 
+</I>&gt;&gt;&gt;&gt;<i> system pool for threads rather than a separate
+</I>&gt;&gt;&gt;&gt;<i> SmartThreadPool instance)?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Also, does setting TrustBinaries = false make any difference? This 
+</I>&gt;&gt;&gt;&gt;<i> is the one relatively unusual setting you have
+</I>&gt;&gt;&gt;&gt;<i> below.  You could also try specifying a non zero ScriptDelayFactor 
+</I>&gt;&gt;&gt;&gt;<i> in case some script is managing to hog CPU.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 11/05/13 04:15, Chris wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> I was noticing while testing master that sometimes when starting 
+</I>&gt;&gt;&gt;&gt;&gt;<i> OpenSim up that it is refusing to load scripts for
+</I>&gt;&gt;&gt;&gt;&gt;<i> some
+</I>&gt;&gt;&gt;&gt;&gt;<i> or all regions at start up. Once every thing is loaded up and the 
+</I>&gt;&gt;&gt;&gt;&gt;<i> console is ready, running the 'login status' command
+</I>&gt;&gt;&gt;&gt;&gt;<i> it shows that some regions are enabled login, and some aren't. In 
+</I>&gt;&gt;&gt;&gt;&gt;<i> order to login the 'login enable' command must be ran
+</I>&gt;&gt;&gt;&gt;&gt;<i> first. Once logged in it seems that no script will run on the 
+</I>&gt;&gt;&gt;&gt;&gt;<i> regions that have not had their scripts loaded at start
+</I>&gt;&gt;&gt;&gt;&gt;<i> up, including attachments, or newly rezzed objects. Had a closer 
+</I>&gt;&gt;&gt;&gt;&gt;<i> look at the console out put and was noticing that
+</I>&gt;&gt;&gt;&gt;&gt;<i> there
+</I>&gt;&gt;&gt;&gt;&gt;<i> are a lot of warnings dealing with objects I have rezzed in world 
+</I>&gt;&gt;&gt;&gt;&gt;<i> that are mesh similar to below:
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> WARN  - OpenSim.Region.Physics.Meshing.Meshmerizer [MESH]: No 
+</I>&gt;&gt;&gt;&gt;&gt;<i> recognized physics mesh found in mesh asset for
+</I>&gt;&gt;&gt;&gt;&gt;<i> chair/c861affd-17b4-4b3c-9535-f1986ab394a9
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I found that if I tracked these objects down and removed them from 
+</I>&gt;&gt;&gt;&gt;&gt;<i> the region and then restarted OpenSim, there's a bit
+</I>&gt;&gt;&gt;&gt;&gt;<i> better chance for scripts to be loaded properly. If I put the 
+</I>&gt;&gt;&gt;&gt;&gt;<i> objects back out again and restart OpenSim then it starts
+</I>&gt;&gt;&gt;&gt;&gt;<i> to randomly not want to load scripts in random regions at start 
+</I>&gt;&gt;&gt;&gt;&gt;<i> up. Setting DeleteScriptsOnStartup = true in
+</I>&gt;&gt;&gt;&gt;&gt;<i> OpenSim.ini
+</I>&gt;&gt;&gt;&gt;&gt;<i> or deleteing the ScriptEngines folder prior to start up also seems 
+</I>&gt;&gt;&gt;&gt;&gt;<i> to give better success at having scripts load
+</I>&gt;&gt;&gt;&gt;&gt;<i> properly. It might be just my imagination and coincidence that it 
+</I>&gt;&gt;&gt;&gt;&gt;<i> is working in this way but it is my observation.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Noticed that the console seems to hang for a bit (a couple 
+</I>&gt;&gt;&gt;&gt;&gt;<i> seconds) before outputting warnings on these objects with
+</I>&gt;&gt;&gt;&gt;&gt;<i> high CPU use. I'm just speculating on this since I'm not entirely 
+</I>&gt;&gt;&gt;&gt;&gt;<i> knowledgeable on how things work but... could there
+</I>&gt;&gt;&gt;&gt;&gt;<i> possibly be some kind of race condition somewhere preventing 
+</I>&gt;&gt;&gt;&gt;&gt;<i> scripts from loading properly in this case?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> A couple of my regions have 0 scripts on them; not sure if it 
+</I>&gt;&gt;&gt;&gt;&gt;<i> matters or not.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I normally run OpenSim with these script related settings:
+</I>&gt;&gt;&gt;&gt;&gt;<i> AppDomainLoading = false
+</I>&gt;&gt;&gt;&gt;&gt;<i> DeleteScriptsOnStartup = false
+</I>&gt;&gt;&gt;&gt;&gt;<i> EventLimit = 500
+</I>&gt;&gt;&gt;&gt;&gt;<i> ScriptDelayFactor = 0.0
+</I>&gt;&gt;&gt;&gt;&gt;<i> AllowScriptCrossing = true
+</I>&gt;&gt;&gt;&gt;&gt;<i> TrustBinaries = true
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Is anyone else seeing this?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012279.html">[Opensim-users] Scripts sometimes do not load on start up?
+</A></li>
+	<LI>Next message: <A HREF="012213.html">[Opensim-users] How to find lost and misbehaving physics objects
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12302">[ date ]</a>
+              <a href="thread.html#12302">[ thread ]</a>
+              <a href="subject.html#12302">[ subject ]</a>
+              <a href="author.html#12302">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

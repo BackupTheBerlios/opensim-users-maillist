@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Mysql dedcated server vrs OS migration oop's
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mysql%20dedcated%20server%20vrs%20OS%20migration%20oop%27s&In-Reply-To=%3C1274896602537-5104923.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004564.html">
+   <LINK REL="Next"  HREF="004573.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Mysql dedcated server vrs OS migration oop's</H1>
+    <B>Master_Mirage</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Mysql%20dedcated%20server%20vrs%20OS%20migration%20oop%27s&In-Reply-To=%3C1274896602537-5104923.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Mysql dedcated server vrs OS migration oop's">mirage123 at verizon.net
+       </A><BR>
+    <I>Wed May 26 19:56:42 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004564.html">[Opensim-users] Developer Meeting at Droidcon ?
+</A></li>
+        <LI>Next message: <A HREF="004573.html">[Opensim-users] Router settings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4569">[ date ]</a>
+              <a href="thread.html#4569">[ thread ]</a>
+              <a href="subject.html#4569">[ subject ]</a>
+              <a href="author.html#4569">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+I was looking thru the mantis the other day and see a few had problems with
+migrations. It was suggested that some of the migration command's may choke
+because Mysql it trying to rev look up host names and rejecting some of
+them.
+
+After thinking about it and looking at the outta the box set up of mysql, it
+does seem to want to do that verry thing. 
+
+In this case some would have problems and others never would depending on
+how thay use a mysql server.
+I use a remote lan ip# not a host name that points to a dedicated mysql
+server on the same LAN. 
+There is no resion in that case MYsql should need to rev. look up anything
+as its beeing called by its lan ip#.
+
+Anyway i added the following to the my.ini 
+
+#Don't resolve hostnames. All hostnames are IP's or 'localhost'.
+skip-name-resolve
+#Don't cache host names.
+skip-host-cache
+
+OS can call the remote lan server directly by IP so there is no Hostname to
+look up anyway. And if im right may well be my some migrations fail for some
+and not others.
+
+If you run mysql and OS on the same box though, this wouldent matter anyway.
+
+Im no wiz at Mysql and not totaly shure if this could be the resion some
+migrations fail. Setting these caused no problems and can easly be removed
+if thats not quite right.
+
+I know others here have a better knowlage of this stuff and more imput
+welcome.
+
+TNX
+
+-----
+Our New Web Page
+<A HREF="Http://www.TritonGrid.com">Http://www.TritonGrid.com</A>
+-- 
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Mysql-dedcated-server-vrs-OS-migration-oop-s-tp5104923p5104923.html">http://opensim-users.2152040.n2.nabble.com/Mysql-dedcated-server-vrs-OS-migration-oop-s-tp5104923p5104923.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004564.html">[Opensim-users] Developer Meeting at Droidcon ?
+</A></li>
+	<LI>Next message: <A HREF="004573.html">[Opensim-users] Router settings
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4569">[ date ]</a>
+              <a href="thread.html#4569">[ thread ]</a>
+              <a href="subject.html#4569">[ subject ]</a>
+              <a href="author.html#4569">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

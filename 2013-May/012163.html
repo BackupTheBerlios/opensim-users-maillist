@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NPC not getting removed as expected
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20not%20getting%20removed%20as%20expected&In-Reply-To=%3CCAHi41xKk%2BFRVVOn-KqFey-U4WGxgvDPcUbG8ofcf8F9jysT2Mw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012161.html">
+   <LINK REL="Next"  HREF="012164.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NPC not getting removed as expected</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20not%20getting%20removed%20as%20expected&In-Reply-To=%3CCAHi41xKk%2BFRVVOn-KqFey-U4WGxgvDPcUbG8ofcf8F9jysT2Mw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] NPC not getting removed as expected">r.ramloll at gmail.com
+       </A><BR>
+    <I>Wed May  1 15:43:14 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012161.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+        <LI>Next message: <A HREF="012164.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12163">[ date ]</a>
+              <a href="thread.html#12163">[ thread ]</a>
+              <a href="subject.html#12163">[ subject ]</a>
+              <a href="author.html#12163">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Just a note here to state something baffling to me ...
+
+the code snippet you provided does not compile, it gives an error:
+(0,0):Error:
+/usr/local/node/opensim2/Opensim.Region.ScriptEngine.SharedApi.Runtime.dll
+error (Location of the symbol related to previous warning)
+
+I just needed to change the variable NPC to something else for it to
+compile ... I can't understand this.
+
+R
+
+
+On Wed, May 1, 2013 at 7:48 AM, Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt;wrote:
+
+&gt;<i> Thanks dz I will definitely try your suggestion. Thank you.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, May 1, 2013 at 1:37 AM, dz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dz at bitzend.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Date: Tue, 30 Apr 2013 17:10:34 -0400
+</I>&gt;&gt;<i> From: Dr Ramesh Ramloll &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">r.ramloll at gmail.com</A>&gt;
+</I>&gt;&gt;<i> To: opensim-users &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] NPC not getting removed as expected
+</I>&gt;&gt;<i> Message-ID:
+</I>&gt;&gt;<i>         &lt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">CAHi41xK6v-qPH9rCc0+pDunHOPcB7UO6VOSs7QeCVrwnfd1+9w at mail.gmail.com</A>&gt;
+</I>&gt;&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hello,
+</I>&gt;&gt;<i> Before I file a mantis report, try wearing an attachment with this trivial
+</I>&gt;&gt;<i> script
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> default
+</I>&gt;&gt;<i> {
+</I>&gt;&gt;<i>     touch_start(integer i){
+</I>&gt;&gt;<i>         osNpcRemove(llGetOwner());
+</I>&gt;&gt;<i>     }
+</I>&gt;&gt;<i> }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> clone youself, then create an NPC using the example script here NPC
+</I>&gt;&gt;<i> Automator script
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/wiki/OSSLNPC">http://opensimulator.org/wiki/OSSLNPC</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Let me know if others are getting the same behavior, the NPC is expected
+</I>&gt;&gt;<i> to
+</I>&gt;&gt;<i> delete itself when attachment is clicked.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I filed a Mantis on this behavior when the NPC functions were released.
+</I>&gt;&gt;<i> I cannot find it now, large numbers of reports seem to have been removed.
+</I>&gt;&gt;<i> The call to GetOwner() does not return the correct UUID for the NPC
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The workaround is to add code to handle the attached event
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     attach(key id) {
+</I>&gt;&gt;<i>         Initialize(id);
+</I>&gt;&gt;<i>     }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The key returned as id in this function is always the key of the
+</I>&gt;&gt;<i> avatar/NPC the item is attached to.
+</I>&gt;&gt;<i> This script should do what you expect.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> key NPC = NULL_KEY;
+</I>&gt;&gt;<i> default
+</I>&gt;&gt;<i> {
+</I>&gt;&gt;<i>     touch_start(integer i){
+</I>&gt;&gt;<i>         osNpcRemove(NPC);
+</I>&gt;&gt;<i>     }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     attach(key id) {
+</I>&gt;&gt;<i>         NPC=id;
+</I>&gt;&gt;<i>     }
+</I>&gt;&gt;<i> }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> 'Consider how the lilies grow. They do not labor or spin.'
+</I>&gt;<i> *Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+</I>&gt;<i> Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+</I>&gt;<i> 208-240-0040
+</I>&gt;<i> Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;, LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+</I>&gt;<i> , DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+ profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+</I>&gt;<i>
+</I>
+
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+*Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+208-240-0040
+Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;,
+LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+, DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+
+profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130501/a9b58f92/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130501/a9b58f92/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012161.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+	<LI>Next message: <A HREF="012164.html">[Opensim-users] NPC not getting removed as expected
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12163">[ date ]</a>
+              <a href="thread.html#12163">[ thread ]</a>
+              <a href="subject.html#12163">[ subject ]</a>
+              <a href="author.html#12163">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] plugin/extension/module system for viewers?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20plugin/extension/module%20system%20for%20viewers%3F&In-Reply-To=%3CBANLkTiktN2VxuiqGsr%3DyRf59JpCifc3EaA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007340.html">
+   <LINK REL="Next"  HREF="007343.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] plugin/extension/module system for viewers?</H1>
+    <B>Sean McNamara</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20plugin/extension/module%20system%20for%20viewers%3F&In-Reply-To=%3CBANLkTiktN2VxuiqGsr%3DyRf59JpCifc3EaA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] plugin/extension/module system for viewers?">smcnam at gmail.com
+       </A><BR>
+    <I>Sun May 15 08:02:06 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007340.html">[Opensim-users] plugin/extension/module system for viewers?
+</A></li>
+        <LI>Next message: <A HREF="007343.html">[Opensim-users] plugin/extension/module system for viewers?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7341">[ date ]</a>
+              <a href="thread.html#7341">[ thread ]</a>
+              <a href="subject.html#7341">[ subject ]</a>
+              <a href="author.html#7341">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+On Sat, May 14, 2011 at 10:22 PM, Cider Jack &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ciderjack.vw at gmail.com</A>&gt; wrote:
+&gt;<i> I know this is related to viewers rather than OpenSim directly and as
+</I>&gt;<i> such may be completely inappropriate for this list, so please feel
+</I>&gt;<i> free to ignore this!
+</I>&gt;<i>
+</I>&gt;<i> This has been on my mind for a few years now and I thought I would
+</I>&gt;<i> just go ahead throw it out there -- Why hasn't there been some sort of
+</I>&gt;<i> plugin/module system developed for Viewers? Something along the lines
+</I>&gt;<i> of Firefox or Google Chrome's add-on/extension system comes to mind. I
+</I>&gt;<i> would expect it to be simple to implement, and I can imagine all sorts
+</I>&gt;<i> of community created tools for builders, avatar designers, scripters,
+</I>&gt;<i> machinamists, terraforming, etc. that could greatly extend viewer
+</I>&gt;<i> functionality &amp; customization! I can think of only four reasons this
+</I>&gt;<i> hasn't happened:
+</I>&gt;<i>
+</I>&gt;<i> 1. Nobody building viewers has thought of it (I don't believe this!)
+</I>
+I myself have never thought of it before, but I wouldn't be surprised
+if someone else has, indeed.
+
+&gt;<i> 2. Nobody has taken the time to implement it
+</I>
+This seems the most likely alternative to me.
+
+&gt;<i> 3. A technical reason makes it impossible
+</I>
+Nah, it's not impossible. Of course you'd have to use a dynamically
+interpreted language for plugins, because the viewer is written in
+C++, which compiles to native code. Distributing plugins as native
+code is dangerous for two reasons: one, it's impossible to sandbox or
+control what native code can do, and two, you can't possibly
+distribute a plugin to be binary-compatible with every platform that
+SL runs on. As soon as you claim that you have built a native plugin
+that covers all the platforms, I will find a Linux distro where your
+plugin doesn't link, or run SL on Solaris or BSD. So it has to be
+platform-independent.
+
+So you could use JavaScript like Chrome/Firefox plugins do, or you
+could pick up one of the many readily-available scripting languages
+out there, like Lua, or you could build in something else entirely
+(Java and C# are conceivably possible, but would add system
+dependencies to the viewer: you'd have to have the Java runtime or a
+.NET runtime or Mono installed, as the case may be).
+
+Despite it being possible rather than impossible, I can definitely say
+that it wouldn't be, as you say, &quot;easy&quot;. Integrating a dynamically
+interpreted scripting language and then designing a stable plugin API
+is no walk in the park; just ask the developers who work on Firefox or
+Chrome's plugin architecture. The biggest challenge would come in
+supporting whatever plugin API you design over the lifetime of the
+viewer, or properly versioning the plugin API in a way that doesn't
+break too many plugins too often (Firefox does this).
+
+&gt;<i> 4. SL's terms wouldn't allow the viewer to be used with SL (This
+</I>&gt;<i> sounds most likely to me)
+</I>
+Whether or not Linden Lab would find viewer plugins to be
+objectionable is completely orthogonal to whether they should be
+implemented. SL is just one grid; the fact that you're posting on the
+opensim ML indicates you know that other grids exist and they're much
+less strict. And no, I don't care a lick if InWorldz wants to lock
+down peoples' viewers. All the other OpenSim grids I'm aware of are
+very liberal about what viewers you're allowed to run, and what you're
+allowed to do with them. Take OSgrid and 3rd rock for instance. There
+are plenty of grids out there that will accept a viewer almost
+completely regardless of what features that viewer has ( provided that
+it doesn't attempt to attack the grid in some malicious way ). Thus we
+don't need to give a crap about what the corporate grids want in order
+to implement something. The software is open source.
+
+And besides that, I don't think that LL would have a fit about it. You
+seem to be under the misconception that third party viewers are
+carefully scrutinized and/or reviewed before they are allowed on the
+SL grid. That's not the case. There are a few rules you have to follow
+to host a third-party viewer, but you can more or less do what you
+want with the code, and you don't have to get LL's permission. You
+just can't break any laws or violate the terms of service. Shipping
+plugins hardly does that.
+
+&gt;<i>
+</I>&gt;<i> Is there something I'm missing?
+</I>
+The challenging part of this is to engineer a plugins API that is
+useful, but not so expansive or general that it would (a) pose a
+security risk to the user (stealing their password etc), or (b) allow
+the plugin to do crazy things like provide mesh support (yes, I'm
+replying to your message DutchGlory), which could never gain any
+semblance of performance implemented in an interpreted scripting
+language.
+
+
+
+&gt;<i>
+</I>&gt;<i> In regards to number four, it's probably primarily based on a
+</I>&gt;<i> combination of the dreaded CopyBot and the Emerald debacle.
+</I>
+No. If plugins are done properly, it won't be possible to do something
+like a copybot, and the KDU thing will be completely irrelevant. You
+have to sandbox plugins and implement the API in a way that nothing
+inherently dangerous can happen. This is why you can install most
+plugins on Google Chrome or Firefox without worry that it will steal
+your passwords -- at least, not without your explicit consent. You
+have to find the balance between flexibility and security.
+
+It's NOT an easy engineering problem, but it is feasible.
+
+&gt;<i> Perhaps a
+</I>&gt;<i> central repository where the code can be reviewed before release
+</I>&gt;<i> (again, like Firefox or Google Chrome) could prevent these sorts of
+</I>&gt;<i> abuses. Additionally I suspect the viewer would only need a couple of
+</I>&gt;<i> lines of code to load the plugins, and leaving the code out wouldn't
+</I>&gt;<i> affect the viewer functionality, so two versions of the viewer could
+</I>&gt;<i> be released - an extendable version, and the locked-down SL version,
+</I>&gt;<i> which isolationist grids like InWorldz may insist on as well.
+</I>
+If the plugin architecture is implemented with proper sandboxing, the
+mainline LL viewer might even pick it up if it's particularly
+well-done. But LL has a history of not accepting large feature
+contributions from the community at large, so don't count on them
+picking it up. That said, if it's done right, I bet at least
+Imprudence, Phoenix and perhaps Hippo might pick it up.
+
+If I were to lay out a possible approach for this, I'd say we could
+start with QtScript or Lua integration into the viewer. QtScript
+provides JavaScript support, and is specifically designed to help you
+create an extension language for your app; and, it's written in C++ (a
+huge plus considering the rest of the viewer is). The license is
+compatible with the license of the viewer as long as we don't have to
+make modifications to Qt itself.
+
+But now that I've strayed completely off the topic of this list, I'd
+say that you should bring this up with the Imprudence developers for
+starters. Don't go to Linden Lab because they will say &quot;show us the
+code or be quiet&quot;, essentially. They have their own feature roadmap
+that operates more or less independently of what the community wants,
+but since the viewer is open source, we've got the power to implement
+anything we want to.
+
+
+Sean
+
+&gt;<i>
+</I>&gt;<i> Anyway, just pipe-dreaming here! :)
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i> ~!CiderJack
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007340.html">[Opensim-users] plugin/extension/module system for viewers?
+</A></li>
+	<LI>Next message: <A HREF="007343.html">[Opensim-users] plugin/extension/module system for viewers?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7341">[ date ]</a>
+              <a href="thread.html#7341">[ thread ]</a>
+              <a href="subject.html#7341">[ subject ]</a>
+              <a href="author.html#7341">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

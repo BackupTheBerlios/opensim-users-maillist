@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] objects undergoing continuous change
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20objects%20undergoing%20continuous%20change&In-Reply-To=%3C63FAD4F222230A4EA79DE9E8BE66473502B106D8%40winxbeus19.exchange.xchg%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000642.html">
+   <LINK REL="Next"  HREF="000644.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] objects undergoing continuous change</H1>
+    <B>Frisby, Adam</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20objects%20undergoing%20continuous%20change&In-Reply-To=%3C63FAD4F222230A4EA79DE9E8BE66473502B106D8%40winxbeus19.exchange.xchg%3E"
+       TITLE="[Opensim-users] objects undergoing continuous change">adam at deepthink.com.au
+       </A><BR>
+    <I>Wed Nov 12 19:16:06 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000642.html">[Opensim-users] objects undergoing continuous change
+</A></li>
+        <LI>Next message: <A HREF="000644.html">[Opensim-users] objects undergoing continuous change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#643">[ date ]</a>
+              <a href="thread.html#643">[ thread ]</a>
+              <a href="subject.html#643">[ subject ]</a>
+              <a href="author.html#643">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I would like to be easier to integrate and edit region modules using our OpenSim API.
+
+Exposing some of that functionality to user scripting (but obviously under controlled environments) and being able to recompile and run new modules on the fly would be a very cool feature to have.
+
+Adam
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Diva Canto
+Sent: Wednesday, 12 November 2008 7:58 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] objects undergoing continuous change
+
+I have written a region module that does traffic simulation. Here's a video produced by my students:
+<A HREF="http://uk.youtube.com/watch?v=kJNDcurLP1w">http://uk.youtube.com/watch?v=kJNDcurLP1w</A>
+
+That was back in late August; the opensim API has changed considerably since then and I haven't had time to update my module yet. I didn't use physics; it was all done with periodic updates to the objects' state, just like in traditional simulation. It works pretty well, only starting to break when there are more than 2 avatars in scene; the breakage is because we have the server behind a home DSL, so packets start getting lost.
+
+In general, for doing tradional simulations forget about using inworld scripting. Even if the scripting engine was already working well, which is not, that introduces a lot of unnecessary overhead. Moreover, it also imposes a programming model that is an obstacle to simulations (for example, not being able to hold references to objects and having to interact with them via llSay functions). The opensim API, on the other hand, is a joy to work with (how many times have I said this? :-)
+
+Diva / Crista
+
+Paul Fishwick wrote:
+
+Justin Clark-Casey wrote:
+
+
+
+Yes, things are stored in memory with a regular flush to database that occurs every 15 seconds.  However, I suspect that
+
+objects with the physics attribute are not currently persisted (from a recent thread on opensim-dev).
+
+
+
+
+
+
+
+
+
+I am curious as to whether it could become possible (in a standalone
+
+server or
+
+in a grid with only one person) to do continuous visual updates for moving
+
+objects (physical or otherwise). I have tried a few experiments, such as a
+
+continuously moving block using LSL (setpos) and after a few seconds, the
+
+behavior becomes erratic (for example, the box shoots off somewhere or
+
+disappears entirely from the region).
+
+
+
+I realize that having fast moving visual objects does not lend itself
+
+well to sharing
+
+state, but there are some instances where one wishes to simply launch a
+
+region
+
+or grid and do more traditional simulation (as one might do in OpenGL)
+
+whether
+
+or not the object states are shared, or on the frequency of sharing. It
+
+would be nice
+
+to have this &quot;standalone continuous object motion&quot; as a switch-based or
+
+deltatime-specified capability.
+
+
+
+Thoughts?
+
+
+
+-p
+
+
+
+
+
+ * Would it (or is it) useful to have some scripts run on the client
+
+rather than the
+
+    server for less server loading? For example, could ODE run on the
+
+client
+
+
+
+
+
+I think that some minor stuff is done client side already (such as flexiprims).  However, I suspect one runs into
+
+difficulties when objects can affect each other, since you would have to start communicating all this information back
+
+to the server and somehow synchronizing it with changes from other clients.
+
+
+
+However, I am not an expert in this area.
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20081112/d060b7f2/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20081112/d060b7f2/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000642.html">[Opensim-users] objects undergoing continuous change
+</A></li>
+	<LI>Next message: <A HREF="000644.html">[Opensim-users] objects undergoing continuous change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#643">[ date ]</a>
+              <a href="thread.html#643">[ thread ]</a>
+              <a href="subject.html#643">[ subject ]</a>
+              <a href="author.html#643">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

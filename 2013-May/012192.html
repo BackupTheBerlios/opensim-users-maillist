@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Simple lsl bug with dramatic effect
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Simple%20lsl%20bug%20with%20dramatic%20effect&In-Reply-To=%3CCAHi41xLVjF_dsEmKOFwBCQe_0VaTNcnYd3OSWDBANT24VWyn7w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012233.html">
+   <LINK REL="Next"  HREF="012193.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Simple lsl bug with dramatic effect</H1>
+    <B>Dr Ramesh Ramloll</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Simple%20lsl%20bug%20with%20dramatic%20effect&In-Reply-To=%3CCAHi41xLVjF_dsEmKOFwBCQe_0VaTNcnYd3OSWDBANT24VWyn7w%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Simple lsl bug with dramatic effect">r.ramloll at gmail.com
+       </A><BR>
+    <I>Wed May  8 16:16:33 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012233.html">[Opensim-users] how to use 'save oar --home'?
+</A></li>
+        <LI>Next message: <A HREF="012193.html">[Opensim-users] Simple lsl bug with dramatic effect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12192">[ date ]</a>
+              <a href="thread.html#12192">[ thread ]</a>
+              <a href="subject.html#12192">[ subject ]</a>
+              <a href="author.html#12192">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+I am sharing on this list hoping that some brains could help me figure this
+one out. I think I have hit a modulus divisor bug. Please let me know what
+you think. This had a significant impact on my scripts ... the whole thing
+froze after I made a simple change to a single variable and am wondering if
+I have hit some constraints that I am not aware of. Basically I am trying
+to pass parameters to a rezzed child object (see below). I generate values
+at the parent prim and try to get those values back from the rezzed child.
+Any thoughts appreciated.
+Thank you.
+
+integer commChannel =54;
+integer modulus_divisor = 1000000000;
+integer objectPinIndex = 23;
+integer rezParameter;
+integer repro_commChannel;
+integer repro_objectPinIndex;
+
+default
+{
+    state_entry()
+    {
+        rezParameter = -1*((commChannel*modulus_divisor)+(objectPinIndex));
+        repro_commChannel = -1*((integer)rezParameter)/modulus_divisor;
+        repro_objectPinIndex = -1*((integer)rezParameter)%modulus_divisor;
+
+        llOwnerSay(&quot;modulus=&quot;+(string)modulus_divisor);
+        llOwnerSay(&quot;objectPinIndex=&quot;+(string)objectPinIndex);
+        llOwnerSay(&quot;commChannel=&quot;+(string)commChannel);
+        llOwnerSay(&quot;REPRODUCING VALUES&quot;);
+        llOwnerSay(&quot;repro_objectPinIndex=&quot;+(string)repro_objectPinIndex);
+        llOwnerSay(&quot;repro_commChannel=&quot;+(string)repro_commChannel);
+    }
+
+
+}
+
+output follows:
+
+modulus=100000000 (eight zeroes)
+[06:57] Primitive: modulus=100000000
+[06:57] Primitive: objectPinIndex=23
+[06:57] Primitive: commChannel=54
+[06:57] Primitive: REPRODUCING VALUES
+[06:57] Primitive: repro_objectPinIndex=5032727
+[06:57] Primitive: repro_commChannel=11
+
+
+
+now change modulus = 10000000
+
+output is:
+
+Primitive: modulus=10000000 (seven zeroes)
+[06:56] Primitive: objectPinIndex=23
+[06:56] Primitive: commChannel=54
+[06:56] Primitive: REPRODUCING VALUES
+[06:56] Primitive: repro_objectPinIndex=23
+[06:56] Primitive: repro_commChannel=54
+
+
+also, modulus_divisor = 29999999 works
+modulus_divisor = 39699999 also works; this appears to be the experimental
+upper bound before modulus_divisor stops working.
+I did not expect this.
+
+-- 
+'Consider how the lilies grow. They do not labor or spin.'
+*Rameshsharma Ramloll* PhD, CEO CTO DeepSemaphore LLC, Affiliate *Research
+Associate Professor*, Idaho State University, Pocatello, ID 83209 Tel:
+208-240-0040
+Blog &lt;<A HREF="http://deepsemaphore.posterous.com/">http://deepsemaphore.posterous.com/</A>&gt;,
+LinkedIn&lt;<A HREF="http://www.linkedin.com/in/rameshramloll">http://www.linkedin.com/in/rameshramloll</A>&gt;
+, DeepSemaphore LLC &lt;<A HREF="http://www.deepsemaphore.com">http://www.deepsemaphore.com</A>&gt;, Google+
+profile&lt;<A HREF="https://plus.google.com/103652369558830540272/about">https://plus.google.com/103652369558830540272/about</A>&gt;
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130508/4dbdf9ba/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130508/4dbdf9ba/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012233.html">[Opensim-users] how to use 'save oar --home'?
+</A></li>
+	<LI>Next message: <A HREF="012193.html">[Opensim-users] Simple lsl bug with dramatic effect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12192">[ date ]</a>
+              <a href="thread.html#12192">[ thread ]</a>
+              <a href="subject.html#12192">[ subject ]</a>
+              <a href="author.html#12192">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

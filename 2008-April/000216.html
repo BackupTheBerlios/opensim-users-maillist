@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Rload-xml in later versions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Rload-xml%20in%20later%20versions&In-Reply-To=%3C200804091943.m39JhrBZ005325%40dandy.inf.ed.ac.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000215.html">
+   <LINK REL="Next"  HREF="000217.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Rload-xml in later versions</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Rload-xml%20in%20later%20versions&In-Reply-To=%3C200804091943.m39JhrBZ005325%40dandy.inf.ed.ac.uk%3E"
+       TITLE="[Opensim-users] Rload-xml in later versions">ai.ai.austin at googlemail.com
+       </A><BR>
+    <I>Wed Apr  9 21:43:52 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000215.html">[Opensim-users] load-xml in later versions
+</A></li>
+        <LI>Next message: <A HREF="000217.html">[Opensim-users] region handshake - how does it work?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#216">[ date ]</a>
+              <a href="thread.html#216">[ thread ]</a>
+              <a href="subject.html#216">[ subject ]</a>
+              <a href="author.html#216">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+&gt;<i>The issue might actually be fixed in the latest build - some further
+</I>&gt;<i>fixes were performed on object deserialization
+</I>&gt;<i>
+</I>&gt;<i> &gt; I have also met this problem 2 weeks ago. After I set the &quot;physics&quot;
+</I>&gt;<i> &gt; option in opensim.ini to another engine instead of basicphysics, e.g.
+</I>&gt;<i> &gt; physics = OpenDynamicsEngine,  the load-xml works ok now...
+</I>
+
+A correction on further checks.  If I use the latest nightly build 0- 
+41160... and leave opensim.ini with the default physics = 
+basicphysics.. then on loading the saved xml file I get
+
+load-xml opensim-iroom-linked-169.xml -newUID 0 0 40
+
+loadOffsets &lt;X,Y,Z&gt; = &lt;0,0,40&gt;
+
+20:34:38 - [TASK INVENTORY]: ReadXml current node before actions, TaskInventory
+20:34:38 - [TASK INVENTORY]: Skipping empty element TaskInventory
+20:34:38 - [TASK INVENTORY]: ReadXml current node after actions, ObjectFlags
+20:34:38 - [SCENE OBJECT GROUP]: Current node RootPart
+20:34:38 - [TASK INVENTORY]: ReadXml current node before actions, TaskInventory
+20:34:38 - [TASK INVENTORY]: Skipping empty element TaskInventory
+20:34:38 - [TASK INVENTORY]: ReadXml current node after actions, ObjectFlags
+                      above 3 lines repeated multiple times for each 
+object group
+20:34:38 - [Console]: Command [load-xml opensim-iroom-linked-169.xml 
+-newUID 0 0 40] failed with exception System.NullReferenceException: 
+Object reference not set to an instance of an object.
+
+
+It then just loads a single object group of the saved XML file... not 
+all the building.
+
+If I change physics = OpenDymamicsEngine in opensim.ini it loads 
+without the error, but with the same (and many more for te additional 
+object groups) &quot;skipping&quot; debug entries.
+
+I assume we have an error with basicphysics set for save-xml file loading? 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000215.html">[Opensim-users] load-xml in later versions
+</A></li>
+	<LI>Next message: <A HREF="000217.html">[Opensim-users] region handshake - how does it work?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#216">[ date ]</a>
+              <a href="thread.html#216">[ thread ]</a>
+              <a href="subject.html#216">[ subject ]</a>
+              <a href="author.html#216">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

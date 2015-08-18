@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] ODE physics exception
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20ODE%20physics%20exception&In-Reply-To=%3C3elub6dvjtt206umucvgsmp118b5umoaq6%404ax.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005871.html">
+   <LINK REL="Next"  HREF="005874.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] ODE physics exception</H1>
+    <B>John Hopkin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20ODE%20physics%20exception&In-Reply-To=%3C3elub6dvjtt206umucvgsmp118b5umoaq6%404ax.com%3E"
+       TITLE="[Opensim-users] ODE physics exception">opensim at jfhopkin.karoo.co.uk
+       </A><BR>
+    <I>Wed Oct 20 22:51:52 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005871.html">[Opensim-users] ODE physics exception
+</A></li>
+        <LI>Next message: <A HREF="005874.html">[Opensim-users] ODE physics exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5873">[ date ]</a>
+              <a href="thread.html#5873">[ thread ]</a>
+              <a href="subject.html#5873">[ subject ]</a>
+              <a href="author.html#5873">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks, WW. Your solution in that Mantis fixed it - changing to
+&quot;false&quot; mesh_sculpted_prim in [ODEPhysicsSettings] in OpenSim.ini.
+
+It was &quot;false&quot; in the OSGrid-supplied example; I'd changed it as an
+experiment when I upgraded and forgot about it.
+
+John
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drwhiet at spacefriends.de</A> wrote:
+
+&gt;<i> Just had the Same yesterday and i could fix it like this ... 
+</I>&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=5093">http://opensimulator.org/mantis/view.php?id=5093</A>
+</I>&gt;<i> 
+</I>&gt;<i> Best regards
+</I>&gt;<i> Wordfromthe Wise
+</I>&gt;<i> 
+</I>&gt;<i> Am 20.10.2010 um 20:36 schrieb John Hopkin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at jfhopkin.karoo.co.uk</A>&gt;:
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Loading a region, I'm getting many thousands of errors from the ODE
+</I>&gt;<i> &gt; plugin for sculpted prims that are not physical. The text of one such
+</I>&gt;<i> &gt; error is pasted at the end.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; The region is connected to OSGrid, and was functional before the
+</I>&gt;<i> &gt; recent 0.7.1 upgrade. All but one other regions connected in the same
+</I>&gt;<i> &gt; way have no major problems. The region in question contains something
+</I>&gt;<i> &gt; like 8600 prims, mostly sculpted.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; OpenSim is 8731c2b, OS is Ubuntu Meerkat latest; database is MySQL
+</I>&gt;<i> &gt; 14.14;  Mono is 2.6.7; physics is Meshmerizer/ODE.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Any ideas? Thanks
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; John
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Error message:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 2010-10-20 19:09:23,045 ERROR -
+</I>&gt;<i> &gt; OpenSim.Region.Physics.OdePlugin.OdeScene.Dwalm Warehouse [PHYSICS]:
+</I>&gt;<i> &gt; Exception while meshing prim Sculpty Pathway_01
+</I>&gt;<i> &gt; funky/ab7eddae-bbcb-48d9-b5ba-437fec74ad2c.
+</I>&gt;<i> &gt; 2010-10-20 19:09:23,045 DEBUG -
+</I>&gt;<i> &gt; OpenSim.Region.Physics.OdePlugin.OdeScene.Dwalm Warehouse
+</I>&gt;<i> &gt; System.Exception: Caught exception processing byte arrays in
+</I>&gt;<i> &gt; SculptMap(): e: System.ArgumentException: A null reference or invalid
+</I>&gt;<i> &gt; value was found [GDI+ status: InvalidParameter]
+</I>&gt;<i> &gt;  at System.Drawing.GDIPlus.CheckStatus (Status status) [0x00000] in
+</I>&gt;<i> &gt; &lt;filename unknown&gt;:0 
+</I>&gt;<i> &gt;  at System.Drawing.Bitmap.GetPixel (Int32 x, Int32 y) [0x00000] in
+</I>&gt;<i> &gt; &lt;filename unknown&gt;:0 
+</I>&gt;<i> &gt;  at (wrapper remoting-invoke-with-check)
+</I>&gt;<i> &gt; System.Drawing.Bitmap:GetPixel (int,int)
+</I>&gt;<i> &gt;  at PrimMesher.SculptMap..ctor (System.Drawing.Bitmap bm, Int32 lod)
+</I>&gt;<i> &gt; [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;<i> &gt;  at PrimMesher.SculptMap..ctor (System.Drawing.Bitmap bm, Int32 lod)
+</I>&gt;<i> &gt; [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;<i> &gt;  at PrimMesher.SculptMesh._SculptMesh (System.Drawing.Bitmap
+</I>&gt;<i> &gt; sculptBitmap, SculptType sculptType, Int32 lod, Boolean viewerMode,
+</I>&gt;<i> &gt; Boolean mirror, Boolean invert) [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;<i> &gt;  at PrimMesher.SculptMesh..ctor (System.Drawing.Bitmap sculptBitmap,
+</I>&gt;<i> &gt; SculptType sculptType, Int32 lod, Boolean viewerMode, Boolean mirror,
+</I>&gt;<i> &gt; Boolean invert) [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;<i> &gt;  at
+</I>&gt;<i> &gt; OpenSim.Region.Physics.Meshing.Meshmerizer.CreateMeshFromPrimMesher
+</I>&gt;<i> &gt; (System.String primName, OpenSim.Framework.PrimitiveBaseShape
+</I>&gt;<i> &gt; primShape, Vector3 size, Single lod) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &gt; at OpenSim.Region.Physics.Meshing.Meshmerizer.CreateMesh
+</I>&gt;<i> &gt; (System.String primName, OpenSim.Framework.PrimitiveBaseShape
+</I>&gt;<i> &gt; primShape, Vector3 size, Single lod, Boolean isPhysical) [0x00000] in
+</I>&gt;<i> &gt; &lt;filename unknown&gt;:0 
+</I>&gt;<i> &gt;  at OpenSim.Region.Physics.OdePlugin.OdeScene.AddPrimShape
+</I>&gt;<i> &gt; (System.String primName, OpenSim.Framework.PrimitiveBaseShape pbs,
+</I>&gt;<i> &gt; Vector3 position, Vector3 size, Quaternion rotation, Boolean
+</I>&gt;<i> &gt; isPhysical) [0x00000] in &lt;filename unknown&gt;:0 
+</I>&gt;<i> &gt; 2010-10-20 19:09:23,046 DEBUG -
+</I>&gt;<i> &gt; OpenSim.Region.Framework.Scenes.SceneObjectPart [SOP]: physics actor
+</I>&gt;<i> &gt; is null for ab7eddae-bbcb-48d9-b5ba-437fec74ad2c with parent
+</I>&gt;<i> &gt; ab7eddae-bbcb-48d9-b5ba-437fec74ad2c
+</I>&gt;<i> &gt; -- 
+</I>&gt;<i> &gt; John Hopkin
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>-- 
+John Hopkin
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005871.html">[Opensim-users] ODE physics exception
+</A></li>
+	<LI>Next message: <A HREF="005874.html">[Opensim-users] ODE physics exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5873">[ date ]</a>
+              <a href="thread.html#5873">[ thread ]</a>
+              <a href="subject.html#5873">[ subject ]</a>
+              <a href="author.html#5873">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

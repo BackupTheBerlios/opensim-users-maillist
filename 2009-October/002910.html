@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] More 0.6.7 ... Re: Multiple regions using 0.6.7
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20More%200.6.7%20...%20Re%3A%20Multiple%20regions%20using%200.6.7&In-Reply-To=%3C4AD8C791.1080809%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002908.html">
+   <LINK REL="Next"  HREF="002927.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] More 0.6.7 ... Re: Multiple regions using 0.6.7</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20More%200.6.7%20...%20Re%3A%20Multiple%20regions%20using%200.6.7&In-Reply-To=%3C4AD8C791.1080809%40googlemail.com%3E"
+       TITLE="[Opensim-users] More 0.6.7 ... Re: Multiple regions using 0.6.7">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Oct 16 21:20:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002908.html">[Opensim-users] More 0.6.7 ... Re: Multiple regions using 0.6.7
+</A></li>
+        <LI>Next message: <A HREF="002927.html">[Opensim-users] no flailing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2910">[ date ]</a>
+              <a href="thread.html#2910">[ thread ]</a>
+              <a href="subject.html#2910">[ subject ]</a>
+              <a href="author.html#2910">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Paul Fishwick wrote:
+&gt;<i> Jabba
+</I>&gt;<i> 
+</I>&gt;<i>    I am running 64 bit linux at work and had exactly the same two 
+</I>&gt;<i> problems that
+</I>&gt;<i> you did.  The avatar problem was resolved with the default settings plus 
+</I>&gt;<i> changing
+</I>&gt;<i> av_capsule_tilted = false. There was no other solution that worked - the 
+</I>&gt;<i> avatar's
+</I>&gt;<i> legs were bent otherwise, or the avatar mesh intersected with the 
+</I>&gt;<i> terrain mesh. There
+</I>&gt;<i> is still the occasional flailing of the avatar, which is something I 
+</I>&gt;<i> wish we could get rid
+</I>&gt;<i> of, but we are just living with that: 
+</I>&gt;<i> <A HREF="http://www.cise.ufl.edu/~fishwick/swimming.png">http://www.cise.ufl.edu/~fishwick/swimming.png</A> --
+</I>&gt;<i> seems to be an in-between state where the avatar is neither flying nor 
+</I>&gt;<i> upright.
+</I>
+This is interesting feedback.  Is there any feeling that it would be safe to 
+make av_capsule_tilted = false the default.
+
+As for the flailing, Teravus recently committed a fix in the trunk line that may 
+reduce this.  If it proves stable then that will make it into 0.6.8, or maybe 
+even backport it to 0.6.7-post-fixes.
+
+&gt;<i> 
+</I>&gt;<i>   As far as the textures, yes, there is something odd going on but a 
+</I>&gt;<i> recent fix was made to
+</I>&gt;<i> transition to a library CSJ2K in 0.6.8.  You'll need to download the 
+</I>&gt;<i> bleeding edge
+</I>&gt;<i> version, though, to take advantage of this. I am not sure if the 
+</I>&gt;<i> releases cover the
+</I>&gt;<i> CSJ2K fix. You'll also see a huge # of warnings from CSJ2K in the 
+</I>&gt;<i> console (more
+</I>&gt;<i>  than before with the older decoding approach), however, the 
+</I>&gt;<i> client-server interaction
+</I>&gt;<i> regarding texture retrievals is much better. I am not sure if the new 
+</I>&gt;<i> library solves
+</I>&gt;<i> all texture issues. There are one or two that never seem to fully 
+</I>&gt;<i> resolve regardless
+</I>&gt;<i> of camera-focus/zooming or time waiting.  Make sure to &quot;clear cache&quot; in
+</I>&gt;<i> the viewer before launching.
+</I>
+Unfortunately, 0.6.7 was taken just before the recent texture and protocol work 
+(though I don't believe that this is stable yet anyway).  So 0.6.8 should be 
+much better in this respect.
+
+Whether 0.6.7 is significantly worse than previous releases or whether people 
+are simply trying to be more ambitious with textures in OpenSim I don't know.
+
+&gt;<i> 
+</I>&gt;<i>   Regarding region crossings, I have not had any issues, though. I am 
+</I>&gt;<i> using Standalone
+</I>&gt;<i> with a 2x2 set of regions.
+</I>&gt;<i> 
+</I>&gt;<i> -p
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Jabba Gruppman wrote:
+</I>&gt;&gt;<i> Thanks Justin for the help, I succeeded in getting up all four regions 
+</I>&gt;&gt;<i> now - but there are some more problems - and partial solutions - I want 
+</I>&gt;&gt;<i> to share...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> All issues are based on release 0.6.7. I know very well that it's not 
+</I>&gt;&gt;<i> the latest rev and I will recheck all issues against an updated 
+</I>&gt;&gt;<i> installation with the latest rev later.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am running a 64 bit Linux (Gentoo) and I have serious problems with 
+</I>&gt;&gt;<i> ODE.There still was a physical spiral object in one region making it 
+</I>&gt;&gt;<i> impossible to bring this one online with ODE. After starting with 
+</I>&gt;&gt;<i> basicphyisics and removing this object from the region, ODE did not 
+</I>&gt;&gt;<i> crash any more.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So my avie was online with bent knees...  Old problem and when I was 
+</I>&gt;&gt;<i> hopping through the hypergrid I learnt that my grid isnt the only one 
+</I>&gt;&gt;<i> with this problem. Somewhere I found the idea to enlarge the force to 
+</I>&gt;&gt;<i> use to keep the avatar standing up straight 
+</I>&gt;&gt;<i> &quot;av_capsule_standup_tensor_linux = 1700000&quot; - but this did not help.
+</I>&gt;&gt;<i> Browsing the mantis another idea was to set &quot;av_capsule_tilted = false&quot; 
+</I>&gt;&gt;<i> which finally did the job - but leads to region crossing problems. 
+</I>&gt;&gt;<i> Anyways the avie is standing as usual but about 10 cm above the 
+</I>&gt;&gt;<i> ground...  I can live with it  ;-)   but region crossing still is an 
+</I>&gt;&gt;<i> issue as it is sometimes crashing the session due to this problem and 
+</I>&gt;&gt;<i> leaves the simulator in an unexeptable state. Relogging does not work - 
+</I>&gt;&gt;<i> session is crashing over and over again - but relogging using &quot;Login at 
+</I>&gt;&gt;<i> home position&quot; does the job.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I suspect the same error occured to the UCI 7000 gateway at 
+</I>&gt;&gt;<i> ucigrid04.nacs.uci.edu:9007 as this region always crashed my session 
+</I>&gt;&gt;<i> when trying to teleport to. Seems to be the same behaviour, at least 
+</I>&gt;&gt;<i> from user view. In this context it makes it impossible to tp to the region.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Next issue is the download of textures to the client viewer. Several 
+</I>&gt;&gt;<i> textures are only transferred in a lower resolution state meaning the 
+</I>&gt;&gt;<i> transfer is not finished and very often never will be. Browsing Mantis I 
+</I>&gt;&gt;<i> found some hints including a &quot;maybe&quot; broken jpeg module for 64 bit. The 
+</I>&gt;&gt;<i> error message
+</I>&gt;&gt;<i> 2009-10-16 01:50:07,476 WARN  - OpenMetaverse Last packet end in 
+</I>&gt;&gt;<i> JPEG2000 stream extends beyond the end of the file. filesize=70083 
+</I>&gt;&gt;<i> layerend=2147450879
+</I>&gt;&gt;<i> 2009-10-16 01:50:07,477 WARN  - 
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.Agent.TextureSender.J2KDecoderModule 
+</I>&gt;&gt;<i> [J2KDecoderModule]: JPEG2000 texture decoding failed for 
+</I>&gt;&gt;<i> 7c1c3156-c8af-4400-8739-6cb68e12692e.   Is this a texture?  is it J2K?
+</I>&gt;&gt;<i> is sometimes displayed - but there are far more textures left unfinished 
+</I>&gt;&gt;<i> as there are error messages regarding jpeg2000 decode errors. So my 
+</I>&gt;&gt;<i> guess is that this might be a different problem.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Anyways there seem to be more texture issues.
+</I>&gt;&gt;<i> [WORLD MAP]: JPEG Map location: 
+</I>&gt;&gt;<i> <A HREF="http://88.198.35.20:9000/index.php?method=regionImage0470c5be5cdf4cdf87dcbc052efa1ebd">http://88.198.35.20:9000/index.php?method=regionImage0470c5be5cdf4cdf87dcbc052efa1ebd</A>
+</I>&gt;&gt;<i> My region image is not loading and I get an error message:
+</I>&gt;&gt;<i> 2009-10-16 01:13:02,891 DEBUG - 
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.World.WorldMap.WorldMapModule [WORLD MAP]: 
+</I>&gt;&gt;<i> Sending map image jpeg
+</I>&gt;&gt;<i> 2009-10-16 01:13:02,894 WARN  - 
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.World.WorldMap.WorldMapModule [WORLD MAP]: 
+</I>&gt;&gt;<i> Unable to generate Map image
+</I>&gt;&gt;<i> The server itself is responding so at least it is listing to the correct 
+</I>&gt;&gt;<i> port number and such. But it might be a typical 64 bit problem as well.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Grid details:
+</I>&gt;&gt;<i> <A HREF="http://www.annuna.net/wiki/index.php/Annuna_Open_Grid">http://www.annuna.net/wiki/index.php/Annuna_Open_Grid</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Justin Clark-Casey schrieb:
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i> Jabba Gruppman wrote:
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i> Hello,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I'm a bit lost with the changes in 0.6.7 regarding how to set up 
+</I>&gt;&gt;&gt;&gt;<i> multiple regions.
+</I>&gt;&gt;&gt;&gt;<i> Formerly I used to have several xml files in the Regions/ directory and 
+</I>&gt;&gt;&gt;&gt;<i> all was
+</I>&gt;&gt;&gt;&gt;<i> working fine.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> After OpenSim.exe was not coming up correctly after installing 0.6.7
+</I>&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;<i> You might want to go back and double check.  I still have a trunk OpenSim which 
+</I>&gt;&gt;&gt;<i> is fine using multiple region xml files.  The same should be true of 0.6.7.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i> I removed the old xml files from the Regions directory and created one 
+</I>&gt;&gt;&gt;&gt;<i> single
+</I>&gt;&gt;&gt;&gt;<i> region manually using the interactive config of OpenSim.exe
+</I>&gt;&gt;&gt;&gt;<i> I was successful and OpenSim.exe started without problems. After this I 
+</I>&gt;&gt;&gt;&gt;<i> found
+</I>&gt;&gt;&gt;&gt;<i> a Regions.ini file in the Regions directory...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Unfortunately the wiki at <A HREF="http://opensimulator.org/wiki/Configuration">http://opensimulator.org/wiki/Configuration</A> 
+</I>&gt;&gt;&gt;&gt;<i> still tells
+</I>&gt;&gt;&gt;&gt;<i> about the xml configuration which seems to be outdated now.
+</I>&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;<i> You're right, this is bad, the doc really needs to be updated here.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I had completely forgotten that the regions default had changed to .ini between 
+</I>&gt;&gt;&gt;<i> 0.6.6 and 0.6.7.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i> How is the correct way of setting up multiple regions for one single 
+</I>&gt;&gt;&gt;&gt;<i> OpenSim.exe
+</I>&gt;&gt;&gt;&gt;<i> instance now? Maybe anyone has a good link to an example?
+</I>&gt;&gt;&gt;&gt;<i>     
+</I>&gt;&gt;&gt;&gt;<i>       
+</I>&gt;&gt;&gt;<i>  From reading the code, I think that it should be possible either to
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 1)  Specify multiple regions in a single ini file (e.g. Regions.ini).  For example
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [Big Fat Region]
+</I>&gt;&gt;&gt;<i> RegionUUID = 5ce85740-6460-43d3-ba4c-29207b010072
+</I>&gt;&gt;&gt;<i> Location = 1000,1000
+</I>&gt;&gt;&gt;<i> InternalAddress = 0.0.0.0
+</I>&gt;&gt;&gt;<i> InternalPort = 9000
+</I>&gt;&gt;&gt;<i> AllowAlternatePorts = False
+</I>&gt;&gt;&gt;<i> ExternalHostName = 192.168.1.2
+</I>&gt;&gt;&gt;<i> MasterAvatarFirstName = Justin
+</I>&gt;&gt;&gt;<i> MasterAvatarLastName = Clark-Casey
+</I>&gt;&gt;&gt;<i> MasterAvatarSandboxPassword = yeahokay
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> [Greek Wedding]
+</I>&gt;&gt;&gt;<i> RegionUUID = 5c445740-6460-43d3-ba4c-444444445555
+</I>&gt;&gt;&gt;<i> Location = 1000,1001
+</I>&gt;&gt;&gt;<i> InternalAddress = 0.0.0.0
+</I>&gt;&gt;&gt;<i> InternalPort = 9001
+</I>&gt;&gt;&gt;<i> AllowAlternatePorts = False
+</I>&gt;&gt;&gt;<i> ExternalHostName = 192.168.1.2
+</I>&gt;&gt;&gt;<i> MasterAvatarFirstName = Justin
+</I>&gt;&gt;&gt;<i> MasterAvatarLastName = Clark-Casey
+</I>&gt;&gt;&gt;<i> MasterAvatarSandboxPassword = yeahokay
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> or spread them across multiple ini files.  Of course, the old xml files should 
+</I>&gt;&gt;&gt;<i> also work.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'll try and change the wiki page sometime (making separate 0.6.6 and 0.6.7 
+</I>&gt;&gt;&gt;<i> sections for now, even though that's messy).  Of course, if someone else wants 
+</I>&gt;&gt;&gt;<i> to jump in and do that it would be very much appreciated :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>   
+</I>&gt;&gt;&gt;<i>     
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.org">http://justincc.org</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002908.html">[Opensim-users] More 0.6.7 ... Re: Multiple regions using 0.6.7
+</A></li>
+	<LI>Next message: <A HREF="002927.html">[Opensim-users] no flailing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2910">[ date ]</a>
+              <a href="thread.html#2910">[ thread ]</a>
+              <a href="subject.html#2910">[ subject ]</a>
+              <a href="author.html#2910">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

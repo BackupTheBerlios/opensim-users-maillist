@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] collision detection for attachments
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3CCAME74xG4voqsqo8PYwZ_xsBhKZqjtw3dPBLVfrHR%2BqcNjekDDg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012450.html">
+   <LINK REL="Next"  HREF="012437.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] collision detection for attachments</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20collision%20detection%20for%20attachments&In-Reply-To=%3CCAME74xG4voqsqo8PYwZ_xsBhKZqjtw3dPBLVfrHR%2BqcNjekDDg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] collision detection for attachments">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Mon Jul  8 19:44:48 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012450.html">[Opensim-users] shutdown dont save all prims
+</A></li>
+        <LI>Next message: <A HREF="012437.html">[Opensim-users] collision detection for attachments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12434">[ date ]</a>
+              <a href="thread.html#12434">[ thread ]</a>
+              <a href="subject.html#12434">[ subject ]</a>
+              <a href="author.html#12434">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hiya,
+
+Sorry for bumping up this thread. I have a similar issue, but my setup
+prevents me from scripting every object in sight to detect collisions. Let
+me explain why.
+
+First, I'm trying to make my solution compatible across SL and OpenSim,
+while developing most of the code in OpenSim: the theory is that if it
+works in OpenSim, it should work even better in SL (based on the theory
+that OpenSim only implements a subset of LSL &#8211; except for OS-specific
+functions, of course). So, keeping things simple, and making them work in
+OpenSim, should ensure compatibility with SL later on. That's the first
+assumption.
+
+The second one is that llCastRay() is, at best, tricky to find things, and,
+at worst, useless. Here, neither SL nor OpenSim are &quot;perfect&quot;. SL's
+llCastRay() seems to give slightly better results, but they're &quot;not as good
+as advertised&quot; &#8212; when the ray is being cast from a moving avatar, i.e. from
+inside an attachment. (The alternative, using sensors, can be often worse
+and has all the other known limitations).
+
+The third assumption is that the world is full of unscripted objects, and
+the scripts will have to deal with them all to have minimally accurate
+&quot;vision&quot;. So I cannot use dz's approach, which is to drop a script inside
+each and every object in a 15,000-prim area (yes, my scripts need to
+navigate across all that), and expect them to send collision events via
+llSay(). It's simply unfeasible. There is an old Indian Buddhist saying
+that goes, &quot;If the roads hurt your feet, the solution is not to wrap the
+whole world with leather to make all surfaces soft, because that's
+impossible; instead, wrap just a little bit of leather across your feet,
+and you can walk all roads without hurting yourself&quot;. A very good
+similarity applies to this case, IMHO: it's a bit pointless to make sure
+*all* the world is scripted for collisions, when you just need to test
+collisions on one's attachments.
+
+So what I'm doing is a mixed approach. First, I cast a ray, to get a list
+of what OpenSim (or SL) _thinks_ is ahead of the avatar. But sometimes the
+ray will just send back wrong/incomplete information, and the avatar &#8212; in
+the case where no human is behind it, of course &#8212; hits a wall. In that
+case, I wish the attachment to detect the collision and report back to the
+system, and flag an exception &#8212; we thought the way was clear, but it isn't.
+Also, this approach means that the script doesn't need to be sending rays
+in very short time frames &#8212; just once in a while, assuming most of the
+environment will remain static, and deal with exceptions (or cast new
+rays!) if it starts bumping into things.
+
+This works well enough in SL, but apparently not in OpenSim: apparently,
+without any special tricks, it seems impossible to get collision events in
+an attachment to work (at least on 0.7.5 Dev). Why?
+
+If there are any special tricks to get this working, what are they?
+
+Will switching to 0.7.6 Dev make any difference? (As far as I can see on
+the Mantis and/or searching via Google, nobody seems to be mentioning
+this). Will this be implemented in BulletPhysics? (I'm not even sure if
+BulletPhysics already works under Linux these days...)
+
+I'm also looking for an alternative using libopenmetaverse. The simulator
+definitely sends *some* messages to the viewer when there is a collision
+with the avatar. However, it's not that obvious how to catch the reverse
+situation: when the avatar collides with an object :-(
+
+Any further suggestions are most welcome!
+
+   - Gwyn
+
+
+On 24 March 2013 16:11, dz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dz at bitzend.net</A>&gt; wrote:
+
+&gt;<i> I would have to qualify my answer, given your response..
+</I>&gt;<i>
+</I>&gt;<i> The NPC collisions I deal with involve avatars bumping into various
+</I>&gt;<i> objects in the course of them walking and running about in a region.  The
+</I>&gt;<i> majority of my sensors are at street intersections where I can make the
+</I>&gt;<i> NPC to react to red/green lights, or send them off in another direction.  I
+</I>&gt;<i> also use them to trigger pause and reach animations for doors,  or
+</I>&gt;<i> sometimes trigger reactions when encountering &quot;Special&quot; NPC's.  The speed
+</I>&gt;<i> of the moving avatar is much lower than the speed of a bullet, and the
+</I>&gt;<i> solution I use limits the number of objects in a sim that cause reactions.
+</I>&gt;<i> Too many scripted objects / simultaneous collisions can be a serious
+</I>&gt;<i> performance issue.
+</I>&gt;<i>
+</I>&gt;<i> I have not attempted to apply this design to an object like a bullet.   My
+</I>&gt;<i> understanding is that best SL solution to that problem it to use the
+</I>&gt;<i> orientation of the gun ( or gun sight ) and location of the target to
+</I>&gt;<i> pre-determine if the bullet will hit/miss.  Scripters in SL are using the
+</I>&gt;<i> llCastRay function to perform this intersection determination.  [ I cant
+</I>&gt;<i> say if or when llRayCast is/will be implemented in OpenSim, or what its
+</I>&gt;<i> performance would be like compared to SL.]  The bullets are still
+</I>&gt;<i> expended,   but in order to minimize the accumulation of spent ammo, the
+</I>&gt;<i> bullets just &quot;fly and die&quot;, removing themselves after a brief period of
+</I>&gt;<i> time.   In that instance,  you can certainly have the GUN broadcast a HIT
+</I>&gt;<i> message to the avatar, but I don't think its a good plan to script bullets
+</I>&gt;<i> to be generating and processing collision events.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> D
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+&quot;I'm not building a game. I'm building a new country.&quot;
+  -- Philip &quot;Linden&quot; Rosedale, interview to Wired, 2004-05-08
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130708/6728dee5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130708/6728dee5/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012450.html">[Opensim-users] shutdown dont save all prims
+</A></li>
+	<LI>Next message: <A HREF="012437.html">[Opensim-users] collision detection for attachments
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12434">[ date ]</a>
+              <a href="thread.html#12434">[ thread ]</a>
+              <a href="subject.html#12434">[ subject ]</a>
+              <a href="author.html#12434">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

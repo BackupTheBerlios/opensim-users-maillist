@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Reappearing prims in regions, OS 0.7.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Reappearing%20prims%20in%20regions%2C%20OS%200.7.2&In-Reply-To=%3C4DDAF29A.1000606%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007387.html">
+   <LINK REL="Next"  HREF="007388.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Reappearing prims in regions, OS 0.7.2</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Reappearing%20prims%20in%20regions%2C%20OS%200.7.2&In-Reply-To=%3C4DDAF29A.1000606%40googlemail.com%3E"
+       TITLE="[Opensim-users] Reappearing prims in regions, OS 0.7.2">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue May 24 01:49:46 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007387.html">[Opensim-users] Reappearing prims in regions, OS 0.7.2
+</A></li>
+        <LI>Next message: <A HREF="007388.html">[Opensim-users] Opensim won't connect to mysql server on diva distro
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7391">[ date ]</a>
+              <a href="thread.html#7391">[ thread ]</a>
+              <a href="subject.html#7391">[ subject ]</a>
+              <a href="author.html#7391">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>To be honest, this sounds like a bug to me.  Deletes should be immediate and wouldn't be affected by persistence times.
+
+When a prim/link set is deleted it is immediately wiped from memory and the database.  If for some reason it goes from 
+memory but not the database, then on restart it would reappear (which is consistent with what you're seeing).
+
+When this kind of thing occurs, you might want to try logging in another avatar to see if they can still see the 
+&quot;deleted&quot; objects.  And then experiment with deleting single prims or simple linksets (sounds like you might have been 
+already).
+
+You might also want to do something like
+
+select count(*) from prims;
+
+in the sql database and see if the number changes (it should if you're deleting prims).
+
+If you can get this down to a simple set of reproducible steps then please file a bug - I'm not aware of an existing one 
+for this.
+
+On 22/05/11 08:33, Chris wrote:
+&gt;<i> On 5/22/2011 2:28 AM, DutchGlory wrote:
+</I>&gt;&gt;<i> hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> has to do with when prims are saved to the database maybe turn up &quot;sweeps&quot;
+</I>&gt;&gt;<i> to make prims &quot;persistent&quot;
+</I>&gt;&gt;<i> ; Persistence of changed objects happens during regular sweeps. The
+</I>&gt;&gt;<i> following control that behaviour to
+</I>&gt;&gt;<i> ; prevent frequently changing objects from heavily loading the region
+</I>&gt;&gt;<i> data store.
+</I>&gt;&gt;<i> ; If both of these values are set to zero then persistence of all
+</I>&gt;&gt;<i> changed objects will happen on every sweep.
+</I>&gt;&gt;<i> ;
+</I>&gt;&gt;<i> ; Objects will be considered for persistance in the next sweep when they
+</I>&gt;&gt;<i> have not changed for this number of seconds
+</I>&gt;&gt;<i> MinimumTimeBeforePersistenceConsidered = 30
+</I>&gt;&gt;<i> ; Objects will always be considered for persistance in the next sweep if
+</I>&gt;&gt;<i> the first change occurred this number of seconds ago
+</I>&gt;&gt;<i> MaximumTimeBeforePersistenceConsidered = 300
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> a lower number will perform more sweeps. It has to do with lag or speed of
+</I>&gt;&gt;<i> PC, its different for every user..
+</I>&gt;&gt;<i> you can use use the &quot;backup&quot; command after every change, this will update
+</I>&gt;&gt;<i> everything...
+</I>&gt;&gt;<i> its a little fine tuning....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> dutch..
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -----
+</I>&gt;&gt;<i> ______________________________________________
+</I>&gt;&gt;<i> OpensimFan (twitter)
+</I>&gt;&gt;<i> MetalFan (OSGRID)
+</I>&gt;&gt;<i> Dutchlord (My Open Grid)
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> View this message in context:
+</I>&gt;&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/Reappearing-prims-in-regions-OS-0-7-2-tp6390572p6390932.html">http://opensim-users.2152040.n2.nabble.com/Reappearing-prims-in-regions-OS-0-7-2-tp6390572p6390932.html</A>
+</I>&gt;&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks much for the info =) I'll fiddle with these settings and see if it helps. But it is strange though that objects
+</I>&gt;<i> that I've deleted several hours before shutting the server down never get persisted as such, although it doesn't happen
+</I>&gt;<i> after every object deletion. It's seemingly random...
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007387.html">[Opensim-users] Reappearing prims in regions, OS 0.7.2
+</A></li>
+	<LI>Next message: <A HREF="007388.html">[Opensim-users] Opensim won't connect to mysql server on diva distro
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7391">[ date ]</a>
+              <a href="thread.html#7391">[ thread ]</a>
+              <a href="subject.html#7391">[ subject ]</a>
+              <a href="author.html#7391">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

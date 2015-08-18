@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] llGiveInventoryList to an object raises	exception
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llGiveInventoryList%20to%20an%20object%20raises%0A%09exception&In-Reply-To=%3CCABK-FkOLznCBvzWR-jz88AUTVSuLAYD%3DN0G%3DXZ_VM%2BbgLjQCsA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012031.html">
+   <LINK REL="Next"  HREF="012036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] llGiveInventoryList to an object raises	exception</H1>
+    <B>Storm Singer</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20llGiveInventoryList%20to%20an%20object%20raises%0A%09exception&In-Reply-To=%3CCABK-FkOLznCBvzWR-jz88AUTVSuLAYD%3DN0G%3DXZ_VM%2BbgLjQCsA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] llGiveInventoryList to an object raises	exception">mycatlovesme at gmail.com
+       </A><BR>
+    <I>Sat Apr 13 01:51:53 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012031.html">[Opensim-users] llGiveInventoryList to an object raises exception
+</A></li>
+        <LI>Next message: <A HREF="012036.html">[Opensim-users] llGiveInventoryList to an object raises exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12035">[ date ]</a>
+              <a href="thread.html#12035">[ thread ]</a>
+              <a href="subject.html#12035">[ subject ]</a>
+              <a href="author.html#12035">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Still afk, sorry... Have you tried removing the folder argument from the
+command? Since prims don't use it, perhaps that's what's causing the
+exception?
+On Apr 12, 2013 7:35 AM, &quot;Jeff Kelley&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at pescadoo.net</A>&gt; wrote:
+
+&gt;<i> At 5:19 AM -0400 4/12/13, Storm Singer wrote:
+</I>&gt;<i>
+</I>&gt;<i>   So my hypothesis is the argument may be looking for the uuid of an avatar
+</I>&gt;&gt;<i>  and just won't accept the uuid of an object.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Probably.
+</I>&gt;<i>
+</I>&gt;<i>   Will it accept the uuid of another user?
+</I>&gt;&gt;<i>
+</I>&gt;<i> Yes. The avatar receives the folder.
+</I>&gt;<i>
+</I>&gt;<i>   What about one that's offline?
+</I>&gt;&gt;<i>
+</I>&gt;<i> Nothing happens. No error.
+</I>&gt;<i>
+</I>&gt;<i>   Or what about perms on the object?
+</I>&gt;&gt;<i>
+</I>&gt;<i> Both objects, sender and receiver, are full-perms.
+</I>&gt;<i>
+</I>&gt;<i>   Distance of the object from the script calling it?
+</I>&gt;&gt;<i>
+</I>&gt;<i> About 2 meters.
+</I>&gt;<i>
+</I>&gt;<i>   Is the object on the root region?
+</I>&gt;&gt;<i>
+</I>&gt;<i> No.
+</I>&gt;<i>
+</I>&gt;<i>   Was it created on the root region?
+</I>&gt;&gt;<i>
+</I>&gt;<i> No.
+</I>&gt;<i>
+</I>&gt;<i>   Is it physical?
+</I>&gt;&gt;<i>
+</I>&gt;<i> No.
+</I>&gt;<i>
+</I>&gt;<i>   Phantom?
+</I>&gt;&gt;<i>
+</I>&gt;<i> No.
+</I>&gt;<i>
+</I>&gt;<i>   Also, what documentation are you using to get this command from?
+</I>&gt;&gt;<i>
+</I>&gt;<i> <A HREF="http://wiki.secondlife.com/**wiki/LlGiveInventoryList&lt;http://wiki.secondlife.com/wiki/LlGiveInventoryList">http://wiki.secondlife.com/**wiki/LlGiveInventoryList&lt;http://wiki.secondlife.com/wiki/LlGiveInventoryList</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>   Is there a similar one you can use instead?
+</I>&gt;&gt;<i>
+</I>&gt;<i> Yes, looping on llGiveInventory.
+</I>&gt;<i>
+</I>&gt;<i>   This may be desired behavior of the command, the term 'inventory' seems
+</I>&gt;&gt;<i> to
+</I>&gt;&gt;<i>  suggest it. (in the hazy realm of connotation.... What I mean is,
+</I>&gt;&gt;<i> &quot;people&quot; have
+</I>&gt;&gt;<i>  inventories, &quot;boxes&quot; don't.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The wiki says destination may be avatar or prim UUID.
+</I>&gt;<i> Boxes have inventories. They lie in the primItems table.
+</I>&gt;<i>
+</I>&gt;<i> They can't be hierarchical.
+</I>&gt;<i> So, llGiveInventoryList must ignore the 'folder' argument.
+</I>&gt;<i>
+</I>&gt;<i>   It would be some hours before I can get on my box to attempt to
+</I>&gt;&gt;<i> reproduce,
+</I>&gt;&gt;<i>  but if it is indeed desired behavior it should reproduce without issue.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks for your help.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- jeff
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20130412/1df5d793/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20130412/1df5d793/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012031.html">[Opensim-users] llGiveInventoryList to an object raises exception
+</A></li>
+	<LI>Next message: <A HREF="012036.html">[Opensim-users] llGiveInventoryList to an object raises exception
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12035">[ date ]</a>
+              <a href="thread.html#12035">[ thread ]</a>
+              <a href="subject.html#12035">[ subject ]</a>
+              <a href="author.html#12035">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

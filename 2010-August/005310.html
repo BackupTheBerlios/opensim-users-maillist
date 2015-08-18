@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim on Linux/Apache using Mono - System.Core Issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20on%20Linux/Apache%20using%20Mono%20-%0A%20System.Core%20Issues&In-Reply-To=%3C4C6EFD02.5000307%40livingsounds.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005272.html">
+   <LINK REL="Next"  HREF="005257.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim on Linux/Apache using Mono - System.Core Issues</H1>
+    <B>Ben Faust</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20on%20Linux/Apache%20using%20Mono%20-%0A%20System.Core%20Issues&In-Reply-To=%3C4C6EFD02.5000307%40livingsounds.org%3E"
+       TITLE="[Opensim-users] OpenSim on Linux/Apache using Mono - System.Core Issues">ben at livingsounds.org
+       </A><BR>
+    <I>Sat Aug 21 00:09:06 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005272.html">[Opensim-users] OpenSim on Linux/Apache using Mono - System.Core Issues
+</A></li>
+        <LI>Next message: <A HREF="005257.html">[Opensim-users] Default OpenSim web page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5310">[ date ]</a>
+              <a href="thread.html#5310">[ thread ]</a>
+              <a href="subject.html#5310">[ subject ]</a>
+              <a href="author.html#5310">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the help! I actually messed something up (never thought a 
+typo + rm would catch me) and had to reinstall the whole server... 
+Anyway, it's back up now with mono installed, and OpenSim is up and 
+running. Thanks!
+
+
+On 8/18/2010 11:47 AM, Kesick, Nicholas Charles wrote:
+&gt;<i> It's not bad getting it to work under Fedora actually. But that aside...
+</I>&gt;<i>
+</I>&gt;<i> Ok, I did some checking around (eg, Google) and I think I found how to fix it. Want some additional information though.
+</I>&gt;<i>
+</I>&gt;<i> &gt; From a terminal, run the following commands (CaSe SeNsItIvE)
+</I>&gt;<i> 1) updatedb
+</I>&gt;<i> 2) locate System.Core | grep .dll
+</I>&gt;<i> 3) Send back in an email what is returned
+</I>&gt;<i>
+</I>&gt;<i> If you don't see something like &quot;/usr/lib/mono/2.0/System.Core.dll&quot;, or anything ending in System.Core.dll, then you are missing the package with System.Core.dll and that's why.  If you do have it, you just have to tell the OS where it is.
+</I>&gt;<i>
+</I>&gt;<i> If you want to try though...
+</I>&gt;<i> Note what is returned.  It should be the first, something like &quot;/usr/lib/mono/2.0/System.Core.dll&quot;
+</I>&gt;<i> 4) Type &quot;export MONO_PATH=(the place where you found the System.Core.dll)
+</I>&gt;<i> ----eg, I would put export MONO_PATH=/usr/lib/mono/2.0/System.Core.dll
+</I>&gt;<i>
+</I>&gt;<i> Then give OpenSim a try again.
+</I>&gt;<i>
+</I>&gt;<i> - Nicholas Kesick
+</I>&gt;<i> Now at <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kesickn09 at students.ecu.edu</A>!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Ben Faust
+</I>&gt;<i> Sent: Tuesday, August 17, 2010 11:14 PM
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] OpenSim on Linux/Apache using Mono - System.Core Issues
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the help! I installed mono-devel and mono-script via yum, and
+</I>&gt;<i> it's still giving me the System.Core error. I am running Fedora. The
+</I>&gt;<i> fact you've run it means it can be done, so I have hope!
+</I>&gt;<i>
+</I>&gt;<i> On 8/17/2010 9:42 PM, Kesick, Nicholas Charles wrote:
+</I>&gt;<i>    
+</I>&gt;&gt;<i> Hey Ben,
+</I>&gt;&gt;<i> What distro of Linux are you using?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've done quite a bit of work with OpenSim for my university, and I've written plenty of directions that I need to post to the wiki.
+</I>&gt;&gt;<i> If you are running Fedora 11(?)/12/13, make sure you run &quot;yum install mono-devel mono-jscript&quot;.  That should solve your mono dependencies on Fedora.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Ubunutu... &quot;apt-get install mono-gmcs libmono-microsoft8.0-cil
+</I>&gt;&gt;<i>        libmono-system-runtime2.0-cil libmono-i18n2.0-cil libmono-oracle2.0-cil&quot; should cover all of the mono related packages on that distro.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Let me know if that helps or doesn't, or if you are using a different distro.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - Nicholas Kesick
+</I>&gt;&gt;<i> Now at <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kesickn09 at students.ecu.edu</A>!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Ben Faust
+</I>&gt;&gt;<i> Sent: Tuesday, August 17, 2010 6:20 PM
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: [Opensim-users] OpenSim on Linux/Apache using Mono - System.Core Issues
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I installed Mono on my Linux/Apache server and ran the Configure.exe
+</I>&gt;&gt;<i> without any problems. However, when running OpenSim.exe, it loads some
+</I>&gt;&gt;<i> of the dll's then dies with the following error. Anyone run into this?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 18:09:56 - [CLIENTSTACK]: Attempting to load
+</I>&gt;&gt;<i> OpenSim.Region.ClientStack.LindenUDP.dll
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** (OpenSim.exe:17321): WARNING **: The following assembly referenced
+</I>&gt;&gt;<i> from /home/opensim/bin/OpenSim.Region.ClientStack.LindenUDP.dll could
+</I>&gt;&gt;<i> not be loaded:
+</I>&gt;&gt;<i>         Assembly:   System.Core    (assemblyref_index=10)
+</I>&gt;&gt;<i>         Version:    3.5.0.0
+</I>&gt;&gt;<i>         Public Key: b77a5c561934e089
+</I>&gt;&gt;<i> The assembly was not found in the Global Assembly Cache, a path listed
+</I>&gt;&gt;<i> in the MONO_PATH environment variable, or in the location of the
+</I>&gt;&gt;<i> executing assembly (/home/opensim/bin/).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** (OpenSim.exe:17321): WARNING **: Could not load file or assembly
+</I>&gt;&gt;<i> 'System.Core, Version=3.5.0.0, Culture=neutral,
+</I>&gt;&gt;<i> PublicKeyToken=b77a5c561934e089' or one of its dependencies.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** (OpenSim.exe:17321): WARNING **: Could not load file or assembly
+</I>&gt;&gt;<i> 'System.Core, Version=3.5.0.0, Culture=neutral,
+</I>&gt;&gt;<i> PublicKeyToken=b77a5c561934e089' or one of its dependencies.
+</I>&gt;&gt;<i> 18:09:56 - System.TypeLoadException: Could not load type
+</I>&gt;&gt;<i> 'OpenSim.Region.ClientStack.LindenUDP.IncomingPacketHistoryCollection'
+</I>&gt;&gt;<i> from assembly 'OpenSim.Region.ClientStack.LindenUDP, Version=0.0.0.0,
+</I>&gt;&gt;<i> Culture=neutral'.
+</I>&gt;&gt;<i> 18:09:56 - System.TypeLoadException: Could not load type
+</I>&gt;&gt;<i> 'OpenSim.Region.ClientStack.LindenUDP.LLClientView' from assembly
+</I>&gt;&gt;<i> 'OpenSim.Region.ClientStack.LindenUDP, Version=0.0.0.0, Culture=neutral'.
+</I>&gt;&gt;<i> 18:09:56 - [APPLICATION]:
+</I>&gt;&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Exception: System.Reflection.ReflectionTypeLoadException: The classes in
+</I>&gt;&gt;<i> the module cannot be loaded.
+</I>&gt;&gt;<i>      at&lt;0x00000&gt;   &lt;unknown method&gt;
+</I>&gt;&gt;<i>      at (wrapper managed-to-native) System.Reflection.Assembly:GetTypes (bool)
+</I>&gt;&gt;<i>      at System.Reflection.Assembly.GetTypes () [0x00000]
+</I>&gt;&gt;<i>      at OpenSim.Region.ClientStack.ClientStackManager..ctor (System.String
+</I>&gt;&gt;<i> dllName) [0x00000]
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Application is terminating: True
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>      
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>    
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005272.html">[Opensim-users] OpenSim on Linux/Apache using Mono - System.Core Issues
+</A></li>
+	<LI>Next message: <A HREF="005257.html">[Opensim-users] Default OpenSim web page
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5310">[ date ]</a>
+              <a href="thread.html#5310">[ thread ]</a>
+              <a href="subject.html#5310">[ subject ]</a>
+              <a href="author.html#5310">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

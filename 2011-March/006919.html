@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Regions Won't Load
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Regions%20Won%27t%20Load&In-Reply-To=%3CAANLkTik_GjQTiB0gVxhUoRgXJvC4fq1i4FpEZt0c1cYt%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006918.html">
+   <LINK REL="Next"  HREF="006929.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Regions Won't Load</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Regions%20Won%27t%20Load&In-Reply-To=%3CAANLkTik_GjQTiB0gVxhUoRgXJvC4fq1i4FpEZt0c1cYt%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Regions Won't Load">teravus at gmail.com
+       </A><BR>
+    <I>Thu Mar 31 05:56:10 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006918.html">[Opensim-users] Regions Won't Load
+</A></li>
+        <LI>Next message: <A HREF="006929.html">[Opensim-users] can't tp home after hypergrid jump
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6919">[ date ]</a>
+              <a href="thread.html#6919">[ thread ]</a>
+              <a href="subject.html#6919">[ subject ]</a>
+              <a href="author.html#6919">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Looks like the Module Interface isn't loaded.
+
+I've seen this happen with OpenSimulator loaded in some profilers as
+well.   It boils down to Mono.Addins or a supporting library that
+Mono.Addins needs isn't installed
+
+Hope this helps!
+
+Teravus
+
+On Wed, Mar 30, 2011 at 10:34 PM, Timothy Hart &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">timothy.hart at gmail.com</A>&gt; wrote:
+&gt;<i> Hey everyone,
+</I>&gt;<i> I am trying to get OpenSim working on OS X and am hitting a weird wall. I am
+</I>&gt;<i> hoping someone has seen it before and knows what it is.
+</I>&gt;<i> OS: 10.6.7
+</I>&gt;<i> Mono: 2.6.7 (installed using MacPorts in
+</I>&gt;<i> /Users/Shared/OpenSim/supportfiles/mp/bin/mono, weird I know, but I have my
+</I>&gt;<i> reasons)
+</I>&gt;<i> MySQL: 5.1.54
+</I>&gt;<i> OpenSim: latest diva distro and regular binaries
+</I>&gt;<i> I have an inkling that my problem is mono related just because of the hell I
+</I>&gt;<i> went through to figure a way to get mono running from /Users/Shared. We will
+</I>&gt;<i> see.
+</I>&gt;<i> I am running OpenSim by the following:
+</I>&gt;<i> $/Users/Shared/OpenSim/supportfiles/mp/bin/mono OpenSim.exe.
+</I>&gt;<i> Everything load up hunky dory, though a little fast. It start up okay with
+</I>&gt;<i> no errors and drops me at Region (root) #. You think everything is okay, but
+</I>&gt;<i> I thought it was fishy when I couldn't connect. Running help at the prompt
+</I>&gt;<i> only shows a limited number of commands available. Odd.
+</I>&gt;<i> It is obvious at this point that none of the regions are loading. I tried it
+</I>&gt;<i> with mono in the normal location and it is all good. OpenSim asks the normal
+</I>&gt;<i> questions and I can connect.
+</I>&gt;<i> I try again with my mono install and it does the same thing. So I try:
+</I>&gt;<i> create region Test RegionConfig.ini. Here:
+</I>&gt;<i> Region (root) # create region Test RegionConfig.ini
+</I>&gt;<i> Region UUID [a63a0528-b6c2-4afc-b78b-9d58297b51da]:
+</I>&gt;<i> Region Location [1000,1000]:
+</I>&gt;<i> Internal IP address [0.0.0.0]:
+</I>&gt;<i> Internal port [9000]:
+</I>&gt;<i> Allow alternate ports [False]:
+</I>&gt;<i> External host name [SYSTEMIP]:
+</I>&gt;<i> Hunky dory. I tell it don't join and estate then name the estate. It thinks
+</I>&gt;<i> then says&#160;[MODULES]: The new RegionModulesController is missing... Keeps
+</I>&gt;<i> going and asks for my firstname then last and says:
+</I>&gt;<i> 22:31:59 - Command error: System.NullReferenceException: Object reference
+</I>&gt;<i> not set to an instance of an object
+</I>&gt;<i> &#160;&#160;at OpenSim.Region.Framework.Scenes.Scene.SetModuleInterfaces () [0x00000]
+</I>&gt;<i> in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+</I>&gt;<i> regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp; mscene)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+</I>&gt;<i> regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.OpenSim.HandleCreateRegion (System.String module,
+</I>&gt;<i> System.String[] cmd) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Framework.Console.Commands.Resolve (System.String[] cmd)
+</I>&gt;<i> [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Framework.Console.LocalConsole.ReadLine (System.String p,
+</I>&gt;<i> Boolean isCommand, Boolean e) [0x00000] in &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Framework.Console.CommandConsole.Prompt () [0x00000] in
+</I>&gt;<i> &lt;filename unknown&gt;:0
+</I>&gt;<i> &#160;&#160;at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename
+</I>&gt;<i> unknown&gt;:0
+</I>&gt;<i>
+</I>&gt;<i> Then it drop to Region (root) # without any regions loaded.
+</I>&gt;<i> Anyone seen this before? Any light you could shed would be awesome.
+</I>&gt;<i> T
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006918.html">[Opensim-users] Regions Won't Load
+</A></li>
+	<LI>Next message: <A HREF="006929.html">[Opensim-users] can't tp home after hypergrid jump
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6919">[ date ]</a>
+              <a href="thread.html#6919">[ thread ]</a>
+              <a href="subject.html#6919">[ subject ]</a>
+              <a href="author.html#6919">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Regions disappear after a relog?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Regions%20disappear%20after%20a%20relog%3F&In-Reply-To=%3C4C75BC90.3000408%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005350.html">
+   <LINK REL="Next"  HREF="005353.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Regions disappear after a relog?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Regions%20disappear%20after%20a%20relog%3F&In-Reply-To=%3C4C75BC90.3000408%40googlemail.com%3E"
+       TITLE="[Opensim-users] Regions disappear after a relog?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Aug 26 03:00:00 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005350.html">[Opensim-users] Regions disappear after a relog?
+</A></li>
+        <LI>Next message: <A HREF="005353.html">[Opensim-users] Regions disappear after a relog?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5352">[ date ]</a>
+              <a href="thread.html#5352">[ thread ]</a>
+              <a href="subject.html#5352">[ subject ]</a>
+              <a href="author.html#5352">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 25/08/10 10:51, Chris wrote:
+&gt;<i> I can comment out the line referring to this error message in the source
+</I>&gt;<i> code and compile it off that to prevent it from flooding the server out
+</I>&gt;<i> put and also flooding my log file, but I'm sure it doesn't address the
+</I>&gt;<i> actual issue lol...
+</I>
+Looks to me like you have some ODE physics issues.  Possibly you have a bad sculpty looking at the stack trace.  I'm 
+afraid that you might have to hunt down that rogue sculpt and delete it.
+
+Unfortunately, from a very brief look at the code, it doesn't seem that the ODE plugin currently retains the UUID of the 
+prims it's running physics for.  Might be worth considering adding that in order to make tracking down failures easier.
+
+&gt;<i>
+</I>&gt;<i> On 8/25/2010 4:46 AM, Chris wrote:
+</I>&gt;&gt;<i> I tried using 0.7.0.1 Post-Fixes as well then I remembered why I
+</I>&gt;&gt;<i> wanted to hold off from moving from 0.6.9
+</I>&gt;&gt;<i> In the 0.7.x series I keep getting an endless flood of the below,
+</I>&gt;&gt;<i> which I've not seen at all until moving to 0.7.X:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010-08-25 04:39:53,155 ERROR -
+</I>&gt;&gt;<i> OpenSim.Region.Physics.OdePlugin.OdeScene.Region 5 [PHYSICS]: Caught
+</I>&gt;&gt;<i> exception processing byte arrays in SculptMap(): e:
+</I>&gt;&gt;<i> System.ArgumentOutOfRangeException: Parameter must be positive and &lt;
+</I>&gt;&gt;<i> Width.
+</I>&gt;&gt;<i> Parameter name: x
+</I>&gt;&gt;<i> at System.Drawing.Bitmap.GetPixel(Int32 x, Int32 y)
+</I>&gt;&gt;<i> at PrimMesher.SculptMap..ctor(Bitmap bm, Int32 lod) in c:\Documents
+</I>&gt;&gt;<i> and Settings\Chris\Desktop\OpenSim\OS 070\opensim-070 Post
+</I>&gt;&gt;<i> Fixes\OpenSim\Region\Physics\Meshing\SculptMap.cs:line 109, Void
+</I>&gt;&gt;<i> .ctor(System.Drawing.Bitmap, Int32), System.Exception: Caught
+</I>&gt;&gt;<i> exception processing byte arrays in SculptMap(): e:
+</I>&gt;&gt;<i> System.ArgumentOutOfRangeException: Parameter must be positive and &lt;
+</I>&gt;&gt;<i> Width.
+</I>&gt;&gt;<i> Parameter name: x
+</I>&gt;&gt;<i> at System.Drawing.Bitmap.GetPixel(Int32 x, Int32 y)
+</I>&gt;&gt;<i> at PrimMesher.SculptMap..ctor(Bitmap bm, Int32 lod) in c:\Documents
+</I>&gt;&gt;<i> and Settings\Chris\Desktop\OpenSim\OS 070\opensim-070 Post
+</I>&gt;&gt;<i> Fixes\OpenSim\Region\Physics\Meshing\SculptMap.cs:line 109
+</I>&gt;&gt;<i> at PrimMesher.SculptMap..ctor(Bitmap bm, Int32 lod) in c:\Documents
+</I>&gt;&gt;<i> and Settings\Chris\Desktop\OpenSim\OS 070\opensim-070 Post
+</I>&gt;&gt;<i> Fixes\OpenSim\Region\Physics\Meshing\SculptMap.cs:line 121
+</I>&gt;&gt;<i> at PrimMesher.SculptMesh._SculptMesh(Bitmap sculptBitmap, SculptType
+</I>&gt;&gt;<i> sculptType, Int32 lod, Boolean viewerMode, Boolean mirror, Boolean
+</I>&gt;&gt;<i> invert) in c:\Documents and Settings\Chris\Desktop\OpenSim\OS
+</I>&gt;&gt;<i> 070\opensim-070 Post
+</I>&gt;&gt;<i> Fixes\OpenSim\Region\Physics\Meshing\SculptMesh.cs:line 299
+</I>&gt;&gt;<i> at PrimMesher.SculptMesh..ctor(Bitmap sculptBitmap, SculptType
+</I>&gt;&gt;<i> sculptType, Int32 lod, Boolean viewerMode, Boolean mirror, Boolean
+</I>&gt;&gt;<i> invert) in c:\Documents and Settings\Chris\Desktop\OpenSim\OS
+</I>&gt;&gt;<i> 070\opensim-070 Post
+</I>&gt;&gt;<i> Fixes\OpenSim\Region\Physics\Meshing\SculptMesh.cs:line 185
+</I>&gt;&gt;<i> at
+</I>&gt;&gt;<i> OpenSim.Region.Physics.Meshing.Meshmerizer.CreateMeshFromPrimMesher(String
+</I>&gt;&gt;<i> primName, PrimitiveBaseShape primShape, Vector3 size, Single lod) in
+</I>&gt;&gt;<i> c:\Documents and Settings\Chris\Desktop\OpenSim\OS 070\opensim-070
+</I>&gt;&gt;<i> Post Fixes\OpenSim\Region\Physics\Meshing\Meshmerizer.cs:line 339
+</I>&gt;&gt;<i> at OpenSim.Region.Physics.Meshing.Meshmerizer.CreateMesh(String
+</I>&gt;&gt;<i> primName, PrimitiveBaseShape primShape, Vector3 size, Single lod,
+</I>&gt;&gt;<i> Boolean isPhysical) in c:\Documents and
+</I>&gt;&gt;<i> Settings\Chris\Desktop\OpenSim\OS 070\opensim-070 Post
+</I>&gt;&gt;<i> Fixes\OpenSim\Region\Physics\Meshing\Meshmerizer.cs:line 509
+</I>&gt;&gt;<i> at OpenSim.Region.Physics.OdePlugin.OdePrim.changeadd(Single timestep)
+</I>&gt;&gt;<i> in c:\Documents and Settings\Chris\Desktop\OpenSim\OS 070\opensim-070
+</I>&gt;&gt;<i> Post Fixes\OpenSim\Region\Physics\OdePlugin\ODEPrim.cs:line 1447
+</I>&gt;&gt;<i> at OpenSim.Region.Physics.OdePlugin.OdePrim.ProcessTaints(Single
+</I>&gt;&gt;<i> timestep) in c:\Documents and Settings\Chris\Desktop\OpenSim\OS
+</I>&gt;&gt;<i> 070\opensim-070 Post
+</I>&gt;&gt;<i> Fixes\OpenSim\Region\Physics\OdePlugin\ODEPrim.cs:line 880
+</I>&gt;&gt;<i> at OpenSim.Region.Physics.OdePlugin.OdeScene.Simulate(Single timeStep)
+</I>&gt;&gt;<i> in c:\Documents and Settings\Chris\Desktop\OpenSim\OS 070\opensim-070
+</I>&gt;&gt;<i> Post Fixes\OpenSim\Region\Physics\OdePlugin\OdePlugin.cs:line 2757
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 8/24/2010 6:37 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;<i> On 23/08/10 02:45, Chris wrote:
+</I>&gt;&gt;&gt;&gt;<i> Also, I have also noticed that if I relog a few times the regions
+</I>&gt;&gt;&gt;&gt;<i> sometimes come back and sometimes they don't.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On 8/22/2010 8:31 PM, Chris wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> Hi all,
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> I'm using OS 0.6.9 Post-Fixes (Recent as of about a week and a half
+</I>&gt;&gt;&gt;&gt;&gt;<i> ago; maybe two weeks. Don't remember exactly) and I've started
+</I>&gt;&gt;&gt;&gt;&gt;<i> noticing recently that when ever I log out and then log back in later,
+</I>&gt;&gt;&gt;&gt;&gt;<i> all the regions surrounding me disappear except the region that I
+</I>&gt;&gt;&gt;&gt;&gt;<i> logged out from. I can still see the regions on the map, but if I try
+</I>&gt;&gt;&gt;&gt;&gt;<i> to cross over to one of them by walking/flying past the sim border, my
+</I>&gt;&gt;&gt;&gt;&gt;<i> avatar gets stuck and I have to relog. I've found that I can select
+</I>&gt;&gt;&gt;&gt;&gt;<i> the region on the map and TP to it (even though I can't actually see
+</I>&gt;&gt;&gt;&gt;&gt;<i> the region in world) and it lets me TP to it, the region appears all
+</I>&gt;&gt;&gt;&gt;&gt;<i> of a sudden and it works fine... for a few seconds. After a few
+</I>&gt;&gt;&gt;&gt;&gt;<i> seconds I get the &quot;You have been logged out of Second Life&quot; message
+</I>&gt;&gt;&gt;&gt;&gt;<i> and I'm logged out.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> Would anyone happen to know why this may be happening? It has been
+</I>&gt;&gt;&gt;&gt;&gt;<i> working fine for me up until now. I cleared out my MySQL database and
+</I>&gt;&gt;&gt;&gt;&gt;<i> restored from a backup that I had and the issue still persists.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I've heard a few odd reports of this but unfortunately it's not a
+</I>&gt;&gt;&gt;<i> general problem.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I would have to recommend that you update to 0.7.0.1 and try again if
+</I>&gt;&gt;&gt;<i> at all possible, since it's unlikely that such issues will be fixed
+</I>&gt;&gt;&gt;<i> with 0.6.9-post-fixes.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005350.html">[Opensim-users] Regions disappear after a relog?
+</A></li>
+	<LI>Next message: <A HREF="005353.html">[Opensim-users] Regions disappear after a relog?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5352">[ date ]</a>
+              <a href="thread.html#5352">[ thread ]</a>
+              <a href="subject.html#5352">[ subject ]</a>
+              <a href="author.html#5352">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

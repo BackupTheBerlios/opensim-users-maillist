@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Grey avatars &amp; no hair or eyes!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Grey%20avatars%20%26%20no%20hair%20or%20eyes%21&In-Reply-To=%3C004f01ca50d9%2417a97fb0%2446fc7f10%24%40freeserve.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002923.html">
+   <LINK REL="Next"  HREF="002925.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Grey avatars &amp; no hair or eyes!</H1>
+    <B>Kevin Buckley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Grey%20avatars%20%26%20no%20hair%20or%20eyes%21&In-Reply-To=%3C004f01ca50d9%2417a97fb0%2446fc7f10%24%40freeserve.co.uk%3E"
+       TITLE="[Opensim-users] Grey avatars &amp; no hair or eyes!">kevin at buckley70.freeserve.co.uk
+       </A><BR>
+    <I>Mon Oct 19 18:27:46 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002923.html">[Opensim-users] Grey avatars &amp; no hair or eyes!
+</A></li>
+        <LI>Next message: <A HREF="002925.html">[Opensim-users] Grey avatars &amp; no hair or eyes!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2924">[ date ]</a>
+              <a href="thread.html#2924">[ thread ]</a>
+              <a href="subject.html#2924">[ subject ]</a>
+              <a href="author.html#2924">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK - some progress.  I am running standalone - but I have created a number
+of different 'Regions' (defined in Regions.ini).  I have one AV 'homed' in
+one region (set during 'create user' - at 1000,1000 for example) and another
+in a different region (at 500,500 for example).
+
+Each AV sees itself OK (except for the white eyes!).  If I TP one AV so they
+are now both standing next to each other, then each one sees the other grey.
+
+HOWEVER - if I give the visitor AV a copy of some body parts (skin, hair
+etc.) and he wears them, hey presto!! He becomes visible!
+
+However, if we TP to another region, then it's back to grey.
+
+So a few questions:
+
+1) Are you allowed to have regions in standalone mode?
+2) Do I need to enable or config something to enable assets to follow the AV
+from region to region?
+
+Thanks, Kevin
+
+-----Original Message-----
+From: Kevin Buckley [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>] 
+Sent: 19 October 2009 16:37
+To: '<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>'
+Subject: RE: [Opensim-users] Grey avatars &amp; no hair or eyes!
+
+Thanks Bill.  I tried logging into OSGrid - no problem, no grey avatars.  So
+I downloaded the latest OSGrid release from there (rather than r0.6.7),
+changed it to Standalone (Opensim.ini, Standalonecommon.ini) and ran on my
+server (I even used a shiny new MySQL database).
+
+Same problem.  Other avatars are grey and my eyes (not my hair now) are
+white.  If I edit appearance they change colour for a few seconds then
+revert to white.
+
+So seemingly it must either be related to operating Standalone, or there's
+something about my PC/software (Windows XP SP2, Pentium processor) which is
+causing it.
+
+It's very frustrating when you do the same as everyone else (allegedly!) but
+YOUR build behaves differently!
+
+Kevin
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of William Magee
+Sent: 19 October 2009 10:44
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Grey avatars &amp; no hair or eyes!
+
+
+Hi Kevin,
+
+Well, I sweated this gray clothes blank hair and eyes thing for 2
+days. I redid the body parts and eyes again and again. Finally, I
+logged in one time and it was all good.
+
+But that is too much work for a production machine, so I moved the
+school back onto the Diva distro, which does not have this problem.
+
+Here is some old info from the SL blog that I was getting ready to try
+when my avatar finally decided not to be a ghoul:
+
+At <A HREF="https://lists.berlios.de/pipermail/opensim-dev/2008-September/003133.html">https://lists.berlios.de/pipermail/opensim-dev/2008-September/003133.html</A>
+
+I find this:
+
+and for what its worth... just for kicks I added a 5 second sleep into
+the inventory retrieval in the mysql inventory module, it fixes the
+gray avatar problem. which seems to indicate that the client is
+expecting a particular order... and speeding up inventory retrieval
+broke that ordering.
+
+And these might help:
+
+<A HREF="http://blog.secondlife.com/2006/09/18/getting-technical-baked-avatar-texture">http://blog.secondlife.com/2006/09/18/getting-technical-baked-avatar-texture</A>
+s/
+
+<A HREF="http://blog.secondlife.com/2006/10/11/gray-and-missing-image-avatars/">http://blog.secondlife.com/2006/10/11/gray-and-missing-image-avatars/</A>
+
+Good luck,
+Bill
+
+
+On Mon, Oct 19, 2009 at 3:37 PM, Kevin Buckley
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt; wrote:
+&gt;<i> I did that already - and that solved my initial 'cloud' problem. &#160;I even
+</I>&gt;<i> imported some clothes and skins from 2L that I created there. &#160;Still same
+</I>&gt;<i> issue - I can see myself and my clothes/skins/hair, but other AV is grey,
+</I>&gt;<i> and my hair and eyes are white (blank?). &#160;And vice-versa.
+</I>&gt;<i>
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+</I>&gt;<i> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of William Magee
+</I>&gt;<i> Sent: 19 October 2009 02:53
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Opensim-users] Grey avatars &amp; no hair or eyes!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This problem can be fixed by creating new shape, skin, hair, clothes,
+</I>&gt;<i> etc and changing their default settings (including their names, I
+</I>&gt;<i> think).
+</I>&gt;<i>
+</I>&gt;<i> The mantis says this:
+</I>&gt;<i>
+</I>&gt;<i> This issue is kind of expected behavior. If you create new clothes and
+</I>&gt;<i> don't change it's parameter, the viewer understands it to be the
+</I>&gt;<i> default wearables (aka Ruth). Since the viewers no longer has (SL)
+</I>&gt;<i> Ruth, you become clouds of gas or all greyed out. Not sure how to fix
+</I>&gt;<i> this yet.
+</I>&gt;<i>
+</I>&gt;<i> and:
+</I>&gt;<i>
+</I>&gt;<i> It's been decided that grids are supposed to implement first clothes
+</I>&gt;<i> for users to avoid Ruthness issues. Still trying to come up with a
+</I>&gt;<i> default real clothing, but this issue is not really bug, so closing it
+</I>&gt;<i> down.
+</I>&gt;<i>
+</I>&gt;<i> See the report:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=3804">http://opensimulator.org/mantis/view.php?id=3804</A>
+</I>&gt;<i>
+</I>&gt;<i> Cheers,
+</I>&gt;<i> Bill
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Oct 19, 2009 at 8:57 AM, Kevin Buckley
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt; wrote:
+</I>&gt;&gt;<i> I&#146;m having a few problems with rel 0.6.7.&#160; I am running standalone and
+</I>&gt;<i> have
+</I>&gt;&gt;<i> 2 users (each are &#145;Master Avatar&#146; of their own regions).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When we are both logged-in we see ourselves OK but see the other AV as
+</I>&gt;<i> grey
+</I>&gt;&gt;<i> (apart from hair and eyes &#150; see below).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> We see our own hair and eyes as blank (white) but other AV hair and eyes
+</I>&gt;<i> as
+</I>&gt;&gt;<i> OK.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If I edit appearance, hair and eyes become normal &#150; but a few seconds
+</I>&gt;<i> after
+</I>&gt;&gt;<i> exiting &#145;edit appearance&#146; they revert to blank.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Anyone experiencing this (and knows how to fix)?&#160; I&#146;m using MySQL by the
+</I>&gt;&gt;<i> way.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Also, I have Physics set to ODE and this is causing a lot of &#145;flailing&#146;.
+</I>&gt;&gt;<i> How to fix?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any suggestions appreciated!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+William Magee, Ph.D.
+Tibetan Section
+Dharma Drum Buddhist College
+Jinshan, Taiwan
+<A HREF="http://magee.ddbc.edu.tw">http://magee.ddbc.edu.tw</A>
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002923.html">[Opensim-users] Grey avatars &amp; no hair or eyes!
+</A></li>
+	<LI>Next message: <A HREF="002925.html">[Opensim-users] Grey avatars &amp; no hair or eyes!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2924">[ date ]</a>
+              <a href="thread.html#2924">[ thread ]</a>
+              <a href="subject.html#2924">[ subject ]</a>
+              <a href="author.html#2924">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,581 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Region load error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20load%20error&In-Reply-To=%3C48777471.4070201%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000340.html">
+   <LINK REL="Next"  HREF="000342.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Region load error</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20load%20error&In-Reply-To=%3C48777471.4070201%40googlemail.com%3E"
+       TITLE="[Opensim-users] Region load error">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Jul 11 16:55:45 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000340.html">[Opensim-users] Region load error
+</A></li>
+        <LI>Next message: <A HREF="000342.html">[Opensim-users] OpenSim load/save archive feature (highly experimental) now available for testing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#341">[ date ]</a>
+              <a href="thread.html#341">[ thread ]</a>
+              <a href="subject.html#341">[ subject ]</a>
+              <a href="author.html#341">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">david at pryor.eu.com</A> wrote:
+&gt;<i> 
+</I>&gt;<i> Having got the standalone version running I thought I&#8217;d get ambitious 
+</I>&gt;<i> and try for multi-regions. I&#8217;m running OpenSim under XP and connecting 
+</I>&gt;<i> from a Vista PC on my own network. I downloaded and installed MySQL and 
+</I>&gt;<i> it appears to be working, I then created some more regions, using 
+</I>&gt;<i> default.xml as an example, each with their own uuid&#8217;s, region names, 
+</I>&gt;<i> port numbers etc. From the frist time I tried running the grid I have 
+</I>&gt;<i> been getting an error indicating that I&#8217;m trying to load the default 
+</I>&gt;<i> region &#8220;OpenSim Test&#8221;, twice.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> I have tried removing default.xml and I don&#8217;t get an error but cannot 
+</I>&gt;<i> then logon, if I change the name in default.xml I get the error but it 
+</I>&gt;<i> says I&#8217;m trying to load &#8220;New region name&#8221; into the same place as region 
+</I>&gt;<i> &#8220;OpenSim Test&#8221;.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> I have tried removing all .xml files and starting again but get the same 
+</I>&gt;<i> result over and over again, the error is sown in two places, OpenSim and 
+</I>&gt;<i> the Grid Server, the grid server seem to survive but OpenSim stops. I 
+</I>&gt;<i> guess I&#8217;m missing something simple somewhere but I cannot spot it. By 
+</I>&gt;<i> the way when I have removed the default.xml file so OpenSim starts but 
+</I>&gt;<i> refuses my attempts to logon and then create a map, all regions I have 
+</I>&gt;<i> added as well as the default region are shown.
+</I>
+It sounds like you're running in grid mode.  Have you tried deleting and recreating all the database 
+tables as well?
+
+&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> The second problem I have is more of an annoyance than a bug, and that 
+</I>&gt;<i> having deleted all server .xml files, when answering the question for a 
+</I>&gt;<i> first time start the User, Grid and Asset servers remember 
+</I>&gt;<i> &#8216;OpenSim.Data.MqSQL.dll&#8217; for [DATASTORE], the Inventory server keeps 
+</I>&gt;<i> trying for SQLite.dll meaning I have to enter it manually, also nothing 
+</I>&gt;<i> I do will get any server to offer the database connection string I have 
+</I>&gt;<i> to use. I have tried editing various .ini files but to no avail.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>
+This has been fixed in the latest subversion trunk.
+
+&gt;<i> 
+</I>&gt;<i> I have attached screen output from OpenSim and the Grid server below and 
+</I>&gt;<i> hope I have given enough information about the problems, if not please 
+</I>&gt;<i> let me know what else is needed.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> As I said before any assistance would be gratefully received, thanks in 
+</I>&gt;<i> advance.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Dave
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> C:\Program Files\OpenGrid\opensimbin&gt;opensim -gridmode=true
+</I>&gt;<i> 
+</I>&gt;<i> log4net:ERROR XmlHierarchyConfigurator: No appender named 
+</I>&gt;<i> [NHibernateFileLog] co
+</I>&gt;<i> 
+</I>&gt;<i> uld be found.
+</I>&gt;<i> 
+</I>&gt;<i> log4net:ERROR XmlHierarchyConfigurator: Appender named 
+</I>&gt;<i> [NHibernateFileLog] not f
+</I>&gt;<i> 
+</I>&gt;<i> ound.
+</I>&gt;<i> 
+</I>&gt;<i> Performing compatibility checks...  Environment is compatible.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - 
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - ========================= STARTING OPENSIM 
+</I>&gt;<i> =========================
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - 
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [OPENSIM MAIN]: Running in grid mode
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [STARTUP]: Beginning startup processing
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [STARTUP]: Version OpenSimulator trunk (post 0.5.8), SVN 
+</I>&gt;<i> build revisi
+</I>&gt;<i> 
+</I>&gt;<i> on not available, OS Microsoft Windows NT 5.1.2600 Service Pack 3
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [DATASTORE]: Attempting to load OpenSim.Data.MySQL.dll
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [REGION DB]: MySql - connecting: Data 
+</I>&gt;<i> Source=localhost;Database=opens
+</I>&gt;<i> 
+</I>&gt;<i> im;User ID=root;Password=mysqlpassword;Protocol=pipe;Pipe=mysql
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - MIGRATION: Match: 001
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - MIGRATION: Match: 002
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - Resource 'RegionStore' was not found
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [DATASTORE]: Added IRegionDataStore Interface
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [ASSET SERVER]: Starting asset storage system
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [ASSET CACHE]: Creating Asset cache
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [REGION]: Starting HTTP server
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [HTTPD]: Starting up HTTP Server
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [HTTPD]: Spawned main thread OK
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [LIBRARY INVENTORY]: Loading library inventory
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:01 - [LIBRARY INVENTORY]: Loading libraries control file 
+</I>&gt;<i> .\inventory\Libra
+</I>&gt;<i> 
+</I>&gt;<i> ries.xml
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSi
+</I>&gt;<i> 
+</I>&gt;<i> m.ApplicationPlugins.RegionProxy.RegionProxyPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - Starting proxy
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSi
+</I>&gt;<i> 
+</I>&gt;<i> m.ApplicationPlugins.RemoteController.RemoteAdminPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSi
+</I>&gt;<i> 
+</I>&gt;<i> m.ApplicationPlugins.Rest.Regions.RestRegionPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [REST-REGION]: #0 Rest Plugins are disabled
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [REST-REGION]: #0 Rest Plugins are disabled
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSi
+</I>&gt;<i> 
+</I>&gt;<i> m.ApplicationPlugins.LoadBalancer.LoadBalancerPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [BALANCER]: Entering Initialize()
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSi
+</I>&gt;<i> 
+</I>&gt;<i> m.ApplicationPlugins.LoadRegions.LoadRegionsPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [LOADREGIONS]: Load Regions addin being initialised
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [LOADREGIONS]: Loading Region Info from filesystem
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [LOADREGIONS]: Creating Region: OpenSim Test (ThreadID: 1)
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [REGION DB]: Loaded terrain revision r1
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: Added meshing engine: ZeroMesher
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: Added physics engine: basicphysics
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: Added physics engine: modified_BulletX
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: Added meshing engine: Meshmerizer
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: Added physics engine: OpenDynamicsEngine
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: Added physics engine: RealPhysX
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: Added physics engine: POS
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: creating meshing engine ZeroMesher
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PHYSICS]: creating basicphysics
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [GRID]: Error sent by user server when trying to get user 
+</I>&gt;<i> profile: (u
+</I>&gt;<i> 
+</I>&gt;<i> nknown_user): The user requested is not in the database
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [PARCEL]: No master avatar found, using null.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [SCENE]: Loading objects from datastore
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [REGION DB]: Loaded 0 prims for region: 
+</I>&gt;<i> ad88ba0a-a951-4031-8e37-f1bd0
+</I>&gt;<i> 
+</I>&gt;<i> 5b34b05
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [SCENE]: Loaded 0 SceneObject(s)
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [SCENE]: Starting timer
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:02 - [MODULES]: Loading Region's modules
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:03 - [MODULES]: Found Module Library [C:\Program 
+</I>&gt;<i> Files\OpenGrid\opensimbin
+</I>&gt;<i> 
+</I>&gt;<i> \OpenSim.Region.DataSnapshot.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:03 - [MODULES]:    [External Data Generator]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]: Found Module Library [C:\Program 
+</I>&gt;<i> Files\OpenGrid\opensimbin
+</I>&gt;<i> 
+</I>&gt;<i> \OpenSim.Region.Environment.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [AssetDownloadModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [AgentTransactionModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [TextureDownloadModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [XferModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [ChatModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [IRCBridgeModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [BetaGridLikeMoneyModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [FriendsModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [GroupsModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [InstantMessageModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [InventoryModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [AvatarProfilesModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [AsteriskVoiceModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [ASTERISKVOICE]: plugin disabled by configuration
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [VoiceModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [VOICE]: plugin disabled
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [CommanderTestModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [InterregionModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [DynamicTextureModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [HttpScriptRequests]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [LoadImageURL]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [VectorRenderModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [WorldCommModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [XMLRPCModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [ArchiverModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [EstateManagementModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [LandManagementModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [NPCModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [PermissionsModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [ExportSerialisationModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [SunModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [SUN]: Initializing
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [SUN]: localtime offset is 72000000000
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [SUN]: Configuration access failed, using defaults. Reason: 
+</I>&gt;<i> Object re
+</I>&gt;<i> 
+</I>&gt;<i> ference not set to an instance of an object.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [SUN]: Mode is SL
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [SUN]: Initialization completed. Day is 14400 seconds, and 
+</I>&gt;<i> year is 60
+</I>&gt;<i> 
+</I>&gt;<i>  days
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [SUN]: Axis offset is 0.45
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [SUN]: Positional data updated every 100 frames
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [TerrainModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [TreePopulatorModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [TREES]: Initialised tree module
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [WorldMapModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]: Found Module Library [C:\Program 
+</I>&gt;<i> Files\OpenGrid\opensimbin
+</I>&gt;<i> 
+</I>&gt;<i> \OpenSim.Region.Modules.AvatarFactory.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [Default Avatar Factory]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]: Found Module Library [C:\Program 
+</I>&gt;<i> Files\OpenGrid\opensimbin
+</I>&gt;<i> 
+</I>&gt;<i> \OpenSim.Region.Modules.SvnSerialiser.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]:    [SvnBackupModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [CHAT]: initialized for OpenSim Test w:10 s:30 S:100
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [DATASNAPSHOT]: Loading configuration
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [DATASNAPSHOT]: Data snapshot disabled, not adding scene to 
+</I>&gt;<i> module (o
+</I>&gt;<i> 
+</I>&gt;<i> r anything else).
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [IRC]: module not configured
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]: Loading scripting engine modules
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:04 - [MODULES]: Loading scripting engine: 
+</I>&gt;<i> OpenSim.Region.ScriptEngine.DotN
+</I>&gt;<i> 
+</I>&gt;<i> etEngine.dll
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [MODULES]: Found Module Library 
+</I>&gt;<i> [ScriptEngines\OpenSim.Region.ScriptE
+</I>&gt;<i> 
+</I>&gt;<i> ngine.DotNetEngine.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [MODULES]:    [Common.ScriptEngine.DotNetEngine]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [ScriptEngine.DotNetEngine]: ScriptEngine initializing
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [ScriptEngine.DotNetEngine]: Hooking up to server events
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [ScriptEngine.DotNetEngine]: Allowed languages: lsl,cs,js,vb
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [ScriptEngine.DotNetEngine]: Reading configuration from 
+</I>&gt;<i> config sectio
+</I>&gt;<i> 
+</I>&gt;<i> n &quot;ScriptEngine.DotNetEngine&quot;
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [MAPTILE]: Generating Maptile Step 1: Terrain
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [MAPTILE]: Generating Maptile Step 1: Done in 360 ms
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [MAPTILE]: Generating Maptile Step 2: Object Volume Profile
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:05 - [MAPTILE]: Generating Maptile Step 2: Done in 0 ms
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:06 - [MAPTILE]: REUSING OLD MAPTILE IMAGE ID
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:06 - [GRID ASSET CLIENT]: Sending store request for asset 
+</I>&gt;<i> 48b56de5-2a17-48
+</I>&gt;<i> 
+</I>&gt;<i> 8e-a952-ab733266d271
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:07 - [OGS1 GRID SERVICES]: Attempting to register region OpenSim 
+</I>&gt;<i> Test with
+</I>&gt;<i> 
+</I>&gt;<i>  grid at <A HREF="http://127.0.0.1:8001">http://127.0.0.1:8001</A>
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:07 - [STARTUP]: Registration of region with grid failed, aborting 
+</I>&gt;<i> startup
+</I>&gt;<i> 
+</I>&gt;<i> - System.Exception: Unable to connect to grid at <A HREF="http://127.0.0.1:8001:">http://127.0.0.1:8001:</A> 
+</I>&gt;<i> Another
+</I>&gt;<i> 
+</I>&gt;<i> region already exists at that location.  Please try another.
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> C:\Program Files\OpenGrid\opensimbin&gt;
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:08 - [STARTUP]: Beginning startup processing
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:08 - [STARTUP]: Version OpenSimulator trunk (post 0.5.8), SVN 
+</I>&gt;<i> build revisi
+</I>&gt;<i> 
+</I>&gt;<i> on not available, OS Microsoft Windows NT 5.1.2600 Service Pack 3
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:08 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: OGS Grid Owner [OGS development team]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Default Asset Server URI [<A HREF="http://127.0.0.1:8003/">http://127.0.0.1:8003/</A>]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Key to send to asset server [null]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Key to expect from asset server [null]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Default User Server URI [<A HREF="http://127.0.0.1:8002/">http://127.0.0.1:8002/</A>]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Key to send to user server [null]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Key to expect from user server [null]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Key to send to a simulator [null]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Key to expect from a simulator [null]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: DLL for database provider [OpenSim.Data.MySQL.dll]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Database connect string []:
+</I>&gt;<i> 
+</I>&gt;<i> Data Source=localhost;Database=opensim;User 
+</I>&gt;<i> ID=root;Password=mysqlpassword;Proto
+</I>&gt;<i> 
+</I>&gt;<i> col=pipe;Pipe=mysql
+</I>&gt;<i> 
+</I>&gt;<i> GRID SERVER: Http Listener port [8001]:
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:31 - [DATA]: Connecting to Storage Server
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:31 - [DATA]: Attempting to load OpenSim.Data.MySQL.dll
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:31 - [DATA]: Found 7 interfaces.
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:32 - [MYSQL]: Connection established
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:32 - [DATA]: Added IGridData Interface
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:32 - [MYSQL]: Connection established
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:32 - [DATA]: Added ILogData Interface
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:32 - [GRID]: Starting HTTP process
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:32 - [HTTPD]: Starting up HTTP Server
+</I>&gt;<i> 
+</I>&gt;<i> 19:13:32 - [HTTPD]: Spawned main thread OK
+</I>&gt;<i> 
+</I>&gt;<i> Enter help for a list of commands
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> Grid# :
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:07 - [LOGIN BEGIN]: Received login request from simulator: OpenSim 
+</I>&gt;<i> Test
+</I>&gt;<i> 
+</I>&gt;<i> 19:16:07 - [LOGIN END]: Failed to login region OpenSim Test at location 
+</I>&gt;<i> 1000 100
+</I>&gt;<i> 
+</I>&gt;<i> 0 currently occupied by OpenSim Test
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000340.html">[Opensim-users] Region load error
+</A></li>
+	<LI>Next message: <A HREF="000342.html">[Opensim-users] OpenSim load/save archive feature (highly experimental) now available for testing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#341">[ date ]</a>
+              <a href="thread.html#341">[ thread ]</a>
+              <a href="subject.html#341">[ subject ]</a>
+              <a href="author.html#341">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

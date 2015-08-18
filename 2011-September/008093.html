@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Retaining correct creator/owner when moving OARs between stand-alone simulators.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Retaining%20correct%20creator/owner%20when%20moving%0A%20OARs%20between%20stand-alone%20simulators.&In-Reply-To=%3C4E67E570.5030509%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008091.html">
+   <LINK REL="Next"  HREF="008109.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Retaining correct creator/owner when moving OARs between stand-alone simulators.</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Retaining%20correct%20creator/owner%20when%20moving%0A%20OARs%20between%20stand-alone%20simulators.&In-Reply-To=%3C4E67E570.5030509%40googlemail.com%3E"
+       TITLE="[Opensim-users] Retaining correct creator/owner when moving OARs between stand-alone simulators.">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Sep  7 23:43:12 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008091.html">[Opensim-users] Retaining correct creator/owner when moving OARs between stand-alone simulators.
+</A></li>
+        <LI>Next message: <A HREF="008109.html">[Opensim-users] Retaining correct creator/owner when moving OARs between stand-alone simulators.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8093">[ date ]</a>
+              <a href="thread.html#8093">[ thread ]</a>
+              <a href="subject.html#8093">[ subject ]</a>
+              <a href="author.html#8093">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This isn't currently possible - creator fields are quite like labels and are conceptually separate from simulator logic. 
+  The owner fields are much more involved in things such as permissions checks.
+
+You could also argue that conceptually if you load an OAR into a region you 'own' the instantiations of those objects. 
+Ownership of the copyright, on the other hand, may still belong to the listed creator depending upon what license is 
+attached to the objects.
+
+On 07/09/11 18:11, Kurt Reisler wrote:
+&gt;<i> Confirmed. Using the save oar --profile &lt;random URL&gt; filename.oar resulted in the imported assets having the correct
+</I>&gt;<i> creator (that account name exists on both platforms), but the owner is still the person who did the importing (me). Is
+</I>&gt;<i> there any way to have both the creator and the owner set correctly if that name exists, even if the UUIDs are different
+</I>&gt;<i> across platforms?
+</I>&gt;<i>
+</I>&gt;<i> So, that is a 50% solution.
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i> Kurt
+</I>&gt;<i>
+</I>&gt;<i> On 9/4/2011 3:21 PM, Oren Hurvitz wrote:
+</I>&gt;&gt;<i> When you save an OAR and use the &quot;--profile&quot; option, the resulting XML
+</I>&gt;&gt;<i> contains an additional field for each item: &quot;CreatorData&quot;. This field
+</I>&gt;&gt;<i> contains the URL of your site's profile server (which isn't actually used,
+</I>&gt;&gt;<i> so it can be anything), and the creator's name.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When you load an OAR that contains this information:
+</I>&gt;&gt;<i> 1. If the creator's UUID exists on the grid then it's used.
+</I>&gt;&gt;<i> 2. Otherwise, if a user with the same *name* as the creator exists then that
+</I>&gt;&gt;<i> user's UUID is used.
+</I>&gt;&gt;<i> 3. Otherwise, the importing user becomes the creator (this is the most
+</I>&gt;&gt;<i> common outcome).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> View this message in context:
+</I>&gt;&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/Retaining-correct-creator-owner-when-moving-OARs-between-stand-alone-simulators-tp6754685p6759048.html">http://opensim-users.2152040.n2.nabble.com/Retaining-correct-creator-owner-when-moving-OARs-between-stand-alone-simulators-tp6754685p6759048.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008091.html">[Opensim-users] Retaining correct creator/owner when moving OARs between stand-alone simulators.
+</A></li>
+	<LI>Next message: <A HREF="008109.html">[Opensim-users] Retaining correct creator/owner when moving OARs between stand-alone simulators.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8093">[ date ]</a>
+              <a href="thread.html#8093">[ thread ]</a>
+              <a href="subject.html#8093">[ subject ]</a>
+              <a href="author.html#8093">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

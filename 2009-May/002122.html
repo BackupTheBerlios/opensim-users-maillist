@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Region status reporting/monitoring with json
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20status%20reporting/monitoring%20with%20json&In-Reply-To=%3Ccfce29900905130223rd825aa1k6085f0122d882434%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002121.html">
+   <LINK REL="Next"  HREF="002123.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Region status reporting/monitoring with json</H1>
+    <B>BlueWall Slade</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20status%20reporting/monitoring%20with%20json&In-Reply-To=%3Ccfce29900905130223rd825aa1k6085f0122d882434%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Region status reporting/monitoring with json">bluewall.slade at gmail.com
+       </A><BR>
+    <I>Wed May 13 11:23:39 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002121.html">[Opensim-users] Region status reporting/monitoring with json
+</A></li>
+        <LI>Next message: <A HREF="002123.html">[Opensim-users] Region status reporting/monitoring with json
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2122">[ date ]</a>
+              <a href="thread.html#2122">[ thread ]</a>
+              <a href="subject.html#2122">[ subject ]</a>
+              <a href="author.html#2122">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>URL Correction : <A HREF="http://ascent.bluewallgroup.com/jtest.html">http://ascent.bluewallgroup.com/jtest.html</A>
+
+
+
+On Wed, May 13, 2009 at 4:33 AM, BlueWall Slade &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">bluewall.slade at gmail.com</A>&gt;wrote:
+
+&gt;<i> As of OpenSim svn 9529 the xtended stats reporting will return a jsonp
+</I>&gt;<i> callback to allow popular javascript toolkits to use the returned data to
+</I>&gt;<i> create ajax monitoring applications in the browser. This is an advantage
+</I>&gt;<i> because after the page is loaded, the browser will interact directly with
+</I>&gt;<i> the region, eliminating traffic through the website (polling the region and
+</I>&gt;<i> servicing the browser). It also allows the creation of mashups to create
+</I>&gt;<i> mini-monitor apps in other pages.
+</I>&gt;<i>
+</I>&gt;<i> To enable your stats reporting, set the following in your OpenSim.ini...
+</I>&gt;<i>
+</I>&gt;<i>     ; Simulator Stats URI
+</I>&gt;<i>     ; Enable JSON simulator data by setting a URI name (case sensitive)
+</I>&gt;<i>     Stats_URI = &quot;jsonSimStats&quot;
+</I>&gt;<i>
+</I>&gt;<i> ...the URI can be anything you want, and is case sensitive. You can query
+</I>&gt;<i> the URI directly to return a json string to use in php, python, java, etc.
+</I>&gt;<i> or you may use one of the popular javascript toolkits to have OpenSim
+</I>&gt;<i> generate a callback for jsonp. The json serialization carries the following
+</I>&gt;<i> data...
+</I>&gt;<i>
+</I>&gt;<i> {&quot;AssetsInCache&quot;:5.0,&quot;TimeAfterCacheMiss&quot;:0.0,&quot;BlockedMissingTextureRequests&quot;:0.0,&quot;AssetServiceRequestFailures&quot;:0.0,&quot;abnormalClientThreadTerminations&quot;:0.0,
+</I>&gt;<i>    &quot;InventoryServiceRetrievalFailures&quot;:0.0,&quot;Dilatn&quot;:0.967380821704865,&quot;SimFPS&quot;:55.0,&quot;PhyFPS&quot;:47.1628913879395,&quot;AgntUp&quot;:0.0,&quot;RootAg&quot;:0.0,
+</I>&gt;<i>
+</I>&gt;<i>    &quot;ChldAg&quot;:0.0,&quot;Prims&quot;:0.0,&quot;AtvPrm&quot;:0.0,&quot;AtvScr&quot;:0.0,&quot;ScrLPS&quot;:0.0,&quot;PktsIn&quot;:0.0,&quot;PktOut&quot;:0.0,&quot;PendDl&quot;:0.0,&quot;PendUl&quot;:0.0,&quot;UnackB&quot;:0.0,&quot;TotlFt&quot;:0.0,
+</I>&gt;<i>
+</I>&gt;<i>    &quot;NetFt&quot;:0.0,&quot;PhysFt&quot;:0.0,&quot;OthrFt&quot;:0.0,&quot;AgntFt&quot;:0.0,&quot;ImgsFt&quot;:0.0,&quot;Memory&quot;:&quot;8&quot;,&quot;Uptime&quot;:&quot;05:12:19.0365590&quot;,
+</I>&gt;<i>    &quot;Version&quot;:&quot;OpenSimulator Server  0.6.4.9533 &quot;}
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Here is an example I have running, and will leave up for a while (
+</I>&gt;<i> <A HREF="http://ascent.bluewalgroup.com/jtest.html">http://ascent.bluewalgroup.com/jtest.html</A> ) . You can use it as a starting
+</I>&gt;<i> place to create monitors for your regions.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &lt;html&gt;
+</I>&gt;<i> &lt;head&gt;
+</I>&gt;<i>     &lt;title&gt;JSON Test&lt;/title&gt;
+</I>&gt;<i> &lt;script src=&quot;<A HREF="http://ascent.bluewallgroup.com/jquery-1.3.2.js">http://ascent.bluewallgroup.com/jquery-1.3.2.js</A>&quot;&gt;&lt;/script&gt;
+</I>&gt;<i> &lt;script src=&quot;<A HREF="http://ascent.bluewallgroup.com/timer.js">http://ascent.bluewallgroup.com/timer.js</A>&quot;&gt;&lt;/script&gt;
+</I>&gt;<i> &lt;script type=&quot;text/javascript&quot; src=&quot;<A HREF="http://www.google.com/jsapi">http://www.google.com/jsapi</A>&quot;&gt;&lt;/script&gt;
+</I>&gt;<i> &lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt;
+</I>&gt;<i>   SimFPS = 0;
+</I>&gt;<i>   PhyFPS = 0;
+</I>&gt;<i>   Memory = 0;
+</I>&gt;<i>   RootAg = 0;
+</I>&gt;<i>   ChldAg = 0;
+</I>&gt;<i>   Uptime = &quot;&quot;;
+</I>&gt;<i>   Version = &quot;&quot;;
+</I>&gt;<i> &lt;/script&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   $.timer(15000, function(timer) {
+</I>&gt;<i>   $.getJSON(&quot;<A HREF="http://ascent.bluewallgroup.com:9300/jsonSimStats/?callback=?">http://ascent.bluewallgroup.com:9300/jsonSimStats/?callback=?</A>&quot;,
+</I>&gt;<i>
+</I>&gt;<i>   function(data){
+</I>&gt;<i>
+</I>&gt;<i>       SimFPS = Math.round(data.SimFPS);
+</I>&gt;<i>       PhyFPS = Math.round(data.PhyFPS);
+</I>&gt;<i>       Memory = Math.round(data.Memory);
+</I>&gt;<i>       ChldAg = data.ChldAg;
+</I>&gt;<i>       RootAg = data.RootAg;
+</I>&gt;<i>       Uptime = data.Uptime;
+</I>&gt;<i>       Version = data.Version;
+</I>&gt;<i>       drawChart();
+</I>&gt;<i>       setTags();
+</I>&gt;<i>       timer.reset(15000);
+</I>&gt;<i>   });
+</I>&gt;<i>   });
+</I>&gt;<i> &lt;/script&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt;
+</I>&gt;<i>
+</I>&gt;<i>   google.load(&quot;visualization&quot;, &quot;1&quot;, {packages:[&quot;gauge&quot;]});
+</I>&gt;<i>   google.setOnLoadCallback(drawChart);
+</I>&gt;<i>   function drawChart() {
+</I>&gt;<i>     var cdata = new google.visualization.DataTable();
+</I>&gt;<i>     cdata.addColumn('string', 'Label');
+</I>&gt;<i>     cdata.addColumn('number', 'Value');
+</I>&gt;<i>     cdata.addRows(3);
+</I>&gt;<i>     cdata.setValue(0, 0, 'SimFPS');
+</I>&gt;<i>     cdata.setValue(0, 1, SimFPS);
+</I>&gt;<i>     cdata.setValue(1, 0, 'PhyFPS');
+</I>&gt;<i>     cdata.setValue(1, 1, PhyFPS);
+</I>&gt;<i>     cdata.setValue(2, 0, 'Memory');
+</I>&gt;<i>     cdata.setValue(2, 1, Memory);
+</I>&gt;<i>
+</I>&gt;<i>     var chart = new
+</I>&gt;<i> google.visualization.Gauge(document.getElementById('chart_div'));
+</I>&gt;<i>     var options = {width: 400, height: 120, redFrom: 90, redTo: 100,
+</I>&gt;<i>         yellowFrom:75, yellowTo: 90, minorTicks: 5};
+</I>&gt;<i>     chart.draw(cdata, options);
+</I>&gt;<i>   }
+</I>&gt;<i> &lt;/script&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;script type=&quot;text/javascript&quot; language=&quot;JavaScript&quot;&gt;
+</I>&gt;<i>    function setTags() {
+</I>&gt;<i>       $(&quot;#par-uptime&quot;).text(&quot;Uptime: &quot;  + Uptime);
+</I>&gt;<i>       $(&quot;#par-ragent&quot;).text(&quot;Root Agent: &quot; + RootAg);
+</I>&gt;<i>       $(&quot;#par-version&quot;).text(&quot;Version: &quot; + Version);
+</I>&gt;<i>       $(&quot;#par-cagent&quot;).text(&quot;Child Agent: &quot; + ChldAg);
+</I>&gt;<i>    }
+</I>&gt;<i> &lt;/script&gt;
+</I>&gt;<i>
+</I>&gt;<i> &lt;/head&gt;
+</I>&gt;<i> &lt;body&gt;
+</I>&gt;<i> &lt;h1&gt;BlueWall Development Region&lt;/h1&gt;
+</I>&gt;<i> &lt;table&gt;
+</I>&gt;<i> &lt;tr&gt;&lt;td&gt;
+</I>&gt;<i> &lt;div id=&quot;par-version&quot;&gt;version&lt;/div&gt;
+</I>&gt;<i> &lt;/td&gt;&lt;td&gt;
+</I>&gt;<i> &lt;div id=&quot;par-ragent&quot;&gt;root agent&lt;/div&gt;
+</I>&gt;<i> &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
+</I>&gt;<i> &lt;div id=&quot;par-uptime&quot;&gt;uptime&lt;/div&gt;
+</I>&gt;<i> &lt;/td&gt;&lt;td&gt;
+</I>&gt;<i> &lt;div id=&quot;par-cagent&quot;&gt;child agent&lt;/div&gt;
+</I>&gt;<i> &lt;/td&gt;&lt;/tr&gt;
+</I>&gt;<i> &lt;/table&gt;
+</I>&gt;<i> &lt;div id=&quot;chart_div&quot;&gt;&lt;/div&gt;
+</I>&gt;<i> &lt;/body&gt;
+</I>&gt;<i> &lt;/html&gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Have Fun!
+</I>&gt;<i> BlueWall
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090513/3536ace0/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090513/3536ace0/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002121.html">[Opensim-users] Region status reporting/monitoring with json
+</A></li>
+	<LI>Next message: <A HREF="002123.html">[Opensim-users] Region status reporting/monitoring with json
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2122">[ date ]</a>
+              <a href="thread.html#2122">[ thread ]</a>
+              <a href="subject.html#2122">[ subject ]</a>
+              <a href="author.html#2122">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

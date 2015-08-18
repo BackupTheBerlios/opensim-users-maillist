@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] XmlRpcRouter consolidating llRemoteData channels
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20XmlRpcRouter%20consolidating%20llRemoteData%20channels&In-Reply-To=%3C50AADDB2.3050900%40bluewallgroup.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011369.html">
+   <LINK REL="Next"  HREF="011372.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] XmlRpcRouter consolidating llRemoteData channels</H1>
+    <B>James Hughes</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20XmlRpcRouter%20consolidating%20llRemoteData%20channels&In-Reply-To=%3C50AADDB2.3050900%40bluewallgroup.com%3E"
+       TITLE="[Opensim-users] XmlRpcRouter consolidating llRemoteData channels">jamesh at bluewallgroup.com
+       </A><BR>
+    <I>Tue Nov 20 02:32:34 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011369.html">[Opensim-users] Announcement of inventory tool (MyInventory)
+</A></li>
+        <LI>Next message: <A HREF="011372.html">[Opensim-users] Feature Request for HyperGrid - source publishing.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11370">[ date ]</a>
+              <a href="thread.html#11370">[ thread ]</a>
+              <a href="subject.html#11370">[ subject ]</a>
+              <a href="author.html#11370">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I made the web part of the XmlRpcGridRouter available today. The module 
+has been in OpenSim core for some time, but was little known. Http in 
+has become very popular for communication with in-world objects since 
+it's inception. But, the llRemoteData is still very useful and is fairly 
+simple to use. The issue with use in OpenSim has been keeping up with 
+all the ip addresses and ports of the simulators containing the objects 
+and matching them with their channels. Also, in SecondLife this service 
+was very unreliable and was prone to timeouts.
+
+The OpenSim module allows simulators to register the llRemoteData 
+channels with an external service that can keep track of the active 
+channels and pair them with their simulator's ip and port address. This 
+allows a use to setup the external service and point their simulator 
+toward the registration uri. As objects request remote data channels, 
+they will register with the gateway. External applications use the 
+outward facing uri to access any of the registered objects with the 
+standard llRemoteData calls. This is not a &quot;grid only&quot; tool. anyone 
+managing groups of simulators my take advantage of it to aggregate their 
+llRemoteData traffic through a single access point.
+
+As I started updating this for release, I re-wrote it using the same 
+xml-rpc library that SecondLife is reported to use and had poor 
+performance. as this is a very specific application, I was able to 
+remove the library and write at a lower level and have had excellent 
+results in testing. Hopefully this will be useful to people looking to 
+integrate external applications with their simulators.
+
+Find code, instructions and testing tools at GForge - 
+<A HREF="http://forge.opensimulator.org/gf/project/xmlrpcrouter/">http://forge.opensimulator.org/gf/project/xmlrpcrouter/</A> or Github - 
+<A HREF="https://github.com/BlueWall/XmlRpcRouter.">https://github.com/BlueWall/XmlRpcRouter.</A>
+
+Thanks,
+BlueWall
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011369.html">[Opensim-users] Announcement of inventory tool (MyInventory)
+</A></li>
+	<LI>Next message: <A HREF="011372.html">[Opensim-users] Feature Request for HyperGrid - source publishing.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11370">[ date ]</a>
+              <a href="thread.html#11370">[ thread ]</a>
+              <a href="subject.html#11370">[ subject ]</a>
+              <a href="author.html#11370">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] strReplace not functioning in OpenSim?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20strReplace%20not%20functioning%20in%20OpenSim%3F&In-Reply-To=%3C4e303a18.02cae30a.0df1.01e4%40mx.google.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007775.html">
+   <LINK REL="Next"  HREF="007777.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] strReplace not functioning in OpenSim?</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20strReplace%20not%20functioning%20in%20OpenSim%3F&In-Reply-To=%3C4e303a18.02cae30a.0df1.01e4%40mx.google.com%3E"
+       TITLE="[Opensim-users] strReplace not functioning in OpenSim?">ai.ai.austin at gmail.com
+       </A><BR>
+    <I>Wed Jul 27 18:17:18 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007775.html">[Opensim-users] latest opensim git: To many errors to mention..!!! with physics, with flotsam cache etc.
+</A></li>
+        <LI>Next message: <A HREF="007777.html">[Opensim-users] strReplace not functioning in OpenSim?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7776">[ date ]</a>
+              <a href="thread.html#7776">[ thread ]</a>
+              <a href="subject.html#7776">[ subject ]</a>
+              <a href="author.html#7776">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I seem to be having a problem with some utility functions in LSL in a 
+script I am trying to bringing over from a Second Life display 
+screen... This strReplace function from 
+<A HREF="http://wiki.secondlife.com/wiki/Combined_Library">http://wiki.secondlife.com/wiki/Combined_Library</A> which we have used 
+seems to be the problem:
+
+I wonder if someone knows the problem, as the two routines used are 
+indicated as implemented in OpenSim.
+
+For these tests I was using OpenSim 0.7.1.1 and 0.7.2 dev master and 
+Imprudence and SL 2.8.0 viewers, so I think its not a specifuc 
+version or viewer issue.
+
+-----------------------------------------
+
+string strReplace(string str, string search, string replace) {
+     return llDumpList2String(llParseStringKeepNulls((str = &quot;&quot;) + 
+str, [search], []), replace);
+}
+
+default {
+     touch_start(integer num){
+        llSay(0,&quot;avatar=&quot;+llDetectedName(0));
+        llSay(0,&quot;avatar_mod=&quot;+strReplace(llDetectedName(0),&quot; &quot;,&quot;_&quot;));
+     }
+}
+
+------------------------------------------------
+The first line works, the second just lists when touched by an avatar 
+with a name like &quot;Ai Austin&quot; it is meant to be able to replace the 
+spaces with underscores and produce &quot;Ai_Austin&quot; but it actually seems 
+to return the null string in OpenSim 0.7.2 dev master r/16364 anyway.
+
+avatar=Ai Austin
+avatar_mod=
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007775.html">[Opensim-users] latest opensim git: To many errors to mention..!!! with physics, with flotsam cache etc.
+</A></li>
+	<LI>Next message: <A HREF="007777.html">[Opensim-users] strReplace not functioning in OpenSim?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7776">[ date ]</a>
+              <a href="thread.html#7776">[ thread ]</a>
+              <a href="subject.html#7776">[ subject ]</a>
+              <a href="author.html#7776">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

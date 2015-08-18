@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] plugin/extension/module system for viewers?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20plugin/extension/module%20system%20for%20viewers%3F&In-Reply-To=%3C1308045175.11215.14.camel%40pulkka%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007589.html">
+   <LINK REL="Next"  HREF="007501.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] plugin/extension/module system for viewers?</H1>
+    <B>Toni Alatalo</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20plugin/extension/module%20system%20for%20viewers%3F&In-Reply-To=%3C1308045175.11215.14.camel%40pulkka%3E"
+       TITLE="[Opensim-users] plugin/extension/module system for viewers?">toni at playsign.net
+       </A><BR>
+    <I>Tue Jun 14 11:52:54 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007589.html">[Opensim-users] Opensim Car and Plane
+</A></li>
+        <LI>Next message: <A HREF="007501.html">[Opensim-users] Dinuka Thilanga invites you to join My Opera
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7500">[ date ]</a>
+              <a href="thread.html#7500">[ thread ]</a>
+              <a href="subject.html#7500">[ subject ]</a>
+              <a href="author.html#7500">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, 2011-05-16 at 17:49 -0400, Sean McNamara wrote:
+
+Hi again, sorry for the delayed reply - saw one screenshot now that made
+me recall that should comment this:
+
+&gt;<i> &gt;&gt;&gt; just go ahead throw it out there -- Why hasn't there been some sort of
+</I>&gt;<i> &gt;&gt;&gt; plugin/module system developed for Viewers? Something along the lines
+</I>&gt;<i> &gt; We did this by developing a modular viewer, Naali. It has a module system somewhat similar to Opensim, but in C++.
+</I>&gt;<i> then I would *imagine* that (barring a herculean effort) your
+</I>&gt;<i> rendering engine is still quite basic compared to SL + Windlight +
+</I>&gt;<i> shaders + SSAO + ... ; but from a software engineer's perspective, I
+</I>&gt;<i> think I'll much prefer the modular code of RealXtend over the
+</I>
+This is not actually true, because reX has never written a rendering
+engine.
+
+Like basically all other features too, it is implemented by a
+pre-existing open source library. For graphics, it is Ogre3d. Besides
+the core Ogre, there are all sorts of plugins and additions to it, which
+we integrate as well .. like this screenshot shows SkyX for skies and
+Hydrax for water:
+
+<A HREF="http://dl.dropbox.com/u/16413694/rex/Tundra2SkXHydax.png">http://dl.dropbox.com/u/16413694/rex/Tundra2SkXHydax.png</A>
+
+There's pretty cool stuff in <A HREF="http://www.ogre3d.org/gallery/">http://www.ogre3d.org/gallery/</A>
+
+BTW IIRC the guy who originally wrote Ogre was doing some dev for Linden
+as well at one point, I think exactly the Windlight integration or so.
+
+The problem with typical SL &amp; Opensim content, and renderers like Ogre,
+is that the user generated content with lots of separate prims and
+non-optimal texturing etc. needs clever processing (batching and such)
+to perform well. This is not a problem for many of the current reX
+users, for example our little studio, because we have never made
+anything with prims. But certainly is a bummer somewhere like osgrid's
+Wright Plaza :p . There are known solutions, dunno if those will be ever
+implemented in Naali. I think one unity3d using viewer had done the
+similar basics that would be needed with ogre too.
+
+&gt;<i> Too bad that the virtual world community seems to be divided between
+</I>&gt;<i> the BSD licensed stuff and the LGPL/GPL licensed stuff.... due to
+</I>&gt;<i> fears of inadvertently &quot;polluting&quot; one codebase with code from
+</I>&gt;<i> another, there might sometimes restrictions on what a single developer
+</I>&gt;<i> can do once they've read / worked on significant parts of the LL
+</I>&gt;<i> viewer code. And probably the same applies for folks who work on
+</I>&gt;<i> RealXtend code and then want to contribute to the LL viewer or a TPV.
+</I>
+Actually that problem is one way only -- studying reX and Opensimulator
+codes doesn't prevent you from working on LL viewer or some TPV based on
+it.
+
+But yes this divide has been very real and unfortunate. Hopefully
+changes .. the new LGPL adoption on the Linden side is AFAIK BSD
+compatible, e.g. Naali could use a lib made from slviewer code.
+
+&gt;<i> Anyway, your post really impressed me and I'll look into your project.
+</I>&gt;<i> Do you guys use OpenSim as your server-side? I'm assuming yes... if
+</I>&gt;<i> so, at least you might benefit from my contributions to OpenSim, if
+</I>&gt;<i> not directly to Naali. :)
+</I>
+Yes, we both use and don't use Opensim actually. Earlier it was the only
+option, with the Naali + Taiga (== Opensim + ModRex) combination. But
+now there is Tundra SDK too, which is actually a server module added to
+the Naali codebase .. and corresponding client side logic and connection
+with a new simple protocol.
+
+Because we use and (potentially) dev Opensim as well, and welcome
+Opensim devs to work on the viewer side, we've been applying the
+contribution policy of Opensim. Which is indeed also very unfortunate
+'cause would be good to be able to collaborate with slviewer &amp;/ tpv devs
+better.
+
+Thanks for the interest!
+
+&gt;<i> Sean
+</I>
+~Toni
+
+&gt;<i> &gt;&gt;&gt; 2. Nobody has taken the time to implement it
+</I>&gt;<i> &gt;&gt; This seems the most likely alternative to me.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It did take us a couple of years :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Nah, it's not impossible. Of course you'd have to use a dynamically
+</I>&gt;<i> &gt;&gt; interpreted language for plugins, because the viewer is written in
+</I>&gt;<i> &gt;&gt; C++, which compiles to native code. Distributing plugins as native
+</I>&gt;<i> &gt;&gt; code is dangerous for two reasons: one, it's impossible to sandbox or
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Naali supports currently C++ modules, Python add-ons, but for custom functionality, most significantly Javascript which is loaded from the web.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The support for interpreted languages was made exactly was this reason -- dealing with native code addons is much more hairy.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The C++ module system is still highly useful. For one, by using it for almost all functionality, many of the things are optional. For example the Bullet physics library, which is integrated in one module (yes, works on the viewer side too, which is often *very* useful). Also people sometimes need to do custom stuff in native code for special applications, which can be useful even if that is made in some special module that doesn't need to be distributed.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; interpreted scripting language and then designing a stable plugin API
+</I>&gt;<i> &gt;&gt; is no walk in the park; just ask the developers who work on Firefox or
+</I>&gt;<i> &gt;&gt; Chrome's plugin architecture. The biggest challenge would come in
+</I>&gt;<i> &gt;&gt; supporting whatever plugin API you design over the lifetime of the
+</I>&gt;<i> &gt;&gt; viewer, or properly versioning the plugin API in a way that doesn't
+</I>&gt;<i> &gt;&gt; break too many plugins too often (Firefox does this).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; We think we are close to freezing the first step of the API now, to declare it 1.0. It is documented in <A HREF="http://www.realxtend.org/doxygen/">http://www.realxtend.org/doxygen/</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It still takes us at least some weeks anyway to make the last currently planned breaking changes. so now is a good time to give feedback if something seems wrong.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This API is indeed similar to the W3C standardized DOM in web browser. In web browsers, the Javascript scope has things like 'document' and 'window'. In this virtual world browser, instead, there is 'scene' which has all the entities (prims on the opensim side) etc. And renderer which you can use for raycast etc.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; The challenging part of this is to engineer a plugins API that is
+</I>&gt;<i> &gt;&gt; useful, but not so expansive or general that it would (a) pose a
+</I>&gt;<i> &gt;&gt; security risk to the user (stealing their password etc), or (b) allow
+</I>&gt;<i> &gt;&gt; the plugin to do crazy things like provide mesh support (yes, I'm
+</I>&gt;<i> &gt;&gt; replying to your message DutchGlory), which could never gain any
+</I>&gt;<i> &gt;&gt; semblance of performance implemented in an interpreted scripting
+</I>&gt;<i> &gt;&gt; language.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; We believe a good way to advance standardization etc. is to implement stuff, so now there is a working implementation out, even in production use, so we can really evaluate and test all these problems.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Security is certainly a huge deal. I did the basics to sandbox our JS API in December, to protect from basic attacks known from the browser land, but it certainly needs more review still. It is now made so that remotely loaded JS code shouldn't be able to get system access in any way.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Prim support in Naali is in c++, actually predates really working Python or Javascript support. Possibly is best to remain in c++ too.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But some quite central things, like avatars and cameras, are now ported from C++ to Javascript. No performance problems there, it's not like you have thousands of them around in your scene. Object editing has been in Python since the beginning (was the original benchmark for the scripting API: i figured that if doing basic object editing is possible in a script, then also making games is easily possible).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Also in the current Tundra 1.0.6 release, the whole UI (which looks like a web browser) is implemented in Javascript now. Naali 0.4 still has a largely c++ written UI (with some Python tools).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; If I were to lay out a possible approach for this, I'd say we could
+</I>&gt;<i> &gt;&gt; start with QtScript or Lua integration into the viewer. QtScript
+</I>&gt;<i> &gt;&gt; provides JavaScript support, and is specifically designed to help you
+</I>&gt;<i> &gt;&gt; create an extension language for your app; and, it's written in C++ (a
+</I>&gt;<i> &gt;&gt; huge plus considering the rest of the viewer is). The license is
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This is exactly how we've done it in Naali too.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The other guys originally used GTK for first UI tests, just to get debug info of the from-the-scratch written LLUDP implementation (Naali is BSD style apache licensed, no Linden code, respects the Opensim contributions policy). I was experimenting with adding Python support just manually first, to better know what kind of a tool would need for the job.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Then we decided to use QT for UI, just to get something for good 2d widgets. Soon I learned about qtscript (and the similar pythonqt) which indeed use the qobject metadata mechanism for automatic exposing of c++ things to scripting, so we went with that and have during the past 1,5years ported all the modules, entity-components etc. to QObjects. So the same API works for c++, py and js. Lua could be easily added in a new c++ module, using QtLua. Then for the security reasons for remotely loaded code, only selected parts are available in the context for those (and new contexts are easy to make for different purposes, e.g. to support LSL style where a script can only see the own object).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; BTW: the JS system is not (only) a plugin / addon system, but it is also the way to make applications. It is identical to how web works as an app platform: besides getting static data from the servers, the viewer downloads also executable code as a part of the service. This way any sim can implement whatever kind of client side functionality, e.g. UI dialogs, mouse&amp;keyboard handling etc. it wants.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Some examples:
+</I>&gt;<i> &gt; the current free camera: <A HREF="https://github.com/realXtend/naali/blob/tundra/bin/jsmodules/camera/freelookcamera.js">https://github.com/realXtend/naali/blob/tundra/bin/jsmodules/camera/freelookcamera.js</A>
+</I>&gt;<i> &gt; This default camera is instanciated by startup/cameraapplication.js so is always there by default.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; client side chat UI: <A HREF="https://github.com/realXtend/naali/blob/tundra/bin/scenes/ChatApplication/ChatApplication.js#L237">https://github.com/realXtend/naali/blob/tundra/bin/scenes/ChatApplication/ChatApplication.js#L237</A> .
+</I>&gt;<i> &gt; This is typically loaded from the server, if the service you connect to has decided to have a chat feature.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; say that you should bring this up with the Imprudence developers for
+</I>&gt;<i> &gt;&gt; starters. Don't go to Linden Lab because they will say &quot;show us the
+</I>&gt;<i> &gt;&gt; code or be quiet&quot;, essentially. They have their own feature roadmap
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; You could show Linden our code, I don't know if they've looked at it :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But yah, I've bugged the Imprudence devs about this periodically .. well more late last year, when they said the time was immature as they had a lot to do with basics, but they hoped to get to this later.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I guess there's two options for those who want this: a) try to do this on the SLviewer base b) join the Naali effort, where it's already made, to help getting missing SL features (or whatever features you need, that you typically use with Opensim) there. One benefit of Naali is that it's a normal open source project, like Opensim, not controlled by any single company, and has a liberal license compatible with Opensimulator itself. But sure SLviewer has a lot of nice functionality, is quite interesting if we'd get this in e.g. Imprudence too.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Sean
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ~Toni
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;&gt; Anyway, just pipe-dreaming here! :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; No pipe dreaming, it is already the reality, and quite normal (web browsers have had this for long, so why not vw viewers).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;&gt; Cheers,
+</I>&gt;<i> &gt;&gt;&gt; ~!CiderJack
+</I>&gt;<i> &gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007589.html">[Opensim-users] Opensim Car and Plane
+</A></li>
+	<LI>Next message: <A HREF="007501.html">[Opensim-users] Dinuka Thilanga invites you to join My Opera
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7500">[ date ]</a>
+              <a href="thread.html#7500">[ thread ]</a>
+              <a href="subject.html#7500">[ subject ]</a>
+              <a href="author.html#7500">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

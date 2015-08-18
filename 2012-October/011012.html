@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OSSL function threat level restrictions -	PARCEL_GROUP_MEMBER flag
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OSSL%20function%20threat%20level%20restrictions%20-%0A%09PARCEL_GROUP_MEMBER%20flag&In-Reply-To=%3CCAG6z%2BU6MUUmez%2BCdXBxyy%3Dmbim9%2Br6mMq3%2Bk-8b91iUz2fOV3A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011039.html">
+   <LINK REL="Next"  HREF="011015.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OSSL function threat level restrictions -	PARCEL_GROUP_MEMBER flag</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OSSL%20function%20threat%20level%20restrictions%20-%0A%09PARCEL_GROUP_MEMBER%20flag&In-Reply-To=%3CCAG6z%2BU6MUUmez%2BCdXBxyy%3Dmbim9%2Br6mMq3%2Bk-8b91iUz2fOV3A%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] OSSL function threat level restrictions -	PARCEL_GROUP_MEMBER flag">fleep513 at gmail.com
+       </A><BR>
+    <I>Wed Oct  3 19:03:41 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011039.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+        <LI>Next message: <A HREF="011015.html">[Opensim-users] New account inventory is lacking standard set of	folders
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11012">[ date ]</a>
+              <a href="thread.html#11012">[ thread ]</a>
+              <a href="subject.html#11012">[ subject ]</a>
+              <a href="author.html#11012">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi all,
+
+Just wanted to share a bit of information for anyone else who may be
+implementing OSSL functions and attempting to restrict certain threat
+levels with the various permission flags in the opensim.ini configuration.
+ This message is particularly related to the PARCEL_GROUP_MEMBER flag.
+
+For more background information on this topic, see the following links:
+<A HREF="http://opensimulator.org/wiki/OSSL">http://opensimulator.org/wiki/OSSL</A>
+<A HREF="http://opensimulator.org/wiki/OSSL_Implemented">http://opensimulator.org/wiki/OSSL_Implemented</A>
+<A HREF="http://opensimulator.org/wiki/OSSL_Enabling_Functions">http://opensimulator.org/wiki/OSSL_Enabling_Functions</A>
+<A HREF="http://opensimulator.org/wiki/Threat_level">http://opensimulator.org/wiki/Threat_level</A>
+
+We are developing a HUD for a local school district that will animate
+student avatars to perform different kinds of classroom behaviors.  An
+overview of the project is at
+<A HREF="http://ucsim.uc.edu/blog/opensim/oak-hills-school-district/">http://ucsim.uc.edu/blog/opensim/oak-hills-school-district/</A> for those who
+may be curious.
+
+In order to perform certain classroom misbehaviors like throwing a paperwad
+or using a cell phone in class, we wanted to take advantage of
+the osForceAttachToOtherAvatarFromInventory function to attach a paperwad
+or cell phone object to the avatar as the animation/sound effects play.
+
+This particular function is listed in the Severe threat level category, so
+we also wanted to try to restrict its use to just the students avatars in
+the project group and to a particular parcel of land where the project
+classroom sits.  We did this (or attempted anyway) by using the following
+configuration in our opensim.ini under the [XEngine] section:
+
+AllowOSFunctions = true
+
+OSFunctionThreatLevel = Moderate
+
+Allow_osForceAttachToOtherAvatarFromInventory = PARCEL_GROUP_MEMBER,
+PARCEL_OWNER, ESTATE_MANAGER, ESTATE_OWNER
+
+Now my understanding was that the PARCEL_GROUP_MEMBER flag would allow a
+user to use this function if:
+a) the parcel of land where the script was run was owned by (deeded to) a
+particular group,
+b) that user was also a member of that particular group,
+c) the object containing the script was also set to the group.
+
+However in our initial tests, it seemed as if the script was failing.  We
+double checked that the land was deeded to the group, that the user was
+invited to and a member of the same group, and both the HUD and the test
+attachment object were also set to the same group.  But when the user tried
+to trigger the script, it failed to work and resulted in the following
+error:
+
+ohsd_hud_v1.2.5 a: System.Reflection.TargetInvocationException: Exception
+has been thrown by the target of an invocation. ---&gt; System.Exception: OSSL
+Runtime Error: osForceAttachToOtherAvatarFromInventory permission denied.
+Script creator is not in the list of users allowed to execute this function
+and prim owner also has no permission.
+
+We double checked all of the configurations and permissions again, and
+discovered two things that eventually led to the function working as we
+intended.
+
+First, at least with the Imprudence viewer, it appears that when a user is
+invited to a group and accepts the invitation, the user is added to the
+group but that group is NOT set to be the active group by default (as
+happens, I believe, in Second Life).  So the user must go in and activate
+the group manually.
+
+Second, even after the group is activated, the function still would not run
+for the user until the user logged off and logged back in - then everything
+worked as expected.
+
+I don't know what part of this is related to the groups module, the viewer
+we're using (Imprudence in this case), or the way we've configured the
+function settings and the objects and scripts themselves, but it took some
+trial and error to discover that it isn't enough to just invite a user to
+the group for them to be able to use OSSL functions restricted by the
+PARCEL_GROUP_MEMBER flag.  End users have to accept the group invitation,
+activate the group manually, and then relog before it would work.
+
+Hope that helps someone else who might run into this and I'm trying to
+figure out where best to document this on the wiki for future reference.
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121003/24fe0891/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20121003/24fe0891/attachment-0001.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011039.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+	<LI>Next message: <A HREF="011015.html">[Opensim-users] New account inventory is lacking standard set of	folders
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11012">[ date ]</a>
+              <a href="thread.html#11012">[ thread ]</a>
+              <a href="subject.html#11012">[ subject ]</a>
+              <a href="author.html#11012">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OAuth / OpenID server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OAuth%20/%20OpenID%20server&In-Reply-To=%3C4F2B202D.3010200%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009288.html">
+   <LINK REL="Next"  HREF="009296.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OAuth / OpenID server</H1>
+    <B>Diva Canto</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OAuth%20/%20OpenID%20server&In-Reply-To=%3C4F2B202D.3010200%40metaverseink.com%3E"
+       TITLE="[Opensim-users] OAuth / OpenID server">diva at metaverseink.com
+       </A><BR>
+    <I>Fri Feb  3 00:45:49 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009288.html">[Opensim-users] OAuth / OpenID server
+</A></li>
+        <LI>Next message: <A HREF="009296.html">[Opensim-users] OAuth / OpenID server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9291">[ date ]</a>
+              <a href="thread.html#9291">[ thread ]</a>
+              <a href="subject.html#9291">[ subject ]</a>
+              <a href="author.html#9291">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The OpenID endpoint is at /openid/server -- that's what other services 
+should use to verify identity via OpenID.
+The service at /users is just for telling a human that the user name is 
+a valid OpenID account (or not), as far as I can tell.
+
+On 2/2/2012 11:16 AM, Gudule Lapointe wrote:
+&gt;<i> Diva, I just tried the last build, with your fix, and it didn't work...
+</I>&gt;<i> It looks to me like if the final confirmation page doesn't include the 
+</I>&gt;<i> redirection to the callback url to finalize the auth process
+</I>&gt;<i>
+</I>&gt;<i> - I put <A HREF="http://my.server:8002/users/My_Name">http://my.server:8002/users/My_Name</A> in OpenID field
+</I>&gt;<i> - There are two scenarios (in same situation, just depending of the 
+</I>&gt;<i> retries)
+</I>&gt;<i> - The website page keeps saying &quot;please wait&quot; and I get a downloadable 
+</I>&gt;<i> file named &quot;server&quot;, of type application/x-openid-kvf (instead of an 
+</I>&gt;<i> html page. Then I have to stop there
+</I>&gt;<i> - I get the simple page from my OpenSim server asking for first, last 
+</I>&gt;<i> and password
+</I>&gt;<i> (tried several retries and I couldn't tell a difference in the process 
+</I>&gt;<i> to explain the page downloaded or rendered)
+</I>&gt;<i> - When I fill the form and press &quot;login&quot;, I am sent to a page saying
+</I>&gt;<i> &quot;This is an OpenID server endpoint, not a human-readable resource. For 
+</I>&gt;<i> more information, see <A HREF="http://openid.net/.">http://openid.net/.</A>&quot;
+</I>&gt;<i>
+</I>&gt;<i> In the Robust.log, I see the OpenID request, mentioning the return 
+</I>&gt;<i> page (openid.return_to)
+</I>&gt;<i>
+</I>&gt;<i> Le 2 f&#233;vr. 2012 &#224; 18:35, Gudule Lapointe a &#233;crit :
+</I>&gt;<i>
+</I>&gt;&gt;<i> Getting the last build into my test environment to check that...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Am I wrong or the OpenID protocol is also used between OS servers in 
+</I>&gt;&gt;<i> Hypergrid context? Could the bug explain the &quot;Unknown user&quot; issue 
+</I>&gt;&gt;<i> mentioned earlier in this mailing list?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Le 2 f&#233;vr. 2012 &#224; 17:41, Diva Canto a &#233;crit :
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> For human-facing tools, it's /users/First_Last
+</I>&gt;&gt;&gt;<i> But there was a bug there that made it fail. I just fixed it. You'll 
+</I>&gt;&gt;&gt;<i> have to wait for 0.7.3 for this fix to make it through.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 2/2/2012 7:42 AM, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;&gt;<i> I saw some vars related to it in .ini, but I can't find the 
+</I>&gt;&gt;&gt;&gt;<i> endpoint URL to point in an OpenID-enabled website...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I tried things like <A HREF="http://my.server:8002/openid/server/">http://my.server:8002/openid/server/</A> and 
+</I>&gt;&gt;&gt;&gt;<i> variants with username or uuid...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On an OpenID login page, I get &quot;no OpenID server detected&quot;, while 
+</I>&gt;&gt;&gt;&gt;<i> if I check it directly in the browser, I get &quot;This is an OpenID 
+</I>&gt;&gt;&gt;&gt;<i> server endpoint, not a human-readable resource. For more 
+</I>&gt;&gt;&gt;&gt;<i> information, see <A HREF="http://openid.net/.">http://openid.net/.</A>&quot;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The wiki page seems to be an old proposal 
+</I>&gt;&gt;&gt;&gt;<i> (<A HREF="http://opensimulator.org/wiki/OpenID">http://opensimulator.org/wiki/OpenID</A>), I can't find real 
+</I>&gt;&gt;&gt;&gt;<i> information on how to use it...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Le 2 f&#233;vr. 2012 &#224; 15:18, Diva Canto a &#233;crit :
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> OpenSim has OpenID support. OAuth is not supported [yet]. It 
+</I>&gt;&gt;&gt;&gt;&gt;<i> doesn't seem like high priority at this point, but patches are 
+</I>&gt;&gt;&gt;&gt;&gt;<i> always welcome.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> On 2/2/2012 1:35 AM, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Are there projects to implement OAuth / OpenID authentication 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> server from OpenSim accounts?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> I found a couple of discussions about using OAuth as in-world 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> authentication, but it is not what I mean. I just would want 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> users to be able to use their avatar account to login in a web 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> platform like WordPress or Drupal, a ticket support system... any 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> OAuth -capable website...
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Using OAuth would allow a wider range of solutions, and best 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> mixes of solutions to build the website
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120202/35436be3/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120202/35436be3/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009288.html">[Opensim-users] OAuth / OpenID server
+</A></li>
+	<LI>Next message: <A HREF="009296.html">[Opensim-users] OAuth / OpenID server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9291">[ date ]</a>
+              <a href="thread.html#9291">[ thread ]</a>
+              <a href="subject.html#9291">[ subject ]</a>
+              <a href="author.html#9291">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

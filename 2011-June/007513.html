@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Hardcoded 0.5s minimum timer interval
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hardcoded%200.5s%20minimum%20timer%20interval&In-Reply-To=%3CBANLkTikbyn06NR7Z690Zj51VJpxp3e1ucw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007534.html">
+   <LINK REL="Next"  HREF="007514.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Hardcoded 0.5s minimum timer interval</H1>
+    <B>Jorge Lima</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Hardcoded%200.5s%20minimum%20timer%20interval&In-Reply-To=%3CBANLkTikbyn06NR7Z690Zj51VJpxp3e1ucw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Hardcoded 0.5s minimum timer interval">jorge.manuel at gmail.com
+       </A><BR>
+    <I>Thu Jun 16 18:14:56 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007534.html">[Opensim-users] Area Object Search
+</A></li>
+        <LI>Next message: <A HREF="007514.html">[Opensim-users] Hardcoded 0.5s minimum timer interval
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7513">[ date ]</a>
+              <a href="thread.html#7513">[ thread ]</a>
+              <a href="subject.html#7513">[ subject ]</a>
+              <a href="author.html#7513">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Is there any special rationale for this 0.5 second minimum value, or
+am I free to mess around with it?
+If so, shouldn't it be an option in the config files?
+
+llSensorRepeat in OpenSim can handle 0.1 seconds, and LSL timers in
+Second Life can go all the way down to 0.05 so...
+
+LSL_API.cs :
+
+protected float m_MinTimerInterval = 0.5f;
+(...)
+public void llSetTimerEvent(double sec)
+{
+           if (sec != 0.0 &amp;&amp; sec &lt; m_MinTimerInterval)
+               sec = m_MinTimerInterval;
+(...)
+}
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007534.html">[Opensim-users] Area Object Search
+</A></li>
+	<LI>Next message: <A HREF="007514.html">[Opensim-users] Hardcoded 0.5s minimum timer interval
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7513">[ date ]</a>
+              <a href="thread.html#7513">[ thread ]</a>
+              <a href="subject.html#7513">[ subject ]</a>
+              <a href="author.html#7513">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

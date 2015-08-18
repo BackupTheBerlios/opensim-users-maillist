@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [Opensim-dev] Round 2: Config changes preview
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20Round%202%3A%20Config%20changes%20preview&In-Reply-To=%3C49BAC785.1010604%40uci.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001679.html">
+   <LINK REL="Next"  HREF="001681.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [Opensim-dev] Round 2: Config changes preview</H1>
+    <B>Sean Hennessee</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5BOpensim-dev%5D%20Round%202%3A%20Config%20changes%20preview&In-Reply-To=%3C49BAC785.1010604%40uci.edu%3E"
+       TITLE="[Opensim-users] [Opensim-dev] Round 2: Config changes preview">sean at uci.edu
+       </A><BR>
+    <I>Fri Mar 13 21:52:21 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001679.html">[Opensim-users] Round 2: Config changes preview
+</A></li>
+        <LI>Next message: <A HREF="001681.html">[Opensim-users] [Opensim-dev] Round 2: Config changes preview
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1680">[ date ]</a>
+              <a href="thread.html#1680">[ thread ]</a>
+              <a href="subject.html#1680">[ subject ]</a>
+              <a href="author.html#1680">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Does this allow for creating a single file, (e.g. mysettings.ini), in 
+the override directory which I can use to override all my settings, 
+which would essentially be a small subset of the OpenSim.ini file? (It 
+looks like it does, but I'd like to confirm.)
+
+Peace,
+Sean
+
+Justin Clark-Casey wrote:
+&gt;<i> Thanks for the feedback from round 1.  I've just uploaded a new preview as
+</I>&gt;<i>
+</I>&gt;<i> config.preview.donotuseyet-v2
+</I>&gt;<i>
+</I>&gt;<i> In this version I've done away with all the subdirectories.  There is now a simpler structure
+</I>&gt;<i>
+</I>&gt;<i> config/OpenSim.ini.example
+</I>&gt;<i> config/defaults
+</I>&gt;<i> config/override
+</I>&gt;<i>
+</I>&gt;<i> defaults/ is a single directory containing *.ini.defaults files.  I've collapsed many of the previously separate 
+</I>&gt;<i> *.ini.example files into fewer *.ini.defaults files (for instance, scriptengines.ini.defaults now contains all the 
+</I>&gt;<i> script engine settings and external.ini.defaults has the settings which control the data exposed externally by OpenSim).
+</I>&gt;<i>
+</I>&gt;<i> To override the defaults, one would either
+</I>&gt;<i>
+</I>&gt;<i> (a) copy the appropriate *.ini.defaults file into config/override/*.ini, or
+</I>&gt;<i> (b) copy and paste the appropriate section directly into config/OpenSim.ini.  These instructions are also in READMEs in 
+</I>&gt;<i> the config directory itself.
+</I>&gt;<i>
+</I>&gt;<i> To get OpenSim to run at all, the user still has to copy OpenSim.ini.example to OpenSim.ini (though it should be 
+</I>&gt;<i> possible to override this if config is supplied over the network).  I feel this is important to get users to give some 
+</I>&gt;<i> thought to the most crucial config settings.  Others may disagree.
+</I>&gt;<i>
+</I>&gt;<i> In case it wasn't clear before, if you don't need to override the defaults then you don't need to make any changes.  If 
+</I>&gt;<i> a particular setting isn't present in an .ini file then there will always be a built-in default which matches that in an 
+</I>&gt;<i> *.ini.default file.
+</I>&gt;<i>
+</I>&gt;<i> I'm also now proposing the bin/OpenSim.ini[.example] move up into bin/config/OpenSim.ini[.example].  To have OpenSim.ini 
+</I>&gt;<i> outside the config/ directory seems a little confusing to me.  Naturally, there can be a period where bin/OpenSim.ini is 
+</I>&gt;<i> still picked up.
+</I>&gt;<i>
+</I>&gt;<i> I'm also going to reply to specific points from round 1 below.  As before, constructive feedback or approval on this is 
+</I>&gt;<i> welcomed.  I probably won't be changing this again before next week.  I'm very happy if people want to tweak the 
+</I>&gt;<i> structure, especially if some of the *.ini.defaults categorizations are wrong.  But please put any radically different 
+</I>&gt;<i> proposals in a separate config preview directory.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ANSWERS TO SPECIFIC POINTS
+</I>&gt;<i>
+</I>&gt;<i> @Mike, DrScofield, Paul - As you can see, I have simplified the structure.  I did look at lighttpd.  One restriction I 
+</I>&gt;<i> think we have is that we can't rely on config by symlink as we're on Windows.  Also, in this structure we're overriding 
+</I>&gt;<i> defaults rather than enabling modules that didn't exist before.
+</I>&gt;<i>
+</I>&gt;<i> @Paul - I agree with you about the ease of use of a GUI, but afaik most server projects do not come bundled with them. 
+</I>&gt;<i> Rather, they are developed and maintained separately.
+</I>&gt;<i>
+</I>&gt;<i> @Tom, Ovi, Paul - Although a single config file is ideal, ours is getting confusing.  It's a certainty that it will grow 
+</I>&gt;<i> yet larger.  This is an attempt (picking up from MW's initial work and discussion) to find a structure that will allow 
+</I>&gt;<i> growth in the future without overwhelming newbies.  Having said that, I believe all the 95% settings should remain in 
+</I>&gt;<i> OpenSim.ini.example.  If they aren't there are the moment or the existing defaults are inappropriate then this can be 
+</I>&gt;<i> separately addressed.
+</I>&gt;<i>
+</I>&gt;<i> @Ai - You're right about the grid settings - these will need to be brought into a config/ structure (and from what I've 
+</I>&gt;<i> previously heard, there are no objections to making the format of these conform to the Nini way of doing thigns).
+</I>&gt;<i>
+</I>&gt;<i> @Sean - In both this structure and in the previous proposal it's quite possible just to set everything in OpenSim.ini as 
+</I>&gt;<i> can be done at the moment.  This config/ proposal is actually orthogonal to the --inimaster idea, so it should be 
+</I>&gt;<i> possible to set everything via the network if desired.).
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>
+-- 
+
+Sean Hennessee
+Central Computing Support
+Network &amp; Academic Computing Services
+UC Irvine
+
+
+... . .- -. /  .... . -. -. . ... ... . .
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001679.html">[Opensim-users] Round 2: Config changes preview
+</A></li>
+	<LI>Next message: <A HREF="001681.html">[Opensim-users] [Opensim-dev] Round 2: Config changes preview
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1680">[ date ]</a>
+              <a href="thread.html#1680">[ thread ]</a>
+              <a href="subject.html#1680">[ subject ]</a>
+              <a href="author.html#1680">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

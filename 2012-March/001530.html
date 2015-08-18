@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.13.1331736494.7901.opensim-users%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001528.html">
+   <LINK REL="Next"  HREF="001531.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.13.1331736494.7901.opensim-users%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 15:47:53 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001528.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="001531.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1530">[ date ]</a>
+              <a href="thread.html#1530">[ thread ]</a>
+              <a href="subject.html#1530">[ subject ]</a>
+              <a href="author.html#1530">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>SVN 8525, you no longer need to listen on port 8895 (or whatever you
+have set up your server to listen on because this is configurable) when
+connecting a region server to a grid (like hooking up a region to OS
+Grid), hence
+
+remoting_listener_port =3D 8895
+
+can be removed from the ini, and you can hence close that port on your
+router because it isn't used any more.
+
+Remoting is just one method of communicating with other stuff over the
+internet, and has until now required OpenSim to use an extra port for
+interregion communication. Now, instead of using Remoting, Diva's
+changes mean that HTTP is used instead, and this means the main HTTP
+port set in your ini:
+
+http_listener_port =3D 9000
+
+(or, again, whatever port number you are configured to listen on) is now
+also used for interregion communications (joining a grid successfully).
+
+XML RPC is a protocol that is used by the remote administration tools
+that many people use. It operates over the main http_listener_port
+setting, hence the default of 9000 is also used for this sort of
+communication. Those tools will be unaffected by this change.
+
+What this also means, which Diva stated, is that you can't mix and match
+between older OpenSim instances and this newer OpenSim code. You can't
+have regions expecting communication on port 8895 and not hearing
+anything back - you need to be on a similar version of OpenSim (&gt;=3D 8525)
+
+Diva or others, please correct me if I have misunderstood or
+mistranslated any of this :)
+
+Chris
+
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at l</A>=
+ists.berlios.de&gt;
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&lt;mailto:opensim-users-bounces=
+@lists.berlios.de&gt;] On Behalf Of Diva Canto
+Sent: 20 February 2009 04:57
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Subject: [Opensim-users] r8525: no more remoting
+Just a heads-up to let everyone know that r8525 departs from .NET
+Remoting for good.
+Post-r8525 sims no longer listen on remoting ports, they use http
+exclusively. This means that those of you who haven't updated your sims
+in the past month or so won't be able to go to places that are
+up-to-date.
+
+The UCI Hypergrid gateways are up-to-date.
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+No virus found in this incoming message.
+Checked by AVG - www.avg.com&lt;<A HREF="http://www.avg.com">http://www.avg.com</A>&gt;
+Version: 8.0.237 / Virus Database: 270.10.25/1957 - Release Date:
+02/18/09 20:55:00
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+--_000_63FAD4F222230A4EA79DE9E8BE664735056D25D6winxbeus19excha_
+Content-Type: text/html; charset=&quot;us-ascii&quot;
+Content-Transfer-Encoding: quoted-printable
+
+&lt;html xmlns:v=3D&quot;urn:schemas-microsoft-com:vml&quot; xmlns:o=3D&quot;urn:schemas-micr=
+osoft-com:office:office&quot; xmlns:w=3D&quot;urn:schemas-microsoft-com:office:word&quot; =
+xmlns:x=3D&quot;urn:schemas-microsoft-com:office:excel&quot; xmlns:p=3D&quot;urn:schemas-m=
+icrosoft-com:office:powerpoint&quot; xmlns:a=3D&quot;urn:schemas-microsoft-com:office=
+:<i>access&quot; xmlns:dt=3D&quot;uuid:C2F41010-65B3-11d1-A29F-00AA00C14882&quot; xmlns:s=3D&quot;=
+</I>uuid:BDC6E3F0-6DA3-11d1-A2A3-00AA00C14882&quot; xmlns:rs=3D&quot;urn:schemas-microsof=
+t-com:rowset&quot; xmlns:z=3D&quot;#RowsetSchema&quot; xmlns:b=3D&quot;urn:schemas-microsoft-co=
+m:office:publisher&quot; xmlns:ss=3D&quot;urn:schemas-microsoft-com:office:spreadshee=
+t&quot; xmlns:c=3D&quot;urn:schemas-microsoft-com:office:component:spreadsheet&quot; xmlns=
+:<i>odc=3D&quot;urn:schemas-microsoft-com:office:odc&quot; xmlns:oa=3D&quot;urn:schemas-micro=
+</I>soft-com:office:activation&quot; xmlns:html=3D&quot;<A HREF="http://www.w3.org/TR/REC-html40">http://www.w3.org/TR/REC-html40</A>&quot; =
+xmlns:q=3D&quot;<A HREF="http://schemas.xmlsoap.org/soap/envelope/">http://schemas.xmlsoap.org/soap/envelope/</A>&quot; xmlns:D=3D&quot;DAV:&quot; xmln=
+s:x2=3D&quot;<A HREF="http://schemas.microsoft.com/office/excel/2003/xml">http://schemas.microsoft.com/office/excel/2003/xml</A>&quot; xmlns:ois=3D&quot;ht=
+<A HREF="tp://schemas.microsoft.com/sharepoint/soap/ois/">tp://schemas.microsoft.com/sharepoint/soap/ois/</A>&quot; xmlns:dir=3D&quot;<A HREF="http://schema=">http://schema=</A>
+s.microsoft.com/sharepoint/soap/directory/&quot; xmlns:ds=3D&quot;<A HREF="http://www.w3.org/2=">http://www.w3.org/2=</A>
+000/09/xmldsig#&quot; xmlns:dsp=3D&quot;<A HREF="http://schemas.microsoft.com/sharepoint/dsp">http://schemas.microsoft.com/sharepoint/dsp</A>&quot; =
+xmlns:udc=3D&quot;<A HREF="http://schemas.microsoft.com/data/udc">http://schemas.microsoft.com/data/udc</A>&quot; xmlns:xsd=3D&quot;<A HREF="http://www=">http://www=</A>
+.w3.org/2001/XMLSchema&quot; xmlns:sub=3D&quot;<A HREF="http://schemas.microsoft.com/sharepoin=">http://schemas.microsoft.com/sharepoin=</A>
+t/soap/2002/1/alerts/&quot; xmlns:ec=3D&quot;<A HREF="http://www.w3.org/2001/04/xmlenc#">http://www.w3.org/2001/04/xmlenc#</A>&quot; xmlns=
+:<i>sp=3D&quot;<A HREF="http://schemas.microsoft.com/sharepoint/">http://schemas.microsoft.com/sharepoint/</A>&quot; xmlns:sps=3D&quot;<A HREF="http://schema=">http://schema=</A>
+</I>s.microsoft.com/sharepoint/soap/&quot; xmlns:xsi=3D&quot;<A HREF="http://www.w3.org/2001/XMLSc=">http://www.w3.org/2001/XMLSc=</A>
+hema-instance&quot; xmlns:udcs=3D&quot;<A HREF="http://schemas.microsoft.com/data/udc/soap">http://schemas.microsoft.com/data/udc/soap</A>&quot; xm=
+lns:udcxf=3D&quot;<A HREF="http://schemas.microsoft.com/data/udc/xmlfile">http://schemas.microsoft.com/data/udc/xmlfile</A>&quot; xmlns:udcp2p=3D=
+&quot;<A HREF="http://schemas.microsoft.com/data/udc/parttopart">http://schemas.microsoft.com/data/udc/parttopart</A>&quot; xmlns:wf=3D&quot;<A HREF="http://schem=">http://schem=</A>
+as.microsoft.com/sharepoint/soap/workflow/&quot; xmlns:dsss=3D&quot;<A HREF="http://schemas.mi=">http://schemas.mi=</A>
+crosoft.com/office/2006/digsig-setup&quot; xmlns:dssi=3D&quot;<A HREF="http://schemas.microsof=">http://schemas.microsof=</A>
+t.com/office/2006/digsig&quot; xmlns:mdssi=3D&quot;<A HREF="http://schemas.openxmlformats.org/=">http://schemas.openxmlformats.org/=</A>
+package/2006/digital-signature&quot; xmlns:mver=3D&quot;<A HREF="http://schemas.openxmlformats=">http://schemas.openxmlformats=</A>
+.org/markup-compatibility/2006&quot; xmlns:m=3D&quot;<A HREF="http://schemas.microsoft.com/off=">http://schemas.microsoft.com/off=</A>
+ice/2004/12/omml&quot; xmlns:mrels=3D&quot;<A HREF="http://schemas.openxmlformats.org/package/=">http://schemas.openxmlformats.org/package/=</A>
+2006/relationships&quot; xmlns:spwp=3D&quot;<A HREF="http://microsoft.com/sharepoint/webpartpa=">http://microsoft.com/sharepoint/webpartpa=</A>
+ges&quot; xmlns:ex12t=3D&quot;<A HREF="http://schemas.microsoft.com/exchange/services/2006/typ=">http://schemas.microsoft.com/exchange/services/2006/typ=</A>
+es&quot; xmlns:ex12m=3D&quot;<A HREF="http://schemas.microsoft.com/exchange/services/2006/mess=">http://schemas.microsoft.com/exchange/services/2006/mess=</A>
+ages&quot; xmlns:pptsl=3D&quot;<A HREF="http://schemas.microsoft.com/sharepoint/soap/SlideLibr=">http://schemas.microsoft.com/sharepoint/soap/SlideLibr=</A>
+ary/&quot; xmlns:spsl=3D&quot;<A HREF="http://microsoft.com/webservices/SharePointPortalServer=">http://microsoft.com/webservices/SharePointPortalServer=</A>
+/PublishedLinksService&quot; xmlns:Z=3D&quot;urn:schemas-microsoft-com:&quot; xmlns:st=3D&quot;=
+&#1;&quot; xmlns=3D&quot;<A HREF="http://www.w3.org/TR/REC-html40">http://www.w3.org/TR/REC-html40</A>&quot;&gt;
+
+&lt;head&gt;
+&lt;META HTTP-EQUIV=3D&quot;Content-Type&quot; CONTENT=3D&quot;text/html; charset=3Dus-ascii&quot;=
+&gt;<i>
+</I>&lt;meta name=3DGenerator content=3D&quot;Microsoft Word 12 (filtered medium)&quot;&gt;
+&lt;style&gt;
+&lt;!--
+ /* Font Definitions */
+ @font-face
+	{font-family:&quot;Cambria Math&quot;;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:&quot;Times New Roman&quot;,&quot;serif&quot;;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-reply;
+	font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;
+	color:#1F497D;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.Section1
+	{page:Section1;}
+--&gt;
+&lt;/style&gt;
+&lt;!--[if gte mso 9]&gt;&lt;xml&gt;
+ &lt;o:shapedefaults v:ext=3D&quot;edit&quot; spidmax=3D&quot;1026&quot; /&gt;
+&lt;/xml&gt;&lt;![endif]--&gt;&lt;!--[if gte mso 9]&gt;&lt;xml&gt;
+ &lt;o:shapelayout v:ext=3D&quot;edit&quot;&gt;
+  &lt;o:idmap v:ext=3D&quot;edit&quot; data=3D&quot;1&quot; /&gt;
+ &lt;/o:shapelayout&gt;&lt;/xml&gt;&lt;![endif]--&gt;
+&lt;/head&gt;
+
+&lt;body lang=3DEN-AU link=3Dblue vlink=3Dpurple&gt;
+
+&lt;div class=3DSection1&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;No, Grid comms has always used REST/XMLRPC.&lt;o:p&gt;&lt;/o:p&gt;&lt;/span=
+&gt;<i>&lt;/p&gt;
+</I>
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;Remoting was only ever used for intra[/er]region comms.&lt;o:p&gt;=
+&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;Adam&lt;o:p&gt;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;span style=3D'font-size:11.0pt;font-family:&quot;Calibri&quot;,=
+&quot;sans-serif&quot;;
+color:#1F497D'&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;div style=3D'border:none;border-left:solid blue 1.5pt;padding:0cm 0cm 0cm =
+4.0pt'&gt;
+
+&lt;div&gt;
+
+&lt;div style=3D'border:none;border-top:solid #B5C4DF 1.0pt;padding:3.0pt 0cm =
+0cm 0cm'&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;b&gt;&lt;span lang=3DEN-US style=3D'font-size:10.0pt;font-f=
+amily:
+&quot;Tahoma&quot;,&quot;sans-serif&quot;'&gt;From:&lt;/span&gt;&lt;/b&gt;&lt;span lang=3DEN-US style=3D'font-siz=
+e:10.0pt;
+font-family:&quot;Tahoma&quot;,&quot;sans-serif&quot;'&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] &lt;b&gt;On Behalf Of &lt;/b&gt;BlueWal=
+l
+Slade&lt;br&gt;
+&lt;b&gt;Sent:&lt;/b&gt; Friday, 20 February 2009 5:02 AM&lt;br&gt;
+&lt;b&gt;To:&lt;/b&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;br&gt;
+&lt;b&gt;Subject:&lt;/b&gt; Re: [Opensim-users] r8525: no more remoting&lt;o:p&gt;&lt;/o:p&gt;&lt;/spa=
+n&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;p class=3DMsoNormal&gt;&lt;o:p&gt;&nbsp;&lt;/o:p&gt;&lt;/p&gt;
+
+&lt;p class=3DMsoNormal style=3D'margin-bottom:12.0pt'&gt;The
+region&lt;&lt;----&gt;&gt;region communications no longer use it. But,&amp;nbsp=
+;
+the grid&lt;&lt;----&gt;&gt;region communications still use it. So, probabl=
+y
+best to leave that in your OpenSim.ini for time being.&lt;br&gt;
+&lt;br&gt;
+BlueWall&lt;o:p&gt;&lt;/o:p&gt;&lt;/p&gt;
+
+&lt;div&gt;
+
+&lt;p class=3DMsoNormal&gt;On Fri, Feb 20, 2009 at 6:25 AM, Chris Hart &lt;&lt;a
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Chris at codetorque.co.uk</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Chris at codetorque.co.uk</A>&lt;/a&gt;&gt; wrote=
+:<i>&lt;o:p&gt;&lt;/o:p&gt;&lt;/p&gt;
+</I>
+&lt;p class=3DMsoNormal&gt;I would recommend including a bit more detail when pos=
+ting
+to the users&lt;br&gt;
+list about what a change like this means - don't expect everyone to be a&lt;br=
+&gt;<i>
+</I>developer :)&lt;br&gt;
+&lt;br&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001528.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="001531.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1530">[ date ]</a>
+              <a href="thread.html#1530">[ thread ]</a>
+              <a href="subject.html#1530">[ subject ]</a>
+              <a href="author.html#1530">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim 0.7.0 login problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%200.7.0%20login%20problem&In-Reply-To=%3C4C1C0558.3030903%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004717.html">
+   <LINK REL="Next"  HREF="004734.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim 0.7.0 login problem</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%200.7.0%20login%20problem&In-Reply-To=%3C4C1C0558.3030903%40googlemail.com%3E"
+       TITLE="[Opensim-users] Opensim 0.7.0 login problem">jjustincc at gmail.com
+       </A><BR>
+    <I>Sat Jun 19 01:46:32 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004717.html">[Opensim-users] Opensim 0.7.0 login problem
+</A></li>
+        <LI>Next message: <A HREF="004734.html">[Opensim-users] Opensim 0.7.0 login problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4724">[ date ]</a>
+              <a href="thread.html#4724">[ thread ]</a>
+              <a href="subject.html#4724">[ subject ]</a>
+              <a href="author.html#4724">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 18/06/10 15:33, Dolma Dollinger wrote:
+&gt;<i> Because there is a Release Candidate, I tried out opensim 0.7.0RC
+</I>&gt;<i>
+</I>&gt;<i> After some work it looks now that all regions come up. I see all scripts
+</I>&gt;<i> starting to execute
+</I>&gt;<i>
+</I>&gt;<i> I cant login however, the login stops at the region handshake
+</I>&gt;<i>
+</I>&gt;<i> I run a 3x3 Megaregion with Hypergrid, Ubuntu 10.04 LTS 64 Bit, MySQL
+</I>&gt;<i> 5.1.41-3ubuntu12.3,Mono 2.4.3.1
+</I>&gt;<i> It runs fine on 0.6.9-post-fixes
+</I>&gt;<i>
+</I>&gt;<i> Any idea what could be wrong?
+</I>
+There are classically 2 steps to login.
+
+1)  When you start up the client and enter your name/password, it sends those details to the login service.  In this case the login service runs in the robust server.  If your password is correct, it tells the region simulator that you're coming.  It then sends back to you (the client) the ip address and port to use to enter that region (as gleaned from your Regions.ini file).
+
+2)  Your client then connects to the region using those details.
+
+Classically, the region handshake hang occurs because the region is sending connection details to the client that it can't use successfully.  I suggest that you carefully check your Regions.ini.
+
+Even if it's not the answer in this case, this question comes up often enough that I copied it to the FAQ at
+
+<A HREF="http://opensimulator.org/wiki/FAQ">http://opensimulator.org/wiki/FAQ</A>
+
+and removed a load of outdated stuff.  It would be really nice if we could add to this page as common problems come up.
+
+&gt;<i>
+</I>&gt;<i> Relevant Robust log:
+</I>&gt;<i>
+</I>&gt;<i> 10:18:47 - [LLOGIN SERVICE]: Login request for Dolma Dollinger from
+</I>&gt;<i> 145.99.250.21 with user agent Imprudence 1.2.2  / Second Life 1.22.11.0
+</I>&gt;<i> starting in last
+</I>&gt;<i> 10:18:47 - [PASS AUTH]: got c9f7275a805f0f1c753a7f4bdfbe5c
+</I>&gt;<i> e1; hashed = ff9dd0eec9ce363570b2eca92b437718; stored =
+</I>&gt;<i> ff9dd0eec9ce363570b2eca92b437718
+</I>&gt;<i> 10:18:47 - [LLOGIN SERVICE]: 0 active gestures
+</I>&gt;<i> 10:18:47 - [PRESENCE SERVICE]: LoginAgent
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f with session
+</I>&gt;<i> f1ee16d7-afe6-4138-97ec-229333a4f0e3 and ssession
+</I>&gt;<i> b8041573-47bb-49e5-ae1f-0a0eba059a83
+</I>&gt;<i> 10:18:47 - [GRID USER SERVICE]: User
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f is online
+</I>&gt;<i> 10:18:47 - [LLOGIN SERVICE]: FindDestination for start location last
+</I>&gt;<i> 10:18:47 - [GRID SERVICE]: GetDefaultRegions returning 1 regions
+</I>&gt;<i> 10:18:47 - [LLOGIN SERVICE]: Launching agent at Unus
+</I>&gt;<i> 10:18:47 - [USER AGENT SERVICE]: Request to login user Dolma Dollinger
+</I>&gt;<i> to grid dwgrid.wufshirabyoshi.nl:8002
+</I>&gt;<i> &lt;<A HREF="http://dwgrid.wufshirabyoshi.nl:8002/">http://dwgrid.wufshirabyoshi.nl:8002/</A>&gt;
+</I>&gt;<i> 10:18:47 - [REMOTE SIMULATION CONNECTOR]: Posted CreateAgent request to
+</I>Clasically, this problem occurs because the region is sending connection details to the client that it can't use successfully.  I suggest that you carefully check your Regions.ini
+
+&gt;<i> remote sim
+</I>&gt;<i> <A HREF="http://145.99.250.20:8002/foreignagent/4e960682-77b3-4042-b7b4-811c90dc248f/,">http://145.99.250.20:8002/foreignagent/4e960682-77b3-4042-b7b4-811c90dc248f/,</A>
+</I>&gt;<i> region Unus, x=1792000 y=1792000
+</I>&gt;<i> 10:18:47 - [GATEKEEPER SERVICE]: Request to login foreign agent Dolma
+</I>&gt;<i> Dollinger @ <A HREF="http://dwgrid.wufshirabyoshi.nl:8002">http://dwgrid.wufshirabyoshi.nl:8002</A>
+</I>&gt;<i> &lt;<A HREF="http://dwgrid.wufshirabyoshi.nl:8002/">http://dwgrid.wufshirabyoshi.nl:8002/</A>&gt;
+</I>&gt;<i> (4e960682-77b3-4042-b7b4-811c90dc248f) at destination Unus
+</I>&gt;<i> 10:18:47 - [GATEKEEPER SERVICE]: Verifying
+</I>&gt;<i> <A HREF="http://dwgrid.wufshirabyoshi.nl:8002">http://dwgrid.wufshirabyoshi.nl:8002</A>
+</I>&gt;<i> &lt;<A HREF="http://dwgrid.wufshirabyoshi.nl:8002/">http://dwgrid.wufshirabyoshi.nl:8002/</A>&gt; against
+</I>&gt;<i> <A HREF="http://dwgrid.wufshirabyoshi.nl:8002">http://dwgrid.wufshirabyoshi.nl:8002</A> &lt;<A HREF="http://dwgrid.wufshirabyoshi.nl:8002/">http://dwgrid.wufshirabyoshi.nl:8002/</A>&gt;
+</I>&gt;<i> 10:18:47 - [USER AGENT SERVICE]: Verifying agent token
+</I>&gt;<i> <A HREF="http://dwgrid.wufshirabyoshi.nl:8002;546631fb-1a1b-4d73-a1d3-00d20ed6f870">http://dwgrid.wufshirabyoshi.nl:8002;546631fb-1a1b-4d73-a1d3-00d20ed6f870</A> against
+</I>&gt;<i> <A HREF="http://dwgrid.wufshirabyoshi.nl:8002;546631fb-1a1b-4d73-a1d3-00d20ed6f870">http://dwgrid.wufshirabyoshi.nl:8002;546631fb-1a1b-4d73-a1d3-00d20ed6f870</A>
+</I>&gt;<i> 10:18:47 - [GATEKEEPER SERVICE]: Identity verified for Dolma Dollinger @
+</I>&gt;<i> <A HREF="http://dwgrid.wufshirabyoshi.nl:8002">http://dwgrid.wufshirabyoshi.nl:8002</A> &lt;<A HREF="http://dwgrid.wufshirabyoshi.nl:8002/">http://dwgrid.wufshirabyoshi.nl:8002/</A>&gt;
+</I>&gt;<i> 10:18:47 - [GATEKEEPER SERVICE]: User is ok
+</I>&gt;<i> 10:18:47 - [PRESENCE SERVICE]: LoginAgent
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f with session
+</I>&gt;<i> f1ee16d7-afe6-4138-97ec-229333a4f0e3 and ssession
+</I>&gt;<i> b8041573-47bb-49e5-ae1f-0a0eba059a83
+</I>&gt;<i> 10:18:47 - [GATEKEEPER SERVICE]: Login presence ok
+</I>&gt;<i> 10:18:47 - [GATEKEEPER SERVICE]: destination ok: Unus
+</I>&gt;<i> 10:18:47 - [REMOTE SIMULATION CONNECTOR]: Posted CreateAgent request to
+</I>&gt;<i> remote sim
+</I>&gt;<i> <A HREF="http://145.99.250.20:9000/agent/4e960682-77b3-4042-b7b4-811c90dc248f/,">http://145.99.250.20:9000/agent/4e960682-77b3-4042-b7b4-811c90dc248f/,</A>
+</I>&gt;<i> region Unus, x=1792000 y=1792000
+</I>&gt;<i> 10:18:47 - [REMOTE SIMULATION CONNECTOR]: DoCreateChildAgentCall reply
+</I>&gt;<i> was {&quot;success&quot;:true}
+</I>&gt;<i> 10:18:47 - [REMOTE SIMULATION CONNECTOR]: DoCreateChildAgentCall reply
+</I>&gt;<i> was {&quot;success&quot;:true}
+</I>&gt;<i> 10:18:47 - [USER AGENT SERVICE]: Setting token 145.99.250.21 for session
+</I>&gt;<i> f1ee16d7-afe6-4138-97ec-229333a4f0e3
+</I>&gt;<i> 10:18:47 - [LLOGIN SERVICE]: Retrieved 6 friends
+</I>&gt;<i> 10:18:47 - [LLOGIN]: Library has 19 folders
+</I>&gt;<i> 10:18:47 - [LLOGIN SERVICE]: All clear. Sending login response to client.
+</I>&gt;<i> 10:18:47 - [USER AGENT SERVICE]: Verifying Client session
+</I>&gt;<i> f1ee16d7-afe6-4138-97ec-229333a4f0e3 with token 145.99.250.21
+</I>&gt;<i> R.O.B.U.S.T.#
+</I>&gt;<i>
+</I>&gt;<i> Relevant Opensim log:
+</I>&gt;<i>
+</I>&gt;<i> 10:18:47 - [LOCAL SIMULATION CONNECTOR]: Found region Unus to send
+</I>&gt;<i> SendCreateChildAgent
+</I>&gt;<i> 10:18:47 - [CONNECTION BEGIN]: Region Unus told of incoming root agent
+</I>&gt;<i> Dolma Dollinger 4e960682-77b3-4042-b7b4-811c90dc248f (circuit code
+</I>&gt;<i> 135001435, teleportflags 128)
+</I>&gt;<i> 10:18:47 - [CONNECTION BEGIN]: Region Unus authenticated and authorized
+</I>&gt;<i> incoming root agent Dolma Dollinger 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> (circuit code 135001435)
+</I>&gt;<i> 10:18:47 - [CAPS]: Reregistering caps for agent
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f.  Old caps path
+</I>&gt;<i> c9238f15-5efd-4d75-9514-c493ca009e83, new caps path
+</I>&gt;<i> 635dd67d-ba63-4a85-b266-6a1d492e54a3.
+</I>&gt;<i> 10:18:47 - [CAPS]: Registered seed capability
+</I>&gt;<i> /CAPS/635dd67d-ba63-4a85-b266-6a1d492e54a30000/ for
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:18:47 - [OBJECTADD]: /CAPS/OA/21be6f0a-8c22-4ef2-8ac4-ad112e14afe2/
+</I>&gt;<i> 10:18:47 - [EVENTQUEUE]: Found Existing UUID!
+</I>&gt;<i> 10:18:47 - [GETTEXTURE]: /CAPS/7b220283-11af-42b7-89e2-47e4dca6b8aa
+</I>&gt;<i> 10:18:47 - [CAPS]: Seed Caps Request in region: Unus
+</I>&gt;<i> 10:18:47 - [Scene]: Incoming client Dolma Dollinger in region Unus via Login
+</I>&gt;<i> 10:18:47 - [Scene]: User Client Verification for Dolma Dollinger in Unus
+</I>&gt;<i> returned true
+</I>&gt;<i> 10:20:49 - [ACCOUNTS CONNECTOR]: GetUserAccount
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:20:49 - [USER CACHE]: cached user 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:23:49 - [ACCOUNTS CONNECTOR]: GetUserAccount
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:23:49 - [USER CACHE]: cached user 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:26:49 - [ACCOUNTS CONNECTOR]: GetUserAccount
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:26:49 - [USER CACHE]: cached user 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:28:49 - [ACCOUNTS CONNECTOR]: GetUserAccount
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:28:49 - [USER CACHE]: cached user 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:31:49 - [ACCOUNTS CONNECTOR]: GetUserAccount
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:31:49 - [USER CACHE]: cached user 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:34:50 - [ACCOUNTS CONNECTOR]: GetUserAccount
+</I>&gt;<i> 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> 10:34:50 - [USER CACHE]: cached user 4e960682-77b3-4042-b7b4-811c90dc248f
+</I>&gt;<i> Region (root) #
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004717.html">[Opensim-users] Opensim 0.7.0 login problem
+</A></li>
+	<LI>Next message: <A HREF="004734.html">[Opensim-users] Opensim 0.7.0 login problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4724">[ date ]</a>
+              <a href="thread.html#4724">[ thread ]</a>
+              <a href="subject.html#4724">[ subject ]</a>
+              <a href="author.html#4724">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] question regarding assetcache file directory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20question%20regarding%20assetcache%20file%20directory&In-Reply-To=%3C50E21661.7010401%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011499.html">
+   <LINK REL="Next"  HREF="011491.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] question regarding assetcache file directory</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20question%20regarding%20assetcache%20file%20directory&In-Reply-To=%3C50E21661.7010401%40googlemail.com%3E"
+       TITLE="[Opensim-users] question regarding assetcache file directory">jjustincc at googlemail.com
+       </A><BR>
+    <I>Mon Dec 31 23:49:05 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011499.html">[Opensim-users] question regarding assetcache file directory
+</A></li>
+        <LI>Next message: <A HREF="011491.html">[Opensim-users] HyperGrid Issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11509">[ date ]</a>
+              <a href="thread.html#11509">[ thread ]</a>
+              <a href="subject.html#11509">[ subject ]</a>
+              <a href="author.html#11509">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>All those folders apart from maptiles/ are used only the simulator.  maptiles/ is used by a standalone or by ROBUST to 
+store jpegs uploaded by individual regions for later serving to LL viewer version 3 and related third party viewers.
+
+I just added some more information about the OpenSimulator directory structure at [1].
+
+I believe David is right about Presence.  Unfortunately, the service interfaces don't expose the required calls so 
+you'll have to interrogate the database directly to get the information.
+
+[1] <A HREF="http://opensimulator.org/wiki/Directory_Structure">http://opensimulator.org/wiki/Directory_Structure</A>
+[2] <A HREF="http://opensimulator.org/wiki/Presence">http://opensimulator.org/wiki/Presence</A>
+
+On 30/12/12 03:40, David Saunders wrote:
+&gt;<i> Hey
+</I>&gt;<i>
+</I>&gt;<i>   The only directory I have found information on moving to common directory is the floatsome asset cache.
+</I>&gt;<i>
+</I>&gt;<i> On the other part, The only way I can get a reliable on is online the grid is using the &quot;Presence&quot; database.   I know
+</I>&gt;<i> the GridUsers database can give false hits for users online. Due to people crashing or a sim crashing on them. And this
+</I>&gt;<i> can stick in  the database tell they logout properly.
+</I>&gt;<i>
+</I>&gt;<i> david
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 12/26/2012 11:32 PM, Emperor Starfinder wrote:
+</I>&gt;&gt;<i> Okay I am pretty sure I know my answer here but I want to be double sure
+</I>&gt;&gt;<i> before I begin making the planned changes we are making.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Do the assetcache, datasnapshot, j2kDecodeCache, maptiles, and scriptengine
+</I>&gt;&gt;<i> folder directories that are created by opensimulator need to stay in the
+</I>&gt;&gt;<i> same instance as the instances running the regions or do they go in the
+</I>&gt;&gt;<i> respective folders that contain their respective instances(i.e. assetcache
+</I>&gt;&gt;<i> goes in the folder that contains the instance running the grid's asset
+</I>&gt;&gt;<i> server.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am pretty sure the script engine folder and likely datasnapshot folder
+</I>&gt;&gt;<i> directories stay in the folder containing the instance that runs each set of
+</I>&gt;&gt;<i> regions.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The second question I do have and I will include it here for time's sake is
+</I>&gt;&gt;<i> this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When writing the code into a website to show the Users online stats which
+</I>&gt;&gt;<i> database table and column or rwo should the users online be calling from.
+</I>&gt;&gt;<i> i.e. currently the wiredredux 0.7 branch found on the forge points to
+</I>&gt;&gt;<i> database table GridUsers and points to online.  However in attempting to
+</I>&gt;&gt;<i> point to this it does not work.  Additionally when you go in to the source
+</I>&gt;&gt;<i> code of the opensim  grid user service file
+</I>&gt;&gt;<i> (../OpenSim/services/UserAccountService.cs)  it shows that when someone logs
+</I>&gt;&gt;<i> onto the grid it places an entry of false for their online status.  This
+</I>&gt;&gt;<i> perhaps could be cleaned up to show a proper clean login and logout on the
+</I>&gt;&gt;<i> grid side.  i.e. if online have it set to true and then when logging out
+</I>&gt;&gt;<i> have it set to false.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I hope everyone has had a wonderful holiday and is ready for 2013.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Emperor
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011499.html">[Opensim-users] question regarding assetcache file directory
+</A></li>
+	<LI>Next message: <A HREF="011491.html">[Opensim-users] HyperGrid Issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11509">[ date ]</a>
+              <a href="thread.html#11509">[ thread ]</a>
+              <a href="subject.html#11509">[ subject ]</a>
+              <a href="author.html#11509">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

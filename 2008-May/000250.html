@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] &quot;Not found region&quot; during client connect
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%22Not%20found%20region%22%20during%20client%20connect&In-Reply-To=%3C541729.21636.qm%40web81403.mail.mud.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000259.html">
+   <LINK REL="Next"  HREF="000251.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] &quot;Not found region&quot; during client connect</H1>
+    <B>Kevin He</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%22Not%20found%20region%22%20during%20client%20connect&In-Reply-To=%3C541729.21636.qm%40web81403.mail.mud.yahoo.com%3E"
+       TITLE="[Opensim-users] &quot;Not found region&quot; during client connect">hek_u5 at yahoo.com
+       </A><BR>
+    <I>Wed May  7 22:29:50 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000259.html">[Opensim-users] llTargetOmega... ?
+</A></li>
+        <LI>Next message: <A HREF="000251.html">[Opensim-users] &quot;Not found region&quot; during client connect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#250">[ date ]</a>
+              <a href="thread.html#250">[ thread ]</a>
+              <a href="subject.html#250">[ subject ]</a>
+              <a href="author.html#250">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Opensim Experts,
+
+I've made an OpenSim build based on a SVN tree just pulled out. After running it with &quot;mono
+./OpenSim.exe&quot; in standalone mode on top of SusE 10.3, I tried to use the latest second life
+viewer to connect to it  (the client and server are two different machines in the same subnet). I
+see the following errors on the server console and the client simply displays a blank &quot;Close&quot;
+message box without showing any graphics. 
+
+
+Region# :
+13:13:22 - [LOGIN BEGIN]: Received login request message from user kevin he
+13:13:22 - [LOGIN]: Client is Second Life Release 1.19.1.4, start location is last
+13:13:22 - [LOGIN]: Authenticating kevin he
+13:13:22 - [LOGIN]: Not found region 109951162803200
+13:13:22 - [USER DB]: Syncing user database: 2 users stored
+13:13:22 - [LOGIN END]: Authentication of user kevin he successful.  Sending response to client.
+
+I read the FAQ section and modified the bin/Regions/default.xml to replace &quot;external_host_name&quot;
+value of &quot;127.0.0.1&quot; with the IP address &quot;192.168.11.250&quot; to which the client connects to. After
+the mod, still the same error shown as the above and client still doesn't connect.
+
+Any pointers will be appreciated.
+
+Thanks
+Kevin
+
+
+--- Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> It looks like plugins are being loaded twice (including the load regions 
+</I>&gt;<i> plugin which actually triggers the problem).
+</I>&gt;<i> 
+</I>&gt;<i> This can sometimes happen because the Mono.Addins.dll gets confused over 
+</I>&gt;<i> its addins cache.  We try to take care of this automatically but it 
+</I>&gt;<i> doesn't always work.  Either try making sure that the cache directories 
+</I>&gt;<i> named addins and addin-db-* are removed before you start, or try 
+</I>&gt;<i> checking out and building a fresh copy of the code from the repository 
+</I>&gt;<i> in an entirely new directory.
+</I>&gt;<i> 
+</I>&gt;<i> Another way to test whether the problem is with OpenSim or local to you 
+</I>&gt;<i> would be to rewind your subversion copy back to a revision before things 
+</I>&gt;<i> started going wrong for you.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Terry Ford wrote:
+</I>&gt;<i> &gt; Hello Justin,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Thanks for your reply.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I have only a single region in my regions folder.
+</I>&gt;<i> &gt; Not sure why it is attempting to load the region twice.
+</I>&gt;<i> &gt; All MySQL tables in this DB were deleted before startup to allow this 
+</I>&gt;<i> &gt; build to create it's own tables so I know it's not from an existing 
+</I>&gt;<i> &gt; entry in the DB.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Here's a copy of the output from OpenSim.exe including the exception it 
+</I>&gt;<i> &gt; reported:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; OpenSim 0.5, SVN build
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Performing compatibility checks...  Environment is compatible.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Starting...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:22 - [OPENSIM MAIN]: PLEASE IGNORE THE SCANNING ERRORS BELOW.  
+</I>&gt;<i> &gt; These are the result of a temporary problem with our plugins manager.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\intl3_svn.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\libapr.dll (The module was expected to contain 
+</I>&gt;<i> &gt; an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\libapriconv.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\libaprutil.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\libdb44d.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\libeay32.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\ode-debug.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\ode.dll (The module was expected to contain an 
+</I>&gt;<i> &gt; assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\openjpeg-libsl.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\PhysX-wrapper.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\sqlite3.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\ssleay32.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> &gt; Sources\OpenSim\Trunk\bin\svn_client-1.dll (The module was expected to 
+</I>&gt;<i> &gt; contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\intl3_svn.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\libapr.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\libapriconv.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\libaprutil.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\libdb44d.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\libeay32.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\ode-debug.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\ode.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\openjpeg-libsl.dll (The module 
+</I>&gt;<i> &gt; was expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\PhysX-wrapper.dll (The module 
+</I>&gt;<i> &gt; was expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\sqlite3.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\ssleay32.dll (The module was 
+</I>&gt;<i> &gt; expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> &gt; H:\Servers\Build042608pmSTILL_BROKEN\bin\svn_client-1.dll (The module 
+</I>&gt;<i> &gt; was expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> &gt; 0x80131018))
+</I>&gt;<i> &gt; 10:35:23 - 
+</I>&gt;<i> &gt; ====================================================================
+</I>&gt;<i> &gt; 10:35:23 - ========================= STARTING OPENSIM 
+</I>&gt;<i> &gt; =========================
+</I>&gt;<i> &gt; 10:35:23 - 
+</I>&gt;<i> &gt; ====================================================================
+</I>&gt;<i> &gt; 10:35:23 - [OPENSIM MAIN]: Running in grid mode
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Creating new local console
+</I>&gt;<i> &gt; 10:35:23 - [Region]: Started at 4/27/2008 10:35:23 AM
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [DATASTORE]: Attempting to load OpenSim.Data.MySQL.dll
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [DATASTORE]: MySql - connecting: Data 
+</I>&gt;<i> &gt; Source=localhost;Database=latestopensim;User ID=opensim;Password=MyPassword;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [DATASTORE]: Added IRegionDataStore Interface
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [ASSET SERVER]: Starting asset storage system
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [ASSET CACHE]: Creating Asset cache
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [REGION]: Starting HTTP server
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [HTTPD]: Starting up HTTP Server
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [HTTPD]: Spawned main thread OK
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [LIBRARY INVENTORY]: Loading library inventory
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [LIBRARY INVENTORY]: Loading libraries control file 
+</I>&gt;<i> &gt; .\inventory\Libraries.xml
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> &gt; /OpenSim/Startup/OpenSim.ApplicationPlugins.RegionProxy.RegionProxyPlugin
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Starting proxy
+</I>&gt;<i> &gt; 10:35:23 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> &gt; /OpenSim/Startup/OpenSim.ApplicationPlugins.LoadRegions.RemoteAdminPlugin
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> &gt; /OpenSim/Startup/OpenSim.ApplicationPlugins.LoadRegions.RemoteAdminPlugin
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> &gt; /OpenSim/Startup/OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [LOADREGIONS]: Load Regions addin being initialised
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [LOADREGIONS]: Loading Region Info from filesystem
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [LOADREGIONS]: Creating Region: OpenSim (ThreadID: 1)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [SCENE]: Creating new entitities instance
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [DATASTORE]: Loaded terrain revision r1209277987
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [PHYSICS]: Added meshing engine: ZeroMesher
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [PHYSICS]: Added physics engine: basicphysics
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [PHYSICS]: Added physics engine: modified_BulletX
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [PHYSICS]: Added meshing engine: Meshmerizer
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 10:35:23 - [PHYSICS]: Added physics engine: OpenDynamicsEngine
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>=== message truncated ===
+
+
+
+      ____________________________________________________________________________________
+Be a better friend, newshound, and 
+know-it-all with Yahoo! Mobile.  Try it now.  <A HREF="http://mobile.yahoo.com/;_ylt=Ahu06i62sR8HDtDypao8Wcj9tAcJ">http://mobile.yahoo.com/;_ylt=Ahu06i62sR8HDtDypao8Wcj9tAcJ</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000259.html">[Opensim-users] llTargetOmega... ?
+</A></li>
+	<LI>Next message: <A HREF="000251.html">[Opensim-users] &quot;Not found region&quot; during client connect
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#250">[ date ]</a>
+              <a href="thread.html#250">[ thread ]</a>
+              <a href="subject.html#250">[ subject ]</a>
+              <a href="author.html#250">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

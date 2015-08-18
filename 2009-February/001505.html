@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Some questions about inventory libraries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Some%20questions%20about%20inventory%20libraries&In-Reply-To=%3C499D7346.2000802%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001499.html">
+   <LINK REL="Next"  HREF="001506.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Some questions about inventory libraries</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Some%20questions%20about%20inventory%20libraries&In-Reply-To=%3C499D7346.2000802%40googlemail.com%3E"
+       TITLE="[Opensim-users] Some questions about inventory libraries">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Feb 19 15:57:10 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001499.html">[Opensim-users] Some questions about inventory libraries
+</A></li>
+        <LI>Next message: <A HREF="001506.html">[Opensim-users] Some questions about inventory libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1505">[ date ]</a>
+              <a href="thread.html#1505">[ thread ]</a>
+              <a href="subject.html#1505">[ subject ]</a>
+              <a href="author.html#1505">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Impalah wrote:
+&gt;<i> Hi everybody, here comes Impalah again with some bizarre questions.
+</I>&gt;<i> 
+</I>&gt;<i> Before... about a question I did some weeks ago when I had &quot;problems&quot; 
+</I>&gt;<i> with avatar crossing regions: it's resolved at 90% from my part (ugaim) 
+</I>&gt;<i> just changing the (superslow) framework I was using to another; anyway 
+</I>&gt;<i> the requests made to ugaim from region servers (get inventory, get maps, 
+</I>&gt;<i> get something I can't remember now) aren't concurrent, at least running 
+</I>&gt;<i> over .NET vm (I have tested it in five different machines with win XP). 
+</I>&gt;<i> I'll return to those things when I finish the project I'm working on.
+</I>&gt;<i> 
+</I>&gt;<i> Well, my questions, overall are for who implemented Inventory Libs and 
+</I>&gt;<i> all the things around.
+</I>
+I didn't implement the original code but I did end up extending it.  I don't think what we have right now is a 
+particularly good solution.
+
+&gt;<i> 
+</I>&gt;<i> When an avatar logs in, apart from the &quot;personal inventory skeleton&quot;, 
+</I>&gt;<i> the user server sends a &quot;inventory library skeleton&quot; too. 
+</I>&gt;<i> Opensim.Grid.User uses the object InventoryLib (excuse me if the names 
+</I>&gt;<i> are wrong, I haven't access to the code right now) which reads the xml's 
+</I>&gt;<i> from the &quot;inventory&quot; folder.
+</I>&gt;<i> 
+</I>&gt;<i> Ok, so an user server needs these xml files isn't it? At least for 
+</I>&gt;<i> returning the skeleton.
+</I>&gt;<i> 
+</I>&gt;<i> Well, but where is stored the inventory library? I suppose, because I 
+</I>&gt;<i> couldn't find any persistent storage for inventory library 
+</I>&gt;<i> folders/items, that the Opensim (region) server loads the xml files when 
+</I>&gt;<i> it starts and, when the viewer asks for inventory, it returns the 
+</I>&gt;<i> contents of the xml's.
+</I>
+Essentially correct.
+
+&gt;<i> 
+</I>&gt;<i> The problem is if I have several region servers, any of them with 
+</I>&gt;<i> distinct inventory libraries (folders and items). I have checked that if 
+</I>&gt;<i> I return in login, for example, only two of the inventory lib folders, 
+</I>&gt;<i> the opensim viewer will only show me these 2 folders, ignoring the rest 
+</I>&gt;<i> of the &quot;inventory xmls&quot; defined.
+</I>&gt;<i> 
+</I>&gt;<i> So if I pretend to distribute and control the inventory library from the 
+</I>&gt;<i> ugaim servers I have to copy the xmls to all the region servers who 
+</I>&gt;<i> connect to my grid... right?
+</I>
+That's correct.  At the moment each region server loads its local library data.  Which means that on a grid system, the 
+library data on every single region and on the grid inventory service must be identical (afair).
+
+I believe that it would be better to stop loading library inventory locally and instead pull it from the central 
+inventory service (in grid mode).  This would have the advantage of making it much easier to update library inventory.
+
+&gt;<i> 
+</I>&gt;<i> I don't know if this is an error (I think the inventory library must be 
+</I>&gt;<i> requested from region servers to ugaim servers) or some kind of 
+</I>&gt;<i> &quot;feature&quot;, or if exists any reason for doing the things that way.
+</I>&gt;<i> 
+</I>&gt;<i> Can anyone help me with this?
+</I>&gt;<i> 
+</I>&gt;<i> Thank you
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Impalah &quot;always having problems&quot; Shenzhou
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001499.html">[Opensim-users] Some questions about inventory libraries
+</A></li>
+	<LI>Next message: <A HREF="001506.html">[Opensim-users] Some questions about inventory libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1505">[ date ]</a>
+              <a href="thread.html#1505">[ thread ]</a>
+              <a href="subject.html#1505">[ subject ]</a>
+              <a href="author.html#1505">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NAT &amp; Corporate Firewall
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3CCAG6z%2BU7Ho%3D0z_XG-vfz96_sZGpo6pcY6KDQCggEd1oukA%3DMmhQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009338.html">
+   <LINK REL="Next"  HREF="009315.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NAT &amp; Corporate Firewall</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NAT%20%26%20Corporate%20Firewall&In-Reply-To=%3CCAG6z%2BU7Ho%3D0z_XG-vfz96_sZGpo6pcY6KDQCggEd1oukA%3DMmhQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] NAT &amp; Corporate Firewall">fleep513 at gmail.com
+       </A><BR>
+    <I>Sun Feb  5 15:43:39 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009338.html">[Opensim-users] Web Statistics Module
+</A></li>
+        <LI>Next message: <A HREF="009315.html">[Opensim-users] World Region/Estate diasabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9311">[ date ]</a>
+              <a href="thread.html#9311">[ thread ]</a>
+              <a href="subject.html#9311">[ subject ]</a>
+              <a href="author.html#9311">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>(This is a very old thread, but I wanted to post our final resolution to
+the problem in the same thread so it's easily linked to on the Nabble
+archive.)
+
+Because our campus uses 1-to-1 NATing (each machine on the campus network
+has both an internal and an external IP address), we had to move our
+Opensim server to the DMZ and have it assigned a static external IP address
+in order for off campus users to connect.
+
+Through this thread, we discovered Opensim does the DNS resolution for the
+remote client and spits out whatever the IP address resolves to locally,
+which means no matter what combination of IP address or hostname is listed
+in the region.ini file, so long as the hostname resolves to an internal IP
+address from inside the network, no one from outside could connect.  The
+only option was to bypass the 1-to-1 NATing and have an external static IP
+address assigned, and then everything worked perfectly from both on and off
+campus.
+
+Hope this helps anyone else on a similar network setup and many thanks
+again to everyone who helped us figure out what was happening under the
+hood.  :)
+
+- Chris/Fleep
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Tue, Apr 5, 2011 at 3:25 PM, Gary Beck &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gab4gab at gmail.com</A>&gt; wrote:
+
+&gt;<i> Teravus,
+</I>&gt;<i>   Thank you for that explanation.  I guess nothing is simple.  The more I
+</I>&gt;<i> tested the less clear it was exactly how things worked.
+</I>&gt;<i> - Gary
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----- Original Message ----- On April 05, 2011 &quot;Teravus Ovares&quot; said:
+</I>&gt;<i> Subject: Re: [Opensim-users] NAT &amp; Corporate Firewall
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> We've had this discussion before on this list so you might be able to
+</I>&gt;<i> dig in the archives for the long winded answer.
+</I>&gt;<i>
+</I>&gt;<i> The short winded answer is this:   The UDP protocol requires that the
+</I>&gt;<i> login server and any 'region connect' messages have an IP address in
+</I>&gt;<i> the response to the client.  If the UDP protocol allowed you to only
+</I>&gt;<i> send a hostname, then this wouldn't be an issue.   As far as the
+</I>&gt;<i> region looking up it's DNS info, neither the login server, or the
+</I>&gt;<i> region has enough of a network structure understanding to manage that
+</I>&gt;<i> 'external ip/internal ip' thing better at the moment.    Ideally,
+</I>&gt;<i> someone could write a subnet matching/ip rewriting scheme that gets
+</I>&gt;<i> sent to the login server so that the login server could supply the
+</I>&gt;<i> correct IP address based on the connecting client ip but it's probably
+</I>&gt;<i> going to be a lot of work to refactor that in because of the
+</I>&gt;<i> complexities of the object RegionInfo and how it interacts with the
+</I>&gt;<i> various types of grid services, (standalone, grid, standalone grid,
+</I>&gt;<i> hypergrid...  etc).
+</I>&gt;<i>
+</I>&gt;<i> One thing that I think is important to note.    I vaguely remember
+</I>&gt;<i> something about sending the client 0.0.0.0 and triggering the client
+</I>&gt;<i> to do the lookup but, at the time, the client had some bugs that
+</I>&gt;<i> prevented it from working.   That might be a more feasable way to move
+</I>&gt;<i> forward.   Test that option.
+</I>&gt;<i>
+</I>&gt;<i> -Teravus
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120205/3e8cb552/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120205/3e8cb552/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009338.html">[Opensim-users] Web Statistics Module
+</A></li>
+	<LI>Next message: <A HREF="009315.html">[Opensim-users] World Region/Estate diasabled
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9311">[ date ]</a>
+              <a href="thread.html#9311">[ thread ]</a>
+              <a href="subject.html#9311">[ subject ]</a>
+              <a href="author.html#9311">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

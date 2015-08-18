@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] UAI Development
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20UAI%20Development&In-Reply-To=%3C4ED6BB47.2080503%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="008754.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] UAI Development</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20UAI%20Development&In-Reply-To=%3C4ED6BB47.2080503%40googlemail.com%3E"
+       TITLE="[Opensim-users] UAI Development">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Dec  1 00:24:55 CET 2011</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="008754.html">[Opensim-users] Wifi for 0.7.2 - Not showing users totals or online	users
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8753">[ date ]</a>
+              <a href="thread.html#8753">[ thread ]</a>
+              <a href="subject.html#8753">[ subject ]</a>
+              <a href="author.html#8753">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 30/11/11 10:33, Joshua Rubeck wrote:
+&gt;<i> Hey all,
+</I>&gt;<i>
+</I>&gt;<i> I am currently working on a user account interface for Open Simulator. Though I must say that My skills in PHP are very
+</I>&gt;<i> limited as I am still learning I figured it would be nice to have this kind of tool for Open Simulator. I would also
+</I>&gt;<i> like to open the table to anyone who would like to help with this project as it would benefit all of us for easier
+</I>&gt;<i> access to our respective grids.
+</I>
+Hi Joshua.  Off the top of my head, there are currently 4 different approaches to tying a web UI in with OpenSim.
+
+1) Edit the db directly.  This is a common and simplish approach but can be fragile if the DB changes.  I think the 
+older opensimwi (redux) takes this approach but I've never looked at the code.  There is some documentation at [1].  If 
+you start going down this route and need some more information, I'm happy to fill out some details as required.
+
+2) Use existing C# services and database classes to interact with the DB, but supplement these with other C# services 
+and database classes.  This is what the Diva distro does [2] with extra request handlers in Diva.Wifi to handle incoming 
+requests from the webpages and a smidgen more database code in Diva.Data.MySQL.  However, I would say that writing this 
+additional C# is complicated.
+
+3) Just use existing C# services.  Actually, various of your functions are already available as service calls on a 
+ROBUST instance, or can be configured to be available in latest git master (e.g. by setting AllowCreateUser = true in 
+the [UserAccountService] section of Robust.ini).  Howeverm these constitute a security risk if they can be accessed by 
+third parties.  Also, documentation is spare in this area - one would have to look at OpenSim.Services.* C# packages and 
+work backwaqrds.  Right now, these services aren't available for incoming http calls in standalone mode on core OpenSim. 
+  I'm not sure how the Diva distro achieves this - maybe there is some cunning config approach.
+
+This approach does require ROBUST services to be running.
+
+4) The RemoteAdmin simulator admin facility has some facilities for these kind of operations (though probably not all). 
+  However, this requires a simulator to be running, though these functios are avilable on standalone.
+
+&gt;<i>
+</I>&gt;<i> This is what the system will have access to and what it can do:
+</I>&gt;<i>
+</I>&gt;<i> User Accounts - Add, Edit, Delete, Block(I am not sure if a block feature is enabled on Open Simulator)
+</I>
+Add, Edit are available.  I don't think block is possible yet (if so, someone please correct me).  It's not possible to 
+delete a user.
+
+&gt;<i> User Inventory - View, Delete
+</I>
+These should be possible.
+
+&gt;<i> User Land - Add, View, Edit, Delete(For this feature there will need to be a main account for the land to be assigned
+</I>&gt;<i> to. Much like Second Life's Governor Linden)
+</I>
+I suspect land mgmt outside the client would only be possible by directly altering databases at the moment (and these 
+who normally be on the region rather than centralized).
+
+&gt;<i>
+</I>&gt;<i> One thing I would like to look into is adding an Account Status system to this. Basically the ability to hold an account
+</I>&gt;<i> for a specific reason that corresponds with a numeric or alpha numeric code.
+</I>
+UserLevel in the UserAccounts table might be usable for this.
+
+&gt;<i>
+</I>&gt;<i> Any suggestions would be helpful as this system is still in planning and early development. There are a lot of tools out
+</I>&gt;<i> there but they seem to be out of date or extremely difficult to install. One thing this system would need is the ability
+</I>&gt;<i> to link with other servers connected to the grid. Which reminds me, Is there a way to set up that ONLY specific region
+</I>&gt;<i> servers can connect to a grid server?
+</I>
+Not at this time.
+
+It sounds like Jason/core now has a good bundle of tools though I don't know how extensive this is since I haven't had a 
+change to read all the e-mails or take a directly look.
+
+[1] <A HREF="http://opensimulator.org/wiki/Database_Documentation">http://opensimulator.org/wiki/Database_Documentation</A>
+[2] <A HREF="https://github.com/diva/diva-distribution">https://github.com/diva/diva-distribution</A>
+[3] <A HREF="http://opensimulator.org/wiki/RemoteAdmin">http://opensimulator.org/wiki/RemoteAdmin</A>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="008754.html">[Opensim-users] Wifi for 0.7.2 - Not showing users totals or online	users
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8753">[ date ]</a>
+              <a href="thread.html#8753">[ thread ]</a>
+              <a href="subject.html#8753">[ subject ]</a>
+              <a href="author.html#8753">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

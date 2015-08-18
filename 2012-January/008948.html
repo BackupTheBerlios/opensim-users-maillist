@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Crash on collision
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3C4F02298F.8040808%40silverday.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008946.html">
+   <LINK REL="Next"  HREF="008949.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Crash on collision</H1>
+    <B>Klaus-E. Klingner</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3C4F02298F.8040808%40silverday.de%3E"
+       TITLE="[Opensim-users] Crash on collision">klingner at silverday.de
+       </A><BR>
+    <I>Mon Jan  2 23:02:55 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008946.html">[Opensim-users] Crash on collision
+</A></li>
+        <LI>Next message: <A HREF="008949.html">[Opensim-users] Crash on collision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8948">[ date ]</a>
+              <a href="thread.html#8948">[ thread ]</a>
+              <a href="subject.html#8948">[ subject ]</a>
+              <a href="author.html#8948">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>BTW in V 07.0.2 the problem wasn't there. I tried to replace the old 
+libode from 0.7.2 with the ones from the old version, but Opensim would 
+no longer  start. So I assume something has changed with the physics 
+from one version to another.
+
+Regards,
+
+Klaus
+
+On 02.01.2012 22:51, Klaus-E. Klingner wrote:
+&gt;<i> Hallo,
+</I>&gt;<i>
+</I>&gt;<i> thanks, Justin, for the tip. I tried it, but it did not help. Still 
+</I>&gt;<i> getting the ODE-crash (in addition one of the regions doesn't load for 
+</I>&gt;<i> some strange reason, with bullet it loads again :/):
+</I>&gt;<i>
+</I>&gt;<i> terminate called after throwing an instance of 'std::bad_alloc'
+</I>&gt;<i>   what():  std::bad_alloc
+</I>&gt;<i> Stacktrace:
+</I>&gt;<i>
+</I>&gt;<i>   at (wrapper managed-to-native) Ode.NET.d.Collide 
+</I>&gt;<i> (intptr,intptr,int,Ode.NET.d/ContactGeom[],int) &lt;0xffffffff&gt;
+</I>&gt;<i>   at OpenSim.Region.Physics.OdePlugin.OdeScene.near 
+</I>&gt;<i> (intptr,intptr,intptr) &lt;0x0054f&gt;
+</I>&gt;<i>   at (wrapper native-to-managed) 
+</I>&gt;<i> OpenSim.Region.Physics.OdePlugin.OdeScene.near (intptr,intptr,intptr) 
+</I>&gt;<i> &lt;0xffffffff&gt;
+</I>&gt;<i>   at (wrapper managed-to-native) Ode.NET.d.SpaceCollide2 
+</I>&gt;<i> (intptr,intptr,intptr,Ode.NET.d/NearCallback) &lt;0xffffffff&gt;
+</I>&gt;<i>   at OpenSim.Region.Physics.OdePlugin.OdeScene.collision_optimized 
+</I>&gt;<i> (single) &lt;0x0052f&gt;
+</I>&gt;<i>   at OpenSim.Region.Physics.OdePlugin.OdeScene.Simulate (single) 
+</I>&gt;<i> &lt;0x00c1f&gt;
+</I>&gt;<i>   at OpenSim.Region.Framework.Scenes.SceneGraph.UpdatePhysics (double) 
+</I>&gt;<i> &lt;0x00046&gt;
+</I>&gt;<i>   at OpenSim.Region.Framework.Scenes.Scene.Update () &lt;0x00627&gt;
+</I>&gt;<i>   at OpenSim.Region.Framework.Scenes.Scene.Heartbeat () &lt;0x00047&gt;
+</I>&gt;<i>   at System.Threading.Thread.StartUnsafe () &lt;0x00071&gt;
+</I>&gt;<i>   at (wrapper runtime-invoke) object.runtime_invoke_void__this__ 
+</I>&gt;<i> (object,intptr,intptr,intptr) &lt;0xffffffff&gt;
+</I>&gt;<i>
+</I>&gt;<i> Native stacktrace:
+</I>&gt;<i>
+</I>&gt;<i>         mono() [0x494e01]
+</I>&gt;<i>         /lib64/libpthread.so.0(+0xf2d0) [0x7fcec95552d0]
+</I>&gt;<i>         /lib64/libc.so.6(gsignal+0x35) [0x7fcec920bab5]
+</I>&gt;<i>         /lib64/libc.so.6(abort+0x186) [0x7fcec920cfb6]
+</I>&gt;<i>         
+</I>&gt;<i> /usr/lib64/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0x11d) 
+</I>&gt;<i> [0x7fce8838ca9d]
+</I>&gt;<i>         /usr/lib64/libstdc++.so.6(+0xbccb6) [0x7fce8838acb6]
+</I>&gt;<i>         /usr/lib64/libstdc++.so.6(+0xbcce3) [0x7fce8838ace3]
+</I>&gt;<i>         /usr/lib64/libstdc++.so.6(+0xbcdee) [0x7fce8838adee]
+</I>&gt;<i>         /usr/lib64/libstdc++.so.6(_Znwm+0x7d) [0x7fce8838b1fd]
+</I>&gt;<i>         /usr/lib64/libstdc++.so.6(_Znam+0x9) [0x7fce8838b2b9]
+</I>&gt;<i>         
+</I>&gt;<i> /opt/opensim/diva-r16915/bin/libode-x86_64.so(_ZN13dxHeightfield20allocateHeightBufferEmm+0x54) 
+</I>&gt;<i> [0x7fce88619f74]
+</I>&gt;<i>         
+</I>&gt;<i> /opt/opensim/diva-r16915/bin/libode-x86_64.so(_ZN13dxHeightfield23dCollideHeightfieldZoneEiiiiP6dxGeomiiP12dContactGeomi+0x1b0) 
+</I>&gt;<i> [0x7fce8861a690]
+</I>&gt;<i>         
+</I>&gt;<i> /opt/opensim/diva-r16915/bin/libode-x86_64.so(_Z19dCollideHeightfieldP6dxGeomS0_iP12dContactGeomi+0x23a) 
+</I>&gt;<i> [0x7fce8861b81a]
+</I>&gt;<i>         [0x41aeafc1]
+</I>&gt;<i>
+</I>&gt;<i> Debug info from gdb:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> =================================================================
+</I>&gt;<i> Got a SIGABRT while executing native code. This usually indicates
+</I>&gt;<i> a fatal error in the mono runtime or one of the native libraries
+</I>&gt;<i> used by your application.
+</I>&gt;<i> =================================================================
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Klaus
+</I>&gt;<i>
+</I>&gt;<i> On 02.01.2012 21:50, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> Please see [1] and [2] for more information on these ODE crashes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Essentially, we've narrowed it down to a problem using the default 
+</I>&gt;&gt;<i> ODE collider with more than 1 region.  Stress tests with 20 bots 
+</I>&gt;&gt;<i> constantly teleporting around one region (or between two simulators 
+</I>&gt;&gt;<i> in a grid each running 1 region) do not trigger the ODE crash even 
+</I>&gt;&gt;<i> after many hours.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The same stress test with 20 bots teleporting between two regions on 
+</I>&gt;&gt;<i> the same system, even where the regions are 10 map spaces apart, 
+</I>&gt;&gt;<i> always triggers the collider crash sooner or later.  Sometimes this 
+</I>&gt;&gt;<i> occurs almost immediately, sometimes only after an hour or so.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Compiling ODE with the older collider (GIMPACT instead of OPCODE) 
+</I>&gt;&gt;<i> doesn't see this crash.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My chief suspicion is that there's actually an ODE/collider memory 
+</I>&gt;&gt;<i> freeing bug.  I suspect that it's not very usual to run more than one 
+</I>&gt;&gt;<i> physics 'world' in a program (in OpenSimulator, each region runs its 
+</I>&gt;&gt;<i> own world).  It could also be a problem with OpenSim's P/Invoke 
+</I>&gt;&gt;<i> interface to ODE causing collision objects to be freed at the wrong 
+</I>&gt;&gt;<i> time, but I'm currently discounting that because we don't see the 
+</I>&gt;&gt;<i> same failure with two simulators each with a single region, and ODE 
+</I>&gt;&gt;<i> scenes at the OpenSim level are entirely separate, even though they 
+</I>&gt;&gt;<i> aren't in the ODE library itself.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [1] contains a link in the comments to an ODE Linux 64 bit library I 
+</I>&gt;&gt;<i> compiled using the GIMPACT collider, if you're running that platform 
+</I>&gt;&gt;<i> and want to try it.  This will work on any recent version of OpenSim 
+</I>&gt;&gt;<i> (probably even 0.6.9).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Using a linux distro version of ode probably won't fix this problem 
+</I>&gt;&gt;<i> as I expect they will have compiled it using OPCODE.  OpenSimulator 
+</I>&gt;&gt;<i> only every uses the ODE library bundled in its bin directory, unless 
+</I>&gt;&gt;<i> you start symlinking or similar.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [1] <A HREF="http://opensimulator.org/mantis/view.php?id=3251">http://opensimulator.org/mantis/view.php?id=3251</A>
+</I>&gt;&gt;<i> [2] <A HREF="http://opensimulator.org/mantis/view.php?id=4553">http://opensimulator.org/mantis/view.php?id=4553</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 01/01/12 20:23, Klaus-E. Klingner wrote:
+</I>&gt;&gt;&gt;<i> Hallo,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks for the tip. But I am not using any mesh in my sim :(
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Basically I am using the DIVA because of the wifi, but think I will 
+</I>&gt;&gt;&gt;<i> switch once the new GUI is done, that was written
+</I>&gt;&gt;&gt;<i> about here on the list. Do not have time to write one myself atm.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Regards,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Klaus
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 01.01.2012 14:38, M.E. Verhagen wrote:
+</I>&gt;&gt;&gt;&gt;<i> Happy new year !
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> One other thing what seems to trigger ode crashes seem to faulty 
+</I>&gt;&gt;&gt;&gt;<i> meshes, you can reconize these from opensim log lines
+</I>&gt;&gt;&gt;&gt;<i> like:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> 10:49:19 - [MESH]: no recognized physics mesh found in mesh asset
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> 11:06:40 - [MESH]: asset data is zero length
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> 06:40 - [MESH]: experimental mesh proxy generation for 
+</I>&gt;&gt;&gt;&gt;<i> defaultMesh/9af57c73-8ef4-42f1-9415-46e8491213cd
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Try to find these inworld and delete them. On my box the ode 
+</I>&gt;&gt;&gt;&gt;<i> crashes were less fequent after deleting those.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The case with the libode is that it does not seem to be compatible 
+</I>&gt;&gt;&gt;&gt;<i> with some systems luckely most system already have
+</I>&gt;&gt;&gt;&gt;<i> a libode in their repo why not use that libode ?
+</I>&gt;&gt;&gt;&gt;<i> I am using a git version, not the diva. Could be that some recent 
+</I>&gt;&gt;&gt;&gt;<i> updates on the odescene also prevent some crashes.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Op zaterdag 31 december 2011 schreef Klaus-E. Klingner 
+</I>&gt;&gt;&gt;&gt;<i> (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">klingner at silverday.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">klingner at silverday.de</A>&gt;) het
+</I>&gt;&gt;&gt;&gt;<i> volgende:
+</I>&gt;&gt;&gt;&gt;<i> &gt; &lt;sigh&gt; I have to correct myself. The world just crashed again 
+</I>&gt;&gt;&gt;&gt;<i> with exactly the same error :(
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; Regards,
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; Klaus
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; On 31.12.2011 18:19, Klaus-E. Klingner wrote:
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; Hallo,
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; thank you for the tip. However it did not fix the problem :/ I 
+</I>&gt;&gt;&gt;&gt;<i> still got the same crash. However I noticed that the
+</I>&gt;&gt;&gt;&gt;<i> ode-file in the physics folder of DIVA is different from the one in 
+</I>&gt;&gt;&gt;&gt;<i> the original OpenSim 0.72-download. I copied that
+</I>&gt;&gt;&gt;&gt;<i> over, started the world and that seems to have done the trick. Now 
+</I>&gt;&gt;&gt;&gt;<i> I just have to figure out a way to one of the sims
+</I>&gt;&gt;&gt;&gt;<i> that suddenly disappeared :/
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; Regards and a happy and a happy new year,
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; Klaus
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; Additional remark:
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; To install the libode on SuSe you have to add the 
+</I>&gt;&gt;&gt;&gt;<i> OpenSuSE-Gamerepository with
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; zypper addrepo 
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://download.opensuse.org/repositories/games/openSUSE_11.4/">http://download.opensuse.org/repositories/games/openSUSE_11.4/</A> 
+</I>&gt;&gt;&gt;&gt;<i> opensuse-games-x86_64
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; and then install libode using
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; zypper install libode1
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; On 31.12.2011 16:57, M.E. Verhagen wrote:
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; I had the same sort of ode crashes, i installed ode on my system 
+</I>&gt;&gt;&gt;&gt;<i> with 'yum install ode' and deleted the libode.so
+</I>&gt;&gt;&gt;&gt;<i> from the opensim bin dir, after wich i simlinked the lib to make 
+</I>&gt;&gt;&gt;&gt;<i> sure opensim uses it. I also downloaded
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://github.com/downloads/justincc/opensim/libode.so-x86_64.so,">https://github.com/downloads/justincc/opensim/libode.so-x86_64.so,</A> 
+</I>&gt;&gt;&gt;&gt;<i> and the crashes stopped.
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; On suse this would something like these commands:
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; yum install libode
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; cd /opt/opensim/diva-r16915/bin
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; wget 
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://github.com/downloads/justincc/opensim/libode.so-x86_64.so">https://github.com/downloads/justincc/opensim/libode.so-x86_64.so</A>
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; rm libode.so
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; rm libode-x86_64.so
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; mv libode.so-x86_64.so &lt;<A HREF="http://libode.so-x86_64.so">http://libode.so-x86_64.so</A>&gt; libode-x86_64.so
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; ln /usr/lib64/libode.so.1.1.1 libode.so
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; I am not sure if there is a libode.so.1.1.1, it could named 
+</I>&gt;&gt;&gt;&gt;<i> differently, but just symlink it.
+</I>&gt;&gt;&gt;&gt;<i> &gt; In theory the symlink is not needed, but it cannot hurt.
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> 
+</I>&gt;&gt;&gt;&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008946.html">[Opensim-users] Crash on collision
+</A></li>
+	<LI>Next message: <A HREF="008949.html">[Opensim-users] Crash on collision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8948">[ date ]</a>
+              <a href="thread.html#8948">[ thread ]</a>
+              <a href="subject.html#8948">[ subject ]</a>
+              <a href="author.html#8948">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

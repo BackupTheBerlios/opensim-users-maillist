@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animations%20seem%20freeze%20framed%20when%20stopping%0A%20them%3F%20OpenSim%20Master&In-Reply-To=%3C510DC844.7000102%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011690.html">
+   <LINK REL="Next"  HREF="011691.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animations%20seem%20freeze%20framed%20when%20stopping%0A%20them%3F%20OpenSim%20Master&In-Reply-To=%3C510DC844.7000102%40gmail.com%3E"
+       TITLE="[Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Sun Feb  3 03:15:32 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011690.html">[Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master
+</A></li>
+        <LI>Next message: <A HREF="011691.html">[Opensim-users] ode + mesh = phantom
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11699">[ date ]</a>
+              <a href="thread.html#11699">[ thread ]</a>
+              <a href="subject.html#11699">[ subject ]</a>
+              <a href="author.html#11699">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Justin,
+
+I have located the commit where the issue began to show up; Commit 
+b977f9 (r/20586). I also tested a couple of commits before it to be 
+certain and in those commits the issue does not appear.
+
+Posted mantis 6530
+<A HREF="http://opensimulator.org/mantis/view.php?id=6530">http://opensimulator.org/mantis/view.php?id=6530</A>
+
+Thank you!
+
+On 2/1/2013 7:17 PM, Justin Clark-Casey wrote:
+&gt;<i> Hi Chris.  I tried to reproduce the playing issues issues on 9588328 
+</I>&gt;<i> which should be identical to fd34a75 with respect to animations.
+</I>&gt;<i>
+</I>&gt;<i> However, I was not able to do so - animations appear to reset 
+</I>&gt;<i> correctly when stopped in mid-animate on both LL 1.23.5 and LL 3.3.4, 
+</I>&gt;<i> for both one's own viewer and for observing avatars.
+</I>&gt;<i>
+</I>&gt;<i> I think the next step would be to open a mantis so that we can 
+</I>&gt;<i> investigate further - some of the animation logic has changed 
+</I>&gt;<i> recently.  As usual, if you could upload running scripts to recreate 
+</I>&gt;<i> the issue and perhaps the animation itself (if not confidential) then 
+</I>&gt;<i> that would be very helpful, as would identifying the exact 
+</I>&gt;<i> OpenSimulator commit where the behaviour changed if possible.
+</I>&gt;<i>
+</I>&gt;<i> Animations are particularly sensitive to things such as animation 
+</I>&gt;<i> overrides so it might be worth reviewing whether these are active on 
+</I>&gt;<i> either client or server-side (where both approaches work rather 
+</I>&gt;<i> differently).
+</I>&gt;<i>
+</I>&gt;<i> On 31/01/13 04:17, Chris wrote:
+</I>&gt;&gt;<i> Hello all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm running OpenSim commit fd34a75 (r/21883) and am noticing some 
+</I>&gt;&gt;<i> oddness with playing and stopping animations. If I
+</I>&gt;&gt;<i> play an animation from inventory and then stop it, it will appear 
+</I>&gt;&gt;<i> that my avatar is frozen in the last frame that was
+</I>&gt;&gt;<i> played before stopping instead of returning the avatar to the state 
+</I>&gt;&gt;<i> that was in before the new animation was played. If
+</I>&gt;&gt;<i> I am playing and stopping animations from a script (such as an AO for 
+</I>&gt;&gt;<i> instance); when the animation is stopped it will
+</I>&gt;&gt;<i> appear to keep playing until another animation is played after it. In 
+</I>&gt;&gt;<i> both cases the weirdness with the stopped
+</I>&gt;&gt;<i> animation(s) will persist until some other animation is played 
+</I>&gt;&gt;<i> whether it be another inventory animation or a default
+</I>&gt;&gt;<i> avatar movement animation. It doesn't seem to matter which animation 
+</I>&gt;&gt;<i> is played from inventory / script.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For  a script it can sort of being worked around by doing this:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> llStartAnimation(&quot;some_anim_name&quot;);
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ... Later on when it needs to be stopped ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> llStopAnimation(&quot;some_anim_name&quot;);
+</I>&gt;&gt;<i> llStartAnimation(&quot;stand&quot;);
+</I>&gt;&gt;<i> llStopAnimation(&quot;stand&quot;);
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It gives the appearance that the animation is stopped; but I'm 
+</I>&gt;&gt;<i> thinking that it's simply just overriding the stuck
+</I>&gt;&gt;<i> animation long enough to put a apply a new animation to the avatar to 
+</I>&gt;&gt;<i> &quot;unstick&quot; it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Its not an issue when the script plays one animation after another 
+</I>&gt;&gt;<i> but if it's a one time animation that needs to be
+</I>&gt;&gt;<i> stopped the results can look really funny.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On a side note... I notice that when I attempt to play the same 
+</I>&gt;&gt;<i> animation again with out first playing a different
+</I>&gt;&gt;<i> animation, the current playing animation won't appear to restart like 
+</I>&gt;&gt;<i> it previously did not too long ago. I noticed this
+</I>&gt;&gt;<i> in my synced pose ball script that has a sync command which would 
+</I>&gt;&gt;<i> simply play the poseball anim again when an avatar sat
+</I>&gt;&gt;<i> on it (sends a link message to other linked pose balls to tell them 
+</I>&gt;&gt;<i> all to play the animation again) in attempt to sync
+</I>&gt;&gt;<i> up the animations of multiple avatars sitting on the link set.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Previously my sync function looked like this
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sync()
+</I>&gt;&gt;<i> {
+</I>&gt;&gt;<i>      llStopAnimation(anim);
+</I>&gt;&gt;<i>      llStartAnimation(anim);
+</I>&gt;&gt;<i> }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Then had to change it to this once the animation issue started 
+</I>&gt;&gt;<i> appearing to get it to work again
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sync()
+</I>&gt;&gt;<i> {
+</I>&gt;&gt;<i>      llStopAnimation(anim);
+</I>&gt;&gt;<i>      llStartAnimation(&quot;stand&quot;);
+</I>&gt;&gt;<i>      llStopAnimation(&quot;stand&quot;);
+</I>&gt;&gt;<i>      llStartAnimation(anim);
+</I>&gt;&gt;<i> }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is any one else experiencing this?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.5 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011690.html">[Opensim-users] Animations seem freeze framed when stopping them? OpenSim Master
+</A></li>
+	<LI>Next message: <A HREF="011691.html">[Opensim-users] ode + mesh = phantom
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11699">[ date ]</a>
+              <a href="thread.html#11699">[ thread ]</a>
+              <a href="subject.html#11699">[ subject ]</a>
+              <a href="author.html#11699">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

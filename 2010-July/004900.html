@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Question on migrating database from Linux to	Windows and vice versa
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20on%20migrating%20database%20from%20Linux%20to%0A%09Windows%20and%20vice%20versa&In-Reply-To=%3CAANLkTilbmb53KDix_L6CDSNelheLnkcRDaGkT7R8I0w0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004899.html">
+   <LINK REL="Next"  HREF="004902.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Question on migrating database from Linux to	Windows and vice versa</H1>
+    <B>Karen Palen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20on%20migrating%20database%20from%20Linux%20to%0A%09Windows%20and%20vice%20versa&In-Reply-To=%3CAANLkTilbmb53KDix_L6CDSNelheLnkcRDaGkT7R8I0w0%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Question on migrating database from Linux to	Windows and vice versa">karenpalensl at gmail.com
+       </A><BR>
+    <I>Mon Jul 12 10:09:24 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004899.html">[Opensim-users] Question on migrating database from Linux to	Windows and vice versa
+</A></li>
+        <LI>Next message: <A HREF="004902.html">[Opensim-users] Question on migrating database from Linux to Windows and vice versa
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4900">[ date ]</a>
+              <a href="thread.html#4900">[ thread ]</a>
+              <a href="subject.html#4900">[ subject ]</a>
+              <a href="author.html#4900">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>My experience is with Engineering or design type databases rather than
+commercial/SQL type of databases, however the concept of data integrity is
+so fundamental that I would be very surprised if much would happen without
+being noticed!
+
+In the case of MySql you are essentially running the same software in
+different environments  - both the basic database server and the Admin tools
+- so I would expect any major issues to be a very rare things.
+
+Probably the best assurance of this is the MySql &quot;market share&quot;, it is one
+of the most popular database systems in existence and is used in all kinds
+of environments (OS, hardware, networks, etc.) from simple standalone setups
+to massive distributed corporate &quot;enterprise&quot; systems. As a result I would
+expect that any common problems would be found and fixed very rapidly.
+
+The kind of data loss caused by parts of a file being deleted could
+certainly occur, but there are very well known and widely used methods to
+detect and fix this kind of problem. My recollection is that the SQL
+&quot;backups&quot; from MySql have several built in mechanisms to check this.
+
+Loss of some more subtle information such as a pointer to a specific texture
+(or your other examples) is more likely, however the application software
+would (SHOULD!) be the same version of OpenSim in both cases so this too is
+very unlikely. This however is a distinct possibility when upgrading from
+one version to the next regardless of the OS!
+
+Since there are extensive changes made to the internal workings of OpenSim
+between V0.6.9 and V0.7.xx this becomes very plausible. It is the subject of
+a lot of the testing work being done on the current RCs as a result. Again I
+would expect that by the time V0.7 is released the major problems either
+fixed or well known.
+
+All the same any grid that has more than a half dozen users will likely
+implement its own beta testing program to catch these problems in your
+specific environment. There always do seem to be a few issues brought to
+light in these tests! Not a problem if you only need to fix up two or three
+users (or regions) but if say 5000 users have their inventory corrupted then
+you have a major problem!
+
+As always &quot;slow and easy wins the race&quot; and a well planned step by step
+migration is essential.
+
+Karen
+
+On Sun, Jul 11, 2010 at 6:28 PM, Chris Kennedy &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at cox.net</A>&gt; wrote:
+
+&gt;<i>  I do make seperate OAR and IAR backups along side my SQL dumps =)
+</I>&gt;<i>
+</I>&gt;<i> I was just wondering if there would be any definite data loss when saving
+</I>&gt;<i> and restoring these SQL dumps across multiple platforms... or if data loss
+</I>&gt;<i> would be a &quot;freak&quot; kind of thing (i.e. a bug in the My SQL server or MySQL
+</I>&gt;<i> Admin when it comes to Linux or Windows, or configuration differences
+</I>&gt;<i> between the default setup of the MySQL server on Linux vs. Windows, etc).
+</I>&gt;<i>
+</I>&gt;<i> Would it be a noticeable thing if data loss did occur such as missing
+</I>&gt;<i> inventory, or something more subtle that would take a bit of digging to
+</I>&gt;<i> find; such as missing textures or even &quot;blank&quot; data (i.e. open a texture and
+</I>&gt;<i> all you see is a white box where the texture should have been. Or try to
+</I>&gt;<i> play an animation / sound from your inventory and it won't play)?
+</I>&gt;<i>
+</I>&gt;<i> Thank you very much for the suggestions! =)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 7/11/2010 7:25 PM, Karen Palen wrote:
+</I>&gt;<i>
+</I>&gt;<i> I don't have a lot of experience with porting MySql between different OSes,
+</I>&gt;<i> but general &quot;belt and suspenders&quot; considerations says that a second and
+</I>&gt;<i> independent path would be a very good &quot;safety net&quot;.
+</I>&gt;<i>
+</I>&gt;<i> I would definitely suggest making an IAR backup of every user inventory and
+</I>&gt;<i> an OAR backup of every region! In that way you have a totally separate way
+</I>&gt;<i> to transfer the data and at least the opportunity to recover anything which
+</I>&gt;<i> is corrupted or lost in the transfer!
+</I>&gt;<i>
+</I>&gt;<i> I believe there are tutorials on how to automate these backups although I
+</I>&gt;<i> have not personally tried them. If you have more that 2 or 3 users and/or 2
+</I>&gt;<i> or 3 regions then this will significantly reduce the workload.
+</I>&gt;<i>
+</I>&gt;<i> It pays to be VER conservative (careful) in making backups since if
+</I>&gt;<i> information is LOST it can be extremely hard to re-create, finding something
+</I>&gt;<i> in multiple backups is trivial compared to re-creating content!
+</I>&gt;<i>
+</I>&gt;<i> remember: Jesus saves - EARLY AND OFTEN!
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Jul 11, 2010 at 4:22 PM, Chris Kennedy &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at cox.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi, I want to migrate my OpenSim MySQL database from Linux to Windows and
+</I>&gt;&gt;<i> vice versa (for traveling reasons) using the MySQL Admin's SQL dump ( MySQL
+</I>&gt;&gt;<i> Admin Backup) feature.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Is there anything special that I need to know or to look out for when
+</I>&gt;&gt;<i> doing this (besides making sure Max Packet Size is set to 16 MB on the
+</I>&gt;&gt;<i> target system)?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The way I normally do my database backup in the Linux environment is to
+</I>&gt;&gt;<i> shut down the OpenSim server, go to the backup tool in MySQL Admin, create a
+</I>&gt;&gt;<i> backup project (if it doesn't already exist) for my OpenSim schema making
+</I>&gt;&gt;<i> sure all the tables are selected for backup. Then I go into advanced options
+</I>&gt;&gt;<i> and click on Normal Backup, and check Complete Backup and run the backup to
+</I>&gt;&gt;<i> save my database to a .sql file. This method has worked perfectly fine for
+</I>&gt;&gt;<i> me under Linux with no data loss after a restore from backup that I can
+</I>&gt;&gt;<i> tell. I have even restored my database to a Windows environment from a Linux
+</I>&gt;&gt;<i> created MySQL dump file with no problems that I can see.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My concern is creating a database backup in a Windows environment and then
+</I>&gt;&gt;<i> restoring it to Linux (or even another Windows environment). Would this,
+</I>&gt;&gt;<i> under normal circumstances, cause data loss?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The reason I ask is: I have successfully been able to restore my Windows
+</I>&gt;&gt;<i> created SQL dump file to Linux and other Windows systems running XP... But
+</I>&gt;&gt;<i> the moment I try to restore my database to a Windows 7 system I get an error
+</I>&gt;&gt;<i> that says &quot;Object Type not recognized&quot; (or it might have said Object Type
+</I>&gt;&gt;<i> not Found, I don't remember off the top of my head) and the restore fails.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In a nutshell, is it safe to port my backups between different operating
+</I>&gt;&gt;<i> systems like this? Or am I better off creating OARs of my regions and IAR of
+</I>&gt;&gt;<i> my inventory(s)? I always make both OAR/IAR and SQL dump backups just to be
+</I>&gt;&gt;<i> safe, but I would like to know.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Any suggestions and/or tips would be much appreciated! =)
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">listOpensim-users at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/opensim-users
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100712/a13474f2/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100712/a13474f2/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004899.html">[Opensim-users] Question on migrating database from Linux to	Windows and vice versa
+</A></li>
+	<LI>Next message: <A HREF="004902.html">[Opensim-users] Question on migrating database from Linux to Windows and vice versa
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4900">[ date ]</a>
+              <a href="thread.html#4900">[ thread ]</a>
+              <a href="subject.html#4900">[ subject ]</a>
+              <a href="author.html#4900">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

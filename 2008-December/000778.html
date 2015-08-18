@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] opensim migration strategy
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20opensim%20migration%20strategy&In-Reply-To=%3C63FAD4F222230A4EA79DE9E8BE66473502E93883%40winxbeus19.exchange.xchg%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000777.html">
+   <LINK REL="Next"  HREF="000792.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] opensim migration strategy</H1>
+    <B>Frisby, Adam</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20opensim%20migration%20strategy&In-Reply-To=%3C63FAD4F222230A4EA79DE9E8BE66473502E93883%40winxbeus19.exchange.xchg%3E"
+       TITLE="[Opensim-users] opensim migration strategy">adam at deepthink.com.au
+       </A><BR>
+    <I>Fri Dec  5 21:36:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000777.html">[Opensim-users] opensim migration strategy
+</A></li>
+        <LI>Next message: <A HREF="000792.html">[Opensim-users] opensim migration strategy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#778">[ date ]</a>
+              <a href="thread.html#778">[ thread ]</a>
+              <a href="subject.html#778">[ subject ]</a>
+              <a href="author.html#778">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, go take a look
+
+The code calling both is or should be close to identical - and the speed difference is there and very noticeable, so if there's any tricks you know of to make SQLite run faster, by all means feel free to make a patch - there's a lot of people who'd appreciate it.
+
+Adam
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A> [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Generic Email
+Sent: Friday, 5 December 2008 10:58 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] opensim migration strategy
+
+I am so glad you brought these up.
+I believe these are also misconceptions...
+
+In many circumstances, primarily where transactions are involved, SQLite beats the pants off mySQL <A HREF="http://www.sqlite.org/speed.html">http://www.sqlite.org/speed.html</A>
+
+Granted they are old tests, and I am sure we have all gotten better since then, but remember, it almost isn't a fair comparison. SQLite has hundreds of fewer features and an order of magnitude less complexity when compared with MySQL. All it does is quickly store and retrieve data.
+
+Did you know that SQLite db writes are journaled, and and failure will result in the transactions being rolled back to a known good state? It is being used on literally millions of cellphones every day, with zero maintenance. If it was easy to corrupt, then I believe the major hardware manufacturers would be steering clear of it, but instead they are moving forward and paying for its maintenance.
+
+I really enjoyed listening to <A HREF="http://twit.tv/floss26">http://twit.tv/floss26</A>
+
+Thanks again.
+
+On Dec 5, 2008, at 1:36 PM, Frisby, Adam wrote:
+
+
+The problem with SQLite is that it's very very slow by comparison.
+
+There's a real noticeable difference between the speed it takes to perform operations, and that of say MySQL.
+
+It's also a little bit easier to corrupt - for instance you can't have two processes accessing the one sqlite DB at once.
+
+Adam
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>&gt; [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Generic Email
+Sent: Friday, 5 December 2008 8:10 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Subject: Re: [Opensim-users] opensim migration strategy
+
+This is a bit of a soap box, so if your are easily offended or annoyed, just pass by, there is nothing to see here.
+
+I see in the OpenSim world the assertion that SQLite is not production worthy often. Most recently here:
+
+<A HREF="http://opensimulator.org/wiki/Upgrading">http://opensimulator.org/wiki/Upgrading</A>
+SQLite (default - a lightweight database that comes bundled with OpenSim and can be used without requiring any extra configuration. It is mostly intended to get you up and running quickly, not for production use.)
+
+I prefer to describe SQLite as:
+SQLite is a software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine. SQLite is the most widely deployed SQL database engine in the world. The source code for SQLite is in the public domain.
+
+These companies believe SQLite is production worthy/ready: <A HREF="http://www.sqlite.org/famous.html">http://www.sqlite.org/famous.html</A>
+
+I am a huge fan of SQLite, and for what it does, I believe it does it very well.
+
+Thanks for letting me get that out, and I hope I can influence more of you to take a better look at SQLite.
+
+On Dec 5, 2008, at 10:58 AM, Justin Clark-Casey wrote:
+
+
+
+Paul Fishwick wrote:
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000777.html">[Opensim-users] opensim migration strategy
+</A></li>
+	<LI>Next message: <A HREF="000792.html">[Opensim-users] opensim migration strategy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#778">[ date ]</a>
+              <a href="thread.html#778">[ thread ]</a>
+              <a href="subject.html#778">[ subject ]</a>
+              <a href="author.html#778">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

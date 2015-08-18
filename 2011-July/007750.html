@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim Mesh Testing,	LOD and MySQL max_allowed_packet
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20Mesh%20Testing%2C%0A%09LOD%20and%20MySQL%20max_allowed_packet&In-Reply-To=%3C4e27f84b.8e3ce30a.3bf7.4155%40mx.google.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007748.html">
+   <LINK REL="Next"  HREF="007761.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim Mesh Testing,	LOD and MySQL max_allowed_packet</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20Mesh%20Testing%2C%0A%09LOD%20and%20MySQL%20max_allowed_packet&In-Reply-To=%3C4e27f84b.8e3ce30a.3bf7.4155%40mx.google.com%3E"
+       TITLE="[Opensim-users] OpenSim Mesh Testing,	LOD and MySQL max_allowed_packet">ai.ai.austin at gmail.com
+       </A><BR>
+    <I>Thu Jul 21 11:58:20 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007748.html">[Opensim-users] Error on Region
+</A></li>
+        <LI>Next message: <A HREF="007761.html">[Opensim-users] OpenSim Mesh Testing,	LOD and MySQL max_allowed_packet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7750">[ date ]</a>
+              <a href="thread.html#7750">[ thread ]</a>
+              <a href="subject.html#7750">[ subject ]</a>
+              <a href="author.html#7750">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have been doing some more testing of meshes into OpenSim (r/16234 
+from a day or two ago, so quite recent on the server side).
+
+I have been using various viewers for upload, and for viewing the 
+meshes in my tests.
+
+With some large Collada meshes, I noticed some errors saying that the 
+asset was not benign stored due to the limit on max_allowed_packet.. 
+which it seems by default for the server side is 1MB in MySQL. 
+Funnily though the meshes that said they failed to store did seem to 
+persist in world and in inventory, and could be rezzed out of 
+inventory even afyer the OpenSim.exe error was indicated.  A bit odd 
+I thought.  I upped the max_allowed_packet to 16MB and the meshes 
+were stored fine.  The answer is to add max_allowed_packet=16M into 
+the [mysqld] section of your MySQL config .ini file.
+
+[mysqld]
+max_allowed_packet
+
+See this for information, where it explicitly indicates that the 
+server size is set low at 1MB and you may need to increase it if you 
+work with large BLOBS, which I assume Collada content is stored in...
+
+      <A HREF="http://dev.mysql.com/doc/refman/5.5/en/packet-too-large.html">http://dev.mysql.com/doc/refman/5.5/en/packet-too-large.html</A>
+
+The other thing I have noticed is that there is a change in the 
+rendering in world of my complex meshes between LL 2.7.2 and 2.7.4 
+viewers.  For ones UPLOADED in 2.7.2 (or Kirstens S21 RC1) on OpenSim 
+r/16234 they render fine in both 2.7.2 and 2.7.4 viewers with LOD 
+handled well as you zoom out.  BUT, for ones uploaded in LL 2.7.4 
+(exactly the same model, and exactly the same OpenASim.exe server), 
+the LOD is handled poorly, and soe quite large parts of the meshes 
+disappear even when only zooming out 30-60 metres.  It looks 
+bad.  See the three progressively more zoomed out examples here for 
+the LL 2.7.4 uploaded mesh, whereeas the vehicle looks the same with 
+all parts intact at all three zoom distances with a LL 2.7.2 viewer 
+uploaded mesh
+
+<A HREF="http://www.aiai.ed.ac.uk/~bat/EXPORT/3D/SC-Images-2011-07-19/Supercar-Mesh-Test-Zoom-1.jpg">http://www.aiai.ed.ac.uk/~bat/EXPORT/3D/SC-Images-2011-07-19/Supercar-Mesh-Test-Zoom-1.jpg</A>
+<A HREF="http://www.aiai.ed.ac.uk/~bat/EXPORT/3D/SC-Images-2011-07-19/Supercar-Mesh-Test-Zoom-2.jpg">http://www.aiai.ed.ac.uk/~bat/EXPORT/3D/SC-Images-2011-07-19/Supercar-Mesh-Test-Zoom-2.jpg</A>
+<A HREF="http://www.aiai.ed.ac.uk/~bat/EXPORT/3D/SC-Images-2011-07-19/Supercar-Mesh-Test-Zoom-3.jpg">http://www.aiai.ed.ac.uk/~bat/EXPORT/3D/SC-Images-2011-07-19/Supercar-Mesh-Test-Zoom-3.jpg</A>
+
+Anyone else have any experience to report on mesh testing on OpenSim 0.7.2 dev?
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007748.html">[Opensim-users] Error on Region
+</A></li>
+	<LI>Next message: <A HREF="007761.html">[Opensim-users] OpenSim Mesh Testing,	LOD and MySQL max_allowed_packet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7750">[ date ]</a>
+              <a href="thread.html#7750">[ thread ]</a>
+              <a href="subject.html#7750">[ subject ]</a>
+              <a href="author.html#7750">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

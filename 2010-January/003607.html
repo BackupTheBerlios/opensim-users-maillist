@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Making A 30region clone to a 30 sector Mega-region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Making%20A%2030region%20clone%20to%20a%2030%20sector%20Mega-region&In-Reply-To=%3C1264740633264-4478270.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003598.html">
+   <LINK REL="Next"  HREF="003608.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Making A 30region clone to a 30 sector Mega-region</H1>
+    <B>Master_Mirage</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Making%20A%2030region%20clone%20to%20a%2030%20sector%20Mega-region&In-Reply-To=%3C1264740633264-4478270.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] Making A 30region clone to a 30 sector Mega-region">mirage123 at verizon.net
+       </A><BR>
+    <I>Fri Jan 29 05:50:33 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003598.html">[Opensim-users] [Opensim-dev] some scalability tests...
+</A></li>
+        <LI>Next message: <A HREF="003608.html">[Opensim-users] Making A 30region clone to a 30 sector	Mega-region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3607">[ date ]</a>
+              <a href="thread.html#3607">[ thread ]</a>
+              <a href="subject.html#3607">[ subject ]</a>
+              <a href="author.html#3607">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+I have managed to clone 30 regions that are allready developed using OAR
+copys. I thought there may be interest in the steps i took that worked.
+The 1st thing i did was to layout a 5x6 mega region on its own instance.
+Dont combine at this point. Use fresh region UUIDS and new names for each. I
+then went and set each region's land settings and media settings as well as
+the land textuers. I chose to do a terrain fill 23 as well. Note: Its best
+to not set autoreturn at this point. The i made an oar i called blank.oar
+(With luck you wount ever need it).
+2. Next was to restore the OARs i made of the regions i wanted to clone and
+be part of the megaregion. (30 in this case). Restore them slowly making
+shure the asset server keeps up with the OAR. Its tempting to rush but a bad
+idea as i found out on the 1st try of this!
+3. Login and check each region carefully for any oops w. the oar restores
+(ignore ground textuers thay will end up changing to what you used in the
+1st step not what is in the oar after the instance is restarted as
+combined). At this point should you see anything wrong this is your last
+change to fix it, if so simply reload the oar again or make a new one and
+resore (sometimes the OAR may not be right). Once i was shure all was well i
+shut the instance down and reloaded normaly. I did another quick check of
+the regions. Remember this is your last chance to fix anything major! So
+take your time and look.
+4. Shut it down again and change the setting in the ini. and restart
+it will take it about 5x longer than normal to load than it did normaly. You
+will see alot of errors about oject crossing boundrys for a bit (dont
+panic). In my case the 30 regions held around 80k objects and a few K in
+scripts. Mixed bag of stuff from simple to complex objects. Eventualy the
+errors stop and a bit after finnishes the loading.
+Its ok to log in at this point and have a look around, you will see
+somethings may be missing or phantom 
+that may not be case though. Alot of things can make it look like that but
+realy there ok. Client cache and other things can make it seem like that
+too. The phntom prims are fixed w. a console command fix phantom objects.
+Its a slow process in my case due to how many objects there are. In my case
+it did fix all the phantom stuff as well as missing prims (not shure why but
+thay poped into view anyway).
+I checked each region 1 by one noting any goof's down (verry minor ones in
+my case).
+I shutdown the instance again. I clear my client cache and changed the
+instance caching from cermone to flotsum. I thought it best not to start out
+with flotsum knowing this would be massive.
+Restarted the instance (yes you will still see the object boundry crossing
+errors and it still takes awhile to load it all).  By doing it in this order
+i was happy to have a working 30region to 30sector MegaRegion.
+There are alot of tweeks that should be done in the ini but thats another
+post totaly.
+There is a side effect to this if you still run your old regions that may
+have had parcles. Thay are Copyed not cloned! and will revert to unparcled
+and back to the region owner. The clone's MEGAREGION parcles will be ok
+though. Why that is im not shure yet. 
+As this was a TEST and dident actualy expect it to work at all. I was happy
+with it. If anyone should try this Keep it in mind that theres 1000 things
+that can go wrong doing this and i am just saying what I did that gave ME a
+happy result.  Please feel free to add to this or any suggestions that i may
+have glossed over here.
+-- 
+View this message in context: <A HREF="http://n2.nabble.com/Making-A-30region-clone-to-a-30-sector-Mega-region-tp4478270p4478270.html">http://n2.nabble.com/Making-A-30region-clone-to-a-30-sector-Mega-region-tp4478270p4478270.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003598.html">[Opensim-users] [Opensim-dev] some scalability tests...
+</A></li>
+	<LI>Next message: <A HREF="003608.html">[Opensim-users] Making A 30region clone to a 30 sector	Mega-region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3607">[ date ]</a>
+              <a href="thread.html#3607">[ thread ]</a>
+              <a href="subject.html#3607">[ subject ]</a>
+              <a href="author.html#3607">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

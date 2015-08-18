@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] problem logging in grid
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20problem%20logging%20in%20grid&In-Reply-To=%3C4A8EB56E.6020005%40cs.cmu.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002455.html">
+   <LINK REL="Next"  HREF="002457.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] problem logging in grid</H1>
+    <B>Eric Riebling</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20problem%20logging%20in%20grid&In-Reply-To=%3C4A8EB56E.6020005%40cs.cmu.edu%3E"
+       TITLE="[Opensim-users] problem logging in grid">er1k at cs.cmu.edu
+       </A><BR>
+    <I>Fri Aug 21 16:55:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002455.html">[Opensim-users] problem logging in grid
+</A></li>
+        <LI>Next message: <A HREF="002457.html">[Opensim-users] DNS Notice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2456">[ date ]</a>
+              <a href="thread.html#2456">[ thread ]</a>
+              <a href="subject.html#2456">[ subject ]</a>
+              <a href="author.html#2456">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Re: [Opensim-users] problem logging in grid
+
+&gt;<i> what could be causing the problem?
+</I>
+The symptoms described sound like the exact situation I see when
+the OpenSim Region(s) files have &quot;external_host_name&quot; configured
+to a domain name that may not be resolving, or an incorrect 
+IP address.  These symptoms include:
+
+ 1.  Person running the sim can connect (from localhost)
+ 2.  Sim console sees some activity when remote user tries to connect
+ 3.  Remote user sees some activity when trying to connect
+ 3.  Remote user gets the errors you mentioned
+
+The fix (for me) was to put the IP address of the sim host in the
+&quot;external_host_name&quot; in Regions/region-name.xml - this even allows
+outside clients to connect by specifying the domain name, not the
+IP address, but for the highest chance of success, using IP doesn't
+hurt.  (specified on the command line that starts the viewer after
+&quot;-loginuri&quot;) for example:
+
+  &quot;C:\Program Files\Meerkat\Meerkat.exe&quot; -loginuri 128.2.10.8:9000
+
+Where the sim's host IP is 128.2.10.8, and it's Regions/region-name.xml
+contains something like:
+
+  external_host_name=&quot;128.2.10.8&quot;
+
+Of course this might not be YOUR problem, but it is one possibility.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002455.html">[Opensim-users] problem logging in grid
+</A></li>
+	<LI>Next message: <A HREF="002457.html">[Opensim-users] DNS Notice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2456">[ date ]</a>
+              <a href="thread.html#2456">[ thread ]</a>
+              <a href="subject.html#2456">[ subject ]</a>
+              <a href="author.html#2456">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

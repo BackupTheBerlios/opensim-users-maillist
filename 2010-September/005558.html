@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Error converting from StandAlone to Grid mode
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Error%20converting%20from%20StandAlone%20to%20Grid%20mode&In-Reply-To=%3C1284846049.2136.31.camel%40scooter%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005568.html">
+   <LINK REL="Next"  HREF="005559.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Error converting from StandAlone to Grid mode</H1>
+    <B>Aaron</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Error%20converting%20from%20StandAlone%20to%20Grid%20mode&In-Reply-To=%3C1284846049.2136.31.camel%40scooter%3E"
+       TITLE="[Opensim-users] Error converting from StandAlone to Grid mode">aaron at stopcommonsense.org
+       </A><BR>
+    <I>Sat Sep 18 23:40:49 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005568.html">[Opensim-users] weird eye color problem
+</A></li>
+        <LI>Next message: <A HREF="005559.html">[Opensim-users] MapTile/WorldMap save time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5558">[ date ]</a>
+              <a href="thread.html#5558">[ thread ]</a>
+              <a href="subject.html#5558">[ subject ]</a>
+              <a href="author.html#5558">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello everyone.
+
+My apologies for such a lengthy email. I've been working with the folks
+in the IRC channel but we can't seem to figure out what is going on.
+I've had a working configuration in StandAlone mode on my external
+(hosted in a data center) server. Our developer wants to mimic the
+production server as close as possible which is in Grid mode. Therefore,
+I followed the instructions on the wiki (configuration section) for
+Grid-mode. This is all on opensim 0.7.0.2.
+
+Here is the issue. When using Hippo Viewer (or any other) I cannot log
+in. Well, that's not necessarily true. I can log in, but I can't
+authenticate to the region. I am running the two processes Robust.exe
+and OpenSim.exe on this server. When logging in I receive the following
+error on the console (and log) for Robust:
+
+[GRID USER SERVICE]: User f6dedbac-4695-4be8-ad75-50dcf3f657d7 is online
+[LLOGIN SERVICE]: FindDestination for start location last
+[GRID SERVICE]: Fallback returned 0 regions
+[PRESENCE SERVICE]: Session bef9d87e-becd-4e4d-8435-6184d1cae69d logout
+[LLOGIN SERVICE]: Login failed, reason: cannot contact remote region
+
+The error Hippo View spits out is: 
+Login failed. Error connecting to grid. Unable to authorize your session
+into the region. 
+
+I've tested this configuration with a new database (mysql) and it still
+throws the same errors. I have also tried setting the &quot;Start location&quot;
+in Hippo Viewer to Home, last location and just typing in the Region's
+name. All result in the same error.
+
+On the remote server I have IPTables turned off. On the firewall in
+front of that server I have ALL UDP ports open and forwarding to the
+server and TCP ports 9000, 9001, 8002, 8003 also forwarding to the
+server.
+
+Below are snippets of the pertinent parts of my ini files. If other
+sections are necessary, I would be happy to post here or pastebin. I'm
+pretty much at a loss here as to what I'm doing wrong. Any help would be
+greatly appreciated!
+
+Regards,
+Aaron
+
+### Regions.ini ###
+
+        [REGION_NAME1]
+        RegionUUID = 94142350-72bd-4741-aa08-a1da63418663
+        Location = 1000,1000
+        InternalAddress = 0.0.0.0
+        InternalPort = 9000
+        AllowAlternatePorts = False
+        ExternalHostName = [EXTERNAL_IP]
+         
+        [REGION_NAME2]
+        RegionUUID = 4b17f84d-2c12-497a-9344-7beef0cd66d2
+        Location = 1000,1001
+        InternalAddress = 0.0.0.0
+        InternalPort = 9001
+        AllowAlternatePorts = False
+        ExternalHostName = [EXTERNAL_IP]
+        
+### Robust.ini ###
+
+[Startup]
+ServiceConnectors =
+&quot;8003/OpenSim.Server.Handlers.dll:AssetServiceConnector,8003/OpenSim.Server.Handlers.dll:XInventoryInConnector,8002/OpenSim.Server.Handlers.dll:FreeswitchServerConnector,8003/OpenSim.Server.Handlers.dll:GridServiceConnector,8002/OpenSim.Server.Handlers.dll:GridInfoServerInConnector,8003/OpenSim.Server.Handlers.dll:AuthenticationServiceConnector,8002/OpenSim.Server.Handlers.dll:OpenIdServerConnector,8003/OpenSim.Server.Handlers.dll:AvatarServiceConnector,8002/OpenSim.Server.Handlers.dll:LLLoginServiceInConnector,8003/OpenSim.Server.Handlers.dll:PresenceServiceConnector,8003/OpenSim.Server.Handlers.dll:UserAccountServiceConnector,8003/OpenSim.Server.Handlers.dll:GridUserServiceConnector,8003/OpenSim.Server.Handlers.dll:FriendsServiceConnector&quot;
+ 
+; * This is common for all services, it's the network setup for the
+entire
+; * server instance, if none if specified above
+; *
+[Network]
+    port = 8003
+...
+...
+...
+[DatabaseService]
+    StorageProvider = &quot;OpenSim.Data.MySQL.dll&quot;
+    ConnectionString = &quot;Data Source=localhost;Database=[DATABASE];User
+ID=[USER];Password=[SUPER_SECRET];&quot;
+
+[Everything else is all set as the file came in the download]
+
+### OpenSim.ini ###
+
+
+    ; ## PRIM STORAGE
+    ; ##
+ 
+    ;storage_plugin = &quot;OpenSim.Data.SQLite.dll&quot;
+    ;storage_plugin = &quot;OpenSim.Data.SQLiteLegacy.dll&quot;
+    ;storage_connection_string=&quot;URI=file:OpenSim.db,version=3&quot;;
+ 
+     storage_plugin=&quot;OpenSim.Data.MySQL.dll&quot;
+     storage_connection_string=&quot;Data
+Source=localhost;Database=[DATABASE];User
+ID=[USER];Password=[SUPER_SECRET];&quot;
+
+...
+...
+...
+
+
+[GridService]
+    ;; default standalone, overridable in StandaloneCommon.ini
+    StorageProvider = &quot;OpenSim.Data.Null.dll:NullRegionData&quot;
+ 
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; The following is the configuration section for the new style
+services
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+[Architecture]
+    ; Choose exactly one and only one of the architectures below.
+ 
+    ;Include-Standalone    = &quot;config-include/Standalone.ini&quot;
+    ;Include-HGStandalone = &quot;config-include/StandaloneHypergrid.ini&quot;
+    Include-Grid         = &quot;config-include/Grid.ini&quot;
+    ;Include-HGGrid       = &quot;config-include/GridHypergrid.ini&quot;
+    ;Include-SimianGrid   = &quot;config-include/SimianGrid.ini&quot;
+
+[Everything else is all set as the file came in the download]
+
+### GridCommon.ini ###
+
+
+        [AssetService]
+         
+            DefaultAssetLoader =
+        &quot;OpenSim.Framework.AssetLoader.Filesystem.dll&quot;
+            AssetLoaderArgs = &quot;assets/AssetSets.xml&quot;
+         
+            ;
+            ; change this to your grid-wide asset server
+            ;
+            AssetServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+         
+        [InventoryService]
+            ;
+            ; change this to your grid-wide inventory server
+            ;
+            InventoryServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+         
+        [GridService]
+            ;
+            ; change this to your grid-wide grid server
+            ;
+            GridServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+            ;AllowHypergridMapSearch = true
+         
+        [AvatarService]
+            ;
+            ; change this to your grid-wide grid server
+            ;
+            AvatarServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+         
+        [PresenceService]
+            ;
+            ; change this to your grid-wide presence server
+            ;
+            PresenceServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+         
+        [UserAccountService]
+            ;
+            ; change this to your grid-wide user accounts server
+            ;
+            UserAccountServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+         
+        [GridUserService]
+            ;
+            ; change this to your grid-wide user accounts server
+            ;
+            GridUserServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+         
+        [AuthenticationService]
+            ;
+            ; change this to your grid-wide authentication server
+            ;
+            AuthenticationServerURI =
+        &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+         
+        [FriendsService]
+            ;
+            ; change this to your grid-wide friends server
+            ;
+            FriendsServerURI = &quot;<A HREF="http://[MY_VALID_INTERNAL_IP">http://[MY_VALID_INTERNAL_IP</A>]:8003&quot;
+         
+        [Modules]
+            ;; Choose 0 or 1 cache modules, and the corresponding config
+        file, if it exists.
+            ;; Copy the config .example file into your own .ini file and
+        change configs there
+                
+            AssetCaching = &quot;FlotsamAssetCache&quot;
+            Include-FlotsamCache = &quot;config-include/FlotsamCache.ini&quot;
+         
+            ;AssetCaching = &quot;CenomeMemoryAssetCache&quot;
+            ;Include-CenomeCache = &quot;config-include/CenomeCache.ini&quot;
+            
+            ;AssetCaching = &quot;GlynnTuckerAssetCache&quot;
+         
+            ;; Optionally, the port for the LLProxyLoginModule module
+        can be changed
+            
+            ;Setup_LLProxyLoginModule = &quot;9090/&quot;
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005568.html">[Opensim-users] weird eye color problem
+</A></li>
+	<LI>Next message: <A HREF="005559.html">[Opensim-users] MapTile/WorldMap save time
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5558">[ date ]</a>
+              <a href="thread.html#5558">[ thread ]</a>
+              <a href="subject.html#5558">[ subject ]</a>
+              <a href="author.html#5558">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

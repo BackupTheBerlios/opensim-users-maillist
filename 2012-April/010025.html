@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] osNpcLoadApparence severe issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20osNpcLoadApparence%20severe%20issue&In-Reply-To=%3C572AA15A-B531-491D-94CF-7210972A2B01%40van-helden.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010023.html">
+   <LINK REL="Next"  HREF="010028.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] osNpcLoadApparence severe issue</H1>
+    <B>Olivier van Helden</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20osNpcLoadApparence%20severe%20issue&In-Reply-To=%3C572AA15A-B531-491D-94CF-7210972A2B01%40van-helden.net%3E"
+       TITLE="[Opensim-users] osNpcLoadApparence severe issue">olivier at van-helden.net
+       </A><BR>
+    <I>Tue Apr  3 14:56:39 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010023.html">[Opensim-users] osNpcLoadApparence severe issue
+</A></li>
+        <LI>Next message: <A HREF="010028.html">[Opensim-users] Hi
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10025">[ date ]</a>
+              <a href="thread.html#10025">[ thread ]</a>
+              <a href="subject.html#10025">[ subject ]</a>
+              <a href="author.html#10025">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="http://opensimulator.org/mantis/view.php?id=5955">http://opensimulator.org/mantis/view.php?id=5955</A>
+
+We tried SIGQUIT as well ass SIGKILL, no effect
+
+
+
+Le 3 avr. 2012 &#224; 05:36, Justin Clark-Casey a &#233;crit :
+
+&gt;<i> Interesting Olivier.  Could you open a Mantis on this?  It would be great if, when the simulator does lock up, you could capture a VM thread dump from mono (send it a SIGQUIT signal).  Don't worry if this isn't possible.
+</I>&gt;<i> 
+</I>&gt;<i> The code should be fixed to not crash even if somebody does pound the function rather than trying to avoid this by inserting a delay.  However, it might be a good idea to have tunable script delays in some OSSL functions just like LSL functions anyway.
+</I>&gt;<i> 
+</I>&gt;<i> On 31/03/12 13:42, Olivier van Helden wrote:
+</I>&gt;&gt;<i> (note: too bad I noticed that *after* the 0.7.3.1 release, sorry Justin)
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> In my install osNpcLoadAppearence makes the simulator severely crash if called twice and too fast for the same NPC.
+</I>&gt;&gt;<i> (I say &quot;severly&quot; because console does not respond anymore, kill doesn't kill and I have to kill the parent process to actually kill mono)
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I tested on Linux and FreeBSD. I didn't have the chance (and didn't want) to check on anyone else installation (I definitively don't want to crash somebody else server just for tests).
+</I>&gt;&gt;<i> But if anyone has a crash-test simulator with NPC allowed, I would be happy to test my script there.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I have an NPC creator, which allows to switch appearance. Works fine, unless I click too fast.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> If I call osNpcLoadAppearence a second time, before the appearance is razzed, the (let's say within the next second), the simulator crashes, without specific error in the log.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Of course, I can update my lsl script to handle that. But the crash makes a high thread risk.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> The script engine should do at least one of the following:
+</I>&gt;&gt;<i> 	- force sleep after osNpcLoadAppearance
+</I>&gt;&gt;<i> 	- fail, silently or with an error code if fired twice for the same NPC within a given interval, or before the new appearance has finished loading.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> .
+</I>&gt;&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010023.html">[Opensim-users] osNpcLoadApparence severe issue
+</A></li>
+	<LI>Next message: <A HREF="010028.html">[Opensim-users] Hi
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10025">[ date ]</a>
+              <a href="thread.html#10025">[ thread ]</a>
+              <a href="subject.html#10025">[ subject ]</a>
+              <a href="author.html#10025">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

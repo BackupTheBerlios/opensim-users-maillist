@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] serverless grid diva setup problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20serverless%20grid%20diva%20setup%20problem&In-Reply-To=%3CAANLkTinQmiK-UvvH9uM9PVS98tTyPnb82-hcZr7%2BkyuC%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005341.html">
+   <LINK REL="Next"  HREF="005344.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] serverless grid diva setup problem</H1>
+    <B>Karen Palen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20serverless%20grid%20diva%20setup%20problem&In-Reply-To=%3CAANLkTinQmiK-UvvH9uM9PVS98tTyPnb82-hcZr7%2BkyuC%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] serverless grid diva setup problem">karenpalensl at gmail.com
+       </A><BR>
+    <I>Tue Aug 24 21:44:32 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005341.html">[Opensim-users] serverless grid diva setup problem
+</A></li>
+        <LI>Next message: <A HREF="005344.html">[Opensim-users] serverless grid diva setup problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5342">[ date ]</a>
+              <a href="thread.html#5342">[ thread ]</a>
+              <a href="subject.html#5342">[ subject ]</a>
+              <a href="author.html#5342">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That might fix enauman's problem, but I am already using r134558!
+
+For some reason the reflector is very slow today, so I will resend my post
+directly to you.
+
+Karen
+
+On Tue, Aug 24, 2010 at 12:39 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">diva at metaverseink.com</A>&gt; wrote:
+
+&gt;<i> Upgrade to the latest (r13558) and that problem should go away.
+</I>&gt;<i>
+</I>&gt;<i> FYI, it was a Null DB connector that sneaked in the [PresenceService]
+</I>&gt;<i> configuration (DivaPreferences.ini). That Null DB shouldn't be there.
+</I>&gt;<i>
+</I>&gt;<i> Also FYI the upgrade from 13458 to 13558 should be a trivial one.
+</I>&gt;<i>
+</I>&gt;<i> And a final FYI, I operate 2 grids as serverless grids + 1 login robust
+</I>&gt;<i> server each, and they work great. Just avoid contiguous mega-regions.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> enauman wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Hi, I'm modifying a Diva Distro 0.7 r13458 to have multiple opensim
+</I>&gt;&gt;<i> instances
+</I>&gt;&gt;<i> running off the same MySQL database, what she calls a '
+</I>&gt;&gt;<i> <A HREF="http://www.metaverseink.com/blog/?p=22">http://www.metaverseink.com/blog/?p=22</A> serverless grid '. The two regions
+</I>&gt;&gt;<i> (I'm just doing single regions, not the default megaregions) are in
+</I>&gt;&gt;<i> contiguous locations. On the console the sims &quot;see&quot; each other and they
+</I>&gt;&gt;<i> both
+</I>&gt;&gt;<i> show up on the viewer map. But when I log in to one sim that account is
+</I>&gt;&gt;<i> not
+</I>&gt;&gt;<i> verified by the other sim and is rejected for teleports and simply
+</I>&gt;&gt;<i> crossing
+</I>&gt;&gt;<i> over. I can't see into the other region either.
+</I>&gt;&gt;<i> It's as if the db isn't allowing a user to be in both sims, though they
+</I>&gt;&gt;<i> both
+</I>&gt;&gt;<i> get up and running fine. I can log in to each separately but NOT when they
+</I>&gt;&gt;<i> are both running. If the target sim refuses connection then I log out of
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i> originating sim and shut it down I can then log in to the target sim.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is the console printout from the target sim during an attempted
+</I>&gt;&gt;<i> teleport from the map:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010-08-24 14:36:54,930 DEBUG -
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.ServiceConnectorsOut.Simulation.LocalSimulationConnectorModule
+</I>&gt;&gt;<i> [LOCAL SIMULATION CONNECTOR]: Found region PAC to send
+</I>&gt;&gt;<i> SendCreateChildAgent
+</I>&gt;&gt;<i> 2010-08-24 14:36:54,930 INFO  - OpenSim.Region.Framework.Scenes.Scene
+</I>&gt;&gt;<i> [CONNECTION BEGIN]: Region PAC told of incoming child agent Erik Nauman
+</I>&gt;&gt;<i> 088afec6-025f-4b7b-8fa9-24b874fd8eb8 (circuit code 1170141604,
+</I>&gt;&gt;<i> teleportflags
+</I>&gt;&gt;<i> 16)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and here is the printout from the originating sim:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010-08-24 14:36:54,898 DEBUG -
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.Framework.EntityTransfer.HGEntityTransferModule
+</I>&gt;&gt;<i> [HG ENTITY TRANSFER MODULE]: region 0a0dbd38-413d-48ef-b170-9b0885dc8904
+</I>&gt;&gt;<i> flags: 4
+</I>&gt;&gt;<i> 2010-08-24 14:36:54,914 DEBUG -
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+</I>&gt;&gt;<i> [ENTITY TRANSFER MODULE]: Final destination is x=4821 y=4429
+</I>&gt;&gt;<i> uuid=0a0dbd38-413d-48ef-b170-9b0885dc8904
+</I>&gt;&gt;<i> 2010-08-24 14:36:54,914 DEBUG -
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+</I>&gt;&gt;<i> [ENTITY TRANSFER MODULE]: Request Teleport to
+</I>&gt;&gt;<i> 160.79.53.26:9001:PAC/&lt;139.5495, 17.914, 38.13717&gt;
+</I>&gt;&gt;<i> 2010-08-24 14:36:54,930 DEBUG -
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> OpenSim.Region.CoreModules.ServiceConnectorsOut.Simulation.LocalSimulationConnectorModule
+</I>&gt;&gt;<i> [LOCAL SIMULATION CONNECTOR]: Did not find region PAC for
+</I>&gt;&gt;<i> SendCreateChildAgent
+</I>&gt;&gt;<i> 2010-08-24 14:36:54,930 INFO  -
+</I>&gt;&gt;<i> OpenSim.Services.Connectors.Simulation.SimulationServiceConnector [REMOTE
+</I>&gt;&gt;<i> SIMULATION CONNECTOR]: Posted CreateAgent request to remote sim
+</I>&gt;&gt;<i> <A HREF="http://160.79.53.26:9001/agent/088afec6-025f-4b7b-8fa9-24b874fd8eb8/,">http://160.79.53.26:9001/agent/088afec6-025f-4b7b-8fa9-24b874fd8eb8/,</A>
+</I>&gt;&gt;<i> region
+</I>&gt;&gt;<i> PAC, x=1234176 y=1133824
+</I>&gt;&gt;<i> 2010-08-24 14:36:54,945 INFO  -
+</I>&gt;&gt;<i> OpenSim.Services.Connectors.Simulation.SimulationServiceConnector [REMOTE
+</I>&gt;&gt;<i> SIMULATION CONNECTOR]: DoCreateChildAgentCall reply was {&quot;reason&quot;:&quot;Failed
+</I>&gt;&gt;<i> to
+</I>&gt;&gt;<i> verify user Erik Nauman, access denied to region PAC.&quot;}
+</I>&gt;&gt;<i> Thanks for any advice. If I can't make this work before classes start I'll
+</I>&gt;&gt;<i> have to start over with a robust install...
+</I>&gt;&gt;<i> Erik
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100824/55881820/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100824/55881820/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005341.html">[Opensim-users] serverless grid diva setup problem
+</A></li>
+	<LI>Next message: <A HREF="005344.html">[Opensim-users] serverless grid diva setup problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5342">[ date ]</a>
+              <a href="thread.html#5342">[ thread ]</a>
+              <a href="subject.html#5342">[ subject ]</a>
+              <a href="author.html#5342">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

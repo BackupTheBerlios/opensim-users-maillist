@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] FreeBSD libODE issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20FreeBSD%20libODE%20issue&In-Reply-To=%3C2CFDC480-779E-4243-9016-1524607446D2%40spekuloos.be%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009147.html">
+   <LINK REL="Next"  HREF="009161.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] FreeBSD libODE issue</H1>
+    <B>Gudule Lapointe</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20FreeBSD%20libODE%20issue&In-Reply-To=%3C2CFDC480-779E-4243-9016-1524607446D2%40spekuloos.be%3E"
+       TITLE="[Opensim-users] FreeBSD libODE issue">gudule at spekuloos.be
+       </A><BR>
+    <I>Sun Jan 22 23:51:02 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009147.html">[Opensim-users] opensimulator git master: MySQL error - &quot; Unknown column 'RegionID' in 'where clause' &quot;
+</A></li>
+        <LI>Next message: <A HREF="009161.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9148">[ date ]</a>
+              <a href="thread.html#9148">[ thread ]</a>
+              <a href="subject.html#9148">[ subject ]</a>
+              <a href="author.html#9148">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello
+
+I try to install OpenSim on a FreeBSD server. Whatever approach I try, I get the same kind of error.
+
+I tried
+	- from last release
+	- from current snapshot (well, tried on several ones)
+	- from osgrid and diva distributions.
+
+I also tried the build instructions on <A HREF="http://opensimulator.org/wiki/Build_Instructions#FreeBSD">http://opensimulator.org/wiki/Build_Instructions#FreeBSD</A>
+but the part concerning ODE Physics is out of date. It mentions opensim-libs/unmanaged/OpenDynamicsEngine2, which doesn't exists, and there are two related folders: OpenDynamicsEngine-0.10.1 and OpenDynamicsEngine-r1755 . I tried both, with same error.
+
+Here is my config:
+
+	FreeBSD 8.2-RELEASE-p5 #2: Wed Dec 28 16:51:23 CET 2011
+	Opensim version (last try): 24b20f6 r17847 2012-01-22 15:35:14 +0000
+	Mono JIT compiler version 2.10.6 (tarball Wed Nov 16 19:42:09 CET 2011)
+
+And below is the error log.
+
+BTW: I installed successfully OpenSim on Ubuntu and MacOS X Lion. So the problem is not related to &quot;global&quot; understanding of the installation process. ;-)
+Now I need to have it working on a production server, which runs FreeBSD (and I can't change that)
+
+If anyone has an idea, it would be greatly appreciated.
+
+
+
+
+
+23:28:06 - [APPLICATION]: 
+APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+
+Exception: System.DllNotFoundException: libode
+  at (wrapper managed-to-native) Ode.NET.d:InitODE ()
+  at OpenSim.Region.Physics.OdePlugin.OdePlugin.GetScene (System.String sceneIdentifier) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Region.Physics.Manager.PhysicsPluginManager.GetPhysicsScene (System.String physEngineName, System.String meshEngineName, IConfigSource config, System.String regionName) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Region.ClientStack.RegionApplicationBase.GetPhysicsScene (System.String engine, System.String meshEngine, IConfigSource config, System.String osSceneIdentifier) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.GetPhysicsScene (System.String osSceneIdentifier) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo regionInfo, Int32 proxyOffset, IConfigSource configSource, IClientNetworkServer&amp; clientServer) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp; mscene) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSim.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename unknown&gt;:0 
+
+Application is terminating: True
+
+[ERROR] FATAL UNHANDLED EXCEPTION: System.DllNotFoundException: libode
+  at (wrapper managed-to-native) Ode.NET.d:InitODE ()
+  at OpenSim.Region.Physics.OdePlugin.OdePlugin.GetScene (System.String sceneIdentifier) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Region.Physics.Manager.PhysicsPluginManager.GetPhysicsScene (System.String physEngineName, System.String meshEngineName, IConfigSource config, System.String regionName) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Region.ClientStack.RegionApplicationBase.GetPhysicsScene (System.String engine, System.String meshEngine, IConfigSource config, System.String osSceneIdentifier) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.GetPhysicsScene (System.String osSceneIdentifier) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.SetupScene (OpenSim.Framework.RegionInfo regionInfo, Int32 proxyOffset, IConfigSource configSource, IClientNetworkServer&amp; clientServer) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp; mscene) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.PostInitialise () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSimBase.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.OpenSim.StartupSpecific () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Framework.Servers.BaseOpenSimServer.Startup () [0x00000] in &lt;filename unknown&gt;:0 
+  at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename unknown&gt;:0 
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009147.html">[Opensim-users] opensimulator git master: MySQL error - &quot; Unknown column 'RegionID' in 'where clause' &quot;
+</A></li>
+	<LI>Next message: <A HREF="009161.html">[Opensim-users] FreeBSD libODE issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9148">[ date ]</a>
+              <a href="thread.html#9148">[ thread ]</a>
+              <a href="subject.html#9148">[ subject ]</a>
+              <a href="author.html#9148">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

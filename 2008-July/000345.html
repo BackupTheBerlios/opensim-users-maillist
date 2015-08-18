@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim Reliable Upgrade Instructions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%20Reliable%20Upgrade%20Instructions&In-Reply-To=%3C200807161939.m6GJdOiY017426%40dandy.inf.ed.ac.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000347.html">
+   <LINK REL="Next"  HREF="000349.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim Reliable Upgrade Instructions</H1>
+    <B>Ai Austin</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%20Reliable%20Upgrade%20Instructions&In-Reply-To=%3C200807161939.m6GJdOiY017426%40dandy.inf.ed.ac.uk%3E"
+       TITLE="[Opensim-users] Opensim Reliable Upgrade Instructions">ai.ai.austin at googlemail.com
+       </A><BR>
+    <I>Wed Jul 16 21:39:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000347.html">[Opensim-users] opensim 0.5.8 and mono not starting
+</A></li>
+        <LI>Next message: <A HREF="000349.html">[Opensim-users] Opensim Reliable Upgrade Instructions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#345">[ date ]</a>
+              <a href="thread.html#345">[ thread ]</a>
+              <a href="subject.html#345">[ subject ]</a>
+              <a href="author.html#345">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have been trying to use the update procedure again with an upgrade 
+of a standalone setup with 13 regions all using SQLite from 
+1-Jul-2008 version to 15-Jul-2008 version from the nightly builds at 
+<A HREF="http://opensim.be/build/">http://opensim.be/build/</A>
+
+Its REASONABLY successful.  Step 4 seems NOT to be needed.  The 
+regions and their terrain for the 13 regions was all present and 
+correct without doing step 4.  The regions, objects on them and the 
+avatars are all present and correct.  BUT ALL avatars have lost their 
+inventory.
+
+Any thoughts on what files I must also copy over or change, or what I 
+might be doing wrong?  Any help appreciated top debug the 
+instructions for updating a working Opensim installation to a later 
+build.  I am sure others are doing this without the problems I seem 
+to be having as I can see their working systems.
+
+I am also trying to debug the process for a grid version update.. but 
+fro the moment this is a question for a standalone system update.
+
+--------------------------------------
+Extract from Opensim.ini
+
+[Startup]
+gridmode = False
+physics = OpenDynamicsEngine
+physical_prim = True
+see_into_this_sim_from_neighbor = True
+serverside_object_permissions = True
+storage_plugin = OpenSim.Data.SQLite.dll
+storage_connection_string = URI=file:OpenSim.db,version=3
+storage_prim_inventories = True
+startup_console_commands_file =
+shutdown_console_commands_file =
+script_engine = OpenSim.Region.ScriptEngine.DotNetEngine.dll
+asset_database = sqlite
+clientstack_plugin = OpenSim.Region.ClientStack.LindenUDP.dll
+[StandAlone]
+accounts_authenticate = True
+welcome_message = Welcome to Opensim on Virtual AIAI
+inventory_plugin = OpenSim.Data.SQLite.dll
+inventory_source =
+userDatabase_plugin = OpenSim.Data.SQLite.dll
+user_source =
+asset_plugin = OpenSim.Data.SQLite.dll
+asset_source =
+dump_assets_to_file = False
+
+-------------------------------------------------------------------------------
+Instructions used... Step 4 appears NOT to be needed
+
+
+&gt;<i>Upgrading Opensim
+</I>&gt;<i>
+</I>&gt;<i>Never Delete your old Simulator until you are happy with your new one.
+</I>&gt;<i>
+</I>&gt;<i>** DO THIS BEFORE RUNNING THE NEW VERSION FOR THE FIRST TIME !! **
+</I>&gt;<i>
+</I>&gt;<i>1. Extract the Opensim Zip to a new location
+</I>&gt;<i>
+</I>&gt;<i>2. From you old location copy:
+</I>&gt;<i>
+</I>&gt;<i>     estate_settings.xml
+</I>&gt;<i>     regionassets.yap (if present, not present in standalone?)
+</I>&gt;<i>     AssetStorage.db
+</I>&gt;<i>     InventoryStore.db
+</I>&gt;<i>     OpenSim.db
+</I>&gt;<i>     userprofiles.db
+</I>&gt;<i>     \Regions\*
+</I>&gt;<i>
+</I>&gt;<i>     to your new location.
+</I>&gt;<i>
+</I>&gt;<i>3. The NEW Opensim.ini should be used as a basis (in case new 
+</I>&gt;<i>element are added) and your own changed entries edited in.
+</I>&gt;<i>
+</I>&gt;<i>4. If you have made a custom terrain you may want to consider 
+</I>&gt;<i>exporting the terrain for each region before update just in case.
+</I>&gt;<i>
+</I>&gt;<i>     change-region &lt;name&gt;
+</I>&gt;<i>     terrain save yourfilename.f32
+</I>&gt;<i>
+</I>&gt;<i>     These can be loaded again by putting it in the base/root folder 
+</I>&gt;<i> and using the commands
+</I>&gt;<i>     change-region &lt;name&gt;
+</I>&gt;<i>     terrain load yourfilename.f32
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000347.html">[Opensim-users] opensim 0.5.8 and mono not starting
+</A></li>
+	<LI>Next message: <A HREF="000349.html">[Opensim-users] Opensim Reliable Upgrade Instructions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#345">[ date ]</a>
+              <a href="thread.html#345">[ thread ]</a>
+              <a href="subject.html#345">[ subject ]</a>
+              <a href="author.html#345">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

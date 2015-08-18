@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sim size limits
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3CCAOaG_2a%3D64qgPtPcpRDimT1Q%2BnGCxDVvOXC7kr_FPqyaf5o8mw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009899.html">
+   <LINK REL="Next"  HREF="009915.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sim size limits</H1>
+    <B>James Stallings II</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3CCAOaG_2a%3D64qgPtPcpRDimT1Q%2BnGCxDVvOXC7kr_FPqyaf5o8mw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Sim size limits">james.stallings at gmail.com
+       </A><BR>
+    <I>Wed Mar 21 14:12:47 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009899.html">[Opensim-users] Sim size limits
+</A></li>
+        <LI>Next message: <A HREF="009915.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9890">[ date ]</a>
+              <a href="thread.html#9890">[ thread ]</a>
+              <a href="subject.html#9890">[ subject ]</a>
+              <a href="author.html#9890">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This actually turned out to be a much more interesting thread than I had
+initially thought it would be, so I feel compelled to add a bit of detail,
+as I'm a long-time user and booster of mega-regions; in fact, if I'm not
+THE person Teravus made mega-regions for, I'm certainly ONE of them ;) I
+was the first user to test them, afaik.
+
+Mega-regions did start out as a nasty hack or kludge, and in the sense that
+they are something of an awkward extension of existing capabilities, they
+probably always will be, at least architecturally.
+
+That said, opensim devs have more or less infinite control over
+architecture on the server side, and most viewer limitations at the
+extremes can be obviated with simple tweaks to the viewer, i.e., shortening
+draw distance.
+
+I think that Justin is right, 'flaky' is a bit extreme at this point in
+describing problems with mega-regions. Where they are troublesome (more on
+that in a minute), they are at least very consistent in how they are
+troublesome. In the final analysis, I think it all comes down to use-case,
+as it generally does with the appropriateness of a given configuration
+profile, and whether you can work alongside of ongoing development efforts
+or even wait on them.
+
+I've identified a couple of solid use-cases for mega-regions, as follows:
+
+- you're a 'resident' or full-time virtual worker who needs a lot of elbow
+room
+- you want to work with simulated transportation
+- you are replicating a significantly large real-world geographic feature
+
+Of course, these are simplified examples but that's deliberate to admit of
+similar  possibilities.
+
+Where mega-regions can be said to be deficient is in certain places where
+either the viewer, the script engine, or the physics frame have been
+hard-coded to 256m limits; for instance most (all?) of
+llMoveToTarget,llTarget and osNpcMoveToTarget do not function in X/Y&gt;256;
+nor does llGround. This necessarily limits some functionality with NPCs,
+certain AOs, etc. Parceling, and all things dependent on parceling are also
+no-go, except in the 'root' or southwest-most region.
+
+Interestingly, physical vehicles do not seem to be troubled in that fashion.
+
+In short, I think if I were to answer whether mega-regions are useful, I'd
+have to give it a hearty and enthusiastic if somewhat qualified 'Yes!' :)
+
+
+While I'm on the topic, I'd like to thank Teravus for making mega-regions,
+and JustinCC for his work on them since, and the other devs who have
+patiently listened as I explained why they shouldn't be backed out of the
+code base.
+
+Thanks! :D
+
+Cheers
+James/Hiro
+
+
+
+On Mon, Mar 19, 2012 at 8:38 PM, Justin Clark-Casey &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+&gt;<i> I think I'm mistakenly giving the impression that they're much more flaky
+</I>&gt;<i> than they actually are (which might not be particularly flaky, more
+</I>&gt;<i> requiring some workarounds).  I do suggest trying them out.
+</I>&gt;<i>
+</I>&gt;<i> It certainly is possible to improve things in this area, it's just
+</I>&gt;<i> difficult to estimate since it requires adaptation/improvements on both
+</I>&gt;<i> client and server side.  If I was to hazard a guess I would say a solid
+</I>&gt;<i> month on the server side and the same on the viewer side.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 19/03/12 09:54, David Burden wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>    Thanks for all the feedback.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Sarge - Looked at Aurora ages ago, might be time for another look (if
+</I>&gt;&gt;<i> I can get it to work).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    James/Justin- got the impression from this list that Megaregions were
+</I>&gt;&gt;<i> still very flaky, and also a bit of kludge
+</I>&gt;&gt;<i>    rather than true large regions
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Toni - I'll have a play with region size. Using Mesh terrain might be
+</I>&gt;&gt;<i> fine. And we've done the @scale piece before,
+</I>&gt;&gt;<i>    worked really well when we put an Apache HUD on and started flying
+</I>&gt;&gt;<i> over it like a flightsim
+</I>&gt;&gt;<i>    (<A HREF="http://www.daden.co.uk/blog/**2012/03/opensim-as-apache-**">http://www.daden.co.uk/blog/**2012/03/opensim-as-apache-**</A>
+</I>&gt;&gt;<i> flightsim.html&lt;<A HREF="http://www.daden.co.uk/blog/2012/03/opensim-as-apache-flightsim.html">http://www.daden.co.uk/blog/2012/03/opensim-as-apache-flightsim.html</A>&gt;),
+</I>&gt;&gt;<i> but these use cases needs real avatars.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Diva - is yours just a Vanilla opensim build with 64+ sims? Any
+</I>&gt;&gt;<i> problems with building across the boundaries - is it
+</I>&gt;&gt;<i>    urban or rural? Any special tools to generate/manage it? 64 OAR files?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    It's interesting how much of this depends on the viewer, which tends
+</I>&gt;&gt;<i> to echo some of the other discussion about the
+</I>&gt;&gt;<i>    need for an &quot;opensim&quot; viewer.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    Only reason for mentioning money was that the stock (commercial)
+</I>&gt;&gt;<i> developer response is that of course it's possible,
+</I>&gt;&gt;<i>    it just depends about how much money you've got, so just wanted to get
+</I>&gt;&gt;<i> passed that. And I'm with InuYasha about
+</I>&gt;&gt;<i>    spending my lottery win (along with buying the GDW Traveller licence).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ______________________________**_________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> ______________________________**_________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/**mailman/listinfo/opensim-users&lt;https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;<i>
+</I>
+
+
+-- 
+===================================
+<A HREF="http://simhost.com">http://simhost.com</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120321/466a6b4c/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120321/466a6b4c/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009899.html">[Opensim-users] Sim size limits
+</A></li>
+	<LI>Next message: <A HREF="009915.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9890">[ date ]</a>
+              <a href="thread.html#9890">[ thread ]</a>
+              <a href="subject.html#9890">[ subject ]</a>
+              <a href="author.html#9890">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Intermittent crashing	-	System.OutofMemoryException
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Intermittent%20crashing%0A%09-%09System.OutofMemoryException&In-Reply-To=%3C001101ccefc5%248d19dd20%24a74d9760%24%40net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009443.html">
+   <LINK REL="Next"  HREF="009445.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Intermittent crashing	-	System.OutofMemoryException</H1>
+    <B>Gary Banham</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Intermittent%20crashing%0A%09-%09System.OutofMemoryException&In-Reply-To=%3C001101ccefc5%248d19dd20%24a74d9760%24%40net%3E"
+       TITLE="[Opensim-users] Intermittent crashing	-	System.OutofMemoryException">banham1 at telus.net
+       </A><BR>
+    <I>Mon Feb 20 12:48:23 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009443.html">[Opensim-users] Intermittent crashing	-	System.OutofMemoryException
+</A></li>
+        <LI>Next message: <A HREF="009445.html">[Opensim-users] Intermittent crashing -	System.OutofMemoryException
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9444">[ date ]</a>
+              <a href="thread.html#9444">[ thread ]</a>
+              <a href="subject.html#9444">[ subject ]</a>
+              <a href="author.html#9444">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>PS
+
+just an additional note I think the problem is the single instance of
+Opensim will only access 2 gigs of memory 
+
+with a large number of regions and lots of building and scripts the single
+instance can't count that high it hits a wall
+
+by placing regions over a number of instances each can use 2 gigs
+
+so yes you use more memory EG 5 instances could potentially use 10 gigs of
+memory but one instance only address 2 Gigs
+
+ 
+
+TC
+
+Gary
+
+ 
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Fleep Tuque
+Sent: Monday, February 20, 2012 4:34 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Intermittent crashing -
+System.OutofMemoryException
+
+ 
+
+I'm worried that you may be right about that and it's just a matter of time
+before adding more content becomes a problem, in which case it sounds like
+perhaps instead of running all the regions on a single opensim instance I
+should split them up across several as Gary mentioned above?
+
+ 
+
+I'm not sure exactly how that works, I guess, and I'm trying to understand
+how that would use less memory instead of more..  Would I simply copy the
+contents of the opensim directory to multiple locations and break the
+regions up in the regions.ini file or..?  
+
+ 
+
+I'd like to experiment with it on FleepGrid first before I hose our campus
+install, but the HGAC group is coming for a visit in a couple days so if
+anyone has pointers about how to do that splitting up process before I break
+anything, I'm all ears.  :)
+
+ 
+
+- Chris/Fleep
+
+ 
+
+ 
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+
+UCIT Instructional &amp; Research Computing
+
+University of Cincinnati
+
+406A Zimmer Hall
+
+315 College Drive
+
+PO BOX 210088
+
+Cincinnati, OH 45221-0088
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+
+(513) 556-3018
+
+ 
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+ 
+
+ 
+
+On Thu, Feb 16, 2012 at 10:19 PM, Justin Clark-Casey
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+
+I would actually be rather surprised if errors during the OAR import were
+related to your memory problems.  I think that it's more likely that the
+content of the OAR in some way pushed you beyond memory boundaries and
+wiping it has reset things.
+
+Still, if the problem is solved then that's what matters :)
+
+
+
+On 16/02/12 22:50, Fleep Tuque wrote:
+
+Hi all,
+
+After going through the log files and trying to figure out what changed in
+the time period when the out of memory errors
+began, we traced it back to an OAR file import. (Thanks to whoever suggested
+that might be an issue earlier in this
+thread!)
+
+I'd ported over a copy of the FleepGrid Plaza region so my students could
+easily grab some of the freebies I'd created,
+and it looks like something got horked during the import to the UCSIM grid:
+
+012-02-07 09:12:05,991 ERROR -
+Flotsam.RegionModules.AssetCache.FlotsamAssetCache [FLOTSAM ASSET CACHE]:
+Failed to
+update cache for asset 3d0b3a52-40e5-48fe-8595-b72e163917fa.  Exception The
+process cannot access the file
+'c:\Opensim\bin\assetcache\3d0\3d0b3a52-40e5-48fe-8595-b72e163917fa' because
+it is being used by another process.    at
+System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess
+access, Int32 rights, Boolean useRights,
+FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES
+secAttrs, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess
+access, FileShare share, Int32 bufferSize)
+   at System.IO.File.OpenFile(String path, FileAccess access,
+SafeFileHandle&amp; handle)
+   at System.IO.File.SetLastAccessTimeUtc(String path, DateTime
+lastAccessTimeUtc)
+   at
+Flotsam.RegionModules.AssetCache.FlotsamAssetCache.UpdateFileCache(String
+key, AssetBase asset)
+
+Shortly after that, we begin to see the first out of memory errors..
+
+2012-02-07 09:15:17,453 DEBUG - OpenSim.Region.ScriptEngine.XEngine.XEngine
+[XEngine] Loaded script LK-Stool-Sit
+#2.poseball-zero-lag, script UUID e73e1114-297a-43a7-b4b8-dd423cd83b95, prim
+UUID 2ae59628-943d-49ec-9673-ee3465bd0242 @
+&lt;168.1464, 156.7953, 26.90887&gt;.UCSIM Staff 1
+2012-02-07 09:15:17,984 ERROR - OpenSim.Region.ScriptEngine.XEngine.XEngine
+[XEngine] Exception creating app domain:
+ System.OutOfMemoryException: Exception of type
+'System.OutOfMemoryException' was thrown.
+   at System.AppDomain.nCreateDomain(String friendlyName, AppDomainSetup
+setup, Evidence providedSecurityInfo, Evidence
+creatorsSecurityInfo, IntPtr parentSecurityDescriptor)
+   at System.AppDomain.CreateDomain(String friendlyName, Evidence
+securityInfo, AppDomainSetup info)
+   at OpenSim.Region.ScriptEngine.XEngine.XEngine.DoOnRezScript(Object[]
+parms)
+
+And we see those out of memory errors stack up until eventually the
+application crashed..
+
+When we realized it was probably the OAR file that was the source of the
+issue, I wiped the region by importing a fresh
+&quot;blank&quot; OAR and we haven't had the out of memory exception since.
+
+Looks like the problem is resolved and super thanks again to everyone who
+helped with pointers and info in this thread -
+much appreciated!
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>&gt;
+(513) 556-3018 &lt;tel:%28513%29%20556-3018&gt; 
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+
+
+
+On Thu, Feb 16, 2012 at 2:16 PM, R.Gunther &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A>
+&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rigun at rigutech.nl</A>&gt;&gt; wrote:
+
+   There's a 3e option. Munin.
+   <A HREF="http://munin-monitoring.org/">http://munin-monitoring.org/</A>
+
+
+   On 2012-02-16 16:49, BlueWall wrote:
+
+       The rrdtools is very good for storing and organizing the data for
+statistics and it will also produce graphs
+       from that data. It relies on external scripts to collect the data -
+that's where Cacti comes in. It has the
+       scripts and templates to graph your system (and snmp devices) in the
+distribution. I have done it on Linux and
+       they claim to work on Windows too.
+
+       You could also write scripts and templates to graph OpenSim. I
+haven't tried that, though. There is
+       documentation included in the distro, and scattered across the Cacti
+user forums.
+
+       -BlueWall
+
+       On 02/16/2012 09:55 AM, Rick Anderson wrote:
+
+           One question about Cacti, and RDDTools. The sites describe them
+as
+           general purpose graphing tools. Is there any documentation or
+tutorial
+           for configuring them to monitor system status. Maybe, it's really
+           simple, and I'm over complicating it.
+
+           -_Rick
+
+
+
+   _________________________________________________
+
+
+   Opensim-users mailing list
+   <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+
+   <A HREF="https://lists.berlios.de/__mailman/listinfo/opensim-users">https://lists.berlios.de/__mailman/listinfo/opensim-users</A>
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+
+
+
+
+
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+ 
+
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120220/7f9e6de1/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120220/7f9e6de1/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009443.html">[Opensim-users] Intermittent crashing	-	System.OutofMemoryException
+</A></li>
+	<LI>Next message: <A HREF="009445.html">[Opensim-users] Intermittent crashing -	System.OutofMemoryException
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9444">[ date ]</a>
+              <a href="thread.html#9444">[ thread ]</a>
+              <a href="subject.html#9444">[ subject ]</a>
+              <a href="author.html#9444">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

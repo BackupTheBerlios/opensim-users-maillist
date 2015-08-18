@@ -1,0 +1,374 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim 0.7.3 Standalone-Hypergrid not Diva Distro
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%200.7.3%20Standalone-Hypergrid%20not%20Diva%20Distro&In-Reply-To=%3C003601ccfa2a%24a0b5ef30%240501a8c0%40littlebox%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009650.html">
+   <LINK REL="Next"  HREF="009872.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim 0.7.3 Standalone-Hypergrid not Diva Distro</H1>
+    <B>Ovi Chris Rouly</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%200.7.3%20Standalone-Hypergrid%20not%20Diva%20Distro&In-Reply-To=%3C003601ccfa2a%24a0b5ef30%240501a8c0%40littlebox%3E"
+       TITLE="[Opensim-users] Opensim 0.7.3 Standalone-Hypergrid not Diva Distro">maelzel at ieee.org
+       </A><BR>
+    <I>Sun Mar  4 18:17:07 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009650.html">[Opensim-users] Hypergate not working in Opensim 0.7.3,	diva-r18222-b ?
+</A></li>
+        <LI>Next message: <A HREF="009872.html">[Opensim-users] Diva distro vs. OpenSim release 0.7.3 in SaHg mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9656">[ date ]</a>
+              <a href="thread.html#9656">[ thread ]</a>
+              <a href="subject.html#9656">[ subject ]</a>
+              <a href="author.html#9656">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Diva,
+
+would you please post a single set of the updated configs needed to run in Standalone-Hypergrid mode on the appropriate OpenSim wiki page.  This would be of great help to me and anyone else maintains their own Sa-Hg mode Sims but who don't subscribe to the Diva Distros.
+
+Right now I'm afraid the piece-meal presentation of corrections scattered among the various emails on the user-boards will be difficult to track coherently.
+
+Very respectfully,
+
+Chris
+
+
+  ----- Original Message ----- 
+  From: Diva Canto 
+  To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A> 
+  Sent: Sunday, March 04, 2012 10:18 AM
+  Subject: Re: [Opensim-users] Hypergate not working in Opensim 0.7.3, diva-r18222-b ?
+
+
+  oh man. This release is full of hickups. This was the result of an undocumented configuration change. I fixed the release notes for 0.7.3, and made a new d2 release diva-r18222-c with that fixed. Hopefully, third time is the charm.
+
+  The fix is very easy, you don't need to download the new package again. Just edit config-include/DivaPreferences.ini and in the
+  [GridService] section add
+  HypergridLinker = true
+
+  That's all I did for the -c package.
+
+  Thanks for reporting.
+
+  Diva
+
+  On 3/4/2012 3:34 AM, Fokides Aegean wrote: 
+    Hi all (again)
+
+    After upgrading toi diva-r18222-b, hypergate and blamgate stopped functioning (teleports using landmarks to external regions seem to work properly though).
+
+
+
+    The error(s) when I use Hypergate
+
+
+
+    2012-03-04 12:25:42,607 DEBUG - OpenSim.Services.GridService.HypergridLinker [HYPERGRID LINKER]: Link to hg.osgrid.org:80 Vue-3200, in 16830-0
+
+    2012-03-04 12:25:42,609 WARN  - OpenSim.Services.GridService.HypergridLinker [HYPERGRID LINKER]: Please set this grid's Gatekeeper's address in [GridService]!
+
+    2012-03-04 12:25:42,612 ERROR - OpenSim.Region.ClientStack.LindenUDP.LLUDPServer [LLUDPSERVER]: Client packet handler for e4ae7548-fc60-4a01-9c40-e3a3ee92e87a for packet MapNameRequest threw an exception
+
+    2012-03-04 12:25:42,615 ERROR - OpenSim.Region.ClientStack.LindenUDP.LLUDPServer Object reference not set to an instance of an object.
+
+    System.NullReferenceException: Object reference not set to an instance of an object.
+
+       at OpenSim.Services.GridService.HypergridLinker.TryCreateLink(UUID scopeID, Int32 xloc, Int32 yloc, String remoteRegionName, UInt32 externalPort, String externalHostName, String serverURI, UUID ownerID, GridRegion&amp; regInfo, String&amp; reason)
+
+       at OpenSim.Services.GridService.HypergridLinker.TryCreateLink(UUID scopeID, Int32 xloc, Int32 yloc, String remoteRegionName, UInt32 externalPort, String externalHostName, UUID ownerID, GridRegion&amp; regInfo, String&amp; reason)
+
+       at OpenSim.Services.GridService.HypergridLinker.TryLinkRegionToCoords(UUID scopeID, String mapName, Int32 xloc, Int32 yloc, UUID ownerID, String&amp; reason)
+
+       at OpenSim.Services.GridService.HypergridLinker.TryLinkRegionToCoords(UUID scopeID, String mapName, Int32 xloc, Int32 yloc, String&amp; reason)
+
+       at OpenSim.Services.GridService.HypergridLinker.LinkRegion(UUID scopeID, String regionDescriptor)
+
+       at OpenSim.Services.GridService.GridService.GetHypergridRegionByName(UUID scopeID, String name)
+
+       at OpenSim.Services.GridService.GridService.GetRegionsByName(UUID scopeID, String name, Int32 maxNumber)
+
+       at OpenSim.Region.CoreModules.ServiceConnectorsOut.Grid.LocalGridServicesConnector.GetRegionsByName(UUID scopeID, String name, Int32 maxNumber)
+
+       at OpenSim.Region.CoreModules.World.WorldMap.MapSearchModule.OnMapNameRequest(IClientAPI remoteClient, String mapName, UInt32 flags)
+
+       at OpenSim.Region.ClientStack.LindenUDP.LLClientView.HandleMapNameRequest(IClientAPI sender, Packet Pack)
+
+       at OpenSim.Region.ClientStack.LindenUDP.LLClientView.ProcessPacketMethod(Packet packet)
+
+       at OpenSim.Region.ClientStack.LindenUDP.LLClientView.ProcessInPacket(Packet packet)
+
+       at OpenSim.Region.ClientStack.LindenUDP.LLUDPServer.ProcessInPacket(Object state)
+
+
+
+    The error(s) when I use Blamgate
+
+
+
+    2012-03-04 12:27:43,671 DEBUG - OpenSim.Services.GridService.HypergridLinker [HYPERGRID LINKER]: Link to sanctuary.homelinux.org:8012 Eld, in 27666-0
+
+    2012-03-04 12:27:43,673 WARN  - OpenSim.Services.GridService.HypergridLinker [HYPERGRID LINKER]: Please set this grid's Gatekeeper's address in [GridService]!
+
+    2012-03-04 12:27:43,677 ERROR - OpenSim.Framework.Util [UTIL]: Continuing after async_call_method thread terminated with exception Object reference not set to an instance of an object.   at OpenSim.Services.GridService.HypergridLinker.TryCreateLink(UUID scopeID, Int32 xloc, Int32 yloc, String remoteRegionName, UInt32 externalPort, String externalHostName, String serverURI, UUID ownerID, GridRegion&amp; regInfo, String&amp; reason)
+
+       at OpenSim.Services.GridService.HypergridLinker.TryCreateLink(UUID scopeID, Int32 xloc, Int32 yloc, String remoteRegionName, UInt32 externalPort, String externalHostName, UUID ownerID, GridRegion&amp; regInfo, String&amp; reason)
+
+       at OpenSim.Services.GridService.HypergridLinker.TryLinkRegionToCoords(UUID scopeID, String mapName, Int32 xloc, Int32 yloc, UUID ownerID, String&amp; reason)
+
+       at OpenSim.Services.GridService.HypergridLinker.TryLinkRegionToCoords(UUID scopeID, String mapName, Int32 xloc, Int32 yloc, String&amp; reason)
+
+       at OpenSim.Services.GridService.HypergridLinker.LinkRegion(UUID scopeID, String regionDescriptor)
+
+       at OpenSim.Services.GridService.GridService.GetHypergridRegionByName(UUID scopeID, String name)
+
+       at OpenSim.Services.GridService.GridService.GetRegionByName(UUID scopeID, String name)
+
+       at OpenSim.Region.CoreModules.ServiceConnectorsOut.Grid.LocalGridServicesConnector.GetRegionByName(UUID scopeID, String regionName)
+
+       at OpenSim.Region.Framework.Scenes.Scene.RequestTeleportLocation(IClientAPI remoteClient, String regionName, Vector3 position, Vector3 lookat, UInt32 teleportFlags)
+
+       at OpenSim.Region.ScriptEngine.Shared.Api.OSSL_Api.&lt;&gt;c__DisplayClass4.&lt;TeleportAgent&gt;b__0(Object o)
+
+       at OpenSim.Framework.Util.&lt;&gt;c__DisplayClass6.&lt;FireAndForget&gt;b__1(Object o)
+
+
+
+
+
+    In Myworld.ini file I have made changes suggested in <A HREF="http://opensimulator.org/wiki/Installing_and_Running_Hypergrid#Configuration_for_OpenSimulator_0.7.3">http://opensimulator.org/wiki/Installing_and_Running_Hypergrid#Configuration_for_OpenSimulator_0.7.3</A> (mainly removed /profile in some parameters) and it looks like:
+
+
+
+    Startup]
+
+        ; SmartThreadPool is reported to work well on Mono/Linux, but 
+
+        ; UnsafeQueueUserWorkItem has been benchmarked with better
+
+        ; performance on .NET/Windows
+
+        async_call_method = UnsafeQueueUserWorkItem
+
+        ; recommended: false for mono / true for Windows
+
+        use_async_when_possible = true
+
+
+
+    [DatabaseService]
+
+        ; ### Set the password (again)
+
+    ConnectionString = &quot;Data Source=localhost;Database=opensim;User ID=opensim;Password=78559;&quot;
+
+
+
+    [Network]
+
+        http_listener_port = 9000
+
+
+
+
+
+    [GridService]
+
+    Region_Fokides_1 = &quot;DefaultRegion, FallbackRegion&quot;
+
+        Gatekeeper = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+
+
+    [HGInventoryService]
+
+        ProfileServerURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+    HomeURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+
+
+    [HGAssetService]
+
+        ProfileServerURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+    HomeURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+
+
+    [HGInventoryAccessModule]
+
+        ProfileServerURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+        HomeURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+    Gatekeeper = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+
+
+    ; OutboundPermission = False
+
+
+
+    [DataSnapshot]
+
+        gridname = &quot;Fokides&quot;
+
+
+
+
+
+    [Messaging]
+
+        Gatekeeper = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+
+
+    [LoginService]
+
+        WelcomeMessage = &quot;Welcome to Fokides!&quot;
+
+        GatekeeperURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+
+
+        SRV_HomeURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;    
+
+        SRV_InventoryServerURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+        SRV_AssetServerURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+        SRV_ProfileServerURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+        SRV_FriendsServerURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+        SRV_IMServerURI = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+        ;; For Viewer 2
+
+        MapTileURL = &quot;<A HREF="http://195.251.147.120:9000/">http://195.251.147.120:9000/</A>&quot;
+
+
+
+
+
+    [GatekeeperService]
+
+        ExternalName = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+        AllowTeleportsToAnyRegion = true
+
+
+
+
+
+    [GridInfoService]
+
+        login = <A HREF="http://195.251.147.120:9000/">http://195.251.147.120:9000/</A>
+
+        gridname = &quot;Fokides&quot;
+
+        gridnick = &quot;fokides&quot;
+
+        welcome = <A HREF="http://195.251.147.120:9000/wifi/welcome.html">http://195.251.147.120:9000/wifi/welcome.html</A>
+
+        register = <A HREF="http://195.251.147.120:9000/wifi/user/account">http://195.251.147.120:9000/wifi/user/account</A>
+
+        password = <A HREF="http://195.251.147.120:9000/wifi/forgotpassword">http://195.251.147.120:9000/wifi/forgotpassword</A>
+
+
+
+
+
+    [WifiService]
+
+        GridName = &quot;Fokides&quot;
+
+        LoginURL = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+        WebAddress = &quot;<A HREF="http://195.251.147.120:9000">http://195.251.147.120:9000</A>&quot;
+
+
+
+    .
+
+
+
+    What am I doing wrong?
+
+    Am I supposed to use my external or the internal ip address?
+
+    Should I or shoud I not remove /profile in the parameters?
+
+    Should I make changes to other files as well? 
+
+
+
+
+
+    Thanks in advance for your replies
+
+    Manos
+
+                    
+
+
+     
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+------------------------------------------------------------------------------
+
+
+  _______________________________________________
+  Opensim-users mailing list
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+  <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120304/b8274281/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120304/b8274281/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009650.html">[Opensim-users] Hypergate not working in Opensim 0.7.3,	diva-r18222-b ?
+</A></li>
+	<LI>Next message: <A HREF="009872.html">[Opensim-users] Diva distro vs. OpenSim release 0.7.3 in SaHg mode
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9656">[ date ]</a>
+              <a href="thread.html#9656">[ thread ]</a>
+              <a href="subject.html#9656">[ subject ]</a>
+              <a href="author.html#9656">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

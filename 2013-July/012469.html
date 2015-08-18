@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Problem with Inventory Access/Attachments Modules on Login
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problem%20with%20Inventory%20Access/Attachments%0A%20Modules%20on%20Login&In-Reply-To=%3C51F2F8F7.9010208%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012467.html">
+   <LINK REL="Next"  HREF="012468.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Problem with Inventory Access/Attachments Modules on Login</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problem%20with%20Inventory%20Access/Attachments%0A%20Modules%20on%20Login&In-Reply-To=%3C51F2F8F7.9010208%40googlemail.com%3E"
+       TITLE="[Opensim-users] Problem with Inventory Access/Attachments Modules on Login">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Jul 27 00:32:23 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012467.html">[Opensim-users] Problem with Inventory Access/Attachments Modules on Login
+</A></li>
+        <LI>Next message: <A HREF="012468.html">[Opensim-users]  File Open dialog box
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12469">[ date ]</a>
+              <a href="thread.html#12469">[ thread ]</a>
+              <a href="subject.html#12469">[ subject ]</a>
+              <a href="author.html#12469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes, this would be one thing to try.  I actually just jotted down some notes on this at [1].  You could try deleting the 
+Wearable keys which have item IDs corresponding to items that do not actually exist.
+
+I'm a little surprised that not finding the items causes the avatar to get booted instead of just failing to find the 
+specified items.  What version of OpenSimulator are you using?
+
+[1] <A HREF="http://opensimulator.org/wiki/AvatarService#Data_Storage">http://opensimulator.org/wiki/AvatarService#Data_Storage</A>
+
+On 23/07/13 05:18, John Sheridan wrote:
+&gt;<i> Maybe try deleting his entries in the grid's appearance and attachment tables from the grid's database before you go
+</I>&gt;<i> through the bother of wiping his inventory?  That should effectively &quot;re-ruth&quot; him, from there he can just re-wear his
+</I>&gt;<i> shape, cloths, etc.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 07/22/2013 11:58 PM, Chris Daley wrote:
+</I>&gt;&gt;<i> Thanks for the response. :)  I ran a search by UUID, but no results came back.  I checked through every item in his
+</I>&gt;&gt;<i> inventory (he doesn't have much in there to begin with, either), but no luck.  An odd part is that we have other
+</I>&gt;&gt;<i> avatars set up with the same objects, but they don't encounter this problem.  It's rather bizarre!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Perhaps it would be prudent to delete his entire inventory (after an IAR backup) and see if we still have the issue...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> *Christopher Daley
+</I>&gt;&gt;<i> Simulation Developer
+</I>&gt;&gt;<i> Simudyne*
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> www.simudyne.com
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *US:* +1-(617)-800-0625
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 7/22/2013 11:29 PM, John Sheridan wrote:
+</I>&gt;&gt;&gt;<i> Is it possible they're attached to or worn by his avatar?  Do you have a way of deleting the user's appearance?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 07/22/2013 08:39 PM, Chris Daley wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hi all,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> One of our client's avatars is unable to log in; he gets booted at the region handshake.  The console reads the
+</I>&gt;&gt;&gt;&gt;<i> following, which we believe may be related:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> [INVENTORY ACCESS MODULE]: Could not find item (UUID) for (Username) in RezObject()
+</I>&gt;&gt;&gt;&gt;<i> [ATTACHMENTS MODULE]: Could not retrieve item (UUID) for attaching to avatar (Username) at point (#)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> This occurs twice.  Both objects with those UUIDs no longer exist in his Inventory, so I do not know why they are
+</I>&gt;&gt;&gt;&gt;<i> being searched for.  Does anyone have any ideas?  I'll provide as much info as I can.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks,
+</I>&gt;&gt;&gt;&gt;<i> Chris
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;<i> *Christopher Daley
+</I>&gt;&gt;&gt;&gt;<i> Simulation Developer
+</I>&gt;&gt;&gt;&gt;<i> Simudyne*
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> www.simudyne.com
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> *US:* +1-(617)-800-0625
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012467.html">[Opensim-users] Problem with Inventory Access/Attachments Modules on Login
+</A></li>
+	<LI>Next message: <A HREF="012468.html">[Opensim-users]  File Open dialog box
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12469">[ date ]</a>
+              <a href="thread.html#12469">[ thread ]</a>
+              <a href="subject.html#12469">[ subject ]</a>
+              <a href="author.html#12469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Problem with physical objects
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problem%20with%20physical%20objects&In-Reply-To=%3CE4909B869CD8CD44B18FA0760806E7E502013D60C4BB%40hermes.aegean.gr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006660.html">
+   <LINK REL="Next"  HREF="006666.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Problem with physical objects</H1>
+    <B>Fokides Manos</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Problem%20with%20physical%20objects&In-Reply-To=%3CE4909B869CD8CD44B18FA0760806E7E502013D60C4BB%40hermes.aegean.gr%3E"
+       TITLE="[Opensim-users] Problem with physical objects">fokides at aegean.gr
+       </A><BR>
+    <I>Mon Feb 21 14:24:51 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006660.html">[Opensim-users] Problem with physical objects
+</A></li>
+        <LI>Next message: <A HREF="006666.html">[Opensim-users] Problem with physical objects
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6662">[ date ]</a>
+              <a href="thread.html#6662">[ thread ]</a>
+              <a href="subject.html#6662">[ subject ]</a>
+              <a href="author.html#6662">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thaks for the reply.
+Are you suggesting that I have to delete any fast rotating objects, rez the objects that need to be physical and re-rez the deleted rotating ones? 
+Furthermore, I've got an object that has crossed the bountaries of my sim (it has gone to an unreachable and invalid region (?)), that was scripted and physical. Can this be the cause of the problem? If so, how can I delete it? 
+
+________________________________________
+From: Teravus Ovares [<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>]
+Sent: Monday, February 21, 2011 10:18 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Cc: Fokides Manos
+Subject: Re: [Opensim-users] Problem with physical objects
+
+If I were to debug this, I'd look for objects in the database with a
+high rate of rotation.    NaN share their NaN status with other
+objects if it's not caught in time.  You might have an object that's
+NaN-ing your objects when you rez them.  Often times this is caused by
+fast rotating objects.
+
+Regards
+
+Teravus
+
+On Mon, Feb 21, 2011 at 1:36 AM, Fokides Aegean &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fokides at aegean.gr</A>&gt; wrote:
+&gt;<i> Hi all!
+</I>&gt;<i>
+</I>&gt;<i> Whenever I turn an object into physical  (physical or physical and locked) I
+</I>&gt;<i> get the following error:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2011-02-21 04:23:44,802 DEBUG -
+</I>&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing Wooden
+</I>&gt;<i> Crate, 0a0b9dfa-ca2e-44cb-bdad-89f6b4cd84e8 in Fokides 5
+</I>&gt;<i>
+</I>&gt;<i> 2011-02-21 04:23:44,805 ERROR - OpenSim.Data.MySQL.MySQLDataStore [REGION
+</I>&gt;<i> DB]: MySQL error in ExecuteNonQuery: Unknown column 'NaN' in 'field list'
+</I>&gt;<i>
+</I>&gt;<i> 2011-02-21 04:23:44,807 ERROR -
+</I>&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup [SCENE]: Storing of Wooden
+</I>&gt;<i> Crate, 0a0b9dfa-ca2e-44cb-bdad-89f6b4cd84e8 in Fokides 5 failed with
+</I>&gt;<i> exception MySql.Data.MySqlClient.MySqlException: Unknown column 'NaN' in
+</I>&gt;<i> 'field list'
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlStream.OpenPacket()
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.NativeDriver.ReadResult(UInt64&amp; affectedRows,
+</I>&gt;<i> Int64&amp; lastInsertId)
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlDataReader.GetResultSet()
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior
+</I>&gt;<i> behavior)
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+</I>&gt;<i>
+</I>&gt;<i>    at OpenSim.Data.MySQL.MySQLDataStore.ExecuteNonQuery(MySqlCommand c)
+</I>&gt;<i>
+</I>&gt;<i>    at OpenSim.Data.MySQL.MySQLDataStore.StoreObject(SceneObjectGroup obj,
+</I>&gt;<i> UUID regionUUID)
+</I>&gt;<i>
+</I>&gt;<i>    at
+</I>&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup.ProcessBackup(IRegionDataStore
+</I>&gt;<i> datastore, Boolean forcedBackup)
+</I>&gt;<i>
+</I>&gt;<i>                    at MySql.Data.MySqlClient.MySqlStream.OpenPacket()
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.NativeDriver.ReadResult(UInt64&amp; affectedRows,
+</I>&gt;<i> Int64&amp; lastInsertId)
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlDataReader.GetResultSet()
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior
+</I>&gt;<i> behavior)
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+</I>&gt;<i>
+</I>&gt;<i>    at OpenSim.Data.MySQL.MySQLDataStore.ExecuteNonQuery(MySqlCommand c)
+</I>&gt;<i>
+</I>&gt;<i>    at OpenSim.Data.MySQL.MySQLDataStore.StoreObject(SceneObjectGroup obj,
+</I>&gt;<i> UUID regionUUID)
+</I>&gt;<i>
+</I>&gt;<i>    at
+</I>&gt;<i> OpenSim.Region.Framework.Scenes.SceneObjectGroup.ProcessBackup(IRegionDataStore
+</I>&gt;<i> datastore, Boolean forcedBackup)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The problem appears in all kinds of objects (single or multiple prim, in
+</I>&gt;<i> objects in my inventory as well in newly rezzed simple objects such as a
+</I>&gt;<i> cube).
+</I>&gt;<i>
+</I>&gt;<i> After restarting opensim, the objects are no longer in the scene (since they
+</I>&gt;<i> weren&#8217;t stored).
+</I>&gt;<i>
+</I>&gt;<i> I googled the problem but I can&#8217;t seem to find an suitable answers.
+</I>&gt;<i>
+</I>&gt;<i> Running latest Diva distribution, windows 7 64bit and mysql-5.1.54-winx64.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Any ideas?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006660.html">[Opensim-users] Problem with physical objects
+</A></li>
+	<LI>Next message: <A HREF="006666.html">[Opensim-users] Problem with physical objects
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6662">[ date ]</a>
+              <a href="thread.html#6662">[ thread ]</a>
+              <a href="subject.html#6662">[ subject ]</a>
+              <a href="author.html#6662">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] trying to set up freeswitch
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAEtfgb7vfWVHi5VSZMgjobnCgAAAEAAAAHVjKz0l%2BlZNiKvR2CNweLUBAAAAAA%3D%3D%40yahoo.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006220.html">
+   <LINK REL="Next"  HREF="006223.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] trying to set up freeswitch</H1>
+    <B>Olli Aro</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20trying%20to%20set%20up%20freeswitch&In-Reply-To=%3C%21%26%21AAAAAAAAAAAYAAAAAAAAAEtfgb7vfWVHi5VSZMgjobnCgAAAEAAAAHVjKz0l%2BlZNiKvR2CNweLUBAAAAAA%3D%3D%40yahoo.co.uk%3E"
+       TITLE="[Opensim-users] trying to set up freeswitch">olli_aro at yahoo.co.uk
+       </A><BR>
+    <I>Sun Nov 21 11:14:55 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006220.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+        <LI>Next message: <A HREF="006223.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6222">[ date ]</a>
+              <a href="thread.html#6222">[ thread ]</a>
+              <a href="subject.html#6222">[ subject ]</a>
+              <a href="author.html#6222">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good news.
+
+ 
+
+Are you running Windows or Linux as OS?
+
+ 
+
+Do you use the public or private IP in your configurations?
+
+ 
+
+Regards,
+
+ 
+
+Olli
+
+ 
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of venkatesh_s
+Sent: 21 November 2010 04:10
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] trying to set up freeswitch
+
+ 
+
+Hi Olli,
+I have an OpenSim instance with FreeSwitch running on Amazon EC2
+
+On Sun, Nov 21, 2010 at 1:46 AM, Olli Aro [via opensim-users] &lt;[hidden
+email]&gt; wrote:
+
+Ok, the reason I am asking is because we have Windows systems with public IP
+
+that work fine. 
+
+However, now I am trying to create a working Amazon EC2 instance and cannot 
+decide if I have problems because Amazon instances are behind NAT or because
+
+I am using Linux. 
+
+But I will do some further testing based on your notes below and let you 
+know. 
+
+Regards, 
+
+Olli 
+
+-----Original Message----- 
+From: [hidden email] &lt;<A HREF="http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=0">http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=0</A>&gt;
+
+[mailto:[hidden email]
+&lt;<A HREF="http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=1">http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=1</A>&gt; ] On Behalf Of Ai
+Austin 
+Sent: 20 November 2010 00:17 
+To: [hidden email] &lt;<A HREF="http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=2">http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=2</A>&gt;  
+Subject: Re: [Opensim-users] trying to set up freeswitch 
+
+
+&gt;<i>Olli wrote: 
+</I>&gt;<i>So according to your notes Freeswitch will not work if your server is 
+</I>&gt;<i>behind NAT, is that correct? 
+</I>&gt;<i> 
+</I>&gt;<i>In other words, if you wish to have an internet accessible OpenSim 
+</I>&gt;<i>instance with Freeswitch you must ensure that it is on DMZ with the public 
+</I>IP as its' 
+&gt;<i>&quot;local&quot; IP address and not behind a router carrying out the address 
+</I>&gt;<i>translation between public and private IP? 
+</I>
+
+I cannot be sure on that Olli. &#194; But any port forwarding or translation 
+method should work, so long as the external address is used consistently in 
+the config files on both the FreeSwitch and OpenSim sides I think. 
+
+Make sure your firewall ports for H.323 call initiation and for the or used 
+for the type of call made is also open.. that's covered already in the 
+Freeswitch wiki page firewall section. Its configurable. Basically open 
+ports 1720 and 5060, and maybe 50505 must be open for listening for the 
+default setup indicated in OpenSim.ini (for 0.7.1 dev master its in 
+OpenSimDefaults.ini and must be copied to OpenSim.ini remember. Dynamically 
+assigned ports are used for specific call traffic. The usual H.323 and SIP 
+traffic dynamic port handling on modern firewalls usually enable this. 
+
+I added some more notes on the wiki for advanced users who want to change 
+the behaviour when joining calls, single user on hold music turn off etc. We
+
+turn all that off in the freeswitch config file for our usage. 
+
+
+
+_______________________________________________ 
+Opensim-users mailing list 
+[hidden email] &lt;<A HREF="http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=3">http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=3</A>&gt;  
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+_______________________________________________ 
+Opensim-users mailing list 
+[hidden email] &lt;<A HREF="http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=4">http://user/SendEmail.jtp?type=node&amp;node=5758848&amp;i=4</A>&gt;  
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+  _____  
+
+View message @
+<A HREF="http://opensim-users.2152040.n2.nabble.com/trying-to-set-up-freeswitch-tp573">http://opensim-users.2152040.n2.nabble.com/trying-to-set-up-freeswitch-tp573</A>
+0546p5758848.html
+&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/trying-to-set-up-freeswitch-tp57">http://opensim-users.2152040.n2.nabble.com/trying-to-set-up-freeswitch-tp57</A>
+30546p5758848.html?by-user=t&gt; 
+
+
+To start a new topic under opensim-users, email [hidden email] 
+To unsubscribe from opensim-users, click here
+&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/template/NamlServlet.jtp?macro=u">http://opensim-users.2152040.n2.nabble.com/template/NamlServlet.jtp?macro=u</A>
+nsubscribe_by_code&amp;node=2152040&amp;code=dmVua2F0LnNpdmFyYWpAZ21haWwuY29tfDIxNTI
+wNDB8MTI2ODIzMzEyMA==&amp;by-user=t&gt; . 
+
+
+
+
+-- 
+Regards,
+
+Venkatesh.
+Mobile : +91 80560 14646
+
+Regards, 
+
+Venkatesh
+
+ 
+
+  _____  
+
+View this message in context: Re: trying to set up freeswitch
+&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/trying-to-set-up-freeswitch-tp57">http://opensim-users.2152040.n2.nabble.com/trying-to-set-up-freeswitch-tp57</A>
+30546p5759552.html&gt; 
+Sent from the opensim-users mailing list archive
+&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/">http://opensim-users.2152040.n2.nabble.com/</A>&gt;  at Nabble.com.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101121/14863c13/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101121/14863c13/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006220.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+	<LI>Next message: <A HREF="006223.html">[Opensim-users] trying to set up freeswitch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6222">[ date ]</a>
+              <a href="thread.html#6222">[ thread ]</a>
+              <a href="subject.html#6222">[ subject ]</a>
+              <a href="author.html#6222">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

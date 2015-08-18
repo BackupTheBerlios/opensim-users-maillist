@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] external computers cannot login
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20external%20computers%20cannot%20login&In-Reply-To=%3CAANLkTimpqODs00YR_mKgAoTTL4PAptz1YjdaPq-CB0aw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004826.html">
+   <LINK REL="Next"  HREF="004832.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] external computers cannot login</H1>
+    <B>Pryderi</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20external%20computers%20cannot%20login&In-Reply-To=%3CAANLkTimpqODs00YR_mKgAoTTL4PAptz1YjdaPq-CB0aw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] external computers cannot login">pryderi.mail at gmail.com
+       </A><BR>
+    <I>Tue Jun 29 01:13:29 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004826.html">[Opensim-users] external computers cannot login
+</A></li>
+        <LI>Next message: <A HREF="004832.html">[Opensim-users] external computers cannot login
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4830">[ date ]</a>
+              <a href="thread.html#4830">[ thread ]</a>
+              <a href="subject.html#4830">[ subject ]</a>
+              <a href="author.html#4830">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks Impalah for your very clear answer,
+1) DHCP is off;
+2)With xampp web server it rederects correctly to my computer, so i guess
+it's correct.
+3)As i wrote up, the webserver works.
+
+
+Without this line:
+
+192.168.0.2      <A HREF="http://pryderi.dyndns.org">http://pryderi.dyndns.org</A> &lt;<A HREF="http://myaddress.dyndns.org/">http://myaddress.dyndns.org/</A>&gt;
+
+in windows/system32/drivers/etc/hosts, it works only from external computer,
+with that: only from internal.
+
+And if I use the <A HREF="http://pryderi.dyndns.org">http://pryderi.dyndns.org</A> &lt;<A HREF="http://myaddress.dyndns.org/">http://myaddress.dyndns.org/</A>&gt; in
+a browser, without that line, of course it doesn't load.... i guess it is
+this NAT loopback.
+
+
+
+2010/6/28 Impalah Shenzhou &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">impalah at gmail.com</A>&gt;
+
+&gt;<i> It seems a NAT Loopback problem with your router:
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/NAT_Loopback_Routers">http://opensimulator.org/wiki/NAT_Loopback_Routers</A> (big problem) or a bad
+</I>&gt;<i> DMZ/NAT configuration (no problem).
+</I>&gt;<i>
+</I>&gt;<i> First: turn off DHCP, you will need a static IP for the computer on your
+</I>&gt;<i> LAN. For example, if you have 3 computers, and the IP address of the router
+</I>&gt;<i> is 192.168.0.1, use the 192.168.0.2, 3 and 4 for the computers.
+</I>&gt;<i>
+</I>&gt;<i> Second: You need to associate the internal ip address of the computer
+</I>&gt;<i> acting as opensim (i.e. 192.168.0.3) to the external address of your router
+</I>&gt;<i> (i.e. 72.11.7.23). This is the one which DynDNS will autodetect.
+</I>&gt;<i>
+</I>&gt;<i> The &quot;association&quot; can be done in the router using NAT (Network address
+</I>&gt;<i> translator, will require both ip addresses and ports) or, more simple, using
+</I>&gt;<i> some DMZ option, which will only require a local ip address.
+</I>&gt;<i>
+</I>&gt;<i> Third: how to test... well, making a ping from the outside to your DynDNS,
+</I>&gt;<i> could be a false positive, your router could answer and not your computer
+</I>&gt;<i> (this depends on the router...). I prefer to use a web server on the
+</I>&gt;<i> computer and try to access from a navigator (i.e.
+</I>&gt;<i> <A HREF="http://myaddress.dyndns.org">http://myaddress.dyndns.org</A>).
+</I>&gt;<i>
+</I>&gt;<i> At this point anyone should be able to access from the outside, using your
+</I>&gt;<i> dyndns address.
+</I>&gt;<i>
+</I>&gt;<i> The NAT loopback problem means that everyone from the outside can access to
+</I>&gt;<i> you computer but you, from your local network, don't.
+</I>&gt;<i>
+</I>&gt;<i> I hope this helps
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 2010/6/28 Spacefriends &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drwhiet at spacefriends.de</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> DynDNS  is a service to have a FQD name Name &quot;at Home &quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Best regards
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Am 28.06.2010 um 07:57 schrieb Dolma Dollinger &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dolma.dollinger at gmail.com</A>
+</I>&gt;&gt;<i> &gt;:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -DYNDNS URL- sounds to me like no legal DNS name syntax.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sun, Jun 27, 2010 at 10:03 AM, Pryderi &lt; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">pryderi.mail at gmail.com</A>&gt;
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">pryderi.mail at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hi all,
+</I>&gt;&gt;&gt;<i> I am sorry to bother you again, but i have not solved yet.
+</I>&gt;&gt;&gt;<i> When somebody attempts to log in in my simulator the log in process stops
+</I>&gt;&gt;&gt;<i> at sending response to client. I guess the server sends and incorrect
+</I>&gt;&gt;&gt;<i> address/port to client.
+</I>&gt;&gt;&gt;<i> Then the client stops log in for timeout.
+</I>&gt;&gt;&gt;<i> I am running OpenSim on win 7, with MySQL, I opened the firewall ports
+</I>&gt;&gt;&gt;<i> and in  windows/system32/drivers/etc/hosts i  added this:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> 192.168.0.2       -DYNDNS URL-
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> If i don't add that I have the problem of incorrect response. The
+</I>&gt;&gt;&gt;<i> internal IP is not dynamic.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> In the region.ini:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> InternalAddress = 0.0.0.0
+</I>&gt;&gt;&gt;<i> InternalPort = 9003
+</I>&gt;&gt;&gt;<i> AllowAlternatePorts = False
+</I>&gt;&gt;&gt;<i> ExternalHostName = -DYNDNS URL-
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Many thanks in advance,
+</I>&gt;&gt;&gt;<i> Vittorio
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i>  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i>  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>&gt;
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100629/78041bc2/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100629/78041bc2/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004826.html">[Opensim-users] external computers cannot login
+</A></li>
+	<LI>Next message: <A HREF="004832.html">[Opensim-users] external computers cannot login
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4830">[ date ]</a>
+              <a href="thread.html#4830">[ thread ]</a>
+              <a href="subject.html#4830">[ subject ]</a>
+              <a href="author.html#4830">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

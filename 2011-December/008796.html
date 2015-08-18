@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Freeswitch voice
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Freeswitch%20voice&In-Reply-To=%3C4EDFEE04.10701%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008793.html">
+   <LINK REL="Next"  HREF="008800.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Freeswitch voice</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Freeswitch%20voice&In-Reply-To=%3C4EDFEE04.10701%40googlemail.com%3E"
+       TITLE="[Opensim-users] Freeswitch voice">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Dec  7 23:51:48 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008793.html">[Opensim-users] Freeswitch voice
+</A></li>
+        <LI>Next message: <A HREF="008800.html">[Opensim-users] Still trying to set up groups - progress and	problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8796">[ date ]</a>
+              <a href="thread.html#8796">[ thread ]</a>
+              <a href="subject.html#8796">[ subject ]</a>
+              <a href="author.html#8796">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>FreeSwitch is always a massive pain to set up with OpenSimulator.  Personally, I've pretty much given up on it, if only 
+because the sound quality is utterly rubbish (not FreeSwitch's fault - the Vivox client plugin falls back to a very low 
+quality codec when not used with a Vivox server).
+
+I vastly prefer the Whisper system, but this has the disadvantage of requiring an SLVoice.exe replacement in a viewer. 
+I would love to see a viewer offer the option of detecting the voice system in use via GridInfo (we could easily add a 
+property) and then use the appropriate voice client executable.
+
+On 07/12/11 16:31, Joshua Rubeck wrote:
+&gt;<i> Hi all, I have been having an issue setting up Freeswitch voice on a CentOS 5.4 server. Freeswitch installed okay but
+</I>&gt;<i> nothing we try will get voice to work. we can turn voice on in the region and parcels but voice will not work at all.
+</I>&gt;<i> This is the message we are getting from the services. What we have is the Grid Server, the Region server and then the
+</I>&gt;<i> voice server. So there are three different servers. Here are the configurations for voice on each:
+</I>&gt;<i>
+</I>&gt;<i> Freeswitch:
+</I>&gt;<i>
+</I>&gt;<i> /&lt;configuration name=&quot;xml_curl.conf&quot; description=&quot;cURL XML Gateway&quot;&gt;
+</I>&gt;<i> &lt;bindings&gt;
+</I>&gt;<i> &lt;binding name=&quot;directory&quot;&gt;
+</I>&gt;<i> &lt;param name=&quot;gateway-url&quot; value=&quot;<A HREF="http://62.75.142.162:8004/fsapi/freeswitch-config">http://62.75.142.162:8004/fsapi/freeswitch-config</A>&quot; bindings=&quot;directory&quot;/&gt;
+</I>&gt;<i> &lt;param name=&quot;gateway-credentials&quot; value=&quot;freeswitch:password&quot;/&gt;
+</I>&gt;<i> &lt;param name=&quot;disable-100-continue&quot; value=&quot;true&quot;/&gt;
+</I>&gt;<i> &lt;/binding&gt;
+</I>&gt;<i> &lt;binding name=&quot;dialplan&quot;&gt;
+</I>&gt;<i> &lt;param name=&quot;gateway-url&quot; value=&quot;<A HREF="http://62.75.142.162:8004/fsapi/freeswitch-config">http://62.75.142.162:8004/fsapi/freeswitch-config</A>&quot; bindings=&quot;dialplan&quot;/&gt;
+</I>&gt;<i> &lt;param name=&quot;gateway-credentials&quot; value=&quot;freeswitch:password&quot;/&gt;
+</I>&gt;<i> &lt;param name=&quot;disable-100-continue&quot; value=&quot;true&quot;/&gt;
+</I>&gt;<i> &lt;/binding&gt;
+</I>&gt;<i> &lt;/bindings&gt;
+</I>&gt;<i> &lt;/configuration&gt;/
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Grid Server(Robust)
+</I>&gt;<i>
+</I>&gt;<i> /[FreeswitchService]
+</I>&gt;<i>      LocalServiceModule = &quot;OpenSim.Services.FreeswitchService.dll:FreeswitchService&quot;
+</I>&gt;<i>
+</I>&gt;<i>      ;; The IP address of your FreeSWITCH server.
+</I>&gt;<i>      ;; This address must be reachable by viewers.
+</I>&gt;<i>       ServerAddress = 85.25.35.67
+</I>&gt;<i>
+</I>&gt;<i>      ;; The following configuration parameters are optional
+</I>&gt;<i>
+</I>&gt;<i>      ;; By default, this is the same as the ServerAddress
+</I>&gt;<i>       Realm = 85.25.35.67/
+</I>&gt;<i>
+</I>&gt;<i> Region Server(OpenSim)
+</I>&gt;<i>
+</I>&gt;<i> /[FreeSwitchVoice]
+</I>&gt;<i>      ;; In order for this to work you need a functioning FreeSWITCH PBX set up.
+</I>&gt;<i>      ;; Configuration details at <A HREF="http://opensimulator.org/wiki/Freeswitch_Module">http://opensimulator.org/wiki/Freeswitch_Module</A>
+</I>&gt;<i>       Enabled = true
+</I>&gt;<i>       LocalServiceModule = OpenSim.Services.Connectors.dll:RemoteFreeswitchConnector
+</I>&gt;<i>       FreeswitchServiceURL = <A HREF="http://62.75.142.162:8004/fsapi">http://62.75.142.162:8004/fsapi</A>
+</I>&gt;<i>
+</I>&gt;<i>      ;; You need to load a local service for a standalone, and a remote service
+</I>&gt;<i>      ;; for a grid region. Use one of the lines below, as appropriate
+</I>&gt;<i>      ;; If you're using Freeswitch on a standalone then you will also need to configure the
+</I>&gt;<i>
+</I>&gt;<i> [FreeswitchService] section in config-include/StandaloneCommon.ini
+</I>&gt;<i>      ; LocalServiceModule = OpenSim.Services.FreeswitchService.dll:FreeswitchService
+</I>&gt;<i>      ; LocalServiceModule = OpenSim.Services.Connectors.dll:RemoteFreeswitchConnector
+</I>&gt;<i>
+</I>&gt;<i>      ;; If using a remote connector, specify the server URL
+</I>&gt;<i>       ;FreeswitchServiceURL = <A HREF="http://62.75.142.162:8004/fsapi/">http://62.75.142.162:8004/fsapi/</A>
+</I>&gt;<i>
+</I>&gt;<i> I have tired almost every configuration i could think of. In the freeswitch server I get the following message:
+</I>&gt;<i>
+</I>&gt;<i> /2011-12-07 17:23:23.865890 [WARNING] sofia_reg.c:2446 Can't find user [x6INx5UOcSv6TwarYELAZjA==@85.25.35.67
+</I>&gt;<i> &lt;<A HREF="http://85.25.35.67">http://85.25.35.67</A>&gt;]
+</I>&gt;<i> You must define a domain called '85.25.35.67' in your directory and add a user with the id=&quot;x6INx5UOcSv6TwarYELAZjA==&quot;
+</I>&gt;<i> attribute
+</I>&gt;<i> and you must configure your device to use the proper domain in it's authentication credentials./
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> for the region server i get this information:
+</I>&gt;<i>
+</I>&gt;<i> /17:23:22 - [FreeSwitchVoice]: FreeSwitchSLVoiceGetPreloginHTTPHandler called
+</I>&gt;<i> 17:23:22 - [AVFACTORY]: Completed texture check for e88371e5-439c-4afe-93c1-aad810b0198c
+</I>&gt;<i> 17:23:22 - [FreeSwitchVoice]: FreeSwitchSLVoiceSigninHTTPHandler called
+</I>&gt;<i> 17:23:22 - [MUTE LIST]: Got mute list request for crc 0
+</I>&gt;<i> 17:23:22 - [FreeSwitchVoice]: FreeSwitchSLVoiceBuddyHTTPHandler called
+</I>&gt;<i> 17:23:23 - [FreeSwitchVoice]: FreeSwitchSLVoiceWatcherHTTPHandler called
+</I>&gt;<i> 17:23:23 - [FreeSwitchVoice]: FreeSwitchSLVoiceWatcherHTTPHandler called/
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Still No voice. Any ideas on how to get voice to work. The viewer I am using is Imprudence and I know voice works on it.
+</I>&gt;<i> I have it enabled and my computers firewall doesnt block it.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008793.html">[Opensim-users] Freeswitch voice
+</A></li>
+	<LI>Next message: <A HREF="008800.html">[Opensim-users] Still trying to set up groups - progress and	problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8796">[ date ]</a>
+              <a href="thread.html#8796">[ thread ]</a>
+              <a href="subject.html#8796">[ subject ]</a>
+              <a href="author.html#8796">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

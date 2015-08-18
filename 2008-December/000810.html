@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] realxtend integration
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20realxtend%20integration&In-Reply-To=%3CPine.LNX.4.63.0812111806290.12634%40pallas.utanet.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000808.html">
+   <LINK REL="Next"  HREF="000811.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] realxtend integration</H1>
+    <B>Toni Alatalo</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20realxtend%20integration&In-Reply-To=%3CPine.LNX.4.63.0812111806290.12634%40pallas.utanet.fi%3E"
+       TITLE="[Opensim-users] realxtend integration">antont at kyperjokki.fi
+       </A><BR>
+    <I>Thu Dec 11 17:43:49 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000808.html">[Opensim-users] realxtend integration
+</A></li>
+        <LI>Next message: <A HREF="000811.html">[Opensim-users] realxtend integration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#810">[ date ]</a>
+              <a href="thread.html#810">[ thread ]</a>
+              <a href="subject.html#810">[ subject ]</a>
+              <a href="author.html#810">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, 11 Dec 2008, Ryan McDougall wrote:
+&gt;<i> On Thu, Dec 11, 2008 at 11:27 AM, Jeroen van Veen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">j.veenvan at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> 2. Are there any plans to build on the bsd-licensed verse udp protocol?
+</I>&gt;&gt;<i> (<A HREF="http://www.uni-verse.org/">http://www.uni-verse.org/</A>)
+</I>&gt;<i> I am afraid that I am unfamiliar with it. What I can say that when
+</I>&gt;<i> making a new viewer with our resources, there is no opportunity to
+</I>&gt;<i> explore with protocols. We will focus on reX as a module on OpenSim
+</I>
+I have some experience from using Verse (we tested it for movie production 
+as a part of project orange.blender.org when made the elephantsdream.org),
+and also discussed it with some people who were involved with openviewer 
+last spring (&lt;daedius&gt; if i recall correctly), so try to summary my 
+understanding here as it was brought up.
+
+The Verse protocol is primarily not for making virtual worlds, nor 
+games, but for connecting different apps like 3d modellers and 
+paint programs etc. to be able to collaborate and/or see results 
+live. I think the power there is being able to sync things like change of 
+a position of a vertex in a mesh, or the colour of a pixel in a texture 
+bitmap, so that you can e.g. have a modeller, paint app, and a game engine
+running as Verse apps with the shared data on the server. This would save 
+from the typical export-import-restart loop, and allows tweaking models, 
+uv coordinates and textures so that you see the actual result in the game 
+engine / movie renderer immediately.
+
+It may still be interesting to think of it in the opensim/rex context. 
+Daedius had an interesting idea to integrate verse to the viewer, so that 
+changes made in e.g. a modelling app would show immediately in the meshes, 
+and then after editing the client would upload the version of mesh to the 
+server.
+
+Another route we were once thinking was to add Verse support to the 
+Opensim/Rex server, so that Verse enabled apps could connect to it for 
+authoring (e.g. manipulating the scene, moving obs/prims etc with a more 
+powerful interface - i'd sure like to have outliner, multiple viewports 
+etc when editing scenes). I don't know which would be easier and better: 
+add SL protocol support for a modelling app so it could work as an 
+authoring client, or add Verse support to the OpenSim server.
+
+The situation with Verse in general remains tricky as far as I know - 
+during the Uni-Verse project they added preliminary support to Blender (by 
+integrating it in the insides) and to Max (as a plugin), and tried with 
+Maya, and made a plugin for Gimp. One lesson they learned was that adding 
+good verse support, especially to a closed source app, is hard as classic 
+apps are typically not structured so that network access could touch their 
+dearest data. When making a new app with Verse in mind it's all different 
+and Eskil has been succesful there with his own toolset. But basically 
+Verse seems pretty much dead to me, no one using, no one adding support. 
+It's still the only thing I know for such a purpose and seems to work well 
+(it synchs vertex movements quickly), and the callback design is perhaps 
+good too, so dunno if it'll somehow pick up some day anyway.
+
+Also I don't know where the differences in the actual protocol lie in the 
+end - Verse focuses on syncing 2d and 3d data needed for making movies and 
+games, meshes, uv coords, textures, shader params, .., and does not touch 
+things like avatar animations and even less IM, commerce or anything like 
+that which you have in SL. But still e.g. the object movents are similar 
+functionality, and the Verse protocol is extensible for custom data, so 
+don't know if it could fit despite the different initial focus. I do 
+recall that Eskil himself didn't use it for his MMO, so am still guessing 
+that it fits just the authoring better.
+
+There are other projects with protocols for virtual worlds with focus more 
+similar to OpenSim/Rex, like <A HREF="http://interreality.org">http://interreality.org</A> and of course Croquet 
+etc. so for SL replacements / alternatives those would probably be more 
+relevant to consider. Verse might be an interesting complementing tool in 
+the set. But like Ryan said, Rex targets now at getting a viewer that'll 
+work with the current server using the existing protocol. Anyone else, 
+feel free to experiment with Verse and stuff!
+
+~Toni, not speaking for the Rex project but to inform them too :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000808.html">[Opensim-users] realxtend integration
+</A></li>
+	<LI>Next message: <A HREF="000811.html">[Opensim-users] realxtend integration
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#810">[ date ]</a>
+              <a href="thread.html#810">[ thread ]</a>
+              <a href="subject.html#810">[ subject ]</a>
+              <a href="author.html#810">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

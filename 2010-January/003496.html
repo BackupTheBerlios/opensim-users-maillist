@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Banning%20%22bad%22%20viewers%20was%20Re%3A%20Can%20this%20be%20done%3F&In-Reply-To=%3C6b9359641001141054y2ac4ee17hd1a04dc55d522fa4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003493.html">
+   <LINK REL="Next"  HREF="003506.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?</H1>
+    <B>Kyle Hamilton</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Banning%20%22bad%22%20viewers%20was%20Re%3A%20Can%20this%20be%20done%3F&In-Reply-To=%3C6b9359641001141054y2ac4ee17hd1a04dc55d522fa4%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?">aerowolf at gmail.com
+       </A><BR>
+    <I>Thu Jan 14 19:54:43 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003493.html">[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</A></li>
+        <LI>Next message: <A HREF="003506.html">[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3496">[ date ]</a>
+              <a href="thread.html#3496">[ thread ]</a>
+              <a href="subject.html#3496">[ subject ]</a>
+              <a href="author.html#3496">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>re the traffic camera issue being off-topic: Alright, and thank you
+for the pointer to the blog.  I look forward to reading it.
+
+In an attempt in bringing this discussion back above the squelch
+threshold, I'll describe the process necessary for mutual
+cryptographic authentication (which is mathematically-provably more
+secure than trying to keep any string, including a password, secret):
+
+1) Server must generate a key, and [details omitted] obtain a server
+certificate from a place the Client trusts.
+2) Client must generate a key, and [details omitted*] obtain a client
+certificate from a place the Server trusts.
+3) All references to grid services must be to https URLs, all of which
+must [currently**] require mutual authentication on the initial
+negotiation.  TLS handles this.
+4) Once the identity is verified (in the same place in the protocol
+flow that the First/Last/Password would be verified), the access token
+is created.
+
+Sounds simple, right?  Conceptually, it is... but the devil is in the details.
+
+Servers have it easier in this respect: they typically have technical
+expertise enough to learn to use openssl to generate the key and
+either the certificate or a request for a certificate from a public
+authority.  (Note that Linden Labs distributes its own root
+certificate with its viewer.)
+
+Clients, though... they're a completely different ball of wax.  In
+order to use openssl to generate the key, obtain the certificate, and
+import it into Mono or .Net's keystore, they must learn an extra
+command that most admins don't ever have to learn about, and thus
+can't provide assistance with: openssl pkcs12.  This generates a .p12
+(or .pfx) file which contains the private key, the certificate, and
+the certificate chain up to the trust anchor, which must then be
+imported (in some way) into the keystore and marked accessible to the
+viewer.
+
+Atop this, the Server and the Client must both support mutual
+authentication, by allowing the keys and certificates to be loaded
+into them.  The Server has it easy, once again; it's difficult and may
+well be impossible for the Client.
+
+The pieces that don't exist:
+
+1) A means of provisioning Clients with keys and certificates.
+2) A mechanism for associating a Client's key/cert pair with a
+particular grid connection.
+3) A mechanism for provisioning Clients with the root certificates for
+any given grid.
+4) A key generation system with certificate enrollment in Mono/.NET
+for the server (and for Mono/.NET clients)
+5) The glue code necessary to pull the underlying authentication data
+from the TLS layer on the server.
+
+#1 has had several attempts made at it by browser vendors over the
+years, from Netscape's &lt;keygen&gt; to Microsoft's CEnroll to Apple's
+Keychain Access.  Thus far, none of them have worked, and all of them
+suffer from one or more major issues which prevent the larger
+corporations (banks etc) from using them.  (cf
+<A HREF="http://www.financialcryptography.com/">http://www.financialcryptography.com/</A> )
+
+#2 has problems even in the alternate context of associating
+certificates with email, for S/MIME.  Mozilla and Microsoft haven't
+figured out ways to do that; Apple has, but it's still a chore because
+it's not possible to set a *default* identity for who you want to be
+to any given person.  (It's made even worse because most S/MIME
+certificates only allow for 1 email address to be listed, at least as
+far as commercial CAs go.)
+
+#3 should be relatively easy -- this is the portion of the system
+where a user wants to connect to a given grid; the reason it's
+difficult is because there is no key/cert management system out there
+that allows a user to specify &quot;I trust this root certificate to
+authenticate things related to this grid (site) only&quot;.  Thus, this
+falls under the problem of both #1 and #2, which is &quot;there is no
+useful user interface for the user side of the process&quot;.
+
+#4 should be fairly easy to write, but I don't know where the keystore
+is and I don't know the API to access it.
+
+#5 is, of course, a matter of simply requesting the authentication
+data from the underlying TLS connection, rather than demanding a
+First/Last/Pass tuple... and to ensure there's no problem with
+backward compatibility, create an index over both the Subject and the
+Authority of the certificate mapping to the named account.  (Bonus
+points if you hash the S&amp;A into a GUID, so you don't even know the
+details embedded in the certificate.  However, this might cause some
+issues, most notably in account recovery.)
+
+All of these are technically outside the realm of OpenSim proper,
+though proper key/certificate provisioning would be nice for the
+services.  It's the user side which nobody's paying attention to, and
+I don't even know if there's a way to make it usable by the masses.
+
+-Kyle H
+
+*: It's *drastically* more difficult to use the &quot;easy UIs&quot; than it is
+to use the certificate signature request submission method.
+**: TLS currently suffers from an attack which can be used to inject
+unauthorized data at the beginning of a stream, including HTTP headers
+or ESMTP commands, which relies on the semantics of renegotiation
+during an established connection.  The IETF TLS working group is
+*extremely* close to publishing a proposed standard for an indication
+that a given side supports secure renegotiation.
+
+
+On Thu, Jan 14, 2010 at 9:51 AM, Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karen_palen at yahoo.com</A>&gt; wrote:
+&gt;<i> You are quite correct in saying that the traffic camera comments belong elsewhere! Sorry.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://camerafraud.wordpress.com/">http://camerafraud.wordpress.com/</A> is a website devoted to this issue and is the appropriate place for any more discussion.
+</I>&gt;<i>
+</I>&gt;<i> I will merely note that so far 11 states have banned the cameras and 17 out of 17 ballots on the issue have also done so.
+</I>&gt;<i>
+</I>&gt;<i> I do agree with your comments on the ID string, although I have other posts which cover my thoughts in more detail.
+</I>&gt;<i>
+</I>&gt;<i> Karen
+</I>&gt;<i>
+</I>&gt;<i> --- On Thu, 1/14/10, Kyle Hamilton &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">aerowolf at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> From: Kyle Hamilton &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">aerowolf at gmail.com</A>&gt;
+</I>&gt;&gt;<i> Subject: Re: [Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</I>&gt;&gt;<i> To: &quot;opensim-users&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> Date: Thursday, January 14, 2010, 10:40 AM
+</I>&gt;&gt;<i> My apologies, Karen;&#160; I was
+</I>&gt;&gt;<i> actually directing most of this to Imago.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (My comments about Arizona, photo radar, red-light cameras,
+</I>&gt;&gt;<i> and
+</I>&gt;&gt;<i> California are all still directed toward you, but they open
+</I>&gt;&gt;<i> a
+</I>&gt;&gt;<i> different topic which is outside the scope of this list.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Kyle H
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2010/1/14 Kyle Hamilton &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">aerowolf at gmail.com</A>&gt;:
+</I>&gt;&gt;<i> &gt; This is completely off-topic at this point, and after
+</I>&gt;&gt;<i> this (unless someone adds useful signal) I'm ignoring this
+</I>&gt;&gt;<i> thread.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Thu, Jan 14, 2010 at 8:36 AM, Karen Palen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">karen_palen at yahoo.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt;&gt; In fact it takes a certain amount of effort to
+</I>&gt;&gt;<i> change the default ID which is built into the viewer code.
+</I>&gt;&gt;<i> Effort that no malware writer will expend!
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; ...until you issue a challenge like that. Further, the
+</I>&gt;&gt;<i> 'default ID' can be changed *on the commandline*. Because of
+</I>&gt;&gt;<i> this, there's no requirement to recompile/relink the viewer
+</I>&gt;&gt;<i> when you want to change that ID string, which reduces (by
+</I>&gt;&gt;<i> several orders of magnitude) the amount of time necessary to
+</I>&gt;&gt;<i> brute-force the string necessary. And, since you've
+</I>&gt;&gt;<i> essentially stated that you want the &quot;official&quot; Linden
+</I>&gt;&gt;<i> viewer, all someone has to do is figure out which version
+</I>&gt;&gt;<i> string(s) of the released viewer your grid will accept.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; If you want security through obscurity, that's
+</I>&gt;&gt;<i> wonderful... but when you make it no longer obscure, it's no
+</I>&gt;&gt;<i> longer secure. You have definitely removed the obscurity
+</I>&gt;&gt;<i> from your system through your announcement of your plans in
+</I>&gt;&gt;<i> this thread.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I have already stated the only even-remotely-secure
+</I>&gt;&gt;<i> way to do it, and even that, if you want any kind of grid
+</I>&gt;&gt;<i> population at all, is going to require some kind of
+</I>&gt;&gt;<i> automation. (That way is server/client mutual cryptographic
+</I>&gt;&gt;<i> authentication, handled via TLS.) Personally, I'd rather
+</I>&gt;&gt;<i> each change to a primitive be written to a log as a
+</I>&gt;&gt;<i> revertable changeset... but I'll let you know when I figure
+</I>&gt;&gt;<i> out how to do that.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt; There are a great many crazy ideas that hide under
+</I>&gt;&gt;<i> the banner of &quot;security&quot;.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Here in Arizona we have a traffic camera scam
+</I>&gt;&gt;<i> which is being promoted as &quot;safety&quot;. The huge amount of
+</I>&gt;&gt;<i> statistical evidence which proves this to be false is simply
+</I>&gt;&gt;<i> ignored.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Traffic cameras have been held unconstitutional in the
+</I>&gt;&gt;<i> state of California. I used to live in Arizona; I pity that
+</I>&gt;&gt;<i> you do.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; The problem that those traffic cameras were supposed
+</I>&gt;&gt;<i> to stop can be resolved, much more effectively, by
+</I>&gt;&gt;<i> increasing the length of the yellow light to at least 2
+</I>&gt;&gt;<i> seconds. The bigger problem is that most city councils were
+</I>&gt;&gt;<i> convinced that it could be a revenue-generation system, and
+</I>&gt;&gt;<i> thus most councils directed that yellow lights be shortened,
+</I>&gt;&gt;<i> thus increasing the danger of entering an intersection in
+</I>&gt;&gt;<i> the first two seconds after a green light.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt; Many people are receiving citations for speeding
+</I>&gt;&gt;<i> when in fact they are sick or travelling outside the US.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; ...which is why they've been held unconstitutional in
+</I>&gt;&gt;<i> CA. (As has photo-radar, since the operator of the vehicle
+</I>&gt;&gt;<i> is the one responsible for the violation -- not the owner or
+</I>&gt;&gt;<i> registered owner of the vehicle used for the violation.)
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt; Karen
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; The point is to identify the end result of what you
+</I>&gt;&gt;<i> want, and you've identified it as &quot;I don't want anyone
+</I>&gt;&gt;<i> fucking with the prims on my grid unless I grant them
+</I>&gt;&gt;<i> permission.&quot; You have generalized this to &quot;I don't want
+</I>&gt;&gt;<i> anyone I can't trust not to fuck with the prims on my grid
+</I>&gt;&gt;<i> to connect to my grid,&quot; and are now trying to find a way to
+</I>&gt;&gt;<i> enforce that. We've all told you *why* your approach is
+</I>&gt;&gt;<i> flawed. We've all told you *how* your approach is flawed.
+</I>&gt;&gt;<i> We've even tried to provide you with *better directions* to
+</I>&gt;&gt;<i> find the solution to your problem.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; All the while, you've been stubbornly refusing to
+</I>&gt;&gt;<i> accept any solution more complex than the not-a-solution
+</I>&gt;&gt;<i> that you've come up with, and have been vocally defending
+</I>&gt;&gt;<i> something that, to be effective, must be kept secret. (Since
+</I>&gt;&gt;<i> it's no longer a secret, it no longer has any effectiveness.
+</I>&gt;&gt;<i> Congratulations on shooting yourself in the foot.)
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; -Kyle H
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003493.html">[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</A></li>
+	<LI>Next message: <A HREF="003506.html">[Opensim-users] Banning &quot;bad&quot; viewers was Re: Can this be done?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3496">[ date ]</a>
+              <a href="thread.html#3496">[ thread ]</a>
+              <a href="subject.html#3496">[ subject ]</a>
+              <a href="author.html#3496">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

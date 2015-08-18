@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Question on migrating database from Linux to	Windows and vice versa
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20on%20migrating%20database%20from%20Linux%20to%0A%09Windows%20and%20vice%20versa&In-Reply-To=%3CAANLkTil5OPEWvCleD4mRfovDBPS6Eq1HPp0dIx8g7Jev%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004908.html">
+   <LINK REL="Next"  HREF="004895.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Question on migrating database from Linux to	Windows and vice versa</H1>
+    <B>Karen Palen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Question%20on%20migrating%20database%20from%20Linux%20to%0A%09Windows%20and%20vice%20versa&In-Reply-To=%3CAANLkTil5OPEWvCleD4mRfovDBPS6Eq1HPp0dIx8g7Jev%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Question on migrating database from Linux to	Windows and vice versa">karenpalensl at gmail.com
+       </A><BR>
+    <I>Mon Jul 12 02:25:39 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004908.html">[Opensim-users] Question on migrating database from Linux to Windows and vice versa
+</A></li>
+        <LI>Next message: <A HREF="004895.html">[Opensim-users] Question on migrating database from Linux to Windows and vice versa
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4892">[ date ]</a>
+              <a href="thread.html#4892">[ thread ]</a>
+              <a href="subject.html#4892">[ subject ]</a>
+              <a href="author.html#4892">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I don't have a lot of experience with porting MySql between different OSes,
+but general &quot;belt and suspenders&quot; considerations says that a second and
+independent path would be a very good &quot;safety net&quot;.
+
+I would definitely suggest making an IAR backup of every user inventory and
+an OAR backup of every region! In that way you have a totally separate way
+to transfer the data and at least the opportunity to recover anything which
+is corrupted or lost in the transfer!
+
+I believe there are tutorials on how to automate these backups although I
+have not personally tried them. If you have more that 2 or 3 users and/or 2
+or 3 regions then this will significantly reduce the workload.
+
+It pays to be VER conservative (careful) in making backups since if
+information is LOST it can be extremely hard to re-create, finding something
+in multiple backups is trivial compared to re-creating content!
+
+remember: Jesus saves - EARLY AND OFTEN!
+
+Karen
+
+On Sun, Jul 11, 2010 at 4:22 PM, Chris Kennedy &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at cox.net</A>&gt; wrote:
+
+&gt;<i> Hi, I want to migrate my OpenSim MySQL database from Linux to Windows and
+</I>&gt;<i> vice versa (for traveling reasons) using the MySQL Admin's SQL dump ( MySQL
+</I>&gt;<i> Admin Backup) feature.
+</I>&gt;<i>
+</I>&gt;<i> Is there anything special that I need to know or to look out for when doing
+</I>&gt;<i> this (besides making sure Max Packet Size is set to 16 MB on the target
+</I>&gt;<i> system)?
+</I>&gt;<i>
+</I>&gt;<i> The way I normally do my database backup in the Linux environment is to
+</I>&gt;<i> shut down the OpenSim server, go to the backup tool in MySQL Admin, create a
+</I>&gt;<i> backup project (if it doesn't already exist) for my OpenSim schema making
+</I>&gt;<i> sure all the tables are selected for backup. Then I go into advanced options
+</I>&gt;<i> and click on Normal Backup, and check Complete Backup and run the backup to
+</I>&gt;<i> save my database to a .sql file. This method has worked perfectly fine for
+</I>&gt;<i> me under Linux with no data loss after a restore from backup that I can
+</I>&gt;<i> tell. I have even restored my database to a Windows environment from a Linux
+</I>&gt;<i> created MySQL dump file with no problems that I can see.
+</I>&gt;<i>
+</I>&gt;<i> My concern is creating a database backup in a Windows environment and then
+</I>&gt;<i> restoring it to Linux (or even another Windows environment). Would this,
+</I>&gt;<i> under normal circumstances, cause data loss?
+</I>&gt;<i>
+</I>&gt;<i> The reason I ask is: I have successfully been able to restore my Windows
+</I>&gt;<i> created SQL dump file to Linux and other Windows systems running XP... But
+</I>&gt;<i> the moment I try to restore my database to a Windows 7 system I get an error
+</I>&gt;<i> that says &quot;Object Type not recognized&quot; (or it might have said Object Type
+</I>&gt;<i> not Found, I don't remember off the top of my head) and the restore fails.
+</I>&gt;<i>
+</I>&gt;<i> In a nutshell, is it safe to port my backups between different operating
+</I>&gt;<i> systems like this? Or am I better off creating OARs of my regions and IAR of
+</I>&gt;<i> my inventory(s)? I always make both OAR/IAR and SQL dump backups just to be
+</I>&gt;<i> safe, but I would like to know.
+</I>&gt;<i>
+</I>&gt;<i> Any suggestions and/or tips would be much appreciated! =)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100711/7ed1f865/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100711/7ed1f865/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004908.html">[Opensim-users] Question on migrating database from Linux to Windows and vice versa
+</A></li>
+	<LI>Next message: <A HREF="004895.html">[Opensim-users] Question on migrating database from Linux to Windows and vice versa
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4892">[ date ]</a>
+              <a href="thread.html#4892">[ thread ]</a>
+              <a href="subject.html#4892">[ subject ]</a>
+              <a href="author.html#4892">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

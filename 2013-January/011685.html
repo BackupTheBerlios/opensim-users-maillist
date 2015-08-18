@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Animations seem freeze framed when stopping them?	OpenSim Master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animations%20seem%20freeze%20framed%20when%20stopping%20them%3F%0A%09OpenSim%20Master&In-Reply-To=%3C5109F05C.3040504%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011688.html">
+   <LINK REL="Next"  HREF="011687.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Animations seem freeze framed when stopping them?	OpenSim Master</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Animations%20seem%20freeze%20framed%20when%20stopping%20them%3F%0A%09OpenSim%20Master&In-Reply-To=%3C5109F05C.3040504%40gmail.com%3E"
+       TITLE="[Opensim-users] Animations seem freeze framed when stopping them?	OpenSim Master">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Thu Jan 31 05:17:32 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011688.html">[Opensim-users] Animations for my opensim
+</A></li>
+        <LI>Next message: <A HREF="011687.html">[Opensim-users] Research into the Immersive  Web
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11685">[ date ]</a>
+              <a href="thread.html#11685">[ thread ]</a>
+              <a href="subject.html#11685">[ subject ]</a>
+              <a href="author.html#11685">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello all,
+
+I'm running OpenSim commit fd34a75 (r/21883) and am noticing some 
+oddness with playing and stopping animations. If I play an animation 
+from inventory and then stop it, it will appear that my avatar is frozen 
+in the last frame that was played before stopping instead of returning 
+the avatar to the state that was in before the new animation was played. 
+If I am playing and stopping animations from a script (such as an AO for 
+instance); when the animation is stopped it will appear to keep playing 
+until another animation is played after it. In both cases the weirdness 
+with the stopped animation(s) will persist until some other animation is 
+played whether it be another inventory animation or a default avatar 
+movement animation. It doesn't seem to matter which animation is played 
+from inventory / script.
+
+For  a script it can sort of being worked around by doing this:
+
+llStartAnimation(&quot;some_anim_name&quot;);
+
+... Later on when it needs to be stopped ...
+
+llStopAnimation(&quot;some_anim_name&quot;);
+llStartAnimation(&quot;stand&quot;);
+llStopAnimation(&quot;stand&quot;);
+
+It gives the appearance that the animation is stopped; but I'm thinking 
+that it's simply just overriding the stuck animation long enough to put 
+a apply a new animation to the avatar to &quot;unstick&quot; it.
+
+Its not an issue when the script plays one animation after another but 
+if it's a one time animation that needs to be stopped the results can 
+look really funny.
+
+On a side note... I notice that when I attempt to play the same 
+animation again with out first playing a different animation, the 
+current playing animation won't appear to restart like it previously did 
+not too long ago. I noticed this in my synced pose ball script that has 
+a sync command which would simply play the poseball anim again when an 
+avatar sat on it (sends a link message to other linked pose balls to 
+tell them all to play the animation again) in attempt to sync up the 
+animations of multiple avatars sitting on the link set.
+
+Previously my sync function looked like this
+
+sync()
+{
+     llStopAnimation(anim);
+     llStartAnimation(anim);
+}
+
+Then had to change it to this once the animation issue started appearing 
+to get it to work again
+
+sync()
+{
+     llStopAnimation(anim);
+     llStartAnimation(&quot;stand&quot;);
+     llStopAnimation(&quot;stand&quot;);
+     llStartAnimation(anim);
+}
+
+Is any one else experiencing this?
+
+Thanks!
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.5 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011688.html">[Opensim-users] Animations for my opensim
+</A></li>
+	<LI>Next message: <A HREF="011687.html">[Opensim-users] Research into the Immersive  Web
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11685">[ date ]</a>
+              <a href="thread.html#11685">[ thread ]</a>
+              <a href="subject.html#11685">[ subject ]</a>
+              <a href="author.html#11685">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] large terrains + megaregions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20large%20terrains%20%2B%20megaregions&In-Reply-To=%3C4AAD2012.6060403%40cise.ufl.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002565.html">
+   <LINK REL="Next"  HREF="002560.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] large terrains + megaregions</H1>
+    <B>Paul Fishwick</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20large%20terrains%20%2B%20megaregions&In-Reply-To=%3C4AAD2012.6060403%40cise.ufl.edu%3E"
+       TITLE="[Opensim-users] large terrains + megaregions">fishwick at cise.ufl.edu
+       </A><BR>
+    <I>Sun Sep 13 18:38:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002565.html">[Opensim-users] large terrains + megaregions
+</A></li>
+        <LI>Next message: <A HREF="002560.html">[Opensim-users]  Offline Messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2566">[ date ]</a>
+              <a href="thread.html#2566">[ thread ]</a>
+              <a href="subject.html#2566">[ subject ]</a>
+              <a href="author.html#2566">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="http://www.bundysoft.com/L3DT/">http://www.bundysoft.com/L3DT/</A>
+
+Also, to make life simpler to start, I suggest the following after
+downloading and starting L3DT:
+
+1. File -&gt; new project (select Designable map)
+2. Set width and height. For example 512 for both. This will
+    require 4 opensim regions in a 2x2 configuration
+3. Take default HF/DM ratio
+4. Modify the Design map parameters to whatever you want--
+    more sea? rolling vs. fractal, etc.
+5. click on Heightfield in the next window and then OK
+6. Operations -&gt; Heightfield -&gt; Change vert. scale
+7. Try something like Min alt of -20 and Max alt of 120 to start, and 
+press OK
+8. File-&gt; Export -&gt; Export Map
+9. Choose Heightfield
+10. For file format, scroll to R32
+11. Hit the browse button and enter a name such as myterrain.r32
+12. Assuming you have set up 4 contiguous regions in a 2x2 configuration 
+in opensim...
+13. And that you have added a new line &quot;CombineContiguousRegions=true&quot; 
+to [Startup]
+      in OpenSim.ini
+14. copy myterrain.r32 to your opensim\bin folder
+15. launch opensim and stay in the (root) region. you should be there by 
+default
+16. Fly to a high location, say 160 meters up
+17. do &quot;terrain load-tile myterrain.r32 2 2 1000 1000&quot; in the opensim 
+console
+18. Enjoy smooth motion throughout the space
+
+Let me know if this works -- took a bit of twiddling to get all the 
+steps right
+
+-p
+
+
+andrew johnson wrote:
+&gt;<i> what is L3DT
+</I>&gt;<i>
+</I>&gt;<i> &gt; Date: Sun, 13 Sep 2009 11:52:54 -0400
+</I>&gt;<i> &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; Subject: Re: [Opensim-users] large terrains + megaregions
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; After a couple of experiments, it re-dawned on me that the load-tile 
+</I>&gt;<i> works
+</I>&gt;<i> &gt; only when in the (root) region. When in root, terrain load-tile 
+</I>&gt;<i> works fine,
+</I>&gt;<i> &gt; and indeed setting CombineContiguousRegions=true to [Startup] in
+</I>&gt;<i> &gt; OpenSim.ini creates one large region - no region crossings and the 
+</I>&gt;<i> visual
+</I>&gt;<i> &gt; pains that come with them (rubber banding, hesitations).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I created a 2x2 map labeling regions 1,2,3 and 4 for simplicity with
+</I>&gt;<i> &gt; region 1
+</I>&gt;<i> &gt; being at (1000,1000):
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 2 3
+</I>&gt;<i> &gt; 1 4
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; and then used L3DT to create a 512x512 heightmap. I am presuming that
+</I>&gt;<i> &gt; regions
+</I>&gt;<i> &gt; still have pointers to their respective assets even though when in the
+</I>&gt;<i> &gt; viewer, I am
+</I>&gt;<i> &gt; always &quot;in&quot; Region 1 which covers the entire 0,0 to 512,512 area.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -p
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Paul Fishwick wrote:
+</I>&gt;<i> &gt; &gt; I played with large terrains a while back, and wanted to get back 
+</I>&gt;<i> into
+</I>&gt;<i> &gt; &gt; it,with
+</I>&gt;<i> &gt; &gt; the discussion of megaterrains. After much searching through the 
+</I>&gt;<i> web and
+</I>&gt;<i> &gt; &gt; docs, my results are getting only one region filled. Here are the
+</I>&gt;<i> &gt; &gt; parameters:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; 1) 2 x 2 region with the southwest at 1000,1000 and the northeast at
+</I>&gt;<i> &gt; &gt; 1001,1001
+</I>&gt;<i> &gt; &gt; 2) used L3DT to generate a nice heightfield with a floor of 0 and
+</I>&gt;<i> &gt; &gt; terrain no higher than 60
+</I>&gt;<i> &gt; &gt; 3) this heightmap is 512x512 in resolution
+</I>&gt;<i> &gt; &gt; 4) exported the heightmap to an R32 format and called it test.r32
+</I>&gt;<i> &gt; &gt; 5) inside of the console after a change-region to the southwest
+</I>&gt;<i> &gt; &gt; (1000,1000) region,
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; terrain load-tile test.r32 2 2 1000 1000
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; loads only region 1 @ 1000,1000
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; the other 3 regions are as they were
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Anyone else experienced this?
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; -p
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Paul Fishwick, PhD
+</I>&gt;<i> &gt; Professor and Director, Digital Arts and Sciences Programs
+</I>&gt;<i> &gt; University of Florida
+</I>&gt;<i> &gt; Computer &amp; Information Science and Eng. Dept.
+</I>&gt;<i> &gt; Bldg. CSE, Room 301
+</I>&gt;<i> &gt; P.O. Box 116120
+</I>&gt;<i> &gt; Gainesville, FL 32611
+</I>&gt;<i> &gt; Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;<i> &gt; Phone: (352) 392-1414
+</I>&gt;<i> &gt; Fax: (352) 392-1220
+</I>&gt;<i> &gt; Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i> Add other email accounts to Hotmail in 3 easy steps. Find out how. 
+</I>&gt;<i> &lt;<A HREF="http://clk.atdmt.com/UKM/go/167688463/direct/01/">http://clk.atdmt.com/UKM/go/167688463/direct/01/</A>&gt;
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>   
+</I>
+
+-- 
+Paul Fishwick, PhD
+Professor and Director, Digital Arts and Sciences Programs
+University of Florida
+Computer &amp; Information Science and Eng. Dept.
+Bldg. CSE, Room 301
+P.O. Box 116120
+Gainesville, FL 32611
+Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+Phone: (352) 392-1414
+Fax: (352) 392-1220
+Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002565.html">[Opensim-users] large terrains + megaregions
+</A></li>
+	<LI>Next message: <A HREF="002560.html">[Opensim-users]  Offline Messages
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2566">[ date ]</a>
+              <a href="thread.html#2566">[ thread ]</a>
+              <a href="subject.html#2566">[ subject ]</a>
+              <a href="author.html#2566">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

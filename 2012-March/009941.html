@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sim size limits
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3CCAOaG_2aWKTZgQ07y4SLPfZS-kYmQ%2BjJwKC-%3DpbKYcO%3D8cOUNqg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009915.html">
+   <LINK REL="Next"  HREF="009970.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sim size limits</H1>
+    <B>James Stallings II</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sim%20size%20limits&In-Reply-To=%3CCAOaG_2aWKTZgQ07y4SLPfZS-kYmQ%2BjJwKC-%3DpbKYcO%3D8cOUNqg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Sim size limits">james.stallings at gmail.com
+       </A><BR>
+    <I>Mon Mar 26 16:51:04 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009915.html">[Opensim-users] Sim size limits
+</A></li>
+        <LI>Next message: <A HREF="009970.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9941">[ date ]</a>
+              <a href="thread.html#9941">[ thread ]</a>
+              <a href="subject.html#9941">[ subject ]</a>
+              <a href="author.html#9941">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Greetings Cosmo!
+
+I'll take these questions in-line as you seem to be comfortable with that
+approach :)
+
+Does this mean restriction of above functions within the SW region /or/
+&gt;<i> within the 256x256 region the npc was created on?
+</I>&gt;<i>
+</I>
+This isn't a design limitation but a technical one. Many parts of opensim
+were implemented as if megaregions were not present, or before they were
+present; since it is, as you point out, an experimental feature. This is
+changing, but older code that did not take them into account has to be
+updated for the configuration.
+
+
+&gt;<i> Since subdivision of land into parcels seems to be the way for multiple
+</I>&gt;<i> streaming media, should subdividing a mega-region for multi parcel media
+</I>&gt;<i> usage been thought of any differently than regular region subdivision?
+</I>&gt;<i>
+</I>&gt;<i> Should one go ahead and create parcels on a mega-region or move to a 4
+</I>&gt;<i> region config. before starting &quot;parceling&quot;? (and I ask this in regard to
+</I>&gt;<i> the
+</I>&gt;<i> aptly noted &quot;working alongside of ongoing development efforts or even
+</I>&gt;<i> waiting on them&quot; since megas are still marked experimental on
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Feature_Matrix">http://opensimulator.org/wiki/Feature_Matrix</A> OS feature matrix )
+</I>&gt;<i>
+</I>&gt;<i>
+</I>Let me reiterate:
+&quot;Parceling, and all things dependent on parceling are also no-go, except
+in the 'root' or southwest-most region.
+
+This means that for all practical purposes, parceling doesn't work on
+megaregions. If you must have parcels, they do work *only* in the root.
+However, the non-root regions inherit media settings from the root region
+(as best I can tell) so if you parcel the root region for purposes of
+setting streams, no telling what stream you will have available in the
+non-root regions. This is one of those cases where the code was simply
+written prior to the existence of megaregions.
+
+How about OAR support for megaregions, is it still
+&gt;<i> <A HREF="http://zonjacapalini.wordpress.com/2010/02/13/splitting-megaregions/partial">http://zonjacapalini.wordpress.com/2010/02/13/splitting-megaregions/partial</A>
+</I>&gt;<i> ?
+</I>&gt;<i> I have been switching to each region in our mega via console (as I was
+</I>&gt;<i> advised) to save each regions oar, is this enough for restoring if/when
+</I>&gt;<i> necessary? or am I in for some future grief?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>I have found that saving an OAR of the root region captures all content in
+the simulator except for the terrains of the non-root region. Consequently,
+a good backup will include both an OAR file of the root as well as a
+terrain saved from the simulator console (see the simulator console help
+for details).
+
+
+&gt;<i> Also I have heard of Teleportation Issues (?) - but these could be on
+</I>&gt;<i> teleporting between megas &amp; normal regions - I haven't experienced any such
+</I>&gt;<i> problems within a mega myself.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>Megaregions don't make good neighbors due to the memory load they place on
+their neighbors in the interest of allowing avs in the neighbor to see into
+the region. Consequently many people put them way out in the boonies in the
+high coordinates. Most put them out beyond the allowable limits of a
+teleport, and this created strangeness that has been styled as a teleport
+issue; in a sense, it is. It's too far to teleport ;)
+
+That said, if you are teleporting into a non-root region from within the
+allowed distance (4000 regions), you first arrive in the root, and are then
+teleported a second time to deliver you to your requested destination. Sort
+of a redirect that some find this annoying; it doesn't bother me.
+
+
+Cheers!
+James
+
+
+-- 
+===================================
+<A HREF="http://simhost.com">http://simhost.com</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120326/93cb7140/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120326/93cb7140/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009915.html">[Opensim-users] Sim size limits
+</A></li>
+	<LI>Next message: <A HREF="009970.html">[Opensim-users] Sim size limits
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9941">[ date ]</a>
+              <a href="thread.html#9941">[ thread ]</a>
+              <a href="subject.html#9941">[ subject ]</a>
+              <a href="author.html#9941">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

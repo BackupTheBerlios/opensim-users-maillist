@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Windlight and LightShare in Opensim 0.7
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Windlight%20and%20LightShare%20in%20Opensim%200.7&In-Reply-To=%3C959180.28029.qm%40web50506.mail.re2.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005499.html">
+   <LINK REL="Next"  HREF="005503.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Windlight and LightShare in Opensim 0.7</H1>
+    <B>Juliana Dutra</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Windlight%20and%20LightShare%20in%20Opensim%200.7&In-Reply-To=%3C959180.28029.qm%40web50506.mail.re2.yahoo.com%3E"
+       TITLE="[Opensim-users] Windlight and LightShare in Opensim 0.7">kila01 at yahoo.com
+       </A><BR>
+    <I>Mon Sep 13 06:43:31 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005499.html">[Opensim-users] 0.7.0.2 release
+</A></li>
+        <LI>Next message: <A HREF="005503.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5501">[ date ]</a>
+              <a href="thread.html#5501">[ thread ]</a>
+              <a href="subject.html#5501">[ subject ]</a>
+              <a href="author.html#5501">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OMG can't believe I did that n00b mistake!
+
+Alas, changing it to true had no effect. I even tried adding careminster=y as I 
+saw on an earlier thread. restarted the server and same result as always.
+
+Tried it with recent release too (0.7.0.2), no change
+
+-------opensim.ini--------------
+[LightShare]
+enable_windlight = true
+
+[XEngine] 
+;Windlight enable needs os -- don't like this At all!!!
+AllowOSFunctions = true
+AllowLightShareFunctions = true
+OSFunctionThreatLevel = Severe
+Allow_lsGetWindlightScene = true
+Allow_lsSetWindlightScene = true
+Allow_lsSetWindlightSceneTargeted = true
+AllowMODFunctions = true
+AllowCareminsterFunctions = true
+--------------------------------------------------
+
+
+Re: [Opensim-users] Windlight and LightShare in Opensim 0.7
+
+James Stallings II
+Sun, 12 Sep 2010 20:12:47 -0700
+
+AllowLightShareFunctions = false
+
+Should be true
+
+Good luck and enjoy :)
+
+On Sun, Sep 12, 2010 at 3:19 PM, Juliana Dutra &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kil... at yahoo.com</A>&gt; wrote:
+
+&gt;<i> Even opening my sim up to all kinds of os threat got me nowere
+</I>&gt;<i> ----------------------opensim.ini-------
+</I>&gt;<i> [LightShare]
+</I>&gt;<i> enable_windlight = true
+</I>&gt;<i>
+</I>&gt;<i> [XEngine]
+</I>&gt;<i> ;Windlight enable needs os -- don't like this At all!!!
+</I>&gt;<i> AllowOSFunctions = true
+</I>&gt;<i> AllowLightShareFunctions = false
+</I>&gt;<i> OSFunctionThreatLevel = Severe
+</I>&gt;<i> Allow_lsGetWindlightScene = true
+</I>&gt;<i> Allow_lsSetWindlightScene = true
+</I>&gt;<i> Allow_lsSetWindlightSceneTargeted = true
+</I>&gt;<i> AllowMODFunctions = false
+</I>&gt;<i> -----------------------------------
+</I>&gt;<i> This script compiles but gives me
+</I>&gt;<i> windlight get: LightShare functions are not enabled.
+</I>&gt;<i> --------get ls settings-----
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i>     state_entry()
+</I>&gt;<i>     {
+</I>&gt;<i>         llSay(0, &quot;Script running&quot;);
+</I>&gt;<i>
+</I>&gt;<i>     } // end entry
+</I>&gt;<i>       touch_start( integer vIntTouches )
+</I>&gt;<i>   {
+</I>&gt;<i>         list wlist;
+</I>&gt;<i>         list rules;
+</I>&gt;<i>         list al = lsGetWindlightScene(wlist);
+</I>&gt;<i>         string lal = llDumpList2String(al, &quot;, &quot;);
+</I>&gt;<i>         llSay(0,lal);
+</I>&gt;<i>         //works if lightshare enabled / how do you enable it ?
+</I>&gt;<i>   } //end touch
+</I>&gt;<i> } // end default
+</I>&gt;<i> --------------------------
+</I>&gt;<i>
+</I>&gt;<i> Any clues ?
+</I>&gt;<i>
+</I>&gt;<i> PS: I favor the XML load approach. hate having the sim so open
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+===================================
+<A HREF="http://simhost.com">http://simhost.com</A> <A HREF="http://osgrid.org">http://osgrid.org</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100912/c3c1b925/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100912/c3c1b925/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005499.html">[Opensim-users] 0.7.0.2 release
+</A></li>
+	<LI>Next message: <A HREF="005503.html">[Opensim-users] Windlight and LightShare in Opensim 0.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5501">[ date ]</a>
+              <a href="thread.html#5501">[ thread ]</a>
+              <a href="subject.html#5501">[ subject ]</a>
+              <a href="author.html#5501">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

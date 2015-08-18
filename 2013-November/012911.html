@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Setup for Use Profiles
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Setup%20for%20Use%20Profiles&In-Reply-To=%3C5297D814.3090007%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012907.html">
+   <LINK REL="Next"  HREF="012912.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Setup for Use Profiles</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Setup%20for%20Use%20Profiles&In-Reply-To=%3C5297D814.3090007%40googlemail.com%3E"
+       TITLE="[Opensim-users] Setup for Use Profiles">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Nov 29 00:56:04 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012907.html">[Opensim-users] Setup for Use Profiles
+</A></li>
+        <LI>Next message: <A HREF="012912.html">[Opensim-users] Setup for Use Profiles
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12911">[ date ]</a>
+              <a href="thread.html#12911">[ thread ]</a>
+              <a href="subject.html#12911">[ subject ]</a>
+              <a href="author.html#12911">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 28/11/13 14:05, James Hughes wrote:
+&gt;<i> On 11/27/2013 08:40 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;<i> I am going to guess that you haven't set Enabled = true in the
+</I>&gt;&gt;<i> [UserProfilesService] section in Robust.ini.  I just configured
+</I>&gt;&gt;<i> everything myself for the first time and it appears to work.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Because there was no wiki doc and I'm slightly insane, I just wrote a
+</I>&gt;&gt;<i> guide to the config changes at [1].  Curiously, from reading the code I
+</I>&gt;&gt;<i> can't obviously see how it would work currently for a standalone
+</I>&gt;&gt;<i> configuration.  If anybody does have that working I would like to know
+</I>&gt;&gt;<i> what you did.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> [1] <A HREF="http://opensimulator.org/wiki/UserProfiles">http://opensimulator.org/wiki/UserProfiles</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 23/11/13 14:06, Greg wrote:
+</I>&gt;&gt;&gt;<i> Hi, I&#8217;m stuck on how to get Robust user profiles to work on my grid.
+</I>&gt;&gt;&gt;<i> I run a small home grid on a Windows 7 PC using
+</I>&gt;&gt;&gt;<i> MySQL, and I&#8217;ve been keeping it up to date with the latest commits.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Here&#8217;s what I&#8216;ve done so far:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &#183;In Robust.ini, I uncommented the UserProfilesServiceConnector line,
+</I>&gt;&gt;&gt;<i> and enabled [UserProfilesService].
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &#183;In OpenSim.ini, I uncommented the ProfileURL parm in [UserProfiles]
+</I>&gt;&gt;&gt;<i> and set it up to access port 8002 of my server
+</I>&gt;&gt;&gt;<i> (since that is the port that is referenced in the connector in
+</I>&gt;&gt;&gt;<i> Robust.ini).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> After restarting everything, I log on and attempt to bring up my
+</I>&gt;&gt;&gt;<i> profile, but nothing is loading and I can't make any
+</I>&gt;&gt;&gt;<i> changes to it.  On Singularity viewer, the OK button is grayed out.
+</I>&gt;&gt;&gt;<i> On Firestorm, none of the fields are editable.  Not
+</I>&gt;&gt;&gt;<i> even the &#8216;Born&#8217; info is filled in.  What am I missing?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> Hi Justin,
+</I>&gt;<i>
+</I>&gt;<i> I see &quot;At this time, there are issues with using this in a standalone system.&quot; in the Profiles Wiki page. Have you seen
+</I>&gt;<i> issues with the Standalone setup?
+</I>
+No, this was badly expressed on my part.  I meant to say something more along the line that &quot;Standalone configuration is 
+not yet available&quot; but since you updated the wiki page this is not longer true, so I deleted the line.  Thanks a lot for 
+doing that and correcting my initial mistakes (I'm not sure how I managed to put in so many).
+
+I'm still a little puzzled by standalone config though.  I see that it still requires the simulator to be given a URI 
+even though the service is in the same executable?  If so, how does this work without exposing the connector?
+
+&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> BlueWall
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012907.html">[Opensim-users] Setup for Use Profiles
+</A></li>
+	<LI>Next message: <A HREF="012912.html">[Opensim-users] Setup for Use Profiles
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12911">[ date ]</a>
+              <a href="thread.html#12911">[ thread ]</a>
+              <a href="subject.html#12911">[ subject ]</a>
+              <a href="author.html#12911">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

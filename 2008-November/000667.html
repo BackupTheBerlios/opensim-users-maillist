@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] ossl functions fail
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20ossl%20functions%20fail&In-Reply-To=%3CC2C227472E84496F8B8F47841C82A255%40VM04%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000666.html">
+   <LINK REL="Next"  HREF="000670.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] ossl functions fail</H1>
+    <B>Frank W Sweet</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20ossl%20functions%20fail&In-Reply-To=%3CC2C227472E84496F8B8F47841C82A255%40VM04%3E"
+       TITLE="[Opensim-users] ossl functions fail">fwsweet at backintyme.com
+       </A><BR>
+    <I>Thu Nov 20 21:47:39 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000666.html">[Opensim-users] Texture not loading
+</A></li>
+        <LI>Next message: <A HREF="000670.html">[Opensim-users] ossl functions fail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#667">[ date ]</a>
+              <a href="thread.html#667">[ thread ]</a>
+              <a href="subject.html#667">[ subject ]</a>
+              <a href="author.html#667">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I get a runtime error whenever I try to execute a OSSL function in a
+script. Specifically, osSetDynamicTextureURL() fails every time. I am
+running stand-alone server version 0.6.0 (7275) on Windows. I get the
+same error with the latest Hippo viewer, the latest realXtend viewer,
+and the latest Linden viewer. The error message is:
+
+===block quote starts===
+Primitive: Runtime error:
+Server stack trace:
+   at OpenSim.Region.ScriptEngine.Shared.Api.OSSL_Api.OSSLError(String
+msg)
+   at
+OpenSim.Region.ScriptEngine.Shared.Api.OSSL_Api.CheckThreatLevel(ThreatLevel
+level, String function)
+   at
+OpenSim.Region.ScriptEngine.Shared.Api.OSSL_Api.osSetDynamicTextureURL(String
+dynamicID, String contentType, String url, String extraParams, Int32
+timer)
+   at
+System.Runtime.Remoting.Messaging.StackBuilderSink._PrivateProcessMessage(IntPtr
+md, Object[] args, Object server, Int32 methodPtr, Boolean
+fExecuteInContext, Object[]&amp; outArgs)
+   at
+System.Runtime.Remoting.Messaging.StackBuilderSink.PrivateProcessMessage(RuntimeMethodHandle
+md, Object[] args, Object server, Int32 methodPtr, Boolean
+fExecuteInContext, Object[]&amp; outArgs)
+   at
+System.Runtime.Remoting.Messaging.StackBuilderSink.SyncProcessMessage(IMessage
+msg, Int32 methodPtr, Boolean fExecuteInContext)
+Exception rethrown at [0]:
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage
+===block quote ends===
+
+The failing script is the following weather display, which is included
+in the opensim release library:
+
+===block quote starts===
+integer count = 0;
+integer refreshRate = 300;
+string URL1 =
+&quot;<A HREF="http://icons.wunderground.com/data/640x480/2xus_rd.gif">http://icons.wunderground.com/data/640x480/2xus_rd.gif</A>&quot;;
+string URL2 =
+&quot;<A HREF="http://icons.wunderground.com/data/640x480/2xus_sf.gif">http://icons.wunderground.com/data/640x480/2xus_sf.gif</A>&quot;;
+string URL3 =
+&quot;<A HREF="http://icons.wunderground.com/data/640x480/2xus_st.gif">http://icons.wunderground.com/data/640x480/2xus_st.gif</A>&quot;;
+string dynamicID=&quot;&quot;;
+string contentType=&quot;image&quot;;
+
+refresh_texture()
+{
+    count++;
+    string url = &quot;&quot;;
+    integer c = count % 3;
+
+    if (c == 0) {
+        url = URL1;
+    } else if (c == 1) {
+        url = URL2;
+    } else {
+        url = URL3;
+    }
+    llSay(0,&quot;touched&quot;);
+    // refresh rate is not yet respected here, which is why we need
+the timer
+    osSetDynamicTextureURL(dynamicID, contentType ,url , &quot;&quot;,
+refreshRate );
+}
+
+default
+{
+    state_entry()
+    {
+        refresh_texture();
+        llSetTimerEvent(refreshRate); // create a &quot;timer event&quot; every
+300 seconds.
+    }
+
+    timer()
+    {
+        refresh_texture();
+    }
+
+    touch_start(integer times)
+    {
+        refresh_texture();
+    }
+}
+===block quote ends===
+
+The above script works fine (but does nothing of course) if you
+comment out the osSetDynamicTextureURL().
+
+My opensim.ini can be downloaded from
+<A HREF="http://sim.thestudyofracialism.org/misc/opensim.ini">http://sim.thestudyofracialism.org/misc/opensim.ini</A>
+
+My sim is accessible at
+-loginuri sim.thestudyofracialism.org:9000
+-loginpage sim.thestudyofracialism.org
+
+I would be grateful for any suggestions.
+
+Frank W Sweet
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000666.html">[Opensim-users] Texture not loading
+</A></li>
+	<LI>Next message: <A HREF="000670.html">[Opensim-users] ossl functions fail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#667">[ date ]</a>
+              <a href="thread.html#667">[ thread ]</a>
+              <a href="subject.html#667">[ subject ]</a>
+              <a href="author.html#667">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NullReferenceException on latest git revision (r17959) when creating NPC
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NullReferenceException%20on%20latest%20git%20revision%0A%20%28r17959%29%20when%20creating%20NPC&In-Reply-To=%3C4F2B3298.2080609%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009293.html">
+   <LINK REL="Next"  HREF="009307.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NullReferenceException on latest git revision (r17959) when creating NPC</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NullReferenceException%20on%20latest%20git%20revision%0A%20%28r17959%29%20when%20creating%20NPC&In-Reply-To=%3C4F2B3298.2080609%40cox.net%3E"
+       TITLE="[Opensim-users] NullReferenceException on latest git revision (r17959) when creating NPC">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Fri Feb  3 02:04:24 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009293.html">[Opensim-users] NullReferenceException on latest git revision (r17959) when creating NPC
+</A></li>
+        <LI>Next message: <A HREF="009307.html">[Opensim-users] NullReferenceException on latest git revision (r17959) when creating NPC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9295">[ date ]</a>
+              <a href="thread.html#9295">[ thread ]</a>
+              <a href="subject.html#9295">[ subject ]</a>
+              <a href="author.html#9295">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oops! Knew I was forgetting something =) Added.
+
+And I believe you're right... Did a bit more testing on it with the 
+change I made and it turns out that the exception will now sometimes 
+appear and sometimes not, and subsequently I will sometimes get a 
+NULL_KEY for the NPC returned (sensor didn't work / detect properly) and 
+sometimes I will get the NPC's key (sensor worked)
+
+On 2/2/2012 6:06 PM, Justin Clark-Casey wrote:
+&gt;<i> I suspect that simply short-circuits the problem.  But I can look more 
+</I>&gt;<i> closely on Friday.
+</I>&gt;<i>
+</I>&gt;<i> Please could you also add the previous exception trace to the mantis.  
+</I>&gt;<i> This is one of the most crucial parts.
+</I>&gt;<i>
+</I>&gt;<i> On 03/02/12 00:01, Chris wrote:
+</I>&gt;&gt;<i> Ah okay, I filed a mantis here 
+</I>&gt;&gt;<i> <A HREF="http://opensimulator.org/mantis/view.php?id=5872">http://opensimulator.org/mantis/view.php?id=5872</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I did attempt to fix this in SensorRepeat.cs at line 452
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> from &amp;&amp; !npcModule.GetNPC(presence.UUID, presence.Scene).SenseAsAgent
+</I>&gt;&gt;<i> to &amp;&amp; npcModule.GetNPC(presence.UUID, presence.Scene).SenseAsAgent
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> With minimal testing this appears to work (sensors pick up on the NPC 
+</I>&gt;&gt;<i> now) and I don't see the NullReferenceException
+</I>&gt;&gt;<i> anymore.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However I am not sure if doing it this way breaks anything else... 
+</I>&gt;&gt;<i> But hopefully that should be it =) I would submit a
+</I>&gt;&gt;<i> patch but I embarrassingly do not know how create patches yet.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 2/2/2012 5:27 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;<i> I've probably introduced a bug. Please could you create a mantis for 
+</I>&gt;&gt;&gt;<i> this with all the details. Thanks, Chris.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 9 Region Standalone on 0.7.3 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.11
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009293.html">[Opensim-users] NullReferenceException on latest git revision (r17959) when creating NPC
+</A></li>
+	<LI>Next message: <A HREF="009307.html">[Opensim-users] NullReferenceException on latest git revision (r17959) when creating NPC
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9295">[ date ]</a>
+              <a href="thread.html#9295">[ thread ]</a>
+              <a href="subject.html#9295">[ subject ]</a>
+              <a href="author.html#9295">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

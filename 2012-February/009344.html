@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Firestorm-Release%20and%20adding%20custom%20OpenSim%0A%09servers&In-Reply-To=%3C4F359E03.908%40cox.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009343.html">
+   <LINK REL="Next"  HREF="009345.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Firestorm-Release and adding custom OpenSim	servers</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Firestorm-Release%20and%20adding%20custom%20OpenSim%0A%09servers&In-Reply-To=%3C4F359E03.908%40cox.net%3E"
+       TITLE="[Opensim-users] Firestorm-Release and adding custom OpenSim	servers">mewtwo0641 at cox.net
+       </A><BR>
+    <I>Fri Feb 10 23:45:23 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009343.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+        <LI>Next message: <A HREF="009345.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9344">[ date ]</a>
+              <a href="thread.html#9344">[ thread ]</a>
+              <a href="subject.html#9344">[ subject ]</a>
+              <a href="author.html#9344">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Aha! That did the trick. Apparently when using the grid manager to add 
+in the grid, for some reason, it wants to change the loginuri to 
+localhost in the xml file. The heck =/? lol
+
+In any event, I found the grids.user.xml file and saw the problem 
+immediately in the section for my os instance:
+
+&lt;key&gt;loginuri&lt;/key&gt;
+&lt;array&gt;
+&lt;string&gt;<A HREF="http://127.0.0.1:9000/&lt;/string">http://127.0.0.1:9000/&lt;/string</A>&gt;
+&lt;/array&gt;
+
+Changed localhost to my IP address and works like a charm.
+
+Thank you so much Wade! =)
+
+
+On 2/10/2012 4:27 PM, Wade Schuette wrote:
+&gt;<i> Chris, I had written the Firestorm developers to find out about this 
+</I>&gt;<i> myself, as to how to get to the JokaydiaGrid.
+</I>&gt;<i> Here's their reply: (Jan 20, 2012) which worked for me on Windows XP, 
+</I>&gt;<i> but I could find no way to do the same sort of thing on a Mac.   If 
+</I>&gt;<i> you try it, let us know (or me know) if it worked for you!
+</I>&gt;<i>
+</I>&gt;<i> Obviously, replace &quot;jokadia...&quot; with your ow desired grids &quot;loginuri&quot;.
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i>  A grid manager is on our list for addition. There is no ETA.
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i>  The workarounds are:
+</I>&gt;&gt;&gt;<i>  - Modify grids.user.xml, which is located in your user settings 
+</I>&gt;&gt;&gt;<i> folder.
+</I>&gt;&gt;&gt;<i>  - Modify the shortcut/launcher to add 
+</I>&gt;&gt;&gt;<i> {noformat}--<A HREF="loginurihttp://jokadia.metaverseworlds.com:8002/{noformat">loginurihttp://jokadia.metaverseworlds.com:8002/{noformat</A>}&gt;&gt;  
+</I>&gt;&gt;&gt;<i> to the exec/target line.
+</I>&gt;<i>
+</I>&gt;<i> Wade
+</I>&gt;<i>
+</I>&gt;<i> On 2/10/12 1:52 PM, Chris wrote:
+</I>&gt;&gt;<i> Hello all,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I was wondering if anyone is having issues with the last 2 latest 
+</I>&gt;&gt;<i> releases of Firestorm and connecting to their own OpenSim grid? I can 
+</I>&gt;&gt;<i> connect to one of the pre-configured grids in the list just fine 
+</I>&gt;&gt;<i> after enabling all the proper options to allow me to connect to other 
+</I>&gt;&gt;<i> grids... but I am unable to specify my own custom os server to 
+</I>&gt;&gt;<i> connect to whether it be by command line options, grid manager, or 
+</I>&gt;&gt;<i> editing the grids xml file to manually include it. I get a message 
+</I>&gt;&gt;<i> stating that it cannot resolve the DNS name and my console output 
+</I>&gt;&gt;<i> doesn't even record an attempt for viewer login... I get the same 
+</I>&gt;&gt;<i> issue on the latest Singularity viewer as well actually.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Following the same procedure to add in a custom grid; I don't have 
+</I>&gt;&gt;<i> any issues with the older viewers and they connect just fine. Would 
+</I>&gt;&gt;<i> any one happen to know if it is possible to get these viewers working 
+</I>&gt;&gt;<i> again on OpenSim?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks!
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 9 Region Standalone on 0.7.3 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.11
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009343.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+	<LI>Next message: <A HREF="009345.html">[Opensim-users] Firestorm-Release and adding custom OpenSim	servers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9344">[ date ]</a>
+              <a href="thread.html#9344">[ thread ]</a>
+              <a href="subject.html#9344">[ subject ]</a>
+              <a href="author.html#9344">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

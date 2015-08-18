@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Scripting: 10x speed boost with C#
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3CBANLkTiktD%3DbzbF%2BJV90VeVEAq%3D4hjnKCgQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007166.html">
+   <LINK REL="Next"  HREF="007169.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Scripting: 10x speed boost with C#</H1>
+    <B>Neil Canham</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Scripting%3A%2010x%20speed%20boost%20with%20C%23&In-Reply-To=%3CBANLkTiktD%3DbzbF%2BJV90VeVEAq%3D4hjnKCgQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Scripting: 10x speed boost with C#">neil at knowsense.co.uk
+       </A><BR>
+    <I>Mon Apr 25 16:09:47 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007166.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+        <LI>Next message: <A HREF="007169.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7167">[ date ]</a>
+              <a href="thread.html#7167">[ thread ]</a>
+              <a href="subject.html#7167">[ subject ]</a>
+              <a href="author.html#7167">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It is in OpenSim.ini -
+
+    ScriptDelayFactor = 0.0
+
+I wasn't aware of it until this thread - so thanks for making me aware - it
+has speeded up a number of scripts for me - of course, the delays are
+required in public sims where griefing might be an issue, but for private
+installations, can anyone see any reason not to set that to zero?  I guess
+there might be scripts that are 'accidentally' working by relying on the
+delays, but other than that, no fundamental opensim architectural reason?
+
+Neil
+
+On Mon, Apr 25, 2011 at 2:42 PM, Henry Wills &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fubat.enterprises at gmail.com</A>&gt;wrote:
+
+&gt;<i> &quot;... *configured all LSL scripting delays down to zero* :)&quot;
+</I>&gt;<i>
+</I>&gt;<i> Where do I find that, Justin? I'm not sure I did that on my sim.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Apr 24, 2011 at 8:36 PM, Justin Clark-Casey &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Very interesting, Jeff.  The scripting engine in OpenSim transforms LSL to
+</I>&gt;&gt;<i> C# before compiling it so there wouldn't be a time difference due to
+</I>&gt;&gt;<i> interpretation.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Of course, I'm presuming that you had configured all LSL scripting delays
+</I>&gt;&gt;<i> down to zero :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 23/04/11 11:20, Jeff Kelley wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I like physics. And I like colors.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I scripted a blackbody spectrum in LSL for a science sim. It was
+</I>&gt;&gt;&gt;<i> reasonably
+</I>&gt;&gt;&gt;<i> fast, 1.8s for a 400 points spectrum (380 to 780 nm) including Planck's
+</I>&gt;&gt;&gt;<i> law
+</I>&gt;&gt;&gt;<i> computation, CIE to RGB colorspace mapping with gamma correction, display
+</I>&gt;&gt;&gt;<i> with osDynamicTexture.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> That was fast, but not enough in my mind. Real-time interaction should be
+</I>&gt;&gt;&gt;<i> in the 1/10s range, not the second.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So I rewrote the thing in C#. The key was to get rid of all llFunctions,
+</I>&gt;&gt;&gt;<i> LSL lists and string handling functions, math functions, even building
+</I>&gt;&gt;&gt;<i> manually the drawlist instead of calling osDraw routines. Execution time
+</I>&gt;&gt;&gt;<i> is
+</I>&gt;&gt;&gt;<i> now in the 0.1-0.2s range.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Running Opensim 0.7.0.2 + MONO on a MacMini server, 2.53GHz Core Duo,
+</I>&gt;&gt;&gt;<i> 4GB.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> LSL code:       <A HREF="http://pastebin.com/MxsivsKS">http://pastebin.com/MxsivsKS</A>
+</I>&gt;&gt;&gt;<i> C# code:        <A HREF="http://pastebin.com/UR2gsnU7">http://pastebin.com/UR2gsnU7</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Nice!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Justin Clark-Casey (justincc)
+</I>&gt;&gt;<i> <A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+</I>&gt;&gt;<i> <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110425/24160667/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110425/24160667/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007166.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+	<LI>Next message: <A HREF="007169.html">[Opensim-users] Scripting: 10x speed boost with C#
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7167">[ date ]</a>
+              <a href="thread.html#7167">[ thread ]</a>
+              <a href="subject.html#7167">[ subject ]</a>
+              <a href="author.html#7167">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Possible to configure how often sim diagnostics are done?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Possible%20to%20configure%20how%20often%20sim%20diagnostics%0A%20are%20done%3F&In-Reply-To=%3C51FA6A4E.5070107%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012495.html">
+   <LINK REL="Next"  HREF="012496.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Possible to configure how often sim diagnostics are done?</H1>
+    <B>Chris M</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Possible%20to%20configure%20how%20often%20sim%20diagnostics%0A%20are%20done%3F&In-Reply-To=%3C51FA6A4E.5070107%40gmail.com%3E"
+       TITLE="[Opensim-users] Possible to configure how often sim diagnostics are done?">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Thu Aug  1 16:01:50 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012495.html">[Opensim-users] Possible to configure how often sim diagnostics are done?
+</A></li>
+        <LI>Next message: <A HREF="012496.html">[Opensim-users] Possible to configure how often sim diagnostics are done?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12498">[ date ]</a>
+              <a href="thread.html#12498">[ thread ]</a>
+              <a href="subject.html#12498">[ subject ]</a>
+              <a href="author.html#12498">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Justin,
+I commented out the lines in BaseOpenSimServer.cs, compiled, and then 
+proceeded to work on some things in world for a few hours. I noticed 
+that while the diagnostic messages no longer appear; the hang ups still 
+occur... but oddly not quite as bad as when the lines aren't commented 
+out. Instead of hanging my system up for a solid minute almost; it hangs 
+it up in short bursts a few times every few seconds appx. every hour or 
+so. It is a little worse when the maps are generating; the system hangs 
+for a bit longer each &quot;burst&quot;.
+
+As far as an issue with writing to the console, I am uncertain, how can 
+I find this out?
+I don't have any logging settings aside from default except for setting 
+logging for OpenSim.Region.ScriptEngine.XEngine to DEBUG in 
+OpenSim.exe.config
+
+On 7/31/2013 6:10 PM, Justin Clark-Casey wrote:
+&gt;<i> That's very odd because the output of &quot;show stats&quot; is extremely 
+</I>&gt;<i> similar to diagnostics.  Diagnostics does log some extra information, 
+</I>&gt;<i> but nothing which should cause this kind of issue.
+</I>&gt;<i>
+</I>&gt;<i> To be honest, this should be configurable but I am really strapped for 
+</I>&gt;<i> time right now.  It would be very handy if you could try disabling 
+</I>&gt;<i> this manually by commenting out the lines (80-81)
+</I>&gt;<i>
+</I>&gt;<i>             m_periodicDiagnosticsTimer.Elapsed += new 
+</I>&gt;<i> ElapsedEventHandler(LogDiagnostics);
+</I>&gt;<i>             m_periodicDiagnosticsTimer.Enabled = true;
+</I>&gt;<i>
+</I>&gt;<i> in the BaseOpenSimServer() constructor in BaseOpenSimServer.cs and see 
+</I>&gt;<i> if that makes a difference.
+</I>&gt;<i>
+</I>&gt;<i> Could this possibly be some issue with writing anything to console?  
+</I>&gt;<i> Do you have logging settings which would otherwise write data?
+</I>&gt;<i>
+</I>&gt;<i> On 31/07/13 23:36, Chris M wrote:
+</I>&gt;&gt;<i> Hi Justin, I have observed this on several different systems with 
+</I>&gt;&gt;<i> different databases and varying amounts of scripted
+</I>&gt;&gt;<i> objects and regions (ranging from very few to fairly populated). I 
+</I>&gt;&gt;<i> see very little CPU use for OpenSim when this is
+</I>&gt;&gt;<i> happening but yet the systems hang up entirely for a while as it's 
+</I>&gt;&gt;<i> doing it (appx 30 seconds to 1 minute) and only when
+</I>&gt;&gt;<i> the automated diagnostics starts to output its information to the 
+</I>&gt;&gt;<i> console. This started back sometime midway through
+</I>&gt;&gt;<i> development of 0.7.5 (if I remember correctly) and then it went away 
+</I>&gt;&gt;<i> for for a little while after some commits after it,
+</I>&gt;&gt;<i> then reappeared again. So I'm not exactly sure when it first started. 
+</I>&gt;&gt;<i> I would think that git bisect would take a good
+</I>&gt;&gt;<i> while to do to track it down since I would have to wait an hour per 
+</I>&gt;&gt;<i> test for diagnostics to show up... the show stats
+</I>&gt;&gt;<i> command doesn't seem to invoke this behavior.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi Dahlia, I hadn't thought to check my HDD light as it was happening 
+</I>&gt;&gt;<i> (due to my desk layout it's a bit difficult to see
+</I>&gt;&gt;<i> the light from where I sit; so I had never just casually glanced over 
+</I>&gt;&gt;<i> to look.) I will keep an eye out for the HDD light
+</I>&gt;&gt;<i> when it does it again though.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 7/31/2013 4:14 PM, Justin Clark-Casey wrote:
+</I>&gt;&gt;&gt;<i> I'm extremely surprised to hear this - no significant CPU operations 
+</I>&gt;&gt;&gt;<i> are involved in printing this information.  Are
+</I>&gt;&gt;&gt;<i> you absolutely sure that some other timed script isn't running at 
+</I>&gt;&gt;&gt;<i> the same time? Also, when did this problem start?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On 31/07/13 01:00, Chris M wrote:
+</I>&gt;&gt;&gt;&gt;<i> Hello all,
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I was wondering if it is possible to configure how often the 
+</I>&gt;&gt;&gt;&gt;<i> automated simulator diagnostics is ran, and if so, where
+</I>&gt;&gt;&gt;&gt;<i> at?
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> It seems like every hour when the diagnostics is ran it results in 
+</I>&gt;&gt;&gt;&gt;<i> hanging my entire system up for about 30 - 45 seconds
+</I>&gt;&gt;&gt;&gt;<i> which results in a variety of interesting things such as the viewer 
+</I>&gt;&gt;&gt;&gt;<i> hanging up entirely for that duration, music stops
+</I>&gt;&gt;&gt;&gt;<i> playing if listening to music via external media player, other 
+</I>&gt;&gt;&gt;&gt;<i> programs hang up, etc. It also tends to translate to lag
+</I>&gt;&gt;&gt;&gt;<i> for other people connected to my setup for about that long as well.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I know the ideal situation would be to run OpenSim on a system 
+</I>&gt;&gt;&gt;&gt;<i> dedicated to that; but right now I have no choice but to
+</I>&gt;&gt;&gt;&gt;<i> run it on the system that I do all my other daily things on. So I 
+</I>&gt;&gt;&gt;&gt;<i> would like to configure diagnostics to run every
+</I>&gt;&gt;&gt;&gt;<i> say...  8 hours or so? It would make the system hangs a bit more 
+</I>&gt;&gt;&gt;&gt;<i> bearable :)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> If it's not configurable externally I'm willing to stick my head 
+</I>&gt;&gt;&gt;&gt;<i> into the source code and change it manually there if
+</I>&gt;&gt;&gt;&gt;<i> need be; if I could be pointed to the file and location in the code 
+</I>&gt;&gt;&gt;&gt;<i> to change it... It's just driving me insane lol.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Thanks!
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012495.html">[Opensim-users] Possible to configure how often sim diagnostics are done?
+</A></li>
+	<LI>Next message: <A HREF="012496.html">[Opensim-users] Possible to configure how often sim diagnostics are done?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12498">[ date ]</a>
+              <a href="thread.html#12498">[ thread ]</a>
+              <a href="subject.html#12498">[ subject ]</a>
+              <a href="author.html#12498">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

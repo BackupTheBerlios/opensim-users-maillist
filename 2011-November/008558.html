@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] A note about XmlRpcGroupsServer and UTF8
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20note%20about%20XmlRpcGroupsServer%20and%20UTF8&In-Reply-To=%3C9CCB8EDC-93BD-4E70-B1BE-8D1AC8A17896%40gwynethllewelyn.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008532.html">
+   <LINK REL="Next"  HREF="008561.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] A note about XmlRpcGroupsServer and UTF8</H1>
+    <B>Gwyneth Llewelyn</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20A%20note%20about%20XmlRpcGroupsServer%20and%20UTF8&In-Reply-To=%3C9CCB8EDC-93BD-4E70-B1BE-8D1AC8A17896%40gwynethllewelyn.net%3E"
+       TITLE="[Opensim-users] A note about XmlRpcGroupsServer and UTF8">gwyneth.llewelyn at gwynethllewelyn.net
+       </A><BR>
+    <I>Thu Nov 10 09:37:02 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008532.html">[Opensim-users] A note about XmlRpcGroupsServer and UTF8
+</A></li>
+        <LI>Next message: <A HREF="008561.html">[Opensim-users] A note about XmlRpcGroupsServer and UTF8
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8558">[ date ]</a>
+              <a href="thread.html#8558">[ thread ]</a>
+              <a href="subject.html#8558">[ subject ]</a>
+              <a href="author.html#8558">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Fleep,
+
+In my case, things are a bit unclear. The original database I used for Groups came from the XmlRpcGroupsServer that I had downloaded in May 2010. This works flawlessly, to my bafflement and surprise, using UTF8 under MySQL 5.1.53/Linux. It worked under 0.7.0.1 and 0.7.0.2, and it did not stop working under 0.7.2 (I skipped 0.7.1 :) ). Since it works so well, I'm scared to touch any of it &#8212; either the code from May 2010, or the created tables :)
+
+When installing Xoopensim (yes, I've been following your experiences and trying to replicate them as best as possible!), I thought I ought to give Xoopensim's built-in groups a try. Although the databases created are a perfect replica of what XmlRpcGroupsServer uses &#8212; they don't work. When copying over exactly the same content I had in the &quot;old&quot; tables to Xoopensim's own &#8212; Groups stopped working.
+
+I gave up on Xoopensim's groups and went back to XmlRpcGroupsServer's instead. They remain functional. Again, they're in UTF8. As a matter of fact, Groups are the *only* thing I can get to work (well, and the Broker, too, because that at least has such an easy protocol that I wrote something quickly &#8212; even though it's less useful than I thought, I imagined I'd get at least the *name* of the avatar that changed regions). Everything else refuses to work. Profiles worked under 0.6.9 or so, but not since the upgrade to 0.7.X, and it's hard to say &quot;why&quot; &#8212; I just get &quot;slow POST requests&quot; and unacknowledged LLSD packets &#8212; and both OSProfiles and Xoopensim's own implementation give similar results.
+
+From the error you describe, I might just have been lucky and not require long keys, and that's why I managed to create those tables back in May 2010, but I guess that an alternative to keep as most of the code using UTF8 as possible, is to change the key length somewhere. Now if one could figure out *where*, it would be tremendously helpful :)
+
+Cheers,
+
+	- Gwyn
+
+On 2011/11/04, at 19:41, Fleep Tuque wrote:
+
+&gt;<i> Hi all,
+</I>&gt;<i> 
+</I>&gt;<i> Given the problems I had with installing Xoopensim, I decided to go the other route and try to install the various modules individually for groups and profiles and so on.
+</I>&gt;<i> 
+</I>&gt;<i> First note: I noticed that there are two pages on the wiki, when I think there should perhaps only be one, or one should redirect to the other:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Groups">http://opensimulator.org/wiki/Groups</A> is the first page, and it seems incomplete.
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://opensimulator.org/wiki/Enabling_Groups">http://opensimulator.org/wiki/Enabling_Groups</A> is the second page, and its instructions are much more fleshed out and clear.
+</I>&gt;<i> 
+</I>&gt;<i> The first page should probably redirect or link to the second page, no?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Second note:  I ran into problems installing the XmpRpcGroupsServer at first, and finally after some digging around discovered the problem was that I installed MySQL with the utf8 charset, and due to this bug:  <A HREF="http://bugs.mysql.com/bug.php?id=4541">http://bugs.mysql.com/bug.php?id=4541</A> some of the tables needed for the groups functionality were not being created.  Upon trying to create the tables, I was getting an error message:
+</I>&gt;<i> 
+</I>&gt;<i> Specified key was too long; max key length is 1000 bytes
+</I>&gt;<i> 
+</I>&gt;<i> Since all things considered we hadn't done too much with anything yet, I resintalled MySQL with the latin1 charset and voila, the groups functionality seems to be working perfectly.
+</I>&gt;<i> 
+</I>&gt;<i> Before I notate the groups page about this problem, I just wanted to confirm that anyone else has seen this error with utf8 and resolved it with the latin1 charset?  Are the folks who developed the XmlRpcGroupsServer planning to fix this issue for those who need international characters?
+</I>&gt;<i> 
+</I>&gt;<i> Is this a known problem and I'm just behind the curve (as usual)? 
+</I>&gt;<i> 
+</I>&gt;<i> :)
+</I>&gt;<i> 
+</I>&gt;<i> - Chris/Fleep
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Chris M. Collins (SL: Fleep Tuque)
+</I>&gt;<i> Project Manager, UC Second Life 
+</I>&gt;<i> UCit Instructional &amp; Research Computing
+</I>&gt;<i> University of Cincinnati 
+</I>&gt;<i> 406E Zimmer Hall
+</I>&gt;<i> PO Box 210088
+</I>&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;<i> (513)556-3018
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://www.uc.edu/ucit/learningtools/secondlife.html">http://www.uc.edu/ucit/learningtools/secondlife.html</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111110/5cbe6b7e/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20111110/5cbe6b7e/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008532.html">[Opensim-users] A note about XmlRpcGroupsServer and UTF8
+</A></li>
+	<LI>Next message: <A HREF="008561.html">[Opensim-users] A note about XmlRpcGroupsServer and UTF8
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8558">[ date ]</a>
+              <a href="thread.html#8558">[ thread ]</a>
+              <a href="subject.html#8558">[ subject ]</a>
+              <a href="author.html#8558">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

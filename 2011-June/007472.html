@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database backups, recommended methods
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20backups%2C%20recommended%20methods&In-Reply-To=%3CBANLkTin%2B_ESvQaq3NU0EpqpcpFF6ddDeFg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007471.html">
+   <LINK REL="Next"  HREF="007473.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database backups, recommended methods</H1>
+    <B>Edmund Edgar</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20backups%2C%20recommended%20methods&In-Reply-To=%3CBANLkTin%2B_ESvQaq3NU0EpqpcpFF6ddDeFg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Database backups, recommended methods">lists at edochan.com
+       </A><BR>
+    <I>Thu Jun  9 06:58:25 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007471.html">[Opensim-users] Database backups, recommended methods
+</A></li>
+        <LI>Next message: <A HREF="007473.html">[Opensim-users] Database backups, recommended methods
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7472">[ date ]</a>
+              <a href="thread.html#7472">[ thread ]</a>
+              <a href="subject.html#7472">[ subject ]</a>
+              <a href="author.html#7472">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 9 June 2011 13:16, missyfitz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">7minarets at gmail.com</A>&gt; wrote:
+&gt;<i> So is it safe to just backup the database file itself?
+</I>
+This can be done, but you'll need to have locked the database to
+prevent changes and flush outstanding changes to disk before you do it
+to be sure you have a workable backup. (Stopping the mysql server will
+achieve the same effects.) If you don't do this, there may be changes
+that are stored in RAM but haven't yet been flushed to disk.
+
+Also, you'll probably want to make sure you restore to the same
+version of MySQL, unless you want your life to be needlessly
+interesting.
+
+People do sometimes do this for very big databases - one client I
+worked with had a database close to 1TB, which would have taken too
+long to run with mysqldump. Since it's not usually practical to lock
+your production database every night to do a backup, the usual
+solution is to replicate the master database to a slave database, stop
+the slave, do the backup, and start it again and let it catch up with
+the master again. On Linux, there's a thing called an LVM snapshot
+that will help you minimize the time you have to stop the slave.
+There's also a tool called mylvmbackup to help you with this process.
+
+But unless you have a very big database or some other special
+requirements, you're almost definitely better off using mysqldump.
+
+-- 
+Edmund Edgar
+Founder, KK Social Minds
+Educational Technology for the Web and Virtual Worlds
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">ed at socialminds.jp</A>
++81 090 3912 3380
+Skype: edmundedgar
+Second Life: Edmund Earp
+Linked In: edmundedgar
+Twitter: @edmundedgar
+<A HREF="http://www.socialminds.jp">http://www.socialminds.jp</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007471.html">[Opensim-users] Database backups, recommended methods
+</A></li>
+	<LI>Next message: <A HREF="007473.html">[Opensim-users] Database backups, recommended methods
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7472">[ date ]</a>
+              <a href="thread.html#7472">[ thread ]</a>
+              <a href="subject.html#7472">[ subject ]</a>
+              <a href="author.html#7472">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

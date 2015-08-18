@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Unable to connect to a region
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Unable%20to%20connect%20to%20a%20region&In-Reply-To=%3CCAG6z%2BU6y5x4wKOBxE-s2b8PbUk8tjeSaVErHhGa%2BO0rXsAHjZA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="010813.html">
+   <LINK REL="Next"  HREF="010815.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Unable to connect to a region</H1>
+    <B>Fleep Tuque</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Unable%20to%20connect%20to%20a%20region&In-Reply-To=%3CCAG6z%2BU6y5x4wKOBxE-s2b8PbUk8tjeSaVErHhGa%2BO0rXsAHjZA%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Unable to connect to a region">fleep513 at gmail.com
+       </A><BR>
+    <I>Fri Aug 24 14:10:20 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="010813.html">[Opensim-users] Unable to connect to a region
+</A></li>
+        <LI>Next message: <A HREF="010815.html">[Opensim-users] Unable to connect to a region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10814">[ date ]</a>
+              <a href="thread.html#10814">[ thread ]</a>
+              <a href="subject.html#10814">[ subject ]</a>
+              <a href="author.html#10814">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Philippe,
+
+Your English is very good, no problems understanding here.  =)
+
+The errors you are experiencing are very common problems when dealing with
+internal and external IP addresses in your network configuration.  They are
+also some of the most difficult problems to troubleshoot because of the
+many variables involved.
+
+To start, let's review how the connection process works:
+
+- When you start up the client and enter your name/password, it sends those
+details to the OpenSim login service (ROBUST). If your password is correct,
+it tells the region simulator that you're coming.
+
+- The login service then sends back to your client the IP address and port
+to use to enter that region based on the information in the regions.ini
+configuration file.  *Opensim does the DNS resolution locally and sends
+that information to the client.*  (This means when your grid server
+resolves os-reg.open-dsi.net, if it gets a 10.x.x.x address, that is what
+it sends to the client.)
+
+- Your client then connects to the region using the details received from
+the login service.
+
+If you are stuck at &quot;Connecting to Region..&quot; then your client successfully
+connected to the Opensim login service, but the information it is using to
+try to connect to the region (IP address and port number) is not allowing
+the connection.
+
+This can be any number of issues related to your networking setup, but I
+think number 3 is most likely your problem based on the description of your
+setup, however I'll list all three troubleshooting tips just in case:
+
+1)  Check to make sure you have the correct ports open on your router and
+firewall by reviewing the Opensim Network Settings page and Firewall
+settings page.  <A HREF="http://opensimulator.org/wiki/Network_Settings">http://opensimulator.org/wiki/Network_Settings</A>
+
+2)  If you are on a home network, make sure your router supports NAT
+Loopback.  <A HREF="http://opensimulator.org/wiki/NAT_Loopback_Routers">http://opensimulator.org/wiki/NAT_Loopback_Routers</A>
+
+3)  If you are on a corporate or campus network with 1-to-1 NATing, you
+will need to have an external static IP address assigned to your server for
+users outside your network to connect.  See this thread for more
+information.
+<A HREF="http://opensim-users.2152040.n2.nabble.com/NAT-amp-Corporate-Firewall-td6223654.html">http://opensim-users.2152040.n2.nabble.com/NAT-amp-Corporate-Firewall-td6223654.html</A>
+
+
+Hope this helps and let us know how it goes!
+
+Sincerely,
+
+- Chris/Fleep
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM)
+UCIT Instructional &amp; Research Computing
+University of Cincinnati
+406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+
+
+
+
+On Fri, Aug 24, 2012 at 6:18 AM, Philippe Scoffoni &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">philippe at scoffoni.net</A>&gt;wrote:
+
+&gt;<i>  Hi,
+</I>&gt;<i>
+</I>&gt;<i> I'm experiencing some problem with access to a region. I'm using OpenSim
+</I>&gt;<i> 0.7.3 on Debian 6 with Mono from the Debian repository.
+</I>&gt;<i>
+</I>&gt;<i> I'm working with a server using openvz container. I'm using two virtual
+</I>&gt;<i> machine. One for the grid and an other for the region.
+</I>&gt;<i> The VM are on a private network. It means, they have a private IP. The
+</I>&gt;<i> grid : 10.0.0.10 and the region : 10.0.0.11.
+</I>&gt;<i> On the physical host, I'm using shorewall to build the rules of the
+</I>&gt;<i> firewall and make the NAT Translation for all the required port
+</I>&gt;<i> (9000TCP/UDP for the region , 8002TCP for the grid)
+</I>&gt;<i> In the Regions.ini, i've put in the ExternalHostName : os-reg.open-dsi.netwich is the public IP I'm using to access to the two vms.
+</I>&gt;<i> All seems to work fine. When I start the region, it is successfully
+</I>&gt;<i> registred by the grid.
+</I>&gt;<i> My problem occurs when I try to connect to the region. My account is
+</I>&gt;<i> succesfully authentified by the grid, but it seems that firestorm (4.1.1)
+</I>&gt;<i> is not able to connect to the region. In the log there is something like
+</I>&gt;<i>
+</I>&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llworld.cpp(181) : addRegion: Add
+</I>&gt;<i> region with handle: 1099511628032000 on host 10.0.0.11:9000
+</I>&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llworld.cpp(214) : addRegion: Adding
+</I>&gt;<i> new region (1000:1000)
+</I>&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llworld.cpp(215) : addRegion: Host:
+</I>&gt;<i> 10.0.0.11:9000
+</I>&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llstartup.cpp(1503) : idle_startup:
+</I>&gt;<i> Adding initial simulator { 256000.0, 256000.0, 0.0 }
+</I>&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llviewerregion.cpp(1586) :
+</I>&gt;<i> setSeedCapability: posting to seed
+</I>&gt;<i> <A HREF="http://os-reg.open-dsi.net:9000/CAPS/005f52b3-5440-4775-97df-a1fd5117be9c0000/">http://os-reg.open-dsi.net:9000/CAPS/005f52b3-5440-4775-97df-a1fd5117be9c0000/</A>
+</I>&gt;<i> 2012-08-24T09:18:27Z INFO: newview/llagent.cpp(781) : LLAgent::setRegion:
+</I>&gt;<i> Moving agent into region:  located at 10.0.0.11:9000
+</I>&gt;<i>
+</I>&gt;<i> *I d'ont understant why he is using the private IP*. On an other lines,
+</I>&gt;<i> he use the ExternalHostName.
+</I>&gt;<i>
+</I>&gt;<i> or
+</I>&gt;<i>
+</I>&gt;<i> 2012-08-24T09:18:27Z INFO: newview/lleventpoll.cpp(140) :
+</I>&gt;<i> LLEventPollResponder: LLEventPoll initialized with sender 10.0.0.11:9000
+</I>&gt;<i>
+</I>&gt;<i> The last lines befoer the error message
+</I>&gt;<i>
+</I>&gt;<i> 2012-08-24T09:18:31Z INFO: newview/llstartup.cpp(1735) : idle_startup:
+</I>&gt;<i> viewer: UserLoginLocationReply() Enabling 10.0.0.11:9000 with code
+</I>&gt;<i> 1940142022
+</I>&gt;<i> 2012-08-24T09:18:32Z INFO: llcommon/llprocess.cpp(692) :
+</I>&gt;<i> LLProcess::LLProcess: SLVoice (7733): launched cd
+</I>&gt;<i> /opt/Phoenix_Firestorm-Release_i686_4.1.1.28744:
+</I>&gt;<i> /opt/Phoenix_Firestorm-Release_i686_4.1.1.28744/bin/SLVoice -ll -1
+</I>&gt;<i> 2012-08-24T09:18:32Z WARNING: newview/lltexturefetch.cpp(1281) : doWork:
+</I>&gt;<i> Texture missing from server (404):
+</I>&gt;<i> <A HREF="http://os-reg.open-dsi.net:9000/CAPS/98b0e679-146d-4373-bfcd-94c669305532//?texture_id=cce0f112-878f-4586-a2e2-a8f104bba271">http://os-reg.open-dsi.net:9000/CAPS/98b0e679-146d-4373-bfcd-94c669305532//?texture_id=cce0f112-878f-4586-a2e2-a8f104bba271</A>
+</I>&gt;<i> 2012-08-24T09:18:52Z WARNING: newview/llstartup.cpp(2597) :
+</I>&gt;<i> use_circuit_callback: Backing up to login screen!
+</I>&gt;<i> 2012-08-24T09:18:52Z WARNING: newview/lltoastalertpanel.cpp(181) :
+</I>&gt;<i> LLToastAlertPanel::LLToastAlertPanel: Alert: Nous avons des difficult&#233;s &#224;
+</I>&gt;<i> vous connecter. Il y a peut-&#234;tre un probl&#232;me avec votre connexion Internet
+</I>&gt;<i> ou la Grille de Second Life.V&#233;rifiez votre connexion Internet et r&#233;essayez
+</I>&gt;<i> dans quelques minutes, cliquez sur Aide pour consulter la page Portail
+</I>&gt;<i> Assistance Second Life ou bien sur T&#233;l&#233;porter pour essayer d'aller chez
+</I>&gt;<i> vous.
+</I>&gt;<i> 2012-08-24T09:18:52Z INFO: newview/llworld.cpp(318) : removeRegion:
+</I>&gt;<i> Removing region 256000.0:256000.0
+</I>&gt;<i>
+</I>&gt;<i> The complete log is on this pastebin
+</I>&gt;<i> <A HREF="http://pastebin.com/UGA7iH1E">http://pastebin.com/UGA7iH1E</A>
+</I>&gt;<i>
+</I>&gt;<i> The region configuration
+</I>&gt;<i> <A HREF="http://pastebin.com/xe3mDYdV">http://pastebin.com/xe3mDYdV</A>
+</I>&gt;<i>
+</I>&gt;<i> I'm not sure that you will understand my poor english :-) .
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i>
+</I>&gt;<i> Philippe
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120824/a2f5addf/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120824/a2f5addf/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="010813.html">[Opensim-users] Unable to connect to a region
+</A></li>
+	<LI>Next message: <A HREF="010815.html">[Opensim-users] Unable to connect to a region
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#10814">[ date ]</a>
+              <a href="thread.html#10814">[ thread ]</a>
+              <a href="subject.html#10814">[ subject ]</a>
+              <a href="author.html#10814">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

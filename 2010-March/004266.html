@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Region Handshake error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20Handshake%20error&In-Reply-To=%3C21c101cad108%246c24e020%24446ea060%24%40net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004261.html">
+   <LINK REL="Next"  HREF="004269.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Region Handshake error</H1>
+    <B>Tedd Hansen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20Handshake%20error&In-Reply-To=%3C21c101cad108%246c24e020%24446ea060%24%40net%3E"
+       TITLE="[Opensim-users] Region Handshake error">tedd at konge.net
+       </A><BR>
+    <I>Wed Mar 31 21:29:03 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004261.html">[Opensim-users] Region Handshake error
+</A></li>
+        <LI>Next message: <A HREF="004269.html">[Opensim-users] Region Handshake error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4266">[ date ]</a>
+              <a href="thread.html#4266">[ thread ]</a>
+              <a href="subject.html#4266">[ subject ]</a>
+              <a href="author.html#4266">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+ 
+
+To explain a bit further. J
+
+This happens if the UDP communication between viewer doesn't work. The
+region (you have set up one, right?) contains an IP in its configuration,
+this must be the computers reachable IP.
+
+The region tells the viewer what IP to contact the region on. (it tells this
+via the grid)
+
+ 
+
+I guess there are 3 scenarios:
+
+1. Local viewer and server: 127.0.0.1 will work fine
+
+2. Viewer and server on same LAN: the IP of server will work fine
+
+3. Viewer on internet and server behind NAT/firewall: The NAT/Firewall must
+allow all ports in. The region config must contain the OFFICIAL IP, not the
+local IP.
+
+ 
+
+Regions can be set to listen to a specific IP to (internal IP iirc), this
+can be set to 0.0.0.0 in any case.
+
+ 
+
+&gt;<i>From <A HREF="http://opensimulator.org/wiki/Configuration">http://opensimulator.org/wiki/Configuration</A>
+</I>
+* Internal IP address - This should always be 0.0.0.0 (0.0.0.0 means &quot;listen
+for connections on any interface&quot;, basically a wildcard) if you want to
+access this server from the internet or another server on your internal
+network, this should be the IP address assigned to the OpenSim Server. You
+should also set up the server to Use a Static IP address, and not DHCP 
+
+* External host name - If you leave this at the default 'SYSTEMIP' then this
+will become the LAN network address of the machine (e.g. 192.168.1.2). This
+is fine if you are connecting only from within your LAN. If you want to
+connect to it from a client on the internet, this should be the External IP
+Address of your router. Fully Qualified Domain Names (FQDNs) should also
+work.
+
+ 
+
+Br, 
+
+ Tedd
+
+ 
+
+ 
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Stephen Devlin
+Sent: 31. mars 2010 13:11
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Region Handshake error
+
+ 
+
+There is nothing in the regions folder but a .svn file?
+
+ 
+
+Is this my problem?
+
+On Wed, Mar 31, 2010 at 12:06 PM, Tedd Hansen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tedd at konge.net</A>&gt; wrote:
+
+Hi
+
+ 
+
+Have you set correct IP for each region? (look in Regions-folder)
+
+The regions needs a reachable IP associated with them for clients to
+connect. J
+
+ 
+
+BR,
+
+ Tedd
+
+ 
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Stephen Devlin
+Sent: 31. mars 2010 12:08
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: [Opensim-users] Region Handshake error
+
+ 
+
+Hey guys,
+
+ 
+
+I'm very new to OpenSim and I am trying to implement a version in my school
+so I can do a research project for my MSc.
+
+ 
+
+I have OpenSim working and I can connect on the local machine but once I try
+to use another machine on the network the server accepts the user and sends
+a response to the client but then hangs on Waiting For Region Handshake.
+
+ 
+
+Can anyone help me on this?
+
+ 
+
+The machines are all networked and I put in the IP address of the server in
+the .ini file
+
+ 
+
+Many Thanks
+
+ 
+
+Stephen 
+
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100331/1128d55d/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100331/1128d55d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004261.html">[Opensim-users] Region Handshake error
+</A></li>
+	<LI>Next message: <A HREF="004269.html">[Opensim-users] Region Handshake error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4266">[ date ]</a>
+              <a href="thread.html#4266">[ thread ]</a>
+              <a href="subject.html#4266">[ subject ]</a>
+              <a href="author.html#4266">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

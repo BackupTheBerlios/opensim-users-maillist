@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] invalidCastException in LSL script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20invalidCastException%20in%20LSL%20script&In-Reply-To=%3CAANLkTimqlVRvusqiYactGjEB2dYGJwmNDrO2f0Wxkc6Z%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004496.html">
+   <LINK REL="Next"  HREF="004488.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] invalidCastException in LSL script</H1>
+    <B>&#3503;&#3538;&#3505;&#3540;&#3482; &#3501;&#3538;&#3517;&#3458;&#3484;</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20invalidCastException%20in%20LSL%20script&In-Reply-To=%3CAANLkTimqlVRvusqiYactGjEB2dYGJwmNDrO2f0Wxkc6Z%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] invalidCastException in LSL script">bbelekkaya at gmail.com
+       </A><BR>
+    <I>Fri May 14 12:05:00 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004496.html">[Opensim-users] remoteadmin help
+</A></li>
+        <LI>Next message: <A HREF="004488.html">[Opensim-users] OpenSim 0.6.9 released
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4487">[ date ]</a>
+              <a href="thread.html#4487">[ thread ]</a>
+              <a href="subject.html#4487">[ subject ]</a>
+              <a href="author.html#4487">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>When I run following lsl script, In Opensim server stop and display
+InvalidCastExeption in OpenSim.Region.ScriptEngine.Shared.Api.LSL_Api
+
+default &lt;<A HREF="http://wiki.secondlife.com/index.php?title=default">http://wiki.secondlife.com/index.php?title=default</A>&gt;
+{
+    state_entry &lt;<A HREF="http://wiki.secondlife.com/index.php?title=state_entry">http://wiki.secondlife.com/index.php?title=state_entry</A>&gt;()
+    {
+        list &lt;<A HREF="http://wiki.secondlife.com/index.php?title=list">http://wiki.secondlife.com/index.php?title=list</A>&gt; my_list
+= [&quot;a&quot;, &quot;0xFF&quot;, &quot;0xFF.FF&quot;, &quot;1.0e3&quot;, 1, 2.0, &lt;1,2,3&gt;, &lt;1,2,3,4&gt;,
+llGetOwner &lt;<A HREF="http://wiki.secondlife.com/index.php?title=llGetOwner">http://wiki.secondlife.com/index.php?title=llGetOwner</A>&gt;()];
+        integer &lt;<A HREF="http://wiki.secondlife.com/index.php?title=integer">http://wiki.secondlife.com/index.php?title=integer</A>&gt; i = 0;
+        integer &lt;<A HREF="http://wiki.secondlife.com/index.php?title=integer">http://wiki.secondlife.com/index.php?title=integer</A>&gt;
+end = llGetListLength
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llGetListLength">http://wiki.secondlife.com/index.php?title=llGetListLength</A>&gt;(my_list);
+        for &lt;<A HREF="http://wiki.secondlife.com/index.php?title=for">http://wiki.secondlife.com/index.php?title=for</A>&gt; (; i&lt;end; ++i)
+        {
+            llOwnerSay
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llOwnerSay">http://wiki.secondlife.com/index.php?title=llOwnerSay</A>&gt;(&quot;string=&quot; +
+llList2String &lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2String">http://wiki.secondlife.com/index.php?title=llList2String</A>&gt;(my_list,i)
+                        + &quot;\n   integer=&quot; + (string
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)llList2Integer
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2Integer">http://wiki.secondlife.com/index.php?title=llList2Integer</A>&gt;(my_list,i)
++ &quot; OR &quot; +(string
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)((integer
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=integer">http://wiki.secondlife.com/index.php?title=integer</A>&gt;)llList2String
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2String">http://wiki.secondlife.com/index.php?title=llList2String</A>&gt;(my_list,i))
+                        + &quot;\n   float=&quot; + (string
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)llList2Float
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2Float">http://wiki.secondlife.com/index.php?title=llList2Float</A>&gt;(my_list,i) +
+&quot; OR &quot; +(string
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)((float
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=float">http://wiki.secondlife.com/index.php?title=float</A>&gt;)llList2String
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2String">http://wiki.secondlife.com/index.php?title=llList2String</A>&gt;(my_list,i))
+                        + &quot;\n   vector=&quot; + (string
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)llList2Vector
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2Vector">http://wiki.secondlife.com/index.php?title=llList2Vector</A>&gt;(my_list,i)
++ &quot; OR &quot; +(string
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)((vector
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=vector">http://wiki.secondlife.com/index.php?title=vector</A>&gt;)llList2String
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2String">http://wiki.secondlife.com/index.php?title=llList2String</A>&gt;(my_list,i))
+                        + &quot;\n   rot=&quot; + (string
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)llList2Rot
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2Rot">http://wiki.secondlife.com/index.php?title=llList2Rot</A>&gt;(my_list,i) + &quot;
+OR &quot; +(string &lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)((rotation
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=rotation">http://wiki.secondlife.com/index.php?title=rotation</A>&gt;)llList2String
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2String">http://wiki.secondlife.com/index.php?title=llList2String</A>&gt;(my_list,i))
+                        + &quot;\n   key=&quot; + (string
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)llList2Key
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2Key">http://wiki.secondlife.com/index.php?title=llList2Key</A>&gt;(my_list,i) + &quot;
+OR &quot; +(string &lt;<A HREF="http://wiki.secondlife.com/index.php?title=string">http://wiki.secondlife.com/index.php?title=string</A>&gt;)((key
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=key">http://wiki.secondlife.com/index.php?title=key</A>&gt;)llList2String
+&lt;<A HREF="http://wiki.secondlife.com/index.php?title=llList2String">http://wiki.secondlife.com/index.php?title=llList2String</A>&gt;(my_list,i))
+);
+        }
+    }
+}
+
+
+
+-- 
+Dinuka Thilanga
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100514/697c84c8/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100514/697c84c8/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004496.html">[Opensim-users] remoteadmin help
+</A></li>
+	<LI>Next message: <A HREF="004488.html">[Opensim-users] OpenSim 0.6.9 released
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4487">[ date ]</a>
+              <a href="thread.html#4487">[ thread ]</a>
+              <a href="subject.html#4487">[ subject ]</a>
+              <a href="author.html#4487">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

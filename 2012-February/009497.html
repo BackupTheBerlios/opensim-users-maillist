@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Wear Your Vehicle Script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Wear%20Your%20Vehicle%20Script&In-Reply-To=%3CCAEUbLkw6GVDtNZosRD4vSm8ZuvbFcZ%2BAaLzMpiGXY5zGY_0yOg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009496.html">
+   <LINK REL="Next"  HREF="009500.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Wear Your Vehicle Script</H1>
+    <B>Kay McLennan</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Wear%20Your%20Vehicle%20Script&In-Reply-To=%3CCAEUbLkw6GVDtNZosRD4vSm8ZuvbFcZ%2BAaLzMpiGXY5zGY_0yOg%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Wear Your Vehicle Script">mclennan.kay at gmail.com
+       </A><BR>
+    <I>Sun Feb 26 16:57:44 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009496.html">[Opensim-users] HELP: OpenSim Crashing
+</A></li>
+        <LI>Next message: <A HREF="009500.html">[Opensim-users] Wear Your Vehicle Script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9497">[ date ]</a>
+              <a href="thread.html#9497">[ thread ]</a>
+              <a href="subject.html#9497">[ subject ]</a>
+              <a href="author.html#9497">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>To the group discussing the &quot;Does OpenSim Fully Support Linden [Vehicle]
+Scripts? (read:  Han, Garmin, InuYasha, Wade, R.Gunther, Justin, Karen,
+M.E., etc.),
+
+I found a splendid &quot;Wear your vehicle&quot; script that works in the OpenSim--
+see below.  Further, when the vehicle is worn in concert with an avatar
+flying, the script works for airplanes too (in the OpenSim)!
+
+Best,
+Kay
+
+
+// Put this script in an object you wish to wear to appear to ride it,
+include any animation for the AV to assume, in the Root Prim's contents.
+First Attach to Pelvis, then you may just wear.
+string SitAO = &quot;DriveCar2&quot;;// Replace sit with the animation's name you
+include in object contents
+
+default
+{
+    attach(key id)
+    {
+        if(id)//tests if it is a valid key and not NULL_KEY and gets
+permission to read the contols keys and start animation
+        {
+            llRequestPermissions(llGetOwner(), PERMISSION_TRIGGER_ANIMATION
+|<i> PERMISSION_TAKE_CONTROLS);
+</I>            llStartAnimation(SitAO);//animation name is put here
+            llTakeControls(CONTROL_FWD |CONTROL_BACK |CONTROL_LEFT
+|<i>CONTROL_RIGHT |CONTROL_ROT_LEFT |CONTROL_ROT_RIGHT |CONTROL_UP
+</I>|<i>CONTROL_DOWN |CONTROL_LBUTTON |CONTROL_ML_LBUTTON |0, TRUE, TRUE);//Takes
+</I>controls but passes them on to the Avatar too
+            llPlaySound(&quot;Sportscarstarts&quot;,1);
+            llSleep(1);
+            llLoopSound(&quot;Sportscaridle&quot;,.75);
+        }
+        else
+        {
+            llStopAnimation(SitAO);//animation name is put here too
+        }
+    }
+
+
+    control(key id, integer level, integer edge)//Event triggered when any
+key is pressed or relased
+    {
+        integer start = level &amp; edge;//define start as key was pressed
+        integer end = ~level &amp; edge;//define end as key was released
+        integer held = level &amp; ~edge;//define key is being held down
+        integer untouched = ~(level | edge);//define that no keys are
+pressed
+
+           if(start &amp; CONTROL_FWD)
+           {
+                  //llSay(0,&quot;Fwd Key was pressed&quot;);
+            llMessageLinked(LINK_SET, 0, &quot;RF&quot;, &quot;&quot;);//sends messgage to all
+other scripts RF=Right Forward
+            llMessageLinked(LINK_SET, 0, &quot;LF&quot;, &quot;&quot;);//sends messgage to all
+other scripts LF=Left Forward
+            llMessageLinked(LINK_SET, 0, &quot;SF&quot;, &quot;&quot;);//sends messgage to all
+other scripts SF=Spin Forward
+            llLoopSound(&quot;Sportscardriving&quot;,1);//Driving sound
+           }
+
+            if(end &amp; CONTROL_FWD)
+           {
+                  //llSay(0,&quot;Fwd Key was released&quot;);
+            llMessageLinked(LINK_SET, 0, &quot;RS&quot;, &quot;&quot;);//sends messgage to all
+other scripts  RS=Right Stop
+            llMessageLinked(LINK_SET, 0, &quot;LS&quot;, &quot;&quot;);//sends messgage to all
+other scripts  LS=Left Stop
+            llMessageLinked(LINK_SET, 0, &quot;SS&quot;, &quot;&quot;);//sends messgage to all
+other scripts SF=Spin Stop
+            llLoopSound(&quot;Sportscaridle&quot;,.5);//Idle Sound
+           }
+
+
+           if(start &amp; CONTROL_BACK)
+           {
+            llMessageLinked(LINK_SET, 0, &quot;RR&quot;, &quot;&quot;);//sends messgage to all
+other scripts  RS=Right Reverse
+            llMessageLinked(LINK_SET, 0, &quot;LR&quot;, &quot;&quot;);//sends messgage to all
+other scripts  LS=Left Reverse
+            llMessageLinked(LINK_SET, 0, &quot;SR&quot;, &quot;&quot;);//sends messgage to all
+other scripts SF=Spin Reverse
+           }
+           if(end &amp; CONTROL_BACK)
+           {
+            llMessageLinked(LINK_SET, 0, &quot;RS&quot;, &quot;&quot;);//sends messgage to all
+other scripts  RS=Right Stop
+            llMessageLinked(LINK_SET, 0, &quot;LS&quot;, &quot;&quot;);//sends messgage to all
+other scripts  LS=Left Stop
+            llMessageLinked(LINK_SET, 0, &quot;SS&quot;, &quot;&quot;);//sends messgage to all
+other scripts SF=Spin Stop
+           }
+
+           if((start &amp; CONTROL_RIGHT) | (CONTROL_ROT_RIGHT == (start)))
+           {
+            llMessageLinked(LINK_SET, 0, &quot;TR&quot;, &quot;&quot;);//send TR to front tires
+            llMessageLinked(LINK_SET, 0, &quot;LF&quot;, &quot;&quot;);//sends messgage to all
+other scripts  LS=Left Forward
+           }
+            if((end &amp; CONTROL_RIGHT) | (CONTROL_ROT_RIGHT == (end)))
+           {
+                       if(held &amp; CONTROL_FWD)//If Forward is held don't stop
+                       {}
+                       else
+                        {
+                        llMessageLinked(LINK_SET, 0, &quot;LS&quot;, &quot;&quot;);//sends
+messgage to all other scripts  LS=Left Stop
+                        }
+            llMessageLinked(LINK_SET, 0, &quot;TS&quot;, &quot;&quot;);//Straighten tires when
+key released
+           }
+
+           if((start &amp; CONTROL_LEFT) | (CONTROL_ROT_LEFT == (start)))
+           {
+            llMessageLinked(LINK_SET, 0, &quot;TL&quot;, &quot;&quot;);//send TL to front tires
+            llMessageLinked(LINK_SET, 0, &quot;RF&quot;, &quot;&quot;);//sends messgage to all
+other scripts  RF=Right Forward
+            }
+           if((end &amp; CONTROL_LEFT) | (CONTROL_ROT_LEFT == (end)))
+           {
+                       if(held &amp; CONTROL_FWD)//If Forward is held don't stop
+                       {}
+                       else
+                       {
+                        llMessageLinked(LINK_SET, 0, &quot;RS&quot;, &quot;&quot;);//sends
+messgage to all other scripts  RS=Right Stop
+                        }
+            llMessageLinked(LINK_SET, 0, &quot;TS&quot;, &quot;&quot;);//Straighten tires when
+key released
+            }
+
+            // for flying
+           if(level &amp; CONTROL_UP)
+           {
+                  //llSay(0,&quot;Page Up&quot;);
+           }
+
+           if(level &amp; CONTROL_DOWN)
+           {
+                  //llSay(0,&quot;Page Down&quot;);
+           }
+            // End of
+FLying
+
+    }
+
+
+
+
+
+
+}
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120226/adf95b95/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120226/adf95b95/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009496.html">[Opensim-users] HELP: OpenSim Crashing
+</A></li>
+	<LI>Next message: <A HREF="009500.html">[Opensim-users] Wear Your Vehicle Script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9497">[ date ]</a>
+              <a href="thread.html#9497">[ thread ]</a>
+              <a href="subject.html#9497">[ subject ]</a>
+              <a href="author.html#9497">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

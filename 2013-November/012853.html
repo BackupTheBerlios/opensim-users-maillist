@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] [scripting] A llCastRay-based path finder
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bscripting%5D%20A%20llCastRay-based%20path%20finder&In-Reply-To=%3CCAEjPjWgE_cZd3YxKyJKZMXMQUepRFXfOcwF8tgVmuf74Hii7Ow%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012852.html">
+   <LINK REL="Next"  HREF="012854.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] [scripting] A llCastRay-based path finder</H1>
+    <B>Vegaslon</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20%5Bscripting%5D%20A%20llCastRay-based%20path%20finder&In-Reply-To=%3CCAEjPjWgE_cZd3YxKyJKZMXMQUepRFXfOcwF8tgVmuf74Hii7Ow%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] [scripting] A llCastRay-based path finder">vegaslon at gmail.com
+       </A><BR>
+    <I>Tue Nov 19 20:57:08 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012852.html">[Opensim-users] [scripting] A llCastRay-based path finder
+</A></li>
+        <LI>Next message: <A HREF="012854.html">[Opensim-users] Help with Hypergrid TP's please.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12853">[ date ]</a>
+              <a href="thread.html#12853">[ thread ]</a>
+              <a href="subject.html#12853">[ subject ]</a>
+              <a href="author.html#12853">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This a very nice script, but be adviced that llcastray can only sense a
+objects bounding box and so will get what apears to be false hits if you
+put a path through a hollowed prim and will not sense the walls inside the
+hollow.
+On Nov 19, 2013 12:53 PM, &quot;Jeff Kelley&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at pescadoo.net</A>&gt; wrote:
+
+&gt;<i> As you may have noticed, since 0.7.6 llCastRay is now functional. We can
+</I>&gt;<i> think about helping our NPC to find their way in a closed environment.
+</I>&gt;<i>
+</I>&gt;<i> This method relies on marker prims, or beacons, defining waypoints. The
+</I>&gt;<i> following script computes the connexity matrix between a set of waypoints.
+</I>&gt;<i> A one in [ i,j ] means there is a direct path from i to j.
+</I>&gt;<i>
+</I>&gt;<i> Build some walls on a flat ground. At corners and intersections, lay a
+</I>&gt;<i> number a thin prims named wp1, wp2 and so on.  Their altitude should be
+</I>&gt;<i> higher than or equal to the wall's base, so that rays casted between two
+</I>&gt;<i> waypoints will hit the walls. Here is a picture of my test rig:
+</I>&gt;<i> <A HREF="http://www.pescadoo.net/tmp/NPC_maze.png">http://www.pescadoo.net/tmp/NPC_maze.png</A>
+</I>&gt;<i>
+</I>&gt;<i> It is advised to allow osSetPrimitiveParams. We'll get a nice demo for the
+</I>&gt;<i> price. Let's now browse the code.
+</I>&gt;<i>
+</I>&gt;<i> First, we sense the waypoints. We iterate on llSense, incrementing the
+</I>&gt;<i> index until we get a no_sensor event. The waypoints names, locations and
+</I>&gt;<i> keys are stored in a strided list.
+</I>&gt;<i>
+</I>&gt;<i> Then, we compute the matrix calling llCastRay for each couple of
+</I>&gt;<i> waypoints. We analyse the hits and declare the two waypoints are connex if
+</I>&gt;<i> we hit any object whose name IS NOT &quot;wp*&quot;. This rule may be refined (using
+</I>&gt;<i> the object's height, volume, or some more sophisticated rule depending on
+</I>&gt;<i> the environment, a rug should no count as a wall). As the matrix is
+</I>&gt;<i> symmetric, we compute only a half-matrix and fill the transposed cells with
+</I>&gt;<i> the same value. We also fill the diagonal with ones. The matrix is stored
+</I>&gt;<i> as a string a '0' and '1', with pseudo-array accessors.
+</I>&gt;<i>
+</I>&gt;<i> Finally, we enter a listening state. Saying &quot;wp3&quot; will highlight waypoint
+</I>&gt;<i> 3 in blue, and all connex waypoints in green (that's why we need
+</I>&gt;<i> osSetPrimitiveParams).That's the point your NPC can reach without bumping
+</I>&gt;<i> into the walls. Unreachable waypoints are colored red.
+</I>&gt;<i>
+</I>&gt;<i> The script stops here for today. You guess it, the next step is to find a
+</I>&gt;<i> path from waypoint A to waypoint B. A classical graph theory exercise, the
+</I>&gt;<i> &quot; transitive closure&quot;. I assume you know how to make a NPC move from point
+</I>&gt;<i> A to point B.
+</I>&gt;<i>
+</I>&gt;<i> Have fun!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> DEBUG (string msg) { llOwnerSay (msg); }
+</I>&gt;<i> PRINT (string msg) { llSay (0, msg); }
+</I>&gt;<i>
+</I>&gt;<i> //
+</I>&gt;<i> // Waypoints list and accessors
+</I>&gt;<i> //
+</I>&gt;<i>
+</I>&gt;<i> list WayPoints; // Strided list (name, location, key)
+</I>&gt;<i>
+</I>&gt;<i> string WPnam (integer i) { return llList2String (WayPoints, 3*i+0); }
+</I>&gt;<i> vector WPLoc (integer i) { return llList2String (WayPoints, 3*i+1); }
+</I>&gt;<i> key    WPKey (integer i) { return llList2Key    (WayPoints, 3*i+2); }
+</I>&gt;<i> integer WPnumber ()      { return llGetListLength (WayPoints) / 3;  }
+</I>&gt;<i>
+</I>&gt;<i> integer FindWP (string name) {
+</I>&gt;<i>     integer i = llListFindList (WayPoints, [name]);
+</I>&gt;<i>     if (i== -1) return i;
+</I>&gt;<i>     else        return i/3;
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> //
+</I>&gt;<i> // Connexity matrix and accessors
+</I>&gt;<i> //
+</I>&gt;<i>
+</I>&gt;<i> string Matrix; // Matrix NxN of booleans implemented as string of 0/1
+</I>&gt;<i>
+</I>&gt;<i> MatrixNew (integer size) {
+</I>&gt;<i>     integer n=0; for (n=0; n&lt;size*size; n++)
+</I>&gt;<i>         Matrix += &quot;0&quot;;
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> MatrixSet (integer i, integer j, integer value) {
+</I>&gt;<i>     integer size = (integer)llSqrt(llStringLength (Matrix));
+</I>&gt;<i>     integer index = i*size+j;
+</I>&gt;<i>     Matrix = llDeleteSubString (Matrix, index, index);
+</I>&gt;<i>     Matrix = llInsertString (Matrix, index, (string)value);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> integer MatrixGet (integer i, integer j) {
+</I>&gt;<i>     integer size = (integer)llSqrt(llStringLength (Matrix));
+</I>&gt;<i>     integer index = i*size+j;
+</I>&gt;<i>     return (integer)llGetSubString (Matrix, index, index);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> MatrixPrint () {
+</I>&gt;<i>     integer size = (integer)llSqrt(llStringLength (Matrix));
+</I>&gt;<i>     integer n=0; for (n=0; n&lt;size; n++) {
+</I>&gt;<i>         PRINT (llGetSubString(Matrix, n*size, n*size+size-1));
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> //
+</I>&gt;<i> // Colors, osFunctions to change color by ID
+</I>&gt;<i> //
+</I>&gt;<i>
+</I>&gt;<i> vector RED      = &lt;1.0, 0.0, 0.0&gt;;
+</I>&gt;<i> vector GREEN    = &lt;0.0, 1.0, 0.0&gt;;
+</I>&gt;<i> vector BLUE     = &lt;0.0, 0.0, 1.0&gt;;
+</I>&gt;<i> vector BLACK    = &lt;0.0, 0.0, 0.0&gt;;
+</I>&gt;<i> vector GREY     = &lt;0.5, 0.5, 0.5&gt;;
+</I>&gt;<i> vector WHITE    = &lt;1.0, 1.0, 1.0&gt;;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> SetIDColor (key id, vector color) {
+</I>&gt;<i>     osSetPrimitiveParams(id, [PRIM_COLOR, ALL_SIDES, color, 1.0]);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> BlinkIDColor (key id, vector color) {
+</I>&gt;<i>     integer i; for (i=0; i&lt;2; i++) {
+</I>&gt;<i>         osSetPrimitiveParams(id, [PRIM_COLOR, ALL_SIDES, color, 1.0]);
+</I>&gt;<i> llSleep (0.1);
+</I>&gt;<i>         osSetPrimitiveParams(id, [PRIM_COLOR, ALL_SIDES, WHITE, 1.0]);
+</I>&gt;<i> llSleep (0.1);
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> ResetAll () {
+</I>&gt;<i>     integer i; for (i=0; i&lt;WPnumber(); i++)
+</I>&gt;<i>         SetIDColor (WPKey(i), GREY);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> //
+</I>&gt;<i> // Waypoints sensing
+</I>&gt;<i> //
+</I>&gt;<i>
+</I>&gt;<i> integer wpindex;    // The current waypoint index
+</I>&gt;<i>
+</I>&gt;<i> SenseNext () {
+</I>&gt;<i>     string target = &quot;wp&quot;+(string)(++wpindex);
+</I>&gt;<i>     llSensor (target, &quot;&quot;, PASSIVE, 200.0, PI);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> SenseDone (string theNam, key theKey, vector theLoc) {
+</I>&gt;<i>     if (theKey == NULL_KEY) state deux;
+</I>&gt;<i>
+</I>&gt;<i>     DEBUG (theNam +&quot; &quot;+(string)theLoc);
+</I>&gt;<i>     WayPoints += [ theNam, theLoc, theKey ];
+</I>&gt;<i>     SenseNext();
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> string Key2Name (key id) {
+</I>&gt;<i>     list dtls = llGetObjectDetails (id, [OBJECT_NAME]);
+</I>&gt;<i>     return llList2String (dtls, 0);
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> float Key2Height (key id) {
+</I>&gt;<i>     list dtls = llGetObjectDetails (id, [OBJECT_POS]);
+</I>&gt;<i>     vector pos = llList2Vector (dtls, 0);
+</I>&gt;<i>     return pos.z;
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> //
+</I>&gt;<i> // Connexity test
+</I>&gt;<i> //
+</I>&gt;<i>
+</I>&gt;<i> integer TestPath (integer wp1, integer wp2) {
+</I>&gt;<i>     string nam1 = WPnam(wp1); vector loc1 = WPLoc(wp1); key key1 = WPKey
+</I>&gt;<i> (wp1);
+</I>&gt;<i>     string nam2 = WPnam(wp2); vector loc2 = WPLoc(wp2); key key2 = WPKey
+</I>&gt;<i> (wp2);
+</I>&gt;<i>
+</I>&gt;<i>     list hits = llCastRay (loc1, loc2, [RC_MAX_HITS,5]);
+</I>&gt;<i>     integer found  = (llGetListLength(hits)-1) / 2;
+</I>&gt;<i>     integer status = llList2Integer(hits, -1);
+</I>&gt;<i>
+</I>&gt;<i>     DEBUG (&quot;&quot;);
+</I>&gt;<i>     DEBUG (&quot;CastRay from &quot; +nam1 +&quot; to &quot; +nam2 +&quot;, Hits/Status : &quot;
+</I>&gt;<i>                 +(string)found +&quot; &quot; +(string)status);
+</I>&gt;<i>
+</I>&gt;<i>     integer numocclu = 0;
+</I>&gt;<i>     integer i; for (i=0; i&lt;found; i++) {
+</I>&gt;<i>         key    hitKey = llList2Key    (hits, 2*i+0);
+</I>&gt;<i>         vector hitLoc = llList2Vector (hits, 2*i+1);
+</I>&gt;<i>         string hitNam = Key2Name (hitKey);
+</I>&gt;<i>         float  hitHei = Key2Height (hitKey);
+</I>&gt;<i>         float  hitDis = llVecDist (hitLoc, loc1);
+</I>&gt;<i>
+</I>&gt;<i>         // Test d'occlusion. Ici, on se base sur le nom
+</I>&gt;<i>         // On peut se baser sur la hauteur mais ne pas
+</I>&gt;<i>         // utiliser hitLoc qui est le point d'interception
+</I>&gt;<i>
+</I>&gt;<i>         integer occlusion = (llGetSubString(hitNam,0,1) != &quot;wp&quot;);
+</I>&gt;<i>         DEBUG (&quot;[&quot;+(string)i+&quot;] &quot;+hitNam+&quot; &quot;+(string)hitHei+&quot;
+</I>&gt;<i> &quot;+(string)occlusion);
+</I>&gt;<i>         if (occlusion) ++numocclu;
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     // Waypoints are connex if zero occlusion
+</I>&gt;<i>
+</I>&gt;<i>     integer connex = (numocclu == 0);
+</I>&gt;<i>     DEBUG (nam1 +&quot; to &quot; +nam2 +&quot; : &quot;+(string)connex);
+</I>&gt;<i>     return connex;
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> //
+</I>&gt;<i> // Highlight connex waypoints
+</I>&gt;<i> //
+</I>&gt;<i>
+</I>&gt;<i> ShowNeighbours (integer wp1) {
+</I>&gt;<i>     ResetAll ();
+</I>&gt;<i>
+</I>&gt;<i>     key key1 = WPKey (wp1);
+</I>&gt;<i>     SetIDColor (key1, BLUE);
+</I>&gt;<i>
+</I>&gt;<i>     integer wp2;  for (wp2=0; wp2&lt;WPnumber(); wp2++) {
+</I>&gt;<i>         integer reach = MatrixGet (wp1, wp2);
+</I>&gt;<i>         key key2 = WPKey (wp2);
+</I>&gt;<i>         if (wp1 != wp2)
+</I>&gt;<i>             if (reach)  SetIDColor (key2, GREEN);
+</I>&gt;<i>             else            SetIDColor (key2, RED);
+</I>&gt;<i>     }
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ///////////////////////////////////////////////////////
+</I>&gt;<i> // Step 1 : sense all waypoints and make a structure
+</I>&gt;<i> ///////////////////////////////////////////////////////
+</I>&gt;<i>
+</I>&gt;<i> default {
+</I>&gt;<i>
+</I>&gt;<i>     state_entry() {
+</I>&gt;<i>         PRINT (&quot;Sensing waypoints&quot;);
+</I>&gt;<i>         SenseNext();
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     sensor(integer num) {
+</I>&gt;<i>         key    hisKey = llDetectedKey  (0);
+</I>&gt;<i>         vector hisPos = llDetectedPos  (0);
+</I>&gt;<i>         string hisNam = llDetectedName (0);
+</I>&gt;<i>         SenseDone (hisNam, hisKey, hisPos);
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     no_sensor() {
+</I>&gt;<i>         SenseDone (&quot;&quot;, NULL_KEY, ZERO_VECTOR);
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     state_exit() {
+</I>&gt;<i>         PRINT ((string)WPnumber()+&quot; found&quot;);
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> ///////////////////////////////////////////////////////
+</I>&gt;<i> // Step 2 : compute the connexity matrix
+</I>&gt;<i> ///////////////////////////////////////////////////////
+</I>&gt;<i>
+</I>&gt;<i> state deux {
+</I>&gt;<i>
+</I>&gt;<i>     state_entry() {
+</I>&gt;<i>         PRINT (&quot;Computing Matrix&quot;);
+</I>&gt;<i>         MatrixNew (WPnumber());
+</I>&gt;<i>
+</I>&gt;<i>         integer wp1; integer wp2;
+</I>&gt;<i>         for (wp1=0; wp1&lt;WPnumber(); wp1++)
+</I>&gt;<i>             for (wp2=wp1+1; wp2&lt;WPnumber(); wp2++) {
+</I>&gt;<i>                 integer reach = TestPath (wp1, wp2);
+</I>&gt;<i>                 MatrixSet (wp1, wp2, reach);
+</I>&gt;<i>                 MatrixSet (wp2, wp1, reach);
+</I>&gt;<i>                 MatrixSet (wp1, wp1, TRUE);
+</I>&gt;<i>         }
+</I>&gt;<i>
+</I>&gt;<i>         MatrixPrint ();
+</I>&gt;<i>         state trois;
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> ///////////////////////////////////////////////////////
+</I>&gt;<i> // Step 3 : listen for waypoint and highlight result
+</I>&gt;<i> ///////////////////////////////////////////////////////
+</I>&gt;<i>
+</I>&gt;<i> state trois {
+</I>&gt;<i>
+</I>&gt;<i>     state_entry() {
+</I>&gt;<i>         PRINT (&quot;Listening to commands&quot;);
+</I>&gt;<i>         llListen (0, &quot;&quot;, llGetOwner(), &quot;&quot;);
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i>     listen (integer channel, string name, key id, string message) {
+</I>&gt;<i>         integer wp = FindWP (message);
+</I>&gt;<i>         if (wp != -1) ShowNeighbours (wp);
+</I>&gt;<i>     }
+</I>&gt;<i>
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20131119/069efa35/attachment-0001.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20131119/069efa35/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012852.html">[Opensim-users] [scripting] A llCastRay-based path finder
+</A></li>
+	<LI>Next message: <A HREF="012854.html">[Opensim-users] Help with Hypergrid TP's please.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12853">[ date ]</a>
+              <a href="thread.html#12853">[ thread ]</a>
+              <a href="subject.html#12853">[ subject ]</a>
+              <a href="author.html#12853">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim PayPal Money Module
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20PayPal%20Money%20Module&In-Reply-To=%3C695109.92047.qm%40web45616.mail.sp1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003112.html">
+   <LINK REL="Next"  HREF="003114.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim PayPal Money Module</H1>
+    <B>Snoopy Pfeffer</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20PayPal%20Money%20Module&In-Reply-To=%3C695109.92047.qm%40web45616.mail.sp1.yahoo.com%3E"
+       TITLE="[Opensim-users] OpenSim PayPal Money Module">snoopy.pfeffer at yahoo.com
+       </A><BR>
+    <I>Sat Nov 14 17:57:25 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003112.html">[Opensim-users] OpenSim PayPal Money Module
+</A></li>
+        <LI>Next message: <A HREF="003114.html">[Opensim-users]  Parcel Archiver?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3113">[ date ]</a>
+              <a href="thread.html#3113">[ thread ]</a>
+              <a href="subject.html#3113">[ subject ]</a>
+              <a href="author.html#3113">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have changed the name of the git repository to &quot;Mod-PayPal&quot;.
+
+The new url is:  <A HREF="http://github.com/SnoopyPfeffer/Mod-PayPal">http://github.com/SnoopyPfeffer/Mod-PayPal</A>
+
+Snoopy
+
+
+
+
+________________________________
+From: &quot;Frisby, Adam&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">adam at deepthink.com.au</A>&gt;
+To: &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Sent: Sat, November 14, 2009 12:13:32 PM
+Subject: Re: [Opensim-users] OpenSim PayPal Money Module
+
+ 
+I&#8217;m really happy to see these improvements being done &#8211; and hopefully
+I can incorporate them back into the original version once they have been
+properly tested.
+ 
+I do have one minor request though &#8211; could you rename this version
+to avoid any confusion between the two? (plus I&#8217;ve got some trademark concerns
+about the deepthink name being used by an outside group)
+ 
+Thanks!,
+ 
+Adam
+ 
+From:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of Snoopy
+Pfeffer
+Sent: Friday, 13 November 2009 9:25 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: [Opensim-users] OpenSim PayPal Money Module
+ 
+Hello everyone
+
+Everybody interested, can have a look at the git branch of Adam Frisby's PayPal
+money module, that I have created:
+    <A HREF="http://github.com/SnoopyPfeffer/DTL-PayPal">http://github.com/SnoopyPfeffer/DTL-PayPal</A>
+
+I have implemented the following functional extensions and bug fixes:
+- User2User pay, User2Object pay, User2Object purchases and User2Land purchases
+work properly, now
+- User2User payments are confirmed with instant messages to senders and
+receivers
+- Support for group owned objects and land can be enabled (default: off);
+requirement: PayPal email accounts have to be defined per group
+- Underscores in email addresses do not cause error messages during opensim
+startup anymore
+- Object and land purchases for US$ 0 do not initiate a PayPal transaction
+anymore
+- Object purchases properly transfer the purchased contents to the buyer, now
+- User email addresses are loaded from the local ini file; invalid email
+adresses are ignored, but loading is not aborted anymore
+- User email addresses can also be fetched from the Users grid service, if that
+feature is enabled (default: off); fetched email addresses are cached by the
+region server until region restart; local email addresses always take
+precedence, to ensure an acceptable level of security
+- Locally defined user email addresses should be used for all users that
+receive bigger amounts of money within a region (i.e. shop owners); the reason
+is the much higher security, if these email addresses are not fetched from the
+Users grid service; beside that it is possible to locally use a special PalPal
+micropayment account for all shop transactions to save fees, instead of a
+standard PayPal account used elsewhere
+- Group email addresses can be defined per group UUID in the local ini file to
+support group owned objects and land as mentioned before
+- Non existent user or group email addresses are handled by showing warning
+messages, instead of error messages for crashed code
+- Added start and success log messages for all kinds of PayPal transactions
+- Rounding problems made it impossible to pay certain amounts (like US$ 1.23);
+now all amounts work and are displayed nicely
+
+Interesting findings:
+- PayPal can send money to all email accounts, even to email accounts not
+registered at PayPal yet; thus it is not necessary to handle that case
+- PayPal micropayment accounts are not available in all countries worldwide
+
+The following still needs to be done:
+- Web pages that are shown after successful or cancelled PayPal transactions
+- Locking for PayPal transactions while buying land or original objects
+- Events or functions that allow to lock vendors while a PayPal transaction is
+in progress
+- Too small amounts that do not cover the PayPal transaction fees produce a misleading error message on the PayPal web page; maybe
+it would be good to be able to define a minimum amount globally and/or per
+email address to avoid that
+- It would be good if a scripter using llGiveMoney gets a warning message, that
+this function is not supported by the PayPal money module
+- User2User payments are confirmed with instant messages to the sender and
+receiver of money, but only if these users are online at that time; maybe it is
+possible to improve that, so that even users offline get such confirmation
+messages as stored offline messages
+
+Installation of the PayPal money module:
+- Install the addon-modules/dtl-paypal under OpenSim/Region/OptionalModules/
+- Install the files for bin dir in the OpenSim bin folder
+- Add the addtional config settings in config-include in bin/OpenSim.ini
+- After that compile OpenSim
+
+Snoopy
+
+
+      
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091114/5f74a7fd/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091114/5f74a7fd/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003112.html">[Opensim-users] OpenSim PayPal Money Module
+</A></li>
+	<LI>Next message: <A HREF="003114.html">[Opensim-users]  Parcel Archiver?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3113">[ date ]</a>
+              <a href="thread.html#3113">[ thread ]</a>
+              <a href="subject.html#3113">[ subject ]</a>
+              <a href="author.html#3113">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Multi-core Mac
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multi-core%20Mac&In-Reply-To=%3C6b9359640906191348k1fd918c2n93bd85bc1208a151%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002305.html">
+   <LINK REL="Next"  HREF="002296.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Multi-core Mac</H1>
+    <B>Kyle Hamilton</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Multi-core%20Mac&In-Reply-To=%3C6b9359640906191348k1fd918c2n93bd85bc1208a151%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Multi-core Mac">aerowolf at gmail.com
+       </A><BR>
+    <I>Fri Jun 19 22:48:01 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002305.html">[Opensim-users] Multi-core Mac
+</A></li>
+        <LI>Next message: <A HREF="002296.html">[Opensim-users] About OpenSim Server Cluster
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2306">[ date ]</a>
+              <a href="thread.html#2306">[ thread ]</a>
+              <a href="subject.html#2306">[ subject ]</a>
+              <a href="author.html#2306">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay.  I think I've figured this out.  If you have MacPorts (which I
+have to, since I work on software other than just OpenSim -- I need
+pcre and db4, among others) you need to either set your
+PKG_CONFIG_PATH to everything that it currently contains
+(conveniently, there's no pkgpath command to function like manpath :P)
+along with the Mono framework configs, or you need to copy the files
+in the Mono framework to the config paths that MacPorts is supplied
+with.
+
+Either way, it does work once you clear that problem up.
+
+-Kyle H
+
+On Fri, Jun 19, 2009 at 1:07 AM, Markus Strickler&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">markus at braindump.ms</A>&gt; wrote:
+&gt;<i> Hi-
+</I>&gt;<i>
+</I>&gt;<i> just checked with Mono 2.4_7 Framework - Universal from
+</I>&gt;<i> <A HREF="http://www.go-mono.com/mono-downloads/download.html">http://www.go-mono.com/mono-downloads/download.html</A> and it works
+</I>&gt;<i> without problems. This already includes nant, pkg-config, etc.
+</I>&gt;<i> So at least fro intel OS X 10.5 it should boil down to
+</I>&gt;<i> &#160;- make sure you have X11 installed
+</I>&gt;<i> &#160;- grab the Apple Dev Tools from <A HREF="http://developer.apple.com/">http://developer.apple.com/</A>
+</I>&gt;<i> &#160;- install Mono Framework from
+</I>&gt;<i> <A HREF="http://www.go-mono.com/mono-downloads/download.html">http://www.go-mono.com/mono-downloads/download.html</A>
+</I>&gt;<i> &#160;- get OpenSim source
+</I>&gt;<i> &#160;- ./runrunprebuild.sh
+</I>&gt;<i> &#160;- nant
+</I>&gt;<i>
+</I>&gt;<i> I've tried this on two machines and it works OK. However I don't have
+</I>&gt;<i> clean box, so it's quite possible that I already had something
+</I>&gt;<i> installed that's not included in the above. So if anyone has a clean
+</I>&gt;<i> OSX install at hand and wants to give this a try...
+</I>&gt;<i>
+</I>&gt;<i> -markus AKA Kusako
+</I>&gt;<i>
+</I>&gt;<i> Zitat von &quot;Kyle Hamilton&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">aerowolf at gmail.com</A>&gt;:
+</I>&gt;<i>
+</I>&gt;&gt;<i> MacPorts has 2.4_0. &#160;The official released package from go-mono.com is 2.4_7.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Kyle H
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Jun 18, 2009 at 2:36 PM, Markus Strickler&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">markus at braindump.ms</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Hi-
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> hm, that's odd. It just worked out of the box for me, without
+</I>&gt;&gt;&gt;<i> downloading anything from MacPorts (pkg-config should be included with
+</I>&gt;&gt;&gt;<i> the mono framework download). But admittedly I haven't tried with mono
+</I>&gt;&gt;&gt;<i> 2.4 yet.
+</I>&gt;&gt;&gt;<i> You can adjust PKG_CONFIG_PATH evironment variable, so pkg-config
+</I>&gt;&gt;&gt;<i> should find the packages.
+</I>&gt;&gt;&gt;<i> However it is probably a better idea to just stick with one
+</I>&gt;&gt;&gt;<i> distribution (i.e. use MacPorts or the official framework downloads).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -markus
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Am 18.06.2009 um 20:40 schrieb Kyle Hamilton:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Correction: it does contain .pc files. &#160;They're not added to the
+</I>&gt;&gt;&gt;&gt;<i> pkg-config search path by default; the path to them is
+</I>&gt;&gt;&gt;&gt;<i> /Library/Frameworks/Mono.framework/Versions/Current/[lib|share]/
+</I>&gt;&gt;&gt;&gt;<i> pkgconfig/*.pc
+</I>&gt;&gt;&gt;&gt;<i> .
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> The version of pkg-config I have is from MacPorts. &#160;I copied the above
+</I>&gt;&gt;&gt;&gt;<i> .pc files to /opt/local/lib/pkgconfig/ and it worked.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Thu, Jun 18, 2009 at 11:31 AM, Kyle Hamilton&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">aerowolf at gmail.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> The official Mono download does not have a pkg-config .pc file. &#160;This
+</I>&gt;&gt;&gt;&gt;&gt;<i> breaks the build.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> -Kyle H
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> On Thu, Jun 18, 2009 at 3:18 AM, Markus
+</I>&gt;&gt;&gt;&gt;&gt;<i> Strickler&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">markus at braindump.ms</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Hi Paul-
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> why not use the official Mono download for OS X?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://www.go-mono.com/mono-downloads/download.html">http://www.go-mono.com/mono-downloads/download.html</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> You'll probably also need nant if it's not included int he above
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> downoad. The grab the OpneSim sources and run nant on them.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> This should be pretty much it.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> As the services are run as separate processes they should use the
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> cores. Not sure how Mono has implemented threading on OS X, but &#160;the
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> OS will probably distribute the threads of each service over the
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> cores
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> as well.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> -markus
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Zitat von &quot;Paul Fishwick&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt;:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> I would like to install a set of opensim regions on a multi-core
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Mac Pro
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> and had these 2 questions:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> (1) For a Mac, does not install the Unix installation (via
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> MacPorts?) or
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> &#160; &#160; &#160; is there a separate installation procedure recommended?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> (2) For multi-core processors such as the 4 and 8 core machines,
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> are
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> &#160; &#160; &#160; the cores used by distributing services (UGAIM and Regions) ?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> -paul
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Paul Fishwick, PhD
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Professor and Director, Digital Arts and Sciences Programs
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> University of Florida
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Computer &amp; Information Science and Eng. Dept.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Bldg. CSE, Room 301
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> P.O. Box 116120
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Gainesville, FL 32611
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Phone: (352) 392-1414
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Fax: (352) 392-1220
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> This message has been scanned for viruses and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> dangerous content by MailScanner, and is
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> believed to be clean.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> ----------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> This message was sent using IMP, the Internet Messaging Program.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> This message has been scanned for viruses and
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> dangerous content by MailScanner, and is
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> believed to be clean.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;<i> This message has been scanned for viruses and
+</I>&gt;&gt;&gt;&gt;<i> dangerous content by MailScanner, and is
+</I>&gt;&gt;&gt;&gt;<i> believed to be clean.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> This message has been scanned for viruses and
+</I>&gt;&gt;&gt;<i> dangerous content by MailScanner, and is
+</I>&gt;&gt;&gt;<i> believed to be clean.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> This message has been scanned for viruses and
+</I>&gt;&gt;<i> dangerous content by MailScanner, and is
+</I>&gt;&gt;<i> believed to be clean.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------
+</I>&gt;<i> This message was sent using IMP, the Internet Messaging Program.
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> This message has been scanned for viruses and
+</I>&gt;<i> dangerous content by MailScanner, and is
+</I>&gt;<i> believed to be clean.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002305.html">[Opensim-users] Multi-core Mac
+</A></li>
+	<LI>Next message: <A HREF="002296.html">[Opensim-users] About OpenSim Server Cluster
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2306">[ date ]</a>
+              <a href="thread.html#2306">[ thread ]</a>
+              <a href="subject.html#2306">[ subject ]</a>
+              <a href="author.html#2306">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

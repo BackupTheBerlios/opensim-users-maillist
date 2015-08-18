@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Missing baked texture requesting rebake.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Missing%20baked%20texture%20requesting%20rebake.&In-Reply-To=%3C52B236C0.6040302%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012996.html">
+   <LINK REL="Next"  HREF="013000.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Missing baked texture requesting rebake.</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Missing%20baked%20texture%20requesting%20rebake.&In-Reply-To=%3C52B236C0.6040302%40googlemail.com%3E"
+       TITLE="[Opensim-users] Missing baked texture requesting rebake.">jjustincc at googlemail.com
+       </A><BR>
+    <I>Thu Dec 19 00:58:56 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012996.html">[Opensim-users] Missing baked texture requesting rebake.
+</A></li>
+        <LI>Next message: <A HREF="013000.html">[Opensim-users] Missing baked texture requesting rebake.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12999">[ date ]</a>
+              <a href="thread.html#12999">[ thread ]</a>
+              <a href="subject.html#12999">[ subject ]</a>
+              <a href="author.html#12999">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If your asset cache is being stored on disk, then the other suspect for this issue is for some reason not having
+
+Cap_UploadBakedTexture = &quot;localhost&quot;
+
+in [ClientStack.LindenCaps]
+
+Normally, this is set by OpenSimDefaults.ini but customized configuration load setups can get tricky.  The last time 
+this cropped up on this list in October ([1] is the last reference, unfortunately a bunch of e-mails went off-list), it 
+turned out to be that a grid config was using -inifile and -inimaster switches in such a way as to bypass 
+OpenSimDefaults.ini.
+
+You can see the actually used config with the various config console commands [2]
+
+In theory, not having the above setting should make viewers fallback to the UDP load mechanism.  However, I'm beginning 
+to think there may have been a regression in OpenSimulator 0.7.6 which stops this working in some circumstances.
+
+[1] <A HREF="http://lists.berlios.de/pipermail/opensim-dev/2013-October/012029.html">http://lists.berlios.de/pipermail/opensim-dev/2013-October/012029.html</A>
+[2] <A HREF="http://opensimulator.org/wiki/Server_Commands#Config_Commands">http://opensimulator.org/wiki/Server_Commands#Config_Commands</A>
+
+On 18/12/13 19:20, Drover, Matt wrote:
+&gt;<i> What would cause this? My Avatar's textures rebake forever, over and over.
+</I>&gt;<i>
+</I>&gt;<i> Only started happening since I upgraded to 0.7.6. I'm running on windows 2008.  Floatsom settings are default and so is
+</I>&gt;<i> opensimdefaults.
+</I>&gt;<i>
+</I>&gt;<i> I'm seeing assets showup in my assetcache folder, so I kno wi'm getting them.
+</I>&gt;<i>
+</I>&gt;<i> Any ideas?
+</I>&gt;<i>
+</I>&gt;<i> 15:45:20 - [ASSET XFER UPLOADER]: Uploaded asset 21fde653-8f4e-58e3-8c23-43baf41ed3b1 for transaction
+</I>&gt;<i> 7b9a62c9-7c26-1285-1c78-ee93b9254106
+</I>&gt;<i>
+</I>&gt;<i> 15:45:20 - [ASSET XFER UPLOADER]: Uploaded asset ab610fa0-e27b-ab0e-71b6-0598e32d214f for transaction
+</I>&gt;<i> 1c0efb76-551d-9d59-4a7e-a45adfe39d66
+</I>&gt;<i>
+</I>&gt;<i> 15:45:21 - [ASSET XFER UPLOADER]: Uploaded asset 9049d6bf-4ed4-27c9-d6e8-e4842a1f815a for transaction
+</I>&gt;<i> 37fb6840-dc45-0e26-4da3-f499ba96cddf
+</I>&gt;<i>
+</I>&gt;<i> 15:45:21 - [ASSET XFER UPLOADER]: Uploaded asset 028d5bdd-e157-0b78-1895-5ea31274f465 for transaction
+</I>&gt;<i> 6c6f2df9-993c-2622-7a0b-e7722fbfe7c9
+</I>&gt;<i>
+</I>&gt;<i> 15:45:23 - [ASSET XFER UPLOADER]: Uploaded asset 94291bfa-2b52-9622-1398-1dcefe798df6 for transaction
+</I>&gt;<i> 9555a1ce-06d0-6955-1235-d8af76af211d
+</I>&gt;<i>
+</I>&gt;<i> 15:45:23 - [AVFACTORY]: Missing baked texture ab610fa0-e27b-ab0e-71b6-0598e32d214f (8) for Omni Potens, requesting rebake.
+</I>&gt;<i>
+</I>&gt;<i> 15:45:23 - [AVFACTORY]: Missing baked texture 028d5bdd-e157-0b78-1895-5ea31274f465 (9) for Omni Potens, requesting rebake.
+</I>&gt;<i>
+</I>&gt;<i> 15:45:23 - [AVFACTORY]: Missing baked texture 9049d6bf-4ed4-27c9-d6e8-e4842a1f815a (10) for Omni Potens, requesting rebake.
+</I>&gt;<i>
+</I>&gt;<i> 15:45:23 - [AVFACTORY]: Missing baked texture 21fde653-8f4e-58e3-8c23-43baf41ed3b1 (11) for Omni Potens, requesting rebake.
+</I>&gt;<i>
+</I>&gt;<i> 15:45:23 - [AVFACTORY]: Missing baked texture 94291bfa-2b52-9622-1398-1dcefe798df6 (20) for Omni Potens, requesting rebake.
+</I>&gt;<i>
+</I>&gt;<i> *Matthew Drover
+</I>&gt;<i> *Programmer Consultant
+</I>&gt;<i>
+</I>&gt;<i> Immersive Technology
+</I>&gt;<i> Distance Education, Learning and Teaching Support
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012996.html">[Opensim-users] Missing baked texture requesting rebake.
+</A></li>
+	<LI>Next message: <A HREF="013000.html">[Opensim-users] Missing baked texture requesting rebake.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12999">[ date ]</a>
+              <a href="thread.html#12999">[ thread ]</a>
+              <a href="subject.html#12999">[ subject ]</a>
+              <a href="author.html#12999">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

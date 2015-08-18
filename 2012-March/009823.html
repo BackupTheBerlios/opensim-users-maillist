@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Fucntion to read a landmark
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Fucntion%20to%20read%20a%20landmark&In-Reply-To=%3C97B042D8-6DD2-4DDC-BB8F-9C838DC7E10C%40van-helden.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009822.html">
+   <LINK REL="Next"  HREF="009825.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Fucntion to read a landmark</H1>
+    <B>Olivier van Helden</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Fucntion%20to%20read%20a%20landmark&In-Reply-To=%3C97B042D8-6DD2-4DDC-BB8F-9C838DC7E10C%40van-helden.net%3E"
+       TITLE="[Opensim-users] Fucntion to read a landmark">olivier at van-helden.net
+       </A><BR>
+    <I>Tue Mar 13 19:07:11 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009822.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+        <LI>Next message: <A HREF="009825.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9823">[ date ]</a>
+              <a href="thread.html#9823">[ thread ]</a>
+              <a href="subject.html#9823">[ subject ]</a>
+              <a href="author.html#9823">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Of course, changing the ll function would break current scripts. And I am not fan of creating a new one based on the same behavior, here is why:
+
+Using data server is slow, and IMHO only justified when you don't know how much or what kind of data will come.
+
+In this case, we exactly know what kind of data can be requested, and most of time, we would request only one specific data (the url)
+
+	LANDMARK_URL (with a couple of possible flavors, could become LANDMARK_URL_SECONDLIFE, LANDMARK_URL_MAP)
+	LANDMARK_GATEKEEPER
+	LANDMARK_REGIONNAME
+	LANDMARK_POSITION
+	LANDMARK_LOOKAT
+
+BlueWall: yes, only coordinates, that was one of the main reason looking to create a new function ;-)
+
+
+--
+<A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+<A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+Speculoos, the belgian cookie-flavored metaverse
+
+Le 13 mars 2012 &#224; 19:04, BlueWall a &#233;crit :
+
+&gt;<i> Bzzt, wrong answer - I looked a little closer and see that just the
+</I>&gt;<i> global coordinates are returned. So, yep I guess a function is a good
+</I>&gt;<i> choice.
+</I>&gt;<i> 
+</I>&gt;<i> It seems like the first form would be easier to adapt for all uses.
+</I>&gt;<i> 
+</I>&gt;<i> -BlueWall
+</I>&gt;<i> 
+</I>&gt;<i> On Tue, 2012-03-13 at 13:49 -0400, BlueWall wrote:
+</I>&gt;&gt;<i> With that being just another piece of data in the landmark's asset, then
+</I>&gt;&gt;<i> I am wondering if we shouldn't just send it with the
+</I>&gt;&gt;<i> llRequestInventoryData? Then take the string and do whatever you like.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> -BlueWall
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> On Tue, 2012-03-13 at 18:35 +0100, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;<i> We are working on a osGetInventoryLandmarkURL function, and it's
+</I>&gt;&gt;&gt;<i> working great.
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Now, it's time to choose the format of the URL ;-)
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> I found two slightly different schemes, which seem to be handled the
+</I>&gt;&gt;&gt;<i> same way
+</I>&gt;&gt;&gt;<i> So my question is &quot;what is their scope?&quot;&#8230;
+</I>&gt;&gt;&gt;<i> (this is to choose a relevant constant name)
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> speculoos.net:8002:Agora
+</I>&gt;&gt;&gt;<i> -&gt; handled in 
+</I>&gt;&gt;&gt;<i> - map search
+</I>&gt;&gt;&gt;<i> - in osTeleport (without http)
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> <A HREF="http://speculoos.net:8002/">http://speculoos.net:8002/</A> Agora
+</I>&gt;&gt;&gt;<i> -&gt; handled in
+</I>&gt;&gt;&gt;<i> - map search
+</I>&gt;&gt;&gt;<i> - in osTeleport
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> The third scheme is more obvious:
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> <A HREF="secondlife://speculoos.net:8002:Agora/">secondlife://speculoos.net:8002:Agora/</A>
+</I>&gt;&gt;&gt;<i> -&gt; handled in 
+</I>&gt;&gt;&gt;<i> - local chat and web only
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;<i> Le 13 mars 2012 &#224; 11:34, BlueWall a &#233;crit :
+</I>&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> Here is the asset data from a landmark:
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> Landmark version 2
+</I>&gt;&gt;&gt;&gt;<i> region_id afd7aa20-a820-11de-8a39-0800200c9a66
+</I>&gt;&gt;&gt;&gt;<i> local_pos 129.1343 124.0458 22.16408
+</I>&gt;&gt;&gt;&gt;<i> region_handle 10621282326789120
+</I>&gt;&gt;&gt;&gt;<i> gatekeeper <A HREF="http://grid.nebadon2025.homeftp.net:8002">http://grid.nebadon2025.homeftp.net:8002</A>
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;<i> -BlueWall
+</I>&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Op maandag 12 maart 2012 schreef Justin Clark-Casey
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>) het volgende:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> There does seem to be no function to do this (it looks
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> like
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> it's done in SL by roundabout web queries).
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> It would be interesting to have something like an
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> osRequestInventoryData(string name, list rules) where rules
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> contains some constant like LANDMARK_REGION_NAME.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> On 10/03/12 21:39, Gudule Lapointe wrote:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> That is interesting, but not enough&#8230;.
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> But the only thing I get seems to be the global (wold
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> coordinate) position of the object:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> like&lt;256128.1, 256127.4, 27.73114&gt;
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Not even the region name, and in case of HG landmark, no
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> indication on the grid url
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Le 10 mars 2012 &#224; 22:13, M.E. Verhagen a &#233;crit :
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> the following lsl function can be used to extract some
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> data
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> out of landmaks:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> <A HREF="http://wiki.secondlife.com/wiki/LlRequestInventoryData">http://wiki.secondlife.com/wiki/LlRequestInventoryData</A>
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> 
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Op zaterdag 10 maart 2012 schreef Gudule Lapointe
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> (<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>&gt;) het
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> volgende:
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> Is there a way to read the coordinates of a landmark
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> from
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> within a script?
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> I made several flavors of blame gates and I would
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> like to
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> be able to drop a landmark in the prim instead of encoding
+</I>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;<i> the uri
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120313/3e76f436/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120313/3e76f436/attachment.html</A>&gt;
+</PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009822.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+	<LI>Next message: <A HREF="009825.html">[Opensim-users] Fucntion to read a landmark
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9823">[ date ]</a>
+              <a href="thread.html#9823">[ thread ]</a>
+              <a href="subject.html#9823">[ subject ]</a>
+              <a href="author.html#9823">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

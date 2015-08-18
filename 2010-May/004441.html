@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] .69 pre fix vrs .7+ rev User account problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20.69%20pre%20fix%20vrs%20.7%2B%20rev%20User%20account%20problem&In-Reply-To=%3C4BE3044D.2050906%40metaverseink.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004440.html">
+   <LINK REL="Next"  HREF="004443.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] .69 pre fix vrs .7+ rev User account problem</H1>
+    <B>diva at metaverseink.com</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20.69%20pre%20fix%20vrs%20.7%2B%20rev%20User%20account%20problem&In-Reply-To=%3C4BE3044D.2050906%40metaverseink.com%3E"
+       TITLE="[Opensim-users] .69 pre fix vrs .7+ rev User account problem">diva at metaverseink.com
+       </A><BR>
+    <I>Thu May  6 20:02:53 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004440.html">[Opensim-users] .69 pre fix vrs .7+ rev User account problem
+</A></li>
+        <LI>Next message: <A HREF="004443.html">[Opensim-users] .69 pre fix vrs .7+ rev User account problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4441">[ date ]</a>
+              <a href="thread.html#4441">[ thread ]</a>
+              <a href="subject.html#4441">[ subject ]</a>
+              <a href="author.html#4441">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The migrations table is the one that keeps information about which 
+migrations have been run. So if you run migrations once over a data 
+resource table (useraccounts or any other) the last migration number 
+will be stored, and migration will not happen again.
+
+I don't recommend dropping the migrations table entirely -- that's 
+calling for trouble. When migrations go wrong for whatever reason, I 
+recommend deleting only the row in the migrations table that corresponds 
+to the data resource in question -- in this case the UserAccount row in 
+that table. Leave the other rows alone.
+
+Master_Mirage wrote:
+&gt;<i> Sub Notes:
+</I>&gt;<i>  We did try 1st to drop just 'useracounts' table and re-launch robust and
+</I>&gt;<i> opensim.exe. It didnot see the table was gone and loaded completly anyway.
+</I>&gt;<i> It did not make a new one.
+</I>&gt;<i> 
+</I>&gt;<i> Next (after putting the orginal table back) Droped the migrations table. It
+</I>&gt;<i> did see it wasent there and redid just the migrations table but not fix
+</I>&gt;<i> usersacounts table (problem remained the same).
+</I>&gt;<i> 
+</I>&gt;<i> We had to drop both tables at the same time then it did remake both
+</I>&gt;<i> correctly and used the orginal un-touched 'user' table data.
+</I>&gt;<i> 
+</I>&gt;<i> -----
+</I>&gt;<i> Our New Web Page
+</I>&gt;<i> <A HREF="Http://www.TritonGrid.com">Http://www.TritonGrid.com</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004440.html">[Opensim-users] .69 pre fix vrs .7+ rev User account problem
+</A></li>
+	<LI>Next message: <A HREF="004443.html">[Opensim-users] .69 pre fix vrs .7+ rev User account problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4441">[ date ]</a>
+              <a href="thread.html#4441">[ thread ]</a>
+              <a href="subject.html#4441">[ subject ]</a>
+              <a href="author.html#4441">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

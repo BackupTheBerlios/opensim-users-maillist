@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] physics issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20physics%20issue&In-Reply-To=%3C200912141647.49043.laeming%40exemail.com.au%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003318.html">
+   <LINK REL="Next"  HREF="003316.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] physics issue</H1>
+    <B>LaeMing</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20physics%20issue&In-Reply-To=%3C200912141647.49043.laeming%40exemail.com.au%3E"
+       TITLE="[Opensim-users] physics issue">laeming at exemail.com.au
+       </A><BR>
+    <I>Mon Dec 14 06:47:48 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003318.html">[Opensim-users] physics issue
+</A></li>
+        <LI>Next message: <A HREF="003316.html">[Opensim-users] Free objects (dmu1 and dmu2 .IAR files)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3319">[ date ]</a>
+              <a href="thread.html#3319">[ thread ]</a>
+              <a href="subject.html#3319">[ subject ]</a>
+              <a href="author.html#3319">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have been seeing this error in new builds off SVN mirror of GIT the past 
+week:
+
+ERROR - OpenSim.Region.Physics.OdePlugin.OdeScene.06-06 [PHYSICS]: Method not 
+found: 'OpenSim.Region.Physics.Manager.RaycastCallback.Invoke'., Int32 
+ProcessQueuedRequests(), System.MissingMethodException: Method not found: 
+'OpenSim.Region.Physics.Manager.RaycastCallback.Invoke'.
+  at 
+OpenSim.Region.Physics.OdePlugin.ODERayCastRequestManager.ProcessQueuedRequests 
+() [0x00000]
+
+line after line of them!!!! ;-)
+
+haven't reported it yet as I haven't had time to check if it is a dangling old 
+dll left from an old build, which is often the cause of these things in my 
+experience (I copy the new bin onto the old when I recompile which is easiest 
+when it works but generates issues for me if dlls change names or get 
+eliminated from new builds). Need to get time to do a side-by-side comparison 
+of all the dlls in a virgin build vs my working directory.
+
+Reverted to my last working build as soon as I saw the console output so can't 
+comment on in-world physics behaviour at this point.
+
+Lae
+
+On Monday December 14 2009 15:36:09 Teravus Ovares wrote:
+&gt;<i> If you enabled OpenDynamicsEngine, then it will either block you from
+</I>&gt;<i> walking or give you errors.    Please try again.   physics =
+</I>&gt;<i> OpenDynamicsEngine in OpenSim.ini
+</I>&gt;<i> 
+</I>&gt;<i> Best Regards
+</I>&gt;<i> 
+</I>&gt;<i> Teravus
+</I>&gt;<i> 
+</I>&gt;<i> On Sun, Dec 13, 2009 at 10:42 PM, andrew johnson
+</I>&gt;<i> 
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rossifan2007 at hotmail.co.uk</A>&gt; wrote:
+</I>&gt;<i> &gt; yes i will try explain bit more
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; we rezzed few cubes and enabled them and they didn't fall to ground as
+</I>&gt;<i> &gt; should be and we walked through prims its should be solid for us - we
+</I>&gt;<i> &gt; tried the 4 options but none of them working - OpenDynamicsEngine and POS
+</I>&gt;<i> &gt; and Basic and Modifed_bullet
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ----------------------------------------
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Date: Sun, 13 Dec 2009 22:07:12 -0500
+</I>&gt;<i> &gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>
+</I>&gt;<i> &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; Subject: Re: [Opensim-users] physics issue
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If you want a complete and detailed answer, then please provide a
+</I>&gt;<i> &gt;&gt; complete and detailed description of what's happening. It sounds
+</I>&gt;<i> &gt;&gt; to me like you're having some kind of error with OpenDynamicsEngine
+</I>&gt;<i> &gt;&gt; and so you're trying other options.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Regards
+</I>&gt;<i> &gt;&gt; Teravus
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Sun, Dec 13, 2009 at 8:15 PM, andrew johnson
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;  wrote:
+</I>&gt;<i> &gt;&gt;&gt; yes but opendynmaics engine is not working because i tested it
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; ----------------------------------------
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Date: Sun, 13 Dec 2009 16:22:40 -0500
+</I>&gt;<i> &gt;&gt;&gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">teravus at gmail.com</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt; Subject: Re: [Opensim-users] physics issue
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Currently, the only full featured physics engine that OpenSimulator
+</I>&gt;<i> &gt;&gt;&gt;&gt; supports is the OpenDynamicsEngine . The rest are currently
+</I>&gt;<i> &gt;&gt;&gt;&gt; either highly experimental or limited in features.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Regards
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Teravus
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; On Sun, Dec 13, 2009 at 4:01 PM, andrew johnson
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt;  wrote:
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; i just noticed the physics don't work anymore on opensim 0.6.7
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; because i changed physics to basic physics or POS or
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; Modified_bulletXL and resulted the cube don't move - its was possible
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; before in older version anyone has noticed that?
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; _________________________________________________________________
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; View your other email accounts from your Hotmail inbox. Add them now.
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; <A HREF="http://clk.atdmt.com/UKM/go/186394592/direct/01/">http://clk.atdmt.com/UKM/go/186394592/direct/01/</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; _________________________________________________________________
+</I>&gt;<i> &gt;&gt;&gt; Use Hotmail to send and receive mail from your different email accounts
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="http://clk.atdmt.com/UKM/go/186394592/direct/01/">http://clk.atdmt.com/UKM/go/186394592/direct/01/</A>
+</I>&gt;<i> &gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _________________________________________________________________
+</I>&gt;<i> &gt; Add your Gmail and Yahoo! Mail email accounts into Hotmail - it's easy
+</I>&gt;<i> &gt; <A HREF="http://clk.atdmt.com/UKM/go/186394592/direct/01/">http://clk.atdmt.com/UKM/go/186394592/direct/01/</A>
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003318.html">[Opensim-users] physics issue
+</A></li>
+	<LI>Next message: <A HREF="003316.html">[Opensim-users] Free objects (dmu1 and dmu2 .IAR files)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3319">[ date ]</a>
+              <a href="thread.html#3319">[ thread ]</a>
+              <a href="subject.html#3319">[ subject ]</a>
+              <a href="author.html#3319">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

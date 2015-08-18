@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Intermittently unable to teleport into my grid
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Intermittently%20unable%20to%20teleport%20into%20my%20grid&In-Reply-To=%3CCABsLVMsix8dCZWr%3DdA22CVGpwjfjGyWrvgdYqjB%2Bzcob2qxJNw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012622.html">
+   <LINK REL="Next"  HREF="012629.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Intermittently unable to teleport into my grid</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Intermittently%20unable%20to%20teleport%20into%20my%20grid&In-Reply-To=%3CCABsLVMsix8dCZWr%3DdA22CVGpwjfjGyWrvgdYqjB%2Bzcob2qxJNw%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Intermittently unable to teleport into my grid">teravus at gmail.com
+       </A><BR>
+    <I>Sat Sep 21 19:44:15 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012622.html">[Opensim-users] Intermittently unable to teleport into my grid
+</A></li>
+        <LI>Next message: <A HREF="012629.html">[Opensim-users] Intermittently unable to teleport into my grid
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12624">[ date ]</a>
+              <a href="thread.html#12624">[ thread ]</a>
+              <a href="subject.html#12624">[ subject ]</a>
+              <a href="author.html#12624">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE> What you describe sounds like a configuration issue potentially and
+doesn't seem like what I was trying to rule out.
+
+If you want to 100% verify that it's not the case, try setting the
+following debug setting in Singularity to 16;
+CurlConcurrentConnectionsPerService
+
+You can do this in the debug settings menu in Singularity.    This is
+not a permanent settings change, this is just for testing.... and the
+change will reset after you close the viewer.   To access the debug
+menu, you enable the 'Advanced' menu in Singularity by hitting the
+keyboard key combination Control + Alt + d.   Inside the Advanced menu
+you will find a 'Debug Settings...' menu item.
+When you have the Debug Settings panel open, start typing
+CurlConcurrentConnectionsPerService, and it will show up.   At the
+bottom of the box after selecting CurlConcurrentConnectionsPerService,
+there's a value, change that to 16 and try your teleport again.
+
+Best Regards
+Teravus
+
+
+
+
+On Sat, Sep 21, 2013 at 10:18 AM, EGBainbridge/Apollo Manga
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">tamrider at frodo.tv</A>&gt; wrote:
+&gt;<i> Tevarus, I'm using primarily Singularity, but have also had the problem with
+</I>&gt;<i> Imprudence.
+</I>&gt;<i>
+</I>&gt;<i> I never considered adjacent regions as a possible cause of the problem.
+</I>&gt;<i> Should an instance not contain adjacent regions?  I've grouped four of my
+</I>&gt;<i> instances geographically, with adjacent regions grouped together in an
+</I>&gt;<i> instance.
+</I>&gt;<i>
+</I>&gt;<i> The instance I use for hypergrid teleporting has three adjacent regions.
+</I>&gt;<i> I've tried hypergrid teleporting to regions in all instances, but I got the
+</I>&gt;<i> same error message with all of them, that it could not find my destination.
+</I>&gt;<i>
+</I>&gt;<i> One of the instances is not hypergrid-enabled, so as a test I tried enabling
+</I>&gt;<i> it and restarted all my instances and Robust, but I still had the problem.
+</I>&gt;<i>
+</I>&gt;<i> Also as a test, I tried starting my grid with only one instance running.
+</I>&gt;<i> The teleport problem still happened.
+</I>&gt;<i>
+</I>&gt;<i> A particularly puzzling aspect is that very often the problem clears up
+</I>&gt;<i> after my grid has been running for a few hours.  It doesn't always happen,
+</I>&gt;<i> however, and this morning after running for 24 hours, teleports back to my
+</I>&gt;<i> grid were still impossible.
+</I>&gt;<i>
+</I>&gt;<i> Another oddity - and likely clue - is that I'm getting an Unauthorized
+</I>&gt;<i> machine error message, but /only/ on successful teleports  For example, this
+</I>&gt;<i> morning I can't teleport back to my grid but I can return by doing a
+</I>&gt;<i> Teleport Home.  When I Teleport Home, I get the error following message:
+</I>&gt;<i>
+</I>&gt;<i> Unauthorized machine 74.63.198.138 tried to set client ip to 76.191.192.250
+</I>&gt;<i>
+</I>&gt;<i> The second IP is my server's.  (FYI: I'm consistently using FQDN's, not IP
+</I>&gt;<i> addresses, in my config files.)
+</I>&gt;<i>
+</I>&gt;<i> I only get this unauthorized machine message on successful hypergrid
+</I>&gt;<i> teleports.  When a teleport back into my grid fails, I don't get any
+</I>&gt;<i> messages in the instance and only one message in Robust: &quot;[GATEKEEPER
+</I>&gt;<i> SERVICE]: Request to get hyperlink region &quot; followed by the region UUID of
+</I>&gt;<i> the region I'm teleporting to.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Teravus Ovares wrote
+</I>&gt;&gt;<i> Two questions that can rule out one possible reason for the issues
+</I>&gt;&gt;<i> you're encountering:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What viewer are you using?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> How many regions do you generally have on the same instance near each
+</I>&gt;&gt;<i> other? In non-technical speak that roughly means, When you start your
+</I>&gt;&gt;<i> OpenSim.exe on your server, how many regions pop up on the map?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Best Regards
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Teravus
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Sep 19, 2013 at 6:21 PM, EGBainbridge/Apollo Manga
+</I>&gt;&gt;<i> &lt;
+</I>&gt;<i>
+</I>&gt;&gt;<i> tamrider@
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt; wrote:
+</I>&gt;&gt;&gt;<i> I'm using vanilla 0.7.5, so it doesn't apply to me, but thanks for
+</I>&gt;&gt;&gt;<i> bringing
+</I>&gt;&gt;&gt;<i> it to my attention.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> As a former software developer, I do want to start trying some Git master
+</I>&gt;&gt;&gt;<i> code and looking into OpenSim's innards. I was waiting until I know
+</I>&gt;&gt;&gt;<i> OpenSim
+</I>&gt;&gt;&gt;<i> better, but now I'm not trying any unofficial releases while I have users
+</I>&gt;&gt;&gt;<i> doing real world work in my grid, which I didn't anticipate happening so
+</I>&gt;&gt;&gt;<i> soon.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----
+</I>&gt;&gt;&gt;<i>  Apollo Manga (Erik Gordon Bainbridge)
+</I>&gt;&gt;&gt;<i>  Writer, instructor, former software engineer
+</I>&gt;&gt;&gt;<i>  Northern California
+</I>&gt;&gt;&gt;<i>  ErikBainbridge.com
+</I>&gt;&gt;&gt;<i>  VirtualMarin.com
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> View this message in context:
+</I>&gt;&gt;&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/Intermittently-unable-to-teleport-into-my-grid-tp7580374p7580401.html">http://opensim-users.2152040.n2.nabble.com/Intermittently-unable-to-teleport-into-my-grid-tp7580374p7580401.html</A>
+</I>&gt;&gt;&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at .berlios</A>
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at .berlios</A>
+</I>&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -----
+</I>&gt;<i>  Apollo Manga (Erik Gordon Bainbridge)
+</I>&gt;<i>  Writer, instructor, former software engineer
+</I>&gt;<i>  Northern California
+</I>&gt;<i>  ErikBainbridge.com
+</I>&gt;<i>  VirtualMarin.com
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/Intermittently-unable-to-teleport-into-my-grid-tp7580374p7580408.html">http://opensim-users.2152040.n2.nabble.com/Intermittently-unable-to-teleport-into-my-grid-tp7580374p7580408.html</A>
+</I>&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I></PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012622.html">[Opensim-users] Intermittently unable to teleport into my grid
+</A></li>
+	<LI>Next message: <A HREF="012629.html">[Opensim-users] Intermittently unable to teleport into my grid
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12624">[ date ]</a>
+              <a href="thread.html#12624">[ thread ]</a>
+              <a href="subject.html#12624">[ subject ]</a>
+              <a href="author.html#12624">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

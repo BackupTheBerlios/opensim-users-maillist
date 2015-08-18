@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] osTeleportAgent. Allowed threat level ...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20osTeleportAgent.%20Allowed%20threat%20level%20...&In-Reply-To=%3C6E2C0CA6F3344ACD8E55C839D8BBCC43%40Cyberdrome%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009266.html">
+   <LINK REL="Next"  HREF="009269.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] osTeleportAgent. Allowed threat level ...</H1>
+    <B>drwhiet at spacefriends.de</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20osTeleportAgent.%20Allowed%20threat%20level%20...&In-Reply-To=%3C6E2C0CA6F3344ACD8E55C839D8BBCC43%40Cyberdrome%3E"
+       TITLE="[Opensim-users] osTeleportAgent. Allowed threat level ...">drwhiet at spacefriends.de
+       </A><BR>
+    <I>Wed Feb  1 15:04:06 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009266.html">[Opensim-users] osTeleportAgent. Allowed threat level ...
+</A></li>
+        <LI>Next message: <A HREF="009269.html">[Opensim-users] osTeleportAgent. Allowed threat level ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9267">[ date ]</a>
+              <a href="thread.html#9267">[ thread ]</a>
+              <a href="subject.html#9267">[ subject ]</a>
+              <a href="author.html#9267">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>i just learned (Thanks to DanBanner) that the idea was to not allow
+osTelportAgent for all people that can 
+create/run scripts on your regions to e.g. &quot;send&quot; people away.
+ 
+So the thing is to only allow 
+Allow_osTeleportAgent = YOURUUID (or uuid1,uuid2 - or for any other function
+you like to restrict) 
+instead of Allow_osTeleportAgent = true to everybody.
+ 
+This way one can leave the ThreadLevel set to veryLow
+ 
+Here is a PasteBin that has all the new osGetGrid* and osNpc* functions in
+it :  &lt;<A HREF="http://pastebin.com/jgE2W1MY">http://pastebin.com/jgE2W1MY</A>&gt; <A HREF="http://pastebin.com/jgE2W1MY">http://pastebin.com/jgE2W1MY</A>
+ &lt;<A HREF="irc://freenode/danbanner,isnick">irc://freenode/danbanner,isnick</A>&gt; 	add that to the [Xengine] section
+and set true/false/PARCE_OWNER/uuid as needed
+ 
+best regards,
+Wordfromthe Wise
+ 
+  _____  
+
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] Im Auftrag von
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drwhiet at spacefriends.de</A>
+Gesendet: Mittwoch, 1. Februar 2012 14:14
+An: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Betreff: Re: [Opensim-users] osTeleportAgent. Allowed threat level ...
+
+
+Hello List,
+ 
+(mayby) i do not full yunderstand the whole issue .. I asked in IRC and get
+repsonse that &quot;it has to be set to SEVERE 
+also as of the .ini this is DANGEROUS&quot;  but the fundamental question(s) are:
+ 
+- Why do we have to set the threat level to severe to have osTeleportAgent
+working
+- Why was osTeleportOwner was introduced ? - What was/is the need for it ?
+ 
+I was told i should find another way around one that doesn't require the
+ability to teleport avatars around against their will.
+i was also told it was changed &quot;to discourage it's use as it's really
+extremely disruptive&quot;
+- Why are there concerns about teleporting avatars around &quot;against their
+will&quot; 
+ 
+- What is the issue with osTeleport Agent .. How to teleport Avatars around
+in any other way ? ; what if i want 
+to have a Teleportfunction in a prim... i thought this is/was the way to
+Teleport around? 
+  
+- and is it just for HG jumps or also for osTeleportAgent calls within my
+regions ?
+ 
+best regards,
+(a puzzled)  Wordfromthe Wise
+
+  _____  
+
+Von: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] Im Auftrag von James
+Stallings II
+Gesendet: Dienstag, 31. Januar 2012 20:50
+An: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Betreff: Re: [Opensim-users] osTeleportAgent. Allowed threat level ...
+
+
+There are other ways around the issue, you don't have to set region-wide
+threat-level to use the function. Just use the 'allow_osFunction' syntax
+(e.g., allow_osTeleportAgent = USER_UUID). 
+
+On Tue, Jan 31, 2012 at 1:28 PM, OpenSimFan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">info at verwijs-pc.nl</A>&gt; wrote:
+
+
+
+I always have thread level at &quot;VeryHigh&quot;  and osTeleportAgent did work for
+me.
+this page  <A HREF="http://opensimulator.org/wiki/OSSL_Enabling_Functions">http://opensimulator.org/wiki/OSSL_Enabling_Functions</A> OSSL
+Enabling Functions  told me  it was set to &quot;High&quot;,  but i found the aswer
+here:
+
+<A HREF="http://opensimulator.org/mantis/view.php?id=5866">http://opensimulator.org/mantis/view.php?id=5866</A> mantis #5866   (resolved
+issue..!!)
+
+/The threat level has been changed to severe by commit
+43173f1b0d80eee8589b9e506a5fdb5cfe92cc06
+I have updated <A HREF="http://opensimulator.org/wiki/OsTeleportAgent">http://opensimulator.org/wiki/OsTeleportAgent</A> [^] to reflect
+this./
+
+sorry, missed that one
+
+I  don't want to use thread level &quot;Severe&quot;,  thats asking for trouble..!!
+
+is it possible to allow osTeleportAgent for group members only? (my group),
+this way i can control it.  or use
+<A HREF="http://opensimulator.org/wiki/OsTeleportOwner">http://opensimulator.org/wiki/OsTeleportOwner</A> &quot;OsTeleportOwner&quot;  Thread
+level: none  (as far i could find)
+
+
+
+
+
+-----
+_________________________________________
+OpenSimFan
+My Opensim/Second Life Blog
+<A HREF="http://verwijs.wordpress.com">http://verwijs.wordpress.com</A>
+(Dutch, basic hardware/software help  windows, Mac, Linux)
+<A HREF="http://verwijs-pc.nl">http://verwijs-pc.nl</A>
+My Twitter Page:
+<A HREF="http://twitter.com/OpenSimFan">http://twitter.com/OpenSimFan</A>
+My Facebook page (be my friend, please )
+<A HREF="http://www.facebook.com/andre.verwijs">http://www.facebook.com/andre.verwijs</A>
+.
+--
+
+View this message in context:
+<A HREF="http://opensim-users.2152040.n2.nabble.com/osTeleportAgent-Allowed-threat-le">http://opensim-users.2152040.n2.nabble.com/osTeleportAgent-Allowed-threat-le</A>
+vel-tp7237778p7240909.html
+
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+
+
+
+
+-- 
+===================================
+<A HREF="http://simhost.com">http://simhost.com</A>
+<A HREF="http://twitter.com/jstallings2">http://twitter.com/jstallings2</A>
+<A HREF="http://www.linkedin.com/pub/5/770/a49">http://www.linkedin.com/pub/5/770/a49</A>
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120201/4af8d246/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120201/4af8d246/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009266.html">[Opensim-users] osTeleportAgent. Allowed threat level ...
+</A></li>
+	<LI>Next message: <A HREF="009269.html">[Opensim-users] osTeleportAgent. Allowed threat level ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9267">[ date ]</a>
+              <a href="thread.html#9267">[ thread ]</a>
+              <a href="subject.html#9267">[ subject ]</a>
+              <a href="author.html#9267">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

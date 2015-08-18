@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Regions Won't Load
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Regions%20Won%27t%20Load&In-Reply-To=%3CAANLkTi%3DBLLoHN%2Bn1nbT0t-K3RPKOdcr0MxQMRQF5b4sv%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006920.html">
+   <LINK REL="Next"  HREF="006919.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Regions Won't Load</H1>
+    <B>Timothy Hart</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Regions%20Won%27t%20Load&In-Reply-To=%3CAANLkTi%3DBLLoHN%2Bn1nbT0t-K3RPKOdcr0MxQMRQF5b4sv%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Regions Won't Load">timothy.hart at gmail.com
+       </A><BR>
+    <I>Thu Mar 31 04:34:43 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006920.html">[Opensim-users] Opensim-users Digest, Vol 43, Issue 43
+</A></li>
+        <LI>Next message: <A HREF="006919.html">[Opensim-users] Regions Won't Load
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6918">[ date ]</a>
+              <a href="thread.html#6918">[ thread ]</a>
+              <a href="subject.html#6918">[ subject ]</a>
+              <a href="author.html#6918">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hey everyone,
+
+I am trying to get OpenSim working on OS X and am hitting a weird wall. I am
+hoping someone has seen it before and knows what it is.
+
+OS: 10.6.7
+Mono: 2.6.7 (installed using MacPorts in
+/Users/Shared/OpenSim/supportfiles/mp/bin/mono, weird I know, but I have my
+reasons)
+MySQL: 5.1.54
+OpenSim: latest diva distro and regular binaries
+
+I have an inkling that my problem is mono related just because of the hell I
+went through to figure a way to get mono running from /Users/Shared. We will
+see.
+
+I am running OpenSim by the following:
+$/Users/Shared/OpenSim/supportfiles/mp/bin/mono OpenSim.exe.
+
+Everything load up hunky dory, though a little fast. It start up okay with
+no errors and drops me at Region (root) #. You think everything is okay, but
+I thought it was fishy when I couldn't connect. Running help at the prompt
+only shows a limited number of commands available. Odd.
+
+It is obvious at this point that none of the regions are loading. I tried it
+with mono in the normal location and it is all good. OpenSim asks the normal
+questions and I can connect.
+
+I try again with my mono install and it does the same thing. So I try:
+create region Test RegionConfig.ini. Here:
+
+Region (root) # create region Test RegionConfig.ini
+Region UUID [a63a0528-b6c2-4afc-b78b-9d58297b51da]:
+Region Location [1000,1000]:
+Internal IP address [0.0.0.0]:
+Internal port [9000]:
+Allow alternate ports [False]:
+External host name [SYSTEMIP]:
+
+Hunky dory. I tell it don't join and estate then name the estate. It thinks
+then says [MODULES]: The new RegionModulesController is missing... Keeps
+going and asks for my firstname then last and says:
+
+22:31:59 - Command error: System.NullReferenceException: Object reference
+not set to an instance of an object
+  at OpenSim.Region.Framework.Scenes.Scene.SetModuleInterfaces () [0x00000]
+in &lt;filename unknown&gt;:0
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+regionInfo, Boolean portadd_flag, Boolean do_post_init, IScene&amp; mscene)
+[0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.OpenSimBase.CreateRegion (OpenSim.Framework.RegionInfo
+regionInfo, Boolean portadd_flag, IScene&amp; scene) [0x00000] in &lt;filename
+unknown&gt;:0
+  at OpenSim.OpenSim.HandleCreateRegion (System.String module,
+System.String[] cmd) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Framework.Console.Commands.Resolve (System.String[] cmd)
+[0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Framework.Console.LocalConsole.ReadLine (System.String p,
+Boolean isCommand, Boolean e) [0x00000] in &lt;filename unknown&gt;:0
+  at OpenSim.Framework.Console.CommandConsole.Prompt () [0x00000] in
+&lt;filename unknown&gt;:0
+  at OpenSim.Application.Main (System.String[] args) [0x00000] in &lt;filename
+unknown&gt;:0
+
+
+Then it drop to Region (root) # without any regions loaded.
+
+Anyone seen this before? Any light you could shed would be awesome.
+
+T
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110330/ccc8cd3e/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110330/ccc8cd3e/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006920.html">[Opensim-users] Opensim-users Digest, Vol 43, Issue 43
+</A></li>
+	<LI>Next message: <A HREF="006919.html">[Opensim-users] Regions Won't Load
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6918">[ date ]</a>
+              <a href="thread.html#6918">[ thread ]</a>
+              <a href="subject.html#6918">[ subject ]</a>
+              <a href="author.html#6918">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

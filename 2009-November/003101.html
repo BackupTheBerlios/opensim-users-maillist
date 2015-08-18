@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] How to change a prim's texture
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20change%20a%20prim%27s%20texture&In-Reply-To=%3C5c1d2b3d0911120323i6aa2d098n1548058ae2f48d52%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003105.html">
+   <LINK REL="Next"  HREF="003102.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] How to change a prim's texture</H1>
+    <B>matan keret</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20How%20to%20change%20a%20prim%27s%20texture&In-Reply-To=%3C5c1d2b3d0911120323i6aa2d098n1548058ae2f48d52%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] How to change a prim's texture">matan504 at gmail.com
+       </A><BR>
+    <I>Thu Nov 12 12:23:43 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003105.html">[Opensim-users] opensim osx (10.5) binary hangs on startup
+</A></li>
+        <LI>Next message: <A HREF="003102.html">[Opensim-users] How to change a prim's texture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3101">[ date ]</a>
+              <a href="thread.html#3101">[ thread ]</a>
+              <a href="subject.html#3101">[ subject ]</a>
+              <a href="author.html#3101">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I'm working on realXtend platform (ModreX) and OpenSim-0.6.7, coding
+in IronPython 2.0.3.
+I've got an image that i'de like to put as a texture of a prim.
+
+the code that i used is:
+
+#       the code that comes before what I've pasted next fetches an image
+attachment from an e-mail using:
+#       image = part.get_payload(decode = True)
+
+#       now the code that tries to make it a texture:
+        asset.FullID = str(uuid.uuid1())
+        asset.Name = &quot;DynamicImage&quot; + str(Util.RandomClass.Next(1, 10000))
+        asset.Type = 0
+        asset.Description = &quot;Mail image&quot;
+        asset.Local = False
+        asset.Temporary = False
+
+#       image is an 'str' type, but is actually an image. converting to
+byteArray type
+        byteArray = Array[Byte](tuple(Byte(ord(c)) for c in image))
+        asset.Data = byteArray
+
+        self.MyWorld.CS.World.AssetService.Store(asset)
+        j2kdecoder.syncdecode(asset.FullID, asset.Data)
+        self.MyWorld.CS.World.AssetService.Store(asset)
+
+#       now the decoded image is stored. trying to present texture
+        id = str(asset.FullID)
+
+#       this next command doesn't work for me. i get white texture on all
+faces instead of my image
+        LSLObject.llSetTexture(self, id, -1)
+
+or if you'de like to see the code in pastebin: <A HREF="http://pastebin.org/52980">http://pastebin.org/52980</A>
+
+
+This doesn't work for me, as i get some white texture in the end.
+I don't know what am I doing wrong..  :-(
+
+Thank you,
+  Matan
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20091112/0a9d46e0/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20091112/0a9d46e0/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003105.html">[Opensim-users] opensim osx (10.5) binary hangs on startup
+</A></li>
+	<LI>Next message: <A HREF="003102.html">[Opensim-users] How to change a prim's texture
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3101">[ date ]</a>
+              <a href="thread.html#3101">[ thread ]</a>
+              <a href="subject.html#3101">[ subject ]</a>
+              <a href="author.html#3101">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

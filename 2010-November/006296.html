@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Diva Distro - Hitting Walls
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Diva%20Distro%20-%20Hitting%20Walls&In-Reply-To=%3CAANLkTi%3DUcATgZjd32KQ3YeOJk03SUNasQBCVYRMsnBKr%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006295.html">
+   <LINK REL="Next"  HREF="006297.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Diva Distro - Hitting Walls</H1>
+    <B>iSkye Silverweb</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Diva%20Distro%20-%20Hitting%20Walls&In-Reply-To=%3CAANLkTi%3DUcATgZjd32KQ3YeOJk03SUNasQBCVYRMsnBKr%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Diva Distro - Hitting Walls">iskye.silverweb at gmail.com
+       </A><BR>
+    <I>Mon Nov 29 17:45:37 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006295.html">[Opensim-users] Diva Distro - Hitting Walls
+</A></li>
+        <LI>Next message: <A HREF="006297.html">[Opensim-users] Diva Distro - Hitting Walls
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6296">[ date ]</a>
+              <a href="thread.html#6296">[ thread ]</a>
+              <a href="subject.html#6296">[ subject ]</a>
+              <a href="author.html#6296">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Drwhiet, we tried your suggestion, no joy.
+
+When I say &quot;not able to get in&quot; that means not able to get past the
+handshake stage; we hang and eventually get the error.  So here is what we
+also tried:
+
+Regions file
+    - setting internal to 192.168.0.9 - he can get in from LAN, external
+computers cannot.
+    - put internal to 0.0.0.0 - external computers get in, he cannot.  Left
+it at that.
+External in both cases was the FQDN we got from dyndns,
+our-grid.dyndns-server.com
+If he set it to 192.168.0.9, he could get in from LAN, but external
+computers could not.
+Set external back to FQDN, internal IP at 0.0.0.0.  With this external
+computers will get past the handshake and log in completely, while he hangs
+at the handshake trying from inside the LAN.
+
+He tried turning off all firewalls and antivirus, then on the router
+allowing all ports open - STILL not able to get in. Put all back.
+
+Looked at hosts file, put one on the computer that opensim is running on.
+If set to 127.0.0.1, it hangs for external computers, when he takes it out
+completely, external computers can get in.
+If set to 129.168.0.9, he can get in from LAN but external computers can't.
+
+If he removes the hosts file from the opensim server, he can't get in (even
+if he has the hosts file set to the latter on the computer he tries to log
+in from - different from the opensim computer) but external computers can.
+He tried the hosts file on the server with the router address, external
+computers cannot get into the grid.
+
+We're puzzled by how it seems EITHER he can get past the handshake and
+complete login to the grid OR the external computers can; we cannot seem to
+get BOTH to completely log in.  Very puzzling.  He's left it so external
+computers can log in, at the moment.
+
+Any more suggestions?
+
+On Mon, Nov 29, 2010 at 4:19 AM, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drwhiet at spacefriends.de</A> &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">drwhiet at spacefriends.de</A>&gt; wrote:
+
+&gt;<i> Hi mayby this helps . I have tcp and udp Ports Open for all my Meeres Ports
+</I>&gt;<i> thats 8000-8003 and the Ports for the Region 9000-9010
+</I>&gt;<i>
+</I>&gt;<i> Best regards
+</I>&gt;<i>
+</I>&gt;<i> Am 28.11.2010 um 16:32 schrieb iSkye Silverweb &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">iskye.silverweb at gmail.com</A>
+</I>&gt;<i> &gt;:
+</I>&gt;<i>
+</I>&gt;<i> here's a review of what our setup is at the moment:
+</I>&gt;<i>
+</I>&gt;<i> Our current setup is this:
+</I>&gt;<i> We have a standalone Diva distro 0.7.0 on a Windows XP computer in the UK,
+</I>&gt;<i> with two other computers inside that network; two external computers outside
+</I>&gt;<i> the UK.
+</I>&gt;<i>
+</I>&gt;<i> On router (Sagem <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">F at ST</A> 2504 firmware version 2.8Sky):
+</I>&gt;<i> Port 9000 for TCP/UDP and ports 9001-9003 for UDP
+</I>&gt;<i>
+</I>&gt;<i> Windows firewall disabled on both computers inside the network
+</I>&gt;<i>
+</I>&gt;<i> regions.ini file:
+</I>&gt;<i> external IP is &lt;<A HREF="http://our-grid.dyndns-server.com/">http://our-grid.dyndns-server.com/</A>&gt;
+</I>&gt;<i> our-grid.dyndns-server.com  (note: when we change the external IP to the
+</I>&gt;<i> actual internal IP, 192.168.0.9, for the machine running our grid, our UK
+</I>&gt;<i> guy can log in from inside his network, but the 2 outside computers can't
+</I>&gt;<i> log in)
+</I>&gt;<i> internal IP is 0.0.0.0
+</I>&gt;<i>
+</I>&gt;<i> hosts file on the client the UK guy is trying to login from contains the
+</I>&gt;<i> following line:
+</I>&gt;<i> 192.168.0.9    &lt;<A HREF="http://our-grid.dyndns-server.com/">http://our-grid.dyndns-server.com/</A>&gt;
+</I>&gt;<i> our-grid.dyndns-server.com
+</I>&gt;<i>
+</I>&gt;<i> uPnP and DMZ are both off, disabled (we've tried both ways)
+</I>&gt;<i>
+</I>&gt;<i> All three of us can see the welcome page in the browser.  The UK (inside
+</I>&gt;<i> network) guy, isn't able to log in through the webpage, nor can he get into
+</I>&gt;<i> the grid.  We seem to be missing one small ingredient that will let our UK
+</I>&gt;<i> guy login from inside his network without blocking us external people from
+</I>&gt;<i> getting into the grid.
+</I>&gt;<i>
+</I>&gt;<i> It seems the problem is addressing somewhere.  We just tried SYSTEMIP as
+</I>&gt;<i> external IP and he can get in the but the external computers can't.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Nov 28, 2010 at 3:46 AM, Olli Aro &lt; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">olli_aro at yahoo.co.uk</A>&gt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">olli_aro at yahoo.co.uk</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Aaah ok I thought it was the other way around. Have you asked the internal
+</I>&gt;&gt;<i> guy to login with the internal ip instead of the domain? So use 192.168.0.9.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Olli
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101129/a8ec1bcb/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101129/a8ec1bcb/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006295.html">[Opensim-users] Diva Distro - Hitting Walls
+</A></li>
+	<LI>Next message: <A HREF="006297.html">[Opensim-users] Diva Distro - Hitting Walls
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6296">[ date ]</a>
+              <a href="thread.html#6296">[ thread ]</a>
+              <a href="subject.html#6296">[ subject ]</a>
+              <a href="author.html#6296">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

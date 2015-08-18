@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.5.1 Release won't start
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.5.1%20Release%20won%27t%20start&In-Reply-To=%3C47D6A516.5040007%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000144.html">
+   <LINK REL="Next"  HREF="000151.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.5.1 Release won't start</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.5.1%20Release%20won%27t%20start&In-Reply-To=%3C47D6A516.5040007%40googlemail.com%3E"
+       TITLE="[Opensim-users] OpenSim 0.5.1 Release won't start">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Mar 11 16:28:22 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000144.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+        <LI>Next message: <A HREF="000151.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#146">[ date ]</a>
+              <a href="thread.html#146">[ thread ]</a>
+              <a href="subject.html#146">[ subject ]</a>
+              <a href="author.html#146">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Joe Greene wrote:
+&gt;<i>
+</I>&gt;<i> Thanks That got rid of the sqlite complaints.. of course, now I've
+</I>&gt;<i> a new error.. which makes me think my MySQL DB may be damaged.
+</I>&gt;<i>
+</I>&gt;<i> Exception: MySql.Data.MySqlClient.MySqlException: Table
+</I>&gt;<i> 'INFORMATION_SCHEMA.TABLES' doesn't exist
+</I>&gt;<i>
+</I>&gt;<i> Has anyone seen that error?
+</I>&gt;<i>
+</I>OpenSim requires version 5 of MySql, which is the first one which has 
+the INFORMATION_SCHEMA table
+
+--
+justincc
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> Joe Greene
+</I>&gt;<i> UNIX Systems, Network and IT Specialist
+</I>&gt;<i> If you aren't having fun, you're doing the wrong thing!
+</I>&gt;<i> All opinions expressed are mine alone. You Can't Have them!
+</I>&gt;<i>
+</I>&gt;<i> Fish Kungfu &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fish.kungfu at earthlink.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Below is my OpenSim.ini file for using MySQL running in standalone mode
+</I>&gt;<i> &gt; for 0.5.0, with MySQL on the same box as opensim.  You will need to put
+</I>&gt;<i> &gt; your password for MySQL root user, or whatever user you're using.  I had
+</I>&gt;<i> &gt; to create the empty database, &quot;opensim&quot; before everything would work.
+</I>&gt;<i> &gt; Then, remember to GRANT ALL privileges to your userName for the opensim
+</I>&gt;<i> &gt; database, and then FLUSH PRIVILEGES.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I had to add these lines to the example file that came with the
+</I>&gt;<i> &gt; installer to make it work.  This tripped me up, and caused the SQLite
+</I>&gt;<i> &gt; activity in the log at startup.  They are included in my OpenSim.ini 
+</I>&gt;<i> below
+</I>&gt;<i> &gt;    asset_database = &quot;mysql&quot;
+</I>&gt;<i> &gt;    asset_plugin = &quot;OpenSim.Framework.Data.MySQL.dll&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I hope this helps.....Fish
+</I>&gt;<i> [snip]
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Joe Greene wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Problem Desc: Opensim [ASSET SERVER] appear to be attempting to open
+</I>&gt;<i> &gt;&gt; and SQLitew database althoguh no such reference appears (even in
+</I>&gt;<i> &gt;&gt; comments) in my OpenSim.ini file. As I'm using MySQL (both the
+</I>&gt;<i> &gt;&gt; OpenSim.ini and the mysql_connection.ini) I have no SQLite installed.
+</I>&gt;<i> &gt;&gt; Any suggestions on what I'm doing wrong, or shall I submit my 
+</I>&gt;<i> OpenSim.ini
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Version Info:
+</I>&gt;<i> &gt;&gt; SuSe Enterprise 9.3 ( with updates )
+</I>&gt;<i> &gt;&gt; Mono: Mono JIT compiler version 1.2.6 (Installed via YAST from Mono 
+</I>&gt;<i> Site)
+</I>&gt;<i> &gt;&gt; MySQL: 4.1.10a
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; libode 0.9-25
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Console Log:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim at opensim1</A>:~/bin&gt; mono OpenSim.exe
+</I>&gt;<i> &gt;&gt; OpenSim 0.5, SVN build
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000144.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+	<LI>Next message: <A HREF="000151.html">[Opensim-users] OpenSim 0.5.1 Release won't start
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#146">[ date ]</a>
+              <a href="thread.html#146">[ thread ]</a>
+              <a href="subject.html#146">[ subject ]</a>
+              <a href="author.html#146">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

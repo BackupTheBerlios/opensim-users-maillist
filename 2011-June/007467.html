@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Database backups, recommended methods
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-June/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20backups%2C%20recommended%20methods&In-Reply-To=%3C4DEF8312.2070202%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="007463.html">
+   <LINK REL="Next"  HREF="007471.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Database backups, recommended methods</H1>
+    <B>InuYasha Meiji</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Database%20backups%2C%20recommended%20methods&In-Reply-To=%3C4DEF8312.2070202%40gmail.com%3E"
+       TITLE="[Opensim-users] Database backups, recommended methods">inuyasha.meiji at gmail.com
+       </A><BR>
+    <I>Wed Jun  8 16:11:30 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="007463.html">[Opensim-users] Database backups, recommended methods
+</A></li>
+        <LI>Next message: <A HREF="007471.html">[Opensim-users] Database backups, recommended methods
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7467">[ date ]</a>
+              <a href="thread.html#7467">[ thread ]</a>
+              <a href="subject.html#7467">[ subject ]</a>
+              <a href="author.html#7467">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>As for myself I simply made a winods batch file, instructing windows to 
+perform a list of commends.   I called MySQL Backup.  A file I run 
+manualy.  It contans this:
+
+cd /.
+cd program files
+cd MySQL
+cd MySQL Server 5.1
+cd bin
+mysqldump -u &lt;root user name&gt; -p&lt;your password&gt; --databases opensim 
+ &gt;\tmp\opensim.sql
+
+mysqldump comes with mysql 5.1 and higher, this batch file simply sends 
+commands to find it in my installed MYSQL directory where mysqldump 
+resides and gets all of my opwnsim's data, tables and all and places it 
+as a sql file into my TMP directory.  Then I use a program like 7zip to 
+compress it to a 7z file that I burn to a DVD or later once the backup 
+becomes to large a set of DVD spanned across several disk using 7zip.
+
+To restore my database I made another batch file I created and lucky me, 
+I only had to use once.  It does prove that it worked though.  It looks 
+like this.
+
+cd /.
+cd program files
+cd MySQL
+cd MySQL Server 5.1
+cd bin
+mysql -u &lt;root user name. -p&lt;your password&gt; opensim &lt; /tmp/opensim.sql
+
+
+And this restores it for me.  Once I unzip the sql file and place it in 
+my tmp directory folder.  Of corse ,root user is your root user name, 
+and the password too.  I took mine out for security reasons.
+
+Good luck, I wish you only the best.
+InuYasha.
+
+
+
+
+On 6/7/2011 8:36 PM, Mimetic Core wrote:
+&gt;<i> HI Missyfitz,
+</I>&gt;<i>
+</I>&gt;<i> Many people will have their own recommendations for backing up 
+</I>&gt;<i> databases, all relative to their own experience levels.  As far as I'm 
+</I>&gt;<i> concerned (even as a seasoned tech) tasks like database management 
+</I>&gt;<i> should be easy and require as little of our precious time as 
+</I>&gt;<i> possible.  There's a great web-based tool for backing up databases 
+</I>&gt;<i> that I use and highly recommend to anyone of any experience level 
+</I>&gt;<i> called MySQLDumper.  It's open source and can be found here:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.mysqldumper.net">http://www.mysqldumper.net</A>
+</I>&gt;<i>
+</I>&gt;<i> I won't go into too many details as you can read about them for 
+</I>&gt;<i> yourself, but I will say that it can back up single/multiple databases 
+</I>&gt;<i> and compress them which makes archiving them very easy.  It takes 
+</I>&gt;<i> about 1 minute to install and has a fairly straightforward interface.  
+</I>&gt;<i> It does require a functional web server, preferably on the same 
+</I>&gt;<i> machine as your SQL database(s) which is usually the case.
+</I>&gt;<i>
+</I>&gt;<i> Check it out.  If you don't get all the info you need from the site, 
+</I>&gt;<i> I'll be happy to help you in any way I can as I've been using 
+</I>&gt;<i> MySQLDumper for some time now.  Cheers.
+</I>&gt;<i>
+</I>&gt;<i> core
+</I>&gt;<i>
+</I>&gt;<i> On 6/7/2011 5:12 PM, missyfitz wrote:
+</I>&gt;&gt;<i> What is the recommended method(s) for doing a database backup? Is it 
+</I>&gt;&gt;<i> simply a
+</I>&gt;&gt;<i> matter of backing up the mySQL database file to external storage or 
+</I>&gt;&gt;<i> dvd, or
+</I>&gt;&gt;<i> is there some method for exporting all the tables to a text file? 
+</I>&gt;&gt;<i> I've seen
+</I>&gt;&gt;<i> reference to the latter someplace, but don't have it bookmarked and 
+</I>&gt;&gt;<i> am not
+</I>&gt;&gt;<i> sure if that's the better way to go, or possibly the only way to go...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Am I safe simply archiving the mySQL database file itself, or should 
+</I>&gt;&gt;<i> I be
+</I>&gt;&gt;<i> using some method to export all the tables / data to a separate file and
+</I>&gt;&gt;<i> then archiving that file? If so, can you describe briefly how to do the
+</I>&gt;&gt;<i> export to grab all the database data, or point me in the right 
+</I>&gt;&gt;<i> direction?
+</I>&gt;&gt;<i> Also, is there an automated way (WinXP) to do this, say, every 6 
+</I>&gt;&gt;<i> hours, or
+</I>&gt;&gt;<i> is it best done manually?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (I'm a mySQL novice, as I'm sure many people here are, so I think 
+</I>&gt;&gt;<i> this info
+</I>&gt;&gt;<i> clearly outlined would be beneficial to a lot of us)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> View this message in context: 
+</I>&gt;&gt;<i> <A HREF="http://opensim-users.2152040.n2.nabble.com/Database-backups-recommended-methods-tp6451598p6451598.html">http://opensim-users.2152040.n2.nabble.com/Database-backups-recommended-methods-tp6451598p6451598.html</A>
+</I>&gt;&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+________________________________________________________________
+Opensim User: Standalone Grid on Version 0.7.1.1 with 49 Regions
+on Windows 7, 64-bit. Phenom 9500 2.2 ghz Quad Core, Terabyte Hard
+Drive, 8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+and MySQL 5.1.41-community edition.  Modules not yet successful
+________________________________________________________________
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110608/7ffabe48/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110608/7ffabe48/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="007463.html">[Opensim-users] Database backups, recommended methods
+</A></li>
+	<LI>Next message: <A HREF="007471.html">[Opensim-users] Database backups, recommended methods
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7467">[ date ]</a>
+              <a href="thread.html#7467">[ thread ]</a>
+              <a href="subject.html#7467">[ subject ]</a>
+              <a href="author.html#7467">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

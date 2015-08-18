@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Random%20OS%20console%20freeze%20on%20login%3B%0A%09OS%200.7.2%20Master&In-Reply-To=%3C4E7D207D.6010108%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008206.html">
+   <LINK REL="Next"  HREF="008211.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Random%20OS%20console%20freeze%20on%20login%3B%0A%09OS%200.7.2%20Master&In-Reply-To=%3C4E7D207D.6010108%40googlemail.com%3E"
+       TITLE="[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sat Sep 24 02:12:45 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008206.html">[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+</A></li>
+        <LI>Next message: <A HREF="008211.html">[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8208">[ date ]</a>
+              <a href="thread.html#8208">[ thread ]</a>
+              <a href="subject.html#8208">[ subject ]</a>
+              <a href="author.html#8208">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Inspection of the EventQueueGetModule revealed some places where we weren't locking a client queue properly to protect 
+against competing threads.
+
+I improved this in git master 839c1cd.  This might help.  If not, please could you open a new mantis and put this 
+information in there.
+
+Thanks Chris!
+
+On 23/09/11 18:35, Chris wrote:
+&gt;<i> I am not sure if this is related to the OS console freeze but I just got an exception message this time on console freeze:
+</I>&gt;<i>
+</I>&gt;<i> 12:32:06 - [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i>
+</I>&gt;<i> Exception: System.ArgumentException: Destination array was not long enough. Chec
+</I>&gt;<i> k destIndex and length, and the array's lower bounds.
+</I>&gt;<i>
+</I>&gt;<i> Server stack trace:
+</I>&gt;<i> at System.Array.Copy(Array sourceArray, Int32 sourceIndex, Array destinationA
+</I>&gt;<i> rray, Int32 destinationIndex, Int32 length, Boolean reliable)
+</I>&gt;<i> at System.Collections.Generic.Queue`1.SetCapacity(Int32 capacity)
+</I>&gt;<i> at System.Collections.Generic.Queue`1.Enqueue(T item)
+</I>&gt;<i> at OpenSim.Region.ClientStack.Linden.EventQueueGetModule.Enqueue(OSD ev, UUID
+</I>&gt;<i> avatarID) in c:\Documents and Settings\Chris\Desktop\opensim-tree-cbd2705 r1674
+</I>&gt;<i> 4\OpenSim\Region\ClientStack\Linden\Caps\EventQueue\EventQueueGetModule.cs:line
+</I>&gt;<i> 182
+</I>&gt;<i> at OpenSim.Region.ClientStack.Linden.EventQueueGetModule.EstablishAgentCommun
+</I>&gt;<i> ication(UUID avatarID, IPEndPoint endPoint, String capsPath) in c:\Documents and
+</I>&gt;<i> Settings\Chris\Desktop\opensim-tree-cbd2705 r16744\OpenSim\Region\ClientStack\L
+</I>&gt;<i> inden\Caps\EventQueue\EventQueueGetModule.cs:line 660
+</I>&gt;<i> at OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule.I
+</I>&gt;<i> nformClientOfNeighbourAsync(ScenePresence sp, AgentCircuitData a, GridRegion reg
+</I>&gt;<i> , IPEndPoint endPoint, Boolean newAgent) in c:\Documents and Settings\Chris\Desk
+</I>&gt;<i> top\opensim-tree-cbd2705 r16744\OpenSim\Region\CoreModules\Framework\EntityTrans
+</I>&gt;<i> fer\EntityTransferModule.cs:line 1355
+</I>&gt;<i> at System.Runtime.Remoting.Messaging.StackBuilderSink._PrivateProcessMessage(
+</I>&gt;<i> IntPtr md, Object[] args, Object server, Int32 methodPtr, Boolean fExecuteInCont
+</I>&gt;<i> ext, Object[]&amp; outArgs)
+</I>&gt;<i> at System.Runtime.Remoting.Messaging.StackBuilderSink.PrivateProcessMessage(R
+</I>&gt;<i> untimeMethodHandle md, Object[] args, Object server, Int32 methodPtr, Boolean fE
+</I>&gt;<i> xecuteInContext, Object[]&amp; outArgs)
+</I>&gt;<i> at System.Runtime.Remoting.Messaging.StackBuilderSink.AsyncProcessMessage(IMe
+</I>&gt;<i> ssage msg, IMessageSink replySink)
+</I>&gt;<i>
+</I>&gt;<i> Exception rethrown at [0]:
+</I>&gt;<i> at System.Runtime.Remoting.Proxies.RealProxy.EndInvokeHelper(Message reqMsg,
+</I>&gt;<i> Boolean bProxyCase)
+</I>&gt;<i> at System.Runtime.Remoting.Proxies.RemotingProxy.Invoke(Object NotUsed, Messa
+</I>&gt;<i> geData&amp; msgData)
+</I>&gt;<i> at OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule.I
+</I>&gt;<i> nformClientOfNeighbourDelegate.EndInvoke(IAsyncResult result)
+</I>&gt;<i> at OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule.I
+</I>&gt;<i> nformClientOfNeighbourCompleted(IAsyncResult iar) in c:\Documents and Settings\C
+</I>&gt;<i> hris\Desktop\opensim-tree-cbd2705 r16744\OpenSim\Region\CoreModules\Framework\En
+</I>&gt;<i> tityTransfer\EntityTransferModule.cs:line 1301
+</I>&gt;<i> at System.Runtime.Remoting.Messaging.AsyncResult.SyncProcessMessage(IMessage
+</I>&gt;<i> msg)
+</I>&gt;<i> at System.Runtime.Remoting.Messaging.StackBuilderSink.AsyncProcessMessage(IMe
+</I>&gt;<i> ssage msg, IMessageSink replySink)
+</I>&gt;<i> at System.Runtime.Remoting.Proxies.AgileAsyncWorkerItem.DoAsyncCall()
+</I>&gt;<i> at System.Runtime.Remoting.Proxies.AgileAsyncWorkerItem.ThreadPoolCallBack(Ob
+</I>&gt;<i> ject o)
+</I>&gt;<i> at System.Threading._ThreadPoolWaitCallback.WaitCallback_Context(Object state
+</I>&gt;<i> )
+</I>&gt;<i> at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, C
+</I>&gt;<i> ontextCallback callback, Object state)
+</I>&gt;<i> at System.Threading._ThreadPoolWaitCallback.PerformWaitCallbackInternal(_Thre
+</I>&gt;<i> adPoolWaitCallback tpWaitCallBack)
+</I>&gt;<i> at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback(Object state)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hope this helps
+</I>&gt;<i> Thank you =)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org/blog">http://justincc.org/blog</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008206.html">[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+</A></li>
+	<LI>Next message: <A HREF="008211.html">[Opensim-users] Random OS console freeze on login;	OS 0.7.2 Master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8208">[ date ]</a>
+              <a href="thread.html#8208">[ thread ]</a>
+              <a href="subject.html#8208">[ subject ]</a>
+              <a href="author.html#8208">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

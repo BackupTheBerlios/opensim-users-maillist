@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Change console prompt
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Change%20console%20prompt&In-Reply-To=%3CAE37FD675E4F400AAA676D1AB86D56F2%40Deimos%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008462.html">
+   <LINK REL="Next"  HREF="008465.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Change console prompt</H1>
+    <B>Garmin Kawaguichi</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Change%20console%20prompt&In-Reply-To=%3CAE37FD675E4F400AAA676D1AB86D56F2%40Deimos%3E"
+       TITLE="[Opensim-users] Change console prompt">garmin.kawaguichi at magalaxie.com
+       </A><BR>
+    <I>Fri Oct 28 13:34:29 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008462.html">[Opensim-users] Change console prompt
+</A></li>
+        <LI>Next message: <A HREF="008465.html">[Opensim-users] Change console prompt
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8463">[ date ]</a>
+              <a href="thread.html#8463">[ thread ]</a>
+              <a href="subject.html#8463">[ subject ]</a>
+              <a href="author.html#8463">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK May be it's not!
+I tried that:
+File OpenSim.cs around line 200
+
+I commented 2 lines
+
+            if (m_sceneManager.Scenes.Count == 1) // If there is only one
+region, select it
+                ChangeSelectedRegion(&quot;region&quot;,
+                                     new string[] {&quot;change&quot;, &quot;region&quot;,
+m_sceneManager.Scenes[0].RegionInfo.RegionName});
+            //else
+                //ChangeSelectedRegion(&quot;region&quot;, new string[] {&quot;change&quot;,
+&quot;region&quot;, &quot;root&quot;});
+
+and with a startup_commands.txt containing
+change region your_favorite_region
+
+I have obtained on the console:
+Region (your_favorite_region) #
+==========================
+Remark : I'm not able to test the whole OpenSim consequence. When there is
+not a change region in the startup_commands.txt, the console displays:
+Region#
+
+I suppose that the best solution is to move
+            //Run Startup Commands
+            if (String.IsNullOrEmpty(m_startupCommandsFile))
+            {
+                m_log.Info(&quot;[STARTUP]: No startup command script specified.
+Moving on...&quot;);
+            }
+            else
+            {
+                RunCommandScript(m_startupCommandsFile);
+            }
+after
+            // For now, start at the 'root' level by default
+            if (m_sceneManager.Scenes.Count == 1) // If there is only one
+region, select it
+                ChangeSelectedRegion(&quot;region&quot;,
+                                     new string[] {&quot;change&quot;, &quot;region&quot;,
+m_sceneManager.Scenes[0].RegionInfo.RegionName});
+            else
+                ChangeSelectedRegion(&quot;region&quot;, new string[] {&quot;change&quot;,
+&quot;region&quot;, &quot;root&quot;});
+
+
+GCI
+
+&gt;<i>----- Original Message ----- 
+</I>&gt;<i>From: &quot;Garmin Kawaguichi&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">garmin.kawaguichi at magalaxie.com</A>&gt;
+</I>&gt;<i>Sent: Friday, October 28, 2011 12:19 PM
+</I>&gt;<i>Subject: Re: [Opensim-users] Change console prompt
+</I>
+
+&gt;<i> &gt;----- Original Message ----- 
+</I>&gt;&gt;<i>From: &quot;Gudule Lapointe&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">gudule at spekuloos.be</A>&gt;
+</I>&gt;&gt;<i>Sent: Thursday, October 27, 2011 10:18 PM
+</I>&gt;&gt;<i>Subject: Re: [Opensim-users] Change console prompt
+</I>&gt;&gt;<i>Of course, if I type &quot;show info&quot; or &quot;show regions&quot;, I know where I am. I
+</I>&gt;&gt;<i>would just want to see it immediately, to choose the right console
+</I>&gt;&gt;<i>quicker.
+</I>&gt;<i>
+</I>...   ...
+&gt;<i> If it is possible to have a command file executed at the very end of
+</I>&gt;<i> OpenSim
+</I>&gt;<i> init, that will be useful for all, but it's beyond me :))
+</I>&gt;<i>
+</I>&gt;<i> GCI
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008462.html">[Opensim-users] Change console prompt
+</A></li>
+	<LI>Next message: <A HREF="008465.html">[Opensim-users] Change console prompt
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8463">[ date ]</a>
+              <a href="thread.html#8463">[ thread ]</a>
+              <a href="subject.html#8463">[ subject ]</a>
+              <a href="author.html#8463">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

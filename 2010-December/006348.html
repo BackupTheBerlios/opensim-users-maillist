@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow LSL timers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3CAANLkTi%3DPa9QKuyo%2B0NoCq5HhL6RsmF04xKwvqsMEd3sh%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006347.html">
+   <LINK REL="Next"  HREF="006349.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow LSL timers</H1>
+    <B>Jorge Lima</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3CAANLkTi%3DPa9QKuyo%2B0NoCq5HhL6RsmF04xKwvqsMEd3sh%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Slow LSL timers">jorge.manuel at gmail.com
+       </A><BR>
+    <I>Fri Dec  3 18:18:11 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006347.html">[Opensim-users] ReactionGrid Releases Open Source	GroupsFunctionality for OpenSimulator
+</A></li>
+        <LI>Next message: <A HREF="006349.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6348">[ date ]</a>
+              <a href="thread.html#6348">[ thread ]</a>
+              <a href="subject.html#6348">[ subject ]</a>
+              <a href="author.html#6348">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ran 100 timer events with a single if(++i &gt; 100) inside. I suppose
+decrementing and comparing to 0 might be faster, but I also
+copy-pasted 100 inlined if clauses and the time to run them was
+negligible.
+
+llSetTimerEvent(0.1) -&gt; 59 s -&gt; 490% overhead
+llSetTimerEvent(0.2) -&gt; 59 s -&gt; 195% overhead
+llSetTimerEvent(0.5) -&gt; 59 s -&gt; 18% overhead
+llSetTimerEvent(0.75) -&gt; 81 s -&gt; 8% overhead
+llSetTimerEvent(1.0) -&gt; 108 s -&gt; 8% overhead
+llSetTimerEvent(2.0) -&gt; 209 s -&gt; 4.5% overhead
+llSetTimerEvent(4.0) -&gt; 407 s -&gt; 1.75% overhead
+
+I am guessing that the overhead is, therefore, internal to the timer
+implementation. I haven't tested raw C# timers as comparison but 100ms
+is an eternity in modern computing, I can ping servers across the
+Atlantic ocean in less than that!
+
+I went through the code but I haven't yet found the part that handles
+timers. It's not in EventManager.
+Does anyone know what's going on? The code works fine in SL.
+Should I be posting this in the dev list? I'd like to see if I can fix it.
+Any thoughts on how to get fast timers in OpenSim?
+Faster computer? (I did check and was only getting about 20% CPU usage...)
+Porting them to a Real-Time operating system? :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006347.html">[Opensim-users] ReactionGrid Releases Open Source	GroupsFunctionality for OpenSimulator
+</A></li>
+	<LI>Next message: <A HREF="006349.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6348">[ date ]</a>
+              <a href="thread.html#6348">[ thread ]</a>
+              <a href="subject.html#6348">[ subject ]</a>
+              <a href="author.html#6348">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

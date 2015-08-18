@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NPC module?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20module%3F&In-Reply-To=%3CAANLkTik54np-XmvYbMuQtE3C-EgfMUhHiHS%3DrafDkVKm%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005550.html">
+   <LINK REL="Next"  HREF="005544.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NPC module?</H1>
+    <B>bodzette Coignet</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20module%3F&In-Reply-To=%3CAANLkTik54np-XmvYbMuQtE3C-EgfMUhHiHS%3DrafDkVKm%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] NPC module?">bodzettecoignet at gmail.com
+       </A><BR>
+    <I>Fri Sep 17 23:06:40 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005550.html">[Opensim-users] NPC module?
+</A></li>
+        <LI>Next message: <A HREF="005544.html">[Opensim-users] NPC module?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5552">[ date ]</a>
+              <a href="thread.html#5552">[ thread ]</a>
+              <a href="subject.html#5552">[ subject ]</a>
+              <a href="author.html#5552">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Could you please give a 30 second description of what you did so I can
+quickly get into the coding?
+
+On Fri, Sep 17, 2010 at 2:40 PM, Juliana Dutra &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kila01 at yahoo.com</A>&gt; wrote:
+
+&gt;<i> Just tested it and AllowOSFunctions = true is not needed.
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i> *From:* Marcus Alexander Link &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">manupool at gmail.com</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> *To:* <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> *Sent:* Fri, September 17, 2010 3:44:56 AM
+</I>&gt;<i>
+</I>&gt;<i> *Subject:* Re: [Opensim-users] NPC module?
+</I>&gt;<i>
+</I>&gt;<i> Is the
+</I>&gt;<i> AllowOSFunctions = true
+</I>&gt;<i>
+</I>&gt;<i> really neccessary or should allowing a function for an agent explicitly
+</I>&gt;<i> Allow_osNpcCreate = UUID (your uuid)
+</I>&gt;<i>
+</I>&gt;<i> have more 'weight' and keep the overall AllowOSFunctions = false?
+</I>&gt;<i>
+</I>&gt;<i> On 9/17/10, Juliana Dutra &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kila01 at yahoo.com</A>&gt; wrote:
+</I>&gt;<i> &gt; On Opensim.ini add to xengine section
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; [XEngine]
+</I>&gt;<i> &gt; AllowOSFunctions = true
+</I>&gt;<i> &gt; Allow_osNpcCreate = UUID (your uuid)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ________________________________
+</I>&gt;<i> &gt; From: Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; Sent: Thu, September 16, 2010 5:47:57 PM
+</I>&gt;<i> &gt; Subject: Re: [Opensim-users] NPC module?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On 16/09/10 23:23, bodzette Coignet wrote:
+</I>&gt;<i> &gt;&gt; Hi Justin:
+</I>&gt;<i> &gt;&gt; On your blog you have a post &quot;passing data between a script and a region
+</I>&gt;<i> &gt;&gt; module with modSendCommand()&quot;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Is that more or less how I would go about testing whether I can invoke
+</I>&gt;<i> &gt;&gt; this code?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; No, you would invoke the npc via normal script commands with an os
+</I>&gt;<i> prefix,
+</I>&gt;<i> &gt; e.g.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; default
+</I>&gt;<i> &gt; {
+</I>&gt;<i> &gt;      touch_start(integer total_number)
+</I>&gt;<i> &gt;      {
+</I>&gt;<i> &gt;          key cloneKey = osNpcCreate(&quot;Scary&quot;, &quot;Clone&quot;, &lt;134, 194, 43&gt;,
+</I>&gt;<i> &gt; llDetectedKey(0));
+</I>&gt;<i> &gt;      }
+</I>&gt;<i> &gt; }
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; There's no real documentation of these apart from the code (in
+</I>&gt;<i> OSSL_Api.cs).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; However, they are the last four in the list at
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> <A HREF="http://www.scengine.org/index.php?option=com_content&amp;view=article&amp;id=10:opensim-api-functions&amp;catid=6:os-api-functions&amp;Itemid=14">http://www.scengine.org/index.php?option=com_content&amp;view=article&amp;id=10:opensim-api-functions&amp;catid=6:os-api-functions&amp;Itemid=14</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It also looks like someone else already tried them without success.
+</I>&gt;<i> Which
+</I>&gt;<i> &gt; leads
+</I>&gt;<i> &gt; me to suspect that they no longer work.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="http://www.osgrid.org/forums/viewtopic.php?f=5&amp;t=2699">http://www.osgrid.org/forums/viewtopic.php?f=5&amp;t=2699</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Remember, you will need to enable OSSL functions at a High threat level.
+</I>&gt;<i> &gt; Information on how to do this should be
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; available via Google.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Thu, Sep 16, 2010 at 3:36 PM, Justin Clark-Casey
+</I>&gt;<i> &gt;&gt; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;    On 16/09/10 22:27, bodzette Coignet wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;        No, I'm talking about the NPC module that's in the opensim
+</I>&gt;<i> &gt;&gt;        source code
+</I>&gt;<i> &gt;&gt;        found at the following location in the source tree:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;        OpenSim\Region\OptionalModules\World\NPC
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;        Does *nobody* know who the original dev is that did this work?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;    That module has been there for ages.  You should be able to find out
+</I>&gt;<i> &gt;&gt;    who created it by looking in the git logs.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;      &gt;From a quick code inspection, it looks like the CreateNPC method
+</I>&gt;<i> &gt;&gt;    needs to be triggered to get anything to happen.  This is hooked up
+</I>&gt;<i> &gt;&gt;    to the osNpcCreate() command (in the OSSL_Api.cs file).  You could
+</I>&gt;<i> &gt;&gt;    try invoking this command via an in-world script - it looks like
+</I>&gt;<i> &gt;&gt;    you'll need the uuid of an existing avatar to get going.  There are
+</I>&gt;<i> &gt;&gt;    some other os commands there which appear to the NPC module (say,
+</I>&gt;<i> &gt;&gt;    move, remove).
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;    It's also very possible that this module doesn't work any more - I
+</I>&gt;<i> &gt;&gt;    haven't heard of anybody trying to use it for a long time.  The only
+</I>&gt;<i> &gt;&gt;    way to find out is to try it.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;    --
+</I>&gt;<i> &gt;&gt;    Justin Clark-Casey (justincc)
+</I>&gt;<i> &gt;&gt;    <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> &gt;&gt;    <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;    _______________________________________________
+</I>&gt;<i> &gt;&gt;    Opensim-users mailing list
+</I>&gt;<i> &gt;&gt;    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i> &gt;&gt;    <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Opensim-users mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; Justin Clark-Casey (justincc)
+</I>&gt;<i> &gt; <A HREF="http://justincc.org">http://justincc.org</A>
+</I>&gt;<i> &gt; <A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Marcus A. Link
+</I>&gt;<i> Entrepreneur @Manupool
+</I>&gt;<i> A Product Development Community
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.manupool.de">http://www.manupool.de</A>
+</I>&gt;<i> Mobile: +49 1577 422 0000
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20100917/8cf10cf3/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20100917/8cf10cf3/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005550.html">[Opensim-users] NPC module?
+</A></li>
+	<LI>Next message: <A HREF="005544.html">[Opensim-users] NPC module?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5552">[ date ]</a>
+              <a href="thread.html#5552">[ thread ]</a>
+              <a href="subject.html#5552">[ subject ]</a>
+              <a href="author.html#5552">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

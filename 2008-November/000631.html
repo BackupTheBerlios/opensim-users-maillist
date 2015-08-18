@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] objects undergoing continuous change
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20objects%20undergoing%20continuous%20change&In-Reply-To=%3C491992B0.8010905%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000627.html">
+   <LINK REL="Next"  HREF="000639.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] objects undergoing continuous change</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20objects%20undergoing%20continuous%20change&In-Reply-To=%3C491992B0.8010905%40googlemail.com%3E"
+       TITLE="[Opensim-users] objects undergoing continuous change">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Nov 11 15:12:00 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000627.html">[Opensim-users] objects undergoing continuous change
+</A></li>
+        <LI>Next message: <A HREF="000639.html">[Opensim-users] objects undergoing continuous change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#631">[ date ]</a>
+              <a href="thread.html#631">[ thread ]</a>
+              <a href="subject.html#631">[ subject ]</a>
+              <a href="author.html#631">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Paul Fishwick wrote:
+&gt;<i> I am curious as to how OpenSim currently deals with updating changing object
+</I>&gt;<i> attributes over time (position and orientation for example). These dynamic
+</I>&gt;<i> changes can come about either through LSL scripting or while running the 
+</I>&gt;<i> Physics
+</I>&gt;<i> engine.
+</I>&gt;<i> 
+</I>&gt;<i> Presumably, many (most) of these are kept in memory? With a reasonable
+</I>&gt;<i> amount of server memory (4GB) one would hope that a region or small grid 
+</I>&gt;<i> could
+</I>&gt;<i> maintain all changing attribute without ever going back to the database 
+</I>&gt;<i> except
+</I>&gt;<i> for (1) initial connections and (2) shutdowns.  Also, it would seem that 
+</I>&gt;<i> some of these
+</I>&gt;<i> changes could be done client-side?
+</I>&gt;<i> 
+</I>&gt;<i> So, I have 2 questions:
+</I>&gt;<i> 
+</I>&gt;<i>  * Where are these attributes stored (in memory, in the database, or in 
+</I>&gt;<i> a memory
+</I>&gt;<i>     hierarchy where there is a memory cache that automatically flushes 
+</I>&gt;<i> to the
+</I>&gt;<i>     database when it is required) ?
+</I>
+Yes, things are stored in memory with a regular flush to database that occurs every 15 seconds.  However, I suspect that 
+objects with the physics attribute are not currently persisted (from a recent thread on opensim-dev).
+
+&gt;<i> 
+</I>&gt;<i>  * Would it (or is it) useful to have some scripts run on the client 
+</I>&gt;<i> rather than the
+</I>&gt;<i>     server for less server loading? For example, could ODE run on the 
+</I>&gt;<i> client
+</I>
+I think that some minor stuff is done client side already (such as flexiprims).  However, I suspect one runs into 
+difficulties when objects can affect each other, since you would have to start communicating all this information back 
+to the server and somehow synchronizing it with changes from other clients.
+
+However, I am not an expert in this area.
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000627.html">[Opensim-users] objects undergoing continuous change
+</A></li>
+	<LI>Next message: <A HREF="000639.html">[Opensim-users] objects undergoing continuous change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#631">[ date ]</a>
+              <a href="thread.html#631">[ thread ]</a>
+              <a href="subject.html#631">[ subject ]</a>
+              <a href="author.html#631">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

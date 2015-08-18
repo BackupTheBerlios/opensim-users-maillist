@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Still trying to set up groups - progress and	problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Still%20trying%20to%20set%20up%20groups%20-%20progress%20and%0A%09problems&In-Reply-To=%3C4EA6D164.9020209%40mitre.org%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008442.html">
+   <LINK REL="Next"  HREF="008444.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Still trying to set up groups - progress and	problems</H1>
+    <B>Kurt Reisler</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Still%20trying%20to%20set%20up%20groups%20-%20progress%20and%0A%09problems&In-Reply-To=%3C4EA6D164.9020209%40mitre.org%3E"
+       TITLE="[Opensim-users] Still trying to set up groups - progress and	problems">kreisler at mitre.org
+       </A><BR>
+    <I>Tue Oct 25 17:10:28 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008442.html">[Opensim-users] Problems with WIFI 0.7
+</A></li>
+        <LI>Next message: <A HREF="008444.html">[Opensim-users] Still trying to set up groups - progress and	problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8443">[ date ]</a>
+              <a href="thread.html#8443">[ thread ]</a>
+              <a href="subject.html#8443">[ subject ]</a>
+              <a href="author.html#8443">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks to Justin's changes, I was able to get the MySQL (5.5.16) 
+database tables created.  I have PHP installed with IIS on a Windows 
+2008 server (tested with a helloworld.php script). Running OpenSim 0.7.2 
+with the OpenSim.ini module modified to include the following:
+
+    Groups]
+         ;# {Enabled} {} {Enable groups?} {true false} false
+         ;; Enables the groups module
+         Enabled = true
+
+         ;# {Module} {Enabled:true} {Groups module to use? (Use
+    GroupsModule to use Flotsam/Simian)} {} Default
+         ;; This is the current groups stub in
+    Region.CoreModules.Avatar.Groups.
+         ;; All the other settings below only really apply to the
+    Flotsam/SimianGrid
+         ;; GroupsModule.
+         ;; This module can use a PHP XmlRpc server from the Flotsam
+    project at
+         ;; <A HREF="http://code.google.com/p/flotsam/">http://code.google.com/p/flotsam/</A>
+         ;; or from the SimianGrid project at
+    <A HREF="http://code.google.com/p/openmetaverse">http://code.google.com/p/openmetaverse</A>
+         Module = GroupsModule
+
+         ;# {MessagingEnabled} {Module:GroupsModule} {Is groups
+    messaging enabled?} {true false} true
+         MessagingEnabled = true
+
+         ;# {MessagingModule} {MessagingEnabled:true} {Module to use for
+    groups messaging} {GroupsMessagingModule} GroupsMessagingModule
+         MessagingModule = GroupsMessagingModule
+
+         ;# {ServicesConnectorModule} {Module:GroupsModule} {Service
+    connector to use for groups} {XmlRpcGroupsServicesConnector
+    SimianGroupsServicesConnector} XmlRpcGroupsServicesConnector
+         ;; Service connectors to the Groups Service as used in the
+    GroupsModule.  Select one depending on
+         ;; whether you're using a Flotsam XmlRpc backend or a
+    SimianGrid backend
+         ServicesConnectorModule = XmlRpcGroupsServicesConnector
+         XmlRpcServiceURL        =
+    <A HREF="http://mosgrid.mitre.org/groups/xmlrpc.php">http://mosgrid.mitre.org/groups/xmlrpc.php</A>
+
+         ;# {GroupsServerURI} {Module:GroupsModule} {Groups Server URI} {}
+         ;; URI for the groups services
+         ;; e.g. <A HREF="http://yourxmlrpcserver.com/xmlrpc.php">http://yourxmlrpcserver.com/xmlrpc.php</A> for Flotsam XmlRpc
+         ;; or <A HREF="http://mygridserver.com:82/Grid/">http://mygridserver.com:82/Grid/</A> for SimianGrid
+         GroupsServerURI = <A HREF="http://mosgrid.mitre.org/groups/xmlrpc.php">http://mosgrid.mitre.org/groups/xmlrpc.php</A>
+
+         ;# {NoticesEnabled} {Module:GroupsModule} {Enable group
+    notices?} {true false} true
+         ;; Enable Group Notices
+         NoticesEnabled = true
+
+         ;; This makes the Groups modules very chatty on the console.
+         DebugEnabled = true
+
+         ;; XmlRpc Security settings.  These must match those set on
+    your backend
+         ;; groups service if the service is using these keys
+         XmlRpcServiceReadKey    = 1234
+         XmlRpcServiceWriteKey   = 1234
+
+         ; Disables HTTP Keep-Alive for XmlRpcGroupsServicesConnector
+    HTTP Requests,
+         ; this is a work around fora problem discovered on some Windows
+    based region servers.
+         ; Only disable keep alive if you see a large number (dozens) of
+    the following Exceptions:
+         ; System.Net.WebException: The request was aborted: The request
+    was canceled.
+         ;
+         ; XmlRpcDisableKeepAlive = false
+
+When I attempt to create a new group, I get the following error every 
+time the XMLRPC-GROUPS-CONNECTOR is called.
+
+    10:31:09 - [GROUPS]: CreateGroup called
+    10:31:09 - [XMLRPC-GROUPS-CONNECTOR]: An error has occured while
+    attempting to a
+    ccess the XmlRpcGroups server method groups.getGroup at
+    <A HREF="http://mosgrid.mitre.org/groups/xmlrpc.php">http://mosgrid.mitre.org/groups/xmlrpc.php</A>
+    10:31:09 - [XMLRPC-GROUPS-CONNECTOR]: Data at the root level is
+    invalid. Line 1, position 1.
+         at System.Xml.XmlTextReaderImpl.Throw(Exception e)
+
+The config.php file is correctly set up to point to the correct 
+database, with the right login and password.
+
+Any suggestions?
+Thanks in advance
+Kurt
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111025/a02a0f53/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20111025/a02a0f53/attachment.html</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: kreisler.vcf
+Type: text/x-vcard
+Size: 324 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111025/a02a0f53/attachment.vcf">https://lists.berlios.de/pipermail/opensim-users/attachments/20111025/a02a0f53/attachment.vcf</A>&gt;
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: smime.p7s
+Type: application/pkcs7-signature
+Size: 2630 bytes
+Desc: S/MIME Cryptographic Signature
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111025/a02a0f53/attachment.bin">https://lists.berlios.de/pipermail/opensim-users/attachments/20111025/a02a0f53/attachment.bin</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008442.html">[Opensim-users] Problems with WIFI 0.7
+</A></li>
+	<LI>Next message: <A HREF="008444.html">[Opensim-users] Still trying to set up groups - progress and	problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8443">[ date ]</a>
+              <a href="thread.html#8443">[ thread ]</a>
+              <a href="subject.html#8443">[ subject ]</a>
+              <a href="author.html#8443">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

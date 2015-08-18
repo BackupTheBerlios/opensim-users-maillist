@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Blender Exporter for OpenSim
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-September/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Blender%20Exporter%20for%20OpenSim&In-Reply-To=%3C48D6652B.4090208%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000449.html">
+   <LINK REL="Next"  HREF="000454.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Blender Exporter for OpenSim</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Blender%20Exporter%20for%20OpenSim&In-Reply-To=%3C48D6652B.4090208%40googlemail.com%3E"
+       TITLE="[Opensim-users] Blender Exporter for OpenSim">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sun Sep 21 17:15:55 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000449.html">[Opensim-users] Blender Exporter for OpenSim
+</A></li>
+        <LI>Next message: <A HREF="000454.html">[Opensim-users] Blender Exporter for OpenSim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#450">[ date ]</a>
+              <a href="thread.html#450">[ thread ]</a>
+              <a href="subject.html#450">[ subject ]</a>
+              <a href="author.html#450">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Shree Kumar wrote:
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> I've been working for a couple of weeks, writing an exporter from 
+</I>&gt;<i> Blender to OpenSim. I didn't find any (most uses of Blender with 
+</I>&gt;<i> SL/OpenSim seem to be create sculpties, is that correct?), so decided to 
+</I>&gt;<i> write my own.
+</I>&gt;<i> 
+</I>&gt;<i> OpenSim does not support meshes yet, so I made a few simplifying 
+</I>&gt;<i> assumptions for a start.
+</I>&gt;<i>      - I export only meshes which are cuboids.
+</I>&gt;<i>      - I set only the position, size &amp; rotation of the prims in the 
+</I>&gt;<i> opensim database
+</I>&gt;<i>      - I only export to MySQL databases at the moment.
+</I>&gt;<i> 
+</I>&gt;<i> The exporter writes directly to the MySQL database - specifically the 
+</I>&gt;<i> &quot;prims&quot; and the &quot;primshapes&quot; tables. I have been able to export scenes 
+</I>&gt;<i> with about 8k prims. Soon expect to use it to export a scene with about 
+</I>&gt;<i> 18k prims.
+</I>
+Sounds like interesting work, Shree!
+
+&gt;<i> 
+</I>&gt;<i> A few questions
+</I>&gt;<i>  - I am not able to export texturing information since I do not know how 
+</I>&gt;<i> to decode the &quot;Texture&quot; field in the &quot;primshapes&quot; table. Any hints on 
+</I>&gt;<i> how to decode that field ? (pointers to the source would save me a lot 
+</I>&gt;<i> of work!)
+</I>
+The Texture field is a concatenation of the texture information needed for each face of a prim.  In OpenSim we rely 
+pretty much  on the libsecondlife/libomv code to parse and manipulate this.  A good initial starting point to look at 
+this might be in
+
+OpenSim.Region.Environment.Modules.World.Archiver.ArchiveWriteRequestPreparation.GetSceneObjectAssetUuuids()
+
+at about line 211 where texture asset ids are extracted for particular prims.  This will let you see the relevant bits 
+of libomv code to look at.
+
+&gt;<i>  - Anybody else interested in the exporter ?
+</I>
+It sounds interesting to me, though my interest is a little more academic at the moment since I'm virtually never on the 
+content creation side of things (being completely useless in that respect).  Perhaps you'd care to stick your code up on 
+a page somewhere and post a link / put something in the wiki?
+
+&gt;<i> 
+</I>&gt;<i> Thanks in advance
+</I>&gt;<i> -- Shree
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000449.html">[Opensim-users] Blender Exporter for OpenSim
+</A></li>
+	<LI>Next message: <A HREF="000454.html">[Opensim-users] Blender Exporter for OpenSim
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#450">[ date ]</a>
+              <a href="thread.html#450">[ thread ]</a>
+              <a href="subject.html#450">[ subject ]</a>
+              <a href="author.html#450">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

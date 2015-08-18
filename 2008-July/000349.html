@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Opensim Reliable Upgrade Instructions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-July/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%20Reliable%20Upgrade%20Instructions&In-Reply-To=%3C488085A5.2060701%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000345.html">
+   <LINK REL="Next"  HREF="000348.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Opensim Reliable Upgrade Instructions</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Opensim%20Reliable%20Upgrade%20Instructions&In-Reply-To=%3C488085A5.2060701%40googlemail.com%3E"
+       TITLE="[Opensim-users] Opensim Reliable Upgrade Instructions">jjustincc at googlemail.com
+       </A><BR>
+    <I>Fri Jul 18 13:59:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000345.html">[Opensim-users] Opensim Reliable Upgrade Instructions
+</A></li>
+        <LI>Next message: <A HREF="000348.html">[Opensim-users] Getting rid of NAT Loopback uncapable routers...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#349">[ date ]</a>
+              <a href="thread.html#349">[ thread ]</a>
+              <a href="subject.html#349">[ subject ]</a>
+              <a href="author.html#349">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ai Austin wrote:
+&gt;<i> I have been trying to use the update procedure again with an upgrade 
+</I>&gt;<i> of a standalone setup with 13 regions all using SQLite from 
+</I>&gt;<i> 1-Jul-2008 version to 15-Jul-2008 version from the nightly builds at 
+</I>&gt;<i> <A HREF="http://opensim.be/build/">http://opensim.be/build/</A>
+</I>&gt;<i> 
+</I>&gt;<i> Its REASONABLY successful.  Step 4 seems NOT to be needed.  The 
+</I>&gt;<i> regions and their terrain for the 13 regions was all present and 
+</I>&gt;<i> correct without doing step 4.  The regions, objects on them and the 
+</I>&gt;<i> avatars are all present and correct.  BUT ALL avatars have lost their 
+</I>&gt;<i> inventory.
+</I>&gt;<i> 
+</I>&gt;<i> Any thoughts on what files I must also copy over or change, or what I 
+</I>&gt;<i> might be doing wrong?  Any help appreciated top debug the 
+</I>&gt;<i> instructions for updating a working Opensim installation to a later 
+</I>&gt;<i> build.  I am sure others are doing this without the problems I seem 
+</I>&gt;<i> to be having as I can see their working systems.
+</I>
+Yes, as long as both the user database and the inventory database are copied things should be fine. 
+  If you inspect your inventory database directly, do you see any of the inventory entries you're 
+expecting?
+
+&gt;<i> 
+</I>&gt;<i> I am also trying to debug the process for a grid version update.. but 
+</I>&gt;<i> fro the moment this is a question for a standalone system update.
+</I>&gt;<i> 
+</I>&gt;<i> --------------------------------------
+</I>&gt;<i> Extract from Opensim.ini
+</I>&gt;<i> 
+</I>&gt;<i> [Startup]
+</I>&gt;<i> gridmode = False
+</I>&gt;<i> physics = OpenDynamicsEngine
+</I>&gt;<i> physical_prim = True
+</I>&gt;<i> see_into_this_sim_from_neighbor = True
+</I>&gt;<i> serverside_object_permissions = True
+</I>&gt;<i> storage_plugin = OpenSim.Data.SQLite.dll
+</I>&gt;<i> storage_connection_string = URI=file:OpenSim.db,version=3
+</I>&gt;<i> storage_prim_inventories = True
+</I>&gt;<i> startup_console_commands_file =
+</I>&gt;<i> shutdown_console_commands_file =
+</I>&gt;<i> script_engine = OpenSim.Region.ScriptEngine.DotNetEngine.dll
+</I>&gt;<i> asset_database = sqlite
+</I>&gt;<i> clientstack_plugin = OpenSim.Region.ClientStack.LindenUDP.dll
+</I>&gt;<i> [StandAlone]
+</I>&gt;<i> accounts_authenticate = True
+</I>&gt;<i> welcome_message = Welcome to Opensim on Virtual AIAI
+</I>&gt;<i> inventory_plugin = OpenSim.Data.SQLite.dll
+</I>&gt;<i> inventory_source =
+</I>&gt;<i> userDatabase_plugin = OpenSim.Data.SQLite.dll
+</I>&gt;<i> user_source =
+</I>&gt;<i> asset_plugin = OpenSim.Data.SQLite.dll
+</I>&gt;<i> asset_source =
+</I>&gt;<i> dump_assets_to_file = False
+</I>&gt;<i> 
+</I>&gt;<i> -------------------------------------------------------------------------------
+</I>&gt;<i> Instructions used... Step 4 appears NOT to be needed
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Upgrading Opensim
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Never Delete your old Simulator until you are happy with your new one.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** DO THIS BEFORE RUNNING THE NEW VERSION FOR THE FIRST TIME !! **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1. Extract the Opensim Zip to a new location
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2. From you old location copy:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     estate_settings.xml
+</I>&gt;&gt;<i>     regionassets.yap (if present, not present in standalone?)
+</I>&gt;&gt;<i>     AssetStorage.db
+</I>&gt;&gt;<i>     InventoryStore.db
+</I>&gt;&gt;<i>     OpenSim.db
+</I>&gt;&gt;<i>     userprofiles.db
+</I>&gt;&gt;<i>     \Regions\*
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     to your new location.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3. The NEW Opensim.ini should be used as a basis (in case new 
+</I>&gt;&gt;<i> element are added) and your own changed entries edited in.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 4. If you have made a custom terrain you may want to consider 
+</I>&gt;&gt;<i> exporting the terrain for each region before update just in case.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     change-region &lt;name&gt;
+</I>&gt;&gt;<i>     terrain save yourfilename.f32
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     These can be loaded again by putting it in the base/root folder 
+</I>&gt;&gt;<i> and using the commands
+</I>&gt;&gt;<i>     change-region &lt;name&gt;
+</I>&gt;&gt;<i>     terrain load yourfilename.f32
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000345.html">[Opensim-users] Opensim Reliable Upgrade Instructions
+</A></li>
+	<LI>Next message: <A HREF="000348.html">[Opensim-users] Getting rid of NAT Loopback uncapable routers...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#349">[ date ]</a>
+              <a href="thread.html#349">[ thread ]</a>
+              <a href="subject.html#349">[ subject ]</a>
+              <a href="author.html#349">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

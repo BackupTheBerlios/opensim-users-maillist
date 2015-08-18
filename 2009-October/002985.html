@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Errors trying to use MySQL data with new
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Errors%20trying%20to%20use%20MySQL%20data%20with%20new&In-Reply-To=%3C01b601ca57c3%24d8189790%248849c6b0%24%40freeserve.co.uk%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002984.html">
+   <LINK REL="Next"  HREF="002986.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Errors trying to use MySQL data with new</H1>
+    <B>Kevin Buckley</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Errors%20trying%20to%20use%20MySQL%20data%20with%20new&In-Reply-To=%3C01b601ca57c3%24d8189790%248849c6b0%24%40freeserve.co.uk%3E"
+       TITLE="[Opensim-users] Errors trying to use MySQL data with new">kevin at buckley70.freeserve.co.uk
+       </A><BR>
+    <I>Wed Oct 28 12:43:18 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002984.html">[Opensim-users] Errors trying to use MySQL data with new
+</A></li>
+        <LI>Next message: <A HREF="002986.html">[Opensim-users] Errors trying to use MySQL data with new
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2985">[ date ]</a>
+              <a href="thread.html#2985">[ thread ]</a>
+              <a href="subject.html#2985">[ subject ]</a>
+              <a href="author.html#2985">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I meant I copied the v067 built (/bin) directory to the place where I want
+it.  Then I compared the original ini's with the v067 versions and amended
+accordingly (using a fabulous programme called 'Beyond Compare' which I
+highly recommend!).
+
+I then used MySQL administrator GUI to take a .sql snapshot of my current
+database, created a new empty database (opensimtest) and 'restored' the
+snapshot to it (and changed the appropriate entries in the ini files to now
+point at opensimtest) - so that the new v067 build will have all my old
+inventories and assets (substantial!).
+
+Surely, if I drop the tables from Opensimtest that will be like starting
+from scratch with a world empty of assets?
+
+Cheers, Kevin
+
+-----Original Message-----
+From: Clive Gould [mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">cliveg at gmail.com</A>] 
+Sent: 28 October 2009 11:05
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>
+Cc: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] Errors trying to use MySQL data with new
+
+
+Hi Kevin
+
+Are you trying to make a fresh install of 0.6.7, because if you are
+the error messages suggest the database tables already exist.
+
+For a fresh install the database needs to exist but the tables should
+not be there. Try dropping all the tables in the database before you
+restart OpenSim.
+
+Also you say you've copied over the /bin directory - you only need to
+copy over and modify where appropriate OpenSim.ini,
+Regions/Regions.ini and any terrain files from the old version to the
+new one.
+
+Good luck
+
+Clive
+
+
+Message: 8
+Date: Wed, 28 Oct 2009 09:49:35 -0000
+From: &quot;Kevin Buckley&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">kevin at buckley70.freeserve.co.uk</A>&gt;
+Subject: [Opensim-users] Errors trying to use MySQL data with new
+       opensim release
+To: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>&gt;
+Message-ID: &lt;01a501ca57b3$f4f91ed0$deeb5c70$@freeserve.co.uk&gt;
+Content-Type: text/plain; charset=&quot;us-ascii&quot;
+
+I am trying to use the latest v0.6.7-post release Opensim in standalone.  I
+have a 'production grid' which is based on the OSGrid downloadable (with the
+ini files suitably changed) working with MySQL.  This has been working well
+for some time (but has some issues - well known).
+
+
+
+I have:
+
+
+
+O Downloaded the latest 0.6.7 following the instructions provided by Clive
+Gould, prebuilt and compiled it, copied the /bin directory to make a 'Test
+Grid' and changed the ini's to reflect my MySQL settings
+
+O Made a snapshot of my Opensim MySQL database and created a new copy
+(opensimtest) which is referenced in the 'Test Grid' Opensim ini's
+
+
+
+When I try to run it I get a bunch of errors that look like this and it
+terminates:
+
+
+
+2009-10-28 09:30:23,490 INFO  - OpenSim.Data.MySQL.MySQLManager [MYSQL]:
+Connection established
+
+2009-10-28 09:30:23,490 DEBUG - OpenSim.Data.MySQL.MySQLManager [REGION DB]:
+Connection wait timeout 28860 seconds
+
+2009-10-28 09:30:23,511 INFO  - OpenSim.Data.Migration [MIGRATIONS]
+Upgrading AssetStore to latest revision.
+
+2009-10-28 09:30:23,511 INFO  - OpenSim.Data.Migration [MIGRATIONS] NOTE:
+this may take a while, don't interupt this process!
+
+2009-10-28 09:30:23,631 ERROR - OpenSim.Server.Base.ServerUtils Error
+loading plugin from OpenSim.Services.AssetService.dll, exception
+MySql.Data.MySqlClient.MySqlException: Table 'assets' already exists
+
+  at MySql.Data.MySqlClient.MySqlStream.OpenPacket()
+
+  at MySql.Data.MySqlClient.NativeDriver.ReadResult(UInt64&amp; affectedRows,
+Int64&amp; lastInsertId)
+
+  at MySql.Data.MySqlClient.MySqlDataReader.GetResultSet()
+
+  at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+
+  at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior
+behavior)
+
+  at MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+
+  at OpenSim.Data.Migration.Update() in c:\Documents and
+Settings\Kevin\opensim\OpenSim\Data\Migration.cs:line 141
+
+  at OpenSim.Data.MySQL.MySQLAssetData.Initialise(String connect) in
+c:\Documents and
+Settings\Kevin\opensim\OpenSim\Data\MySQL\MySQLAssetData.cs:line 83
+
+  at OpenSim.Services.AssetService.AssetServiceBase..ctor(IConfigSource
+config) in c:\Documents and
+Settings\Kevin\opensim\OpenSim\Services\AssetService\AssetServiceBase.cs:lin
+e 80
+
+  at OpenSim.Services.AssetService.AssetService..ctor(IConfigSource config)
+in c:\Documents and
+Settings\Kevin\opensim\OpenSim\Services\AssetService\AssetService.cs:line 46
+
+2009-10-28 09:30:23,871 ERROR -
+OpenSim.Region.CoreModules.ServiceConnectorsOut.Asset.LocalAssetServicesConn
+ector [ASSET CONNECTOR]: Can't load asset service
+
+
+
+Any suggestions? - Thanks, Kevin
+
+
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002984.html">[Opensim-users] Errors trying to use MySQL data with new
+</A></li>
+	<LI>Next message: <A HREF="002986.html">[Opensim-users] Errors trying to use MySQL data with new
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2985">[ date ]</a>
+              <a href="thread.html#2985">[ thread ]</a>
+              <a href="subject.html#2985">[ subject ]</a>
+              <a href="author.html#2985">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

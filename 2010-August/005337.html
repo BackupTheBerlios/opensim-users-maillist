@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] serverless grid diva setup problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20serverless%20grid%20diva%20setup%20problem&In-Reply-To=%3C1282677256133-5458307.post%40n2.nabble.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005346.html">
+   <LINK REL="Next"  HREF="005338.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] serverless grid diva setup problem</H1>
+    <B>enauman</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20serverless%20grid%20diva%20setup%20problem&In-Reply-To=%3C1282677256133-5458307.post%40n2.nabble.com%3E"
+       TITLE="[Opensim-users] serverless grid diva setup problem">enauman at hewittschool.org
+       </A><BR>
+    <I>Tue Aug 24 21:14:16 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005346.html">[Opensim-users] Groups
+</A></li>
+        <LI>Next message: <A HREF="005338.html">[Opensim-users] serverless grid diva setup problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5337">[ date ]</a>
+              <a href="thread.html#5337">[ thread ]</a>
+              <a href="subject.html#5337">[ subject ]</a>
+              <a href="author.html#5337">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hi, I'm modifying a Diva Distro 0.7 r13458 to have multiple opensim instances
+running off the same MySQL database, what she calls a '
+<A HREF="http://www.metaverseink.com/blog/?p=22">http://www.metaverseink.com/blog/?p=22</A> serverless grid '. The two regions
+(I'm just doing single regions, not the default megaregions) are in
+contiguous locations. On the console the sims &quot;see&quot; each other and they both
+show up on the viewer map. But when I log in to one sim that account is not
+verified by the other sim and is rejected for teleports and simply crossing
+over. I can't see into the other region either. 
+
+It's as if the db isn't allowing a user to be in both sims, though they both
+get up and running fine. I can log in to each separately but NOT when they
+are both running. If the target sim refuses connection then I log out of the
+originating sim and shut it down I can then log in to the target sim.
+
+Here is the console printout from the target sim during an attempted
+teleport from the map:
+
+2010-08-24 14:36:54,930 DEBUG -
+OpenSim.Region.CoreModules.ServiceConnectorsOut.Simulation.LocalSimulationConnectorModule
+[LOCAL SIMULATION CONNECTOR]: Found region PAC to send SendCreateChildAgent
+2010-08-24 14:36:54,930 INFO  - OpenSim.Region.Framework.Scenes.Scene
+[CONNECTION BEGIN]: Region PAC told of incoming child agent Erik Nauman
+088afec6-025f-4b7b-8fa9-24b874fd8eb8 (circuit code 1170141604, teleportflags
+16)
+
+and here is the printout from the originating sim:
+
+
+2010-08-24 14:36:54,898 DEBUG -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.HGEntityTransferModule
+[HG ENTITY TRANSFER MODULE]: region 0a0dbd38-413d-48ef-b170-9b0885dc8904
+flags: 4
+2010-08-24 14:36:54,914 DEBUG -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+[ENTITY TRANSFER MODULE]: Final destination is x=4821 y=4429
+uuid=0a0dbd38-413d-48ef-b170-9b0885dc8904
+2010-08-24 14:36:54,914 DEBUG -
+OpenSim.Region.CoreModules.Framework.EntityTransfer.EntityTransferModule
+[ENTITY TRANSFER MODULE]: Request Teleport to
+160.79.53.26:9001:PAC/&lt;139.5495, 17.914, 38.13717&gt;
+2010-08-24 14:36:54,930 DEBUG -
+OpenSim.Region.CoreModules.ServiceConnectorsOut.Simulation.LocalSimulationConnectorModule
+[LOCAL SIMULATION CONNECTOR]: Did not find region PAC for
+SendCreateChildAgent
+2010-08-24 14:36:54,930 INFO  -
+OpenSim.Services.Connectors.Simulation.SimulationServiceConnector [REMOTE
+SIMULATION CONNECTOR]: Posted CreateAgent request to remote sim
+<A HREF="http://160.79.53.26:9001/agent/088afec6-025f-4b7b-8fa9-24b874fd8eb8/,">http://160.79.53.26:9001/agent/088afec6-025f-4b7b-8fa9-24b874fd8eb8/,</A> region
+PAC, x=1234176 y=1133824
+2010-08-24 14:36:54,945 INFO  -
+OpenSim.Services.Connectors.Simulation.SimulationServiceConnector [REMOTE
+SIMULATION CONNECTOR]: DoCreateChildAgentCall reply was {&quot;reason&quot;:&quot;Failed to
+verify user Erik Nauman, access denied to region PAC.&quot;} 
+
+Thanks for any advice. If I can't make this work before classes start I'll
+have to start over with a robust install...
+Erik
+
+-- 
+View this message in context: <A HREF="http://opensim-users.2152040.n2.nabble.com/serverless-grid-diva-setup-problem-tp5458307p5458307.html">http://opensim-users.2152040.n2.nabble.com/serverless-grid-diva-setup-problem-tp5458307p5458307.html</A>
+Sent from the opensim-users mailing list archive at Nabble.com.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005346.html">[Opensim-users] Groups
+</A></li>
+	<LI>Next message: <A HREF="005338.html">[Opensim-users] serverless grid diva setup problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5337">[ date ]</a>
+              <a href="thread.html#5337">[ thread ]</a>
+              <a href="subject.html#5337">[ subject ]</a>
+              <a href="author.html#5337">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

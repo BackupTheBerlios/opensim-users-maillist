@@ -1,0 +1,666 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Troubles with latest build?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2008-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Troubles%20with%20latest%20build%3F&In-Reply-To=%3C4814A428.9050804%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000239.html">
+   <LINK REL="Next"  HREF="000241.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Troubles with latest build?</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Troubles%20with%20latest%20build%3F&In-Reply-To=%3C4814A428.9050804%40googlemail.com%3E"
+       TITLE="[Opensim-users] Troubles with latest build?">jjustincc at googlemail.com
+       </A><BR>
+    <I>Sun Apr 27 18:04:56 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000239.html">[Opensim-users] Troubles with latest build?
+</A></li>
+        <LI>Next message: <A HREF="000241.html">[Opensim-users] About OpenSim.exe command line options...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#240">[ date ]</a>
+              <a href="thread.html#240">[ thread ]</a>
+              <a href="subject.html#240">[ subject ]</a>
+              <a href="author.html#240">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It looks like plugins are being loaded twice (including the load regions 
+plugin which actually triggers the problem).
+
+This can sometimes happen because the Mono.Addins.dll gets confused over 
+its addins cache.  We try to take care of this automatically but it 
+doesn't always work.  Either try making sure that the cache directories 
+named addins and addin-db-* are removed before you start, or try 
+checking out and building a fresh copy of the code from the repository 
+in an entirely new directory.
+
+Another way to test whether the problem is with OpenSim or local to you 
+would be to rewind your subversion copy back to a revision before things 
+started going wrong for you.
+
+
+Terry Ford wrote:
+&gt;<i> Hello Justin,
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for your reply.
+</I>&gt;<i> 
+</I>&gt;<i> I have only a single region in my regions folder.
+</I>&gt;<i> Not sure why it is attempting to load the region twice.
+</I>&gt;<i> All MySQL tables in this DB were deleted before startup to allow this 
+</I>&gt;<i> build to create it's own tables so I know it's not from an existing 
+</I>&gt;<i> entry in the DB.
+</I>&gt;<i> 
+</I>&gt;<i> Here's a copy of the output from OpenSim.exe including the exception it 
+</I>&gt;<i> reported:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> OpenSim 0.5, SVN build
+</I>&gt;<i> 
+</I>&gt;<i> Performing compatibility checks...  Environment is compatible.
+</I>&gt;<i> 
+</I>&gt;<i> Starting...
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:22 - [OPENSIM MAIN]: PLEASE IGNORE THE SCANNING ERRORS BELOW.  
+</I>&gt;<i> These are the result of a temporary problem with our plugins manager.
+</I>&gt;<i> 
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\intl3_svn.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\libapr.dll (The module was expected to contain 
+</I>&gt;<i> an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\libapriconv.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\libaprutil.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\libdb44d.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\libeay32.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\ode-debug.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\ode.dll (The module was expected to contain an 
+</I>&gt;<i> assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\openjpeg-libsl.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\PhysX-wrapper.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\sqlite3.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\ssleay32.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: H:\Servers\Server 
+</I>&gt;<i> Sources\OpenSim\Trunk\bin\svn_client-1.dll (The module was expected to 
+</I>&gt;<i> contain an assembly manifest. (Exception from HRESULT: 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\intl3_svn.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\libapr.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\libapriconv.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\libaprutil.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\libdb44d.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\libeay32.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\ode-debug.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\ode.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\openjpeg-libsl.dll (The module 
+</I>&gt;<i> was expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\PhysX-wrapper.dll (The module 
+</I>&gt;<i> was expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\sqlite3.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\ssleay32.dll (The module was 
+</I>&gt;<i> expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> ERROR: There was an error while scanning assembly: 
+</I>&gt;<i> H:\Servers\Build042608pmSTILL_BROKEN\bin\svn_client-1.dll (The module 
+</I>&gt;<i> was expected to contain an assembly manifest. (Exception from HRESULT: 
+</I>&gt;<i> 0x80131018))
+</I>&gt;<i> 10:35:23 - 
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 10:35:23 - ========================= STARTING OPENSIM 
+</I>&gt;<i> =========================
+</I>&gt;<i> 10:35:23 - 
+</I>&gt;<i> ====================================================================
+</I>&gt;<i> 10:35:23 - [OPENSIM MAIN]: Running in grid mode
+</I>&gt;<i> 
+</I>&gt;<i> Creating new local console
+</I>&gt;<i> 10:35:23 - [Region]: Started at 4/27/2008 10:35:23 AM
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [DATASTORE]: Attempting to load OpenSim.Data.MySQL.dll
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [DATASTORE]: MySql - connecting: Data 
+</I>&gt;<i> Source=localhost;Database=latestopensim;User ID=opensim;Password=MyPassword;
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [DATASTORE]: Added IRegionDataStore Interface
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [ASSET SERVER]: Starting asset storage system
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [ASSET CACHE]: Creating Asset cache
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [REGION]: Starting HTTP server
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [HTTPD]: Starting up HTTP Server
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [HTTPD]: Spawned main thread OK
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [LIBRARY INVENTORY]: Loading library inventory
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [LIBRARY INVENTORY]: Loading libraries control file 
+</I>&gt;<i> .\inventory\Libraries.xml
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSim.ApplicationPlugins.RegionProxy.RegionProxyPlugin
+</I>&gt;<i> 
+</I>&gt;<i> Starting proxy
+</I>&gt;<i> 10:35:23 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSim.ApplicationPlugins.LoadRegions.RemoteAdminPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSim.ApplicationPlugins.LoadRegions.RemoteAdminPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [LOADREGIONS]: Load Regions addin being initialised
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [LOADREGIONS]: Loading Region Info from filesystem
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [LOADREGIONS]: Creating Region: OpenSim (ThreadID: 1)
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [SCENE]: Creating new entitities instance
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [DATASTORE]: Loaded terrain revision r1209277987
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: Added meshing engine: ZeroMesher
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: Added physics engine: basicphysics
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: Added physics engine: modified_BulletX
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: Added meshing engine: Meshmerizer
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: Added physics engine: OpenDynamicsEngine
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: Added physics engine: RealPhysX
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: Added physics engine: POS
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: creating meshing engine Meshmerizer
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PHYSICS]: creating OpenDynamicsEngine
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [PARCEL]: Found master avatar 
+</I>&gt;<i> [51765d91-c72d-4424-be2a-5a985ed068cd]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [SCENE]: Loading objects from datastore
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [DATASTORE]: Loaded 0 prims for region: 
+</I>&gt;<i> 542e9f5f-7a39-4906-811d-1cb56edf1009
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [SCENE]: Loaded 0 SceneObject(s)
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [SCENE]: Starting timer
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:23 - [MODULES]: Loading Region's modules
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Could not load types for 
+</I>&gt;<i> [OpenSim.Framework.Data.MSSQL, Version=1.0.0.0, Culture=neutral, 
+</I>&gt;<i> PublicKeyToken=null].
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Could not load types for 
+</I>&gt;<i> [OpenSim.Framework.Data.MySQL, Version=1.0.0.0, Culture=neutral, 
+</I>&gt;<i> PublicKeyToken=null].
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Could not load types for 
+</I>&gt;<i> [OpenSim.Framework.Data.SQLite, Version=1.0.0.0, Culture=neutral, 
+</I>&gt;<i> PublicKeyToken=null].
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.DataSnapshot.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [External Data Generator]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.Environment.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [InventoryModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [CommanderTestModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [XMLRPCModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [VectorRenderModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [TextureDownloadModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [TerrainModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [DynamicTextureModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [ChatModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [BetaGridLikeMoneyModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [TreePopulatorModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [TREES]: Initialised tree module
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [AsteriskVoiceModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [ASTERISKVOICE]: plugin disabled by configuration
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [AssetDownloadModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [AvatarProfilesModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [HttpScriptRequests]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [FriendsModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [VoiceModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [VOICE]: plugin disabled
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [GroupsModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [InstantMessageModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [WorldCommModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [LandManagementModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [LoadImageURL]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [ExportSerialisationModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [XferModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [SunModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [AgentTransactionModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Could not load types for 
+</I>&gt;<i> [OpenSim.Region.Examples.SimpleModule, Version=1.0.0.0, Culture=neutral, 
+</I>&gt;<i> PublicKeyToken=null].
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.ExtensionsScriptModule.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [ExtensionsScriptingModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [SCRIPTMODULE]: Initialising Extensions Scripting Module
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.Modules.AvatarFactory.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [Default Avatar Factory]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.Modules.SvnSerialiser.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [SvnBackupModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [CHAT]: No IRC config information, skipping IRC bridge 
+</I>&gt;<i> configuration
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [DATASNAPSHOT]: Loading configuration
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [DATASNAPSHOT]: DataSnapshot directory already exists.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [DATASNAPSHOT]: Data snapshot disabled, not adding scene to 
+</I>&gt;<i> module (or anything else).
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Loading scripting engine modules
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Loading scripting engine: 
+</I>&gt;<i> OpenSim.Region.ScriptEngine.DotNetEngine.dll
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]: Found Module Library 
+</I>&gt;<i> [ScriptEngines\OpenSim.Region.ScriptEngine.DotNetEngine.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [MODULES]:    [Common.ScriptEngine.DotNetEngine]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [ScriptEngine.DotNetEngine]: ScriptEngine initializing
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [ScriptEngine.DotNetEngine]: Hooking up to server events
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:24 - [ScriptEngine.DotNetEngine]: Reading configuration from 
+</I>&gt;<i> config section &quot;ScriptEngine.DotNetEngine&quot;
+</I>&gt;<i> 
+</I>&gt;<i> *10:35:25 - [OGS1 GRID SERVICES]: Attempting to register region OpenSim 
+</I>&gt;<i> with grid at <A HREF="http://127.0.0.1:8001">http://127.0.0.1:8001</A>
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [OGS1 GRID SERVICES]: Region OpenSim successfully registered 
+</I>&gt;<i> with grid at <A HREF="http://127.0.0.1:8001*">http://127.0.0.1:8001*</A>
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PRIM INVENTORY]: Starting scripts in scene
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SCENE]: Loading land objects from storage
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SERVER]: Opening UDP socket on 0.0.0.0 9000.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SERVER]: UDP socket bound, getting ready to listen
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SERVER]: Listening on port 9000
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - Loading effects in 
+</I>&gt;<i> Terrain\OpenSim.Region.Modules.Terrain.Extensions.DefaultEffects.dll
+</I>&gt;<i> 10:35:25 - ... ChannelDigger
+</I>&gt;<i> 10:35:25 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSim.ApplicationPlugins.LoadBalancer.LoadBalancerPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [BALANCER]: Entering Initialize()
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PLUGINS]: Loading OpenSim application plugin 
+</I>&gt;<i> /OpenSim/Startup/OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [LOADREGIONS]: Load Regions addin being initialised
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [LOADREGIONS]: Loading Region Info from filesystem
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Module name &quot;DynamicTextureModule&quot; already exists 
+</I>&gt;<i> in module list. Module type DynamicTextureModule not added!
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Module name &quot;ChatModule&quot; already exists in module 
+</I>&gt;<i> list. Module type ChatModule not added!
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Module name &quot;InstantMessageModule&quot; already exists 
+</I>&gt;<i> in module list. Module type InstantMessageModule not added!
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Module name &quot;LoadImageURL&quot; already exists in 
+</I>&gt;<i> module list. Module type LoadImageURLModule not added!
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Module name &quot;XMLRPCModule&quot; already exists in 
+</I>&gt;<i> module list. Module type XMLRPCModule not added!
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Module name &quot;AgentTransactionModule&quot; already 
+</I>&gt;<i> exists in module list. Module type TransactionModule not added!
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [LOADREGIONS]: Creating Region: OpenSim (ThreadID: 1)
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SCENE]: Creating new entitities instance
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [CONFIG]: Calling Configuration Load Function...
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [DATASTORE]: Loaded terrain revision r1209277987
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: Added meshing engine: ZeroMesher
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: Added physics engine: basicphysics
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: Added physics engine: modified_BulletX
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: Added meshing engine: Meshmerizer
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: Added physics engine: OpenDynamicsEngine
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: Added physics engine: RealPhysX
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: Added physics engine: POS
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: creating meshing engine Meshmerizer
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PHYSICS]: creating OpenDynamicsEngine
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [PARCEL]: Found master avatar 
+</I>&gt;<i> [51765d91-c72d-4424-be2a-5a985ed068cd]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SCENE]: Loading objects from datastore
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [DATASTORE]: Loaded 0 prims for region: 
+</I>&gt;<i> 542e9f5f-7a39-4906-811d-1cb56edf1009
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SCENE]: Loaded 0 SceneObject(s)
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SCENE]: Starting timer
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Loading Region's modules
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Could not load types for 
+</I>&gt;<i> [OpenSim.Framework.Data.MSSQL, Version=1.0.0.0, Culture=neutral, 
+</I>&gt;<i> PublicKeyToken=null].
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Could not load types for 
+</I>&gt;<i> [OpenSim.Framework.Data.MySQL, Version=1.0.0.0, Culture=neutral, 
+</I>&gt;<i> PublicKeyToken=null].
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Could not load types for 
+</I>&gt;<i> [OpenSim.Framework.Data.SQLite, Version=1.0.0.0, Culture=neutral, 
+</I>&gt;<i> PublicKeyToken=null].
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.DataSnapshot.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [External Data Generator]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.Environment.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [InventoryModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [CommanderTestModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [XMLRPCModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [VectorRenderModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [TextureDownloadModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [TerrainModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [DynamicTextureModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [ChatModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [BetaGridLikeMoneyModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [TreePopulatorModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [TREES]: Initialised tree module
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [AsteriskVoiceModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [ASTERISKVOICE]: plugin disabled by configuration
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [AssetDownloadModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [AvatarProfilesModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [HttpScriptRequests]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [FriendsModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [VoiceModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [VOICE]: plugin disabled
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [GroupsModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [InstantMessageModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [WorldCommModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [LandManagementModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [LoadImageURL]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [ExportSerialisationModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [XferModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [SunModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [AgentTransactionModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Could not load types for 
+</I>&gt;<i> [OpenSim.Region.Examples.SimpleModule, Version=1.0.0.0, Culture=neutral, 
+</I>&gt;<i> PublicKeyToken=null].
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.ExtensionsScriptModule.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [ExtensionsScriptingModule]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SCRIPTMODULE]: Initialising Extensions Scripting Module
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.Modules.AvatarFactory.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [Default Avatar Factory]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Found Module Library 
+</I>&gt;<i> [H:\Servers\Build042608pmSTILL_BROKEN\bin\OpenSim.Region.Modules.SvnSerialiser.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [SvnBackupModule]: Loading Shared Module.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [DATASNAPSHOT]: DataSnapshot directory already exists.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [DATASNAPSHOT]: Data snapshot disabled, not adding scene to 
+</I>&gt;<i> module (or anything else).
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Loading scripting engine modules
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Loading scripting engine: 
+</I>&gt;<i> OpenSim.Region.ScriptEngine.DotNetEngine.dll
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]: Found Module Library 
+</I>&gt;<i> [ScriptEngines\OpenSim.Region.ScriptEngine.DotNetEngine.dll]
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [MODULES]:    [Common.ScriptEngine.DotNetEngine]: Initializing.
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [ScriptEngine.DotNetEngine]: ScriptEngine initializing
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [ScriptEngine.DotNetEngine]: Hooking up to server events
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [ScriptEngine.DotNetEngine]: Reading configuration from 
+</I>&gt;<i> config section &quot;ScriptEngine.DotNetEngine&quot;
+</I>&gt;<i> 
+</I>&gt;<i> *10:35:25 - [OGS1 GRID SERVICES]: Attempting to register region OpenSim 
+</I>&gt;<i> with grid at <A HREF="http://127.0.0.1:8001">http://127.0.0.1:8001</A>
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [OGS1 GRID SERVICES]: Region OpenSim successfully registered 
+</I>&gt;<i> with grid at <A HREF="http://127.0.0.1:8001">http://127.0.0.1:8001</A>
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [INTERREGION STANDALONE]: Region registered twice. Region 
+</I>&gt;<i> went down and came back up.
+</I>&gt;<i> *
+</I>&gt;<i> 10:35:25 - [PRIM INVENTORY]: Starting scripts in scene
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SCENE]: Loading land objects from storage
+</I>&gt;<i> 
+</I>&gt;<i> 10:35:25 - [SERVER]: Opening UDP socket on 0.0.0.0 9000.
+</I>&gt;<i> 
+</I>&gt;<i> [APPLICATION]:
+</I>&gt;<i> APPLICATION EXCEPTION DETECTED: System.UnhandledExceptionEventArgs
+</I>&gt;<i> 
+</I>&gt;<i> Exception: System.Net.Sockets.SocketException: Only one usage of each 
+</I>&gt;<i> socket address (protocol/network address/port) is normally permitted
+</I>&gt;<i>    at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, 
+</I>&gt;<i> SocketAddress socketAddress)
+</I>&gt;<i>    at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+</I>&gt;<i>    at OpenSim.Region.ClientStack.UDPServer.ServerListener()
+</I>&gt;<i>    at OpenSim.OpenSimMain.CreateRegion(RegionInfo regionInfo, Boolean 
+</I>&gt;<i> portadd_flag, Boolean do_post_init)
+</I>&gt;<i>    at OpenSim.OpenSimMain.CreateRegion(RegionInfo regionInfo, Boolean 
+</I>&gt;<i> portadd_flag)
+</I>&gt;<i>    at 
+</I>&gt;<i> OpenSim.ApplicationPlugins.LoadRegions.LoadRegionsPlugin.Initialise(OpenSimMain 
+</I>&gt;<i> openSim)
+</I>&gt;<i>    at OpenSim.OpenSimMain.StartUp()
+</I>&gt;<i>    at OpenSim.Application.Main(String[] args)
+</I>&gt;<i> 
+</I>&gt;<i> Application is terminating: True
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;&gt;<i>
+</I>
+
+-- 
+justincc
+Justin Clark-Casey
+<A HREF="http://justincc.wordpress.com">http://justincc.wordpress.com</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000239.html">[Opensim-users] Troubles with latest build?
+</A></li>
+	<LI>Next message: <A HREF="000241.html">[Opensim-users] About OpenSim.exe command line options...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#240">[ date ]</a>
+              <a href="thread.html#240">[ thread ]</a>
+              <a href="subject.html#240">[ subject ]</a>
+              <a href="author.html#240">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

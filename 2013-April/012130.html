@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Disappearing folders or items when declining inventory offer?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2013-April/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Disappearing%20folders%20or%20items%20when%20declining%0A%20inventory%20offer%3F&In-Reply-To=%3C517CA6BC.2020402%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="012129.html">
+   <LINK REL="Next"  HREF="012131.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Disappearing folders or items when declining inventory offer?</H1>
+    <B>Chris</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Disappearing%20folders%20or%20items%20when%20declining%0A%20inventory%20offer%3F&In-Reply-To=%3C517CA6BC.2020402%40gmail.com%3E"
+       TITLE="[Opensim-users] Disappearing folders or items when declining inventory offer?">mewtwo0641 at gmail.com
+       </A><BR>
+    <I>Sun Apr 28 06:34:04 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="012129.html">[Opensim-users] Disappearing folders or items when declining inventory offer?
+</A></li>
+        <LI>Next message: <A HREF="012131.html">[Opensim-users] Disappearing folders or items when declining inventory offer?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12130">[ date ]</a>
+              <a href="thread.html#12130">[ thread ]</a>
+              <a href="subject.html#12130">[ subject ]</a>
+              <a href="author.html#12130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm... That is a bit strange. On the viewers I thought to be OK I was 
+able to utilize the test object after the test (By attempting to rez the 
+object and looking to see if it would appear or not and watching the 
+console for errors). However, I based all my tests transferring an item 
+from Phoenix viewer (which is currently my viewer of choice) to the 
+viewers in my test results since it didn't seem to make a difference 
+which viewer the item came from, just the viewers they were going to. I 
+managed to lose a script I spent about 8 hours working on in the process 
+due to the Lost and Found folder issue explained toward the end of my 
+previous email (D'oh!)... but I was able to recover it by grepping a 
+dump of my database and then dumping the most recent asset.
+
+I did a quick test as I was writing this with a transfer from Firestorm 
+to Firestorm on seperate computers and with viewers on the same computer 
+(Computer OS is running on) to be sure but I was not able to reproduce 
+the issue in this way. I also tried with both HTTP Inventory on and off 
+as well but it didn't seem to make a difference. The Lost and Found 
+issue also does not show up on the viewers listed as OK in my previous 
+tests with the exception of Phoenix viewer, it's OK when using silent 
+discard, but the issue shows up when using regular discard.
+
+As an addendum to my previous test, I also noticed that if other avatars 
+had a copy of the object you gave to another avatar, and the issue is 
+triggered, then that particular object will missing from the other 
+avatars inventories as well. Just to be clear, when I say missing, I 
+mean that it seems to be missing from the database, but not visually 
+from the inventory (at least not until a relog); can't do anything with 
+the object in the way of using it such as rezzing, wearing, 
+transferring, etc.
+
+On 4/27/2013 6:32 PM, InuYasha Meiji wrote:
+&gt;<i> So you understand and know, I only used two viewers with two different 
+</I>&gt;<i> accounts on the same machine, on the same machine running the grid.  
+</I>&gt;<i> Both of these logged in using the latest Firestorm for Opensim.  
+</I>&gt;<i> Having the same results as well and finding that although you see that 
+</I>&gt;<i> Firestorm in your list appears to be ok...
+</I>&gt;<i>
+</I>&gt;<i> Item Transfer -&gt; Singularity (1.8.0) = Missing inventory item
+</I>&gt;<i> Item Transfer -&gt; Firestorm (4.4.0) = OK
+</I>&gt;<i> Item Transfer -&gt; Hippo OpenSim (0.6.3) = Missing inventory item
+</I>&gt;<i> Item Transfer -&gt; Imprudence (1.3.0) = Missing inventory item
+</I>&gt;<i> Item Transfer -&gt; Phoenix (1.6.0.1600) = Missing inventory item when 
+</I>&gt;<i> using normal Discard, OK when using (Discard) (Silent discard)
+</I>&gt;<i> Item Transfer -&gt; Radegast (2.12.1354) = Missing inventory item
+</I>&gt;<i> Item Transfer -&gt; Kokua (3.5.1.27984) = OK
+</I>&gt;<i> Item Transfer -&gt; CoolVL (1.26.8.1) = Missing inventory item
+</I>&gt;<i>
+</I>&gt;<i> It really isn;t.  It is only in your inventory in name, but not 
+</I>&gt;<i> useable, so I would not give it an ok.  Thanks for gonig through all 
+</I>&gt;<i> the trouble of testing so many viewers to prove it isn't a
+</I>&gt;<i> Viewer issue.
+</I>&gt;<i>
+</I>&gt;<i> InuYasha
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 4/27/2013 2:29 PM, Chris wrote:
+</I>&gt;&gt;<i> Last night I tested with 2 avatars on the same machine OpenSim is 
+</I>&gt;&gt;<i> running on, one avatar on one machine and one avatar on a different 
+</I>&gt;&gt;<i> machine, and both avatars on a machine other than the one OpenSim is 
+</I>&gt;&gt;<i> running on.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I repeated my tests today a bit more in depth and it would seem that 
+</I>&gt;&gt;<i> the issue does not depend so much on the viewer the person 
+</I>&gt;&gt;<i> transferring the item is using but more depends on what viewer the 
+</I>&gt;&gt;<i> person on the receiving end of the inventory transfer is running.
+</I>&gt;&gt;<i> Steps to reproduce:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1. Offer an item transfer to another avatar that you aren't afraid to 
+</I>&gt;&gt;<i> lose (Creating a new prim and taking it to inventory then offering 
+</I>&gt;&gt;<i> that is sufficient)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2. Decline the transfer on the other avatar and it should go to that 
+</I>&gt;&gt;<i> avatar's trash folder.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3. Empty that avatar's trash folder.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 4. Go back to the first avatar and try to rez, wear, or otherwise 
+</I>&gt;&gt;<i> utilize the item that was to be transferred (In my case I attempted 
+</I>&gt;&gt;<i> to rez the object).
+</I>&gt;&gt;<i>     a. Should notice that it won't have any effect
+</I>&gt;&gt;<i>     b. Look in the console and there should be errors to the effect 
+</I>&gt;&gt;<i> of &quot;item not found&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     My error when attempting to rez the object:
+</I>&gt;&gt;<i>     16:11:48 - [INVENTORY ACCESS MODULE]: Could not find item 
+</I>&gt;&gt;<i> 6d3689ee-5c06-478d-8c10-10870cc6e788 for Test User in RezObject()
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 5. Relog the avatar you attempted item transfer from. The item will 
+</I>&gt;&gt;<i> be missing from their inventory upon relog.
+</I>&gt;&gt;<i> Test results:
+</I>&gt;&gt;<i> (Format: Item Transfer -&gt; Viewer name of the person receiving item.)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Item Transfer -&gt; Singularity (1.8.0) = Missing inventory item
+</I>&gt;&gt;<i> Item Transfer -&gt; Firestorm (4.4.0) = OK
+</I>&gt;&gt;<i> Item Transfer -&gt; Hippo OpenSim (0.6.3) = Missing inventory item
+</I>&gt;&gt;<i> Item Transfer -&gt; Imprudence (1.3.0) = Missing inventory item
+</I>&gt;&gt;<i> Item Transfer -&gt; Phoenix (1.6.0.1600) = Missing inventory item when 
+</I>&gt;&gt;<i> using normal Discard, OK when using (Discard) (Silent discard)
+</I>&gt;&gt;<i> Item Transfer -&gt; Radegast (2.12.1354) = Missing inventory item
+</I>&gt;&gt;<i> Item Transfer -&gt; Kokua (3.5.1.27984) = OK
+</I>&gt;&gt;<i> Item Transfer -&gt; CoolVL (1.26.8.1) = Missing inventory item
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It seems like if the issue triggers, there will be two copies of the 
+</I>&gt;&gt;<i> declined object that will show up in the receiver's trash folder. The 
+</I>&gt;&gt;<i> tests also apply to offering entire folders of items. It also looks 
+</I>&gt;&gt;<i> like on declining the transfer, If there are any other items directly 
+</I>&gt;&gt;<i> under neath it in the person transferring the item, those items will 
+</I>&gt;&gt;<i> some how wind up in the other person's lost and found folder. If the 
+</I>&gt;&gt;<i> person deletes those items from lost and found it will remove those 
+</I>&gt;&gt;<i> items also from the other persons inventory.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As far as the viewer I use; I mainly swap between Phoenix, 
+</I>&gt;&gt;<i> Imprudence, and Singularity. As for other users on my install it 
+</I>&gt;&gt;<i> could be any of the ones listed in the tests (And possibly others, 
+</I>&gt;&gt;<i> but these are the main ones I was able to come up with).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 4/27/2013 10:47 AM, drWhiet wrote:
+</I>&gt;&gt;&gt;<i> Chris, are you testing this with yourself e.g. With 2 Viewers 
+</I>&gt;&gt;&gt;<i> running on the Same machine ? Or are you testing this behaviour with 
+</I>&gt;&gt;&gt;<i> your avatar and a different users Avatar ? And by the way which 
+</I>&gt;&gt;&gt;<i> Viewer do you (and the other user) use ??
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Best regards,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Am 27.04.2013 um 03:37 schrieb Chris&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mewtwo0641 at gmail.com</A>&gt;:
+</I>&gt;&gt;<i> -- 
+</I>&gt;&gt;<i> OpenSim: 10 Region Standalone on 0.7.6 Dev
+</I>&gt;&gt;<i> Physics: Open Dynamics Engine
+</I>&gt;&gt;<i> OS: Windows 7 (x64)
+</I>&gt;&gt;<i> CPU: AMD Phenom II X4 840 3.2 GHz
+</I>&gt;&gt;<i> Memory: 11 GB DDR3
+</I>&gt;&gt;<i> Database: MySQL 5.1.63 (x64)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+OpenSim: 10 Region Standalone on 0.7.6 Dev
+Physics: Open Dynamics Engine
+OS: Windows 7 (x64)
+CPU: AMD Phenom II X4 840 3.2 GHz
+Memory: 11 GB DDR3
+Database: MySQL 5.1.63 (x64)
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="012129.html">[Opensim-users] Disappearing folders or items when declining inventory offer?
+</A></li>
+	<LI>Next message: <A HREF="012131.html">[Opensim-users] Disappearing folders or items when declining inventory offer?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#12130">[ date ]</a>
+              <a href="thread.html#12130">[ thread ]</a>
+              <a href="subject.html#12130">[ subject ]</a>
+              <a href="author.html#12130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

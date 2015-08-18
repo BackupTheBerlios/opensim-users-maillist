@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Receiving a rash of async_call_method exceptions in latest master
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Receiving%20a%20rash%20of%20async_call_method%0A%20exceptions%20in%20latest%20master&In-Reply-To=%3C508F336B.6000708%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011131.html">
+   <LINK REL="Next"  HREF="011155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Receiving a rash of async_call_method exceptions in latest master</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Receiving%20a%20rash%20of%20async_call_method%0A%20exceptions%20in%20latest%20master&In-Reply-To=%3C508F336B.6000708%40googlemail.com%3E"
+       TITLE="[Opensim-users] Receiving a rash of async_call_method exceptions in latest master">jjustincc at googlemail.com
+       </A><BR>
+    <I>Tue Oct 30 02:54:51 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011131.html">[Opensim-users] Receiving a rash of async_call_method exceptions in	latest master
+</A></li>
+        <LI>Next message: <A HREF="011155.html">[Opensim-users] Receiving a rash of async_call_method exceptions in latest master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11154">[ date ]</a>
+              <a href="thread.html#11154">[ thread ]</a>
+              <a href="subject.html#11154">[ subject ]</a>
+              <a href="author.html#11154">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It looks this was because of the new sculpt/mesh asset loading code not checking for the callback being given a null 
+AssetBase (which occurs when no asset is found, asset service could not be reached before timeout, etc.).
+
+I just fixed this in git master ff6c690.
+
+However, you will still get warnings, though they should be more informative (you get to know prim name, location, 
+region).  The ODEPrim changes here aim to eliminate a race condition which used to generate false 'asset not loaded' 
+warnings.  The fact that you are getting them should mean that your simulator genuinely could not retreive the asset data.
+
+One possibility here is that for some reason the asset does not exist.  However, I do know that on OSGrid at the moment, 
+there's an asset migration going on which should give better responsiveness in the medium term but in the short term 
+means that some requests may not be served in a timely manner.  This would cause the same problem as if the asset did 
+not exist, though in that case you should also be seeing other warnings on the console.
+
+On 27/10/12 09:48, Chris wrote:
+&gt;<i> Hello every one,
+</I>&gt;<i>
+</I>&gt;<i> I have updated to the latest master 3531f29 (r/20825) and am receiving a rash of async_call_method exceptions upon start
+</I>&gt;<i> up of the server. There seems to be at least one per loaded region (That have objects and are possibly scripted, can't
+</I>&gt;<i> pinpoint what is actually triggering it). I can't tell if there are any adverse effects or not.
+</I>&gt;<i>
+</I>&gt;<i> Is anyone else experiencing this as well?
+</I>&gt;<i>
+</I>&gt;<i> Thanks!
+</I>&gt;<i>
+</I>&gt;<i> Exception:
+</I>&gt;<i>
+</I>&gt;<i> 2012-10-27 03:13:36,746 ERROR - OpenSim.Framework.Util [UTIL]: Continuing after async_call_method thread terminated with
+</I>&gt;<i> exception Object reference not set to an instance of an object.   at
+</I>&gt;<i> OpenSim.Region.Physics.OdePlugin.OdePrim.MeshAssetReveived(AssetBase asset) in
+</I>&gt;<i> c:\Users\admin\Desktop\opensim-3531f29\OpenSim\Region\Physics\OdePlugin\ODEPrim.cs:line 3355
+</I>&gt;<i>     at OpenSim.Region.Framework.Scenes.Scene.PhysicsAssetReceived(String id, Object sender, AssetBase asset) in
+</I>&gt;<i> c:\Users\admin\Desktop\opensim-3531f29\OpenSim\Region\Framework\Scenes\Scene.cs:line 5649
+</I>&gt;<i>     at
+</I>&gt;<i> OpenSim.Region.CoreModules.ServiceConnectorsOut.Asset.LocalAssetServicesConnector.&lt;&gt;c__DisplayClass3.&lt;&gt;c__DisplayClass8.&lt;Get&gt;b__2(Object
+</I>&gt;<i> ) in
+</I>&gt;<i> c:\Users\admin\Desktop\opensim-3531f29\OpenSim\Region\CoreModules\ServiceConnectorsOut\Asset\LocalAssetServiceConnector.cs:line
+</I>&gt;<i> 250
+</I>&gt;<i>     at OpenSim.Framework.Util.&lt;&gt;c__DisplayClass6.&lt;FireAndForget&gt;b__1(Object o) in
+</I>&gt;<i> c:\Users\admin\Desktop\opensim-3531f29\OpenSim\Framework\Util.cs:line 1686
+</I>&gt;<i>
+</I>
+
+-- 
+Justin Clark-Casey (justincc)
+OSVW Consulting
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011131.html">[Opensim-users] Receiving a rash of async_call_method exceptions in	latest master
+</A></li>
+	<LI>Next message: <A HREF="011155.html">[Opensim-users] Receiving a rash of async_call_method exceptions in latest master
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11154">[ date ]</a>
+              <a href="thread.html#11154">[ thread ]</a>
+              <a href="subject.html#11154">[ subject ]</a>
+              <a href="author.html#11154">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

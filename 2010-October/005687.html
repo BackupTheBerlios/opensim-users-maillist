@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Running OpenSim on a Nokia N900 Smartphone
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Running%20OpenSim%20on%20a%20Nokia%20N900%20Smartphone&In-Reply-To=%3CAANLkTin7y8fCDYB7SYNovpp_GGNyoO0XN8EG4vzuhfRB%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="005686.html">
+   <LINK REL="Next"  HREF="005694.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Running OpenSim on a Nokia N900 Smartphone</H1>
+    <B>Teravus Ovares</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Running%20OpenSim%20on%20a%20Nokia%20N900%20Smartphone&In-Reply-To=%3CAANLkTin7y8fCDYB7SYNovpp_GGNyoO0XN8EG4vzuhfRB%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Running OpenSim on a Nokia N900 Smartphone">teravus at gmail.com
+       </A><BR>
+    <I>Sun Oct 10 16:53:12 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="005686.html">[Opensim-users] Running OpenSim on a Nokia N900 Smartphone
+</A></li>
+        <LI>Next message: <A HREF="005694.html">[Opensim-users] Running OpenSim on a Nokia N900 Smartphone
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5687">[ date ]</a>
+              <a href="thread.html#5687">[ thread ]</a>
+              <a href="subject.html#5687">[ subject ]</a>
+              <a href="author.html#5687">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This may not be a good solution....  but it's something for you to try
+----------------------------------
+Hey there
+
+Since I have not had much response to my CSharpSqlite query in June, I
+went ahead and committed the CSharpSqlite binary as well as my custom
+ADO.NET &lt;<A HREF="http://ado.net/">http://ado.net/</A>&gt; wrapper for CSharpSqlite.   The source for them is
+OpenSimLibs/trunk/managed.
+
+Commit Hash: acd5bbdb71682131be386b7a5ce190
+4622b0ee70
+ViewGit:
+<A HREF="http://opensimulator.org/viewgit/?a=commit&amp;p=opensim&amp;h=acd5bbdb71682131be386b7a5ce1904622b0ee70">http://opensimulator.org/viewgit/?a=commit&amp;p=opensim&amp;h=acd5bbdb71682131be386b7a5ce1904622b0ee70</A>
+
+For those of you who do not know what CSharpSqlite is, I suggest you
+read: <A HREF="http://code.google.com/p/csharp-sqlite/">http://code.google.com/p/csharp-sqlite/</A>
+Summary:   It's an independent implementation of the SQLite library
+written in C#.   There are no native libraries associated with it.
+This has the advantage of having it work, out of the box in most
+configurations.  (32bit/64bit/Win/Linux/Mac/more?).
+Benchmarks: <A HREF="http://code.google.com/p/csharp-sqlite/wiki/Benchmarks">http://code.google.com/p/csharp-sqlite/wiki/Benchmarks</A>
+
+A couple of things that I've learned about it during the process of
+getting it to work.
+
+1. The SQLite database files that CSharpSqlite makes are not byte per
+byte compatible.   Mono.Data.Sqlite and other native SQLite tools can
+read databases created with CSharpSqlite but CSharpSqlite asserts on
+databases created with Mono.Data.Sqlite
+
+2. When running under CSharpSqlite, OpenSimulator will crash on the
+first load.    Subsequent attempts to load OpenSimulator and it'll be
+fine.
+
+The ADO.NET &lt;<A HREF="http://ado.net/">http://ado.net/</A>&gt; wrapper that I wrote for CSharpSqlite is code
+compatible
+with Mono.Data.Sqlite. That means that either can be used simply by
+changing the using statement at the top of each of the SQLite*.cs
+files  The same code that works for Mono.Data.Sqlite will also work on
+CSharpSqlite because the inner namespaces are exactly the same.
+
+To save on code maintenance, I implemented CSharpSqlite as the
+compilation conditional CSharpSqlite in the OpenSim.Data.Sqlite
+project.
+
+#if CSharpSqlite
+   using Community.CsharpSqlite.Sqlite;
+#else
+   using Mono.Data.Sqlite;
+#endif
+
+CSharpSqlite is easy to define in Microsoft Visual Studio but it's
+slightly tougher for just plain Mono.
+
+In Visual Studio, you right click the OpenSim.Data.Sqlite project in
+the Solution Explorer.  Click Properties from the context menu.  Then
+go to the Build Tab.  You'll see a box labeled 'Condition compilation
+symbols' that's empty.   Simply enter CSharpSqlite into that box, save
+the project and compile.
+
+Apparently in Mono you use the -d:CSharpSqlite parameter when you
+compile OpenSim.Data.Sqlite.     MonoDevelop may make this process
+easier but I have no basis to work from.
+
+Hopefully this helps people deal with issues relating to the use of SQLite
+
+Regards
+
+Teravus
+
+
+
+On Sun, Oct 10, 2010 at 10:15 AM, Aldon Hynes
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Aldon.Hynes at orient-lodge.com</A>&gt;wrote:
+
+&gt;<i> &gt; From: Justin Clark-Casey
+</I>&gt;<i> &gt; On 08/10/10 19:04, Aldon Hynes wrote:
+</I>&gt;<i> &gt; &gt; Okay, I realize this is probably pushing the envelope a little bit, but
+</I>&gt;<i> &gt; &gt; I've made a little bit of progress in running OpenSim on a Nokia N900
+</I>&gt;<i> &gt; &gt; smartphone.
+</I>&gt;<i> &gt; &gt; The Nokia N900 is a linux based phone. There is limited Mono support on
+</I>&gt;<i> &gt; &gt; it, so I thought I would see if I could run OpenSim on it.
+</I>&gt;<i> &gt; &gt; I actually got pretty far, but it seems to be failing when I get to the
+</I>&gt;<i> &gt; &gt; Loading Region's modules (old style) section.
+</I>&gt;<i> &gt; &gt; I get an error saying Could not load types fo [MySql.Data ... ]
+</I>&gt;<i> &gt; &gt; I don't believe that the Mono on the N900 supports MySql. On the other
+</I>&gt;<i> &gt; &gt; hand, I'm using sqlite3 for my database, so I'm wondering why I'm
+</I>&gt;<i> &gt; &gt; getting the MySql.Data error and if there is some configuration I can
+</I>&gt;<i> do
+</I>&gt;<i> &gt; &gt; to get around this.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It looks like this is a consequence of our module loading system.
+</I>&gt;<i> &gt;  If you move or remove OpenSim.Data.Tests.dll then
+</I>&gt;<i> &gt; OpenSim may start correctly without the MySQL library (it does on
+</I>&gt;<i> &gt; my local master).  For some reason, module loading is
+</I>&gt;<i> &gt; loading OpenSim.Data.Tests.dll and then trying to resolve the
+</I>&gt;<i> &gt; MySQL libraries that it references further on.
+</I>&gt;<i>
+</I>&gt;<i> I removed OpenSim.Data.Tests.dll from the opensim/bin directory.  Still
+</I>&gt;<i> getting the same error.
+</I>&gt;<i>
+</I>&gt;<i> I wondered if maybe it was some other Test dll, so I moved all of the files
+</I>&gt;<i> with *Test* out of the opensim/bin directory, and still got the same error.
+</I>&gt;<i>
+</I>&gt;<i> So, is there something else I can do to get around the MySQL problem?
+</I>&gt;<i> I tried using SQLLiteLegacyStandalone.ini and I seemed to get further, but
+</I>&gt;<i> it gave me an error about failing to load plugin
+</I>&gt;<i> OpenSim.Data.IXInventoryData  I tried tweaking SQLLiteLegacyStandalone.ini
+</I>&gt;<i> but without any luck.
+</I>&gt;<i>
+</I>&gt;<i> Also, when I am running an OpenSim region, do I need the test files?
+</I>&gt;<i> Especially if I'm trying to run a pared down version on a mobile device?
+</I>&gt;<i>
+</I>&gt;<i> Aldon
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I discovered this by first removing Data.MySQL.dll and then
+</I>&gt;<i> &gt; working back along the chain of resolution problems it
+</I>&gt;<i> &gt; complained about.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt; For more details, check my blog post
+</I>&gt;<i> &gt; &gt; Building Virtual Worlds on the #N900
+</I>&gt;<i> &gt; &gt; <A HREF="http://www.orient-lodge.com/node/4281">http://www.orient-lodge.com/node/4281</A>
+</I>&gt;<i> &gt; &gt; Aldon
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20101010/168672d5/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20101010/168672d5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="005686.html">[Opensim-users] Running OpenSim on a Nokia N900 Smartphone
+</A></li>
+	<LI>Next message: <A HREF="005694.html">[Opensim-users] Running OpenSim on a Nokia N900 Smartphone
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#5687">[ date ]</a>
+              <a href="thread.html#5687">[ thread ]</a>
+              <a href="subject.html#5687">[ subject ]</a>
+              <a href="author.html#5687">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

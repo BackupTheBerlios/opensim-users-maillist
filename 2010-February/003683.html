@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] the concept of &quot;visitor&quot;
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-February/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20the%20concept%20of%20%22visitor%22&In-Reply-To=%3C4B692F71.6040403%40kyperjokki.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003682.html">
+   <LINK REL="Next"  HREF="003687.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] the concept of &quot;visitor&quot;</H1>
+    <B>Toni Alatalo</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20the%20concept%20of%20%22visitor%22&In-Reply-To=%3C4B692F71.6040403%40kyperjokki.fi%3E"
+       TITLE="[Opensim-users] the concept of &quot;visitor&quot;">antont at kyperjokki.fi
+       </A><BR>
+    <I>Wed Feb  3 09:10:25 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003682.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+        <LI>Next message: <A HREF="003687.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3683">[ date ]</a>
+              <a href="thread.html#3683">[ thread ]</a>
+              <a href="subject.html#3683">[ subject ]</a>
+              <a href="author.html#3683">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>John Mieske kirjoitti:
+&gt;<i> why not add a PHP file that does this all for you ?  Example : They 
+</I>&gt;<i> click a button that says Visitor John. It gives them a temp user and 
+</I>&gt;<i> PW with full instructions to their e-mail. They log in. Now the timer 
+</I>&gt;<i> on the PHP can delete the temp user and PW after 24 hours. You
+</I>
+BTW I happened to do independently a first very simple implementation of 
+this on Monday, but integrated to the Naali viewer so that visitor / 
+anon login to a preconfigured world is just click of a single button - 
+no need to know anything about usernames or passwords or servers or 
+anything. Was fun to see this discussion here after had implemented it :)
+
+That works by the button handler in viewer fetching a temp / anon 
+account with http, and logging in with that. It works in trunk now (also 
+on linux) and is released hopefully later today in Naali 0.1 rc1 so you 
+can test, the sources are in our google code repo -- i can give the 
+direct pointers if someone is curious.
+
+The target demo server is just a standalone with auth off with no other 
+usage, so can be reseted if there becomes cruft etc. We are certainly 
+interested in this more advanced solutions that have been outlined here, 
+where could mix actual authenticated and such visitor accounts in the 
+same worlds well enough.
+
+~Toni
+&gt;<i> can even have a php that refreshes every hour that checks the database 
+</I>&gt;<i> and removes the temp users that has no need to be there. Make sure you 
+</I>&gt;<i> create a seperate database for the time limit so that it wont have to 
+</I>&gt;<i> be added to the MAIN SQL database. If the &quot;extra&quot; SQL databse has the 
+</I>&gt;<i> name and user's time stamp ready for deletion then it removes it from 
+</I>&gt;<i> the MAIN database for the name and PW and then goes back to the temp 
+</I>&gt;<i> and removes it there too. So two databases with name and PW to show 
+</I>&gt;<i> which is fake.
+</I>&gt;<i>
+</I>&gt;<i> This can be done in many ways. Just a thought.
+</I>&gt;<i>
+</I>&gt;<i> John Mieske / Sonya Penucca
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Feb 2, 2010 at 10:49 AM, Paul Fishwick &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     I would like to open up one of our worlds to the general public by
+</I>&gt;<i>     allowing people
+</I>&gt;<i>     to log in as visitors. This is related to the &quot;anonymous login&quot;
+</I>&gt;<i>     and has
+</I>&gt;<i>     been discussed
+</I>&gt;<i>     in various forms, but here is the concept - not sure if anything
+</I>&gt;<i>     exists
+</I>&gt;<i>     yet in trunk to
+</I>&gt;<i>     support this:
+</I>&gt;<i>
+</I>&gt;<i>     1. A user logs in using whatever name they want. If authentication is
+</I>&gt;<i>     turned off, this is
+</I>&gt;<i>       no problem. However, what would be ideal is that when the user logs
+</I>&gt;<i>     off, any trace
+</I>&gt;<i>       of them is removed from the database-- they do not persist.
+</I>&gt;<i>
+</I>&gt;<i>     2. When the user logs in, they have access to the Library part of the
+</I>&gt;<i>     inventory, but are
+</I>&gt;<i>        unable to load any assets to the server, thus they would have
+</I>&gt;<i>     nothing under &quot;My Inventory&quot;
+</I>&gt;<i>        or be able to copy items from the Library or the world into My
+</I>&gt;<i>     Inventory. The Library
+</I>&gt;<i>        would contain all necessities (clothing, basic objects and scripts
+</I>&gt;<i>     that they require
+</I>&gt;<i>        in the space).
+</I>&gt;<i>
+</I>&gt;<i>     3. The user cannot build on the island but can run scripts and
+</I>&gt;<i>     navigate
+</I>&gt;<i>     performing full
+</I>&gt;<i>        interaction.
+</I>&gt;<i>
+</I>&gt;<i>     #1 is not a huge issue since I would imagine that the incremental
+</I>&gt;<i>     space
+</I>&gt;<i>     allocation for
+</I>&gt;<i>     users just means additional rows in the user/agent tables -- shouldn't
+</I>&gt;<i>     take up too much
+</I>&gt;<i>     room. #2 is a bigger problem - visitors should not be taxing the asset
+</I>&gt;<i>     server. #3
+</I>&gt;<i>     can be handled by unchecking both boxes next to Create Objects in
+</I>&gt;<i>     About
+</I>&gt;<i>     Land-&gt;Options.
+</I>&gt;<i>
+</I>&gt;<i>     Are either #1 or #2 possible? They would seem to be a prerequisite for
+</I>&gt;<i>     something approaching
+</I>&gt;<i>     basic web page services: people come in, visit, and exit while
+</I>&gt;<i>     leaving a
+</I>&gt;<i>     minimal trace.
+</I>&gt;<i>     Builders on the other hand, have special login names that give
+</I>&gt;<i>     them the
+</I>&gt;<i>     capability to build
+</I>&gt;<i>     and load assets (possible with groups?).
+</I>&gt;<i>
+</I>&gt;<i>     -p
+</I>&gt;<i>
+</I>&gt;<i>     --
+</I>&gt;<i>     Paul Fishwick, PhD
+</I>&gt;<i>     Professor
+</I>&gt;<i>     University of Florida
+</I>&gt;<i>     CISE Department, CSE 301
+</I>&gt;<i>     Gainesville, FL 32611
+</I>&gt;<i>     Email: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fishwick at cise.ufl.edu</A>&gt;
+</I>&gt;<i>     Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+</I>&gt;<i>     &lt;<A HREF="http://www.cise.ufl.edu/%7Efishwick">http://www.cise.ufl.edu/%7Efishwick</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Opensim-users mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003682.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+	<LI>Next message: <A HREF="003687.html">[Opensim-users] the concept of &quot;visitor&quot;
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3683">[ date ]</a>
+              <a href="thread.html#3683">[ thread ]</a>
+              <a href="subject.html#3683">[ subject ]</a>
+              <a href="author.html#3683">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

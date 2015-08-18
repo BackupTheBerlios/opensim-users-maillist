@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] External connection to grid and IP tables... Please	:)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20External%20connection%20to%20grid%20and%20IP%20tables...%20Please%0A%09%3A%29&In-Reply-To=%3C49c6d132.02578c0a.295f.ffffe13b%40mx.google.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001718.html">
+   <LINK REL="Next"  HREF="001720.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] External connection to grid and IP tables... Please	:)</H1>
+    <B>Skidz Tweak</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20External%20connection%20to%20grid%20and%20IP%20tables...%20Please%0A%09%3A%29&In-Reply-To=%3C49c6d132.02578c0a.295f.ffffe13b%40mx.google.com%3E"
+       TITLE="[Opensim-users] External connection to grid and IP tables... Please	:)">skidz.tweak at gmail.com
+       </A><BR>
+    <I>Mon Mar 23 01:00:44 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001718.html">[Opensim-users] External connection to grid and IP tables... Please	:)
+</A></li>
+        <LI>Next message: <A HREF="001720.html">[Opensim-users] External connection to grid and IP tables...	Please :)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1719">[ date ]</a>
+              <a href="thread.html#1719">[ thread ]</a>
+              <a href="subject.html#1719">[ subject ]</a>
+              <a href="author.html#1719">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>My rules appeared to be all messed up in the last email so trying again.
+
+ 
+
+Hi All. 
+
+ 
+
+I have set up a grid in my home, and trying to let a friend connect. 
+
+Having some problems. and I know it has to do with my iptables. at least I
+think so. 
+
+ 
+
+I have all 5 servers and one sim running on:
+
+192.168.1.181
+
+ 
+
+I have the domain name grid.gridaverse.com pointed to my external IP
+address:
+
+98.100.106.10
+
+ 
+
+In my firewall script I have added the following rules for forwarding:
+
+$IPTABLES -A INPUT -i $EXTIF -m state --state NEW,ESTABLISHED,RELATED -p tcp
+-s $UNIVERSE -d $EXTIP --dport 8000:8006 -j ACCEPT
+
+$IPTABLES -A INPUT -i $EXTIF -m state --state NEW,ESTABLISHED,RELATED -p tcp
+-s $UNIVERSE -d $EXTIP --dport 8895 -j ACCEPT
+
+$IPTABLES -A INPUT -i $EXTIF -m state --state NEW,ESTABLISHED,RELATED -p tcp
+-s $UNIVERSE -d $EXTIP --dport 9000:9001 -j ACCEPT
+
+ 
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 8002 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 8002 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:8002
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 8001 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 8001 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:8001
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 8000 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 8000 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:8000
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 8003 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 8003 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:8003
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 8004 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 8004 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:8004
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 8005 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 8005 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:8005
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 8006 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 8006 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:8006
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 8895 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 8895 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:8895
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 9000 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 9000 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:9000
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p udp --dport 9000 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p udp -d $EXTIP --dport 9000 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:9000
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p tcp --dport 9001 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p tcp -d $EXTIP --dport 9001 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:9001
+
+$IPTABLES -A FORWARD -i $EXTIF -o $INTIF -p udp --dport 9001 -m state
+--state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+$IPTABLES -A PREROUTING -t nat -p udp -d $EXTIP --dport 9001 -m state
+--state NEW,ESTABLISHED,RELATED -j DNAT --to 192.168.1.181:9001
+
+ 
+
+Also per the site <A HREF="http://opensimulator.org/wiki/Network_Settings">http://opensimulator.org/wiki/Network_Settings</A> I added
+these:
+
+$IPTABLES -t nat -A OUTPUT --dst 98.100.106.10 -p tcp --dport 9000:9010 -j
+DNAT --to-destination 192.168.1.181
+
+$IPTABLES -t nat -A OUTPUT --dst 98.100.106.10 -p udp --dport 9000:9010 -j
+DNAT --to-destination 192.168.1.181
+
+$IPTABLES -t nat -A PREROUTING --dst 98.100.106.10 -p tcp --dport 9000:9010
+-j DNAT --to-destination 192.168.1.181
+
+$IPTABLES -t nat -A PREROUTING --dst 98.100.106.10 -p udp --dport 9000:9010
+-j DNAT --to-destination 192.168.1.181
+
+ 
+
+After that I did run the firewall script again. and I did restart the
+network.
+
+ 
+
+Now I start up the 5 servers and not the sim.. and tested it on shields up:
+<A HREF="https://www.grc.com/x/">https://www.grc.com/x/</A>
+
+Results from scan of ports: 8000-8006, 8895, 9000
+
+    5 Ports Open
+
+    4 Ports Closed
+
+    0 Ports Stealth
+
+ 
+
+So I believe the port forwarding is correct. Even though some are closed, I
+believe that is because the sim is not running.
+
+ 
+
+ 
+
+ 
+
+For the region/default.xml setting I placed in the:
+
+internal_ip_address=&quot;192.168.1.181&quot; 
+
+internal_ip_port=&quot;9000&quot; 
+
+allow_alternate_ports=&quot;false&quot;
+
+external_host_name=&quot;98.100.106.10&quot;
+
+ 
+
+Now, when I start up the sim, I get an ERROR:
+
+11:25:31 - [STARTUP]: Registration of region with grid failed, aborting
+startup
+
+- System.Exception: Unable to connect to grid at <A HREF="http://127.0.0.1:8001:">http://127.0.0.1:8001:</A> The
+grid
+
+ service could not contact the http url <A HREF="http://98.100.106.10:9000/simstatus/">http://98.100.106.10:9000/simstatus/</A>
+at
+
+your region.  Please make sure this url is reachable by the grid service
+
+ 
+
+Now, I have assumed that the rules I added from the site
+<A HREF="http://opensimulator.org/wiki/Network_Settings">http://opensimulator.org/wiki/Network_Settings</A> were forwarding the traffic
+back to my 181 box when something on the internal netorked called it on port
+9000 to the router, but that does not seem to be happening.
+
+ 
+
+I have also tried adding a host entry in both my ubuntu router, and windows
+server pointing grid.gridaverse.com to 192.168.1.181 and tried replacieng my
+external host name to that domain name. 
+
+I am able to start up the sim after that, and. someone from the outside can
+login. but.. he never makes it to the sim.. just to the handshake.
+
+ 
+
+I believe if I added grids.gridaverse.com to my internal DNS server it would
+fix this problem, but to be hostest. everytime I have looked into doing
+something like that with BIND, I don't understand a damn thing I read. But.
+then again.. shouldn't the entry in /etc/host compensate for that?
+
+ 
+
+Any help would be greatly apprecaited. I am passing on my knowledge so
+helping me will help. well.. like the 20 people that read my blog.. lol..
+<A HREF="http://blog.skidzpartz.com">http://blog.skidzpartz.com</A> 
+
+Also if you have additional questions about the setup, the last 3 blog
+entries documented it exactly.
+
+ 
+
+ 
+
+ 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090322/b5ca1b2b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090322/b5ca1b2b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001718.html">[Opensim-users] External connection to grid and IP tables... Please	:)
+</A></li>
+	<LI>Next message: <A HREF="001720.html">[Opensim-users] External connection to grid and IP tables...	Please :)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1719">[ date ]</a>
+              <a href="thread.html#1719">[ thread ]</a>
+              <a href="subject.html#1719">[ subject ]</a>
+              <a href="author.html#1719">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

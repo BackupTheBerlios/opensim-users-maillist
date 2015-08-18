@@ -1,0 +1,627 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] HyperGrid Issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HyperGrid%20Issues&In-Reply-To=%3C000101cde461%2445b14ae0%24d113e0a0%24%40secondgalaxy.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011509.html">
+   <LINK REL="Next"  HREF="011492.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] HyperGrid Issues</H1>
+    <B>Emperor Starfinder</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20HyperGrid%20Issues&In-Reply-To=%3C000101cde461%2445b14ae0%24d113e0a0%24%40secondgalaxy.com%3E"
+       TITLE="[Opensim-users] HyperGrid Issues">emperor at secondgalaxy.com
+       </A><BR>
+    <I>Thu Dec 27 19:37:45 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011509.html">[Opensim-users] question regarding assetcache file directory
+</A></li>
+        <LI>Next message: <A HREF="011492.html">[Opensim-users] HyperGrid Issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11491">[ date ]</a>
+              <a href="thread.html#11491">[ thread ]</a>
+              <a href="subject.html#11491">[ subject ]</a>
+              <a href="author.html#11491">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You may need to use the external IP address provided by your ISP i.e.
+xx.xx.xx.xx and not the Fully Qualified Domain Name (FQDN) i.e.
+you.dyndns.org for your url to your sql server.  In some cases the FQDN does
+not work correctly.  Also regions for hypergrid unless I have lost my memory
+on reading the instructions provided via the wiki and through diva's own
+instructions on her site require the regions to be located in cells around
+the 6000,6000 area..  
+
+Additionally you will likely need to unblock port 3306 in your router and
+firewall to allow other computers to access it for opensim to work.  
+
+Also your region.ini file in bin/Regions/  is configured correctly.  An
+example of this is as follows:
+
+ [Default Region]
+RegionUUID = &quot;11111111-2222-3333-4444-555555555555&quot;
+Location = &quot;1000,1000&quot;
+InternalAddress = &quot;192.168.1.xx&quot;
+InternalPort = 9000
+AllowAlternatePorts = False
+ExternalHostName = &quot;xx.xx.xx.xx&quot;
+
+The reason why you don't want to use the FQDN in the region's file if using
+dyndns is that it actually doesn't work as I have tried it.  It will work
+for the viewer to get your grid info but not in the regions.ini file for
+some odd reason.  At any rate it might be that it is also affecting your
+ability to access your SQL server as well.  Remember the URL or IP address
+must be accessible from outside your network by others on the internet.  
+
+It also does help to have your systems that run your grid and regions
+servers assigned a static IP in your local area netowkr.  You can accomplish
+this easily without much hassle using the software provided by
+portforward.com 
+
+I hope that helps a little.
+
+Emperor
+
+-----Original Message-----
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>
+[mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-bounces at lists.berlios.de</A>] On Behalf Of
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+Sent: Thursday, December 27, 2012 9:14 AM
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Opensim-users Digest, Vol 64, Issue 32
+
+Send Opensim-users mailing list submissions to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+
+To subscribe or unsubscribe via the World Wide Web, visit
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+or, via email, send a message with subject or body 'help' to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>
+
+You can reach the person managing the list at
+	<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-owner at lists.berlios.de</A>
+
+When replying, please edit your Subject line so it is more specific than
+&quot;Re: Contents of Opensim-users digest...&quot;
+
+
+Today's Topics:
+
+   1. Re: HyperGrid Issues (Fleep Tuque)
+   2. Re: HyperGrid Issues (Fleep Tuque)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Thu, 27 Dec 2012 09:10:09 -0500
+From: Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] HyperGrid Issues
+Message-ID:
+	&lt;CAG6z+U5kOodieQm1myuHzRZKhTmAM8M3N=<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">mncqpV8cwLjtyEtw at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;windows-1252&quot;
+
+Hi Randy,
+
+Based on the 192.168.x.x IP addresses, I'm assuming you're doing all this on
+a home network.  On the issue of the Hypergrid, I've found that I am unable
+to hypergrid from any machine on my home network EXCEPT the machine running
+the ROBUST server.  That is, if I open the client on the same machine
+running ROBUST, I can HG jump to other grids, but if I open the client on
+any other machine on my home network, HG jump does not work and I see the
+same kinds of errors you posted in your original post.
+
+I keep hoping at some point there will be a fix to that, since I basically
+can't use the Hypergrid from my own grid at all as a result, but for now if
+I want to go HG visiting other grids, I have to log in to someone else's
+grid as the starting point to jumping around.
+
+Regarding your instance setup, in pretty much all cases, I think you will
+want to use the FQDN instead of IP address in your configuration files since
+internal IP addresses will never resolve from outside your home network.  In
+case it's useful, I post copies of my .ini files on the FleepGrid Change Log
+page at: <A HREF="http://fleep.wikispaces.com/FleepGrid.">http://fleep.wikispaces.com/FleepGrid.</A>
+
+I also recently mapped out my directory structure for the multiple Opensim
+instances I run for the region clusters at:
+<A HREF="http://fleep.wikispaces.com/Directory+Structure+for+FleepGrid.">http://fleep.wikispaces.com/Directory+Structure+for+FleepGrid.</A>
+
+Not sure if that helps, but maybe take a look and if you have other
+questions will try to help.
+
+Good luck!
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM) UCIT
+Instructional &amp; Research Computing University of Cincinnati 406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+
+On Thu, Dec 27, 2012 at 12:06 AM, Randy Pierce
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">thepierces-rwpt at charter.net</A>&gt;wrote:
+
+&gt;<i> Well Fleep -&gt; bad news. I have read both posts by Diva in their 
+</I>&gt;<i> entirety and they did not repair the problem.****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> I am attempting to solve multiple problems simultaneously and not 
+</I>&gt;<i> having luck with any of them.****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> Meanwhile, rather than open up another thread I am running into 
+</I>&gt;<i> another
+</I>&gt;<i> issue.****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> I am attempting to split region loads across multiple computers (all 
+</I>&gt;<i> running windows xp and 0.7.4) but cannot for the life of me get the 
+</I>&gt;<i> SQL to be able to be accessed from computer #2. Computer #1 (and the 
+</I>&gt;<i> rest of the
+</I>&gt;<i> world) can access the SQL file as they can login and all services are 
+</I>&gt;<i> there. But my computer #2 reports the following during OpenSim 
+</I>&gt;<i> startup:***
+</I>&gt;<i> *
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> ====================================================================**
+</I>&gt;<i> **
+</I>&gt;<i>
+</I>&gt;<i> 2012-12-26 22:59:02,544 INFO  - OpenSim.OpenSim 
+</I>&gt;<i> ========================= STARTING OPENSIM 
+</I>&gt;<i> =========================****
+</I>&gt;<i>
+</I>&gt;<i> 2012-12-26 22:59:02,544 INFO  - OpenSim.OpenSim
+</I>&gt;<i> ====================================================================**
+</I>&gt;<i> **
+</I>&gt;<i>
+</I>&gt;<i> 2012-12-26 22:59:17,809 ERROR - OpenSim.Services.Base.ServiceBase 
+</I>&gt;<i> [SERVICE
+</I>&gt;<i> BASE]: Failed to load plugin
+</I>&gt;<i> OpenSim.Region.Framework.Interfaces.ISimulationDataStore from 
+</I>&gt;<i> OpenSim.Data.MySQL.dll with args Data 
+</I>&gt;<i> Source=192.168.1.125;Database=opensim;User ID=opensim;Password=***;Old
+</I>&gt;<i> Guids=true;****
+</I>&gt;<i>
+</I>&gt;<i> System.Reflection.TargetInvocationException: Exception has been thrown 
+</I>&gt;<i> by the target of an invocation. ---&gt;
+</I>MySql.Data.MySqlClient.MySqlException:
+&gt;<i> Unable to connect to any of the specified MySQL hosts.****
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.NativeDriver.Open()****
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.Driver.Open()****
+</I>&gt;<i>
+</I>&gt;<i>    at 
+</I>&gt;<i> MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder
+</I>&gt;<i> settings)****
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()****
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()****
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()****
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlPool.GetConnection()****
+</I>&gt;<i>
+</I>&gt;<i>    at MySql.Data.MySqlClient.MySqlConnection.Open()****
+</I>&gt;<i>
+</I>&gt;<i>    at OpenSim.Data.MySQL.MySQLSimulationData.Initialise(String
+</I>&gt;<i> connectionString)****
+</I>&gt;<i>
+</I>&gt;<i>    at OpenSim.Data.MySQL.MySQLSimulationData..ctor(String 
+</I>&gt;<i> connectionString)
+</I>&gt;<i> ****
+</I>&gt;<i>
+</I>&gt;<i>    --- End of inner exception stack trace ---****
+</I>&gt;<i>
+</I>&gt;<i>    at System.RuntimeMethodHandle._InvokeConstructor(Object[] args, 
+</I>&gt;<i> SignatureStruct&amp; signature, IntPtr declaringType)****
+</I>&gt;<i>
+</I>&gt;<i>    at System.RuntimeMethodHandle.InvokeConstructor(Object[] args, 
+</I>&gt;<i> SignatureStruct signature, RuntimeTypeHandle declaringType)****
+</I>&gt;<i>
+</I>&gt;<i>    at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags
+</I>&gt;<i> invokeAttr, Binder binder, Object[] parameters, CultureInfo 
+</I>&gt;<i> culture)****
+</I>&gt;<i>
+</I>&gt;<i>    at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, 
+</I>&gt;<i> Binder binder, Object[] args, CultureInfo culture, Object[]
+</I>&gt;<i> activationAttributes)****
+</I>&gt;<i>
+</I>&gt;<i>    at System.Activator.CreateInstance(Type type, BindingFlags 
+</I>&gt;<i> bindingAttr, Binder binder, Object[] args, CultureInfo culture, 
+</I>&gt;<i> Object[]
+</I>&gt;<i> activationAttributes)****
+</I>&gt;<i>
+</I>&gt;<i>    at OpenSim.Services.Base.ServiceBase.LoadPlugin[T](String dllName, 
+</I>&gt;<i> String className, Object[] args)****
+</I>&gt;<i>
+</I>&gt;<i> 2012-12-26 22:59:17,825 ERROR - OpenSim.Server.Base.ServerUtils Error 
+</I>&gt;<i> loading plugin 
+</I>&gt;<i> OpenSim.Region.Framework.Interfaces.ISimulationDataService
+</I>&gt;<i> from OpenSim.Services.Connectors.dll. Exception: Could not find a 
+</I>&gt;<i> storage interface in the given module****
+</I>&gt;<i>
+</I>&gt;<i> 2012-12-26 22:59:17,840 INFO  - OpenSim.Data.MySQL.MySQLEstateStore
+</I>&gt;<i> [REGION DB]: MySql - connecting: Data
+</I>&gt;<i> Source=192.168.1.125;Database=opensim;User ID=opensim;Password=***;Old
+</I>&gt;<i> Guids=true;****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> 1)      I am NOT trying to run two Robust instances. The operating
+</I>&gt;<i> instance is on computer #1****
+</I>&gt;<i>
+</I>&gt;<i> 2)      The passwords have been removed.****
+</I>&gt;<i>
+</I>&gt;<i> 3)      I have tried ?localhost?, ?192.168.1.125? (local IP), as well as ?
+</I>&gt;<i> gcse.dyndns.org? (external DNS port forwarding)****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> *From:* Fleep Tuque [via opensim-users] [mailto:[hidden 
+</I>&gt;<i> email]&lt;<A HREF="http://user/SendEmail.jtp?type=node&amp;node=7579220&amp;i=0">http://user/SendEmail.jtp?type=node&amp;node=7579220&amp;i=0</A>&gt;]
+</I>&gt;<i>
+</I>&gt;<i> *Sent:* Tuesday, December 25, 2012 6:58 PM
+</I>&gt;<i> *To:* Randy Pierce
+</I>&gt;<i> *Subject:* Re: HyperGrid Issues****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> Hi,****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> There are two previous listserv threads where Diva has replied about 
+</I>&gt;<i> similar Hypergrid issues that may be helpful in your situation:****
+</I>&gt;<i>
+</I>&gt;<i> ** **
+</I>&gt;<i>
+</I>&gt;<i> click here.
+</I>&gt;<i> NAML&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/template/NamlServlet.j">http://opensim-users.2152040.n2.nabble.com/template/NamlServlet.j</A>
+</I>&gt;<i> tp?macro=macro_viewer&amp;id=instant_html%21nabble%3Aemail.naml&amp;base=nabbl
+</I>&gt;<i> e.naml.namespaces.BasicNamespace-nabble.view.web.template.NabbleNamesp
+</I>&gt;<i> ace-nabble.naml.namespaces.BasicNamespace-nabble.view.web.template.Nab
+</I>&gt;<i> bleNamespace-nabble.naml.namespaces.BasicNamespace-nabble.view.web.tem
+</I>&gt;<i> plate.NabbleNamespace-nabble.view.web.template.NodeNamespace&amp;breadcrum
+</I>&gt;<i> bs=notify_subscribers%21nabble%3Aemail.naml-instant_emails%21nabble%3A
+</I>&gt;<i> email.naml-send_instant_email%21nabble%3Aemail.naml&gt;
+</I>&gt;<i> ****
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i> View this message in context: RE: HyperGrid 
+</I>&gt;<i> Issues&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/HyperGrid-Issues-tp7">http://opensim-users.2152040.n2.nabble.com/HyperGrid-Issues-tp7</A>
+</I>&gt;<i> 579211p7579220.html&gt; Sent from the opensim-users mailing list 
+</I>&gt;<i> archive&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/">http://opensim-users.2152040.n2.nabble.com/</A>&gt;at Nabble.com.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL:
+&lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121227/6adf5">https://lists.berlios.de/pipermail/opensim-users/attachments/20121227/6adf5</A>
+f59/attachment-0001.html&gt;
+
+------------------------------
+
+Message: 2
+Date: Thu, 27 Dec 2012 09:14:07 -0500
+From: Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: Re: [Opensim-users] HyperGrid Issues
+Message-ID:
+	&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">CAG6z+U4yq3vrreLSTRzrJfd03-3sB6vMgcr8V7VcHLBMBnXOew at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;windows-1252&quot;
+
+I forgot to add, if you're serious about running your own publicly
+accessible Opensim grid from home, I'm a big fan of registering an actual
+domain name and getting a static IP address from your ISP - that resolved
+nearly all the networking issues I ran into when I was first trying to set
+up FleepGrid. I never could get the dyndns and NAT loopback stuff working
+properly on my network.
+
+Sincerely,
+
+- Chris/Fleep
+
+
+Chris M. Collins (SL/OS: Fleep Tuque)
+Center for Simulations &amp; Virtual Environments Research (UCSIM) UCIT
+Instructional &amp; Research Computing University of Cincinnati 406A Zimmer Hall
+315 College Drive
+PO BOX 210088
+Cincinnati, OH 45221-0088
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+(513) 556-3018
+
+<A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+
+On Thu, Dec 27, 2012 at 9:10 AM, Fleep Tuque &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">fleep513 at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hi Randy,
+</I>&gt;<i>
+</I>&gt;<i> Based on the 192.168.x.x IP addresses, I'm assuming you're doing all 
+</I>&gt;<i> this on a home network.  On the issue of the Hypergrid, I've found 
+</I>&gt;<i> that I am unable to hypergrid from any machine on my home network 
+</I>&gt;<i> EXCEPT the machine running the ROBUST server.  That is, if I open the 
+</I>&gt;<i> client on the same machine running ROBUST, I can HG jump to other 
+</I>&gt;<i> grids, but if I open the client on any other machine on my home 
+</I>&gt;<i> network, HG jump does not work and I see the same kinds of errors you
+</I>posted in your original post.
+&gt;<i>
+</I>&gt;<i> I keep hoping at some point there will be a fix to that, since I 
+</I>&gt;<i> basically can't use the Hypergrid from my own grid at all as a result, 
+</I>&gt;<i> but for now if I want to go HG visiting other grids, I have to log in 
+</I>&gt;<i> to someone else's grid as the starting point to jumping around.
+</I>&gt;<i>
+</I>&gt;<i> Regarding your instance setup, in pretty much all cases, I think you 
+</I>&gt;<i> will want to use the FQDN instead of IP address in your configuration 
+</I>&gt;<i> files since internal IP addresses will never resolve from outside your 
+</I>&gt;<i> home network.  In case it's useful, I post copies of my .ini files on 
+</I>&gt;<i> the FleepGrid Change Log page at: <A HREF="http://fleep.wikispaces.com/FleepGrid.">http://fleep.wikispaces.com/FleepGrid.</A>
+</I>&gt;<i>
+</I>&gt;<i> I also recently mapped out my directory structure for the multiple 
+</I>&gt;<i> Opensim instances I run for the region clusters at:
+</I>&gt;<i> <A HREF="http://fleep.wikispaces.com/Directory+Structure+for+FleepGrid.">http://fleep.wikispaces.com/Directory+Structure+for+FleepGrid.</A>
+</I>&gt;<i>
+</I>&gt;<i> Not sure if that helps, but maybe take a look and if you have other 
+</I>&gt;<i> questions will try to help.
+</I>&gt;<i>
+</I>&gt;<i> Good luck!
+</I>&gt;<i>
+</I>&gt;<i> - Chris/Fleep
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Chris M. Collins (SL/OS: Fleep Tuque)
+</I>&gt;<i> Center for Simulations &amp; Virtual Environments Research (UCSIM) UCIT 
+</I>&gt;<i> Instructional &amp; Research Computing University of Cincinnati 406A 
+</I>&gt;<i> Zimmer Hall
+</I>&gt;<i> 315 College Drive
+</I>&gt;<i> PO BOX 210088
+</I>&gt;<i> Cincinnati, OH 45221-0088
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">chris.collins at uc.edu</A>
+</I>&gt;<i> (513) 556-3018
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://ucsim.uc.edu">http://ucsim.uc.edu</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Dec 27, 2012 at 12:06 AM, Randy Pierce &lt; 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">thepierces-rwpt at charter.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Well Fleep -&gt; bad news. I have read both posts by Diva in their 
+</I>&gt;&gt;<i> entirety and they did not repair the problem.****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am attempting to solve multiple problems simultaneously and not 
+</I>&gt;&gt;<i> having luck with any of them.****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Meanwhile, rather than open up another thread I am running into 
+</I>&gt;&gt;<i> another
+</I>&gt;&gt;<i> issue.****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am attempting to split region loads across multiple computers (all 
+</I>&gt;&gt;<i> running windows xp and 0.7.4) but cannot for the life of me get the 
+</I>&gt;&gt;<i> SQL to be able to be accessed from computer #2. Computer #1 (and the 
+</I>&gt;&gt;<i> rest of the
+</I>&gt;&gt;<i> world) can access the SQL file as they can login and all services are 
+</I>&gt;&gt;<i> there. But my computer #2 reports the following during OpenSim 
+</I>&gt;&gt;<i> startup:**
+</I>&gt;&gt;<i> **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ====================================================================*
+</I>&gt;&gt;<i> ***
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-12-26 22:59:02,544 INFO  - OpenSim.OpenSim 
+</I>&gt;&gt;<i> ========================= STARTING OPENSIM 
+</I>&gt;&gt;<i> =========================****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-12-26 22:59:02,544 INFO  - OpenSim.OpenSim
+</I>&gt;&gt;<i> ====================================================================*
+</I>&gt;&gt;<i> ***
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-12-26 22:59:17,809 ERROR - OpenSim.Services.Base.ServiceBase 
+</I>&gt;&gt;<i> [SERVICE BASE]: Failed to load plugin 
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Interfaces.ISimulationDataStore from 
+</I>&gt;&gt;<i> OpenSim.Data.MySQL.dll with args Data 
+</I>&gt;&gt;<i> Source=192.168.1.125;Database=opensim;User 
+</I>&gt;&gt;<i> ID=opensim;Password=***;Old
+</I>&gt;&gt;<i> Guids=true;****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> System.Reflection.TargetInvocationException: Exception has been 
+</I>&gt;&gt;<i> thrown by the target of an invocation. ---&gt;
+</I>MySql.Data.MySqlClient.MySqlException:
+&gt;&gt;<i> Unable to connect to any of the specified MySQL hosts.****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at MySql.Data.MySqlClient.NativeDriver.Open()****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at MySql.Data.MySqlClient.Driver.Open()****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at 
+</I>&gt;&gt;<i> MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder
+</I>&gt;&gt;<i> settings)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at 
+</I>&gt;&gt;<i> MySql.Data.MySqlClient.MySqlPool.CreateNewPooledConnection()****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at MySql.Data.MySqlClient.MySqlPool.GetPooledConnection()****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at MySql.Data.MySqlClient.MySqlPool.TryToGetDriver()****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at MySql.Data.MySqlClient.MySqlPool.GetConnection()****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at MySql.Data.MySqlClient.MySqlConnection.Open()****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at OpenSim.Data.MySQL.MySQLSimulationData.Initialise(String
+</I>&gt;&gt;<i> connectionString)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at OpenSim.Data.MySQL.MySQLSimulationData..ctor(String
+</I>&gt;&gt;<i> connectionString)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    --- End of inner exception stack trace ---****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.RuntimeMethodHandle._InvokeConstructor(Object[] args, 
+</I>&gt;&gt;<i> SignatureStruct&amp; signature, IntPtr declaringType)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.RuntimeMethodHandle.InvokeConstructor(Object[] args, 
+</I>&gt;&gt;<i> SignatureStruct signature, RuntimeTypeHandle declaringType)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Reflection.RuntimeConstructorInfo.Invoke(BindingFlags
+</I>&gt;&gt;<i> invokeAttr, Binder binder, Object[] parameters, CultureInfo 
+</I>&gt;&gt;<i> culture)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, 
+</I>&gt;&gt;<i> Binder binder, Object[] args, CultureInfo culture, Object[]
+</I>&gt;&gt;<i> activationAttributes)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at System.Activator.CreateInstance(Type type, BindingFlags 
+</I>&gt;&gt;<i> bindingAttr, Binder binder, Object[] args, CultureInfo culture, 
+</I>&gt;&gt;<i> Object[]
+</I>&gt;&gt;<i> activationAttributes)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>    at OpenSim.Services.Base.ServiceBase.LoadPlugin[T](String dllName, 
+</I>&gt;&gt;<i> String className, Object[] args)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-12-26 22:59:17,825 ERROR - OpenSim.Server.Base.ServerUtils Error 
+</I>&gt;&gt;<i> loading plugin 
+</I>&gt;&gt;<i> OpenSim.Region.Framework.Interfaces.ISimulationDataService
+</I>&gt;&gt;<i> from OpenSim.Services.Connectors.dll. Exception: Could not find a 
+</I>&gt;&gt;<i> storage interface in the given module****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2012-12-26 22:59:17,840 INFO  - OpenSim.Data.MySQL.MySQLEstateStore
+</I>&gt;&gt;<i> [REGION DB]: MySql - connecting: Data 
+</I>&gt;&gt;<i> Source=192.168.1.125;Database=opensim;User 
+</I>&gt;&gt;<i> ID=opensim;Password=***;Old
+</I>&gt;&gt;<i> Guids=true;****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1)      I am NOT trying to run two Robust instances. The operating
+</I>&gt;&gt;<i> instance is on computer #1****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2)      The passwords have been removed.****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3)      I have tried ?localhost?, ?192.168.1.125? (local IP), as well as
+</I>&gt;&gt;<i> ?gcse.dyndns.org? (external DNS port forwarding)****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *From:* Fleep Tuque [via opensim-users] [mailto:[hidden 
+</I>&gt;&gt;<i> email]&lt;<A HREF="http://user/SendEmail.jtp?type=node&amp;node=7579220&amp;i=0">http://user/SendEmail.jtp?type=node&amp;node=7579220&amp;i=0</A>&gt;]
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *Sent:* Tuesday, December 25, 2012 6:58 PM
+</I>&gt;&gt;<i> *To:* Randy Pierce
+</I>&gt;&gt;<i> *Subject:* Re: HyperGrid Issues****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi,****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There are two previous listserv threads where Diva has replied about 
+</I>&gt;&gt;<i> similar Hypergrid issues that may be helpful in your situation:****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ** **
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> click here.
+</I>&gt;&gt;<i> NAML&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/template/NamlServlet.">http://opensim-users.2152040.n2.nabble.com/template/NamlServlet.</A>
+</I>&gt;&gt;<i> jtp?macro=macro_viewer&amp;id=instant_html%21nabble%3Aemail.naml&amp;base=nab
+</I>&gt;&gt;<i> ble.naml.namespaces.BasicNamespace-nabble.view.web.template.NabbleNam
+</I>&gt;&gt;<i> espace-nabble.naml.namespaces.BasicNamespace-nabble.view.web.template
+</I>&gt;&gt;<i> .NabbleNamespace-nabble.naml.namespaces.BasicNamespace-nabble.view.we
+</I>&gt;&gt;<i> b.template.NabbleNamespace-nabble.view.web.template.NodeNamespace&amp;bre
+</I>&gt;&gt;<i> adcrumbs=notify_subscribers%21nabble%3Aemail.naml-instant_emails%21na
+</I>&gt;&gt;<i> bble%3Aemail.naml-send_instant_email%21nabble%3Aemail.naml&gt;
+</I>&gt;&gt;<i> ****
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;<i> View this message in context: RE: HyperGrid 
+</I>&gt;&gt;<i> Issues&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/HyperGrid-Issues-tp">http://opensim-users.2152040.n2.nabble.com/HyperGrid-Issues-tp</A>
+</I>&gt;&gt;<i> 7579211p7579220.html&gt; Sent from the opensim-users mailing list 
+</I>&gt;&gt;<i> archive&lt;<A HREF="http://opensim-users.2152040.n2.nabble.com/">http://opensim-users.2152040.n2.nabble.com/</A>&gt;at Nabble.com.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Opensim-users mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL:
+&lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20121227/c92d8">https://lists.berlios.de/pipermail/opensim-users/attachments/20121227/c92d8</A>
+c58/attachment.html&gt;
+
+------------------------------
+
+_______________________________________________
+Opensim-users mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+
+End of Opensim-users Digest, Vol 64, Issue 32
+*********************************************
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011509.html">[Opensim-users] question regarding assetcache file directory
+</A></li>
+	<LI>Next message: <A HREF="011492.html">[Opensim-users] HyperGrid Issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11491">[ date ]</a>
+              <a href="thread.html#11491">[ thread ]</a>
+              <a href="subject.html#11491">[ subject ]</a>
+              <a href="author.html#11491">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

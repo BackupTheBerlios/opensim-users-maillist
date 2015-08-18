@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] building opensim on a mac (nant problem)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-August/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20building%20opensim%20on%20a%20mac%20%28nant%20problem%29&In-Reply-To=%3C177FCED0-9B36-4338-B966-9935B9DED67F%40cise.ufl.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002465.html">
+   <LINK REL="Next"  HREF="002468.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] building opensim on a mac (nant problem)</H1>
+    <B>Paul Fishwick</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20building%20opensim%20on%20a%20mac%20%28nant%20problem%29&In-Reply-To=%3C177FCED0-9B36-4338-B966-9935B9DED67F%40cise.ufl.edu%3E"
+       TITLE="[Opensim-users] building opensim on a mac (nant problem)">fishwick at cise.ufl.edu
+       </A><BR>
+    <I>Tue Aug 25 02:59:44 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002465.html">[Opensim-users] building opensim on a mac (nant problem)
+</A></li>
+        <LI>Next message: <A HREF="002468.html">[Opensim-users] building opensim on a mac (nant problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2466">[ date ]</a>
+              <a href="thread.html#2466">[ thread ]</a>
+              <a href="subject.html#2466">[ subject ]</a>
+              <a href="author.html#2466">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jeff
+  Thanks for your note:
+
+  (1) I  had already installed the Mono intel CSDK from the source you  
+mention. This installed Mono
+        version 2.4.2.3
+
+(2) I also added a symbolic link as per your suggestion. To verify:
+
+      ls -l /usr/bin/pkg-config
+
+      lrwxr-xr-x  1 root  wheel  54 Aug 24 20:41 /usr/bin/pkg-config - 
+ &gt; /Library/Frameworks/Mono.framework/Commands/pkg-config
+
+
+(3) Doing &quot;nant&quot; at the shell where the prebuild.sh was done and where  
+there
+       is a &quot;.nant&quot; directory, I get:
+
+       BUILD FAILED
+
+       Failed to initialize the 'Mono 3.5 Profile' (mono-3.5) target  
+framework.
+
+       Unable to locate 'mono' module using pkg-config. Download the  
+Mono development packages from <A HREF="http://www.mono-project.com/downloads/.">http://www.mono-project.com/downloads/.</A>
+
+
+(4) A &quot;mono -V&quot; shows that Mono JIT compiler version 2.4.2.3 is  
+installed
+
+At the shell, &quot;pkg-config&quot; runs the Mono pkg-config command, so not  
+sure .....
+
+-paul
+
+
+On Aug 24, 2009, at 8:24 PM, Jeff Ames wrote:
+
+&gt;<i> <A HREF="http://www.rustyrazorblade.com/2009/05/08/mono-install-bug-found-when-using-eclipse/">http://www.rustyrazorblade.com/2009/05/08/mono-install-bug-found-when-using-eclipse/</A>
+</I>&gt;<i> suggests that mono fails to create a link to pkg-config in a standard
+</I>&gt;<i> bin directory, but doing so yourself may fix this:
+</I>&gt;<i>
+</I>&gt;<i>  sudo ln -s /Library/Frameworks/Mono.framework/Commands/pkg-config
+</I>&gt;<i> /usr/bin/pkg-config
+</I>&gt;<i>
+</I>&gt;<i> Alternatively, adding /Library/Frameworks/Mono.framework/Commands/ to
+</I>&gt;<i> your PATH might also work.
+</I>&gt;<i>
+</I>&gt;<i> You may also run into a problem where pkg-config complains about not
+</I>&gt;<i> finding glib-2.0.  If so, make sure you've also installed the mono
+</I>&gt;<i> CSDK.  There's a link at <A HREF="http://www.go-mono.com/mono-downloads/download.html">http://www.go-mono.com/mono-downloads/download.html</A>
+</I>&gt;<i>
+</I>&gt;<i> Jeff
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>
+Paul Fishwick, PhD
+Professor
+Director, Digital Arts and Sciences Programs
+Computer and Information Sciences and Engineering Dept.
+PO Box 116120
+Bldg. CSE, Room 301
+Gainesville, Florida 32611
+Web: <A HREF="http://www.cise.ufl.edu/~fishwick">http://www.cise.ufl.edu/~fishwick</A>
+Ph: (352) 392-1414
+Fax: (352) 392-1220
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090824/bd05c718/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090824/bd05c718/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002465.html">[Opensim-users] building opensim on a mac (nant problem)
+</A></li>
+	<LI>Next message: <A HREF="002468.html">[Opensim-users] building opensim on a mac (nant problem)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2466">[ date ]</a>
+              <a href="thread.html#2466">[ thread ]</a>
+              <a href="subject.html#2466">[ subject ]</a>
+              <a href="author.html#2466">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

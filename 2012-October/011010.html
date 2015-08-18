@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim and VirWox
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-October/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20and%20VirWox&In-Reply-To=%3C506C2AE4.3060500%40t-data.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="011009.html">
+   <LINK REL="Next"  HREF="011031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim and VirWox</H1>
+    <B>Melanie</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%20and%20VirWox&In-Reply-To=%3C506C2AE4.3060500%40t-data.com%3E"
+       TITLE="[Opensim-users] OpenSim and VirWox">melanie at t-data.com
+       </A><BR>
+    <I>Wed Oct  3 14:09:08 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="011009.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+        <LI>Next message: <A HREF="011031.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11010">[ date ]</a>
+              <a href="thread.html#11010">[ thread ]</a>
+              <a href="subject.html#11010">[ subject ]</a>
+              <a href="author.html#11010">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Your DLL doesn't match your OpenSim version. You will need to
+compile VirWox from source. In this case, late bound method
+references could not be resolved and the call to the VirWox function
+failed.
+
+Melanie
+
+On 03/10/2012 13:20, <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dogwomble at exemail.com.au</A> wrote:
+&gt;<i> Hi guys,
+</I>&gt;<i> 
+</I>&gt;<i> I know this is venturing into somewhat unsupported territory but I thought
+</I>&gt;<i> I'd ask anyways.
+</I>&gt;<i> 
+</I>&gt;<i> At the moment, I'm experimenting with OpenSim 0.7.4 and want to try and
+</I>&gt;<i> get VirWox working.  This is currently set up on a Windows 2003 Server box
+</I>&gt;<i> in grid mode.  I've _almost_ got it working but I'm not quite there - I'm
+</I>&gt;<i> sure I've missed something obvious but I can't quite work out what.
+</I>&gt;<i> 
+</I>&gt;<i> As per the VirWox instructions
+</I>&gt;<i> (<A HREF="https://www.virwox.com:419/OSMoneyGateway/4.0.3/Public/index.php/OMHelp">https://www.virwox.com:419/OSMoneyGateway/4.0.3/Public/index.php/OMHelp</A>)
+</I>&gt;<i> I have added the appropriate DLL files (I used the binary versions for
+</I>&gt;<i> convenience).  I have placed the following into all my OpenSim.ini files:
+</I>&gt;<i> 
+</I>&gt;<i> [OpenMetaverseEconomy]
+</I>&gt;<i>   OMEconomyInitialize =   
+</I>&gt;<i> &quot;<A HREF="https://www.virwox.com:419/OSMoneyGateway/init.php">https://www.virwox.com:419/OSMoneyGateway/init.php</A>&quot;
+</I>&gt;<i>   GridShortName =          &quot;TestingOnly&quot;
+</I>&gt;<i>   OMBaseEnvironment =      &quot;TEST&quot;
+</I>&gt;<i>   OMCurrencyEnvironment =  &quot;TEST&quot;
+</I>&gt;<i> 
+</I>&gt;<i> The following shows in the logs, which seems to indicate that it is
+</I>&gt;<i> loading correctly.
+</I>&gt;<i> 
+</I>&gt;<i> 2012-10-02 22:00:47,280 DEBUG - OMEconomy.OMBase.CommunicationHelpers
+</I>&gt;<i> [OMECONOMY] Request:
+</I>&gt;<i> <A HREF="https://www.virwox.com:419/OSMoneyGateway/TEST/4.0.3/API/Simulator.php?method=initializeRegion&amp;regionIP=http://192.168.1.67:9004/&amp;regionName=Newton&amp;regionUUID=591ee37b-2e00-4278-aae2-6db86937bc5b&amp;simulatorVersion=OpenSim">https://www.virwox.com:419/OSMoneyGateway/TEST/4.0.3/API/Simulator.php?method=initializeRegion&amp;regionIP=http://192.168.1.67:9004/&amp;regionName=Newton&amp;regionUUID=591ee37b-2e00-4278-aae2-6db86937bc5b&amp;simulatorVersion=OpenSim</A>
+</I>&gt;<i> 0.7.4 Release     
+</I>&gt;<i> &amp;moduleVersion=4.0.5&amp;gridShortName=TestingOnly&amp;gridURL=<A HREF="http://192.168.1.67:8003">http://192.168.1.67:8003</A>
+</I>&gt;<i> 2012-10-02 22:00:47,998 DEBUG - OMEconomy.OMBase.CommunicationHelpers
+</I>&gt;<i> [OMECONOMY] Response: {&quot;success&quot;:&quot;true&quot;,&quot;regionSecret&quot;:&quot;removed&quot;}
+</I>&gt;<i> 2012-10-02 22:00:48,014 INFO  - OMEconomy.OMBase.OMBaseModule [OMBASE]:
+</I>&gt;<i> The Service is Available
+</I>&gt;<i> 
+</I>&gt;<i> The terminal has been successfully brought in and a test account created
+</I>&gt;<i> and verified - so all good so far.
+</I>&gt;<i> 
+</I>&gt;<i> However, whenever I try and &quot;Pay&quot; an object or avatar, I start getting
+</I>&gt;<i> problems.  Because I have $OS0, it wants me to purcahse some currency -
+</I>&gt;<i> which is expected.  However, at the stage of it &quot;Getting data&quot;, I receive
+</I>&gt;<i> the error: &quot;Despite our best efforts, something unexpected has gone
+</I>&gt;<i> wrong&quot;.
+</I>&gt;<i> 
+</I>&gt;<i> I have added the appropriate Helper URI to my client settings, as well as
+</I>&gt;<i> place the Helper files as part of my web server.  My Apache log seems to
+</I>&gt;<i> indicate they are being loaded successfully:
+</I>&gt;<i> 
+</I>&gt;<i> 192.168.1.66 - - [03/Oct/2012:21:15:03 +1000] &quot;POST
+</I>&gt;<i> /grid/helper/currency.php HTTP/1.1&quot; 200 122
+</I>&gt;<i> 
+</I>&gt;<i> The only odd thing I'm noticing is this in my OpenSim.log:
+</I>&gt;<i> 
+</I>&gt;<i> 2012-10-02 22:06:23,014 ERROR -
+</I>&gt;<i> OpenSim.Region.Framework.Scenes.EventManager [EVENT MANAGER]: Delegate for
+</I>&gt;<i> TriggerOnMakeRootAgent failed - continuing.  Method not found:
+</I>&gt;<i> 'System.Net.EndPoint OpenSim.Framework.IClientAPI.GetClientEP()'.    at
+</I>&gt;<i> OMEconomy.OMBase.OMBaseModule.AddAvatar(ScenePresence avatar)
+</I>&gt;<i>    at
+</I>&gt;<i> OpenSim.Region.Framework.Scenes.EventManager.TriggerOnMakeRootAgent(ScenePresence
+</I>&gt;<i> presence)
+</I>&gt;<i> 
+</I>&gt;<i> This seems to correlate with me loggin in, and I can't for the life of me
+</I>&gt;<i> work out what's happening here, even with the help of Google.
+</I>&gt;<i> 
+</I>&gt;<i> I'm sure I'm missing something obvious and it's staring me in the face - I
+</I>&gt;<i> just can't see it so any help (and I know I'm verging on tl;dr) would be
+</I>&gt;<i> appreciated!
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I></PRE>
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="011009.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+	<LI>Next message: <A HREF="011031.html">[Opensim-users] OpenSim and VirWox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11010">[ date ]</a>
+              <a href="thread.html#11010">[ thread ]</a>
+              <a href="subject.html#11010">[ subject ]</a>
+              <a href="author.html#11010">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

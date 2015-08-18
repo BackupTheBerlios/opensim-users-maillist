@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Slow LSL timers
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3CAANLkTi%3D%2B86Hs8v5wZLoD39x5jXhwHFQZCLcg%2Bi5VZNRS%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006352.html">
+   <LINK REL="Next"  HREF="006359.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Slow LSL timers</H1>
+    <B>Jorge Lima</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Slow%20LSL%20timers&In-Reply-To=%3CAANLkTi%3D%2B86Hs8v5wZLoD39x5jXhwHFQZCLcg%2Bi5VZNRS%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Slow LSL timers">jorge.manuel at gmail.com
+       </A><BR>
+    <I>Mon Dec  6 01:30:48 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006352.html">[Opensim-users] Slow LSL timers
+</A></li>
+        <LI>Next message: <A HREF="006359.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6358">[ date ]</a>
+              <a href="thread.html#6358">[ thread ]</a>
+              <a href="subject.html#6358">[ subject ]</a>
+              <a href="author.html#6358">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>My project is simple enough - something like throwing a ball off a
+cliff with a horizontal impulse and recording its speed. It's for high
+school physics teachers/students.
+
+It seems to me that I can either have a fast timer that simulates the
+movement and generates points, or I can have a fast timer that trusts
+the physics engine to provide an accurate simulation and records its
+output :)
+
+I will look into the Timer.cs file and try out C# scripting tomorrow,
+then get back to you. Thanks for the help!
+
+On Sat, Dec 4, 2010 at 6:23 AM, dz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">dz at bitzend.net</A>&gt; wrote:
+&gt;<i> I'd have to agree with Justin...
+</I>&gt;<i>
+</I>&gt;<i> Expecting event handling to be optimized is too optimistic, but&#160; there are
+</I>&gt;<i> alternatives.&#160; The .Net/Mono libraries already include timer functions that
+</I>&gt;<i> support fast and accurate timing.
+</I>&gt;<i>
+</I>&gt;<i> Relying on an LSL event trigger to happen every 4 frames MAY work in SL but
+</I>&gt;<i> it is a design begging to cause lag and&#160; stop itself.&#160; Designs like that are
+</I>&gt;<i> also susceptible to event buffer overflows&#160; where your events are &quot;lost&quot;,
+</I>&gt;<i> leaving you to wonder why your &quot;reliable&quot; script&#160; sometimes just isn't..
+</I>&gt;<i> The ONLY LSL events I have seen&#160; requiring sub-second repeats&#160; would be in
+</I>&gt;<i> an AO, but timer based AO's are obsoleted in OpenSim by the use of the
+</I>&gt;<i> Animation_Changed event.
+</I>&gt;<i>
+</I>&gt;<i> In the extreme, if you are trying to be&#160; very exact,,&#160; you would want to
+</I>&gt;<i> insure the timings were made by processes independent of the region time
+</I>&gt;<i> dialations, not the ones that may be responsible for them.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Dec 3, 2010 at 5:35 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users-request at lists.berlios.de</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ---------- Forwarded message ----------
+</I>&gt;&gt;<i> From:&#160;Jorge Lima &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jorge.manuel at gmail.com</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Subject:&#160;[Opensim-users] Slow LSL timers
+</I>&gt;&gt;<i> Ran 100 timer events with a single if(++i &gt; 100) inside. I suppose
+</I>&gt;&gt;<i> decrementing and comparing to 0 might be faster, but I also
+</I>&gt;&gt;<i> copy-pasted 100 inlined if clauses and the time to run them was
+</I>&gt;&gt;<i> negligible.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> llSetTimerEvent(0.1) -&gt; 59 s -&gt; 490% overhead
+</I>&gt;&gt;<i> llSetTimerEvent(0.2) -&gt; 59 s -&gt; 195% overhead
+</I>&gt;&gt;<i> llSetTimerEvent(0.5) -&gt; 59 s -&gt; 18% overhead
+</I>&gt;&gt;<i> llSetTimerEvent(0.75) -&gt; 81 s -&gt; 8% overhead
+</I>&gt;&gt;<i> llSetTimerEvent(1.0) -&gt; 108 s -&gt; 8% overhead
+</I>&gt;&gt;<i> llSetTimerEvent(2.0) -&gt; 209 s -&gt; 4.5% overhead
+</I>&gt;&gt;<i> llSetTimerEvent(4.0) -&gt; 407 s -&gt; 1.75% overhead
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am guessing that the overhead is, therefore, internal to the timer
+</I>&gt;&gt;<i> implementation. I haven't tested raw C# timers as comparison but 100ms
+</I>&gt;&gt;<i> is an eternity in modern computing, I can ping servers across the
+</I>&gt;&gt;<i> Atlantic ocean in less than that!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I went through the code but I haven't yet found the part that handles
+</I>&gt;&gt;<i> timers. It's not in EventManager.
+</I>&gt;&gt;<i> Does anyone know what's going on? The code works fine in SL.
+</I>&gt;&gt;<i> Should I be posting this in the dev list? I'd like to see if I can fix it.
+</I>&gt;&gt;<i> Any thoughts on how to get fast timers in OpenSim?
+</I>&gt;&gt;<i> Faster computer? (I did check and was only getting about 20% CPU usage...)
+</I>&gt;&gt;<i> Porting them to a Real-Time operating system? :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ---------- Forwarded message ----------
+</I>&gt;&gt;<i> From:&#160;Justin Clark-Casey &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">jjustincc at googlemail.com</A>&gt;
+</I>&gt;&gt;<i> To:&#160;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+</I>&gt;&gt;<i> Date:&#160;Sat, 04 Dec 2010 01:35:32 +0000
+</I>&gt;&gt;<i> Subject:&#160;Re: [Opensim-users] Slow LSL timers
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm not familiar with the this area of the code but I had a quick look
+</I>&gt;&gt;<i> since I was curious (the meat is in
+</I>&gt;&gt;<i> OpenSim/Region/ScriptEngine/Shared/Api/Plugins/Timer.cs). &#160;The code isn't
+</I>&gt;&gt;<i> using C# timers so I'm not totally surprised at the behaviour that you're
+</I>&gt;&gt;<i> seeing.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I suspect addressing this would require a considerably different
+</I>&gt;&gt;<i> implementation.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006352.html">[Opensim-users] Slow LSL timers
+</A></li>
+	<LI>Next message: <A HREF="006359.html">[Opensim-users] Slow LSL timers
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6358">[ date ]</a>
+              <a href="thread.html#6358">[ thread ]</a>
+              <a href="subject.html#6358">[ subject ]</a>
+              <a href="author.html#6358">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

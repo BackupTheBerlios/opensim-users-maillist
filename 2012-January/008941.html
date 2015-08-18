@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Crash on collision
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-January/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3CCA%2BRcaTRKPcx-%3DoBzcq3_8oJL%2Bys-BvmcSh1mfOp-b3MOJbJ2bQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008947.html">
+   <LINK REL="Next"  HREF="008942.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Crash on collision</H1>
+    <B>M.E. Verhagen</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Crash%20on%20collision&In-Reply-To=%3CCA%2BRcaTRKPcx-%3DoBzcq3_8oJL%2Bys-BvmcSh1mfOp-b3MOJbJ2bQ%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Crash on collision">marceled9 at gmail.com
+       </A><BR>
+    <I>Sun Jan  1 14:38:55 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008947.html">[Opensim-users] opensim (latest git) error when updating	permissions rezzed prim..
+</A></li>
+        <LI>Next message: <A HREF="008942.html">[Opensim-users] Crash on collision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8941">[ date ]</a>
+              <a href="thread.html#8941">[ thread ]</a>
+              <a href="subject.html#8941">[ subject ]</a>
+              <a href="author.html#8941">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Happy new year !
+
+One other thing what seems to trigger ode crashes seem to faulty meshes,
+you can reconize these from opensim log lines like:
+
+10:49:19 - [MESH]: no recognized physics mesh found in mesh asset
+
+11:06:40 - [MESH]: asset data is zero length
+
+06:40 - [MESH]: experimental mesh proxy generation for
+defaultMesh/9af57c73-8ef4-42f1-9415-46e8491213cd
+
+Try to find these inworld and delete them. On my box the ode crashes were
+less fequent after deleting those.
+
+The case with the libode is that it does not seem to be compatible with
+some systems luckely most system already have a libode in their repo why
+not use that libode ?
+I am using a git version, not the diva. Could be that some recent updates
+on the odescene also prevent some crashes.
+
+Op zaterdag 31 december 2011 schreef Klaus-E. Klingner (
+<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">klingner at silverday.de</A>) het volgende:
+&gt;<i> &lt;sigh&gt; I have to correct myself. The world just crashed again with
+</I>exactly the same error :(
+&gt;<i>
+</I>&gt;<i> Regards,
+</I>&gt;<i>
+</I>&gt;<i> Klaus
+</I>&gt;<i>
+</I>&gt;<i> On 31.12.2011 18:19, Klaus-E. Klingner wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hallo,
+</I>&gt;<i>
+</I>&gt;<i> thank you for the tip. However it did not fix the problem :/ I still got
+</I>the same crash. However I noticed that the ode-file in the physics folder
+of DIVA is different from the one in the original OpenSim 0.72-download. I
+copied that over, started the world and that seems to have done the trick.
+Now I just have to figure out a way to one of the sims that suddenly
+disappeared :/
+&gt;<i>
+</I>&gt;<i> Regards and a happy and a happy new year,
+</I>&gt;<i>
+</I>&gt;<i> Klaus
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Additional remark:
+</I>&gt;<i>
+</I>&gt;<i> To install the libode on SuSe you have to add the OpenSuSE-Gamerepository
+</I>with
+&gt;<i>
+</I>&gt;<i> zypper addrepo
+</I><A HREF="http://download.opensuse.org/repositories/games/openSUSE_11.4/opensuse-games-x86_64">http://download.opensuse.org/repositories/games/openSUSE_11.4/opensuse-games-x86_64</A>
+&gt;<i>
+</I>&gt;<i> and then install libode using
+</I>&gt;<i>
+</I>&gt;<i> zypper install libode1
+</I>&gt;<i>
+</I>&gt;<i> On 31.12.2011 16:57, M.E. Verhagen wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I had the same sort of ode crashes, i installed ode on my system with
+</I>'yum install ode' and deleted the libode.so from the opensim bin dir, after
+wich i simlinked the lib to make sure opensim uses it.  I also downloaded
+<A HREF="https://github.com/downloads/justincc/opensim/libode.so-x86_64.so,">https://github.com/downloads/justincc/opensim/libode.so-x86_64.so,</A> and the
+crashes stopped.
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On suse this would something like these commands:
+</I>&gt;<i>
+</I>&gt;<i> yum install libode
+</I>&gt;<i>
+</I>&gt;<i> cd /opt/opensim/diva-r16915/bin
+</I>&gt;<i>
+</I>&gt;<i> wget <A HREF="https://github.com/downloads/justincc/opensim/libode.so-x86_64.so">https://github.com/downloads/justincc/opensim/libode.so-x86_64.so</A>
+</I>&gt;<i>
+</I>&gt;<i> rm libode.so
+</I>&gt;<i>
+</I>&gt;<i> rm libode-x86_64.so
+</I>&gt;<i>
+</I>&gt;<i> mv libode.so-x86_64.so libode-x86_64.so
+</I>&gt;<i>
+</I>&gt;<i> ln /usr/lib64/libode.so.1.1.1 libode.so
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I am not sure if there is a libode.so.1.1.1, it could named differently,
+</I>but just symlink it.
+&gt;<i> In theory the symlink is not needed, but it cannot hurt.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20120101/dbef28c4/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20120101/dbef28c4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008947.html">[Opensim-users] opensim (latest git) error when updating	permissions rezzed prim..
+</A></li>
+	<LI>Next message: <A HREF="008942.html">[Opensim-users] Crash on collision
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8941">[ date ]</a>
+              <a href="thread.html#8941">[ thread ]</a>
+              <a href="subject.html#8941">[ subject ]</a>
+              <a href="author.html#8941">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

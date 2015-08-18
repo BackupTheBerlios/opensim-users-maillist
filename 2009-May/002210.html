@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] FW: [Opensim-dev] On Revisions, tags and branches
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-May/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20FW%3A%20%5BOpensim-dev%5D%20On%20Revisions%2C%20tags%20and%20branches&In-Reply-To=%3CBLU134-W2227101030190D0DBF28ABD5520%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002198.html">
+   <LINK REL="Next"  HREF="002211.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] FW: [Opensim-dev] On Revisions, tags and branches</H1>
+    <B>Stefan Andersson</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20FW%3A%20%5BOpensim-dev%5D%20On%20Revisions%2C%20tags%20and%20branches&In-Reply-To=%3CBLU134-W2227101030190D0DBF28ABD5520%40phx.gbl%3E"
+       TITLE="[Opensim-users] FW: [Opensim-dev] On Revisions, tags and branches">stefan at tribalmedia.se
+       </A><BR>
+    <I>Tue May 26 09:27:56 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002198.html">[Opensim-users] Building and running newly tagged 0.6.5-release	(downloaded as SVN r9667)
+</A></li>
+        <LI>Next message: <A HREF="002211.html">[Opensim-users] ReactionGrid offers behind the firewall solution	before LL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2210">[ date ]</a>
+              <a href="thread.html#2210">[ thread ]</a>
+              <a href="subject.html#2210">[ subject ]</a>
+              <a href="author.html#2210">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+In light of recent confusion, reposting this; should go onto wiki, I suppose.
+ 
+Best regards,
+Stefan Andersson
+
+
+
+ 
+
+
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">stefan at tribalmedia.se</A>
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-dev at lists.berlios.de</A>
+Date: Sat, 4 Apr 2009 20:27:06 +0200
+Subject: [Opensim-dev] On Revisions, tags and branches
+
+
+
+Esteemed colleagues,
+ 
+a couple of good-to-know points about SVN versioning;
+ 
+In an SVN repo, the 'revision' is a discrete version of the software. But; the revision _number_ is _not_ an indication of sequential functional increment.
+ 
+Revisions are based on the revision before it, but that does not have to be the one with the revision _number_ before it.
+ 
+The revision number counter is global to the repo, hence it is upped whenever somebody does something within the repo, regardless of what branch the thing happens to.
+ 
+An example:
+ 
+I commit something to trunk, the rev number is upped to, say, 1337, and my new version is given that number.
+ 
+I now branch trunk into /branches/mybranch. I do this by doing a remote copy of trunk. This copy of trunk, although identical to 1337, is a new version and is thus given the revision number 1338, the first revision on the new _branch_.
+ 
+Now I commit a number of changes to trunk, spinning past 1339, 1340, 1341 and 1342 - each being separate _versions_ but on the _branch_ called /trunk (think of it as paths)
+ 
+Now, if I commit some minor change to /branches/mybranch, what revision number will it get? You guessed it - 1343.
+ 
+If I now commit something to trunk again, it will get 1344. I then commit something to the really old branch based on, say, revision 666. It will get 1345.
+ 
+So, my point is: we really should stop talking only about revision numbers when we're trying to convey an idea of some kind of advancement of state.
+ 
+Ie, in my example, 1344 is probably the one reflecting the most development, 1343 is essentially based in 1337 and 1345, currently the highest rev number, could basically be six months old, with just a minor modification.
+ 
+Now on to tags - trunk, branches and tags are really all one thing: paths. The only real difference is by convention: there is a certain path called /trunk that serves a certain purpose, nemaly to be the focal point for developers. There is a certain name used for paths other than trunk, and that is &quot;branches&quot;. Some branches by convention aren't meant to be modified, but serve as snapshots of a point in time - they are called &quot;tags&quot;.
+ 
+But to the server, they are all revisions along differerent link paths. There is really nothing stopping you from committing to a tag - it's just the svn client will be reluctant to do so, as it's aware of the convention.
+ 
+Keep this in mind, when referring to a 'revision' - it might be on a totally different path, so be sure to mention what path you're really talking about. specifying &quot;trunk, between revision 1343 and 1780&quot; or &quot;0.6.2 post-fixes, between revision 1764 and 2006&quot; again lets you compare revision numbers to indicate advancement of state.
+
+So, don't tell people to check a certain revision out, unless you mean _exactly_ that version - tell them the logical path to it instead.
+ 
+Just thought this might clear some confusion up.
+
+Best regards,
+Stefan Andersson
+Tribal Media AB
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090526/a7998b6b/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20090526/a7998b6b/attachment.html</A>&gt;
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: ATT00000
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20090526/a7998b6b/attachment.ksh">https://lists.berlios.de/pipermail/opensim-users/attachments/20090526/a7998b6b/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002198.html">[Opensim-users] Building and running newly tagged 0.6.5-release	(downloaded as SVN r9667)
+</A></li>
+	<LI>Next message: <A HREF="002211.html">[Opensim-users] ReactionGrid offers behind the firewall solution	before LL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2210">[ date ]</a>
+              <a href="thread.html#2210">[ thread ]</a>
+              <a href="subject.html#2210">[ subject ]</a>
+              <a href="author.html#2210">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

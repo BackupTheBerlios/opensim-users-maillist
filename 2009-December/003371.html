@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] OpenSim 0.6.8 source packages now available for	download
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2009-December/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.6.8%20source%20packages%20now%20available%20for%0A%09download&In-Reply-To=%3C4B327A25.70208%40googlemail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="003366.html">
+   <LINK REL="Next"  HREF="003372.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] OpenSim 0.6.8 source packages now available for	download</H1>
+    <B>Justin Clark-Casey</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20OpenSim%200.6.8%20source%20packages%20now%20available%20for%0A%09download&In-Reply-To=%3C4B327A25.70208%40googlemail.com%3E"
+       TITLE="[Opensim-users] OpenSim 0.6.8 source packages now available for	download">jjustincc at googlemail.com
+       </A><BR>
+    <I>Wed Dec 23 21:14:29 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="003366.html">[Opensim-users] Question out of curiosity Re:Prim Data Formats
+</A></li>
+        <LI>Next message: <A HREF="003372.html">[Opensim-users] OpenSim 0.6.8 source packages now available for	download
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3371">[ date ]</a>
+              <a href="thread.html#3371">[ thread ]</a>
+              <a href="subject.html#3371">[ subject ]</a>
+              <a href="author.html#3371">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi folks,
+
+The OpenSim 0.6.8 source release packages are now available from
+
+<A HREF="http://opensimulator.org/wiki/Download">http://opensimulator.org/wiki/Download</A>
+
+In this release, the grid service moves into ROBUST, so anybody upgrading from 
+0.6.7 to 0.6.8 will need to do some configuration migration work.  Thanks to 
+Diva, there are instructions at the bottom of
+
+<A HREF="http://opensimulator.org/wiki/ROBUST">http://opensimulator.org/wiki/ROBUST</A>
+
+for this.  I also overhauled the main configuration page at
+
+<A HREF="http://opensimulator.org/wiki/Configuration">http://opensimulator.org/wiki/Configuration</A>
+
+to better reflect current configuration realities with 0.6.8.  I also 
+considerably rearranged the text to split instructions into specific 
+'standalone' and 'grid' sections.  It's still far from perfect but I think that 
+it is an improvement (even if I say so myself :).
+
+Here's an extremely high-level and subjective summary of the changes between 
+0.6.7 and 0.6.8
+
+     * The minimum level of Mono required to build and run OpenSim is now 2.4.2.
+     * The version of libomv used by OpenSim was upgraded to 0.8.0-pre.
+     * The grid service has been moved to the new ROBUST infrastructure.  The 
+User and Messaging servers still exist as specific executables.  If you're 
+moving to OpenSim 0.6.8 from 0.6.7 then there is migration information on the 
+wiki.  The OpenSim configuration wiki page has also been changed to reflect the 
+current setup situation with 0.6.8.
+     * Parcel information was added to OpenSim region archives (OARs).
+     * Inventory Archive (IAR) functionality was improved.
+     * JPEG2000 texture generation was considerably improved, which should mean 
+less missing texture information in general.  However, 64 bit users may see an 
+increase in the number of exceptions with the new CSJ2K code which replaces the 
+OpenJPEG library in various spots.  Bug reports are welcome.
+     * Considerable work has been done to reduce memory leaks.
+     * Excessive flailing when an avatar walks over very moderately bumpy ground 
+was fixed.
+     * Objects on sale at L$0 can now be bought.
+     * The Linden Lab Second Life client stack was overhauled.  This should be 
+improve server responsiveness to client requests.
+     * OpenSim's use of the Open Dynamics Engine (ODE) physics plugin was 
+improved to increase performance.
+     * The DotNetEngine scripting engine was removed.  We recommend that anybody 
+still using it migrate to the XEngine scripting plugin (which has been the 
+default for sometime).  This does not affect anything at the language level - 
+all scripts will continue to work as before.
+     * The performance and reliability of scene object manipulation code was 
+improved, though some bugs will remain.  Linking code is as yet largely 
+unchanged, hence existing object linking bugs very probably still remain.
+     * Prim collision meshing has been improved.
+     * An issue where avatars could not automatically land on prims was resolved.
+
+This is duplicated from my blog post at 
+<A HREF="http://justincc.org/blog/2009/12/23/opensim-068-source-packages-released/">http://justincc.org/blog/2009/12/23/opensim-068-source-packages-released/</A>
+
+I didn't incorporate this into the release itself since it's inevitably somewhat 
+subjective (it naturally emphasizes the things I know most about or can most 
+easily learn through documentation).  A high-level changelog should contain more 
+perspectives - it might be possible to do that for the next release, or perhaps 
+it doesn't really matter.  A low-level git commit log is probably still better 
+than nothing so that may be worth considering too for the future.
+
+Some bugs were reported against this release in RC1 testing, in particular 
+Mantis 4351.  However, this bug is proving very difficult to resolve and as it 
+doesn't affect everybody I decided to go ahead with the release regardless 
+rather than hold things up further.  I have to strongly invoke the alpha code 
+disclaimer here.
+
+I'm hoping the usual good people will produce binary packages and
+installers :).  I know I said this for 0.6.7 but judging from the rumbles in the 
+jungle I think that it is more likely to happen for this release.
+
+Merry Christmas everyone!
+
+-- 
+Justin Clark-Casey (justincc)
+<A HREF="http://justincc.org">http://justincc.org</A>
+<A HREF="http://twitter.com/justincc">http://twitter.com/justincc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="003366.html">[Opensim-users] Question out of curiosity Re:Prim Data Formats
+</A></li>
+	<LI>Next message: <A HREF="003372.html">[Opensim-users] OpenSim 0.6.8 source packages now available for	download
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3371">[ date ]</a>
+              <a href="thread.html#3371">[ thread ]</a>
+              <a href="subject.html#3371">[ subject ]</a>
+              <a href="author.html#3371">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

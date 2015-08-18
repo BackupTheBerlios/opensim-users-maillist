@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Floating text not going away
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Floating%20text%20not%20going%20away&In-Reply-To=%3CAANLkTimmHEzjE8dTN-H-j%3DfjXd92XptTyPRfKx5Daewm%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="006811.html">
+   <LINK REL="Next"  HREF="006813.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Floating text not going away</H1>
+    <B>Lindy McKeown</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Floating%20text%20not%20going%20away&In-Reply-To=%3CAANLkTimmHEzjE8dTN-H-j%3DfjXd92XptTyPRfKx5Daewm%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Floating text not going away">lindyaustralia at gmail.com
+       </A><BR>
+    <I>Wed Mar 16 16:57:04 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="006811.html">[Opensim-users] Floating text not going away
+</A></li>
+        <LI>Next message: <A HREF="006813.html">[Opensim-users] Floating text not going away
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6812">[ date ]</a>
+              <a href="thread.html#6812">[ thread ]</a>
+              <a href="subject.html#6812">[ subject ]</a>
+              <a href="author.html#6812">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Prims always remember floating text even  after the script creating it are
+removed. So to remove you have to put nothing  in the floating text. Then it
+will replace your time with nothing and remember that when you remove the
+floating text  script. It allows you to label and unlabel items. Useful for
+objects that give their contents so you don't also get the floating text
+script given to you.
+Lindy
+On Mar 16, 2011 8:47 AM, &quot;Robert Klein&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">rtkwebman at gmail.com</A>&gt; wrote:
+&gt;<i> I have a script that puts the current time floating above an object. When
+</I>I
+&gt;<i> remove the script from the object contents the text still remains floating
+</I>&gt;<i> above the object showing the time from when the script was removed. The
+</I>time
+&gt;<i> does not continue to update but it will not go away. Anyone else have this
+</I>&gt;<i> problem and if so how did you get the text to go away without deleting the
+</I>&gt;<i> object and starting over?
+</I>&gt;<i>
+</I>&gt;<i> Here is the script:
+</I>&gt;<i>
+</I>&gt;<i> // HoverText Clock Script
+</I>&gt;<i> // By Ben Linden
+</I>&gt;<i> //
+</I>&gt;<i> // Drop on an object to make it display the PST time.
+</I>&gt;<i> //
+</I>&gt;<i> // If you are interested in scripting, check out
+</I>&gt;<i> // the Script Help under the help menu.
+</I>&gt;<i>
+</I>&gt;<i> // The double slash means these lines are comments
+</I>&gt;<i> // and ignored by the computer.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> // Global Variables
+</I>&gt;<i> // a string is a collection of characters.
+</I>&gt;<i> string smin; // Represents minutes
+</I>&gt;<i> string sseconds; //Represens seconds
+</I>&gt;<i>
+</I>&gt;<i> // All scripts have a default state, this will be
+</I>&gt;<i> // the first code executed.
+</I>&gt;<i> default
+</I>&gt;<i> {
+</I>&gt;<i> // state_entry() is an event handler, it executes
+</I>&gt;<i> // whenever a state is entered.
+</I>&gt;<i> state_entry()
+</I>&gt;<i> {
+</I>&gt;<i> // llSetTimerEvent() is a function that sets
+</I>&gt;<i> // up a timer event in seconds.
+</I>&gt;<i> llSetTimerEvent(2.0); // call a timer event
+</I>&gt;<i> // every 2 seconds.
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> // timer() is an event handler, it executes on an
+</I>&gt;<i> // interval defined by llSetTimerEvent()
+</I>&gt;<i> timer()
+</I>&gt;<i> {
+</I>&gt;<i> // llFloor is a function that rounds down all numbers.
+</I>&gt;<i> // llGetWallClock is a function that returns the time
+</I>&gt;<i> // of day in seconds, on a 24 hour clock.
+</I>&gt;<i> integer seconds = llFloor(llGetWallclock());
+</I>&gt;<i> // Convert the total number of seconds into a integer (whole number)
+</I>&gt;<i> integer min = llFloor(seconds/60);
+</I>&gt;<i> // Figure out how many minutes that is
+</I>&gt;<i> seconds = seconds - (min*60);
+</I>&gt;<i> //Work out the remaining number of seconds
+</I>&gt;<i> integer hour = llFloor(min/60);
+</I>&gt;<i> // figure out how many hours it represents.
+</I>&gt;<i> min = min - (hour*60);
+</I>&gt;<i> // figure out the number of minutes remaining
+</I>&gt;<i>
+</I>&gt;<i> // if is a conditional statement, it will only execute if the
+</I>&gt;<i> conditions are met.
+</I>&gt;<i> if(hour &gt; 12) {hour = hour - 12;} // if the hours are greater than
+</I>&gt;<i> 12, convert to 12 hour time
+</I>&gt;<i> string shour = (string)hour; //convert the number into a string
+</I>&gt;<i> if(min &lt; 10) {smin = &quot;0&quot;+(string)min;} // if less than 10 minutes,
+</I>&gt;<i> put a 0 in the minute string
+</I>&gt;<i> else { smin = (string)min;}
+</I>&gt;<i> if(seconds &lt; 10) { sseconds = &quot;0&quot;+(string)seconds;} // if less than
+</I>&gt;<i> 10 sec, put a 0 in the second string
+</I>&gt;<i> else {sseconds = (string)seconds;}
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> string time = shour + &quot;:&quot; + smin; // build the seperate strings into
+</I>&gt;<i> a complete string, with colons
+</I>&gt;<i>
+</I>&gt;<i> // llSetText is a function that displays a string over the object.
+</I>&gt;<i> llSetText(time, ZERO_VECTOR, 1.0); //Display the string in solid
+</I>&gt;<i> black.
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i>
+</I>&gt;<i> Robert
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> View this message in context:
+</I><A HREF="http://opensim-users.2152040.n2.nabble.com/Floating-text-not-going-away-tp6177053p6177053.html">http://opensim-users.2152040.n2.nabble.com/Floating-text-not-going-away-tp6177053p6177053.html</A>
+&gt;<i> Sent from the opensim-users mailing list archive at Nabble.com.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20110316/31f1ee0c/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20110316/31f1ee0c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="006811.html">[Opensim-users] Floating text not going away
+</A></li>
+	<LI>Next message: <A HREF="006813.html">[Opensim-users] Floating text not going away
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6812">[ date ]</a>
+              <a href="thread.html#6812">[ thread ]</a>
+              <a href="subject.html#6812">[ subject ]</a>
+              <a href="author.html#6812">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

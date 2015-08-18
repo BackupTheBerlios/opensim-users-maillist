@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] NPC and internal Animations
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2012-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20and%20internal%20Animations&In-Reply-To=%3C1331187013.2111.33.camel%40pulkka%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="009760.html">
+   <LINK REL="Next"  HREF="009762.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] NPC and internal Animations</H1>
+    <B>Toni Alatalo</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20NPC%20and%20internal%20Animations&In-Reply-To=%3C1331187013.2111.33.camel%40pulkka%3E"
+       TITLE="[Opensim-users] NPC and internal Animations">toni at playsign.net
+       </A><BR>
+    <I>Thu Mar  8 07:10:13 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="009760.html">[Opensim-users] NPC and internal Animations
+</A></li>
+        <LI>Next message: <A HREF="009762.html">[Opensim-users] NPC and internal Animations
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9733">[ date ]</a>
+              <a href="thread.html#9733">[ thread ]</a>
+              <a href="subject.html#9733">[ subject ]</a>
+              <a href="author.html#9733">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, 2012-03-05 at 20:46 -0600, satguru p srivastava wrote:
+&gt;<i> If the animation is internal animation and  if it is, as you say, part
+</I>&gt;<i> of the client  then the client already has it and  should be able to
+</I>&gt;<i> animate the Avatar/NPC
+</I>
+Your reasoning / understanding of the system seems correct to me.
+
+Perhaps there is just some check with 'prims' (normal scene objects, not
+avatars) in the scripting or animation logic to not try to play back an
+anim that e.g. the server thinks that the object doesn't have .. as it
+doesn't know it's a special NPC thing for which slviewer has the bundled
+avatar data.
+
+So getting the sources and checking there is indeed the thing to do :)
+
+&gt;<i> Sat
+</I>
+~Toni
+
+P.S. and the mandatory how-this-is-in-realXtend-now note, hopefully not
+annoying or considered off-topic .. do feel free to skip: There are no
+special avatars with all that it entails bundled in. Every object in the
+scene is just a normal entity. Any object can have a skeleton with
+animations, or not. Whether or not a client is assigned to control some
+object is separated from all that. That is: having server controlled
+NPCs is normal, nothing special needed. On the other hand server side
+logic can say what clients control -- instead of Second Life (tm) like
+app you can also make a Sim City clone or whatever, with a UI designated
+to that.
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On 3/5/2012 7:55 PM, Gudule Lapointe wrote: 
+</I>&gt;<i> &gt; Obviously, everything runs on client side, that's the point of a
+</I>&gt;<i> &gt; client ;-) 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I think what was meant is that internal animations are part of the
+</I>&gt;<i> &gt; client, not loaded from server.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; As your NPC is not controlled by a client, it doesn't have these
+</I>&gt;<i> &gt; animations at disposal, unless you put them in your script's prim.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; <A HREF="http://www.speculoos.net/">http://www.speculoos.net/</A>
+</I>&gt;<i> &gt; <A HREF="secondlife://speculoos.net:8002/">secondlife://speculoos.net:8002/</A>
+</I>&gt;<i> &gt; Speculoos, the belgian cookie-flavored metaverse
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Le 6 mars 2012 &#224; 02:48, satguru p srivastava a &#233;crit :
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Garmin,
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Thanks for pointing out the BVH files.
+</I>&gt;<i> &gt; &gt; 121 files!!
+</I>&gt;<i> &gt; &gt; A bit of a pain uploading  them :)
+</I>&gt;<i> &gt; &gt; You also loose the per bone priorites which you get with
+</I>&gt;<i> &gt; &gt; internal/default animations.
+</I>&gt;<i> &gt; &gt; Also I am assuming that user loaded animations are not as
+</I>&gt;<i> &gt; &gt; efficient as internal ones. Right?
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I am still curious why the internal animations do not play.
+</I>&gt;<i> &gt; &gt; As far as I know all animations run on client side.
+</I>&gt;<i> &gt; &gt; The triggers for animation can come from client side (example when
+</I>&gt;<i> &gt; &gt; a users presses a key to make the avatar walk)
+</I>&gt;<i> &gt; &gt; or from server side  (example when if it is being called from
+</I>&gt;<i> &gt; &gt; script).
+</I>&gt;<i> &gt; &gt; NPCs animations are triggered from scripts.
+</I>&gt;<i> &gt; &gt; How is this different from Avatar animations being triggered from
+</I>&gt;<i> &gt; &gt; scripts ?
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Thanks
+</I>&gt;<i> &gt; &gt; Sat
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; On 3/5/2012 5:34 AM, Garmin Kawaguichi wrote: 
+</I>&gt;<i> &gt; &gt; &gt; True, Trinity!  User Playable Internal Animations are
+</I>&gt;<i> &gt; &gt; &gt; serverside; you cannot use them with NPCs but...
+</I>&gt;<i> &gt; &gt; &gt;  
+</I>&gt;<i> &gt; &gt; &gt; ... the BVH files corresponding to the Internal Animation are
+</I>&gt;<i> &gt; &gt; &gt; at : 
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="http://static-secondlife-com.s3.amazonaws.com/downloads/avatar/bvh_files.zip">http://static-secondlife-com.s3.amazonaws.com/downloads/avatar/bvh_files.zip</A>
+</I>&gt;<i> &gt; &gt; &gt; as it is specified in the SL Wiki :
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="http://wiki.secondlife.com/wiki/Internal_Animations">http://wiki.secondlife.com/wiki/Internal_Animations</A>
+</I>&gt;<i> &gt; &gt; &gt;  
+</I>&gt;<i> &gt; &gt; &gt; GCI
+</I>&gt;<i> &gt; &gt; &gt;         ----- Original Message ----- 
+</I>&gt;<i> &gt; &gt; &gt;         From: Trinity 
+</I>&gt;<i> &gt; &gt; &gt;         Sent: Monday, March 05, 2012 6:58 AM
+</I>&gt;<i> &gt; &gt; &gt;         Subject: Re: [Opensim-users] NPC and internal Animations
+</I>&gt;<i> &gt; &gt; &gt;         Because some animations are built into the viewer and
+</I>&gt;<i> &gt; &gt; &gt;         npcs dont use a viewer and perhaps for security reasons.
+</I>&gt;<i> &gt; &gt; &gt;         Im not really completely sure to be honest.
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Opensim-users mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Opensim-users mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">Opensim-users at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">https://lists.berlios.de/mailman/listinfo/opensim-users</A>
+</I>
+
+
+</PRE>
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="009760.html">[Opensim-users] NPC and internal Animations
+</A></li>
+	<LI>Next message: <A HREF="009762.html">[Opensim-users] NPC and internal Animations
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9733">[ date ]</a>
+              <a href="thread.html#9733">[ thread ]</a>
+              <a href="subject.html#9733">[ subject ]</a>
+              <a href="author.html#9733">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

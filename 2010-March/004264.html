@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Region Handshake error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2010-March/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20Handshake%20error&In-Reply-To=%3Cx2s62a72a691003310510g31efa81dm48c83917cf315c8c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="004262.html">
+   <LINK REL="Next"  HREF="004267.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Region Handshake error</H1>
+    <B>Clive Gould</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Region%20Handshake%20error&In-Reply-To=%3Cx2s62a72a691003310510g31efa81dm48c83917cf315c8c%40mail.gmail.com%3E"
+       TITLE="[Opensim-users] Region Handshake error">cliveg at gmail.com
+       </A><BR>
+    <I>Wed Mar 31 14:10:39 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="004262.html">[Opensim-users] Opensim-users Digest, Vol 31, Issue 46
+</A></li>
+        <LI>Next message: <A HREF="004267.html">[Opensim-users] Anybody up for making a Library of Standard Objects?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4264">[ date ]</a>
+              <a href="thread.html#4264">[ thread ]</a>
+              <a href="subject.html#4264">[ subject ]</a>
+              <a href="author.html#4264">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Stephen
+
+&gt;<i>From my own experince the &quot;Waiting for Region Handshake Error&quot; is
+</I>usually down to UDP.
+
+Please see the excerpt from our blog below:
+
+&quot;We wanted to provide access to the simulator both externally from the
+Internet (via a GNAT box) and internally from the staff and student
+intranets (via an ISA Server Firewall). The main problem we enountered
+with internal and external access related to the region handshake
+failing. During login, it appears that the client initially uses the
+address associated with the client Login URI box (FQDN accepted here)
+to connect to the server and exchange authentication information using
+the TCP protocol. Before the region handshake takes place the server
+provides the client with a new IP address to use in client server
+communications. This is derived from the ExternalHostName parameter in
+Regions.ini (FQDN NOT accepted here). When the client reaches the
+point of the region handshake, it switches to using a mix of TCP &amp; UDP
+protocols and the new server IP address. This change of address for
+the server can easily result in the region handshake failing if the
+client cannot reach the server on the new address. The client
+initiates the region handshake by sending UDP packet(s) and times out
+if these packets are undeliverable.
+
+The problem with internal access was eventually solved by a change of
+protocol definition associated with the appropriate ISA UDP rule. The
+protocol definition for UDP needed to include both &quot;Send Receive&quot; and
+&quot;Receive Send&quot;, so that two-way UDP traffic was allowed.&quot;
+
+Good luck
+
+Clive
+
+
+Message: 2
+Date: Wed, 31 Mar 2010 11:08:08 +0100
+From: Stephen Devlin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">stephen.devlin at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">opensim-users at lists.berlios.de</A>
+Subject: [Opensim-users] Region Handshake error
+Message-ID:
+       &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/opensim-users">n2lc36cf3561003310308mfb2810fdk91fcf7ce396c01ea at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+
+Hey guys,
+
+I'm very new to OpenSim and I am trying to implement a version in my school
+so I can do a research project for my MSc.
+
+I have OpenSim working and I can connect on the local machine but once I try
+to use another machine on the network the server accepts the user and sends
+a response to the client but then hangs on Waiting For Region Handshake.
+
+Can anyone help me on this?
+
+The machines are all networked and I put in the IP address of the server in
+the .ini file
+
+Many Thanks
+
+Stephen
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="004262.html">[Opensim-users] Opensim-users Digest, Vol 31, Issue 46
+</A></li>
+	<LI>Next message: <A HREF="004267.html">[Opensim-users] Anybody up for making a Library of Standard Objects?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4264">[ date ]</a>
+              <a href="thread.html#4264">[ thread ]</a>
+              <a href="subject.html#4264">[ subject ]</a>
+              <a href="author.html#4264">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>

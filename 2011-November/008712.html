@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Opensim-users] Sounds, inworld clocks, rotations
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/opensim-users/2011-November/index.html" >
+   <LINK REL="made" HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sounds%2C%20inworld%20clocks%2C%20rotations&In-Reply-To=%3C4ED4E1EF.9080704%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="008689.html">
+   <LINK REL="Next"  HREF="008727.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Opensim-users] Sounds, inworld clocks, rotations</H1>
+    <B>InuYasha Meiji</B> 
+    <A HREF="mailto:opensim-users%40lists.berlios.de?Subject=Re%3A%20%5BOpensim-users%5D%20Sounds%2C%20inworld%20clocks%2C%20rotations&In-Reply-To=%3C4ED4E1EF.9080704%40gmail.com%3E"
+       TITLE="[Opensim-users] Sounds, inworld clocks, rotations">inuyasha.meiji at gmail.com
+       </A><BR>
+    <I>Tue Nov 29 14:45:19 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="008689.html">[Opensim-users] Sounds, inworld clocks, rotations
+</A></li>
+        <LI>Next message: <A HREF="008727.html">[Opensim-users] Sounds, inworld clocks, rotations
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8712">[ date ]</a>
+              <a href="thread.html#8712">[ thread ]</a>
+              <a href="subject.html#8712">[ subject ]</a>
+              <a href="author.html#8712">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 11/28/2011 1:36 PM, Jigs wrote:
+&gt;<i> I have 3 little projects I would like to do on my non-profit sims but
+</I>&gt;<i> wanted to find out first if they are possible, and if so, how it can be
+</I>&gt;<i> done.
+</I>&gt;<i>
+</I>&gt;<i> 1)Sounds
+</I>&gt;<i>
+</I>&gt;<i> We know the llPlaySound commands etc will play a .wav from prim inventory
+</I>&gt;<i> or via UUID, and we know scripts can play streaming audio (shoutcast etc)
+</I>&gt;<i> or play an .mp3 file (or video) from a prim which changes the parcel/media
+</I>&gt;<i> settings to the url.
+</I>&gt;<i> But, I wondered if it's possible to play a longer sound residing on the
+</I>&gt;<i> same server as opensim- which leads to project;
+</I>&gt;<i>
+</I>&gt;<i> 2)- an analog clock which currently plays a chime on the hour on my
+</I>&gt;<i> building's tower- wanting to mod the script to play on the quarter hour
+</I>&gt;<i> the traditional series of so called &quot;Westminster chimes&quot; which are
+</I>&gt;<i> obviously longer than 10 seconds each, especially on the 3/4 hour
+</I>&gt;<i> sequence.
+</I>&gt;<i> I know 10 sec clips can be strung together in a prim, but was trying to
+</I>&gt;<i> see if there's a way to call it with the sound file residing on the
+</I>&gt;<i> server/localhost, since mySQL and OS are all running off localhost to
+</I>&gt;<i> begin with.
+</I>&gt;<i>
+</I>&gt;<i> 3)Rotation of a prim, this youtube video  below shows what I would like to
+</I>&gt;<i> rotate and how- the crank arm of a steam engine, which as can be seen in
+</I>&gt;<i> the video would rotate in 2 directions- x-y (forward-back as well as one
+</I>&gt;<i> end of the prim rotating 360 degrees in an arc;
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.youtube.com/watch?v=-7AVjxxlJRI">http://www.youtube.com/watch?v=-7AVjxxlJRI</A>
+</I>&gt;<i>
+</I>&gt;<i> I have the engine mostly build, and the flywheel scripted to rotate, I
+</I>&gt;<i> also found a swing script and &quot;cut&quot; a prim, inserted the script and linked
+</I>&gt;<i> it to the shaft I want to rotate, this mostly does what I want but does
+</I>&gt;<i> not move x-y.
+</I>&gt;<i> The secondary horzontal connecting shaft needs only move horizontally x-y
+</I>&gt;<i> a small amount for best effects but I haven't found a script that will
+</I>&gt;<i> move a prim just x-y for that.
+</I>&gt;<i>
+</I>&gt;<i> The Engine itself can be seen on the Wolf Reference Library region at
+</I>&gt;<i> 225,231,21 the 2 scripts I am trying are on now.
+</I>&gt;<i>
+</I>&gt;<i> I think aside from my 3 projects- others, not just myself could make a
+</I>&gt;<i> broader use of any findings and solutions found for these 3 tasks.
+</I>&gt;<i>
+</I>&gt;<i> Timber
+</I>&gt;<i> WesternPrairie.net
+</I>&gt;<i>
+</I>
+Part of the problem with sound in opensim id not all the sound commands 
+seems to be working.  There was a way of cutting up sound files and 
+pre-loading them with a small cache to play entire songs.  This small 
+caching had to do with a llSetSoundQueueing 
+&lt;<A HREF="http://wiki.secondlife.com/wiki/LlSetSoundQueueing">http://wiki.secondlife.com/wiki/LlSetSoundQueueing</A>&gt; command.
+
+Not only that but I found sounds in opensim cause a sound being played 
+to be cut off and stopped when another object starts another sound. 
+Unlike SL that allows one sound to complete even as the other starts 
+up.  I made a rain shower that had a falling rain sound accompanying   
+the rain in a loop.  When another object a lightning effect set off and 
+played the thunder the rain sound was cut off completely.  So after each 
+lightning effect the sound of the rain stopped.  I am waiting for 
+opensim to fix this sound before I try that again.  I didn't add it to 
+the error reports.  I felt it wasn't on the top of their list of fixes 
+right now and there where more pressing matters to contend with.
+
+InuYasha..
+
+-- 
+________________________________________________________________
+Opensim User: Standalone Grid on Version 0.7.2 with 49 Regions
+on Windows 7, 64-bit. Phenom 9500 2.2 ghz Quad Core, Terabyte Hard
+Drive, 8gig DDR2 RAM.  Used XAMPP to load PHP Version 5.3.0, Apache
+and MySQL 5.1.41-community edition.
+________________________________________________________________
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/opensim-users/attachments/20111129/0cf716c9/attachment.html">https://lists.berlios.de/pipermail/opensim-users/attachments/20111129/0cf716c9/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="008689.html">[Opensim-users] Sounds, inworld clocks, rotations
+</A></li>
+	<LI>Next message: <A HREF="008727.html">[Opensim-users] Sounds, inworld clocks, rotations
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8712">[ date ]</a>
+              <a href="thread.html#8712">[ thread ]</a>
+              <a href="subject.html#8712">[ subject ]</a>
+              <a href="author.html#8712">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/opensim-users">More information about the Opensim-users
+mailing list</a><br>
+</body></html>
